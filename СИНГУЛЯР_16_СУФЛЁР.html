@@ -81,7 +81,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
   </div>
 
   <h2>Сцена <em>canvas · 60 fps · мастер-часы audio.currentTime</em></h2>
-  <div class="stage" id="stageHost"><canvas id="pitchCanvas"></canvas></div>
+  <div class="stage" id="stageHost"><canvas id="pitchCanvas" aria-hidden="true"></canvas></div>
 
   <div class="row">
     <button class="btn" id="btnPlay">▶ играть минусовку</button>
@@ -92,7 +92,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
   <div class="row">
     <button class="btn blue" id="btnFlagman">★ флагман «Когда теряем»</button>
     <button class="btn ghost" id="btnFile">📁 своя минусовка…</button>
-    <input type="file" id="fileAudio" accept="audio/*">
+    <input type="file" id="fileAudio" accept="audio/*" aria-label="Файл минусовки">
     <label class="chk"><input type="checkbox" id="chkPhones">🎧 я в наушниках (честный захват без фильтров)</label>
   </div>
 
@@ -111,7 +111,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
     её в ноты (первый раз — счёт по кадрам с прогрессом, результат кэшируется в браузере).
     📄 — формат UltraStar (<code>: старт длина нота слово</code>, <code>*</code> = золотая нота) или LRC.
     📦 — карта, сохранённая раньше, подхватится сама при выборе песни.</p>
-    <div class="status" id="chartStatus">Карта не загружена — включится режим вокального монитора (без очков).</div>
+    <div class="status" id="chartStatus" role="status" aria-live="polite">Карта не загружена — включится режим вокального монитора (без очков).</div>
   </div>
 
   <h2>Микрофон и итог <em>оценка только по твоему голосу</em></h2>
@@ -121,7 +121,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
       <button class="btn gray" id="btnMicOff" disabled>выключить</button>
       <span class="hint">Частота → MIDI + центсы, медиана 5 кадров, октавная поправка, комбо ×1…×4.</span>
     </div>
-    <div class="status" id="micStatus">Микрофон выключен. Нажми 🎤 — браузер спросит разрешение (всё остаётся на устройстве).</div>
+    <div class="status" id="micStatus" role="status" aria-live="polite">Микрофон выключен. Нажми 🎤 — браузер спросит разрешение (всё остаётся на устройстве).</div>
   </div>
 
   <div class="panel">
@@ -301,7 +301,12 @@ class SingulyarPitchEngine {
         this.historySize = 5;
         this.active = false;
         this.frames = 0;
+        this.lastSignal = 0;   /* S15_PITCH_NO_SIGNAL: момент последнего сигнала */
+        this.silentSince = 0;  /* мс тишины с последнего сигнала */
     }
+    /* S15_PITCH_NO_SIGNAL: микрофон включён, но сигнала нет больше 3 секунд */
+    noSignal() { return this.active && this.silentSince > 3000; }
+
     async start(useHeadphones) {
         if (this.active) return;
         this.useHeadphones = !!useHeadphones;
@@ -328,6 +333,9 @@ class SingulyarPitchEngine {
     }
     handleData({ pitch, clarity, rms }) {
         this.frames++;
+        const nowTs = Date.now();
+        if (pitch || (rms || 0) > 0.012) this.lastSignal = nowTs;
+        this.silentSince = nowTs - this.lastSignal;
         if (!pitch) {
             this.pitchHistory = [];
             this.bus.emit('PITCH_FRAME', { hz: null, midi: null, cents: 0, clarity: 0, rms });
@@ -952,7 +960,12 @@ class SingulyarPrompterApp {
             this.el.btnMic.disabled = true; this.el.btnMicOff.disabled = false;
             this.el.micStatus.textContent = 'Микрофон живой: шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
         } catch (e) {
-            this.el.micStatus.textContent = 'Микрофон недоступен: ' + e.message + ' (нужно разрешение браузера; на file:// работает в Chrome/Edge)';
+            const code = e && e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED'
+                : e && e.name === 'NotFoundError' ? 'S15_DEVICE_MISSING'
+                : e && e.name === 'NotReadableError' ? 'S15_DEVICE_BUSY' : 'S15_MIC_ERROR';
+            this.el.micStatus.textContent = '[' + code + '] Микрофон недоступен: ' + e.message
+                + ' (нужно разрешение браузера; на file:// работает в Chrome/Edge)';
+            this.bus.emit('S15_MIC_ERROR', { code, message: e && e.message });
         }
     }
     micOff() {
@@ -1040,6 +1053,16 @@ class SingulyarPrompterApp {
     /* ── мастер-цикл: audio.currentTime + rAF ── */
     loop() {
         const t = this.audio.currentTime || 0;
+        if (this.engine.noSignal()) {
+            if (!this.noSignalShown) {
+                this.noSignalShown = true;
+                this.el.micStatus.textContent = '[S15_PITCH_NO_SIGNAL] Микрофон включён, но сигнала нет >3 с — проверь устройство ввода или спой громче.';
+                this.bus.emit('S15_PITCH_NO_SIGNAL', { silentMs: this.engine.silentSince });
+            }
+        } else if (this.noSignalShown) {
+            this.noSignalShown = false;
+            if (this.engine.active) this.el.micStatus.textContent = 'Микрофон живой: шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
+        }
         this.evaluateFrame(t);
         this.renderer.draw(t);
         if (this.audio.duration) {
