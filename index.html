@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР RUVSON — вселенная караоке · ОРКЕСТРАТОР ·15</title>
+<meta name="description" content="Офлайн-вселенная караоке RUVSON: 61 песня × 158 языков · 13 модулей · ОРКЕСТРАТОР ·15 · PWA. Отчёт и инструкция — читай и сразу действуй.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:80px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:18px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:19px;font-family:var(--mono)}
+.hd b{font-size:18px} .hd span{color:var(--dim);font-size:13px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d}
+h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
+h1 em{font-style:normal;color:var(--teal)}
+.lead{color:var(--dim);max-width:760px;font-size:17px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 8px}
+.nums .n{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.nums b{display:block;font-size:24px;font-family:var(--mono);color:var(--teal)}
+.nums i{font-style:normal;color:var(--dim);font-size:12.5px}
+h2{font-size:21px;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px;vertical-align:middle;margin-left:8px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
+.card:hover{border-color:rgba(94,234,212,.5)}
+.card .t{font-weight:700;font-size:16.5px}
+.card .d{color:var(--dim);font-size:13.5px;flex:1}
+.card .m{font-family:var(--mono);font-size:11px;color:#5b6a72}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.step .k{font-family:var(--mono);color:var(--teal);font-size:13px;min-width:64px;padding-top:2px}
+.step p{color:#c9d7e2;font-size:14.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.box h3{font-size:15px;margin-bottom:10px;color:var(--teal2);font-family:var(--mono)}
+.box ul{list-style:none}
+.box li{padding:5px 0;font-size:14px;color:#c9d7e2;border-bottom:1px dashed rgba(255,255,255,.05)}
+.ok{color:var(--teal)} .no{color:var(--amber)}
+.warn{border:1px solid #4d3a12;background:#1a1408;border-radius:14px;padding:14px 18px;font-size:13.5px;color:#e8d5a8;margin-top:26px}
+footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:var(--mono)}
+kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <div class="logo">S·15</div>
+  <div><b>СИНГУЛЯР RUVSON</b><span>офлайн-вселенная караоке · читай отчёт — начинай действовать</span></div>
+  <div class="badge">v1.7 · PWA · офлайн</div>
+</div></header>
+
+<main class="wrap">
+  <h1>61 песня. <em>158 языков.</em> Один файл. Ноль интернета.</h1>
+  <p class="lead">Это не плеер — это организм: каталог → тексты → переводы → караоке → хор.
+  Всё вычисляется из данных, ничего не «заявлено». Ниже — что готово прямо сейчас, что проверено
+  тестами и как начать действовать за две минуты.</p>
+
+  <div class="nums">
+    <div class="n"><b>61</b><i>песня канала + флагман ★</i></div>
+    <div class="n"><b>158</b><i>языков (157 YouTube у флагмана)</i></div>
+    <div class="n"><b>24 759</b><i>языковых пар в реестре</i></div>
+    <div class="n"><b>13</b><i>модулей в ОС v1.7</i></div>
+    <div class="n"><b>53/53</b><i>тесты ·15 · ОС 44/44</i></div>
+    <div class="n"><b>0</b><i>внешних сетевых запросов</i></div>
+  </div>
+
+  <h2>Запуск <em>выбери и кликни</em></h2>
+  <div class="cards">
+    <div class="card"><div class="t">ОС v1.7 — всё сразу</div><div class="d">13 модулей: Платформа, Фабрика, Геном, Караоке-студия, Оркестратор… Консоль команд и горячие клавиши.</div><div class="m">40 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_ОС_v17_13_МОДУЛЕЙ.html">▶ открыть</a></div>
+    <div class="card"><div class="t">ОРКЕСТРАТОР ·15</div><div class="d">Реестр 62×13, хор с слово-подсветкой, темп/тональность, микрофон+реверб, аудит, импорт/экспорт LRC/VTT.</div><div class="m">0.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
+    <div class="card"><div class="t">Флагман ×157 голосов</div><div class="d">«Когда теряем» (OutShadow feat RUVSON): реальные тайминги, 157 переводов YouTube, минусовка ДНК.</div><div class="m">15 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">▶ открыть</a></div>
+    <div class="card"><div class="t">ФАБРИКА ·02</div><div class="d">Генерация песен, конвейер, галактика эмерджентности, слушалка с караоке.</div><div class="m">7.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">▶ открыть</a></div>
+  </div>
+
+  <h2>Начать действовать <em>две минуты</em></h2>
+  <div class="step"><div class="k">Шаг 1</div><p>Кликни <b>ОРКЕСТРАТОР ·15</b> — откроется ПУЛЬС с честными числами: 61 песня · 447 дорожек · 158 языков · 24 620 строк. Всё посчитано из данных, не зашито.</p></div>
+  <div class="step"><div class="k">Шаг 2</div><p>Вкладка <b>РЕЕСТР</b>: матрица 62×13. Клик по языку в строке песни → караоке. Пустая ячейка «·» — перевода нет, система не притворяется.</p></div>
+  <div class="step"><div class="k">Шаг 3</div><p>Вкладка <b>ХОР</b>: выбери источник — <code>./minus/&lt;videoId&gt;.mp3</code>, свой файл, память браузера, синтез по генам или репетиция. Жми ▶. <kbd>Пробел</kbd> — пауза, <kbd>↑/↓</kbd> — строки, <kbd>N</kbd> — режим «не смотреть».</p></div>
+  <div class="step"><div class="k">Шаг 4</div><p>Подстрой под голос: <b>темп ×0.5–1.5</b> и <b>тональность ±6 пт</b> (синтез-режим), включи <b>🎤 микрофон</b> с ревербом. Скоринга нет — эталона в минусовке нет, оценивать нечестно.</p></div>
+  <div class="step"><div class="k">Шаг 5</div><p>Установи как приложение: адресная строка → значок «установить» → значок на рабочем столе. Работает офлайн — сервис-воркер <code>sw15.js</code> уже в комплекте.</p></div>
+  <p style="margin-top:14px"><a class="btn ghost" href="ИНСТРУКЦИЯ_СТАРТ.md">Полная инструкция →</a> <a class="btn ghost" href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md">Полный отчёт →</a></p>
+
+  <div class="cols" style="margin-top:36px">
+    <div class="box"><h3>ПРОВЕРЕНО (CLAIM → EVIDENCE)</h3><ul>
+      <li><span class="ok">✓</span> проб минусовок батчами по 12 (не «все 61 залпом»)</li>
+      <li><span class="ok">✓</span> «×157» вычисляется: Object.keys(flag.yt).length</li>
+      <li><span class="ok">✓</span> счётчики 62×13/24 759/158 — из данных</li>
+      <li><span class="ok">✓</span> сбой пака → «РЕЕСТР НЕ ЗАГРУЖЕН» + стоп (не тихий пустой UI)</li>
+      <li><span class="ok">✓</span> ноль innerHTML → DOM-XSS исключён (assert сборки)</li>
+      <li><span class="ok">✓</span> нет fetch/XHR/WebSocket/sendBeacon — офлайн доказан</li>
+      <li><span class="ok">✓</span> валидатор таймлайна бракует мусор ДО сортировки</li>
+    </ul></div>
+    <div class="box"><h3>ЧЕСТНО НЕ СДЕЛАНО</h3><ul>
+      <li><span class="no">○</span> стемы (Demucs в браузере) — заменят репетицию</li>
+      <li><span class="no">○</span> forced alignment — пословные тайминги помечены interp</li>
+      <li><span class="no">○</span> тональность для файлов — нужен AudioWorklet (синтез уже умеет)</li>
+      <li><span class="no">○</span> скоринг пения — только после появления эталона</li>
+      <li><span class="no">○</span> переводы LLM: 228/793 — демон добивает восточные</li>
+      <li><span class="no">○</span> LRCv2 / Background Fetch / MSE — горизонт v1.2+</li>
+    </ul></div>
+  </div>
+
+  <div class="cols" style="margin-top:20px">
+    <div class="box"><h3>ДАННЫЕ И ИНСТРУМЕНТЫ</h3><ul>
+      <li><a href="ДАННЫЕ/RUVSON_каталог_канала_2026-09-30.xlsx">Каталог канала (xlsx)</a> — 61 видео, 10.18 млн просмотров</li>
+      <li><a href="ДАННЫЕ/RUVSON_ТЕКСТЫ_61_песен_srt_lrc_txt.zip">Тексты 61 песни</a> (srt/lrc/txt)</li>
+      <li><a href="ДАННЫЕ/RUVSON_МНОГОЯЗЫЧНЫЙ_КОРПУС_LRC.zip">Многоязычный корпус LRC</a> + <a href="ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md">индекс</a></li>
+      <li><a href="ДАННЫЕ/флагман_157_языков/INDEX.md">157 переводов флагмана</a> (srt/txt)</li>
+      <li><a href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md">RUVSON Grabber</a> — userscript вытягивания с YouTube</li>
+      <li><a href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md">Установщик Windows</a> (bat/ps1)</li>
+      <li><a href="ИНСТРУМЕНТЫ/КАРАОКЕ-ЛАБ/КАК_ЮЗАТЬ_КАРАОКЕ.md">Караоке-ЛАБ v5</a></li>
+    </ul></div>
+    <div class="box"><h3>ДОКУМЕНТЫ</h3><ul>
+      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md">ОТЧЁТ_ПОЛНЫЙ — вся хронология, инвентарь, доказательства</a></li>
+      <li><a href="ИНСТРУКЦИЯ_СТАРТ.md">ИНСТРУКЦИЯ_СТАРТ — начал действовать за 2 минуты</a></li>
+      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md">Трассировка: ревизия ·14 → код → тесты</a></li>
+      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md">Ответ ·15 на ревизию (v1.0)</a></li>
+      <li><a href="ДОКУМЕНТЫ/МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md">Мастер-план 157 языков</a></li>
+      <li><a href="ДОКУМЕНТЫ/СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md">Стратегия v1</a></li>
+      <li><a href="СКРИНШОТЫ/ОРКЕСТРАТОР_15/s15_04_choir.png">Скриншоты-доказательства</a> (3 папки)</li>
+    </ul></div>
+  </div>
+
+  <div class="warn">⚠ Безопасность: в переписке по проекту ранее фигурировали активные cookies
+  (GitHub, Google/YouTube). В поставку и коммиты они не входили. Рекомендуется ротация всех
+  сессий (выйти и войти заново).</div>
+
+  <footer>СИНГУЛЯР · RUVSON · сборка v1.7 от 2026-10-02 · офлайн-first, accessibility-first, provenance-first<br>
+  github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
+</main>
+<script>
+/* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+</body>
+</html>
