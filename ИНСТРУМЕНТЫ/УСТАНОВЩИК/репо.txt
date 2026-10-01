@@ -1,0 +1,4 @@
+﻿# RUVSON :: откуда тянуть обновления установщика
+# Первая не-# строка = база raw-ссылок (использует ПОДТЯНУТЬ_С_GITHUB.bat)
+# Внимание: репа должна быть ПУБЛИЧНОЙ (private отдаёт 404 для raw)
+https://raw.githubusercontent.com/rtynbirf/cell65-host/main/
