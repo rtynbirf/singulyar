@@ -1,0 +1,29 @@
+# ============================================================
+# ПРОФИЛЬ 4 · ТЕКСТ/ДОКУМЕНТЫ — docx, xlsx, pdf, OCR, перевод
+# Из категорий «Документы и OCR» и «Обработка текста» каталога.
+# ============================================================
+
+# офисные документы
+pip:python-docx
+pip:openpyxl
+
+# PDF: создание, чтение, склейка, разбор
+pip:reportlab
+pip:pypdf
+pip:pymupdf
+pip:pdfplumber
+
+# веб-текст и разметка
+pip:beautifulsoup4
+pip:lxml
+pip:markdown
+
+# OCR — распознавание текста с картинок (Tesseract ставится программой ниже)
+pip:pytesseract
+winget:UB-Mannheim.TesseractOCR
+
+# офлайн-нейронный перевод на десятки языков (в духе 157 языков грабера =)
+pip:argostranslate
+
+# pandoc — конвертер между Markdown/HTML/DOCX/PDF/LaTeX и т.д.
+winget:JohnMacFarlane.Pandoc
