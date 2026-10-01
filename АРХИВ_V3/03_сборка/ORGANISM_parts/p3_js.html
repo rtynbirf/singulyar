@@ -1,0 +1,209 @@
+<script>
+"use strict";
+/* ============ ORGANISM v0.9 · живой прототип ============ */
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const rnd=(a=1,b)=>b===undefined?Math.random()*a:a+Math.random()*(b-a);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- ГЕНОМ ---------- */
+const GENOME={
+  hue:{v:168,min:0,max:360,drift:26,label:"тон"},
+  hue2:{v:288,min:0,max:360,drift:34,label:"резонанс"},
+  entropy:{v:.42,min:.08,max:.92,drift:.1,label:"энтропия"},
+  density:{v:64,min:28,max:150,drift:18,label:"плотность",int:true},
+  speed:{v:.8,min:.35,max:1.6,drift:.22,label:"темп"},
+  link:{v:.55,min:.25,max:.8,drift:.12,label:"связность"},
+  form:{v:.35,min:0,max:1,drift:.3,label:"форма"}
+};
+const DEFAULTS=JSON.parse(JSON.stringify(GENOME));
+let generation=1;
+
+function applyGenome(){
+  const r=document.documentElement.style;
+  r.setProperty("--hue",GENOME.hue.v.toFixed(1));
+  r.setProperty("--hue2",GENOME.hue2.v.toFixed(1));
+  r.setProperty("--radius",(6+GENOME.form.v*26).toFixed(1)+"px");
+  $("#g-hue").style.background=`hsl(${GENOME.hue.v} 90% 60%)`;
+  const ent=$("#g-ent");
+  ent.style.width=(GENOME.entropy.v*100).toFixed(0)+"%";
+  ent.style.background=`hsl(${GENOME.hue2.v} 90% 60%)`;
+  $("#g-den").textContent=Math.round(GENOME.density.v);
+  $("#g-gen").textContent="П"+generation;
+  document.title=`ORGANISM — живой прототип · поколение ${generation}`;
+  $$(".gene").forEach(g=>{
+    const s=GENOME[g.dataset.gene];
+    $(".bar i",g).style.width=(((s.v-s.min)/(s.max-s.min))*100).toFixed(1)+"%";
+    $(".val",g).textContent=s.int?Math.round(s.v):s.v.toFixed(2);
+  });
+}
+
+const POOL=[
+  "дрейф тона: колония сместилась к новому спектру",
+  "всплеск энтропии: сетка перестроила связи",
+  "плотность изменилась — организм дышит иначе",
+  "резонанс захватил соседний спектр",
+  "мутация формы: геометрия поверхности обновлена",
+  "темп жизни изменён, поток ускорился",
+  "найден локальный порядок: связи укоротились",
+  "шум среды усилился, геном адаптируется",
+  "наблюдение зафиксировано: паттерн признан устойчивым"
+];
+
+function log(msg,hl){
+  const box=$("#log");
+  const line=document.createElement("div");
+  line.className="log-line"+(hl?" hl":"");
+  const t=new Date().toLocaleTimeString("ru-RU",{hour12:false});
+  line.innerHTML=`<span>${t}</span>${msg}`;
+  box.prepend(line);
+  while(box.children.length>34)box.lastChild.remove();
+}
+
+function mutate(reason){
+  const keys=Object.keys(GENOME);
+  const n=1+(Math.random()<GENOME.entropy.v?1:0);
+  for(let i=0;i<n;i++){
+    const s=GENOME[pick(keys)];
+    s.v=clamp(s.v+rnd(-s.drift,s.drift),s.min,s.max);
+    if(s.int)s.v=Math.round(s.v);
+  }
+  generation++;
+  applyGenome();syncFlock();
+  log((reason||pick(POOL))+` → поколение ${generation}`,true);
+}
+
+/* ---------- ПОЛЕ · эмерджентная колония ---------- */
+const cv=$("#field"),cx=cv.getContext("2d");
+let W=0,H=0,parts=[],mouse={x:-9e3,y:-9e3};
+function resize(){
+  const dpr=Math.min(2,devicePixelRatio||1);
+  W=innerWidth;H=innerHeight;
+  cv.width=W*dpr;cv.height=H*dpr;
+  cx.setTransform(dpr,0,0,dpr,0,0);
+}
+const spawn=()=>({x:rnd(W),y:rnd(H),vx:rnd(-.6,.6),vy:rnd(-.6,.6)});
+function syncFlock(){
+  const t=Math.round(GENOME.density.v);
+  while(parts.length<t)parts.push(spawn());
+  if(parts.length>t)parts.length=t;
+}
+let last=performance.now();
+function step(now){
+  const dt=Math.min(50,now-last)/16.7;last=now;
+  const sp=GENOME.speed.v,linkD=88+GENOME.link.v*74;
+  cx.clearRect(0,0,W,H);
+  const hue=GENOME.hue.v,hue2=GENOME.hue2.v;
+  for(const p of parts){
+    p.vx+=Math.sin((p.y+now*.02)/140)*.012*dt;
+    p.vy+=Math.cos((p.x+now*.02)/160)*.012*dt;
+    const dx=mouse.x-p.x,dy=mouse.y-p.y,d2=dx*dx+dy*dy;
+    if(d2<32400){const d=Math.sqrt(d2)||1,f=(180-d)/180*.05*sp;
+      p.vx+=dx/d*f*dt;p.vy+=dy/d*f*dt;}
+    p.vx*=.995;p.vy*=.995;
+    p.x+=p.vx*sp*dt*1.4;p.y+=p.vy*sp*dt*1.4;
+    if(p.x<-20)p.x=W+20;if(p.x>W+20)p.x=-20;
+    if(p.y<-20)p.y=H+20;if(p.y>H+20)p.y=-20;
+  }
+  cx.lineWidth=1;
+  for(let i=0;i<parts.length;i++){
+    const a=parts[i];
+    for(let j=i+1;j<parts.length;j++){
+      const b=parts[j],dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy;
+      if(d2<linkD*linkD){
+        const t=1-Math.sqrt(d2)/linkD;
+        cx.strokeStyle=`hsla(${(hue+(hue2-hue)*t+360)%360} 90% 62% / ${(t*.3).toFixed(3)})`;
+        cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();
+      }
+    }
+  }
+  cx.fillStyle=`hsla(${hue} 90% 70% / .85)`;
+  for(const p of parts){cx.beginPath();cx.arc(p.x,p.y,1.6,0,7);cx.fill();}
+  requestAnimationFrame(step);
+}
+
+/* ---------- ВЗАИМОДЕЙСТВИЯ ---------- */
+addEventListener("resize",resize);
+addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+addEventListener("pointerdown",e=>{
+  if(e.target.closest("a,button,input,summary"))return;
+  for(const p of parts){
+    const dx=p.x-e.clientX,dy=p.y-e.clientY,d=Math.hypot(dx,dy)||1;
+    if(d<240){const f=(240-d)/240*3;p.vx+=dx/d*f;p.vy+=dy/d*f;}
+  }
+  log("импульс среды: колония получила энергию");
+});
+addEventListener("keydown",e=>{
+  if(["m","M","ь","Ь","м","М"].includes(e.key)&&!e.metaKey&&!e.ctrlKey&&!e.altKey)
+    mutate("ручная мутация");
+});
+$("#btn-mutate").addEventListener("click",()=>mutate("ручная мутация"));
+$("#btn-mutate-top").addEventListener("click",()=>mutate("ручная мутация"));
+$("#btn-resonance").addEventListener("click",()=>{
+  GENOME.hue2.v=(GENOME.hue.v+rnd(80,190))%360;
+  applyGenome();log("резонанс настроен: дополнительный спектр захвачен",true);
+});
+$("#btn-stabilize").addEventListener("click",()=>{
+  GENOME.entropy.v=clamp(GENOME.entropy.v*.55,GENOME.entropy.min,GENOME.entropy.max);
+  GENOME.speed.v=clamp(GENOME.speed.v*.8,GENOME.speed.min,GENOME.speed.max);
+  applyGenome();log("стабилизация: энтропия снижена, среда успокаивается",true);
+});
+$("#btn-reset").addEventListener("click",()=>{
+  for(const k in GENOME)GENOME[k].v=DEFAULTS[k].v;
+  applyGenome();syncFlock();
+  log("геном откачен к исходной версии · поколение сохранено",true);
+});
+
+/* ---------- ПУЛЬС ЖИЗНИ ---------- */
+const tick=()=>{$("#clock").textContent=new Date().toLocaleTimeString("ru-RU",{hour12:false});};
+tick();setInterval(tick,1000);
+setInterval(()=>mutate(),12000); /* автономная мутация каждые 12 секунд */
+
+/* ---------- ПЕЧАТАЮЩАЯ СТРОКА ---------- */
+const PHRASES=[
+  "инициализация генома… ок",
+  "наблюдается эмерджентность: паттерны возникают без команды",
+  "инженерный слой стабилен: 1 файл · 0 зависимостей",
+  "среда адаптируется к наблюдателю",
+  "прогноз: интерфейс соберёт себя под задачу",
+  "следующая мутация запланирована через 12 секунд"
+];
+let pi=0,ci=0,del=false;
+function typeLoop(){
+  const el=$("#type"),p=PHRASES[pi];
+  el.textContent=del?p.slice(0,ci--):p.slice(0,ci++);
+  let wait=del?16:32;
+  if(!del&&ci>p.length){del=true;wait=2300;}
+  else if(del&&ci<0){del=false;pi=(pi+1)%PHRASES.length;wait=320;}
+  setTimeout(typeLoop,wait);
+}
+
+/* ---------- ПОЯВЛЕНИЕ СЕКЦИЙ ---------- */
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){
+    en.target.classList.add("in");
+    $$(".prog i",en.target).forEach(b=>b.style.width=b.dataset.w+"%");
+    io.unobserve(en.target);
+  }
+}),{threshold:.12});
+$$("[data-rv]").forEach(el=>io.observe(el));
+
+/* ---------- ЗАПУСК ---------- */
+resize();
+applyGenome();
+syncFlock();
+if(REDUCED){
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle=`hsla(${GENOME.hue.v} 90% 70% / .85)`;
+  for(const p of parts){cx.beginPath();cx.arc(p.x,p.y,1.6,0,7);cx.fill();}
+  $("#type").textContent=PHRASES[0];
+}else{
+  requestAnimationFrame(step);
+  typeLoop();
+}
+log("генома собран: старт поколения 1",true);
+</script>
+</body>
+</html>

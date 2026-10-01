@@ -1,0 +1,135 @@
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <a class="brand" href="javascript:void(0)">СИНГУЛЯР·02 <span>· резонанс</span><span class="ver">ОРГАНИЗМ</span></a>
+  <span class="counter" id="counter" role="status" aria-live="polite">1 песня · 157 голосов</span>
+  <div class="grow"></div>
+  <button class="tbtn dna" id="btnDna" title="ДНК-самотест ядра (файл знает сам себя)"><span class="led" aria-hidden="true"></span>ДНК…</button>
+  <button class="tbtn" id="btnPlan" title="Генеральный план организма (P)">план</button>
+  <button class="tbtn" id="btnLangs" title="157 голосов (G)">голоса</button>
+  <button class="tbtn" id="btnTasks" title="Все файлы задачи · менеджер загрузки (T)">task files</button>
+  <button class="tbtn" id="btnMotion" aria-pressed="true" title="Движение (M)">motion</button>
+  <button class="tbtn" id="btnHelp" title="Что это">?</button>
+</header>
+<p class="back-hint">клик по кубу — рассыпать на голоса · клик по узлу — язык · R — резонанс строки · P — план</p>
+
+<main class="stage">
+  <div class="cube-wrap" id="cubeWrap" role="button" tabindex="0" aria-label="Куб. Нажмите — рассыплется на 157 голосов">
+    <div class="cube">
+      <div class="face f-front"></div><div class="face f-back"></div>
+      <div class="face f-right"></div><div class="face f-left"></div>
+      <div class="face f-top"></div><div class="face f-bottom"></div>
+    </div>
+  </div>
+  <p class="hint">куб · нажми, чтобы рассыпать на голоса</p>
+
+  <div class="wheel" id="wheel" aria-hidden="false">
+    <div class="wheel-inner">
+      <div class="wheel-rotator" id="rotator">
+        <svg id="web" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </div>
+      <div class="ghost" aria-hidden="true"></div>
+      <div class="axis" id="axis" role="button" tabindex="0" aria-label="Ось: играть или пауза"><b>▶ ОСЬ</b></div>
+    </div>
+  </div>
+</main>
+
+<div class="songs" id="songs" role="list" aria-label="Песни: одна живая, остальные заглушки"></div>
+
+<p class="legend"><b>I–V</b> пять кругов голосов · <b>157</b> языков · одна правда ·
+спицы света — услышанные голоса · <b>R</b> — резонанс строки ·
+<b>целое знает части, часть знает целое</b></p>
+
+<aside class="panel" id="panel" role="dialog" aria-label="Караоке" inert>
+  <div class="p-head">
+    <span class="p-chip"><span class="lc" id="lc">RU·ORIG</span><span class="ln" id="ln"></span></span>
+    <span class="p-title">Когда теряем</span>
+    <span class="p-artist">OutShadow feat RUVSON · 3:51</span>
+    <span class="p-note">тексты — ASR-черновики (автоперевод); смысловая редактура — Фаза 5</span>
+  </div>
+  <div class="transport">
+    <button class="bt" id="btnPlay" aria-pressed="false" aria-label="Играть или пауза"><span id="icoplay">▶</span></button>
+    <span class="timecode" id="tc">0:00 / 3:51</span>
+    <div class="rail" id="rail" role="slider" aria-label="Позиция" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+      <div class="tr"><div class="fill" id="fill"></div><div class="head" id="head"></div></div>
+    </div>
+  </div>
+  <div class="kwrap">
+    <div class="kstage" id="kstage" dir="ltr"><div class="kstack" id="kstack"></div></div>
+  </div>
+  <div class="res" id="res" aria-label="Резонанс: одна строка в шести голосах">
+    <div class="res-head"><span class="rdot" aria-hidden="true"></span>резонанс · одна строка — шесть голосов · одна правда</div>
+    <div id="resRows"></div>
+  </div>
+  <div class="p-actions">
+    <button class="ab" id="prev" aria-label="Предыдущий язык">← язык</button>
+    <button class="ab" id="next" aria-label="Следующий язык">язык →</button>
+    <button class="ab" id="btnRes" aria-pressed="false" aria-label="Резонанс строки в шести голосах (R)">резонанс</button>
+    <button class="ab" id="btnLangs2" onclick="document.getElementById('btnLangs').click()" aria-label="Все 157 голосов">157 голосов</button>
+    <button class="ab" id="btnFull" aria-pressed="false" aria-label="Весь текст">весь текст</button>
+    <button class="ab" id="btnLrc" aria-label="Скачать LRC текущего языка">LRC ⬇</button>
+    <span class="spacer"></span>
+    <span class="shift">сдвиг <input type="range" id="shift" min="-600" max="600" step="10" value="0" aria-label="Сдвиг таймингов мс"/><b id="shiftV">0</b>мс</span>
+    <button class="ab" id="btnClose" aria-label="Закрыть">✕</button>
+  </div>
+  <span class="sr-only" id="live" aria-live="polite"></span>
+</aside>
+
+<div class="gridview" id="gridView" aria-hidden="true" role="dialog" aria-label="Все 157 голосов">
+  <div class="gt">
+    <input id="search" type="search" autocomplete="off" placeholder="найди свой язык: 日本語, Suaheli, Svenska…"/>
+    <span class="found" id="found">157 / 157</span>
+    <button class="tbtn" id="gridClose">закрыть ✕</button>
+  </div>
+  <div class="grid" id="grid" role="list"></div>
+</div>
+
+<div class="planview" id="planView" aria-hidden="true" role="dialog" aria-label="Генеральный план организма">
+  <div class="pt">
+    <h2>ГЕНЕРАЛЬНЫЙ ПЛАН <span>· организм СИНГУЛЯР</span></h2>
+    <span class="ptmeta" id="planMeta">v2.0 · 2026-10-01</span>
+    <span class="grow"></span>
+    <button class="tbtn" id="planDl">план ⬇ .md</button>
+    <button class="tbtn" id="planClose">закрыть ✕</button>
+  </div>
+  <div class="pscroll" id="planScroll" role="list"></div>
+</div>
+
+<div class="tasksview" id="tasksView" aria-hidden="true" role="dialog" aria-label="Менеджер загрузки · все файлы задачи">
+  <div class="tt">
+    <h2>TASK FILES <span>· все файлы задачи</span></h2>
+    <input id="taskSearch" type="search" autocomplete="off" placeholder="фильтр: srt, grabber, караоке, план…"/>
+    <span class="tmeta" id="taskFound">—</span>
+    <button class="tbtn" id="taskClose">закрыть ✕</button>
+  </div>
+  <div class="tscroll" id="taskScroll" role="list"></div>
+  <p class="tlegend" id="taskLegend"></p>
+</div>
+
+<dialog class="help" id="help">
+  <h2>СИНГУЛЯР·02 — что это</h2>
+  <p><b>Одна песня. 157 голосов. Одна правда.</b> Эволюция прототипа СИНГУЛЯР·01: организм,
+  который знает себя, помнит услышанное и связывает голоса в резонанс.</p>
+  <ul>
+    <li><b>Куб</b> — точка входа: клик — рассыпается в Колесо 157 голосов (5 кругов).</li>
+    <li><b>Узел</b> — язык: клик открывает караоке с синхронным текстом (тайминги из SRT).
+    Услышанные узлы вспыхивают и соединяются <b>спицами света</b> — созвездие растёт.</li>
+    <li><b>Караоке:</b> строка светится по словам (вес слова + правило первого слова), spring-скролл,
+    интерлюдии дышат. <kbd>↑</kbd><kbd>↓</kbd> — сдвиг таймингов ±50 мс. <b>LRC ⬇</b> — синхрон текущего языка.</li>
+    <li><b>РЕЗОНАНС (клавиша R):</b> одна строка — шесть голосов одновременно. Таймкоды общие,
+    поэтому «одна правда» становится видимой: русский оригинал и переводы поют вместе.</li>
+    <li><b>ПУЛЬС:</b> организм помнит услышанное (N/157, прогресс сингулярности) — в счётчике сверху.</li>
+    <li><b>ПЛАН (клавиша P):</b> генеральный план фаз 0–7 вшит в файл и качается офлайн.</li>
+    <li><b>ДНК:</b> при загрузке файл проверяет сам себя — 9 проверок ядра (целое знает части).</li>
+    <li><b>Task files (клавиша T):</b> ВСЕ файлы проекта с ролями; готовые — кнопка <b>⬇</b>, офлайн.</li>
+    <li><b>Честность:</b> тексты — черновики автоперевода; смысловая редактура — Фаза 5.</li>
+    <li><b>Автономность:</b> один файл, ноль внешних запросов, работает офлайн; аудио вшито (AAC).</li>
+  </ul>
+  <p>Горячие клавиши: <kbd>Space</kbd> играть · <kbd>←</kbd><kbd>→</kbd> язык · <kbd>↑</kbd><kbd>↓</kbd> сдвиг ·
+  <kbd>R</kbd> резонанс · <kbd>G</kbd> голоса · <kbd>P</kbd> план · <kbd>T</kbd> файлы · <kbd>Esc</kbd> назад.
+  «Уменьшить движение» уважается.</p>
+  <div class="close-row"><button class="tbtn" id="helpClose">понятно</button></div>
+</dialog>
+

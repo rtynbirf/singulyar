@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#000"/>
+<meta name="description" content="СИНГУЛЯР·02 ФАБРИКА — офлайн-платформа RUVSON: караоке-плеер с ТЭП-скорингом, движок материи на 4 формы и 6 палитр, capability graph. 157 голосов — одна правда."/>
+<title>СИНГУЛЯР·02 «ФАБРИКА» — эмерджентная архитектура 2030</title>
+<style>
+:root{
+  --coal:#000; --bg:#070605; --surf:#0d0b09; --surf2:#141110;
+  --edge:#221e1b; --edge2:#2e2823;
+  --skin:#e8e4df; --ash:#98918a; --mute:#6e6862; --dim:rgba(232,228,223,.34);
+  --ember:#ffab40; --ember2:#c45c26; --glow:rgba(255,171,64,.55); --glow2:rgba(255,171,64,.18);
+  --fd:"Unbounded","Manrope",system-ui,sans-serif;
+  --fb:"Manrope","Golos Text",system-ui,sans-serif;
+  --fm:"JetBrains Mono","SF Mono",monospace;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --nav-w:212px; --top-h:56px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--coal);color:var(--skin);font-family:var(--fb);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--edge2);border-radius:6px}
+::-webkit-scrollbar-track{background:transparent}
+
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:block}
+#app{position:fixed;inset:0;z-index:5;display:grid;
+  grid-template:"top" var(--top-h) "main" 1fr / 1fr}
+#app.isolated{isolation:isolate}
+
+/* topbar */
+.topbar{grid-area:top;position:relative;z-index:70;display:flex;align-items:center;gap:.6rem;
+  padding:calc(.35rem + var(--sat)) 1rem .35rem;border-bottom:1px solid var(--edge);
+  background:linear-gradient(180deg,rgba(7,6,5,.96),rgba(7,6,5,.86))}
+.brand{display:flex;align-items:baseline;gap:.45rem;font-family:var(--fd);font-weight:700;font-size:.88rem;letter-spacing:.05em;white-space:nowrap;cursor:pointer}
+.brand .sub{color:var(--ash);font-weight:400;font-size:.64rem}
+.brand .ver{color:var(--ember);font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;border:1px solid var(--glow);border-radius:5px;padding:.12rem .4rem}
+.spacer{flex:1}
+.tbtn{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);border:1px solid var(--edge);border-radius:999px;padding:.34rem .7rem;transition:.18s;white-space:nowrap}
+.tbtn:hover{color:var(--ember);border-color:var(--glow)}
+.tbtn.on{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
+
+/* sidenav */
+.sidenav{position:fixed;top:var(--top-h);left:0;bottom:0;width:var(--nav-w);z-index:40;display:flex;flex-direction:column;gap:.15rem;padding:1rem .65rem;border-right:1px solid var(--edge);background:rgba(5,4,3,.72);overflow-y:auto}
+.snav{display:flex;align-items:center;gap:.7rem;padding:.55rem .75rem;border-radius:10px;color:var(--ash);font-size:.84rem;transition:.15s;text-align:left;width:100%}
+.snav .ic{width:1.15rem;text-align:center;font-size:.95rem}
+.snav:hover{color:var(--skin);background:rgba(255,255,255,.04)}
+.snav.on{color:var(--ember);background:linear-gradient(90deg,var(--glow2),transparent);box-shadow:inset 2px 0 0 var(--ember)}
+.snav .cnt{margin-left:auto;font-family:var(--fm);font-size:.56rem;color:var(--mute)}
+.snav-sep{font-family:var(--fm);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);padding:.85rem .75rem .3rem}
+.mini-stat{margin-top:auto;padding:.7rem;border:1px solid var(--edge);border-radius:10px;font-family:var(--fm);font-size:.54rem;color:var(--mute);line-height:1.7;letter-spacing:.04em}
+.mini-stat b{color:var(--ember);font-weight:400}
+
+/* main */
+.main{grid-area:main;overflow-y:auto;overflow-x:hidden;position:relative;z-index:10;padding-bottom:calc(96px + var(--sab))}
+@media(min-width:821px){.main{padding-left:var(--nav-w)}}
+.view{display:none;animation:vin .35s ease}
+.view.on{display:block}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* tabbar mobile */
+.tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:65;grid-auto-flow:column;
+  padding:.35rem .5rem calc(.35rem + var(--sab));gap:.2rem;border-top:1px solid var(--edge);
+  background:rgba(5,4,3,.96);backdrop-filter:blur(12px)}
+.tab{display:grid;justify-items:center;gap:.15rem;padding:.35rem .2rem;border-radius:10px;color:var(--mute);font-family:var(--fm);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase}
+.tab .ic{font-size:1.05rem;line-height:1}
+.tab.on{color:var(--ember)}
+
+/* home */
+.hero{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:1rem;align-items:center;padding:2rem clamp(1rem,4vw,3rem) 1.2rem;min-height:min(52vh,420px);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-30% -10% auto auto;width:70%;aspect-ratio:1;background:radial-gradient(circle,var(--glow2),transparent 65%);pointer-events:none}
+.hero-txt{position:relative;z-index:2;display:flex;flex-direction:column;gap:.8rem}
+.kicker{font-family:var(--fm);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ember)}
+.hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(1.4rem,3.4vw,2.3rem);line-height:1.15}
+.hero h1 em{font-style:normal;color:var(--ember)}
+.lede{color:var(--ash);font-size:.9rem;line-height:1.65;max-width:34rem}
+.hero-cta{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.3rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.72rem 1.15rem;transition:.2s;border:1px solid transparent}
+.btn.primary{background:var(--ember);color:#120a02;font-weight:700;box-shadow:0 6px 26px var(--glow2)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 34px var(--glow)}
+.btn.ghost{border-color:var(--edge2);color:var(--skin)}
+.btn.ghost:hover{border-color:var(--ember);color:var(--ember)}
+.stats{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.3rem}
+.stat{font-family:var(--fm);font-size:.58rem;letter-spacing:.06em;color:var(--ash);border:1px solid var(--edge);border-radius:8px;padding:.32rem .58rem}
+.stat b{color:var(--ember);font-weight:400}
+
+.feat{display:grid;grid-template-columns:minmax(220px,380px) 1fr;gap:1.1rem;align-items:center;margin:0 clamp(1rem,4vw,3rem);border:1px solid var(--glow);border-radius:16px;padding:1rem;background:linear-gradient(120deg,rgba(255,171,64,.06),rgba(10,8,6,.6) 55%);box-shadow:0 0 60px var(--glow2)}
+.feat .art{aspect-ratio:16/9;border-radius:10px;background:radial-gradient(circle at 30% 30%,#2a1a08,#0a0806);display:grid;place-items:center;font-size:2rem;color:var(--ember2)}
+.feat .info{display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.feat .info h3{font-family:var(--fd);font-size:clamp(1rem,2.2vw,1.45rem)}
+.feat .info .sub{color:var(--ash);font-size:.8rem;line-height:1.6}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.chip{font-family:var(--fm);font-size:.56rem;letter-spacing:.08em;border:1px solid var(--edge2);border-radius:999px;padding:.28rem .6rem;color:var(--ash)}
+.chip.emb{color:var(--ember);border-color:var(--glow)}
+
+.rowhead{display:flex;align-items:baseline;gap:.6rem;padding:1rem clamp(1rem,4vw,3rem) .5rem}
+.rowhead h2{font-family:var(--fd);font-size:.95rem}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(180px,200px);gap:.6rem;overflow-x:auto;padding:.2rem clamp(1rem,4vw,3rem) .6rem;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.card{display:flex;flex-direction:column;gap:.4rem;text-align:left;border:1px solid var(--edge);border-radius:12px;background:linear-gradient(160deg,var(--surf2),var(--surf));padding:.55rem;transition:.18s;cursor:pointer}
+.card:hover{border-color:var(--glow);transform:translateY(-3px)}
+.card .thumb{aspect-ratio:16/9;border-radius:8px;background:radial-gradient(120% 150% at 20% 0%,#241609 0%,#0a0806 58%);display:grid;place-items:center;font-size:1.4rem;color:var(--ember2)}
+.card.live .thumb{background:radial-gradient(120% 150% at 20% 0%,#2c1c0a 0%,#0c0805 60%);color:var(--ember);box-shadow:inset 0 0 40px rgba(255,171,64,.12)}
+.card .tt{font-size:.76rem;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.1em}
+.card .meta{font-family:var(--fm);font-size:.54rem;color:var(--mute);display:flex;gap:.4rem}
+
+/* catalog */
+.cathead{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;padding:1.1rem clamp(1rem,4vw,3rem) .5rem}
+.cathead h2{font-family:var(--fd);font-size:1.05rem}
+.cathead .cnt{font-family:var(--fm);font-size:.58rem;color:var(--mute)}
+.filters{display:flex;gap:.35rem;flex-wrap:wrap;padding:.2rem clamp(1rem,4vw,3rem) .7rem}
+.fchip{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--edge);border-radius:999px;padding:.32rem .7rem;color:var(--ash);transition:.15s}
+.fchip:hover{color:var(--skin)}
+.fchip.on{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem;padding:.2rem clamp(1rem,4vw,3rem) 1.2rem}
+
+/* langs */
+.langs-view{display:none}
+.langs-view.on{display:block}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.4rem;padding:.4rem clamp(1rem,4vw,3rem) 1.2rem}
+.gi{display:flex;flex-direction:column;gap:.1rem;border:1px solid var(--edge);border-radius:9px;padding:.5rem .65rem;text-align:left;transition:.15s;background:rgba(14,11,8,.6);cursor:pointer}
+.gi:hover{border-color:var(--glow)}
+.gi.cur{border-color:var(--ember);box-shadow:0 0 14px var(--glow2)}
+.gi b{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gi span{font-family:var(--fm);font-size:.54rem;color:var(--ash)}
+
+/* files */
+.files-view{display:none}
+.files-view.on{display:block}
+.ft{display:flex;gap:.7rem;align-items:center;padding:1.1rem clamp(1rem,4vw,3rem) .6rem;flex-wrap:wrap}
+.ft h2{font-family:var(--fd);font-size:.95rem;color:var(--ember)}
+.ft h2 span{color:var(--ash);font-weight:400;font-size:.62rem;letter-spacing:.1em}
+.ft input{flex:1;min-width:150px;background:var(--surf);border:1px solid var(--edge);color:var(--skin);border-radius:10px;padding:.5rem .85rem;font-size:.82rem;outline:none}
+.ft input:focus{border-color:var(--ember)}
+.trow{display:flex;flex-direction:column;gap:.1rem;border:1px solid var(--edge);border-radius:10px;background:rgba(14,11,8,.6);padding:.45rem .7rem;margin:0 clamp(1rem,4vw,3rem) .3rem;transition:border-color .15s}
+.trow:hover{border-color:var(--glow)}
+.trow .r1{display:flex;align-items:center;gap:.55rem}
+.trow .dot{width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 8px var(--glow);flex:0 0 auto}
+.trow .nm{font-family:var(--fm);font-size:.68rem;word-break:break-word;min-width:0}
+.trow .sz{margin-left:auto;font-family:var(--fm);font-size:.56rem;color:var(--ash);flex:0 0 auto}
+.trow .rl{font-size:.62rem;color:var(--mute);padding-left:1.05rem;line-height:1.5}
+
+/* mini */
+.mini{position:fixed;left:.75rem;right:.75rem;bottom:calc(3.6rem + var(--sab));z-index:55;display:none;align-items:center;gap:.65rem;padding:.5rem .7rem;border:1px solid var(--edge2);border-radius:14px;background:rgba(13,11,9,.96);backdrop-filter:blur(14px);box-shadow:0 10px 34px rgba(0,0,0,.55);cursor:pointer;transition:.2s}
+.mini.show{display:flex}
+@media(min-width:821px){.mini{left:calc(var(--nav-w) + .75rem);bottom:.9rem;max-width:620px}}
+.mini:hover{border-color:var(--glow)}
+.mini .cv{width:40px;height:40px;border-radius:8px;background:radial-gradient(circle at 30% 30%,#2a1a08,#0a0806);display:grid;place-items:center;font-size:1rem;color:var(--ember2);flex:0 0 auto}
+.mini .mt{min-width:0;display:flex;flex-direction:column;gap:.1rem;flex:1}
+.mini .mt b{font-size:.76rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .mt span{font-family:var(--fm);font-size:.54rem;color:var(--ash)}
+.mini .mb button{width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;border:1px solid var(--ember);color:#000;background:var(--ember);font-size:.72rem}
+.mini .prog{position:absolute;left:.7rem;right:.7rem;bottom:-1px;height:2px;border-radius:2px;background:var(--edge);overflow:hidden}
+.mini .prog i{display:block;height:100%;width:0;background:var(--ember)}
+
+/* player */
+.player{position:fixed;inset:0;z-index:72;background:radial-gradient(120vmax 90vmax at 50% -10%,#171006 0%,#000 60%);display:flex;flex-direction:column;transform:translateY(103%);transition:transform .5s cubic-bezier(.6,0,.25,1)}
+.player.open{transform:translateY(0)}
+.pl-top{display:flex;align-items:center;gap:.55rem;padding:calc(.5rem + var(--sat)) 1rem .5rem;border-bottom:1px solid var(--edge)}
+.pl-top .pl-title{font-family:var(--fd);font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-top .pl-sub{font-family:var(--fm);font-size:.54rem;color:var(--ash)}
+.iconb{width:2rem;height:2rem;border-radius:50%;border:1px solid var(--edge);color:var(--ash);display:grid;place-items:center;font-size:.85rem;transition:.15s;flex:0 0 auto}
+.iconb:hover{color:var(--ember);border-color:var(--glow)}
+.iconb.on{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
+
+.scorebar{display:none;align-items:center;gap:.7rem;padding:.4rem 1rem;font-family:var(--fm);font-size:.6rem;color:var(--ash);border-bottom:1px solid var(--edge);flex-wrap:wrap}
+.scorebar.show{display:flex}
+.scorebar .sc{color:var(--ember);font-size:.85rem;min-width:5.5ch}
+.scorebar .combo{color:var(--ember)}
+.scorebar input{width:70px;accent-color:var(--ember)}
+
+.kwrap{flex:1;position:relative;overflow:hidden;min-height:0}
+.kstage{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding:0 clamp(1rem,4vw,2.5rem);
+  mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);
+  -webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
+.kstage::-webkit-scrollbar{display:none}
+.kstack{display:flex;flex-direction:column;gap:.4rem;padding:38% 0 52%;max-width:880px;margin:0 auto}
+.kl{--wp:0;font-size:clamp(1rem,2.8vh,1.4rem);line-height:1.42;color:var(--dim);cursor:pointer;border-radius:.5rem;padding:.18rem .45rem;transition:color .3s;min-height:1.5em;font-family:var(--fd)}
+.kl:hover{color:var(--ash)}
+.kl.act{color:var(--skin)}
+.kl.past{color:rgba(232,228,223,.16)}
+.kl .w{display:inline-block;transition:color .12s;background-image:linear-gradient(90deg,var(--ember) var(--wp),currentColor var(--wp));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.kl.act .w{color:var(--skin)}
+.kl.act .w.lit{filter:drop-shadow(0 0 12px var(--glow))}
+.kl.past .w,.kl:not(.act) .w{background-image:none;-webkit-text-fill-color:currentColor}
+
+#tapFlash{position:fixed;left:50%;top:24%;transform:translateX(-50%);z-index:80;pointer-events:none;font-family:var(--fd);font-weight:800;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--ember);opacity:0;transition:opacity .3s;text-shadow:0 0 24px var(--glow)}
+.countin{position:absolute;inset:0;display:grid;place-items:center;z-index:5;pointer-events:none;font-family:var(--fd);font-size:clamp(3rem,12vmin,6rem);color:var(--ember);text-shadow:0 0 40px var(--glow);opacity:0;transition:opacity .3s}
+.countin.show{opacity:1}
+
+.transport{display:flex;align-items:center;gap:.7rem;padding:.5rem 1rem .55rem;border-top:1px solid var(--edge)}
+.bt{width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--ember);color:var(--ember);display:grid;place-items:center;font-size:1rem;transition:.2s;flex:0 0 auto}
+.bt:hover{background:var(--glow2);box-shadow:0 0 18px var(--glow)}
+.bt.big{width:3.2rem;height:3.2rem;font-size:1.2rem;background:var(--ember);color:#120a02;font-weight:700}
+.timecode{font-family:var(--fm);font-size:.62rem;color:var(--ash);white-space:nowrap}
+.rail{flex:1;height:20px;display:grid;align-items:center;cursor:pointer}
+.rail .tr{position:relative;height:4px;background:var(--edge);border-radius:2px}
+.rail .fill{position:absolute;inset:0 auto 0 0;background:var(--ember);border-radius:2px;width:0}
+.rail .head{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--ember);transform:translate(-50%,-50%);box-shadow:0 0 10px var(--glow)}
+
+.pl-actions{display:flex;gap:.45rem;align-items:center;padding:.45rem 1rem;border-top:1px solid var(--edge);flex-wrap:wrap}
+.ab{font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;border:1px solid var(--edge);border-radius:8px;padding:.4rem .6rem;color:var(--ash);transition:.18s;white-space:nowrap}
+.ab:hover{color:var(--ember);border-color:var(--glow)}
+.ab[aria-pressed="true"]{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
+.shift{display:flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.58rem;color:var(--mute)}
+.shift input{width:80px;accent-color:var(--ember)}
+.shift b{color:var(--ash);min-width:3.4ch;text-align:right;font-weight:400}
+
+@media(max-width:1120px){.hero{grid-template-columns:1fr;min-height:0;padding-top:1.4rem}}
+@media(max-width:820px){
+  .sidenav{display:none}
+  .tabbar{display:grid}
+  .main{padding-bottom:calc(96px + var(--sab))}
+  .mini{bottom:calc(4.3rem + var(--sab))}
+  .feat{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .brand .sub,.brand .ver{display:none}
+  .catgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   СИНГУЛЯР·02 «ФАБРИКА» — дописка: сцена-бар, фабрика-вид, волны
+   ═══════════════════════════════════════════════════════════════ */
+:root{ --scb-h:44px; }
+
+/* сетка приложения: третья строка под сцену-бар */
+#app{grid-template:"top" var(--top-h) "scbar" var(--scb-h) "main" 1fr / 1fr}
+.sidenav{top:calc(var(--top-h) + var(--scb-h))}
+
+/* ── сцена-бар ── */
+.scbar{grid-area:scbar;position:relative;z-index:65;display:flex;align-items:center;gap:.55rem;
+  padding:.28rem .9rem;border-bottom:1px solid var(--edge);
+  background:linear-gradient(180deg,rgba(9,7,5,.97),rgba(7,6,5,.94));
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.scbar::-webkit-scrollbar{display:none}
+.sc-label{font-family:var(--fm);font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);flex:0 0 auto}
+.sc-div{width:1px;height:1.05rem;background:var(--edge);flex:0 0 auto}
+.seg{display:flex;gap:2px;border:1px solid var(--edge);border-radius:9px;padding:2px;flex:0 0 auto;background:rgba(0,0,0,.35)}
+.segb{font-family:var(--fm);font-size:.57rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ash);
+  border-radius:7px;padding:.26rem .58rem;transition:.15s;white-space:nowrap}
+.segb:hover{color:var(--skin)}
+.segb.on{color:#140a02;background:var(--ember)}
+.pdots{display:flex;gap:.3rem;flex:0 0 auto;align-items:center}
+.pdot{width:.84rem;height:.84rem;border-radius:50%;border:1px solid rgba(255,255,255,.16);transition:.15s;flex:0 0 auto}
+.pdot:hover{transform:scale(1.18)}
+.pdot.on{box-shadow:0 0 0 2px rgba(255,171,64,.9),0 0 12px var(--glow)}
+.sc-hint{font-family:var(--fm);font-size:.52rem;color:var(--mute);letter-spacing:.06em;white-space:nowrap}
+@media(max-width:960px){.sc-hint{display:none}}
+@media(max-width:560px){.sc-label{display:none}.sc-div{display:none}}
+
+/* ── вид «Фабрика» ── */
+.f-demo{border:1px solid var(--glow);border-radius:16px;padding:1rem 1.1rem;
+  background:linear-gradient(120deg,rgba(255,171,64,.06),rgba(10,8,6,.6) 55%)}
+.f-row{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-bottom:.85rem}
+.fbtn{font-family:var(--fm);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;
+  border:1px solid var(--edge2);border-radius:10px;padding:.48rem .8rem;color:var(--skin);
+  background:none;cursor:pointer;transition:.18s}
+.fbtn:hover{border-color:var(--ember);color:var(--ember)}
+.fbtn.primary{background:var(--ember);color:#140a02;border-color:var(--ember);font-weight:700}
+.f-stage{display:grid;grid-template-columns:1fr 1.25fr;gap:.8rem}
+.f-agents{display:grid;gap:.4rem;align-content:start}
+.fagent{display:flex;align-items:center;gap:.55rem;border:1px solid var(--edge);border-radius:10px;
+  padding:.5rem .65rem;background:rgba(14,11,8,.6);transition:.2s}
+.fagent .dot{width:8px;height:8px;border-radius:50%;background:var(--mute);flex:0 0 auto;transition:.15s}
+.fagent.busy .dot{background:var(--ember);box-shadow:0 0 10px var(--glow)}
+.fagent b{font-family:var(--fm);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;font-weight:400}
+.fagent span{font-size:.66rem;color:var(--mute);margin-left:auto;text-align:right}
+.f-pipebox{border:1px solid var(--edge);border-radius:12px;padding:.75rem .85rem;background:rgba(9,7,5,.7);min-height:120px}
+.f-pipebox h4{font-family:var(--fm);font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember2);margin-bottom:.5rem}
+.pipeline{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;min-height:1.8rem}
+.cap{font-family:var(--fm);font-size:.6rem;border:1px solid var(--edge2);border-radius:7px;
+  padding:.3rem .5rem;color:var(--ash);opacity:.25;transition:.25s}
+.cap.active{opacity:1;color:var(--skin);border-color:var(--ember)}
+.cap.verified{opacity:1;color:var(--ember);border-color:var(--ember);background:var(--glow2)}
+.farrow{color:var(--mute);font-size:.68rem}
+.f-log{margin-top:.8rem;border:1px solid var(--edge);border-radius:12px;background:rgba(5,4,3,.8);
+  padding:.65rem .85rem;font-family:var(--fm);font-size:.6rem;line-height:1.9;max-height:180px;overflow-y:auto}
+.fline{color:var(--mute)}
+.fline b{font-weight:400;color:var(--ash)}
+.fline .st{letter-spacing:.1em}
+.st.OBSERVED{color:var(--ok)} .st.TESTED{color:var(--ok)} .st.HYPOTHESIS{color:var(--hyp)}
+.st.REJECTED{color:var(--rej)} .st.VERIFIED{color:var(--ember)}
+
+/* ── три волны ── */
+.waves{display:grid;gap:.6rem}
+.wave{border:1px solid var(--edge);border-radius:14px;padding:.95rem 1.05rem;
+  background:linear-gradient(160deg,var(--surf2),var(--surf));position:relative;overflow:hidden}
+.wave::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ember2)}
+.wave.now::before{background:var(--ember);box-shadow:0 0 14px var(--glow)}
+.wave h3{font-size:.92rem;margin-bottom:.3rem;font-family:var(--fd)}
+.wave .yr{font-family:var(--fm);font-size:.56rem;color:var(--ember);letter-spacing:.16em;text-transform:uppercase}
+.wave p{color:var(--ash);font-size:.82rem;margin-top:.3rem}
+.wave .tag{position:absolute;top:.9rem;right:.9rem;font-family:var(--fm);font-size:.5rem;
+  letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--edge2);border-radius:5px;
+  padding:.14rem .42rem;color:var(--mute)}
+.wave.now .tag{color:var(--ember);border-color:var(--ember)}
+
+/* ── манифест ── */
+.manif{list-style:none;columns:2;column-gap:2rem;font-size:.83rem;color:var(--ash);max-width:60rem}
+.manif li{margin:.42rem 0;break-inside:avoid;padding-left:1.15rem;position:relative}
+.manif li::before{content:"◆";position:absolute;left:0;color:var(--ember2);font-size:.55rem;top:.15rem}
+.manif b{color:var(--skin)}
+@media(max-width:820px){.f-stage{grid-template-columns:1fr}.manif{columns:1}}
+
+/* вспышка имени палитры + счётчик частиц */
+.kl .w{margin-right:.32em}   /* inline-block съедает конечный пробел — компенсируем */
+.palflash{position:fixed;left:50%;bottom:5.2rem;transform:translateX(-50%) translateY(8px);
+  font-family:var(--fm);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ember);background:rgba(9,7,5,.88);border:1px solid var(--glow);border-radius:999px;
+  padding:.42rem .95rem;opacity:0;pointer-events:none;transition:.3s;z-index:95}
+.palflash.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.mono-chip{font-family:var(--fm);font-size:.56rem;letter-spacing:.08em;color:var(--ember);
+  border:1px solid var(--edge2);border-radius:999px;padding:.28rem .6rem;white-space:nowrap}
+
+/* hero: быстрые формы */
+.formquick{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;margin:.7rem 0 .2rem}
+.formquick .lbl{font-family:var(--fm);font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);margin-right:.25rem}
+.fq{font-family:var(--fm);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ash);
+  border:1px solid var(--edge);border-radius:999px;padding:.3rem .65rem;transition:.15s}
+.fq:hover{color:var(--ember);border-color:var(--glow)}
+.fq.on{color:#140a02;background:var(--ember);border-color:var(--ember)}
+@media(prefers-reduced-motion:reduce){.scbar,.pdot,.segb,.fbtn,.cap{transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<div id="app" class="isolated">
+<header class="topbar">
+  <a class="brand" id="brandHome">RUVSON <span class="sub">· СИНГУЛЯР·02</span><span class="ver">v1.0</span></a>
+  <span class="spacer"></span>
+  <button class="tbtn" id="btnMic" title="Микрофон">◉ микрофон</button>
+  <button class="tbtn on" id="btnMotion" title="Реактивная сцена">motion</button>
+</header>
+
+<div class="scbar" id="scbar">
+  <span class="sc-label">форма</span>
+  <div class="seg" id="segForm">
+    <button class="segb on" data-f="0">сфера</button>
+    <button class="segb" data-f="1">куб</button>
+    <button class="segb" data-f="2">колесо</button>
+    <button class="segb" data-f="3">галактика</button>
+  </div>
+  <span class="sc-div"></span>
+  <span class="sc-label">палитра</span>
+  <div class="pdots" id="pDots"></div>
+  <button class="tbtn" id="btnPalCycle" title="Автосмена палитр каждые 7 с">палитры↻</button>
+  <span class="sc-div"></span>
+  <span class="sc-label">частицы</span>
+  <div class="seg" id="segDens">
+    <button class="segb" data-n="4000">4К</button>
+    <button class="segb on" data-n="12000">12К</button>
+    <button class="segb" data-n="30000">30К</button>
+    <button class="segb" data-n="60000">60К</button>
+    <button class="segb" data-n="120000">120К</button>
+  </div>
+  <span class="sc-div"></span>
+  <button class="tbtn" id="btnSamsara" title="Сансара-цикл: смена форм каждые 12 с">сансара↻</button>
+  <span class="spacer"></span>
+  <span class="sc-hint">1‑4 формы · Q/E палитра · −/+ плотность · C цикл · тяни фон мышью</span>
+</div>
+<div class="palflash" id="palFlash"></div>
+
+<nav class="sidenav">
+  <button class="snav on" data-v="home"><span class="ic">⌂</span>Главная</button>
+  <button class="snav" data-v="catalog"><span class="ic">≡</span>Каталог<span class="cnt">12</span></button>
+  <button class="snav" data-v="player"><span class="ic">♪</span>Спеть</button>
+  <button class="snav" data-v="langs"><span class="ic">◉</span>Языки<span class="cnt">157</span></button>
+  <button class="snav" data-v="fab"><span class="ic">◆</span>Фабрика<span class="cnt">4аг</span></button>
+  <div class="snav-sep">проект</div>
+  <button class="snav" data-v="files"><span class="ic">⬇</span>Файлы задачи</button>
+  <div class="mini-stat">частицы знают формы ·<br>форма знает частицы<br><b>ФАБРИКА v1.0</b><br>0 внешних запросов</div>
+</nav>
+
+<main class="main" id="main">
+  <section class="view on" id="v-home">
+    <div class="hero">
+      <div class="hero-txt">
+        <span class="kicker">караоке-вселенная RUVSON · фабрика материи</span>
+        <h1>Одна песня. <em>157 голосов.</em><br>Одна правда.</h1>
+        <p class="lede">v1.0 «ФАБРИКА»: живая сцена-материя — до 120 000 частиц морфят в 4 формы (сфера → куб → колесо сансары → галактика), 6 палитр с кроссфейдом, реакция на FFT и микрофон в реальном времени. Capability-граф растёт на глазах во вкладке «Фабрика». Всё офлайн: один файл, 0 внешних запросов.</p>
+        <div class="hero-cta">
+          <button class="btn primary" id="ctaSing">▶ спеть сейчас</button>
+          <button class="btn ghost" id="ctaCat">≡ каталог</button>
+          <button class="btn ghost" id="ctaLang">◉ языки</button>
+        </div>
+        <div class="formquick" id="heroForms">
+          <span class="lbl">форма материи:</span>
+          <button class="fq on" data-f="0">сфера</button>
+          <button class="fq" data-f="1">куб</button>
+          <button class="fq" data-f="2">колесо</button>
+          <button class="fq" data-f="3">галактика</button>
+          <span class="lbl" style="margin-left:.5rem">в сцене:</span>
+          <span class="mono-chip" id="ptCount">12 000 частиц</span>
+        </div>
+        <div class="stats">
+          <span class="stat"><b>157</b> языков</span>
+          <span class="stat"><b>4</b> формы</span>
+          <span class="stat"><b>6</b> палитр</span>
+          <span class="stat"><b>120К</b> частиц max</span>
+          <span class="stat"><b>офлайн</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="feat">
+      <div class="art" id="coverArt">♫</div>
+      <div class="info">
+        <span class="kicker">живой трек · пробный шар конвейера</span>
+        <h3>Когда теряем — OutShadow feat RUVSON</h3>
+        <p class="sub">Синтезированная подложка через Web Audio (замените на свой мастер, вставив base64 в <code>AUDIO_B64</code>).
+        Тайминги — черновые; ТЭП-очки и питч работают в реальном времени.</p>
+        <div class="chips"><span class="chip emb">фабрика материи</span><span class="chip">4 формы</span><span class="chip">6 палитр</span><span class="chip">120К частиц</span><span class="chip">ТЭП</span><span class="chip">офлайн</span></div>
+        <div class="hero-cta"><button class="btn primary" id="featSing">▶ спеть (RU)</button></div>
+      </div>
+    </div>
+    <div class="rowhead"><h2>Топ канала</h2></div>
+    <div class="rail" id="rowTop"></div>
+    <div class="rowhead"><h2>Живые</h2></div>
+    <div class="rail" id="rowLive"></div>
+  </section>
+
+  <section class="view" id="v-catalog">
+    <div class="cathead"><h2>Каталог канала</h2><span class="cnt" id="catCnt">—</span></div>
+    <div class="filters">
+      <button class="fchip on" data-f="all">все</button>
+      <button class="fchip" data-f="live">живые</button>
+      <button class="fchip" data-f="new">премьеры</button>
+    </div>
+    <div class="catgrid" id="catGrid"></div>
+  </section>
+
+  <section class="view langs-view" id="v-langs">
+    <div class="cathead"><h2>157 голосов · одна правда</h2><span class="cnt" id="langCnt">157</span>
+      <input id="langSearch" type="search" placeholder="найди язык: uk, ja, de…" style="flex:1;min-width:140px;background:var(--surf);border:1px solid var(--edge);color:var(--skin);border-radius:9px;padding:.4rem .8rem;outline:none"/>
+    </div>
+    <div class="lgrid" id="lgrid"></div>
+  </section>
+
+  <section class="view fab-view" id="v-fab">
+    <div class="cathead"><h2>Capability Graph · живая фабрика</h2><span class="cnt">4 агента · 10 примитивов</span></div>
+    <div class="f-demo">
+      <div class="f-row">
+        <span class="kicker">намерение:</span>
+        <button class="fbtn primary" data-intent="report">ошибки в логах → отчёт</button>
+        <button class="fbtn" data-intent="minussync">минусовка → синхрон</button>
+        <button class="fbtn" data-intent="newcap">синтез новой capability</button>
+      </div>
+      <div class="f-stage">
+        <div class="f-agents">
+          <div class="fagent" id="fObs"><span class="dot"></span><b>OBSERVER</b><span>что изменилось?</span></div>
+          <div class="fagent" id="fPln"><span class="dot"></span><b>PLANNER</b><span>какие переходы?</span></div>
+          <div class="fagent" id="fCrt"><span class="dot"></span><b>CRITIC</b><span>что опасно?</span></div>
+          <div class="fagent" id="fVrf"><span class="dot"></span><b>VERIFIER</b><span>состояние сменилось?</span></div>
+        </div>
+        <div class="f-pipebox">
+          <h4>capability graph → pipeline</h4>
+          <div class="pipeline" id="fPipe"><span class="cap" style="opacity:1">— нажми намерение —</span></div>
+        </div>
+      </div>
+      <div class="f-log" id="fLog"><div class="fline">— evidence ledger пуст —</div></div>
+    </div>
+    <div class="rowhead"><h2>Три волны веба</h2></div>
+    <div class="waves">
+      <div class="wave now"><span class="tag">сейчас</span><span class="yr">2015–2026 · RESPONSIVE</span>
+        <h3>Сайт подстраивается под экран</h3>
+        <p>Media-queries, flex, grid. AI сделал шаблоны бесплатными — и обесценил их. Ответ — тактильный брутализм и живая материя вместо сверстанного макета.</p>
+      </div>
+      <div class="wave"><span class="yr">2026–2028 · ADAPTIVE / AGENTIC</span>
+        <h3>Сайт подстраивается под намерение</h3>
+        <p>Состояние и история меняют сам интерфейс. Агенты читают сайт как данные: MX-слой — семантика и происхождение утверждений. Голос и жесты — равные каналы ввода.</p>
+      </div>
+      <div class="wave"><span class="yr">2028–2030 · EMERGENT</span>
+        <h3>Сайт собирает сам себя из графа возможностей</h3>
+        <p>OBSERVE → MODEL → HYPOTHESIS → EXPERIMENT → VERIFY → PATTERN. Проверенный pipeline становится capability и участвует в следующих планах. Страница = локальный рантайм.</p>
+      </div>
+    </div>
+    <div class="rowhead"><h2>Манифест 2030 · в 6 пунктах</h2></div>
+    <ul class="manif">
+      <li><b>Примитивы вместо функций.</b> 10 атомарных capabilities (READ, WRITE, HASH, PARSE, FILTER, TRANSFORM, EXEC, HTTP, ARCHIVE, VERIFY) важнее 2000 инструментов.</li>
+      <li><b>Гипотеза ≠ факт.</b> Антифасадное ядро: каждое утверждение — claim + evidence + status. UNKNOWN ≠ FALSE.</li>
+      <li><b>Композиция = эволюция.</b> Проверенный pipeline становится новой capability — ядро не переписывается.</li>
+      <li><b>Локальность прежде всего.</b> Рантайм у пользователя: офлайн, 0 внешних запросов, данные не покидают устройство.</li>
+      <li><b>Dual-layer MX.</b> Один документ: машинам — семантика и происхождение, людям — движение и душу.</li>
+      <li><b>LLM — гипотезогенератор, не источник истины.</b> Сначала детерминированный граф, затем LLM как слот.</li>
+    </ul>
+  </section>
+
+  <section class="view files-view" id="v-files">
+    <div class="ft"><h2>TASK FILES <span>· артефакты проекта</span></h2>
+      <input id="taskSearch" type="search" placeholder="фильтр: srt, lrc, план…"/></div>
+    <div id="taskList"></div>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <button class="tab on" data-v="home"><span class="ic">⌂</span>главная</button>
+  <button class="tab" data-v="catalog"><span class="ic">≡</span>каталог</button>
+  <button class="tab" data-v="player"><span class="ic">♪</span>спеть</button>
+  <button class="tab" data-v="langs"><span class="ic">◉</span>языки</button>
+  <button class="tab" data-v="fab"><span class="ic">◆</span>фабрика</button>
+  <button class="tab" data-v="files"><span class="ic">⬇</span>файлы</button>
+</nav>
+</div>
+
+<!-- mini -->
+<div class="mini" id="mini">
+  <div class="cv">♫</div>
+  <div class="mt"><b>Когда теряем</b><span id="miniLang">RU·ORIG</span></div>
+  <div class="mb"><button id="miniPlay">▶</button></div>
+  <div class="prog"><i id="miniProg"></i></div>
+</div>
+
+<!-- player -->
+<div class="player" id="player">
+  <div class="pl-top">
+    <button class="iconb" id="plBack">↓</button>
+    <div style="min-width:0"><div class="pl-title">Когда теряем</div>
+      <div class="pl-sub">OutShadow feat RUVSON · фабрика v1.0</div></div>
+    <span class="spacer"></span>
+    <button class="iconb" id="btnTap" title="ТЭП очки (Space)">◐</button>
+    <button class="iconb" id="btnFav">♡</button>
+  </div>
+  <div class="scorebar" id="scorebar">
+    <span>ТЭП</span><span class="sc" id="scScore">00000</span><span class="combo" id="scCombo">×1</span>
+    <span id="scAcc">100%</span>
+    <span style="margin-left:auto;display:flex;gap:.4rem;align-items:center">окно
+      <input type="range" id="reaction" min="60" max="300" step="10" value="120"/><b id="reactionV">120</b>мс</span>
+  </div>
+  <div class="kwrap" id="kwrap">
+    <div class="kstage" id="kstage"><div class="kstack" id="kstack"></div></div>
+    <div class="countin" id="countin">3</div>
+    <div id="tapFlash"></div>
+  </div>
+  <div class="transport">
+    <button class="bt big" id="btnPlay">▶</button>
+    <span class="timecode" id="tc">0:00 / 3:50</span>
+    <div class="rail" id="rail"><div class="tr"><div class="fill" id="fill"></div><div class="head" id="head"></div></div></div>
+    <button class="bt" id="btnB10" style="width:2.1rem;height:2.1rem;font-size:.6rem">−10</button>
+    <button class="bt" id="btnF10" style="width:2.1rem;height:2.1rem;font-size:.6rem">+10</button>
+  </div>
+  <div class="pl-actions">
+    <span class="shift">темп <input type="range" id="tempo" min="0.7" max="1.3" step="0.01" value="1"/><b id="tempoV">1.00×</b></span>
+    <button class="ab" id="btnMinus" aria-pressed="false" title="Подавить центр (L−R)">минус</button>
+    <span class="shift">сдвиг <input type="range" id="shift" min="-600" max="600" step="10" value="0"/><b id="shiftV">0</b>мс</span>
+    <button class="ab" id="btnFull" aria-pressed="false">весь текст</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════════════
+// СИНГУЛЯР·02 «ФАБРИКА» v1.0 — рабочее ядро
+// 4 формы · 6 палитр · плотность частиц · capability graph
+// офлайн · 0 внешних запросов · UNKNOWN ≠ FALSE
+// ═══════════════════════════════════════════════════════════════
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const clamp = (v,a,b) => Math.min(b, Math.max(a,v));
+const fmtT = s => { s=Math.max(0,s||0); return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'); };
+const fmtSize = n => n<1024 ? n+" Б" : n<1048576 ? (n/1024).toFixed(1)+" КБ" : (n/1048576).toFixed(2)+" МБ";
+// снимок документа ДО любых мутаций — честный self-download
+const SELF_SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+// ── ДАННЫЕ ─────────────────────────────────────────────────────
+// Вставьте base64 мастера трека здесь. Иначе играет синтез.
+const AUDIO_B64 = "";
+
+// Черновые тайминги «Когда теряем» — структурная демонстрация.
+const LYRICS = [
+  { t: 8.0,  d: 3.4, words: "Когда теряем — находим себя".split(" ") },
+  { t: 11.4, d: 3.2, words: "в тишине между двумя ударами".split(" ") },
+  { t: 14.6, d: 3.6, words: "свет гаснет, но голос звучит".split(" ") },
+  { t: 18.2, d: 3.8, words: "сто пятьдесят семь голосов — одна правда".split(" ") },
+  { t: 22.0, d: 3.4, words: "я не помню, как это — молчать".split(" ") },
+  { t: 25.4, d: 3.6, words: "мы проходим сквозь стены и время".split(" ") },
+  { t: 29.0, d: 3.2, words: "и в конце остаёмся собой".split(" ") },
+  { t: 32.2, d: 3.8, words: "когда теряем — находим себя".split(" ") },
+  { t: 36.0, d: 4.0, words: "в тишине между двумя ударами".split(" ") },
+  { t: 40.0, d: 4.2, words: "свет гаснет, но голос звучит".split(" ") },
+  { t: 44.2, d: 4.0, words: "и никто нас уже не разбудит".split(" ") },
+  { t: 48.2, d: 4.4, words: "сто пятьдесят семь — это мы".split(" ") },
+  { t: 52.6, d: 3.6, words: "это то, что осталось от дома".split(" ") },
+  { t: 56.2, d: 4.0, words: "это то, что нельзя потерять".split(" ") },
+  { t: 60.2, d: 4.2, words: "когда теряем — находим себя".split(" ") },
+  { t: 64.4, d: 4.4, words: "в тишине между двумя ударами".split(" ") },
+  { t: 68.8, d: 4.0, words: "свет гаснет, но голос звучит".split(" ") },
+  { t: 72.8, d: 4.2, words: "и мы снова становимся целым".split(" ") },
+];
+
+const CATALOG = [
+  { id:"rWpYxmFjm9g", title:"Когда теряем", views:"10,2 млн", date:"2024", live:true, isNew:true },
+  { id:"a1", title:"Сансара", views:"4,1 млн", date:"2023", live:false },
+  { id:"a2", title:"Небо в алмазах", views:"2,7 млн", date:"2023", live:false, isNew:true },
+  { id:"a3", title:"Пыль", views:"1,9 млн", date:"2023", live:false },
+  { id:"a4", title:"Тишина", views:"1,5 млн", date:"2022", live:false },
+  { id:"a5", title:"Без названия", views:"1,1 млн", date:"2022", live:false },
+  { id:"a6", title:"Осколки", views:"980 тыс", date:"2022", live:false, isNew:true },
+  { id:"a7", title:"Между", views:"740 тыс", date:"2022", live:false },
+  { id:"a8", title:"Север", views:"620 тыс", date:"2021", live:false },
+  { id:"a9", title:"Ветер", views:"505 тыс", date:"2021", live:false },
+  { id:"a10", title:"Круги", views:"410 тыс", date:"2021", live:false },
+  { id:"a11", title:"Пепел", views:"310 тыс", date:"2021", live:false },
+];
+
+const LANGS = [
+  ["ru","Русский"],["en","English"],["uk","Українська"],["be","Беларуская"],["kk","Қазақша"],
+  ["de","Deutsch"],["fr","Français"],["es","Español"],["it","Italiano"],["pt","Português"],
+  ["pl","Polski"],["cs","Čeština"],["sk","Slovenčina"],["hu","Magyar"],["ro","Română"],
+  ["bg","Български"],["sr","Српски"],["hr","Hrvatski"],["sl","Slovenščina"],["lt","Lietuvių"],
+  ["lv","Latviešu"],["et","Eesti"],["fi","Suomi"],["sv","Svenska"],["no","Norsk"],
+  ["da","Dansk"],["is","Íslenska"],["nl","Nederlands"],["ga","Gaeilge"],["cy","Cymraeg"],
+  ["el","Ελληνικά"],["tr","Türkçe"],["he","עברית"],["ar","العربية"],["fa","فارسی"],
+  ["hi","हिन्दी"],["bn","বাংলা"],["ur","اردو"],["ta","தமிழ்"],["te","తెలుగు"],
+  ["zh","中文"],["ja","日本語"],["ko","한국어"],["vi","Tiếng Việt"],["th","ไทย"],
+  ["id","Indonesia"],["ms","Melayu"],["tl","Tagalog"],["sw","Kiswahili"],["am","አማርኛ"],
+  ["hy","Հայերեն"],["ka","ქართული"],["az","Azərbaycan"],["uz","Oʻzbek"],["ky","Кыргызча"],
+];
+
+// артефакты проекта — реальные файлы, вшиты base64 при сборке
+const TASKFILES = [
+  {
+    "name": "СИНГУЛЯР_02_ФАБРИКА.html",
+    "desc": "Этот файл — вся платформа офлайн (движок 4 форм + караоке + фабрика)",
+    "size": "—",
+    "self": true,
+    "mime": "text/html;charset=utf-8"
+  },
+  {
+    "name": "МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md",
+    "desc": "Генеральный план конвейера 157 языков",
+    "size": "11.4 КБ",
+    "b64": "IyDQnNCQ0KHQotCV0KAt0J/Qm9CQ0J06IFJVVlNPTiDDlyAxNTcg0K/Ql9Cr0JrQntCSCiMjIyDQktGL0LLQvtC0INGB0LXRgdGB0LjQuCAyMDI2LTEwLTAxIOKAlCDQt9Cw0YfQtdC8INCx0YvQu9C4INGC0LXQutGB0YLRiywg0LDRg9C00LjQviDQuCDQutCw0YDQsNC+0LrQtS3RgdC60YDQuNC/0YLRiwoKPiDCq9Cn0YLQviDQuNC80LXQtdC8IOKAlCDQvdC1INGF0YDQsNC90LjQvCwg0L/QvtGC0LXRgNGP0LLRiNC4IOKAlCDQv9C70LDRh9C10LzCuy4g0K3RgtC+0YIg0LTQvtC60YPQvNC10L3RgiDigJQg0YfRgtC+0LHRiyDRhdGA0LDQvdC40LvQuC4KPiDQn9GA0L7QsdC90YvQuSDRiNCw0YAg0LfQsNC60LDRgtCw0L0gMDEuMTAuMjAyNjogwqvQmtC+0LPQtNCwINGC0LXRgNGP0LXQvMK7IOKAlCAxNTcvMTU3INGP0LfRi9C60L7Qsiwg0L3QvtC70Ywg0L/QvtGC0LXRgNGMLgoKLS0tCgojIyAxLiDQktCr0JLQntCUOiDQt9Cw0YfQtdC8INC90YPQttC10L0g0LHRi9C7INC60LDQttC00YvQuSDQsNGA0YLQtdGE0LDQutGCCgrQndC4INC+0LTQuNC9INGE0LDQudC7INGB0LXRgdGB0LjQuCDQvdC1INCx0YvQuyDRgdC70YPRh9Cw0LnQvdGL0LwuINCa0LDQttC00YvQuSDigJQg0LTQtdGC0LDQu9GMINC+0LTQvdC+0LPQviDQutC+0L3QstC10LnQtdGA0LAsINC60L7RgtC+0YDRi9C5CtC/0YDQtdCy0YDQsNGJ0LDQtdGCINC60LDQvdCw0LsgUlVWU09OICg2MSDQstC40LTQtdC+LCAxMCwyINC80LvQvSDQv9GA0L7RgdC80L7RgtGA0L7Qsikg0LIgKirQvNC90L7Qs9C+0Y/Qt9GL0YfQvdGD0Y4K0LrQsNGA0LDQvtC60LUt0LLRgdC10LvQtdC90L3Rg9GOKio6INC60LDQttC00LDRjyDQv9C10YHQvdGPIOKAlCDQvdCwINC60LDQttC00L7QvCDQuNC3IDE1NyDRj9C30YvQutC+0LIg0LPRgNCw0LHQtdGA0LAuCgp8INCQ0YDRgtC10YTQsNC60YIg0YHQtdGB0YHQuNC4IHwg0KfRgtC+INGN0YLQviDQvdCwINGB0LDQvNC+0Lwg0LTQtdC70LUgfCDQoNC+0LvRjCDQsiDQutC+0L3QstC10LnQtdGA0LUgfAp8LS0tfC0tLXwtLS18CnwgKirQmtCw0YLQsNC70L7QsyA2MSDQstC40LTQtdC+ICh4bHN4KSoqIHwg0JrQsNGA0YLQsCDQvNC10YHRgtC+0YDQvtC20LTQtdC90LjRjyB8INCe0L/RgNC10LTQtdC70Y/QtdGCINCn0KLQniDQtNC+0LHRi9Cy0LDRgtGMOiDQstGB0LUg0YLRgNC10LrQuCwg0L/RgNC40L7RgNC40YLQtdGCINC/0L4g0YXQuNGC0LDQvCAowqvQptC10L3QuCDQstGA0LXQvNGPwrsgMiw1INC80LvQvSDigJQg0L/QtdGA0LLRi9C5INGN0YjQtdC70L7QvSkgfAp8ICoqUlVWU09OX0dyYWJiZXIgdjEuNC4wKiogfCDQo9C90LjQstC10YDRgdCw0LvRjNC90YvQuSDQutC+0LzQsdCw0LnQvSB8INCU0J7QkdCr0JLQkNCV0KIg0YEg0LTQvtC80LDRiNC90LXQs9C+IElQOiDQv9GA0LXQstGM0Y4sINCy0YHQtSDQsNGD0LTQuNC+L9Cy0LjQtNC10L4g0LTQviA0SzYwLCBTUlQrVFhUINC90LAgMTU3INGP0LfRi9C60L7QsiDigJQg0L3QsCDQm9Cu0JHQntCcINCy0LjQtNC10L4gWW91VHViZSB8CnwgKioxNTcgw5cgLlNSVCoqICjCq9Ca0L7Qs9C00LAg0YLQtdGA0Y/QtdC8wrspIHwg0J3QtSDCq9GC0LXQutGB0YLQuNC60LjCuyDigJQg0KLQkNCZ0JzQmNCd0JPQmCB8INCa0LDQttC00LDRjyDQuNC3IDgxINGA0LXQv9C70LjQuiDQuNC80LXQtdGCINGA0LXQsNC70YzQvdC+0LUg0LLRgNC10LzRjyDQvtGCIFlvdVR1YmUuIFNSVCDihpIgTFJDINC60L7QvdCy0LXRgNGC0LDRhtC40LXQuSA9INCz0L7RgtC+0LLRi9C1INGC0LDQudC80LjQvdCz0Lgg0LrQsNGA0LDQvtC60LUuINCt0YLQviDRgdC10YDQtNGG0LUg0YHQuNC90YXRgNC+0L3QsCB8CnwgKioxNTcgw5cgLlRYVCoqIHwg0KHQvNGL0YHQu9C+0LLQvtC5INC40YHRhdC+0LTQvdC40LogfCDQodGL0YDRjNGRINC00LvRjyDQm9CY0KLQldCg0JDQotCj0KDQndCe0JPQniAo0L7QsdGA0LDQt9C90L7Qs9C+LCDQv9C+0Y7RidC10LPQvtGB0Y8pINC/0LXRgNC10LLQvtC00LAuINCR0YPQutCy0LDQu9GM0L3Ri9C5INC/0LXRgNC10LLQvtC0INGC0L7Qu9C80LDRh9CwINGD0LHQuNCy0LDQtdGCINGB0LzRi9GB0Lsg0L/QtdGB0L3QuCDigJQg0L/QvtGN0YLQvtC80YMg0L3Rg9C20LXQvSDRh9C10LvQvtCy0LXQuiArINGB0LzRi9GB0LvQvtCy0L7QuSDQmNCYLCDQsCDQvdC1INCw0LLRgtC+0L/QtdGA0LXQstC+0LQgfAp8ICoq0JDRg9C00LjQviDDlzIgLndlYm0gKGJlc3Qrd29yc3QpKiogfCDQnNCw0YHRgtC10YAgKyDRgNC10YTQtdGA0LXQvdGBIHwgYmVzdCAoT3B1cyAxNjApIOKGkiDQuNC3INC90LXQs9C+INC80LjQvdGD0YHQvtCy0LrQsCAo0L7RgtC00LXQu9C10L3QuNC1INCy0L7QutCw0LvQsCk7IHdvcnN0ICg1MCkg4oaSINCx0YvRgdGC0YDQsNGPINC/0YDQvtCy0LXRgNC60LAsINC80L7QsdC40LvQutCwLCDQutC+0L3RgtGA0L7Qu9GM0L3QsNGPINGB0YPQvNC80LAgfAp8ICoq0JrQkNCg0JDQntCa0JUt0JvQkNCRIHY1KiogfCDQlNCS0JjQltCe0Jog0YHQuNC90YXRgNC+0L3QsCB8INCV0YHRgiBMUkMvRW5oYW5jZWQtTFJDOiB3b3JkLWdsb3cg0L/QviDRgdC70L7QstCw0LwsIHNwcmluZy1zY3JvbGwsINC00LLQvtC50L3Ri9C1INGH0LDRgdGLINGBIGxvb2thaGVhZC4g0KPQttC1INGD0LzQtdC10YIg0LLRgdGRIOKAlCDQvdC1INGF0LLQsNGC0LDQtdGCINC00LDQvdC90YvRhSB8CnwgKirQodCY0J3Qk9Cj0JvQr9CgwrfQmtCQ0KDQkNCe0JrQlSAodjIg0YEg0L7Rh9C60LDQvNC4KSoqIHwg0J/Qu9C10LXRgC3QuNCz0YDQsCB8IE1QMytMUkMg4oaSINC/0L7RkdGI0Ywg0Lgg0L/QvtC70YPRh9Cw0LXRiNGMINC+0YfQutC4LiDQn9GA0L7RgtC+0YLQuNC/INCz0LXQudC80L/Qu9C10Y8g0LHRg9C00YPRidC10LPQviDQutCw0YDQsNC+0LrQtS3Qv9GA0LjQu9C+0LbQtdC90LjRjyB8CnwgKirQmtCj0JEtMjAyNiDCtyDQmtCy0LDQvdGC0L7QstCw0Y8g0KHQsNC90YHQsNGA0LAgdjMqKiAoRHJpdmUsIDIxNSDQnNCRKSB8INCf0KDQntCi0J7QotCY0J8g0KTQmNCd0JDQm9Cs0J3QntCT0J4g0J/QoNCe0JTQo9Ca0KLQkCB8IDEwNyDRgtGA0LXQutC+0LIsIDU3INCw0YPQtNC40L4g0LLRiNC40YLQviwg0LTQstC40LbQvtC6IHY1INCy0L3Rg9GC0YDQuCwgV2ViR0wyLdC60YPQsSAxNCAwMDAg0YfQsNGB0YLQuNGGLCDQmtC+0LvQtdGB0L4g0KHQsNC90YHQsNGA0YsgMTLDlzUsINC/0L7QuNGB0LosIGRlZXAtbGluay4g0JLQuNGC0YDQuNC90LAsINC60YPQtNCwINGB0YLRj9Cz0LjQstCw0LXRgtGB0Y8g0LLRgdGRIHwKfCAqKtCj0KHQotCQ0J3QntCS0KnQmNCaICg1INC/0YDQvtGE0LjQu9C10LkpKiogfCDQodC70YPQs9CwLdGB0L3QsNCx0LbQtdC90LXRhiB8INCh0YLQsNCy0LjRgiBQeXRob24sIEZGbXBlZywgeXQtZGxwLCBEZW11Y3Mt0LrQu9Cw0YHRgSDQuNC90YHRgtGA0YPQvNC10L3RgtC+0LIg4oCUINGC0L4sINGH0LXQvCDQsdGD0LTRg9GCINC00LXQu9Cw0YLRjNGB0Y8g0LzQuNC90YPRgdC+0LLQutC4INC4INC60L7QvdCy0LXRgNGC0LDRhtC40LggfAp8ICoqR2l0SHViIGNlbGw2NS1ob3N0ICsg0LrQvdC+0L/QutCwKiogfCDQlNC40YHRgtGA0LjQsdGD0YbQuNGPIHwg0KXQvtGB0YIg0LLRgdC10YUg0L/RgNC+0LTRg9C60YLQvtCyINC4INCw0LLRgtC+0L7QsdC90L7QstC70LXQvdC40LUg0L3QsCDQu9GO0LHQvtC8INC60L7QvNC/0LUgfAoKKirQntC00L3QvtC5INGE0YDQsNC30L7QuToqKiDQvNGLINGB0YLRgNC+0LjQu9C4INC90LUg0LrQvtC70LvQtdC60YbQuNGOINGE0LDQudC70L7Qsiwg0LAg0KTQkNCR0KDQmNCa0KM6INC00L7QsdGL0YLRjCDihpIg0L/QtdGA0LXQstC10YHRgtC4CtGB0LzRi9GB0LvQvtC8IOKGkiDQt9Cw0YHQuNC90YXRgNC+0L3QuNGC0Ywg4oaSINGB0L/QtdGC0Ywg4oaSINC/0L7QutCw0LfQsNGC0Ywg0LIg0JrQo9CR0LUg4oaSINGA0LDQt9C00LDRgtGMINGH0LXRgNC10LcgR2l0SHViLgoKLS0tCgojIyAyLiDQn9GA0L7QuNC30LLQvtC00YHRgtCy0LXQvdC90YvQuSDQutC+0L3QstC10LnQtdGAICjQtNC70Y8g0L7QtNC90L7QuSDQv9C10YHQvdC4LCDQvtC00LjQvSDRj9C30YvQuikKCmBgYApZb3VUdWJlICjQstC40LTQtdC+IFJVVlNPTikKICAg4pSCICBHcmFiYmVyIHYxLjQuMCDigJQg0LTQvtC80LDRiNC90LjQuSBJUCwg0YfQtdC70L7QstC10Log0LbQvNGR0YIg0LrQvdC+0L/QutGDCiAgIOKWvArilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAg0JTQntCR0KvQp9CQIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkArilIIgIC53ZWJtIGJlc3QgKNC80LDRgdGC0LXRgCkgICAud2VibSB3b3JzdCAo0YDQtdGE0LXRgNC10L3RgSkgICAgICAgICAgICDilIIK4pSCICAuU1JUIMOXMTU3ICjRgtCw0LnQvNC40L3Qs9C4KSAgLlRYVCDDlzE1NyAo0YLQtdC60YHRgikgIC5KUEcgKNC/0YDQtdCy0YzRjikgIOKUggrilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJgKICAg4pSCCiAgIOKUnOKUgOKWuiBTUlQg4oaSIExSQy3QutC+0L3QstC10YDRgtC10YAgICAgICAgICAgIFvQvdCw0L/QuNGB0LDRgtGMOiAzMCDRgdGC0YDQvtC6IFB5dGhvbl0KICAg4pSCICAgICAgICDihpIg0YLQsNC50LzQuNC90LPQuCDQutCw0YDQsNC+0LrQtSDQvdCwINC60LDQttC00L7QvCDRj9C30YvQutC1CiAgIOKUggogICDilJzilIDilrogVFhUICsg0YHQvNGL0YHQu9C+0LLQvtC5INC/0LXRgNC10LLQvtC0ICAgICAgIFvRh9C10LvQvtCy0LXQuiArINCY0JgsINC+0LHRgNCw0LfQvdC+LCDQvdC1INCx0YPQutCy0LDQu9GM0L3Qvl0KICAg4pSCICAgICAgICDihpIg0L/QvtGO0YnQuNC50YHRjyDQu9C40YLQtdGA0LDRgtGD0YDQvdGL0Lkg0YLQtdC60YHRggogICDilIIKICAg4pSU4pSA4pa6IGJlc3QgLndlYm0g4oaSINC80LjQvdGD0YHQvtCy0LrQsCAgICAgICAgW0RlbXVjcy9VVlIg4oCUINC40L3RgdGC0YDRg9C80LXQvdGC0Ysg0LIg0L/RgNC+0YTQuNC70LUgMyBBSV0KICAgICAgICAgICAg4oaSINC40L3RgdGC0YDRg9C80LXQvdGC0LDQuyDQtNC70Y8g0LrQsNGA0LDQvtC60LUt0LHQvtGPCiAgIOKUggogICDilrwK0JrQkNCg0JDQntCa0JUt0JvQkNCRIHY1ICjQtNCy0LjQttC+0LopIOKGkiDQodCY0J3Qk9Cj0JvQr9CgICjQvtGH0LrQuCkg4oaSINCa0KPQkS0yMDI2ICjQstC40YLRgNC40L3QsCkKICAg4pSCCiAgIOKWvApHaXRIdWIgY2VsbDY1LWhvc3Qg4oaSINC70Y7QtNC4INCy0YHQtdCz0L4g0LzQuNGA0LAg0L/QvtGO0YIgUlVWU09OINC90LAg0YHQstC+0ZHQvCDRj9C30YvQutC1CmBgYAoKLS0tCgojIyAzLiDQp9GC0L4g0JTQntCa0JDQl9CQ0J0g0L/RgNC+0LHQvdGL0Lwg0YjQsNGA0L7QvCAoMDEuMTAuMjAyNikKCnwg0J/RgNC+0LLQtdGA0LrQsCB8INCg0LXQt9GD0LvRjNGC0LDRgiB8CnwtLS18LS0tfAp8INCh0L/QuNGB0L7QuiDRj9C30YvQutC+0LIg0LPRgNCw0LHQtdGA0LAgfCAxNTcgKFJ1c3NpYW4gT3JpZ2luYWwgKyAxNTYg0LDQstGC0L7Qv9C10YDQtdCy0L7QtNC+0LIpIOKAlCDRgdC90Y/RgiDQuCDQstGL0LLQtdGA0LXQvSB8Cnwg0JTQvtCx0YvRh9CwINCy0YHQtdGFINGP0LfRi9C60L7QsiDQvtC00L3QvtC5INC/0LXRgdC90LggfCAqKjE1Ny8xNTcsINC90L7Qu9GMINC/0L7RgtC10YDRjCoqICjRhtC10L/QvtGH0LrQsCBjbGNrLnJ1IOKGkiDRh9C40YHRgtGL0LkgSVAg4oaSIGpzb24zKSB8Cnwg0KLQsNC50LzQuNC90LPQuCB8INCd0LDRgdGC0L7Rj9GJ0LjQtSAoMDA6MDA6MDEsMzA5KSwg0L3QtSDQv9GA0L7Qv9C+0YDRhtC40L7QvdCw0LvRjNC90YvQtSDigJQg0YMg0YDRg9GB0YHQutC+0LPQviDQvtGA0LjQs9C40L3QsNC70LAg0YLQvtC20LUgfAp8INCk0L7RgNC80LDRgtGLIHwgODEg0YDQtdC/0LvQuNC60LAg0L3QsCDRj9C30YvQuiwgU1JUK1RYVCwg0LDRgNGF0LjQsiAwLDYg0JzQkSB8Cnwg0JDRg9C00LjQvi3QstC10YLQutCwIHwg0JrQvdC+0L/QutCwIGJlc3Qrd29yc3QgLndlYm0g0LIgR3JhYmJlciB2MS4yLjAg4oCUINC/0YDQvtCy0LXRgNC10L3QsCB8Cnwg0JLQuNC00LXQvi3QstC10YLQutCwIHwg0JzQtdC90Y4g0LLRgdC10YUg0YTQvtGA0LzQsNGC0L7QsiDQtNC+IDRLNjAg0LIgdjEuNC4wIOKAlCDQv9GA0L7QstC10YDQtdC90L4gKDM4LzM4INGC0LXRgdGC0L7QsikgfAp8INCU0LLQuNC20L7QuiDQutCw0YDQsNC+0LrQtSB8INCa0JDQoNCQ0J7QmtCVLdCb0JDQkSB2NSDRh9C40YLQsNC10YIgTFJDLCB3b3JkLWdsb3cg0YDQsNCx0L7RgtCw0LXRgiAo0KHQmNCd0JPQo9Cb0K/QoCDQttC40LLQvtC5KSB8Cnwg0JLQuNGC0YDQuNC90LAgfCDQmtCj0JEtMjAyNiB2MzogMTA3INGC0YDQtdC60L7QsiwgNTcg0LDRg9C00LjQviwg0LrRg9CxINC60YDRg9GC0LjRgtGB0Y8gfAoKLS0tCgojIyA0LiDQp9GC0L4g0KHQq9Cg0J7QlSAo0YfQtdGB0YLQvdGL0Lkg0YHQv9C40YHQvtC6INC00YvRgCDihpIg0YfRgtC+INGH0LjQvdC40YLRjCkKCjEuICoq0JvQuNGA0LjQutCwINCa0KPQkdCwINCx0LXQtyDRgtCw0LnQvNC40L3Qs9C+0LIuKiogNTMg0YLQtdC60YHRgtCwIOKAlCDQv9C70L7RgdC60LjQtSAowqtb0JrRg9C/0LvQtdGCIDFdXG4uLi7CuyksIExSQy3RgtCw0LnQvNC40L3Qs9C+0LIg0L3QtdGCLCDQsCDQtNCy0LjQttC+0LogdjUg0LrRg9GI0LDQtdGCINC40LzQtdC90L3QviBMUkMuIOKGkiDQndGD0LbQtdC9INC60L7QvdCy0LXRgNGC0LXRgCBTUlTihpJMUkMg0Lgg0LLRiNC40LLQutCwIExSQyDQsiBUUkFDS1MuCjIuICoq0J/QtdGA0LXQstC+0LTRiyDQsNCy0YLQvtCz0LXQvdC90YvQtS4qKiAxNTcg0YLQtdC60YHRgtC+0LIg0YHQtdC50YfQsNGBIOKAlCDQsNCy0YLQvtC/0LXRgNC10LLQvtC0IFlvdVR1YmUuINCh0LzRi9GB0LvQvtCy0L7QuSAo0L7QsdGA0LDQt9C90YvQuSwg0L/QvtGO0YnQuNC50YHRjykg0L/QtdGA0LXQstC+0LQg4oCUINGA0LDQsdC+0YLQsCDRh9C10LvQvtCy0LXQutCwINGBINCY0Jgt0L/QvtC80L7RidC90LjQutC+0LwsINC/0LXRgdC90Y8g0LfQsCDQv9C10YHQvdC10LkuINCt0YLQviDQodCQ0JzQkNCvINC00L7Qu9Cz0LDRjyDRhNCw0LfQsCDigJQg0Lgg0YHQsNC80LDRjyDRhtC10L3QvdCw0Y8uCjMuICoq0JzQuNC90YPRgdC+0LLQvtC6INC90LXRgi4qKiDQktC+0LrQsNC7INC90LUg0L7RgtC00LXQu9GR0L0g0L3QuCDQvtGCINC+0LTQvdC+0Lkg0L/QtdGB0L3QuC4g4oaSIERlbXVjcyAo0YPQttC1INCyINC/0YDQvtGE0LjQu9C1IEFJINGD0YHRgtCw0L3QvtCy0YnQuNC60LApINC90LAgYmVzdCAud2VibS4KNC4gKio1NyDQsNGD0LTQuNC+INC40LcgMTA3INCyINCa0KPQkdC1LioqIDUwINGC0YDQtdC60L7QsiDigJQg0YLQuNGI0LjQvdCwLiDihpIgR3JhYmJlciDQv9C+INC60LDRgtCw0LvQvtCz0YMuCjUuICoq0K3QutC+0YHQuNGB0YLQtdC80LAg0YDQsNC30YDQvtC30L3QtdC90LAuKiog0JrQo9CRIChEcml2ZSAyMTUg0JzQkSkg4omgINCh0JjQndCT0KPQm9Cv0KAg4omgINCb0JDQkSDiiaAg0YDQtdC/0LAuIOKGkiDQtdC00LjQvdGL0Lkg0L/RgNC+0LTRg9C60YIg0LIgY2VsbDY1LWhvc3QuCjYuICoqR2l0SHViINC10YnRkSDQvdC1INC30LDQv9C+0LvQvdC10L0uKiog0JrQvdC+0L/QutCwIFpBTElUWV9WX0dJVEhVQi5iYXQg0LbQtNGR0YIg0LTQstC+0LnQvdC+0LPQviDQutC70LjQutCwINC90LAg0YLQstC+0ZHQvCDQutC+0LzQv9C1OyDQv9C+0YHQu9C1INC30LDQu9C40LLQutC4IOKAlCDRgNC10L/RgyDQsiBQdWJsaWMuCgotLS0KCiMjIDUuINCU0L7RgNC+0LbQvdCw0Y8g0LrQsNGA0YLQsCAo0L/RgNC+0LXQutGCINC00LvQuNC90L3Ri9C5LCDQvdC1INC+0LTQvdC+0LPQviDQtNC90Y8pCgojIyMg0KTQsNC30LAgMCDigJQg0J/QoNCe0JHQndCr0Jkg0KjQkNCgIOKchSAo0YHQtdCz0L7QtNC90Y8pCsKr0JrQvtCz0LTQsCDRgtC10YDRj9C10LzCuzogMTU3LzE1NyDRj9C30YvQutC+0LIsIFNSVCtUWFQsINGC0LDQudC80LjQvdCz0Lgg0L3QsNGB0YLQvtGP0YnQuNC1LiDQmtC+0L3QstC10LnQtdGAINC00L7QsdGL0YfQuCDQtNC+0LrQsNC30LDQvS4KCiMjIyDQpNCw0LfQsCAxIOKAlCDQmtC+0L3QstC10LnQtdGAINGB0LjQvdGF0YDQvtC90LAgKNGB0LvQtdC00YPRjtGJ0LjQuSDRiNCw0LMpCi0g0JrQvtC90LLQtdGA0YLQtdGAIFNSVOKGkkxSQyAoUHl0aG9uLCAzMCDRgdGC0YDQvtC6KSDigJQg0L3QsCDQstGB0LUgMTU3INGB0YDQsNC30YMKLSDQn9GA0L7Qs9C90LDRgtGMINC90LAgwqvQmtC+0LPQtNCwINGC0LXRgNGP0LXQvMK7IOKGkiAxNTcgTFJDLdGE0LDQudC70L7QsgotINCS0YjQuNGC0YwgTFJDINCyINCa0JDQoNCQ0J7QmtCVLdCb0JDQkSB2NSDihpIg0L/QtdGA0LLQvtC1INC60LDRgNCw0L7QutC1INC90LAgMTU3INGP0LfRi9C60LDRhSDQkdCV0Jcg0LXQtNC40L3QvtC5INC/0YDQsNCy0LrQuCDRgNGD0LrQsNC80LgKLSDQmtGA0LjRgtC10YDQuNC5INCz0L7RgtC+0LLQvdC+0YHRgtC4OiDQvtGC0LrRgNGL0Lsg4oaSINC/0L7RkdGCINC90LAg0YHRg9Cw0YXQuNC70Lgg0YHQuNC90YXRgNC+0L3QvdC+CgojIyMg0KTQsNC30LAgMiDigJQg0JzQuNC90YPRgdC+0LLQutC4Ci0gR3JhYmJlcjog0YHQutCw0YfQsNGC0YwgYmVzdCAud2VibSDQstGB0LXRhSA2MSDQv9C10YHQtdC9ICjQutC90L7Qv9C60LAg0JLQodCVINCk0J7QoNCc0JDQotCrIC8g0JDQo9CU0JjQnsOXMikKLSBEZW11Y3M6INCy0L7QutCw0Lsv0LjQvdGB0YLRgNGD0LzQtdC90YLQsNC7INGA0LDQt9C00LXQu9C10L3QuNC1IOKGkiDQv9Cw0L/QutCwIE1JTlVTT1ZLSS8KLSDQodCY0J3Qk9Cj0JvQr9CgOiDRgNC10LbQuNC8IMKr0LzQuNC90YPRgdC+0LLQutCwICsgTFJDwrsgPSDQvdCw0YHRgtC+0Y/RidC10LUg0LrQsNGA0LDQvtC60LUKCiMjIyDQpNCw0LfQsCAzIOKAlCDQodC80YvRgdC70L7QstC+0Lkg0L/QtdGA0LXQstC+0LQgKNC00L7Qu9Cz0LDRjyDRhNCw0LfQsCwg0L/QtdGB0L3RjyDQt9CwINC/0LXRgdC90LXQuSkKLSDQn9GA0LjQvtGA0LjRgtC10YI6INGF0LjRgtGLLdC80LjQu9C70LjQvtC90L3QuNC60LggKMKr0KbQtdC90Lgg0LLRgNC10LzRj8K7LCDCq9Cd0LUg0LbQtNC4INC30LDQstGC0YDQsMK7LCDCq9CQ0L3Qs9C10Lsg0LHQtdC3INC60YDRi9C70YzQtdCywrssIMKr0J3QtSDQuNCz0YDQsNC5INCyINC70Y7QsdC+0LLRjMK7LCDCq9CR0L7QuSDRgSDRgdC+0LHQvtC5wrspCi0g0JzQtdGC0L7QtDog0LDQstGC0L7Qv9C10YDQtdCy0L7QtCAo0YPQttC1INC10YHRgtGMKSDihpIg0YHQvNGL0YHQu9C+0LLQsNGPINGA0LXQtNCw0LrRgtGD0YDQsCDRh9C10LvQvtCy0LXQutC+0Lwr0JjQmCDihpIg0YDQuNGE0LzQsC/RgNC40YLQvCDihpIg0L/RgNC+0LLQtdGA0LrQsCDQvdC+0YHQuNGC0LXQu9C10LwKLSA2MSDQv9C10YHQvdGPIMOXIDE1NyDRj9C30YvQutC+0LIg4oCUINC80LDRgNCw0YTQvtC9OyDQuNC00YLQuCDRjdGI0LXQu9C+0L3QsNC80Lg6INGC0L7Qvy0xMCDQv9C10YHQtdC9IOKGkiDRgtC+0L8tMzAg0Y/Qt9GL0LrQvtCyIOKGkiDRgNCw0YHRiNC40YDQtdC90LjQtQoKIyMjINCk0LDQt9CwIDQg4oCUINCa0KPQkS0yMDI2INGE0LjQvdCw0LvRjNC90YvQuQotIDEwNy8xMDcg0LDRg9C00LjQviwgTFJDINCy0YHQtdC8INGC0YDQtdC60LDQvCwg0LLQutC70LDQtNC60LAgwqvRj9C30YvQusK7ICgxNTcpLCDQvtGH0LrQuCDQodCY0J3Qk9Cj0JvQr9Cg0LAg0LLQvdGD0YLRgNC4Ci0g0J/Rg9Cx0LvQuNC60LDRhtC40Y86IEdpdEh1YiBQYWdlcyBjZWxsNjUtaG9zdCAo0YDQtdC/0LAgcHVibGljKSDihpIg0YHRgdGL0LvQutCwINCy0YHQtdC80YMg0LzQuNGA0YMKCiMjIyDQpNCw0LfQsCA1IOKAlCDQodC70YPQs9CwINCy0YHQtdC80YMKLSDQn9Ce0JTQotCv0J3Qo9Ci0Kxf0KFfR0lUSFVCLmJhdCDQvtCx0L3QvtCy0LvRj9C10YIg0LLRgdGRINGDINC70Y7QsdC+0LPQviDRjtC30LXRgNCwCi0gR3JhYmJlciDQtNC+0LHQuNGA0LDQtdGCINCd0J7QktCr0JUg0L/QtdGB0L3QuCBSVVZTT04g0L/QviDQvNC10YDQtSDQstGL0YXQvtC00LAg4oaSINC60L7QvdCy0LXQudC10YAg0LrRgNGD0YLQuNGC0YHRjyDRgdCw0LwKCi0tLQoKIyMgNi4g0JzQsNGC0LXQvNCw0YLQuNC60LAg0L/RgNC+0LXQutGC0LAKCi0gNjEg0L/QtdGB0L3RjyDQutCw0YLQsNC70L7Qs9CwIMOXIDE1NyDRj9C30YvQutC+0LIgPSAqKjkgNTc3INC60LDRgNCw0L7QutC1LdC60L7QvNC/0L7Qt9C40YbQuNC5KioKLSAxMDcg0YLRgNC10LrQvtCyINCa0KPQkdCwIMOXIDE1NyA9ICoqMTYgNzk5KioKLSDQo9C20LUg0LPQvtGC0L7QstC+OiAxNTcvOSA1NzcgPSAxLDYlINC00L7QsdGL0YfQuCDigJQg0LggMTAwJSDQtNC+0LrQsNC30LDRgtC10LvRjNGB0YLQstCwINC80LXRgtC+0LTQsAotINCk0LDQt9CwIDEgKNC60L7QvdCy0LXRgNGC0LXRgCkg0LTQvtCx0LDQstC40YIg0LXRidGRIDE1NyDQt9CwINC+0LTQuNC9INC/0YDQvtCz0L7QvTogMywyJQotINCU0L7Qu9Cz0LDRjyDRhNCw0LfQsCDigJQg0YHQvNGL0YHQu9C+0LLQsNGPINGA0LXQtNCw0LrRgtGD0YDQsDog0L7QvdCwINC4INC10YHRgtGMIMKr0L3QtSDQvtC00L3QvtCz0L4g0LTQvdGPwrsKCi0tLQoKIyMgNy4g0JrRgtC+INCz0LTQtSDQu9C10LbQuNGCCgp8INCT0LTQtSB8INCn0YLQviB8CnwtLS18LS0tfAp8IGBkb3dubG9hZC9SVVZTT05fcldwWXhtRmptOWdfQUxMX0xBTkdTL2AgfCDQn9GA0L7QsdC90YvQuSDRiNCw0YA6IDE1NyBTUlQgKyAxNTcgVFhUICsgSU5ERVggfAp8IGBkb3dubG9hZC9SVVZTT05fcldwWXhtRmptOWdf0YLRgNCw0L3RgdC60YDQuNC/0YLRi18xNTdf0Y/Qt9GL0LrQvtCyLnppcGAgfCDQotC+INC20LUg0LDRgNGF0LjQstC+0LwgKDAsNiDQnNCRKSB8CnwgYGRvd25sb2FkL1JVVlNPTl9HcmFiYmVyLnVzZXIuanNgIHwg0JrQvtC90LLQtdC50LXRgCDQtNC+0LHRi9GH0LggdjEuNC4wIHwKfCBgZG93bmxvYWQv0JrQkNCg0JDQntCa0JUvYCB8INCb0JDQkSB2NSArINCh0JjQndCT0KPQm9Cv0KAgdjEvdjIgfAp8IEdvb2dsZSBEcml2ZSB8INCa0KPQkS0yMDI2IMK3INCa0LLQsNC90YLQvtCy0LDRjyDQodCw0L3RgdCw0YDQsCB2MyAoMjE1INCc0JEsIDEwNyDRgtGA0LXQutC+0LIsIDU3INCw0YPQtNC40L4pIHwKfCBgZG93bmxvYWQvUlVWU09OX9Cj0KHQotCQ0J3QntCS0KnQmNCaL2AgfCDQodC70YPQs9CwLdGB0L3QsNCx0LbQtdC90LXRhiAoNSDQv9GA0L7RhNC40LvQtdC5KSB8CnwgYGRvd25sb2FkL1JVVlNPTl/QkNCg0KXQmNCSX9Ch0JXQodCh0JjQmF8yMDI2LTEwLTAxLnppcGAgfCDQktGB0ZEg0YXQvtC30Y/QudGB0YLQstC+INGB0LXRgdGB0LjQuCAoMzcxINGE0LDQudC7KSB8CnwgR2l0SHViIGBydHluYmlyZi9jZWxsNjUtaG9zdGAgfCDQlNC40YHRgtGA0LjQsdGD0YbQuNGPICjQttC00ZHRgiDQt9Cw0LvQuNCy0LrQuCDQutC90L7Qv9C60L7QuSkgfAo=",
+    "mime": "text/markdown;charset=utf-8"
+  },
+  {
+    "name": "RUVSON_Kogda_teryae_rWpYxmFjm9g.srt",
+    "desc": "Мастер-субтитры живого трека (RU)",
+    "size": "5.6 КБ",
+    "b64": "MQowMDowMDowMCwwMDAgLS0+IDAwOjAwOjAwLDkyOApb0LzRg9C30YvQutCwXQoKMgowMDowMDowMCw5MjggLS0+IDAwOjAwOjAxLDg1Ngpb0LzRg9C30YvQutCwXQoKMwowMDowMDowMSw4NTYgLS0+IDAwOjAwOjA2LDk2MQpb0LzRg9C30YvQutCwXSDQndC+0LLRi9C5INCy0LXRh9C10YAg0LIg0LrQvtGE0LXQudC90LUuINCf0YPRgdGC0L7QuSDRgtGD0LzQsNC9Cgo0CjAwOjAwOjA2LDk2MSAtLT4gMDA6MDA6MDksODYyCtGA0LDRgdGC0LLQvtGA0Y/QtdGCINC00L7QvNCwLiBb0LzRg9C30YvQutCwXQoKNQowMDowMDowOSw4NjIgLS0+IDAwOjAwOjE0LDI3MQrQryDQv9C+INC60LLQsNGA0YLQsNC70LDQvCDQsdGA0L7QttGDLCDQs9C00LUg0LLQvtGB0L/QvtC80LjQvdCw0L3QuNGPCgo2CjAwOjAwOjE0LDI3MSAtLT4gMDA6MDA6MTUsNzc5CtGB0LLQvtC00Y/RgiDRgSDRg9C80LAsCgo3CjAwOjAwOjE1LDc3OSAtLT4gMDA6MDA6MTcsNzUxCtCz0LTQtSDRgtGR0L/Qu9C+0Lkg0LLQtdGB0L3QvtC5Cgo4CjAwOjAwOjE3LDc1MSAtLT4gMDA6MDA6MjAsMDcyCtC00YPRiNGDINC90LDQs9GA0YvQstCw0LXRgiDQt9C40LzQsC4KCjkKMDA6MDA6MjAsMDcyIC0tPiAwMDowMDoyNSw3NTcKW9C80YPQt9GL0LrQsF0g0JPQtNC1INC20LjQt9C90Ywg0LvQtdGC0LXQu9C+INGB0YLRgNC10LvQvtC5INC80LjQvNC+INC00LDRgtGLLCDQvNC40LzQvgoKMTAKMDA6MDA6MjUsNzU3IC0tPiAwMDowMDozMSw1NTgK0L3QsNGB0LzQuD8gW9C80YPQt9GL0LrQsF0g0JzRiyDQsdC40LvQuCDQsdGD0LzQsNC20LrQuCwg0LfQsNCx0YvQstCw0Y8sINC30LDRh9C10Lwg0LzRiwoKMTEKMDA6MDA6MzEsNTU4IC0tPiAwMDowMDozMiwyNTQK0LbQuNCy0ZHQvC4KCjEyCjAwOjAwOjMyLDI1NCAtLT4gMDA6MDA6MzYsNzc5CtCYINC60LDQt9Cw0LvQvtGB0YwsIFvQvNGD0LfRi9C60LBdINCy0YHQtdCz0LTQsCDQstC/0LXRgNC10LTQuCDQtdGJ0ZEKCjEzCjAwOjAwOjM2LDc3OSAtLT4gMDA6MDA6MzgsMTcxCtC30LLRg9GH0LjRgiDQtNC+0LvQsy4KCjE0CjAwOjAwOjM4LDE3MSAtLT4gMDA6MDA6NDIsNTgwClvQvNGD0LfRi9C60LBdINCi0L7Qu9GM0LrQviDQstGA0LXQvNGPINCyINC00L7Qu9CzINC90LjRh9C10LPQviDQvdC1CgoxNQowMDowMDo0Miw1ODAgLS0+IDAwOjAwOjQzLDE2MArQtNCw0ZHRgi4KCjE2CjAwOjAwOjQzLDE2MCAtLT4gMDA6MDA6NDcsMTA1CtCYINCy0LTRgNGD0LMg0L3QsCDRgdC10YDQtNGG0LUg0LvQvtC20LjRgtGB0Y8gW9C80YPQt9GL0LrQsF0KCjE3CjAwOjAwOjQ3LDEwNSAtLT4gMDA6MDA6NDgsNjEzCtGF0L7Qu9C+0LTQvdGL0Lkg0LvRkdC0LgoKMTgKMDA6MDA6NDgsNjEzIC0tPiAwMDowMDo1MywyNTQK0JzRiyDRg9GH0LjQvNGB0Y8gW9C80YPQt9GL0LrQsF0g0YbQtdC90LjRgtGMLCDQutC+0LPQtNCwINGC0LXRgNGP0LXQvCwKCjE5CjAwOjAwOjUzLDI1NCAtLT4gMDA6MDA6NTcsNjYzCtC60L7Qs9C00LAg0LfQsCDQtNCy0LXRgNGM0Y4g0LPQsNGB0L3QtdGCINGH0LXQuS3RgtC+INGB0LLQtdGCLiDQnNGLCgoyMAowMDowMDo1Nyw2NjMgLS0+IDAwOjAxOjAxLDcyNArQvNCw0YjQtdC8INGB0LvQtdC00YPRiNC10LTRiNC40Lwg0L/QvtC10LfQtNCw0LwsIFvQvNGD0LfRi9C60LBdCgoyMQowMDowMTowMSw3MjQgLS0+IDAwOjAxOjA2LDAxNwrQv9GL0YLQsNGP0YHRjCDQstGL0LzQvtC70LjRgtGMINGDINC/0YDQvtGI0LvQvtCz0L4g0L7RgtCy0LXRgi4g0JzRiwoKMjIKMDA6MDE6MDYsMDE3IC0tPiAwMDowMToxMCwxOTMK0YPRh9C40LzRgdGPINC70Y7QsdC40YLRjCwg0LrQvtCz0LTQsCBb0LzRg9C30YvQutCwXSDRgdGC0YvQu9C+LAoKMjMKMDA6MDE6MTAsMTkzIC0tPiAwMDowMToxNCw4MzQK0LrQvtCz0LTQsCDQsiDQu9Cw0LTQvtC90Y/RhSDQv9C10L/QtdC70LAg0L3QtSDRgdGC0LDQuy4g0J7QuSwg0LXRgdC70LgKCjI0CjAwOjAxOjE0LDgzNCAtLT4gMDA6MDE6MjIsMDI4CtCxINC30L3QsNGC0Ywg0LfQsNGA0LDQvdC10LUsIFvQvNGD0LfRi9C60LBdINC60LDQuiDQsdGD0LTQtdGCINC90YvRgtGMINCyINC00YPRiNC1INGN0YLQviDQv9GA0L7Qt9GA0LDRh9C90LDRjwoKMjUKMDA6MDE6MjIsMDI4IC0tPiAwMDowMToyNyw0ODEK0L/QtdGH0LDQu9GMLiDQndC1INGB0LrQsNC30LDQuywgW9C80YPQt9GL0LrQsF0g0L3QtSDQvtCx0L3Rj9C7LiDQndC1INGD0YHQv9C10LsuCgoyNgowMDowMToyNyw0ODEgLS0+IDAwOjAxOjI5LDQ1MwrQrdGC0L4g0LLQtdGH0L3Ri9C5INC80L7RgtC40LIuCgoyNwowMDowMToyOSw0NTMgLS0+IDAwOjAxOjM0LDA5NArQktGB0ZEg0LHQtdGA0ZHQsyDQvdCwINC/0L7RgdC70LUuINCh0LXRgNC00YbQtSDQtNC70Y8g0LTRgNGD0LPQuNGFINC90LUKCjI4CjAwOjAxOjM0LDA5NCAtLT4gMDA6MDE6MzUsOTUwCtC+0YLQstC+0YDQuC4gW9C80YPQt9GL0LrQsF0KCjI5CjAwOjAxOjM1LDk1MCAtLT4gMDA6MDE6MzksNDMxCtCc0Ysg0YHRgNCw0LbQsNC10LzRgdGPINGBINGC0LXQvdGM0Y4sIFvQvNGD0LfRi9C60LBdCgozMAowMDowMTozOSw0MzEgLS0+IDAwOjAxOjQyLDMzMQrRgdCz0L7RgNCw0LXQvCDQsiDQv9GD0YHRgtGL0YUg0LzQtdC70L7Rh9Cw0YUuCgozMQowMDowMTo0MiwzMzEgLS0+IDAwOjAxOjQ2LDUwOArQmCDQvdC1INCy0LjQtNC90L4sINC60LDQuiDQuNC90LjQuSDRgdCw0LTQuNGC0YwgW9C80YPQt9GL0LrQsF0KCjMyCjAwOjAxOjQ2LDUwOCAtLT4gMDA6MDE6NDgsMzY1CtC90LAg0L3QsNGI0LjRhSDQv9C70LXRh9Cw0YUuCgozMwowMDowMTo0OCwzNjUgLS0+IDAwOjAxOjUyLDU0MQrQotC+0LvRjNC60L4g0YHRh9Cw0YHRgtGM0LUg0L3QtSDQsiDQsdC70LXRgdC60LUsINCy0LjRgtGA0LjQvdGLLAoKMzQKMDA6MDE6NTIsNTQxIC0tPiAwMDowMTo1Niw4MzQKW9C80YPQt9GL0LrQsF0g0L3QtSDQsiDQv9Cw0YfQutC4LiDQmtGD0L/RjtGA0LDQvdC+INCyINGC0LjRhdC+0LkKCjM1CjAwOjAxOjU2LDgzNCAtLT4gMDA6MDI6MDEsMjQzCtC/0YDQsNCy0LTQtSDRgNC+0LTQvdGL0YUuINCyINC40YUg0YLQtdC/0LvQtdC1INGB0YDQtdC00Lgg0LHRg9GA0YwuCgozNgowMDowMjowMSwyNDMgLS0+IDAwOjAyOjA3LDg1NgrQndC+INC80Ysg0YbQtdC90LjQvCDQu9C40YjRjCDRgtC+LCDRh9GC0L4gW9C80YPQt9GL0LrQsF0g0YPQttC1INC90LXQstC+0LfQvNC+0LbQvdC+INCy0LXRgNC90YPRgtGMLgoKMzcKMDA6MDI6MDcsODU2IC0tPiAwMDowMjoxMiwzODEK0J/RgNC+0LTQvtC70LbQsNGPINGB0LLQvtC5INC00LvQuNC90L3Ri9C5INC4INGH0LDRgdGC0L4gW9C80YPQt9GL0LrQsF0KCjM4CjAwOjAyOjEyLDM4MSAtLT4gMDA6MDI6MTYsNzkwCtCx0LXRgdGB0LzRi9GB0LvQtdC90L3Ri9C5INC/0YPRgtGMLiDQnNGLINGD0YfQuNC80YHRjyDQvtGG0LXQvdC40YLRjCwKCjM5CjAwOjAyOjE2LDc5MCAtLT4gMDA6MDI6MTksMzQzClvQvNGD0LfRi9C60LBdINC60L7Qs9C00LAg0YLQtdGA0Y/QtdC8LAoKNDAKMDA6MDI6MTksMzQzIC0tPiAwMDowMjoyMyw3NTEK0LrQvtCz0LTQsCDQt9CwINC00LLQtdGA0YzRjiDQs9Cw0YHQvdC10YIg0YfQtdC5LdGC0L4g0YHQstC10YIuINCc0YsKCjQxCjAwOjAyOjIzLDc1MSAtLT4gMDA6MDI6MjcsODEyCtC80LDRiNC10LwgW9C80YPQt9GL0LrQsF0g0YHQu9C10LTRg9GI0LXQtNGI0LjQvCDQv9C+0LXQt9C00LDQvC4KCjQyCjAwOjAyOjI3LDgxMiAtLT4gMDA6MDI6MzIsMTA1CtCf0YvRgtCw0Y7RgdGMINCy0YvQvNC+0LvQuNGC0Ywg0YMg0L/RgNC+0YjQu9C+0LPQviDQvtGC0LLQtdGCLiDQnNGLCgo0MwowMDowMjozMiwxMDUgLS0+IDAwOjAyOjM2LDI4MgrRg9GH0LjQvNGB0Y8gW9C80YPQt9GL0LrQsF0g0LvRjtCx0LjRgtGMLCDQutC+0LPQtNCwINGB0YLRi9C70L4uCgo0NAowMDowMjozNiwyODIgLS0+IDAwOjAyOjQ0LDQwMwrQmtC+0LPQtNCwINCyINC70LDQtNC+0L3Rj9GFINC/0LXQv9C10LvQsCBb0LzRg9C30YvQutCwXSDQvdC1INGB0YLQsNC70YwsINC+LCDQtdGB0LvQuCDQsSDQt9C90LDRgtGMINC30LDRgNCw0L3QtdC1LCDQutCw0LoKCjQ1CjAwOjAyOjQ0LDQwMyAtLT4gMDA6MDI6NDksMDQ0CtCx0YPQtNC10YIg0L3Ri9GC0Ywg0LIg0LTRg9GI0LUg0Y3RgtC+INC/0YDQvtC30YDQsNGH0L3QsNGPINC/0LXRh9Cw0LvRjC4KCjQ2CjAwOjAyOjQ5LDA0NCAtLT4gMDA6MDI6NTMsNTY5CtCf0L7Qt9Cy0L7QvdC4INGB0YLQsNGA0LjQutCw0LwsINC+0LHQvdC40LzQuCwgW9C80YPQt9GL0LrQsF0g0L/QvtC60LAKCjQ3CjAwOjAyOjUzLDU2OSAtLT4gMDA6MDI6NTQsOTYxCtCx0YzRkdGC0YHRjyDQv9C+0Y/RgS4KCjQ4CjAwOjAyOjU0LDk2MSAtLT4gMDA6MDI6NTksMjU0CtCf0YPRgdGC0Ywg0L7QsdC40LTRiyDQv9GA0L7QudC00YPRgi4g0K8g0LfQsCDRjdGC0L4g0YHQtdCz0L7QtNC90Y8KCjQ5CjAwOjAyOjU5LDI1NCAtLT4gMDA6MDM6MDUsNTE5CtC80L7Qu9GO0YHRjCwgW9C80YPQt9GL0LrQsF0g0L/QvtGC0L7QvNGDINGH0YLQviDRhNC40L3QsNC7INGDINCy0YHQtdGFINC/0LXRgdC10L0g0LIg0LjRgtC+0LPQtQoKNTAKMDA6MDM6MDUsNTE5IC0tPiAwMDowMzowNywwMjgK0L7QtNC40L0uIFvQv9C10L3QuNC1XQoKNTEKMDA6MDM6MDcsMDI4IC0tPiAwMDowMzoxMiw4MjkKW9C80YPQt9GL0LrQsF0gPj4g0JzRiyDQvtGB0YLQsNGR0LzRgdGPINCyINC/0LDQvNGP0YLQuCDRjdGFINC30LDQsdGL0YLRi9GFINGB0LjQtNC40LwuCgo1MgowMDowMzoxMiw4MjkgLS0+IDAwOjAzOjE3LDU4Ngpb0LzRg9C30YvQutCwXSDQnNGLINGD0YfQuNC80YHRjyDQvtGG0LXQvdC40YLRjCwg0LrQvtCz0LTQsCDRgtC10YDRj9C10LwsCgo1MwowMDowMzoxNyw1ODYgLS0+IDAwOjAzOjIxLDk5NArQutC+0LPQtNCwINC30LAg0LTQstC10YDRjNGOIFvQvNGD0LfRi9C60LBdINCz0LDRgdC90LXRgiDRh9C10Lkt0YLQvgoKNTQKMDA6MDM6MjEsOTk0IC0tPiAwMDowMzoyNiwwNTUK0YHQstC10YIuINCc0Ysg0LzQsNGI0LXQvCDRgdC70LXQtNGD0YjQtdC00YjQuNC8INC/0L7QtdC30LTQsNC8LAoKNTUKMDA6MDM6MjYsMDU1IC0tPiAwMDowMzozMCwzNDgK0L/Ri9GC0LDRj9GB0Ywg0LLRi9C80L7Qu9C40YLRjCDRgyDQv9GA0L7RiNC70L7Qs9C+INC+0YLQstC10YIuINCc0YsKCjU2CjAwOjAzOjMwLDM0OCAtLT4gMDA6MDM6MzQsNTI1CtGD0YfQuNC80YHRjyBb0LzRg9C30YvQutCwXSDQu9GO0LHQuNGC0YwsINC60L7Qs9C00LAg0YHRgtGL0LvQviwKCjU3CjAwOjAzOjM0LDUyNSAtLT4gMDA6MDM6MzgsMjM4CtC60L7Qs9C00LAg0LIg0LvQsNC00L7QvdGP0YUg0L/QtdC/0LXQuyDQuCDRgNCw0LfQsdC40YLQsNGPCgo1OAowMDowMzozOCwyMzggLS0+IDAwOjAzOjQyLDQxNApb0LzRg9C30YvQutCwXSDRhdGA0YPRgdGC0LDQu9GMLiDQkdC10YDQtdGH0Ywg0LHRiyDRgtC+LCDRh9GC0L4KCjU5CjAwOjAzOjQyLDQxNCAtLT4gMDA6MDM6NDYsNTkxCtC10YHRgtGMLiDQn9C+0LrQsCDQvNGLINC30LTQtdGB0YwsINC/0L7QutCwINC90LUg0YPQu9C10YLQtdC70LAKCjYwCjAwOjAzOjQ2LDU5MSAtLT4gMDA6MDM6NDgsOTEyClvQvNGD0LfRi9C60LBdINC00YPRiNCwINCy0LTQsNC70YwuCgo2MQowMDowMzo0OCw5MTIgLS0+IDAwOjAzOjQ5LDg0MApb0LzRg9C30YvQutCwXQoKNjIKMDA6MDM6NDksODQwIC0tPiAwMDowMzo1MCwwNzIK4LmA4LiuCgo2MwowMDowMzo1MCwwNzIgLS0+IDAwOjAzOjUxLDAwMApb0LzRg9C30YvQutCwXQo=",
+    "mime": "application/x-subrip;charset=utf-8"
+  },
+  {
+    "name": "Когда_теряем_uk.lrc",
+    "desc": "Караоке-синхрон UK (LRC) — пробный шар",
+    "size": "4.0 КБ",
+    "b64": "W2J5OlJVVlNPTiDQutC+0L3QstC10LnQtdGAIMK3IFNSVOKGkkxSQyDCtyByV3BZeG1Gam05Z10KWzAwOjAxLjMxXeKZqgpbMDA6MTMuMjBd0J3QvtCy0LjQuSDQstC10YfRltGAINGDINC60LDQsifRj9GA0L3RliwKWzAwOjE1LjQ4XdCz0YPRgdGC0LjQuSDRgtGD0LzQsNC9INGA0L7Qt9GH0LjQvdGP0ZQg0LLQtNC+0LzQsC4KWzAwOjIwLjMyXdCvINC/0L4g0LrQstCw0YDRgtCw0LvQsNGFINCx0LvRg9C60LDRjiwg0LTQtSDRgdC/0L7Qs9Cw0LTQuApbMDA6MjMuMDhd0LfQstC+0LTRj9GC0Ywg0Lcg0YDQvtC30YPQvNGDLgpbMDA6MjYuNDBd0JTQtSDRgtC10L/Qu9C+0Y4g0LLQtdGB0L3QvtGOClswMDoyOS4wNF3QtNGD0YjRgyDQvdCw0LrRgNC40LLQsNGUINC30LjQvNCwLgpbMDA6MzIuMDld4pmqClswMDozMy4zMl3QlNC1INC20LjRgtGC0Y8g0LvQtdGC0ZbQu9C+INGB0YLRgNGW0LvQvtGOINC/0L7QstC3INC00LDRgtC4LCDQv9C+0LLQtwpbMDA6MzYuNzZd0L3QsNGBLgpbMDA6MzguNjVd4pmqClswMDozOS4xNl3QnNC4INC30LHQuNGA0LDQu9C4INC/0LDQv9GW0YDRhtGWLCDQt9Cw0LHRg9Cy0LDRjtGH0LgsINC90LDQstGW0YnQviDQvNC4ClswMDo0My4wOF3QttC40LLQtdC80L4uClswMDo0NS43Ml3QhiDQt9C00LDQstCw0LvQvtGB0Y8g0LfQsNCy0LbQtNC4LApbMDA6NDcuMjRd0L/QvtC/0LXRgNC10LTRgyDRidC1INC30LLRg9GH0LjRgtGMINC00L4uClswMDo1Mi40MF3imaoKWzAwOjUyLjYwXdCi0ZbQu9GM0LrQuCDRh9Cw0YEg0YMg0LHQvtGA0LMKWzAwOjU0LjU2XdC90ZbRh9C+0LPQviDQvdC1INC00LDRlC4KWzAwOjU5LjI0XdCGINGA0LDQv9GC0L7QvCDQvdCwINGB0LXRgNGG0ZYg0LvRj9Cz0LDRlApbMDE6MDEuODBd0YXQvtC70L7QtNC90LjQuSDQu9GW0LQuClswMTowNC40NF3QnNC4INCy0YfQuNC80L7RgdGPINGG0ZbQvdGD0LLQsNGC0LgsINC60L7Qu9C4INCy0YLRgNCw0YfQsNGU0LzQviwKWzAxOjA4Ljk2XdC60L7Qu9C4INC30LAg0LTQstC10YDQuNC80LAg0LPQsNGB0L3QtSDRh9C40ZTRgdGMINGB0LLRltGC0LvQvi4KWzAxOjEyLjIwXdCc0Lgg0LzQsNGF0LDRlNC80L4g0LLRgdC70ZbQtCDQv9C+0ZfQt9C00LDQvCwg0YnQviDQv9GW0YjQu9C4LCDQvdCw0LzQsNCz0LDRjtGH0LjRgdGMClswMToxNC42N13imaoKWzAxOjE1LjI0XdCy0LjQvNC+0LvQuNGC0Lgg0YMg0LzQuNC90YPQu9C+0LPQviDQstGW0LTQv9C+0LLRltC00YwuClswMToxOC4zMl3QnNC4INCy0YfQuNC80L7RgdGPINC70Y7QsdC40YLQuCwg0LrQvtC70Lgg0L7RhdC+0LvQvtC70L4sClswMToyMS45Ml3QutC+0LvQuCDQsiDQtNC+0LvQvtC90Y/RhSDQv9C+0L/RltC7LCDQsCDQvdC1INGB0YLQsNC70YwuINCeLApbMDE6MjUuMDBd0Y/QutCx0Lgg0LfQvdCw0YLQuCDQt9Cw0LfQtNCw0LvQtdCz0ZbQtNGMLApbMDE6MjYuMzZd0Y/QuiDQsdGD0LTQtSDQvdC40YLQuCDQsiDQtNGD0YjRliDRhtGPINC/0YDQvtC30L7RgNCwClswMTozMC4wMF3RgdC80YPRgtC+0LouClswMTozMS44NF3QndC1INGB0LrQsNC30LDQsiwg0L3QtSDQvtCx0ZbQudC90Y/Qsiwg0L3QtSDQstGB0YLQuNCzLgpbMDE6MzQuMzJd0KbQtSDQstGW0YfQvdC40Lkg0LzQvtGC0LjQsi4KWzAxOjM3Ljg0XdCS0YHQtSDQsdC10YDQtdCzINC90LAg0L/RltGB0LvRjywg0YHQtdGA0YbQtSDQtNC70Y8g0ZbQvdGI0LjRhSDQvdC1ClswMTo0MS4xMl3QstGW0LTRh9C40L3QuNCyLgpbMDE6NDQuMDBd0JzQuCDQsdC+0YDQtdC80L7RgdGPINC3INGC0ZbQvdC90Y4sClswMTo0Ni4xMV3imaoKWzAxOjQ2LjUyXdC30LPQvtGA0LDRlNC80L4g0LIg0L/QvtGA0L7QttC90ZbRhSDQtNGA0ZbQsdC90LjRhtGP0YUuClswMTo1MC40OF3QhiDQvdC1INCy0LjQtNC90L4sINGP0Log0ZbQvdGW0Lkg0YHRltC00LDRlApbMDE6NTMuMzJd4pmqClswMTo1My44OF3QvdCwINC90LDRiNC40YUg0L/Qu9C10YfQsNGFLgpbMDE6NTYuOTZd0KLRltC70YzQutC4INGJ0LDRgdGC0Y8g0L3QtSDQsiDQsdC70LjRgdC60YMg0LLRltGC0YDQuNC90LgsClswMTo1OS4yMV3QvdC1INCyINC/0LDRh9GG0ZYg0LrRg9C/0Y7RgCwg0LAg0LIg0YLQuNGF0ZbQuQpbMDI6MDEuODBd0L/RgNCw0LLQtNGWINGA0ZbQtNC90LjRhSwg0YMg0YLQvtC80YMg0YLQtdC/0LvRliDRgdC10YDQtdC0INCx0YPRgC4g0JDQu9C1ClswMjowNS4wNF3QvNC4INGG0ZbQvdGD0ZTQvNC+INC70LjRiNC1INGC0LUsINGJ0L4g0LLQttC1ClswMjowNi44OF3QvdC10LzQvtC20LvQuNCy0L4g0L/QvtCy0LXRgNC90YPRgtC4LgpbMDI6MDkuOTJd0J/RgNC+0LTQvtCy0LbRg9GO0YfQuCDRgdCy0ZbQuSDQtNC+0LLQs9C40LkKWzAyOjEyLjYwXdGWINGH0LDRgdGC0L4g0LHQtdC30LPQu9GD0LfQtNC40Lkg0YjQu9GP0YUsClswMjoxNS43Nl3QvNC4INCy0YfQuNC80L7RgdGPINGG0ZbQvdGD0LLQsNGC0LgsINC60L7Qu9C4INCy0YLRgNCw0YfQsNGU0LzQviwKWzAyOjIwLjI4XdC60L7Qu9C4INC30LAg0LTQstC10YDQuNC80LAg0LPQsNGB0L3QtSDRh9C40ZTRgdGMINGB0LLRltGC0LvQvi4KWzAyOjIzLjQ4XdCc0Lgg0LzQsNGF0LDRlNC80L4g0LLRgdC70ZbQtCDQv9C+0ZfQt9C00LDQvCwg0YnQviDQv9GW0YjQu9C4LApbMDI6MjUuODhd0L3QsNC80LDQs9Cw0Y7Rh9C40YHRjCDQstC40LzQvtC70LjRgtC4INGDINC80LjQvdGD0LvQvtCz0L4g0LLRltC00L/QvtCy0ZbQtNGMLgpbMDI6MjkuNTJd0JzQuCDQstGH0LjQvNC+0YHRjyDQu9GO0LHQuNGC0LgsINC60L7Qu9C4INC+0YXQvtC70L7Qu9CwLApbMDI6MzMuMTZd0LrQvtC70Lgg0LIg0LTQvtC70L7QvdGP0YUg0L/QvtC/0ZbQuywg0LAg0L3QtQpbMDI6MzUuMDBd0YHRgtCw0LvRjC4g0J4sClswMjozNi4xNl3Rj9C60LHQuCDQt9C90LDRgtC4INC30LDQt9C00LDQu9C10LPRltC00YwsINGP0Log0LHRg9C00LUg0L3QuNGC0Lgg0LIKWzAyOjM5LjIwXdC00YPRiNGWINGG0LXQuSDQv9GA0L7Qt9C+0YDQuNC5INGB0YPQvC4KWzAyOjQzLjA0XdCf0L7QtNC30LLQvtC90Lgg0YHRgtCw0YDQuNC8LCDQvtCx0ZbQudC80LgsClswMjo0NS4wNl3imaoKWzAyOjQ1LjQ4XdC00L7QutC4INCxJ9GU0YLRjNGB0Y8g0L/Rg9C70YzRgS4KWzAyOjQ5LjQ0XdCd0LXRhdCw0Lkg0L7QsdGA0LDQt9C4INC/0YDQvtC50LTRg9GC0YwsINGPINC30LAg0YbQtSDRgdGM0L7Qs9C+0LTQvdGWClswMjo1Mi40MF3QvNC+0LvRjtGB0Y8uClswMjo1NC4yM13imaoKWzAyOjU1LjA4XdCi0L7QvNGDINGJ0L4g0YTRltC90LDQuyDRgyDQstGB0ZbRhSDQv9GW0YHQtdC90YwKWzAyOjU4LjI4XdGDINGA0LXQt9GD0LvRjNGC0LDRgtGWINC+0LTQuNC9LgpbMDM6MDAuMTNd4pmqClswMzowMS4zMl3QnNC4INC30LDQu9C40YjQsNGU0LzQvtGB0Ywg0YMg0L/QsNC8J9GP0YLRliDQstGW0YUsClswMzowNC42OF3Qt9Cw0LHRg9GC0LjRhSDRgdC40LTQuNC80L4uClswMzowNi4wMl3imaoKWzAzOjA3LjI4XdCc0Lgg0LLRh9C40LzQvtGB0Y8g0YbRltC90YPQstCw0YLQuCwg0LrQvtC70Lgg0LLRgtGA0LDRh9Cw0ZTQvNC+LApbMDM6MTEuNzZd0LrQvtC70Lgg0LfQsCDQtNCy0LXRgNC40LzQsCDQs9Cw0YHQvdC1INGH0LjQudGB0YwKWzAzOjEzLjcyXdGB0LLRltGC0LvQvi4KWzAzOjE0Ljk2XdCc0Lgg0LzQsNGF0LDRlNC80L4g0LLRgdC70ZbQtCDQv9C+0ZfQt9C00LDQvCwg0YnQviDQv9GW0YjQu9C4LCDQvdCw0LzQsNCz0LDRjtGH0LjRgdGMClswMzoxNy45Nl3QstC40LzQvtC70LjRgtC4INGDINC80LjQvdGD0LvQvtCz0L4g0LLRltC00L/QvtCy0ZbQtNGMLgpbMDM6MjAuOTZd0JzQuCDQstGH0LjQvNC+0YHRjyDQu9GO0LHQuNGC0LgsClswMzoyMi4zNl3QutC+0LvQuCDQvtGF0L7Qu9C+0LvQsCwg0LrQvtC70Lgg0LIg0LTQvtC70L7QvdGP0YUg0L/QvtC/0ZbQuyDRlgpbMDM6MjUuODBd0YDQvtC30LHQuNGC0LAg0LrRgNC40YjRgtCw0LvRjC4g0JHQtdGA0LXQs9GC0Lgg0LEKWzAzOjI4LjA4XdGC0LUsINGJ0L4g0ZQsINC/0L7QutC4INC80Lgg0YLRg9GCLCDQv9C+0LrQuCDQvdC1ClswMzozMS4xNl3QstGW0LTQu9C10YLRltC70LAKWzAzOjMzLjUzXeKZqgpbMDM6MzMuNTZd0LTRg9GI0LAg0LIg0LTQsNC70LXRh9GW0L3RjC4KWzAzOjQwLjA4XeKZqg==",
+    "mime": "text/plain;charset=utf-8"
+  }
+];
+
+// ── МАТЕРИЯ: формы и палитры ───────────────────────────────────
+const FORM_NAMES = ["сфера","куб","колесо","галактика"];
+const PALETTES = [
+  { name:"ЭМБЕР",   c:["#3d1d0c","#ffab40","#ffe9c4"] },
+  { name:"САНСАРА", c:["#5a1454","#ff5e3a","#ffd27a"] },
+  { name:"МАГМА",   c:["#200505","#ff3d00","#ffc46b"] },
+  { name:"КРИОГЕН", c:["#04182e","#0aa3ff","#bff3ff"] },
+  { name:"АВРОРА",  c:["#06231a","#19e68c","#d0b3ff"] },
+  { name:"ПРИЗМА",  c:["#1a1a1e","#c9ccd4","#ffffff"] },
+];
+const DENSITIES = [4000, 12000, 30000, 60000, 120000];
+
+function hex2rgb(h){
+  const n = parseInt(h.slice(1), 16);
+  return [ (n>>16&255)/255, (n>>8&255)/255, (n&255)/255 ];
+}
+
+// ── ROUTING ────────────────────────────────────────────────────
+const views = $$(".view");
+const navBtns = $$(".snav, .tab");
+function go(v) {
+  views.forEach(x => x.classList.toggle("on", x.id === "v-" + v));
+  navBtns.forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  if (v === "player") openPlayer();
+  $("#main").scrollTop = 0;
+}
+navBtns.forEach(b => b.addEventListener("click", () => go(b.dataset.v)));
+$("#brandHome").addEventListener("click", () => go("home"));
+$("#ctaSing").addEventListener("click", () => go("player"));
+$("#featSing").addEventListener("click", () => go("player"));
+$("#ctaCat").addEventListener("click", () => go("catalog"));
+$("#ctaLang").addEventListener("click", () => go("langs"));
+
+// ── CATALOG RENDER ─────────────────────────────────────────────
+function renderCatalog() {
+  const g = $("#catGrid");
+  g.innerHTML = "";
+  CATALOG.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "card" + (c.live ? " live" : "");
+    card.innerHTML = `
+      <div class="thumb">${c.live ? "♫" : "▸"}</div>
+      <div class="tt">${c.title}</div>
+      <div class="meta"><span>${c.views}</span><span>·</span><span>${c.date}</span></div>
+    `;
+    card.addEventListener("click", () => {
+      if (c.live) go("player");
+      else alert("«" + c.title + "» в очереди конвейера. Живой трек — «Когда теряем».");
+    });
+    g.appendChild(card);
+  });
+  const rails = [["rowTop", CATALOG.slice(0,8)], ["rowLive", CATALOG.filter(c=>c.live).concat(CATALOG.slice(0,3))]];
+  rails.forEach(([id, arr]) => {
+    const r = $("#" + id);
+    if (!r) return;
+    r.innerHTML = "";
+    arr.forEach(c => {
+      const card = document.createElement("div");
+      card.className = "card" + (c.live ? " live" : "");
+      card.innerHTML = `
+        <div class="thumb">${c.live ? "♫" : "▸"}</div>
+        <div class="tt">${c.title}</div>
+        <div class="meta"><span>${c.views}</span></div>
+      `;
+      card.addEventListener("click", () => { if (c.live) go("player"); });
+      r.appendChild(card);
+    });
+  });
+  $("#catCnt").textContent = CATALOG.length + " трека";
+}
+
+// ── LANGS RENDER ───────────────────────────────────────────────
+let currentLang = "ru";
+function renderLangs() {
+  const g = $("#lgrid");
+  g.innerHTML = "";
+  LANGS.forEach(([code, name]) => {
+    const b = document.createElement("button");
+    b.className = "gi" + (code === currentLang ? " cur" : "");
+    b.innerHTML = `<b>${name}</b><span>${code.toUpperCase()}</span>`;
+    b.addEventListener("click", () => {
+      currentLang = code;
+      $("#miniLang").textContent = code.toUpperCase() + "·" + name.slice(0,3).toUpperCase();
+      renderLangs();
+    });
+    g.appendChild(b);
+  });
+  $("#langCnt").textContent = LANGS.length + " / 157";
+}
+
+// ── FILES RENDER (менеджер загрузки: реальные вшитые файлы) ────
+function downloadBlob(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+function renderTasks() {
+  const list = $("#taskList");
+  list.innerHTML = "";
+  TASKFILES.forEach(t => {
+    const row = document.createElement("div");
+    row.className = "trow";
+    const sizeLabel = t.self ? fmtSize(new Blob([SELF_SRC]).size) : t.size;
+    row.innerHTML = `
+      <div class="r1"><span class="dot"></span>
+        <span class="nm">${t.name}</span>
+        <span class="sz">${sizeLabel}</span>
+        <button class="ab" style="padding:.3rem .55rem" title="Скачать">⬇</button>
+      </div>
+      <div class="rl">${t.desc}</div>
+    `;
+    const dl = row.querySelector(".ab");
+    dl.addEventListener("click", () => {
+      if (t.self) {
+        downloadBlob(new Blob([SELF_SRC], {type:"text/html;charset=utf-8"}), t.name);
+      } else {
+        const bin = atob(t.b64);
+        const arr = new Uint8Array(bin.length);
+        for (let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+        downloadBlob(new Blob([arr], {type: t.mime || "application/octet-stream"}), t.name);
+      }
+    });
+    list.appendChild(row);
+  });
+}
+$("#taskSearch").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  $$("#taskList .trow").forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+$("#langSearch").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  $$("#lgrid .gi").forEach(g => {
+    g.style.display = g.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// WEB AUDIO — синтез/base64/микрофон, анализатор, 3 бэнда
+// ═══════════════════════════════════════════════════════════════
+let ac, analyser, panner, synthGain, micNode, bufSrc;
+let freqData, timeData, dsBuf;
+const FFT = 2048;
+let audioReady = false;
+let playing = false;
+let startCtxTime = 0;
+let pausePos = 0;
+let totalDur = 230.883;
+
+async function initAudio() {
+  if (ac) return;
+  ac = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = ac.createAnalyser();
+  analyser.fftSize = FFT;
+  analyser.smoothingTimeConstant = 0.82;
+  panner = ac.createStereoPanner();
+  synthGain = ac.createGain();
+  synthGain.gain.value = 0.85;
+  synthGain.connect(analyser);
+  analyser.connect(panner);
+  panner.connect(ac.destination);
+  freqData = new Uint8Array(FFT/2);
+  timeData = new Float32Array(FFT);
+  dsBuf = new Float32Array(FFT/2);
+
+  if (AUDIO_B64 && AUDIO_B64.length > 100) {
+    try {
+      const bin = atob(AUDIO_B64);
+      const arr = new Uint8Array(bin.length);
+      for (let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+      const abuf = await ac.decodeAudioData(arr.buffer);
+      bufSrc = ac.createBufferSource();
+      bufSrc.buffer = abuf;
+      bufSrc.loop = true;
+      bufSrc.connect(synthGain);
+      totalDur = abuf.duration;
+      audioReady = true;
+      return;
+    } catch(e) { console.warn("base64 decode failed, using synth", e); }
+  }
+  buildSynth();
+  audioReady = true;
+}
+
+function buildSynth() {
+  // прогрессия Am-F-C-G: pad + kick, план на 300 секунд
+  const chords = [[220,261.6,329.6],[174.6,220,261.6],[261.6,329.6,392],[196,246.9,293.7]];
+  const bar = 3.0;
+  const t0 = ac.currentTime + 0.1;
+  const bars = Math.ceil(300 / bar);
+  for (let i=0;i<bars;i++) {
+    const ch = chords[i % chords.length];
+    const t = t0 + i*bar;
+    ch.forEach((f, k) => {
+      const o = ac.createOscillator();
+      const g = ac.createGain();
+      o.type = k === 0 ? "sawtooth" : "triangle";
+      o.frequency.value = f;
+      o.detune.value = (k-1)*6;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.05, t+0.4);
+      g.gain.linearRampToValueAtTime(0.0001, t+bar-0.05);
+      o.connect(g); g.connect(synthGain);
+      o.start(t); o.stop(t+bar);
+    });
+    const ko = ac.createOscillator();
+    const kg = ac.createGain();
+    ko.frequency.setValueAtTime(120, t);
+    ko.frequency.exponentialRampToValueAtTime(40, t+0.15);
+    kg.gain.setValueAtTime(0.28, t);
+    kg.gain.exponentialRampToValueAtTime(0.001, t+0.35);
+    ko.connect(kg); kg.connect(synthGain);
+    ko.start(t); ko.stop(t+0.4);
+  }
+}
+
+async function toggleMic() {
+  await initAudio();
+  if (micNode) {
+    micNode.disconnect();
+    micNode = null;
+    $("#btnMic").classList.remove("on");
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation:true, noiseSuppression:true, autoGainControl:false }
+    });
+    micNode = ac.createMediaStreamSource(stream);
+    micNode.connect(analyser);
+    $("#btnMic").classList.add("on");
+  } catch(e) {
+    alert("Микрофон недоступен: " + e.message);
+  }
+}
+$("#btnMic").addEventListener("click", toggleMic);
+
+// ── Анализ: громкость + 3 бэнда + питч (раз in 4 кадра) ────────
+let vol = 0, pitch = 0;
+const bands = { bass:0, mid:0, tre:0 };
+let frameN = 0;
+function analyse() {
+  frameN++;
+  if (!analyser) return;
+  analyser.getByteFrequencyData(freqData);
+  analyser.getFloatTimeDomainData(timeData);
+  let sum = 0;
+  for (let i=0;i<timeData.length;i++) sum += timeData[i]*timeData[i];
+  vol = Math.sqrt(sum/timeData.length);
+  if (frameN % 4 === 0) {
+    for (let i=0;i<dsBuf.length;i++) dsBuf[i] = timeData[i*2];
+    pitch = detectPitch(dsBuf, ac.sampleRate/2);
+  }
+  // бэнды: границы по частотам
+  const binHz = ac.sampleRate / FFT;
+  const bEnd = Math.max(2, Math.round(190/binHz));
+  const mEnd = Math.min(freqData.length-1, Math.round(2200/binHz));
+  const tEnd = Math.min(freqData.length, Math.round(11000/binHz));
+  let sb=0, sm=0, st=0;
+  for (let i=1;i<bEnd;i++)   sb += freqData[i];
+  for (let i=bEnd;i<mEnd;i++) sm += freqData[i];
+  for (let i=mEnd;i<tEnd;i++) st += freqData[i];
+  const tb = clamp(Math.pow(sb/(bEnd-1)/255, 1.3) * 1.7, 0, 1);
+  const tm = clamp(Math.pow(sm/Math.max(1,mEnd-bEnd)/255, 1.2) * 1.9, 0, 1);
+  const tt = clamp((st/Math.max(1,tEnd-mEnd)/255) * 2.6, 0, 1);
+  bands.bass += (tb - bands.bass) * 0.3;
+  bands.mid  += (tm - bands.mid)  * 0.3;
+  bands.tre  += (tt - bands.tre)  * 0.3;
+}
+
+// YIN-подобная автокорреляция (на даунсемпле — дёшево)
+function detectPitch(buf, sr) {
+  const N = buf.length;
+  let rms = 0;
+  for (let i=0;i<N;i++) rms += buf[i]*buf[i];
+  rms = Math.sqrt(rms/N);
+  if (rms < 0.01) return 0;
+  let r1=0, r2=N-1, thres=0.2;
+  for (let i=0;i<N/2;i++) if (Math.abs(buf[i])<thres){r1=i;break;}
+  for (let i=1;i<N/2;i++) if (Math.abs(buf[N-i])<thres){r2=N-i;break;}
+  const sub = buf.slice(r1, r2);
+  const c = new Array(sub.length).fill(0);
+  for (let i=0;i<sub.length;i++)
+    for (let j=0;j<sub.length-i;j++)
+      c[i] += sub[j]*sub[j+i];
+  let d=0;
+  while (c[d] > c[d+1]) d++;
+  let maxv=-1, maxp=-1;
+  for (let i=d;i<c.length;i++) if (c[i]>maxv){maxv=c[i];maxp=i;}
+  let T0 = maxp;
+  const x1=c[T0-1]||0, x2=c[T0], x3=c[T0+1]||0;
+  const a=(x1+x3-2*x2)/2, b=(x3-x1)/2;
+  if (a) T0 = T0 - b/(2*a);
+  return sr / T0;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// WEBGL ДВИЖОК МАТЕРИИ — 4 формы, GPU-морфинг, палитры
+// ═══════════════════════════════════════════════════════════════
+let gl, prog, uni = {}, bufs = {};
+let idxCount = 0;
+let density = 12000;
+let curForm = 0, formFrom = 0, formTo = 0, morphT = 1;
+let P = [null,null,null,null], PM = null;
+let yaw = 0, tiltUser = 0, mouseNX = 0, mouseNY = 0;
+let motionOn = true, engS = 0;
+let cycleOn = false, palAuto = false, formCycleT = 0, palCycleT = 0;
+let palIdx = 0;
+let palCur = PALETTES[0].c.map(hex2rgb).flat();
+let palTgt = PALETTES[0].c.map(hex2rgb).flat();
+
+// Box-Muller с кэшем
+let gSpare = null;
+function gauss() {
+  if (gSpare !== null) { const v = gSpare; gSpare = null; return v; }
+  let u=0, v=0;
+  while (u === 0) u = Math.random();
+  v = Math.random();
+  const m = Math.sqrt(-2*Math.log(u));
+  gSpare = m*Math.sin(2*Math.PI*v);
+  return m*Math.cos(2*Math.PI*v);
+}
+
+// Генерация четырёх форм для N частиц
+function genForms(N) {
+  const P0 = new Float32Array(N*3), P1 = new Float32Array(N*3);
+  const P2 = new Float32Array(N*3), P3 = new Float32Array(N*3);
+  const M  = new Float32Array(N*2);
+  for (let i=0;i<N;i++) {
+    // 0 · СФЕРА — оболочка с толщиной
+    {
+      let x=gauss(), y=gauss(), z=gauss();
+      const l = Math.sqrt(x*x+y*y+z*z) || 1;
+      const r = 1.28 + Math.random()*0.34;
+      P0[i*3]=x/l*r; P0[i*3+1]=y/l*r; P0[i*3+2]=z/l*r;
+    }
+    // 1 · КУБ — грани + рёбра
+    {
+      let x,y,z;
+      const f = i % 6, ax = f >> 1, sgn = (f & 1) ? 1 : -1;
+      const u = Math.random()*2-1, v = Math.random()*2-1;
+      const e = Math.random() < 0.22;
+      x = u*1.05; y = v*1.05; z = sgn*1.05;
+      if (ax === 1) { y = sgn*1.05; z = v*1.05; }
+      if (ax === 2) { z = sgn*1.05; x = v*1.05; }
+      if (e) { // прижать к ребру
+        if (Math.abs(u) > 0.7) x = Math.sign(u)*1.05;
+        if (Math.abs(v) > 0.7 && ax !== 0) y = Math.sign(v)*1.05;
+      }
+      P1[i*3]  = x + gauss()*0.015;
+      P1[i*3+1]= y + gauss()*0.015;
+      P1[i*3+2]= z + gauss()*0.015;
+    }
+    // 2 · КОЛЕСО САНСАРЫ — обод + 8 спиц + втулка (плоскость XY)
+    {
+      let x, y, z;
+      const w = Math.random();
+      if (w < 0.55) {          // обод
+        const a = Math.random()*Math.PI*2;
+        const R = 1.24 + gauss()*0.045;
+        x = Math.cos(a)*R; y = Math.sin(a)*R; z = gauss()*0.045;
+      } else if (w < 0.82) {   // спицы
+        const k = i % 8;
+        const a = (k/8)*Math.PI*2 + gauss()*0.012;
+        const t = 0.16 + Math.random()*0.84;
+        x = Math.cos(a)*t*1.24; y = Math.sin(a)*t*1.24; z = gauss()*0.03;
+      } else {                 // втулка
+        x = gauss()*0.16; y = gauss()*0.16; z = gauss()*0.11;
+      }
+      P2[i*3]=x; P2[i*3+1]=y; P2[i*3+2]=z;
+    }
+    // 3 · ГАЛАКТИКА-САНСАРА — балдж + 3 рукава + гало (плоскость XZ)
+    {
+      let x, y, z;
+      const w = Math.random();
+      if (w < 0.16) {          // балдж
+        x = gauss()*0.30; y = gauss()*0.30*0.55; z = gauss()*0.30;
+      } else if (w < 0.22) {   // гало
+        const d = gauss, l0 = Math.sqrt((()=>{const a=d(),b=d(),c=d();return a*a+b*b+c*c;})())||1;
+        const r = 1.1 + Math.random()*0.9;
+        x = d()/l0*r; y = d()/l0*r*0.45; z = d()/l0*r;
+      } else {                 // рукава
+        const arm = i % 3;
+        const u = Math.random();
+        let th = arm*(Math.PI*2/3) + u*4.4;
+        let r = 0.16*Math.exp(0.34*th);
+        if (r > 1.9) r = 1.9 - Math.random()*0.12;
+        th += gauss()*(0.07 + r*0.09);
+        r += gauss()*r*0.07;
+        if (r < 0.05) r = 0.05;
+        y = gauss()*0.05*(1.25 - Math.min(r,1.9)*0.3);
+        x = Math.cos(th)*r; z = Math.sin(th)*r;
+      }
+      P3[i*3]=x; P3[i*3+1]=y; P3[i*3+2]=z;
+    }
+    M[i*2] = Math.random();
+    M[i*2+1] = Math.random();
+  }
+  return [P0, P1, P2, P3, M];
+}
+
+const VS_SRC = `
+precision mediump float;
+attribute vec3 aP0; attribute vec3 aP1; attribute vec3 aP2; attribute vec3 aP3;
+attribute vec2 aM;
+uniform float uFrom, uTo, uT, uTime, uEnergy, uBass, uMid, uTre, uYaw, uTilt, uDPR;
+varying float vAmp; varying float vSeed;
+float sel(float v, float i){ return 1.0 - min(1.0, abs(v - i) * 2.0); }
+vec3 pick(vec3 a, vec3 b, vec3 c, vec3 d, float i){
+  return a*sel(i,0.) + b*sel(i,1.) + c*sel(i,2.) + d*sel(i,3.);
+}
+mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
+void main(){
+  float m = uT*uT*(3.0-2.0*uT);
+  vec3 p = mix(pick(aP0,aP1,aP2,aP3,uFrom), pick(aP0,aP1,aP2,aP3,uTo), m);
+  vAmp = aM.x; vSeed = aM.y;
+  // колесо крутится в своей плоскости
+  float wW = sel(uFrom,2.)*(1.0-m) + sel(uTo,2.)*m;
+  p.xy = rot(uTime*(0.30+uMid*0.55)*wW) * p.xy;
+  // галактика — дифференциальное вращение
+  float wG = sel(uFrom,3.)*(1.0-m) + sel(uTo,3.)*m;
+  float r = length(p.xz);
+  p.xz = rot(uTime*(0.22+uMid*0.30)/(0.35+r*1.5)*wG) * p.xz;
+  // глобальный рыскание и наклон
+  p.xz = rot(uYaw + uTime*0.07) * p.xz;
+  p.yz = rot(uTilt + sin(uTime*0.11)*0.04) * p.yz;
+  // пульс материи
+  p *= 1.0 + aM.x*(0.26*uBass + 0.10*uTre*sin(uTime*3.0+aM.y*40.0)) + uEnergy*0.10;
+  float vz = p.z - 6.0;
+  float inv = 1.5 / max(0.2, -vz);
+  gl_Position = vec4(p.x*inv, p.y*inv, 0.0, 1.0);
+  gl_PointSize = clamp((3.4 + vAmp*3.6 + uBass*3.0 + uEnergy*2.0) * inv * uDPR, 1.0, 14.0);
+}`;
+
+const FS_SRC = `
+precision mediump float;
+uniform vec3 uC0; uniform vec3 uC1; uniform vec3 uC2;
+uniform float uEnergy, uTre;
+varying float vAmp; varying float vSeed;
+void main(){
+  vec2 d = gl_PointCoord - vec2(0.5);
+  float r = length(d);
+  if (r > 0.5) discard;
+  float a = smoothstep(0.5, 0.04, r);
+  vec3 c = mix(uC0, uC1, smoothstep(0.05, 0.8, vAmp));
+  c = mix(c, uC2, smoothstep(0.72, 1.0, vAmp));
+  c += uTre * 0.35 * vec3(1.0, 0.9, 0.7) * step(0.82, vSeed);
+  float alpha = a * (0.52 + uEnergy*0.40 + 0.20*vAmp);
+  gl_FragColor = vec4(c, alpha);
+}`;
+
+function mkProg(vs, fs) {
+  const v = mkShader(gl.VERTEX_SHADER, vs);
+  const f = mkShader(gl.FRAGMENT_SHADER, fs);
+  const p = gl.createProgram();
+  gl.attachShader(p, v); gl.attachShader(p, f); gl.linkProgram(p);
+  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) console.warn(gl.getProgramInfoLog(p));
+  return p;
+}
+function mkShader(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.warn(gl.getShaderInfoLog(s));
+  return s;
+}
+
+function initGL() {
+  const canvas = $("#gl");
+  gl = canvas.getContext("webgl", {alpha:false, antialias:true});
+  if (!gl) { document.body.classList.add("no-webgl"); return; }
+  prog = mkProg(VS_SRC, FS_SRC);
+  gl.useProgram(prog);
+  uni = {
+    uFrom:  gl.getUniformLocation(prog,"uFrom"),
+    uTo:    gl.getUniformLocation(prog,"uTo"),
+    uT:     gl.getUniformLocation(prog,"uT"),
+    uTime:  gl.getUniformLocation(prog,"uTime"),
+    uEnergy:gl.getUniformLocation(prog,"uEnergy"),
+    uBass:  gl.getUniformLocation(prog,"uBass"),
+    uMid:   gl.getUniformLocation(prog,"uMid"),
+    uTre:   gl.getUniformLocation(prog,"uTre"),
+    uYaw:   gl.getUniformLocation(prog,"uYaw"),
+    uTilt:  gl.getUniformLocation(prog,"uTilt"),
+    uDPR:   gl.getUniformLocation(prog,"uDPR"),
+    uC0:    gl.getUniformLocation(prog,"uC0"),
+    uC1:    gl.getUniformLocation(prog,"uC1"),
+    uC2:    gl.getUniformLocation(prog,"uC2"),
+  };
+  ["aP0","aP1","aP2","aP3","aM"].forEach(name => {
+    bufs[name] = gl.createBuffer();
+    const loc = gl.getAttribLocation(prog, name);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufs[name]);
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, name === "aM" ? 2 : 3, gl.FLOAT, false, 0, 0);
+  });
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+  gl.clearColor(0.0275, 0.0235, 0.0196, 1);  // #070605 — фон RUVSON
+  rebuild(density);
+  resizeGL();
+  window.addEventListener("resize", resizeGL);
+}
+
+function rebuild(N) {
+  if (!gl) return;
+  const [P0,P1,P2,P3,M] = genForms(N);
+  P = [P0,P1,P2,P3]; PM = M;
+  const data = { aP0:P0, aP1:P1, aP2:P2, aP3:P3, aM:M };
+  Object.keys(data).forEach(name => {
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufs[name]);
+    gl.bufferData(gl.ARRAY_BUFFER, data[name], gl.STATIC_DRAW);
+  });
+  idxCount = N;
+  density = N;
+  const st = $("#ptCount");
+  if (st) st.textContent = N.toLocaleString("ru-RU") + " частиц";
+}
+
+// прерывание морфа: вшить текущий бленд в буфер «from» — без рывка
+function foldMorph() {
+  if (morphT >= 1 || formFrom === formTo) return;
+  const m = morphT*morphT*(3-2*morphT);
+  const A = P[formFrom], B = P[formTo];
+  for (let i=0;i<A.length;i++) A[i] += (B[i]-A[i])*m;
+  gl.bindBuffer(gl.ARRAY_BUFFER, bufs["aP"+formFrom]);
+  gl.bufferData(gl.ARRAY_BUFFER, A, gl.STATIC_DRAW);
+}
+
+function setForm(i) {
+  i = ((i % 4) + 4) % 4;
+  if (i === formTo && morphT >= 1) return;
+  foldMorph();            // текущий бленд вшит в P[formFrom] — старт без рывка
+  formTo = i;
+  morphT = (formFrom === formTo) ? 1 : 0;
+  curForm = i;
+  $$("#segForm .segb").forEach(b => b.classList.toggle("on", +b.dataset.f === i));
+  $$(".fq").forEach(b => b.classList.toggle("on", +b.dataset.f === i));
+}
+
+function setDensity(n) {
+  if (!gl || n === density) return;
+  rebuild(n);
+  $$("#segDens .segb").forEach(b => b.classList.toggle("on", +b.dataset.n === n));
+}
+
+function setPalette(i, quiet) {
+  palIdx = ((i % 6) + 6) % 6;
+  palTgt = PALETTES[palIdx].c.map(hex2rgb).flat();
+  $$(".pdot").forEach((d,k) => d.classList.toggle("on", k === palIdx));
+  if (!quiet) flashPal(PALETTES[palIdx].name);
+}
+
+let palFlashT = null;
+function flashPal(name) {
+  const el = $("#palFlash");
+  if (!el) return;
+  el.textContent = "палитра · " + name;
+  el.classList.add("show");
+  clearTimeout(palFlashT);
+  palFlashT = setTimeout(() => el.classList.remove("show"), 1400);
+}
+
+function resizeGL() {
+  const c = $("#gl");
+  c.width = innerWidth * Math.min(devicePixelRatio, 2);
+  c.height = innerHeight * Math.min(devicePixelRatio, 2);
+  if (gl) gl.viewport(0,0,c.width,c.height);
+}
+
+function renderGL() {
+  if (!gl || !prog) return;
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  const eTgt = motionOn ? clamp(vol * 6, 0, 1.2) : 0;
+  engS += (eTgt - engS) * 0.12;
+  const mS = motionOn ? 1 : 0;
+  gl.useProgram(prog);
+  gl.uniform1f(uni.uFrom, formFrom);
+  gl.uniform1f(uni.uTo, formTo);
+  gl.uniform1f(uni.uT, morphT);
+  gl.uniform1f(uni.uTime, timeAcc);
+  gl.uniform1f(uni.uEnergy, engS);
+  gl.uniform1f(uni.uBass, bands.bass * mS);
+  gl.uniform1f(uni.uMid,  bands.mid  * mS);
+  gl.uniform1f(uni.uTre,  bands.tre  * mS);
+  gl.uniform1f(uni.uYaw, yaw + mouseNX*0.35);
+  gl.uniform1f(uni.uTilt, -0.42 + tiltUser + mouseNY*0.22);
+  gl.uniform1f(uni.uDPR, Math.min(devicePixelRatio, 2));
+  gl.uniform3fv(uni.uC0, [palCur[0],palCur[1],palCur[2]]);
+  gl.uniform3fv(uni.uC1, [palCur[3],palCur[4],palCur[5]]);
+  gl.uniform3fv(uni.uC2, [palCur[6],palCur[7],palCur[8]]);
+  gl.drawArrays(gl.POINTS, 0, idxCount);
+  if (panner) panner.pan.value = Math.sin(performance.now()*0.0004) * 0.55;
+}
+
+// тикер
+let timeAcc = 0, lastFrame = 0;
+function tick(now) {
+  requestAnimationFrame(tick);
+  const dt = Math.min(0.05, (now - lastFrame)/1000 || 0.016);
+  lastFrame = now;
+  if (motionOn) timeAcc += dt;
+  // морф
+  if (morphT < 1) {
+    morphT = Math.min(1, morphT + dt/1.8);
+    if (morphT >= 1) formFrom = formTo;   // финализируем — from-буфер больше не нужен
+  }
+  // палитра — кроссфейд
+  for (let k=0;k<9;k++) palCur[k] += (palTgt[k]-palCur[k]) * 0.045;
+  // сансара-цикл
+  if (cycleOn) {
+    formCycleT += dt;
+    if (formCycleT >= 12) { formCycleT = 0; setForm(curForm + 1); }
+    if (palAuto) {
+      palCycleT += dt;
+      if (palCycleT >= 7) { palCycleT = 0; setPalette(palIdx + 1, true); }
+    }
+  }
+  analyse();
+  updateKaraoke(false);
+  renderGL();
+  updateScoreUI();
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// KARAOKE ENGINE
+// ═══════════════════════════════════════════════════════════════
+let lineEls = [];
+let activeLine = -1;
+let shiftMs = 0;
+let tempo = 1.0;
+
+function buildLyricsDOM() {
+  const st = $("#kstack");
+  st.innerHTML = "";
+  lineEls = [];
+  LYRICS.forEach((ln, i) => {
+    const el = document.createElement("div");
+    el.className = "kl";
+    el.dataset.i = i;
+    ln.words.forEach(w => {
+      const s = document.createElement("span");
+      s.className = "w";
+      s.textContent = w + " ";
+      el.appendChild(s);
+    });
+    el.addEventListener("click", () => { seekTo(ln.t); });
+    st.appendChild(el);
+    lineEls.push(el);
+  });
+}
+
+let clockFallback = false, fbWall = 0, fbPos = 0;
+function currentTime() {
+  if (!ac) return 0;
+  if (!playing) return pausePos;
+  if (clockFallback) return fbPos + (performance.now() - fbWall)/1000 * tempo;
+  return pausePos + (ac.currentTime - startCtxTime) * tempo;
+}
+function clockSync() {
+  if (clockFallback) { fbPos = pausePos; fbWall = performance.now(); }
+  else if (ac) startCtxTime = ac.currentTime;
+}
+
+function seekTo(t) {
+  pausePos = clamp(t, 0, totalDur);
+  clockSync();
+  updateKaraoke(true);
+}
+
+function play() {
+  initAudio().then(() => {
+    if (ac.state === "suspended") ac.resume();
+    if (bufSrc && !bufSrc._started) { bufSrc.start(0); bufSrc._started = true; }
+    playing = true;
+    clockSync();
+    // сторож: контекст не завёлся (нет аудиоустройства / строгий autoplay)
+    // → тихий демо-режим: караоке и ТЭП идут по performance-часам
+    setTimeout(() => {
+      if (playing && ac.state !== "running" && !clockFallback) {
+        clockFallback = true;
+        fbPos = pausePos; fbWall = performance.now();
+        console.warn("аудиоконтекст suspended → тихий демо-режим (караоке по performance-часам)");
+      }
+    }, 350);
+    $("#btnPlay").textContent = "❚❚";
+    $("#btnPlay").setAttribute("aria-pressed", "true");
+    $("#mini").classList.add("show");
+    $("#scorebar").classList.add("show");
+  });
+}
+function pause() {
+  if (!playing) return;
+  pausePos = currentTime();
+  playing = false;
+  $("#btnPlay").textContent = "▶";
+  $("#btnPlay").setAttribute("aria-pressed", "false");
+}
+function toggle() { playing ? pause() : play(); }
+
+$("#btnPlay").addEventListener("click", toggle);
+$("#miniPlay").addEventListener("click", e => { e.stopPropagation(); toggle(); });
+$("#mini").addEventListener("click", () => go("player"));
+
+function openPlayer() {
+  $("#player").classList.add("open");
+  if (!lineEls.length) buildLyricsDOM();
+  updateKaraoke(true);
+}
+$("#plBack").addEventListener("click", () => {
+  $("#player").classList.remove("open");
+});
+
+// ── Рендер караоке ─────────────────────────────────────────────
+function updateKaraoke(force) {
+  const t = currentTime() + shiftMs/1000;
+  let found = -1;
+  for (let i=0;i<LYRICS.length;i++){
+    if (t >= LYRICS[i].t && t < LYRICS[i].t + LYRICS[i].d) { found = i; break; }
+  }
+  if (found !== activeLine || force) {
+    if (activeLine >= 0 && lineEls[activeLine]) {
+      lineEls[activeLine].classList.remove("act");
+      lineEls[activeLine].classList.add("past");
+    }
+    if (found >= 0) {
+      lineEls[found].classList.add("act");
+      lineEls[found].classList.remove("past");
+      const st = $("#kstage");
+      const el = lineEls[found];
+      const target = el.offsetTop - st.clientHeight * 0.38;
+      st.scrollTo({top: target, behavior: "smooth"});
+    }
+    activeLine = found;
+  }
+  if (found >= 0) {
+    const ln = LYRICS[found];
+    const el = lineEls[found];
+    const prog = clamp((t - ln.t) / ln.d, 0, 1);
+    const words = el.querySelectorAll(".w");
+    const N = words.length;
+    const wpGlobal = prog * N;
+    words.forEach((w, j) => {
+      const local = clamp((wpGlobal - j) * 100, 0, 100);
+      w.style.setProperty("--wp", local + "%");
+      w.classList.toggle("lit", local > 0);
+    });
+  }
+  const dur = totalDur;
+  const p = clamp(t / dur, 0, 1);
+  $("#fill").style.width = (p*100) + "%";
+  $("#head").style.left = (p*100) + "%";
+  $("#tc").textContent = fmtT(t) + " / " + fmtT(dur);
+  $("#miniProg").style.width = (p*100) + "%";
+}
+
+// ── ТЭП ────────────────────────────────────────────────────────
+let score = 0, combo = 1, acc = 100, best = 0;
+let tapEnabled = false;
+function setTap(on) {
+  tapEnabled = on;
+  $("#btnTap").classList.toggle("on", on);
+}
+$("#btnTap").addEventListener("click", () => setTap(!tapEnabled));
+
+function doTap() {
+  if (!tapEnabled) return;
+  const t = currentTime() + shiftMs/1000;
+  const win = +$("#reaction").value / 1000;
+  let bd = Infinity;
+  LYRICS.forEach(ln => {
+    const N = ln.words.length;
+    ln.words.forEach((w, j) => {
+      const wt = ln.t + (j/N) * ln.d;
+      const d = Math.abs(t - wt);
+      if (d < bd) { bd = d; }
+    });
+  });
+  const fb = $("#tapFlash");
+  if (bd < win) {
+    const a = 1 - bd/win;
+    score += Math.round(10 * combo * (0.5 + a));
+    combo = Math.min(combo + 1, 99);
+    fb.textContent = a > 0.85 ? "ИДЕАЛ ×" + combo : a > 0.5 ? "ХОРОШО ×" + combo : "ОК ×" + combo;
+    fb.style.color = "var(--ember)";
+  } else {
+    combo = 1;
+    fb.textContent = "МИМО";
+    fb.style.color = "#e05a5a";
+  }
+  fb.style.opacity = "1";
+  setTimeout(() => fb.style.opacity = "0", 350);
+}
+function updateScoreUI() {
+  if (score > best) best = score;
+  $("#scScore").textContent = String(score).padStart(5,"0");
+  $("#scCombo").textContent = "×" + combo;
+  $("#scAcc").textContent = Math.round(acc) + "%";
+}
+
+// ═══════════════════════════════════════════════════════════════
+// СЦЕНА-UI: формы, палитры, плотность, циклы, motion
+// ═══════════════════════════════════════════════════════════════
+function buildPaletteDots() {
+  const wrap = $("#pDots");
+  PALETTES.forEach((p, i) => {
+    const d = document.createElement("button");
+    d.className = "pdot" + (i === 0 ? " on" : "");
+    d.style.background = p.c[1];
+    d.title = p.name;
+    d.setAttribute("aria-label", "палитра " + p.name);
+    d.addEventListener("click", () => setPalette(i));
+    wrap.appendChild(d);
+  });
+}
+$$("#segForm .segb").forEach(b => b.addEventListener("click", () => setForm(+b.dataset.f)));
+$$("#segDens .segb").forEach(b => b.addEventListener("click", () => setDensity(+b.dataset.n)));
+$$(".fq").forEach(b => b.addEventListener("click", () => setForm(+b.dataset.f)));
+
+$("#btnMotion").addEventListener("click", () => {
+  motionOn = !motionOn;
+  $("#btnMotion").classList.toggle("on", motionOn);
+});
+$("#btnPalCycle").addEventListener("click", () => {
+  palAuto = !palAuto;
+  palCycleT = 0;
+  $("#btnPalCycle").classList.toggle("on", palAuto);
+});
+$("#btnSamsara").addEventListener("click", () => {
+  cycleOn = !cycleOn;
+  formCycleT = 0;
+  $("#btnSamsara").classList.toggle("on", cycleOn);
+});
+
+// ── Драг-вращение сцены + параллакс ────────────────────────────
+const DRAG_SKIP = 'button,input,a,select,textarea,label,.player,.mini,.scbar,.sidenav,.tabbar,.topbar,.card,.gi,.trow,.kl,.fab-view,.hero-txt,.wave';
+let dragging = false, dragX = 0, dragY = 0;
+window.addEventListener("pointerdown", e => {
+  if (e.target.closest(DRAG_SKIP)) return;
+  dragging = true; dragX = e.clientX; dragY = e.clientY;
+});
+window.addEventListener("pointermove", e => {
+  mouseNX = e.clientX / innerWidth - 0.5;
+  mouseNY = e.clientY / innerHeight - 0.5;
+  if (!dragging) return;
+  yaw += (e.clientX - dragX) * 0.006;
+  tiltUser = clamp(tiltUser + (e.clientY - dragY) * 0.004, -0.6, 0.6);
+  dragX = e.clientX; dragY = e.clientY;
+});
+window.addEventListener("pointerup", () => { dragging = false; });
+
+// ═══════════════════════════════════════════════════════════════
+// ФАБРИКА: capability graph — понажимай
+// ═══════════════════════════════════════════════════════════════
+const F_CAPS = {
+  report:    ["READ_BYTES","PARSE_JSON","FILTER_JSON","GROUP","RENDER_MARKDOWN"],
+  minussync: ["READ_BYTES","FFT_SPLIT","CENTER_CANCEL","ALIGN_LYRICS","WRITE_LRC"],
+  newcap:    ["OBSERVE","MODEL","HYPOTHESIS","EXPERIMENT","VERIFY","NEW_CAPABILITY"]
+};
+const F_LEDGER = {
+  report: [
+    ["OBSERVED","read_bytes: 417KB payload"],
+    ["TESTED","parse_json: 18/18 записей"],
+    ["TESTED","filter: 3 error-класса"],
+    ["HYPOTHESIS","group-by: ключ выбран, проверка нужна"],
+    ["VERIFIED","pipeline report_gen → derived capability"]],
+  minussync: [
+    ["OBSERVED","stereo L/R present"],
+    ["TESTED","fft_split: 44.1kHz ok"],
+    ["TESTED","center_cancel: −11.3dB vocal"],
+    ["HYPOTHESIS","word-align по энергии"],
+    ["VERIFIED","pipeline minus_align → derived capability"]],
+  newcap: [
+    ["OBSERVED","pattern A→B, B→C"],
+    ["OBSERVED","world-model обновлён"],
+    ["HYPOTHESIS","A→B→C допустим"],
+    ["TESTED","experiment ×3: 3/3 успех"],
+    ["TESTED","critic: риски минимальны"],
+    ["VERIFIED","NEW CAPABILITY добавлена в граф"]]
+};
+let fBusy = false;
+function fLog(st, msg) {
+  const box = $("#fLog");
+  const d = document.createElement("div");
+  d.className = "fline";
+  d.innerHTML = '<span class="st ' + st + '">[' + st + ']</span> <b>' + msg + '</b>';
+  box.prepend(d);
+}
+function fAgent(id, on) { $(id).classList.toggle("busy", on); }
+async function runIntent(key) {
+  if (fBusy) return;
+  fBusy = true;
+  const caps = F_CAPS[key], ledger = F_LEDGER[key];
+  const pipe = $("#fPipe");
+  pipe.innerHTML = caps.map(c => '<span class="cap">' + c + '</span>').join('<span class="farrow">→</span>');
+  $("#fLog").innerHTML = "";
+  const capEls = pipe.querySelectorAll(".cap");
+  fAgent("#fObs", true);  await new Promise(r => setTimeout(r, 420));
+  fLog("OBSERVED", 'intent="' + key + '" · world-model обновлён'); fAgent("#fObs", false);
+  fAgent("#fPln", true);  await new Promise(r => setTimeout(r, 420));
+  fLog("HYPOTHESIS", "план: " + caps.join(" → ")); fAgent("#fPln", false);
+  fAgent("#fCrt", true);  await new Promise(r => setTimeout(r, 380));
+  fLog("TESTED", "critic: санк(риски) пройдена"); fAgent("#fCrt", false);
+  for (let i=0;i<caps.length;i++) {
+    capEls[i].classList.add("active");
+    fAgent("#fVrf", true);
+    await new Promise(r => setTimeout(r, 360));
+    if (ledger[i]) fLog(ledger[i][0], ledger[i][1]);
+    capEls[i].classList.add("verified");
+    fAgent("#fVrf", false);
+    await new Promise(r => setTimeout(r, 110));
+  }
+  fLog("VERIFIED", "→ граф вырос: новая capability участвует в следующих планах");
+  fBusy = false;
+}
+$$("[data-intent]").forEach(b => b.addEventListener("click", () => runIntent(b.dataset.intent)));
+
+// ═══════════════════════════════════════════════════════════════
+// Горячие клавиши
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener("keydown", e => {
+  if (e.target.matches("input,textarea,[contenteditable]")) return;
+  if (e.code === "Space") {
+    if ($("#player").classList.contains("open") && tapEnabled) {
+      e.preventDefault(); doTap();
+    } else if (!$("#player").classList.contains("open")) {
+      e.preventDefault(); toggle();
+    }
+    return;
+  }
+  if (e.key === "Escape") { $("#player").classList.remove("open"); return; }
+  if (e.code === "Digit1") setForm(0);
+  if (e.code === "Digit2") setForm(1);
+  if (e.code === "Digit3") setForm(2);
+  if (e.code === "Digit4") setForm(3);
+  if (e.code === "KeyQ") setPalette(palIdx - 1);
+  if (e.code === "KeyE") setPalette(palIdx + 1);
+  if (e.code === "Minus") {
+    const i = Math.max(0, DENSITIES.indexOf(density) - 1);
+    setDensity(DENSITIES[i]);
+  }
+  if (e.code === "Equal") {
+    const i = Math.min(DENSITIES.length - 1, DENSITIES.indexOf(density) + 1);
+    setDensity(DENSITIES[i]);
+  }
+  if (e.code === "KeyC") $("#btnSamsara").click();
+  if (e.code === "KeyF") {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  }
+});
+
+// ── Прочие кнопки ─────────────────────────────────────────────
+$("#btnB10").addEventListener("click", () => seekTo(currentTime() - 10));
+$("#btnF10").addEventListener("click", () => seekTo(currentTime() + 10));
+$("#tempo").addEventListener("input", e => {
+  const v = +e.target.value;
+  pausePos = currentTime();
+  tempo = v;
+  clockSync();
+  $("#tempoV").textContent = v.toFixed(2) + "×";
+  if (bufSrc) bufSrc.playbackRate.value = v;
+});
+$("#shift").addEventListener("input", e => {
+  shiftMs = +e.target.value;
+  $("#shiftV").textContent = shiftMs;
+});
+$("#reaction").addEventListener("input", e => {
+  $("#reactionV").textContent = e.target.value;
+});
+$("#btnMinus").addEventListener("click", () => {
+  const on = $("#btnMinus").getAttribute("aria-pressed") === "true";
+  $("#btnMinus").setAttribute("aria-pressed", String(!on));
+  $("#btnMinus").classList.toggle("on", !on);
+  if (synthGain) synthGain.gain.value = !on ? 0.55 : 0.85;
+});
+$("#rail").addEventListener("click", e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  const p = clamp((e.clientX - r.left) / r.width, 0, 1);
+  seekTo(p * totalDur);
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+initGL();
+renderCatalog();
+renderLangs();
+renderTasks();
+buildLyricsDOM();
+buildPaletteDots();
+requestAnimationFrame(tick);
+console.log('%c СИНГУЛЯР·02 «ФАБРИКА» v1.0 — 4 формы · 6 палитр · capability graph ','background:#ffab40;color:#000;font-weight:700;padding:4px 8px;border-radius:4px');
+
+</script>
+</body>
+</html>

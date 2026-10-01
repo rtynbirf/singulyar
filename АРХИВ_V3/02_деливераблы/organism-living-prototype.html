@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>ORGANISM — живой прототип · поколение 1</title>
+<meta name="description" content="Живой прототип интерфейса: сингулярное, эмерджентное, инженерное. Один файл, ноль зависимостей, среда, которая мутирует у вас на глазах.">
+<style>
+:root{
+  --hue:168; --hue2:288; --radius:14px;
+  --bg:#05070a; --panel:rgba(255,255,255,.035); --line:rgba(255,255,255,.09);
+  --tx:#e9f1f4; --dim:#93a3ad;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,"Liberation Mono",monospace;
+  --sans:"Inter","SF Pro Display","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.65;overflow-x:hidden}
+::selection{background:hsl(var(--hue) 90% 60% / .35)}
+:focus-visible{outline:2px solid hsl(var(--hue) 90% 60%);outline-offset:2px}
+#field{position:fixed;inset:0;z-index:0;display:block}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(1100px 650px at 50% 18%,transparent 0%,rgba(5,7,10,.5) 70%,rgba(5,7,10,.92) 100%)}
+main,footer{position:relative;z-index:2}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+a{color:hsl(var(--hue) 90% 68%)}
+h1,h2,h3{line-height:1.12;letter-spacing:-.02em}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:18px;
+  padding:11px 22px;background:rgba(5,7,10,.74);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px}
+.brand{font-weight:700;letter-spacing:.09em;color:var(--dim);white-space:nowrap}
+.brand b{color:hsl(var(--hue) 90% 62%)}
+.genom-mini{display:flex;align-items:center;gap:10px;color:var(--dim);white-space:nowrap}
+.genom-mini b{color:var(--tx)}
+.dot{width:10px;height:10px;border-radius:50%;background:hsl(var(--hue) 90% 60%);
+  box-shadow:0 0 14px hsl(var(--hue) 90% 60%);transition:background .8s}
+.meter{width:64px;height:5px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;display:inline-block}
+.meter i{display:block;height:100%;width:40%;transition:width .9s,background .9s}
+.gen{border:1px solid hsl(var(--hue) 90% 60% / .5);color:hsl(var(--hue) 90% 70%);
+  padding:1px 8px;border-radius:999px}
+.hud nav{margin-left:auto;display:flex;gap:16px}
+.hud nav a{color:var(--dim);text-decoration:none}
+.hud nav a:hover{color:hsl(var(--hue) 90% 68%)}
+#clock{color:var(--dim);font-variant-numeric:tabular-nums}
+@media(max-width:940px){.genom-mini{display:none}}
+@media(max-width:640px){.hud nav{display:none}.hud{justify-content:space-between}}
+
+/* ---------- HERO ---------- */
+.hero{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding-top:110px;padding-bottom:40px}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+.hero h1{font-size:clamp(42px,7.2vw,92px);font-weight:800;margin:18px 0 22px}
+.hero h1 em{font-style:normal;
+  background:linear-gradient(92deg,hsl(var(--hue) 95% 62%),hsl(var(--hue2) 95% 66%),hsl(var(--hue) 95% 62%));
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:pan 9s linear infinite}
+@keyframes pan{to{background-position:220% 0}}
+.lead{max-width:760px;font-size:clamp(15.5px,1.6vw,18.5px);color:#c3d0d8}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 8px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:hsl(var(--hue) 90% 72%);
+  border:1px solid hsl(var(--hue) 90% 60% / .5);padding:6px 13px;border-radius:999px;white-space:nowrap}
+.status{font-family:var(--mono);font-size:13px;color:var(--dim);min-height:1.6em;margin-top:14px}
+.status .prompt{color:hsl(var(--hue) 90% 62%)}
+.caret{display:inline-block;width:8px;height:14px;background:hsl(var(--hue) 90% 62%);
+  vertical-align:-2px;margin-left:2px;animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:26px}
+.btn{font-family:var(--mono);font-size:13px;letter-spacing:.04em;cursor:pointer;border-radius:10px;
+  padding:12px 20px;text-decoration:none;transition:filter .25s,border-color .25s,background .25s}
+.btn.primary{background:hsl(var(--hue) 85% 55%);border:1px solid transparent;color:#031410;font-weight:700}
+.btn.primary:hover{filter:brightness(1.15)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--tx)}
+.btn.ghost:hover{border-color:hsl(var(--hue) 90% 60% / .6)}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.hint b{color:hsl(var(--hue) 90% 70%)}
+
+/* ---------- СЕКЦИИ ---------- */
+.sec{padding:84px 0 26px}
+h2{font-size:clamp(27px,3.8vw,44px);font-weight:800;margin:14px 0 26px}
+.sec-lead{max-width:720px;color:#c3d0d8;margin:-8px 0 30px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:920px){.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+  transition:border-color .5s,transform .5s,box-shadow .5s}
+.card:hover{border-color:hsl(var(--hue) 90% 60% / .4);transform:translateY(-3px)}
+.tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--dim)}
+.card h3{font-size:21px;margin:10px 0 8px}
+.era-lead{font-size:14px;color:#b9c7d0;margin-bottom:14px}
+.card ul{list-style:none}
+.card li{position:relative;padding-left:17px;margin:9px 0;font-size:14px;color:#c6d3da}
+.card li::before{content:"—";position:absolute;left:0;color:hsl(var(--hue) 90% 60%)}
+.patterns{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.patterns span{font-family:var(--mono);font-size:11px;color:var(--dim);
+  border:1px dashed var(--line);padding:4px 9px;border-radius:8px}
+.era.future{border-color:hsl(var(--hue2) 95% 62% / .55);
+  background:linear-gradient(165deg,hsl(var(--hue2) 95% 60% / .1),transparent 55%);
+  animation:breath 5s ease-in-out infinite}
+@keyframes breath{50%{box-shadow:0 0 34px hsl(var(--hue2) 95% 60% / .18)}}
+.era.future .tag{color:hsl(var(--hue2) 95% 70%)}
+
+/* ---------- ПЛАН ---------- */
+.h-top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.h-code{font-family:var(--mono);font-size:12.5px;font-weight:700;color:hsl(var(--hue) 90% 65%)}
+.state{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line);color:var(--dim)}
+.state.done{border-color:hsl(158 80% 55% / .6);color:#7de8b8}
+.state.run{border-color:hsl(var(--hue) 90% 60% / .6);color:hsl(var(--hue) 90% 72%)}
+.state.goal{border-color:hsl(var(--hue2) 95% 62% / .6);color:hsl(var(--hue2) 95% 72%)}
+.h-card p{font-size:14px;color:#c6d3da;margin-bottom:16px}
+.prog{height:4px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:hsl(var(--hue) 90% 60%);transition:width 1.4s .2s ease}
+.pct{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px;display:block}
+
+/* ---------- ЛАБОРАТОРИЯ ---------- */
+.lab{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:920px){.lab{grid-template-columns:1fr}}
+.gene{display:grid;grid-template-columns:96px 1fr 54px;gap:12px;align-items:center;
+  font-family:var(--mono);font-size:12px;margin:13px 0}
+.gene .name{color:var(--dim)}
+.bar{height:5px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:hsl(var(--hue) 90% 60%);transition:width .8s}
+.gene .val{text-align:right;font-variant-numeric:tabular-nums}
+.lab-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.log-title{font-size:15px;margin-bottom:12px;font-family:var(--mono);letter-spacing:.06em}
+.log{max-height:330px;overflow:auto;font-family:var(--mono);font-size:12px;color:#b9c7d0;
+  display:flex;flex-direction:column;gap:7px;scrollbar-width:thin}
+.log-line span{color:var(--dim);margin-right:9px}
+.log-line{overflow-wrap:anywhere}
+.log-line.hl{color:hsl(var(--hue) 90% 72%)}
+
+/* ---------- ИНЖЕНЕРИЯ ---------- */
+.layer{display:grid;grid-template-columns:58px 230px 1fr;gap:16px;align-items:baseline;
+  border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);
+  padding:15px 19px;margin:9px 0;transition:border-color .4s}
+.layer:hover{border-color:hsl(var(--hue) 90% 60% / .45)}
+.layer .code{font-family:var(--mono);font-weight:700;color:hsl(var(--hue) 90% 65%)}
+.layer .l-name{font-weight:600;font-size:14.5px}
+.layer .l-desc{font-size:13.5px;color:#b9c7d0}
+@media(max-width:820px){.layer{grid-template-columns:1fr;gap:4px}}
+.p-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.p-chips .chip{color:var(--dim);border-color:var(--line)}
+
+/* ---------- ПОДВАЛ / ПРОЧЕЕ ---------- */
+footer{border-top:1px solid var(--line);margin-top:90px;padding:44px 0 46px}
+footer p{max-width:760px;color:#b9c7d0;font-size:14.5px}
+footer .tiny{margin-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+[data-rv]{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .75s ease}
+[data-rv].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<noscript><style>[data-rv]{opacity:1;transform:none}.prog i{width:60%!important}</style></noscript>
+
+<header class="hud">
+  <div class="brand">ORGANISM <b>//</b> v0.9</div>
+  <div class="genom-mini">
+    <span class="dot" id="g-hue"></span>
+    <span>энтропия</span><span class="meter"><i id="g-ent"></i></span>
+    <span>плотность <b id="g-den">64</b></span>
+    <span class="gen" id="g-gen">П1</span>
+  </div>
+  <nav>
+    <a href="#evolution">было·есть·будет</a>
+    <a href="#plan">генплан</a>
+    <a href="#lab">лаборатория</a>
+    <a href="#eng">инженерия</a>
+  </nav>
+  <span id="clock">--:--:--</span>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="kicker" data-rv>эскиз будущего · живой прототип · один файл · ноль зависимостей</p>
+    <h1 data-rv>Интерфейс, который <em>живёт</em></h1>
+    <p class="lead" data-rv>Как было — статичные документы. Как есть — адаптивные системы. Как будет — среда, которая собирает себя сама: геном из дизайн-токенов, эмерджентная сборка слоёв и инженерная дисциплина вместо ручной вёрстки. Этот прототип уже начал жить: он мутирует каждые 12 секунд, чувствует курсор, реагирует на клики и ведёт журнал эволюции.</p>
+    <div class="chips" data-rv>
+      <span class="chip">СИНГУЛЯРНОЕ</span>
+      <span class="chip">ЭМЕРДЖЕНТНОЕ</span>
+      <span class="chip">ИНЖЕНЕРНОЕ</span>
+    </div>
+    <p class="status" data-rv><span class="prompt">&gt;</span> <span id="type"></span><span class="caret"></span></p>
+    <div class="cta" data-rv>
+      <a class="btn primary" href="#plan">Генеральный план</a>
+      <button class="btn ghost" id="btn-mutate-top" type="button">Собрать мутацию</button>
+      <span class="hint">клавиша <b>M / Ь</b> — мутация · клик по фону — импульс среды</span>
+    </div>
+  </section>
+
+  <section id="evolution" class="sec">
+    <p class="kicker" data-rv>01 · эволюция среды</p>
+    <h2 data-rv>Как было · Как есть · Как будет</h2>
+    <div class="g3">
+      <article class="card era" data-rv>
+        <div class="tag">1991 → 2010</div>
+        <h3>Документ</h3>
+        <p class="era-lead">Веб — это страницы. Дизайн имитирует бумагу, вёрстка фиксируется таблицами, красота приносится в жертву совместимости.</p>
+        <ul>
+          <li>Фиксированная сетка 960px и таблицы вместо систем</li>
+          <li>GIF-счётчики, Flash-вставки, скевоморфизм</li>
+          <li>Макет «рисуется раз и навсегда» — и умирает при публикации</li>
+        </ul>
+        <div class="patterns"><span>страницы</span><span>баннеры</span><span>скролл</span></div>
+      </article>
+      <article class="card era" data-rv>
+        <div class="tag">2010 → 2025</div>
+        <h3>Система</h3>
+        <p class="era-lead">Веб становится адаптивным: дизайн-системы, токены, состояния. Макет больше не рисунок — это описание правил, по которым рисунок возникает.</p>
+        <ul>
+          <li>Responsive и mobile-first: один интерфейс — бесконечно экранов</li>
+          <li>Дизайн-системы: Material, Human, токены вместо констант</li>
+          <li>Flat → glassmorphism → тёмные темы: мода циклится, дисциплина остаётся</li>
+          <li>Первый AI-слой: рекомендации, генерация контента, копирайт</li>
+        </ul>
+        <div class="patterns"><span>компоненты</span><span>токены</span><span>состояния</span><span>темы</span></div>
+      </article>
+      <article class="card era future" data-rv>
+        <div class="tag">2026 → ∞</div>
+        <h3>Организм</h3>
+        <p class="era-lead">Интерфейс перестаёт быть макетом и становится средой: у неё есть геном, метаболизм и память. Экран собирается под намерение и распадается, когда стал не нужен.</p>
+        <ul>
+          <li>Генеративный UI: не «страница», а сборка под конкретное намерение</li>
+          <li>Агент-нативность: интерфейс договаривается с ИИ о правах и лимитах</li>
+          <li>Один геном — много поверхностей: экран, голос, AR, нулевой UI</li>
+          <li>Самооценка и регенерация: слабые паттерны отмирают, сильные наследуются</li>
+        </ul>
+        <div class="patterns"><span>намерение → сборка</span><span>живые токены</span><span>агенты</span><span>нулевая графика</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="plan" class="sec">
+    <p class="kicker" data-rv>02 · генеральный план</p>
+    <h2 data-rv>Шесть горизонтов эволюции</h2>
+    <p class="sec-lead" data-rv>Каждый горизонт опирается на предыдущий и проверяем инженерно: геном → метаболизм → органы → нервная система → эмерджентность → сингулярность.</p>
+    <div class="g2">
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H0</span><span class="state done">ГОТОВО</span></div>
+        <h3>Геном</h3>
+        <p>Дизайн-токены как ДНК проекта: семантические переменные цвета, ритма, радиусов и плотности. Один источник правды, наследование всеми поверхностями, автоматический аудит контраста.</p>
+        <div class="prog"><i data-w="100"></i></div><span class="pct">100% · фундамент заложен в этот прототип</span>
+      </article>
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H1</span><span class="state run">В РАБОТЕ</span></div>
+        <h3>Метаболизм</h3>
+        <p>Живые сетки и темы: интерфейс реагирует на время суток, скорость ввода и внимание. Движение, плотность и темп становятся параметрами, а не константами макета.</p>
+        <div class="prog"><i data-w="62"></i></div><span class="pct">62% · мутации и реакция на курсор уже работают</span>
+      </article>
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H2</span><span class="state run">ЭСКИЗ</span></div>
+        <h3>Органы</h3>
+        <p>Генеративные компоненты: блоки собираются из примитивов под задачу, а не выбираются из каталога. Прототип формулирует состав экрана как функцию от намерения.</p>
+        <div class="prog"><i data-w="28"></i></div><span class="pct">28% · примитивы определены, сборка — следующая итерация</span>
+      </article>
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H3</span><span class="state">ПРОЕКТ</span></div>
+        <h3>Нервная система</h3>
+        <p>Агентный слой: ассистент получает права и лимиты, читает геном, предлагает мутации. Человек утверждает эволюцию — или откатывает её одним жестом.</p>
+        <div class="prog"><i data-w="12"></i></div><span class="pct">12% · контракт «намерение → план → интерфейс» описан</span>
+      </article>
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H4</span><span class="state">ГИПОТЕЗА</span></div>
+        <h3>Эмерджентность</h3>
+        <p>Коллективная сборка: сотни вариантов экрана проходят самотесты на скорость, контраст и понятность. Выживают сильнейшие паттерны — без ручного отбора.</p>
+        <div class="prog"><i data-w="4"></i></div><span class="pct">4% · журнал эволюции уже собирает данные наблюдений</span>
+      </article>
+      <article class="card h-card" data-rv>
+        <div class="h-top"><span class="h-code">H5</span><span class="state goal">ЦЕЛЬ</span></div>
+        <h3>Сингулярность</h3>
+        <p>Интерфейс без макетов: непрерывное сотворчество человека и среды. Дизайнер задаёт ценности и границы, организм проектирует себя сам — воспроизводимо и инженерно честно.</p>
+        <div class="prog"><i data-w="1"></i></div><span class="pct">горизонт открыт · этот прототип — первая проба пера</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="lab" class="sec">
+    <p class="kicker" data-rv>03 · лаборатория</p>
+    <h2 data-rv>Геном интерфейса</h2>
+    <p class="sec-lead" data-rv>Семь генов управляют живой средой: цветом, плотностью, темпом и формой. Среда мутирует сама каждые 12 секунд — или ускорьте эволюцию вручную.</p>
+    <div class="lab">
+      <div class="card" data-rv>
+        <div class="genes">
+          <div class="gene" data-gene="hue"><span class="name">тон</span><span class="bar"><i></i></span><span class="val">168</span></div>
+          <div class="gene" data-gene="hue2"><span class="name">резонанс</span><span class="bar"><i></i></span><span class="val">288</span></div>
+          <div class="gene" data-gene="entropy"><span class="name">энтропия</span><span class="bar"><i></i></span><span class="val">0.42</span></div>
+          <div class="gene" data-gene="density"><span class="name">плотность</span><span class="bar"><i></i></span><span class="val">64</span></div>
+          <div class="gene" data-gene="speed"><span class="name">темп</span><span class="bar"><i></i></span><span class="val">0.80</span></div>
+          <div class="gene" data-gene="link"><span class="name">связность</span><span class="bar"><i></i></span><span class="val">0.55</span></div>
+          <div class="gene" data-gene="form"><span class="name">форма</span><span class="bar"><i></i></span><span class="val">0.35</span></div>
+        </div>
+        <div class="lab-btns">
+          <button class="btn primary" id="btn-mutate" type="button">Мутация</button>
+          <button class="btn ghost" id="btn-resonance" type="button">Резонанс</button>
+          <button class="btn ghost" id="btn-stabilize" type="button">Стабилизация</button>
+          <button class="btn ghost" id="btn-reset" type="button">Сброс</button>
+        </div>
+      </div>
+      <div class="card" data-rv>
+        <h3 class="log-title">Журнал эволюции</h3>
+        <div id="log" class="log" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="eng" class="sec">
+    <p class="kicker" data-rv>04 · инженерия</p>
+    <h2 data-rv>Слои живой архитектуры</h2>
+    <div class="layers">
+      <div class="layer" data-rv><span class="code">L0</span><span class="l-name">Геном · дизайн-токены</span><span class="l-desc">Семантические переменные (цвет, ритм, радиус, плотность) как ДНК. Один источник правды, аудит контраста на лету, наследование всеми поверхностями.</span></div>
+      <div class="layer" data-rv><span class="code">L1</span><span class="l-name">Примитивы · атомы</span><span class="l-desc">Сетка, типографика, кнопки, поля, жесты. Атомы не знают о сценариях — только о правилах физики среды.</span></div>
+      <div class="layer" data-rv><span class="code">L2</span><span class="l-name">Паттерны · органы</span><span class="l-desc">Компоненты собираются из примитивов и конфигурируются геномом: радиусы, темп и плотность приходят извне, а не зашиты внутрь.</span></div>
+      <div class="layer" data-rv><span class="code">L3</span><span class="l-name">Сценарии · намерение</span><span class="l-desc">Намерение пользователя → план экрана → композиция. Состояния, переходы и деградация описаны явно и тестируемы.</span></div>
+      <div class="layer" data-rv><span class="code">L4</span><span class="l-name">Агентный слой</span><span class="l-desc">ИИ-агенты с правами и лимитами: наблюдают телеметрию среды, предлагают мутации, откатываются по требованию человека.</span></div>
+      <div class="layer" data-rv><span class="code">L5</span><span class="l-name">Среда · контекст</span><span class="l-desc">Время, устройство, движение, внимание. Среда — не декорация, а участник проектирования: она подаёт сигналы в геном.</span></div>
+    </div>
+    <div class="p-chips" data-rv>
+      <span class="chip">один файл</span>
+      <span class="chip">ноль зависимостей</span>
+      <span class="chip">работает без сети</span>
+      <span class="chip">prefers-reduced-motion учтён</span>
+      <span class="chip">60 fps на локальных расчётах</span>
+      <span class="chip">доступный фокус и контраст</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>ORGANISM — эскиз №1 из серии «сингулярное · эмерджентное · инженерное». Интерфейс здесь не объект, а организм: у него есть геном, метаболизм и память наблюдений. Оставьте вкладку открытой — и увидите, как он меняется.</p>
+    <p class="tiny">собрано одним HTML-файлом · без библиотек и шрифтов из сети · следующая мутация уже запланирована</p>
+  </div>
+</footer>
+<script>
+"use strict";
+/* ============ ORGANISM v0.9 · живой прототип ============ */
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const rnd=(a=1,b)=>b===undefined?Math.random()*a:a+Math.random()*(b-a);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- ГЕНОМ ---------- */
+const GENOME={
+  hue:{v:168,min:0,max:360,drift:26,label:"тон"},
+  hue2:{v:288,min:0,max:360,drift:34,label:"резонанс"},
+  entropy:{v:.42,min:.08,max:.92,drift:.1,label:"энтропия"},
+  density:{v:64,min:28,max:150,drift:18,label:"плотность",int:true},
+  speed:{v:.8,min:.35,max:1.6,drift:.22,label:"темп"},
+  link:{v:.55,min:.25,max:.8,drift:.12,label:"связность"},
+  form:{v:.35,min:0,max:1,drift:.3,label:"форма"}
+};
+const DEFAULTS=JSON.parse(JSON.stringify(GENOME));
+let generation=1;
+
+function applyGenome(){
+  const r=document.documentElement.style;
+  r.setProperty("--hue",GENOME.hue.v.toFixed(1));
+  r.setProperty("--hue2",GENOME.hue2.v.toFixed(1));
+  r.setProperty("--radius",(6+GENOME.form.v*26).toFixed(1)+"px");
+  $("#g-hue").style.background=`hsl(${GENOME.hue.v} 90% 60%)`;
+  const ent=$("#g-ent");
+  ent.style.width=(GENOME.entropy.v*100).toFixed(0)+"%";
+  ent.style.background=`hsl(${GENOME.hue2.v} 90% 60%)`;
+  $("#g-den").textContent=Math.round(GENOME.density.v);
+  $("#g-gen").textContent="П"+generation;
+  document.title=`ORGANISM — живой прототип · поколение ${generation}`;
+  $$(".gene").forEach(g=>{
+    const s=GENOME[g.dataset.gene];
+    $(".bar i",g).style.width=(((s.v-s.min)/(s.max-s.min))*100).toFixed(1)+"%";
+    $(".val",g).textContent=s.int?Math.round(s.v):s.v.toFixed(2);
+  });
+}
+
+const POOL=[
+  "дрейф тона: колония сместилась к новому спектру",
+  "всплеск энтропии: сетка перестроила связи",
+  "плотность изменилась — организм дышит иначе",
+  "резонанс захватил соседний спектр",
+  "мутация формы: геометрия поверхности обновлена",
+  "темп жизни изменён, поток ускорился",
+  "найден локальный порядок: связи укоротились",
+  "шум среды усилился, геном адаптируется",
+  "наблюдение зафиксировано: паттерн признан устойчивым"
+];
+
+function log(msg,hl){
+  const box=$("#log");
+  const line=document.createElement("div");
+  line.className="log-line"+(hl?" hl":"");
+  const t=new Date().toLocaleTimeString("ru-RU",{hour12:false});
+  line.innerHTML=`<span>${t}</span>${msg}`;
+  box.prepend(line);
+  while(box.children.length>34)box.lastChild.remove();
+}
+
+function mutate(reason){
+  const keys=Object.keys(GENOME);
+  const n=1+(Math.random()<GENOME.entropy.v?1:0);
+  for(let i=0;i<n;i++){
+    const s=GENOME[pick(keys)];
+    s.v=clamp(s.v+rnd(-s.drift,s.drift),s.min,s.max);
+    if(s.int)s.v=Math.round(s.v);
+  }
+  generation++;
+  applyGenome();syncFlock();
+  log((reason||pick(POOL))+` → поколение ${generation}`,true);
+}
+
+/* ---------- ПОЛЕ · эмерджентная колония ---------- */
+const cv=$("#field"),cx=cv.getContext("2d");
+let W=0,H=0,parts=[],mouse={x:-9e3,y:-9e3};
+function resize(){
+  const dpr=Math.min(2,devicePixelRatio||1);
+  W=innerWidth;H=innerHeight;
+  cv.width=W*dpr;cv.height=H*dpr;
+  cx.setTransform(dpr,0,0,dpr,0,0);
+}
+const spawn=()=>({x:rnd(W),y:rnd(H),vx:rnd(-.6,.6),vy:rnd(-.6,.6)});
+function syncFlock(){
+  const t=Math.round(GENOME.density.v);
+  while(parts.length<t)parts.push(spawn());
+  if(parts.length>t)parts.length=t;
+}
+let last=performance.now();
+function step(now){
+  const dt=Math.min(50,now-last)/16.7;last=now;
+  const sp=GENOME.speed.v,linkD=88+GENOME.link.v*74;
+  cx.clearRect(0,0,W,H);
+  const hue=GENOME.hue.v,hue2=GENOME.hue2.v;
+  for(const p of parts){
+    p.vx+=Math.sin((p.y+now*.02)/140)*.012*dt;
+    p.vy+=Math.cos((p.x+now*.02)/160)*.012*dt;
+    const dx=mouse.x-p.x,dy=mouse.y-p.y,d2=dx*dx+dy*dy;
+    if(d2<32400){const d=Math.sqrt(d2)||1,f=(180-d)/180*.05*sp;
+      p.vx+=dx/d*f*dt;p.vy+=dy/d*f*dt;}
+    p.vx*=.995;p.vy*=.995;
+    p.x+=p.vx*sp*dt*1.4;p.y+=p.vy*sp*dt*1.4;
+    if(p.x<-20)p.x=W+20;if(p.x>W+20)p.x=-20;
+    if(p.y<-20)p.y=H+20;if(p.y>H+20)p.y=-20;
+  }
+  cx.lineWidth=1;
+  for(let i=0;i<parts.length;i++){
+    const a=parts[i];
+    for(let j=i+1;j<parts.length;j++){
+      const b=parts[j],dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy;
+      if(d2<linkD*linkD){
+        const t=1-Math.sqrt(d2)/linkD;
+        cx.strokeStyle=`hsla(${(hue+(hue2-hue)*t+360)%360} 90% 62% / ${(t*.3).toFixed(3)})`;
+        cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();
+      }
+    }
+  }
+  cx.fillStyle=`hsla(${hue} 90% 70% / .85)`;
+  for(const p of parts){cx.beginPath();cx.arc(p.x,p.y,1.6,0,7);cx.fill();}
+  requestAnimationFrame(step);
+}
+
+/* ---------- ВЗАИМОДЕЙСТВИЯ ---------- */
+addEventListener("resize",resize);
+addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+addEventListener("pointerdown",e=>{
+  if(e.target.closest("a,button,input,summary"))return;
+  for(const p of parts){
+    const dx=p.x-e.clientX,dy=p.y-e.clientY,d=Math.hypot(dx,dy)||1;
+    if(d<240){const f=(240-d)/240*3;p.vx+=dx/d*f;p.vy+=dy/d*f;}
+  }
+  log("импульс среды: колония получила энергию");
+});
+addEventListener("keydown",e=>{
+  if(["m","M","ь","Ь","м","М"].includes(e.key)&&!e.metaKey&&!e.ctrlKey&&!e.altKey)
+    mutate("ручная мутация");
+});
+$("#btn-mutate").addEventListener("click",()=>mutate("ручная мутация"));
+$("#btn-mutate-top").addEventListener("click",()=>mutate("ручная мутация"));
+$("#btn-resonance").addEventListener("click",()=>{
+  GENOME.hue2.v=(GENOME.hue.v+rnd(80,190))%360;
+  applyGenome();log("резонанс настроен: дополнительный спектр захвачен",true);
+});
+$("#btn-stabilize").addEventListener("click",()=>{
+  GENOME.entropy.v=clamp(GENOME.entropy.v*.55,GENOME.entropy.min,GENOME.entropy.max);
+  GENOME.speed.v=clamp(GENOME.speed.v*.8,GENOME.speed.min,GENOME.speed.max);
+  applyGenome();log("стабилизация: энтропия снижена, среда успокаивается",true);
+});
+$("#btn-reset").addEventListener("click",()=>{
+  for(const k in GENOME)GENOME[k].v=DEFAULTS[k].v;
+  applyGenome();syncFlock();
+  log("геном откачен к исходной версии · поколение сохранено",true);
+});
+
+/* ---------- ПУЛЬС ЖИЗНИ ---------- */
+const tick=()=>{$("#clock").textContent=new Date().toLocaleTimeString("ru-RU",{hour12:false});};
+tick();setInterval(tick,1000);
+setInterval(()=>mutate(),12000); /* автономная мутация каждые 12 секунд */
+
+/* ---------- ПЕЧАТАЮЩАЯ СТРОКА ---------- */
+const PHRASES=[
+  "инициализация генома… ок",
+  "наблюдается эмерджентность: паттерны возникают без команды",
+  "инженерный слой стабилен: 1 файл · 0 зависимостей",
+  "среда адаптируется к наблюдателю",
+  "прогноз: интерфейс соберёт себя под задачу",
+  "следующая мутация запланирована через 12 секунд"
+];
+let pi=0,ci=0,del=false;
+function typeLoop(){
+  const el=$("#type"),p=PHRASES[pi];
+  el.textContent=del?p.slice(0,ci--):p.slice(0,ci++);
+  let wait=del?16:32;
+  if(!del&&ci>p.length){del=true;wait=2300;}
+  else if(del&&ci<0){del=false;pi=(pi+1)%PHRASES.length;wait=320;}
+  setTimeout(typeLoop,wait);
+}
+
+/* ---------- ПОЯВЛЕНИЕ СЕКЦИЙ ---------- */
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){
+    en.target.classList.add("in");
+    $$(".prog i",en.target).forEach(b=>b.style.width=b.dataset.w+"%");
+    io.unobserve(en.target);
+  }
+}),{threshold:.12});
+$$("[data-rv]").forEach(el=>io.observe(el));
+
+/* ---------- ЗАПУСК ---------- */
+resize();
+applyGenome();
+syncFlock();
+if(REDUCED){
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle=`hsla(${GENOME.hue.v} 90% 70% / .85)`;
+  for(const p of parts){cx.beginPath();cx.arc(p.x,p.y,1.6,0,7);cx.fill();}
+  $("#type").textContent=PHRASES[0];
+}else{
+  requestAnimationFrame(step);
+  typeLoop();
+}
+log("генома собран: старт поколения 1",true);
+</script>
+</body>
+</html>
