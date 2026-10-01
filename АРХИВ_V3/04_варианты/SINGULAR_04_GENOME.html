@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР·04 ГЕНОМ</title>
+<style>
+:root{--bg:#050505;--pn:#0c0c0e;--ln:#26262b;--tx:#ececec;--mu:#88888f;--hot:#ffb454;--ok:#72e0a0;--wr:#e6c66a;--bad:#ef7777;--cy:#72cfff;--vi:#b49cff;--mono:ui-monospace,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,sans-serif}
+button,textarea{font:inherit;color:inherit}button{cursor:pointer;background:#0f0f12;border:1px solid var(--ln);border-radius:9px;padding:7px 11px;color:var(--mu)}
+button:hover{color:var(--tx);border-color:#555}button.on,button.pri{background:var(--hot);color:#140b02;border-color:var(--hot);font-weight:700}button:disabled{opacity:.35;cursor:default}
+header{position:sticky;top:0;z-index:9;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:rgba(5,5,5,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+.logo{font-weight:800;letter-spacing:.08em}.logo small{font:10px var(--mono);color:var(--hot);margin-left:6px}.sp{flex:1}
+.m{font:11px var(--mono);color:var(--mu)}.m b{color:var(--hot)}
+main{max-width:1180px;margin:auto;padding:20px 16px 80px}.v{display:none}.v.on{display:block}
+.eb{font:11px var(--mono);letter-spacing:.18em;color:var(--hot);text-transform:uppercase}
+h1{font-size:clamp(28px,5vw,54px);line-height:1;margin:8px 0 12px}h1 em{font-style:normal;color:var(--hot)}h2{margin:0 0 8px;font-size:20px}h3{margin:0 0 8px;font-size:14px}
+.lead{color:#b5b5bd;max-width:820px}.g2{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:14px}
+.p{border:1px solid var(--ln);background:var(--pn);border-radius:14px;padding:14px;min-width:0}
+textarea{width:100%;height:120px;background:#08080a;border:1px solid var(--ln);border-radius:10px;padding:10px;font:12px var(--mono);outline:0;resize:vertical}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+svg{width:100%;height:auto;display:block}.e{fill:none;stroke:#34343b;stroke-width:1.4}.e.m{stroke-dasharray:4 3;stroke:#7a5a2c}
+.e.on{stroke:var(--hot);stroke-width:2.4;stroke-dasharray:6 4;animation:f .7s linear infinite}@keyframes f{to{stroke-dashoffset:-20}}
+.n circle{fill:#0b0b0d;stroke:#44444b}.n.on circle{stroke:var(--hot);fill:#1a1209}.n text{fill:var(--mu);font:10px var(--mono);text-anchor:middle}.t{fill:#666;font:8px var(--mono);text-anchor:middle}
+.led{height:300px;overflow:auto;display:grid;gap:4px;align-content:start}.ev{border-left:2px solid #34343a;padding:4px 8px;background:#0d0d0f;font:11px/1.4 var(--mono);word-break:break-all}
+.ev b{font-weight:500}.OBSERVED{color:var(--cy)}.TESTED{color:var(--wr)}.VERIFIED{color:var(--ok)}.HYPOTHESIS{color:var(--vi)}.FAILED{color:var(--bad)}.UNKNOWN{color:var(--mu)}.ev i{color:#555;font-style:normal}
+#out{min-height:150px}table{border-collapse:collapse;width:100%;font:12px var(--mono)}td,th{border-bottom:1px solid var(--ln);padding:5px 8px;text-align:left}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}.cards div{border:1px solid var(--ln);border-radius:10px;padding:10px}.cards b{display:block;font:20px var(--mono);color:var(--hot)}.cards span{font:10px var(--mono);color:var(--mu)}
+code{font:12px var(--mono);word-break:break-all;color:var(--ok)}
+#ks{height:200px;overflow:hidden;position:relative;border:1px solid var(--ln);border-radius:10px;background:#08080a}#kl{position:absolute;left:0;right:0;transition:transform .3s}
+.k{padding:6px 14px;font-size:18px;color:#555;text-align:center}.k.a{font-size:22px;font-weight:700;background:linear-gradient(90deg,var(--hot) var(--p),#777 var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}.k.d{color:#888}
+.tl{display:grid;gap:10px;margin-top:12px}.era{border-left:3px solid var(--ln);padding:4px 0 4px 14px}.era.now{border-color:var(--hot)}.era b{font:11px var(--mono);color:var(--hot)}.era p{margin:4px 0 0;color:#b5b5bd;font-size:14px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:12px}.chain{font:13px/1.9 var(--mono);color:#cfcfd6}.chain b{color:var(--hot)}.hyp{color:var(--vi)}
+@media(max-width:820px){.g2{grid-template-columns:1fr}}
+</style></head><body>
+<script id="genome" type="application/json"></script>
+<header><div class="logo">СИНГУЛЯР·04<small>ГЕНОМ</small></div>
+<button class="on" data-v="org">организм</button><button data-v="plan">генплан</button><span class="sp"></span>
+<span class="m">cap <b id="mc">0</b> · макро <b id="mm">0</b> · цепь <b id="ml">0</b></span>
+<button id="gx">геном ↓ (файл с памятью)</button><button id="rs">сброс</button></header>
+<main>
+<section class="v on" id="org">
+<div class="eb">04 · организм вместо сайта</div>
+<h1>Файл — это <em>организм</em>.<br>Он помнит, доказывает и растёт.</h1>
+<p class="lead">02 дал продукт и материю, 03 — доказательства. Здесь они сшиты: караоке — одна из capability, каждый шаг пишется в хэш-цепь, удачный путь <b>кристаллизуется</b> в новый примитив, а весь опыт уходит в файл-геном.</p>
+<div class="g2">
+<div class="p"><h3>1 · вход</h3><textarea id="in" spellcheck="false"></textarea>
+<div class="row"><button data-s="cfg">пример: конфиг</button><button data-s="lyr">пример: текст песни</button><button data-s="lrc">пример: LRC</button></div>
+<h3>2 · цель (тип результата)</h3>
+<div class="row" id="goals"><button data-g="kv" class="on">kv-таблица</button><button data-g="hash">отпечаток</button><button data-g="stats">статистика</button><button data-g="lrc">караоке</button></div>
+<div class="row"><button class="pri" id="run">▶ спланировать и выполнить</button><button id="cry" disabled>◆ кристаллизовать путь</button></div>
+<svg id="gr" viewBox="0 0 420 260"></svg></div>
+<div class="p"><h3>Evidence Ledger · хэш-цепь</h3>
+<div class="row"><button id="vc">проверить цепь</button><button id="tp">симуляция подделки</button></div>
+<div class="led" id="led"></div></div></div>
+<div class="p" style="margin-top:12px"><h3>3 · вид, выбранный типом результата</h3><div id="out"><span class="m">UNKNOWN — ничего не выполнено.</span></div></div>
+</section>
+
+<section class="v" id="plan">
+<div class="eb">генеральный план · 2026 → 2032</div>
+<h1>Куда растёт <em>СИНГУЛЯР</em></h1>
+<p class="lead">Прогноз — не пророчество, а экстраполяция наблюдаемого: браузер получает локальные вычисления (WASM, WebGPU, OPFS, Workers), а доверие к результату становится дефицитом. Выживает тот, кто умеет <b>доказать</b> работу.</p>
+<div class="p" style="margin-top:12px"><h3>Эволюция ядра</h3><div class="chain">
+01 Лаб: <b>файл → текст</b><br>02 Фабрика: <b>файл → продукт + материя</b><br>03 Runtime: <b>намерение → граф → доказательство</b><br>
+04 Геном: <b>типизированный граф → хэш-цепь → кристаллизация → файл-память</b><br>
+дальше: <b>граф → изолированный исполнитель → обмен подписанными capability → самосборка</b></div></div>
+<div class="cols">
+<div class="p"><h3>Принципы 04</h3><p class="lead" style="font-size:14px">1. Тип, а не страница: вид выбирает тип результата.<br>2. Пред/постусловие у каждой capability.<br>3. Утверждение ≠ доказательство; эвристика остаётся <span class="hyp">HYPOTHESIS</span>.<br>4. Рост только через повторяемый тест (детерминизм).<br>5. Состояние переносимо: геном — сам файл.</p></div>
+<div class="p"><h3>Что реально работает здесь</h3><p class="lead" style="font-size:14px">BFS-планировщик по типам · проверка постусловий · SHA-256 цепь с детектором подделки · кристаллизация с тестом воспроизводимости · тап-синк тайминга · экспорт .lrc · экспорт файла-генома.</p></div>
+<div class="p"><h3>Что пока UNKNOWN</h3><p class="lead" style="font-size:14px">Автотайминг — равномерная эвристика, не слух. Нет изоляции capability (Worker). Нет подписи авторства. Нет анализа аудио. Это честные дыры → задачи 05–06.</p></div></div>
+<div class="tl">
+<div class="era now"><b>2026 Q4 · 04 ГЕНОМ (этот файл)</b><p>Типизированный граф, цепь доказательств, макро-capability, файл-геном. Караоке — первая «жилая» capability.</p></div>
+<div class="era"><b>2027 H1 · 05 ПЕСОЧНИЦА</b><p>Каждая capability — в Worker/WASM с лимитом времени и памяти; OPFS как хранилище; материя из 02 (WebGPU) возвращается как view-capability; onset-детекция аудио через OfflineAudioContext заменяет эвристику тайминга → HYPOTHESIS становится VERIFIED на измерении.</p></div>
+<div class="era"><b>2027 H2–2028 · 06 КОНТРАКТ</b><p>Формат пакета: capability + тесты + золотые вектора + подпись. Планировщик строит план по стоимости (время, риск, права), а не только по длине пути.</p></div>
+<div class="era"><b>2028–2029 · 07 РОЙ</b><p>Обмен пакетами между геномами (файл, QR, WebRTC). Принимается только то, что воспроизводится локально: репутация = число независимых воспроизведений.</p></div>
+<div class="era"><b>2029–2030 · 08 СЛОВАРЬ ГИПОТЕЗ</b><p>Локальная модель (WebNN/WebGPU) — лишь слот гипотез: предлагает граф, детерминированный рантайм решает, что допустимо исполнить.</p></div>
+<div class="era"><b>2031–2032 · ЭМЕРДЖЕНТНОЕ ПРИЛОЖЕНИЕ</b><p>Нет фиксированных страниц: есть текущая композиция проверенных примитивов под намерение. Риск, который надо держать в явном виде: раздувание графа и дрейф — лечится сборкой мусора по неиспользуемым макро и аудитом цепи.</p></div></div>
+</section>
+</main>
+<script>
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const SELF='<!DOCTYPE html>\n'+document.documentElement.outerHTML,OPEN='<scr'+'ipt id="genome" type="application/json">',Z='0'.repeat(64);
+let G={macros:[],ledger:[],text:''};
+try{const e=$('#genome').textContent.trim();if(e)G=Object.assign(G,JSON.parse(e))}catch{}
+try{const l=JSON.parse(localStorage.getItem('s04')||'null');if(l&&l.ledger.length>G.ledger.length)G=l}catch{}
+const save=()=>{try{localStorage.setItem('s04',JSON.stringify(G))}catch{}};
+const sha=async s=>{if(crypto.subtle){return[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('')}
+ let h=0xdeadbeef,g=0x41c6ce57;for(const c of s){h=Math.imul(h^c.charCodeAt(0),2654435761);g=Math.imul(g^c.charCodeAt(0),1597334677)}return((h>>>0).toString(16).padStart(8,'0')+(g>>>0).toString(16).padStart(8,'0')).repeat(4)};
+const CAPS=[
+{id:'KV',a:'text',b:'kv',pre:t=>/^\s*[\w.-]+\s*=/m.test(t),fn:t=>{const o={};t.split('\n').forEach(l=>{const m=l.match(/^\s*([\w.-]+)\s*=\s*(.*)$/);if(m)o[m[1]]=o[m[1]]===undefined?m[2]:[].concat(o[m[1]],m[2])});return o},ck:o=>Object.keys(o).length>0},
+{id:'HASH',a:'text',b:'hash',fn:t=>sha(t),ck:h=>/^[0-9a-f]{64}$/.test(h)},
+{id:'LINES',a:'text',b:'lines',fn:t=>t.split('\n').map(s=>s.trim()).filter(Boolean),ck:l=>l.length>0},
+{id:'STATS',a:'lines',b:'stats',fn:l=>{const w=l.join(' ').toLowerCase().match(/[\p{L}\p{N}]+/gu)||[];return{'строк':l.length,'слов':w.length,'уникальных':new Set(w).size,'макс. длина':Math.max(...l.map(x=>x.length))}},ck:s=>s['строк']>0},
+{id:'LRC',a:'text',b:'lrc',pre:t=>/\[\d+:\d+/.test(t),fn:t=>t.split('\n').map(l=>{const m=l.match(/^\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);return m&&{t:+m[1]*60+parseFloat(m[2]),s:m[3]}}).filter(Boolean),ck:L=>L.length>0&&L.every((x,i)=>!i||x.t>=L[i-1].t)},
+{id:'AUTOTIME',a:'lines',b:'lrc',hyp:1,fn:l=>{const w=l.map(x=>Math.max(x.length,10)),S=w.reduce((a,b)=>a+b),T=Math.max(20,l.length*3.4);let t=2;return l.map((s,i)=>{const o={t:+t.toFixed(2),s};t+=w[i]/S*T;return o})},ck:L=>L.length>0&&L.every((x,i)=>!i||x.t>x.t-1&&x.t>=L[i-1].t)}];
+const SAMP={cfg:'alpha=10\nbeta=20\nalpha=15\nstatus=ok',lyr:'Когда теряем — находим себя\nв тишине между двумя ударами\nсвет гаснет, но голос звучит\nсто пятьдесят семь голосов — одна правда\nя не помню, как это — молчать\nи в конце остаёмся собой',lrc:'[00:02.0] первая строка\n[00:05.5] вторая строка\n[00:09.0] третья строка'};
+let GOAL='kv',LAST=null,ON=[],NO=['text'];
+$('#in').value=G.text||SAMP.cfg;
+const N={text:[50,130],lines:[190,45],kv:[190,130],hash:[190,215],stats:[330,45],lrc:[330,170]};
+const edges=()=>[...CAPS,...G.macros.map(m=>({id:m.id,a:'text',b:m.b,m:1}))];
+function graph(){let s='';edges().forEach(e=>{const a=N[e.a],b=N[e.b],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2-(e.m?46:0);
+ s+=`<path class="e${e.m?' m':''}${ON.includes(e.id)?' on':''}" d="M${a} Q${mx},${my} ${b}"/>`;if(!e.m)s+=`<text class="t" x="${mx}" y="${my-3}">${e.id}</text>`});
+ for(const k in N)s+=`<g class="n${NO.includes(k)?' on':''}"><circle cx="${N[k][0]}" cy="${N[k][1]}" r="20"/><text x="${N[k][0]}" y="${N[k][1]+3}">${k}</text></g>`;
+ $('#gr').innerHTML=s;$('#mc').textContent=CAPS.length;$('#mm').textContent=G.macros.length;$('#ml').textContent=G.ledger.length}
+async function log(st,msg){const p=G.ledger.length?G.ledger[0].h:Z,e={i:G.ledger.length,t:new Date().toLocaleTimeString('ru-RU'),st,msg,p};e.h=await sha(p+e.i+st+msg);G.ledger.unshift(e);save();led()}
+function led(){$('#led').innerHTML=G.ledger.slice(0,60).map(e=>`<div class="ev"><i>#${e.i} ${e.t}</i> <b class="${e.st}">[${e.st}]</b> ${esc(e.msg)} <i>${e.h.slice(0,8)}</i></div>`).join('')||'<div class="ev"><b class="UNKNOWN">[UNKNOWN]</b> цепь пуста</div>';$('#ml').textContent=G.ledger.length}
+async function chain(L){let p=Z;for(const e of[...L].reverse()){if(e.p!==p||e.h!==await sha(p+e.i+e.st+e.msg))return e.i;p=e.h}return -1}
+function plan(t,goal){const E=edges().filter(e=>{const c=e.m?CAPS.find(c=>c.id===G.macros.find(m=>m.id===e.id).path[0]):e;return e.a!=='text'||!c.pre||c.pre(t)});
+ const q=[['text',[]]],seen={text:1};while(q.length){const[x,p]=q.shift();if(x===goal)return p;for(const e of E)if(e.a===x&&!seen[e.b]){seen[e.b]=1;q.push([e.b,[...p,e]])}}return null}
+const flat=p=>p.flatMap(e=>e.m?G.macros.find(m=>m.id===e.id).path:[e.id]);
+async function exec(t,ids,live){let d=t,tag='VERIFIED';for(const id of ids){const c=CAPS.find(c=>c.id===id);if(live){ON.push(id);NO.push(c.b);graph()}d=await c.fn(d);if(!c.ck(d)){if(live)await log('FAILED',id+': постусловие нарушено');return null}if(c.hyp)tag='HYPOTHESIS';if(live){await log('TESTED',id+' ✓ постусловие');await sleep(240)}}return{d,tag}}
+async function run(){const t=$('#in').value;G.text=t;ON=[];NO=['text'];graph();$('#cry').disabled=true;
+ await log('OBSERVED','вход '+t.length+' симв., цель '+GOAL);const p=plan(t,GOAL);if(!p){await log('UNKNOWN','путь к '+GOAL+' не найден: предусловия не выполнены');$('#out').innerHTML='<span class="m">UNKNOWN — для этого входа нет пути.</span>';return}
+ const ids=flat(p),r=await exec(t,ids,1);if(!r)return;
+ await log(r.tag,ids.join(' → ')+(r.tag==='HYPOTHESIS'?' (структура проверена, тайминг — эвристика)':''));
+ LAST={t,ids,d:r.d,p};view(GOAL,r.d);$('#cry').disabled=ids.length<2||p.some(e=>e.m)}
+function view(g,d){const o=$('#out');
+ if(g==='kv')o.innerHTML='<table><tr><th>ключ</th><th>значение</th></tr>'+Object.entries(d).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc([].concat(v).join(' → '))}</td></tr>`).join('')+'</table>';
+ else if(g==='hash')o.innerHTML='<h3>SHA-256 входа</h3><code>'+d+'</code>';
+ else if(g==='stats')o.innerHTML='<div class="cards">'+Object.entries(d).map(([k,v])=>`<div><b>${v}</b><span>${k}</span></div>`).join('')+'</div>';
+ else kara(d)}
+let KT=0,PL=0,TP=-1,LR=[],raf=0,lt=0;
+function kara(L){LR=L;KT=0;PL=0;TP=-1;$('#out').innerHTML='<div id="ks"><div id="kl">'+L.map((x,i)=>`<div class="k" id="k${i}">${esc(x.s)}</div>`).join('')+'</div></div><div class="row"><button class="pri" id="kp">▶ играть</button><button id="kt">тап-синк (Пробел)</button><button id="kx">скачать .lrc</button><span class="m" id="ki"></span></div>';
+ $('#kp').onclick=()=>{PL=!PL;lt=performance.now();$('#kp').textContent=PL?'⏸ пауза':'▶ играть';if(PL)loop()};
+ $('#kt').onclick=()=>{TP=0;KT=0;PL=1;lt=performance.now();$('#ki').textContent='жми Пробел на начале каждой строки';loop()};
+ $('#kx').onclick=()=>dl(LR.map(x=>`[${String(Math.floor(x.t/60)).padStart(2,'0')}:${(x.t%60).toFixed(2).padStart(5,'0')}]${x.s}`).join('\n'),'song.lrc','text/plain');paint()}
+function loop(){cancelAnimationFrame(raf);const f=n=>{KT+=PL?(n-lt)/1000:0;lt=n;paint();if(PL)raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
+function paint(){if(!LR.length||!$('#kl'))return;let a=-1;LR.forEach((x,i)=>{if(KT>=x.t)a=i});
+ LR.forEach((x,i)=>{const e=$('#k'+i);e.className='k'+(i===a?' a':i<a?' d':'');if(i===a){const n=i+1<LR.length?LR[i+1].t:x.t+3;e.style.setProperty('--p',Math.min(100,(KT-x.t)/(n-x.t)*100)+'%')}});
+ const h=$('#ks').clientHeight,e=$('#k'+Math.max(a,0));$('#kl').style.transform=`translateY(${h/2-e.offsetTop-e.offsetHeight/2}px)`}
+async function tap(){if(TP<0)return;LR[TP].t=+KT.toFixed(2);TP++;if(TP>=LR.length){TP=-1;PL=0;$('#kp').textContent='▶ играть';$('#ki').textContent='';
+ const ok=LR.every((x,i)=>!i||x.t>=LR[i-1].t);await log(ok?'OBSERVED':'FAILED',ok?'тайминг снят вручную: '+LR.length+' строк, монотонность ✓':'тайминг нарушил монотонность');if(ok)await log('VERIFIED','LRC человека проходит постусловие; эвристика заменена наблюдением')}}
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&TP>=0&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();tap()}});
+function dl(txt,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+$('#cry').onclick=async()=>{const{t,ids}=LAST,goal=GOAL,id='M·'+ids.join('∘');if(G.macros.some(m=>m.id===id)){await log('UNKNOWN','макро уже существует: '+id);return}
+ const a=await exec(t,ids),b=await exec(t,ids);const ja=JSON.stringify(a&&a.d),jb=JSON.stringify(b&&b.d);
+ if(a&&b&&await sha(ja)===await sha(jb)){G.macros.push({id,b:goal,path:ids});await log('VERIFIED','кристаллизация: '+id+' — результат воспроизведён 2×, новый примитив в графе');$('#cry').disabled=true;graph()}else await log('FAILED','кристаллизация отклонена: нет детерминизма')};
+$('#run').onclick=run;
+$$('[data-g]').forEach(b=>b.onclick=()=>{GOAL=b.dataset.g;$$('[data-g]').forEach(x=>x.classList.toggle('on',x===b))});
+$$('[data-s]').forEach(b=>b.onclick=()=>{$('#in').value=SAMP[b.dataset.s];if(b.dataset.s==='lyr'){GOAL='lrc'}else if(b.dataset.s==='lrc')GOAL='lrc';else GOAL='kv';$$('[data-g]').forEach(x=>x.classList.toggle('on',x.dataset.g===GOAL))});
+$$('[data-v]').forEach(b=>b.onclick=()=>{$$('.v').forEach(x=>x.classList.toggle('on',x.id===b.dataset.v));$$('[data-v]').forEach(x=>x.classList.toggle('on',x===b))});
+$('#vc').onclick=async()=>{const r=await chain(G.ledger);await log(r<0?'VERIFIED':'FAILED',r<0?'цепь целостна: '+G.ledger.length+' записей':'цепь разорвана на записи #'+r)};
+$('#tp').onclick=async()=>{if(G.ledger.length<2){await log('UNKNOWN','мало записей для симуляции');return}const c=G.ledger.map(e=>({...e})),k=Math.floor(c.length/2);c[k].msg+=' (подделано)';const r=await chain(c);await log(r>=0?'VERIFIED':'FAILED',r>=0?'подделка обнаружена на записи #'+r+' (симуляция на копии, оригинал цел)':'подделка НЕ обнаружена — тревога')};
+$('#gx').onclick=()=>{G.text=$('#in').value;const j=JSON.stringify(G).replace(/</g,'\\u003c'),i=SELF.indexOf(OPEN)+OPEN.length,k=SELF.indexOf('</scr'+'ipt>',i);dl(SELF.slice(0,i)+j+SELF.slice(k),'SINGULAR_04_GENOME.html','text/html')};
+$('#rs').onclick=()=>{try{localStorage.removeItem('s04')}catch{}G={macros:[],ledger:[],text:''};$('#in').value=SAMP.cfg;ON=[];NO=['text'];graph();led();$('#out').innerHTML='<span class="m">UNKNOWN — ничего не выполнено.</span>'};
+graph();led();
+</script></body></html>
