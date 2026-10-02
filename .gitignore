@@ -1,0 +1,4 @@
+server/node_modules/
+server/data/
+node_modules/
+__pycache__/
