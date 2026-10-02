@@ -2,10 +2,12 @@
    Честно и минимально: cache-first для same-origin GET, офлайн-фолбэк.
    На file:// не работает (так устроены браузеры) — модулю там и не нужен:
    пак данных вшит, внешних запросов нет. */
-var S15_CACHE = 's15-orkestrator-v2';
+var S15_CACHE = 's15-orkestrator-v3';
 var S15_CORE = [
   './',
-  './СИНГУЛЯР_15_ОРКЕСТРАТОР.html'
+  './СИНГУЛЯР_15_ОРКЕСТРАТОР.html',
+  './СИНГУЛЯР_18_СОБЫТИЕ.html',
+  './БИБЛИОТЕКИ/trystero-nostr.bundle.mjs'
 ];
 
 self.addEventListener('install', function(e){
