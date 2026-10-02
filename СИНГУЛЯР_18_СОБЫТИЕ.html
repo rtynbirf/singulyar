@@ -1604,5 +1604,219 @@ window.ЗАЛ18 = { ПРИЛОЖЕНИЕ: ПРИЛОЖЕНИЕ, ХРАНИЛИЩ
 
 </script>
 <script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script>
+
+<script id="s18-turn-js">
+/* ═══ СИНГУЛЯР ·18: TURN-слой и политика >5 (надстройка, ядро не тронуто) ═══ */
+/*<S18TURN>*/
+/* ════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·18 — TURN-СЛОЙ И ПОЛИТИКА «>5 УЧАСТНИКОВ» (v1, надстройка)
+   Ядро ·18 не тронуто. Три честные возможности:
+   1) свой TURN (coturn) — пользователь вводит свои реквизиты в настройках;
+      инъекция в ICE происходит перехватом RTCPeerConnection ДО загрузки
+      trystero-модуля (он импортируется лениво при подключении);
+   2) мониторинг связи: getStats → сколько соединений P2P, сколько через релей;
+   3) политика >5: предупреждение о бюджете соединений (меш = N-1 на участника)
+      и щадящее кодирование Opus при >8; SFU — план на документе, не фейк.
+   ════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+function эл(тег, атр, дети){
+  var n = document.createElement(тег);
+  if (атр) for (var k in атр){
+    if (k === 'text') n.textContent = атр[k];
+    else if (k === 'class') n.className = атр[k];
+    else if (k === 'style' && typeof атр[k] === 'object') for (var s in атр[k]) n.style[s] = атр[k][s];
+    else if (k === 'disabled' || k === 'checked' || k === 'hidden'){ if (атр[k]) n.setAttribute(k, ''); else n.removeAttribute(k); }
+    else if (атр[k] === undefined || атр[k] === null) { /* пустые атрибуты не ставим */ }
+    else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), атр[k]);
+    else n.setAttribute(k, атр[k]);
+  }
+  if (дети) дети.forEach(function(d){ if (d) n.appendChild(d); });
+  return n;
+}
+
+var S18TURN = {
+  LS: 's18.turn.v1',
+  конфиг: function(){
+    try {
+      var c = JSON.parse(localStorage.getItem(this.LS) || 'null');
+      if (c && c.включено && c.urls) return c;
+    } catch (e) {}
+    return null;
+  }
+};
+
+/* ── 1. перехват RTCPeerConnection: инъекция TURN в cross-device конфиги ── */
+var NativePC = window.RTCPeerConnection;
+var S18MON = { pcs: new Set(), тайм: null };
+
+window.RTCPeerConnection = function(cfg, гарды){
+  cfg = cfg || {};
+  var т = S18TURN.конфиг();
+  /* инъекция только в конфиги с уже заданными ICE (cross-device);
+     путь «этот браузер» (iceServers: []) не трогаем — host-кандидатов хватает */
+  if (т && Array.isArray(cfg.iceServers) && cfg.iceServers.length){
+    var есть = false;
+    cfg.iceServers.forEach(function(s){ if (s && s.urls && String(s.urls).indexOf('turn:') !== -1) есть = true; });
+    if (!есть){
+      var сервер = { urls: String(т.urls).split(',').map(function(u){ return u.trim(); }).filter(Boolean) };
+      if (т.username) сервер.username = т.username;
+      if (т.credential) сервер.credential = т.credential;
+      cfg.iceServers = cfg.iceServers.concat([сервер]);
+    }
+  }
+  var pc = (т && arguments.length > 1) ? new NativePC(cfg, гарды) : new NativePC(cfg);
+  try { S18MON.pcs.add(pc); pc.addEventListener('connectionstatechange', function(){ if (pc.connectionState === 'closed' || pc.connectionState === 'failed') S18MON.pcs.delete(pc); }); } catch (e) {}
+  return pc;
+};
+window.RTCPeerConnection.prototype = NativePC.prototype;
+Object.defineProperty(window.RTCPeerConnection, 'name', { value: 'RTCPeerConnection' });
+
+/* ── 2. мониторинг: P2P/релей/участники (getStats, раз в 3 с) ── */
+S18MON.обследование = function(){
+  var живых = 0, релей = 0, обещания = [];
+  S18MON.pcs.forEach(function(pc){
+    if (pc.connectionState === 'closed') { S18MON.pcs.delete(pc); return; }
+    живых++;
+    обещания.push(pc.getStats ? pc.getStats().then(function(stats){
+      stats.forEach(function(r){
+        var активная = (r.selected === true) || (r.state === 'succeeded' && r.nominated === true);
+        if (r.type === 'candidate-pair' && активная){
+          var лок = stats.get(r.localCandidateId), уд = stats.get(r.remoteCandidateId);
+          if ((лок && лок.candidateType === 'relay') || (уд && уд.candidateType === 'relay')) релей++;
+        }
+      });
+    }).catch(function(){}) : null);
+  });
+  return Promise.all(обещания).then(function(){ return { соединений: живых, релей: релей, участников: живых }; });
+};
+
+S18MON.щадящееКодирование = function(вкл){
+  S18MON.pcs.forEach(function(pc){
+    try {
+      (pc.getSenders ? pc.getSenders() : []).forEach(function(s){
+        if (!s.track || s.track.kind !== 'audio' || !s.setParameters) return;
+        var p; s.getParameters().then(function(params){
+          p = params;
+          if (!p.encodings || !p.encodings.length) p.encodings = [{}];
+          p.encodings[0].maxBitrate = вкл ? 24000 : 51000;
+          return s.setParameters(p);
+        }).catch(function(){});
+      });
+    } catch (e) {}
+  });
+};
+
+var ПРЕДЕЛ_МЯГКИЙ = 5;   /* >5 — предупреждение о бюджете соединений */
+var ПРЕДЕЛ_ЩАДЯЩИЙ = 8;  /* >8 — щадящее кодирование Opus */
+
+S18MON.такт = function(){
+  S18MON.обследование().then(function(с){
+    var узел = document.getElementById('s18связь');
+    if (!узел) return;
+    var части = ['соединений: ' + с.соединений];
+    if (с.релей) части.push('через релей: ' + с.релей);
+    else части.push('P2P напрямую');
+    if (S18TURN.конфиг()) части.push('TURN: задан');
+    else части.push('TURN: нет (симметричный NAT — честно не обещаем)');
+    узел.textContent = части.join(' · ');
+    var пред = document.getElementById('s18предупреждение');
+    if (пред){
+      if (с.участников > ПРЕДЕЛ_МЯГКИЙ){
+        пред.hidden = false;
+        пред.textContent = 'аудио-меш: ' + с.участников + ' участников — у каждого ' + (с.участников - 1) +
+          ' прямых соединений. При >8 включается щадящее кодирование; для больших залов нужен SFU (план — в ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md).';
+      } else пред.hidden = true;
+    }
+    S18MON.щадящееКодирование(с.участников > ПРЕДЕЛ_ЩАДЯЩИЙ);
+  }).catch(function(){});
+};
+
+/* ── 3. UI: панель TURN в меню зала + строка статуса ── */
+function панельTURN(дляГостей){
+  var c = (function(){ try { return JSON.parse(localStorage.getItem(S18TURN.LS) || 'null') || {}; } catch (e) { return {}; } })();
+  var ай = дляГостей ? '' : { чб: 's18turnOn', urls: 's18turnUrls', user: 's18turnUser', cred: 's18turnCred' };
+  var чб = эл('input', { type: 'checkbox', id: ай.чб || undefined, 'aria-label': 'использовать свой TURN-релей' });
+  чб.checked = !!c.включено;
+  var urls = эл('input', { type: 'text', id: ай.urls || undefined, placeholder: 'turn:мой-сервер.пример:3478?transport=udp', 'aria-label': 'адреса TURN', style: { flex: '1', minWidth: '220px' } });
+  urls.value = c.urls || '';
+  var user = эл('input', { type: 'text', id: ай.user || undefined, placeholder: 'логин', 'aria-label': 'логин TURN', autocomplete: 'off' });
+  user.value = c.username || '';
+  var cred = эл('input', { type: 'password', id: ай.cred || undefined, placeholder: 'пароль', 'aria-label': 'пароль TURN', autocomplete: 'new-password' });
+  cred.value = c.credential || '';
+
+  var hint;
+  var сохр = эл('button', { class: 'btn', type: 'button', text: 'сохранить', onclick: function(){
+    var conf = {
+      включено: чб.checked && !!urls.value.trim(),
+      urls: urls.value.trim().slice(0, 300),
+      username: user.value.trim().slice(0, 120),
+      credential: cred.value.slice(0, 200)
+    };
+    try {
+      localStorage.setItem(S18TURN.LS, JSON.stringify(conf));
+      hint.textContent = conf.включено
+        ? 'сохранено: TURN будет добавлен к ICE при следующем подключении зала.'
+        : 'сохранено: TURN выключен — работает как раньше (STUN + P2P).';
+    } catch (e) { hint.textContent = 'не удалось сохранить: ' + e.message; }
+  } });
+
+  hint = эл('p', { class: 'hint', text: 'TURN нужен только за симметричным NAT. Реквизиты остаются на устройстве (localStorage) и никуда не отправляются. Бесплатных TURN мы не встраиваем: это твой сервер — твой контроль.' });
+
+  var det = эл('details', { class: 's18turn' }, []);
+  det.appendChild(эл('summary', { text: дляГостей ? '🛰 TURN-релей (для гостей: те же реквизиты)' : '🛰 TURN-релей (свой сервер, необязательно)' }));
+  var body = эл('div', {}, [
+    эл('label', { class: 'chk' }, [ чб, эл('span', { text: ' использовать TURN (если задан)' }) ]),
+    эл('div', { class: 'row', style: { marginTop: '6px' } }, [ urls ]),
+    эл('div', { class: 'row', style: { marginTop: '6px' } }, [ user, cred ]),
+    эл('div', { class: 'row', style: { marginTop: '6px' } }, [ сохр ]),
+    hint,
+    эл('p', { class: 'hint', text: 'coturn одной строкой (docker): docker run -d --network host coturn/coturn -n --lt-cred-mech --user singulyar:пароль --realm singulyar.local — затем здесь: turn:IP_СЕРВЕРА:3478?transport=udp, логин singulyar, пароль твой. Подробно: ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md' })
+  ]);
+  det.appendChild(body);
+  return det;
+}
+
+function статусСтрока(){
+  var wrap = эл('div', { id: 's18связьблок', style: { margin: '8px 0' } }, []);
+  var стр = эл('div', { id: 's18связь', class: 'hint', text: 'связь: наблюдение запустится при подключении зала' });
+  var пред = эл('p', { id: 's18предупреждение', class: 'hint', hidden: true, style: { color: '#ffcf6e' } });
+  wrap.appendChild(стр); wrap.appendChild(пред);
+  return { wrap: wrap, стр: стр, пред: пред };
+}
+
+/* ── установка UI ── */
+function установить(){
+  var строка = статусСтрока();
+  /* панель TURN — в панель «СОЗДАТЬ ЗАЛ», после строки транспорта */
+  var сел = document.getElementById('transportHost');
+  if (сел){
+    var ряд = сел.closest('.row') || сел.parentNode;
+    ряд.parentNode.insertBefore(панельTURN(false), ряд.nextSibling);
+    /* строка статуса связи — в конец панели ведущего */
+    var создать = document.getElementById('btnCreate');
+    var хост = создать ? создать.closest('.panelbox') : null;
+    if (хост) хост.appendChild(строка.wrap);
+  }
+  /* та же панель для гостей (без id-дублей) */
+  var войтиКод = document.getElementById('joinCode');
+  if (войтиКод){
+    var бокс = войтиКод.closest('.panelbox');
+    if (бокс) бокс.appendChild(панельTURN(true));
+  }
+  setInterval(S18MON.такт, 3000);
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', установить);
+else установить();
+
+/* экспорт для тестов (не используется ядром) */
+window.S18TURN = S18TURN;
+window.S18MON = S18MON;
+})();
+/*</S18TURN>*/
+
+</script>
 </body>
 </html>
