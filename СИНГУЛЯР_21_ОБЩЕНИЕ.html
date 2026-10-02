@@ -56,6 +56,14 @@ li{margin:6px 0}
 footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--dim);font-size:13px}
 [hidden]{display:none!important}
 </style>
+<style>
+/*<SEL-FIX> v1: нативные выпадающие списки = тёмный дизайн страницы */
+:root{color-scheme:dark}
+select{color-scheme:dark}
+option,optgroup{background-color:#101823;color:#e8f0f6}
+option:checked,option:hover{background-color:#10312c;color:#8ff0dc}
+/*</SEL-FIX>*/
+</style>
 </head>
 <body>
 <header>
