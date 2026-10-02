@@ -9,7 +9,7 @@ const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
 
-const HTML = fs.readFileSync(path.join(__dirname, '..', 'repo_check', 'СИНГУЛЯР_18_СОБЫТИЕ.html'), 'utf8');
+const HTML = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_18_СОБЫТИЕ.html'), 'utf8');
 const m = HTML.match(/<script>\n([\s\S]*?)\n<\/script>/);
 if (!m) { console.error('FAIL: script-блок не найден'); process.exit(1); }
 const src = m[1];

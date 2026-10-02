@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·19 — ЧЕЛОВЕК · адаптация · личность · мои люди</title>
+<meta name="description" content="СИНГУЛЯР ·19 «ЧЕЛОВЕК» — Human-First слой: одна модель событий, разные каналы предъявления (адаптация по возможностям, без «режимов для инвалидов»), личность на устройстве (ECDSA P-256 non-exportable, challenge/подпись), мои люди и «позвать спеть» в зал ·18. Сервер связей опционален: без него зал работает по коду/QR.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--red:#ef4444;--green:#10b981;--pink:#f9a8d4;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d;white-space:nowrap}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.18;margin:24px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12.5px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:780px;font-size:15.5px}
+.hint{color:var(--dim);font-size:13px;margin-top:8px}
+code{font-family:var(--mono);font-size:12.5px;background:#16202e;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:11px 18px;font-weight:700;border:0;cursor:pointer;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.38;cursor:not-allowed;filter:none}
+.btn.gray{background:#223146;color:var(--tx)}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn.pink{background:var(--pink);color:#2b0b1a}
+.btn.red{background:var(--red);color:#fff}
+.btn.big{font-size:16px;padding:14px 24px;border-radius:13px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0}
+.stat>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.stat b{display:block;font-size:17px;font-family:var(--mono);color:var(--teal)}
+.stat i{font-style:normal;color:var(--dim);font-size:11.5px}
+input[type=text],input[type=search],input[type=url],select,textarea{background:#0d1520;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:14.5px/1.4 inherit;min-width:0}
+select{font-family:var(--mono);font-size:13px;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid #1f4d47;outline-offset:1px}
+label.chk{display:flex;gap:8px;align-items:center;font-size:13.5px;color:#c9d7e2;cursor:pointer;padding:7px 0}
+label.chk input{width:19px;height:19px;accent-color:#5eead4}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#0d1a26;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:14px;margin:4px 6px 4px 0}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:#44546a;display:inline-block}
+.chip.online .dot{background:var(--green)}
+.chip.pending .dot{background:var(--amber)}
+.person{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px dashed rgba(255,255,255,.06);padding:10px 0}
+.person .nm{font-size:15px;min-width:120px}
+.status{border:1px solid #1f3a5f;background:#0b1524;border-radius:14px;padding:13px 16px;font-size:13.5px;color:#b9cde0;margin:14px 0}
+.status.err{border-color:#5f1f1f;background:#190b0b;color:#f0c8c8}
+.status.ok{border-color:#1f4d47;background:#0b1f1d;color:#b9f0dd}
+.capgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.capgrid>div{background:#0d1520;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;color:#c9d7e2}
+.capgrid b{display:block;font-family:var(--mono);font-size:15px;color:var(--teal);margin-bottom:2px}
+.toastbox{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;max-width:min(560px,92vw)}
+.toastbox .t{background:#13202e;border:1px solid #1f4d47;border-radius:12px;padding:11px 16px;font-size:14px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+.invite{border:1px solid #3a2b1f;background:#161009;border-radius:14px;padding:14px 16px;margin:10px 0}
+.invite .who{font-size:15px;font-weight:700;color:#ffd9a8}
+html[data-large-targets="true"] .btn{min-height:3.1rem;padding:13px 20px;font-size:15px}
+html[data-large-targets="true"] input[type=text],html[data-large-targets="true"] input[type=search],html[data-large-targets="true"] input[type=url]{padding:12px 14px;font-size:15.5px}
+html[data-large-targets="true"] label.chk{font-size:15px;padding:9px 0}
+html[data-reduced-motion="true"] *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+footer{margin-top:46px;border-top:1px solid var(--line);padding-top:16px;color:var(--dim);font-size:12.5px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div id="ariaPolite" class="sr" aria-live="polite"></div>
+<div id="ariaAssertive" class="sr" aria-live="assertive"></div>
+<header><div class="wrap hd">
+  <div class="logo">S·19</div>
+  <div><b>СИНГУЛЯР ·19 «ЧЕЛОВЕК»</b><span>человек решает · система подстраивается · автоматика ≠ власть</span></div>
+  <div class="badge">HUMAN-FIRST · v1.0</div>
+</div></header>
+<main class="wrap">
+  <h1>Событие одно. <em>Способ взаимодействия — твой.</em></h1>
+  <p class="lead">·19 не спрашивает «какого ты типа человека». Он смотрит, что устройство и ты умеете
+  (возможности + предпочтения + контекст) и сам строит доступный канал: зрение, слух, вибрация,
+  уведомления, крупные цели. Любую автоматику можно выключить — и она выключится по-настоящему.</p>
+
+  <section class="panelbox" style="margin-top:20px">
+    <h2 style="margin-top:0">1 · Как тебе удобно <em>АДАПТАЦИЯ</em></h2>
+    <p class="hint">Вверху — что система обнаружила сама (возможности). Ниже — твои решения (предпочтения). Автоматика предлагает, человек распоряжается.</p>
+    <div class="capgrid" id="capGrid" aria-label="обнаруженные возможности устройства"></div>
+    <div id="prefList"></div>
+    <div class="row">
+      <button class="btn ghost" id="btnTestChannel">проверить канал события</button>
+      <span class="hint" id="routeEcho"></span>
+    </div>
+  </section>
+
+  <section class="panelbox">
+    <h2 style="margin-top:0">2 · Личность <em>IDENTITY CORE</em></h2>
+    <p class="hint">Один раз назвался — дальше ключ живёт на устройстве и не покидает его (ECDSA P-256, non-exportable). Серверу достаётся только публичная часть: вызов → подпись устройства → вход. Ни пароля, ни SMS, ни второго телефона. Технический номер (UUID) существует, но это не «код друга» и не пароль.</p>
+    <div id="identityBox"></div>
+  </section>
+
+  <section class="panelbox">
+    <h2 style="margin-top:0">3 · Сервер связей <em>опционален</em></h2>
+    <p class="hint">Зал ·18 работает и без сервера: код и QR. Сервер нужен только для «моих людей» и живых приглашений. Сеть — функция, не фундаментальная зависимость.</p>
+    <div class="row">
+      <input type="url" id="serverUrl" placeholder="https://адрес-сервера-singulyar" style="flex:1;max-width:420px" aria-label="адрес сервера связей">
+      <button class="btn" id="btnServerSave">сохранить</button>
+      <button class="btn gray" id="btnServerCheck">проверить</button>
+      <button class="btn ghost" id="btnServerClear">убрать</button>
+    </div>
+    <div class="status" id="serverStatus" role="status" aria-live="polite">сервер не задан — офлайн-режим: личность только на устройстве, зал по коду/QR</div>
+  </section>
+
+  <section class="panelbox">
+    <h2 style="margin-top:0">4 · Мои люди <em>ЛЮДИ</em></h2>
+    <div id="peopleBox"></div>
+  </section>
+
+  <section class="panelbox">
+    <h2 style="margin-top:0">5 · Позвать спеть <em>INVITE → ЗАЛ ·18</em></h2>
+    <div class="grid2">
+      <div>
+        <p class="hint"><b>Вариант А — новый зал.</b> Придумываем код зала, открываем ·18 как ведущий и рассылаем приглашения своим людям.</p>
+        <div class="row">
+          <button class="btn big" id="btnNewHall">🎉 создать зал и позвать</button>
+        </div>
+        <p class="hint"><b>Вариант Б — зал уже создан в ·18.</b> Введи код зала (показан крупно в ·18) и позови людей.</p>
+        <div class="row">
+          <input type="text" id="hallCode" maxlength="5" placeholder="КОД зала, напр. P7J97" style="width:200px" aria-label="код зала">
+          <button class="btn" id="btnInviteExisting">пригласить в этот зал</button>
+        </div>
+        <p class="hint" id="invitePickHint">Отметь людей ниже — приглашение уйдёт живым событием (и push, если разрешён).</p>
+        <div id="invitePick"></div>
+      </div>
+      <div>
+        <p class="hint"><b>Приглашения мне</b> — когда кто-то из твоих людей зовёт спеть, событие появляется здесь (и в уведомлениях, если включены).</p>
+        <div id="inviteInbox"></div>
+        <p class="hint">Присоединение открывает <code>СИНГУЛЯР_18_СОБЫТИЕ.html?зал=КОД</code> — в сборке ОС: открой модуль ·18 из навигации и введи код вручную.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="status" id="bootStatus" role="status" aria-live="polite" style="margin-top:20px">·19 готов. адаптация применена.</div>
+</main>
+<div class="toastbox" id="toasts" role="region" aria-label="события"></div>
+<footer><div class="wrap">СИНГУЛЯР ·19 «ЧЕЛОВЕК» v1.0 · офлайн-first · 0 innerHTML · личность non-exportable ·
+сервер связей — функция, не зависимость · UNKNOWN: три телефона в поле, TURN, фоновый push iOS/Android, VoiceOver/TalkBack в поле</footer>
+<script>
+'use strict';
+/* ═══ СИНГУЛЯР ·19 «ЧЕЛОВЕК» — HUMAN-FIRST слой. Офлайн-first. 0 innerHTML. ═══
+   1. АДАПТАЦИЯ: возможности+предпочтения+контекст → каналы (aria/вибрация/уведомление/цели).
+      Автоматика предлагает — человек отменяет. Ни одного «режима для типа человека».
+   2. ЛИЧНОСТЬ: ECDSA P-256 non-exportable в IndexedDB; серверу — только публичный JWK.
+   3. СЕРВЕР СВЯЗЕЙ (опционален): REST+WS по контракту SINGULAR SERVER v1.
+   4. МОИ ЛЮДИ + INVITE: связь принимается человеком; «позвать спеть» → зал ·18 (?зал=КОД / ?хост=КОД). */
+
+const $ = function (s, r) { return (r || document).querySelector(s); };
+function эл(тег, атр, дети) {
+  const n = document.createElement(тег);
+  if (атр) for (const k in атр) {
+    const v = атр[k];
+    if (v == null) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k === 'html') throw new Error('innerHTML запрещён в СИНГУЛЯРЕ');
+    else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v);
+  }
+  (дети || []).forEach(function (d) { if (d != null) n.appendChild(d); });
+  return n;
+}
+
+/* ── 1. АДАПТАЦИЯ ─────────────────────────────────────────────────────────── */
+const АДАПТАЦИЯ = (function () {
+  const КЛЮЧ = 'singulyar.adaptation.v1';
+  const ЗАГЛУШКИ = { largeTargets: true, haptic: null, notifications: null, reducedMotion: null, announceAll: true };
+  let pref = {};
+  try { pref = JSON.parse(localStorage.getItem(КЛЮЧ) || '{}'); } catch (e) { pref = {}; }
+  function решение(ключ, автоЗначение) {
+    const v = pref[ключ];
+    if (v === true || v === false) return v;          /* человек решал — человек прав */
+    if (автоЗначение === null || автоЗначение === undefined) return false;
+    return !!автоЗначение;                             /* автоматика предлагает */
+  }
+  function возможности() {
+    return {
+      клавиатура: true,
+      касание: ('ontouchstart' in window) || (navigator.maxTouchPoints > 0),
+      вибрация: ('vibrate' in navigator),
+      уведомления: ('Notification' in window),
+      синтезРечи: ('speechSynthesis' in window),
+      сниженноеДвижение: !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches),
+      подсказкаЭкранчик: /NVDA|JAWS|VoiceOver|TalkBack/i.test(navigator.userAgent || ''),
+      микрофон: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    };
+  }
+  const кап = возможности();
+  function автоВибрация() { return решение('haptic', кап.вибрация); }
+  function автоУведомления() { return решение('notifications', кап.уведомления); }
+  function крупныеЦели() { return решение('largeTargets', true); }
+  function движениеМеньше() { return решение('reducedMotion', кап.сниженноеДвижение); }
+  function применить() {
+    const корень = document.documentElement;
+    корень.dataset.largeTargets = крупныеЦели() ? 'true' : 'false';
+    корень.dataset.reducedMotion = движениеМеньше() ? 'true' : 'false';
+  }
+  function задать(ключ, значение) { pref[ключ] = значение; try { localStorage.setItem(КЛЮЧ, JSON.stringify(pref)); } catch (e) {} применить(); }
+  function объявить(текст, срочно) {
+    const узел = $(срочно ? '#ariaAssertive' : '#ariaPolite');
+    if (узел) { узел.textContent = ''; requestAnimationFrame(function () { узел.textContent = текст; }); }
+  }
+  function тост(текст) {
+    const бокс = $('#toasts'); if (!бокс) return;
+    const т = эл('div', { class: 't', text: текст });
+    бокс.appendChild(т);
+    setTimeout(function () { т.remove(); }, 5200);
+  }
+  /* Событие одно — каналы разные. Каждый канал честно гасится предпочтением человека. */
+  function событие(текст, опции) {
+    опции = опции || {};
+    const срочно = !!опции.срочно;
+    const каналы = [];
+    объявить(текст, срочно); каналы.push('aria:' + (срочно ? 'assertive' : 'polite'));
+    тост(текст); каналы.push('toast');
+    if (автоВибрация() && navigator.vibrate) { try { navigator.vibrate(срочно ? [80, 40, 80] : 40); каналы.push('vibrate'); } catch (e) {} }
+    if (опции.уведомление && автоУведомления() && ('Notification' in window) && Notification.permission === 'granted' && navigator.serviceWorker) {
+      navigator.serviceWorker.ready.then(function (рег) {
+        return рег.showNotification('СИНГУЛЯР ·19', { body: текст, tag: 's19', data: опции.данные || {} });
+      }).then(function () { if (опции.послеУведомления) опции.послеУведомления(); }).catch(function () {});
+      каналы.push('notification');
+    }
+    if (опции.эхо) опции.эхо.textContent = 'каналы: ' + каналы.join(' · ');
+    return каналы;
+  }
+  return {
+    возможности: кап, применить: задать, применитьСейчас: применить, объявить: объявить, тост: тост,
+    событие: событие, крупныеЦели: крупныеЦели, автоВибрация: автоВибрация, автоУведомления: автоУведомления,
+    движениеМеньше: движениеМеньше, prefs: pref
+  };
+})();
+
+/* ── 2. ЛИЧНОСТЬ (IndexedDB, non-exportable) ──────────────────────────────── */
+function откройБД() {
+  return new Promise(function (res, rej) {
+    const r = indexedDB.open('singulyar-human-v1', 1);
+    r.onupgradeneeded = function () { r.result.createObjectStore('kv'); };
+    r.onsuccess = function () { res(r.result); };
+    r.onerror = function () { rej(r.error); };
+  });
+}
+function бдПолучи(ключ) {
+  return откройБД().then(function (б) {
+    return new Promise(function (res, rej) {
+      const q = б.transaction('kv', 'readonly').objectStore('kv').get(ключ);
+      q.onsuccess = function () { res(q.result); };
+      q.onerror = function () { rej(q.error); };
+    });
+  });
+}
+function бдПоложи(ключ, значение) {
+  return откройБД().then(function (б) {
+    return new Promise(function (res, rej) {
+      const t = б.transaction('kv', 'readwrite');
+      t.objectStore('kv').put(значение, ключ);
+      t.oncomplete = function () { res(); };
+      t.onerror = function () { rej(t.error); };
+    });
+  });
+}
+function бдУдали(ключ) {
+  return откройБД().then(function (б) {
+    return new Promise(function (res, rej) {
+      const t = б.transaction('kv', 'readwrite');
+      t.objectStore('kv').delete(ключ);
+      t.oncomplete = function () { res(); };
+      t.onerror = function () { rej(t.error); };
+    });
+  });
+}
+const b64url = function (буфер) {
+  const б = new Uint8Array(буфер), с = [];
+  for (let i = 0; i < б.length; i++) с.push(String.fromCharCode(б[i]));
+  return btoa(с.join('')).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+const текстВБайты = function (с) { return new TextEncoder().encode(с); };
+function нормИмя(с) { return String(с || '').replace(/\s+/g, ' ').trim().slice(0, 80); }
+function создатьЛичность(имя) {
+  имя = нормИмя(имя);
+  if (!имя) return Promise.reject(new Error('нужно имя'));
+  return crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign', 'verify'])
+    .then(function (ключи) {
+      return crypto.subtle.exportKey('jwk', ключи.publicKey).then(function (пуб) {
+        const личность = { id: crypto.randomUUID(), имя: имя, создана: Date.now(), приватный: ключи.privateKey, публичныйJWK: пуб };
+        return бдПоложи('личность', личность).then(function () { return личность; });
+      });
+    });
+}
+/* контракту сервера соответствует: challenge → ECDSA P-256 SHA-256 подпись → verify(JWK) */
+function подписьВызова(личность, challenge) {
+  return crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, личность.приватный, текстВБайты(challenge)).then(b64url);
+}
+
+/* ── 3. СЕРВЕР СВЯЗЕЙ (опционален; контракт SINGULAR SERVER v1) ───────────── */
+const СЕРВЕР = (function () {
+  const КЛЮЧ = 'singulyar.server.url';
+  let url = '';
+  try { url = (localStorage.getItem(КЛЮЧ) || '').trim(); } catch (e) {}
+  let токен = null, я = null, ws = null, wsЖив = false, перепод = null;
+  function задать(u) { url = String(u || '').trim().replace(/\/+$/, ''); try { localStorage.setItem(КЛЮЧ, url); } catch (e) {} }
+  function адрес() { return url; }
+  function есть() { return !!url; }
+  function api(путь, опции) {
+    опции = опции || {};
+    const заг = new Headers((опции && опции.headers) || {});
+    if (токен) заг.set('Authorization', 'Bearer ' + токен);
+    let тело = опции.body;
+    if (тело && !(тело instanceof Blob)) { заг.set('content-type', 'application/json'); тело = JSON.stringify(тело); }
+    return fetch(url + путь, { method: опции.method || 'GET', headers: заг, body: тело })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) { const e = new Error(d.error || ('HTTP ' + r.status)); e.код = d.error; throw e; } return d; }); });
+  }
+  function здоров() {
+    const к = new AbortController(); const т = setTimeout(function () { к.abort(); }, 4000);
+    return fetch(url + '/health', { signal: к.signal }).then(function (r) { clearTimeout(т); return r.json(); });
+  }
+  function вход(личность) {
+    return api('/api/auth/challenge', { method: 'POST', body: { userId: личность.id } })
+      .then(function (о) { return подписьВызова(личность, о.challenge); })
+      .then(function (подп) { return api('/api/auth/verify', { method: 'POST', body: { userId: личность.id, signature: подп } }); })
+      .then(function (о) { токен = о.token; я = о.user; return о.user; });
+  }
+  function registered(личность) {
+    return api('/api/register', { method: 'POST', body: { name: личность.имя, publicKey: личность.публичныйJWK } });
+  }
+  function соединить(приём) {
+    if (!url || !токен) return;
+    if (ws) { try { ws.onclose = null; ws.close(); } catch (e) {} }
+    const u = url.replace(/^http/, 'ws') + '/ws?token=' + encodeURIComponent(токен);
+    try { ws = new WebSocket(u); } catch (e) { return; }
+    ws.onopen = function () { wsЖив = true; if (приём) приём({ type: 'ws', online: true }); };
+    ws.onmessage = function (e) { let м = null; try { м = JSON.parse(e.data); } catch (о) { return; } if (приём) приём(м); };
+    ws.onclose = function () { wsЖив = false; if (приём) приём({ type: 'ws', online: false }); clearTimeout(перепод); перепод = setTimeout(function () { соединить(приём); }, 2500); };
+  }
+  return {
+    задать: задать, адрес: адрес, есть: есть, api: api, здоров: здоров, вход: вход, registered: registered,
+    соединить: соединить, getToken: function () { return токен; }, кто: function () { return я; }
+  };
+})();
+
+/* ── 4. СОСТОЯНИЕ + РЕНДЕР ────────────────────────────────────────────────── */
+const С = {
+  личность: null, я: null, люди: [], входящие: [], исходящие: [],
+  выбраноДляПриглашения: {}, приглашения: [], онлайн: {}
+};
+function статус(текст, вид) {
+  const уз = $('#bootStatus');
+  уз.className = 'status' + (вид ? ' ' + вид : '');
+  уз.textContent = текст;
+}
+function отрисоватьВозможности() {
+  const г = $('#capGrid'); while (г.firstChild) г.removeChild(г.firstChild);
+  const кап = АДАПТАЦИЯ.возможности;
+  const строки = [
+    ['клавиатура', кап.клавиатура], ['касание', кап.касание], ['вибрация', кап.вибрация],
+    ['уведомления', кап.уведомления], ['синтез речи', кап.синтезРечи],
+    ['движение меньше', кап.сниженноеДвижение], ['экранчик?', кап.подсказкаЭкранчик], ['микрофон', кап.микрофон]
+  ];
+  строки.forEach(function (п) {
+    г.appendChild(эл('div', {}, [эл('b', { text: п[1] ? 'да' : '—' }), document.createTextNode(п[0])]));
+  });
+}
+function отрисоватьПредпочтения() {
+  const бокс = $('#prefList'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  const пункты = [
+    ['largeTargets', 'крупные кнопки и поля', 'автоматика: да для всех — отключается'],
+    ['haptic', 'вибрация на события', АДАПТАЦИЯ.возможности.вибрация ? 'автоматика: включить, устройство умеет' : 'устройство вибрацию не умеет'],
+    ['notifications', 'уведомления поверх страниц', 'нужно разрешение браузера'],
+    ['reducedMotion', 'меньше движения', АДАПТАЦИЯ.возможности.сниженноеДвижение ? 'автоматика: система уже просит меньше движения' : 'автоматика: как в системе']
+  ];
+  пункты.forEach(function (п) {
+    const ключ = п[0];
+    const текущ = АДАПТАЦИЯ[{ largeTargets: 'крупныеЦели', haptic: 'автоВибрация', notifications: 'автоУведомления', reducedMotion: 'движениеМеньше' }[ключ]]();
+    const ч = эл('input', { type: 'checkbox' });
+    ч.checked = текущ;
+    ч.addEventListener('change', function () {
+      АДАПТАЦИЯ.применить(ключ, ч.checked);
+      if (ключ === 'notifications' && ч.checked && ('Notification' in window) && Notification.permission === 'default') {
+        Notification.requestPermission().then(function (р) {
+          АДАПТАЦИЯ.событие(р === 'granted' ? 'Уведомления разрешены — канал открыт.' : 'Браузер не дал уведомления — канал aria и вибрация остаются.', { срочно: р !== 'granted' });
+        });
+      }
+      АДАПТАЦИЯ.событие('Предпочтение «' + п[1] + '»: ' + (ч.checked ? 'включено' : 'выключено') + '. Человек решил — автоматика молчит.', {});
+      отрисоватьПредпочтения();
+    });
+    бокс.appendChild(эл('label', { class: 'chk' }, [ч, эл('span', { text: п[1] }), эл('span', { class: 'hint', text: ' · ' + п[2] })]));
+  });
+}
+function отрисоватьЛичность() {
+  const бокс = $('#identityBox'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  if (!С.личность) {
+    const inp = эл('input', { type: 'text', id: 'имяВвод', maxlength: '80', placeholder: 'как вас называть? (напр. Бабушка)', style: 'max-width:340px' });
+    const btn = эл('button', { class: 'btn big', text: 'готово — это я' });
+    btn.addEventListener('click', function () {
+      создатьЛичность(inp.value).then(function (л) {
+        С.личность = л;
+        АДАПТАЦИЯ.событие('Личность создана: ' + л.имя + '. Ключ не покидает устройство.', { срочно: false });
+        отрисоватьЛичность();
+        серверВход();
+      }).catch(function (e) {
+        АДАПТАЦИЯ.событие('Личность не создана: ' + (e.message || e), { срочно: true });
+      });
+    });
+    бокс.appendChild(эл('div', { class: 'row' }, [inp, btn]));
+    бокс.appendChild(эл('p', { class: 'hint', text: 'Ничего не отправляется: создание личности работает офлайн. Сервер понадобится позже — только чтобы «мои люди» нашли друг друга.' }));
+    return;
+  }
+  const л = С.личность;
+  бокс.appendChild(эл('div', { class: 'stat' }, [
+    эл('div', {}, [эл('b', { text: л.имя }), эл('i', { text: 'имя, которое видно людям' })]),
+    эл('div', {}, [эл('b', { text: String(л.id).slice(0, 8) + '…' }), эл('i', { text: 'технический UUID — не код и не пароль' })]),
+    эл('div', {}, [эл('b', { text: new Date(л.создана).toLocaleDateString('ru-RU') }), эл('i', { text: 'профиль живёт на этом устройстве' })]),
+    эл('div', {}, [эл('b', { text: СЕРВЕР.кто() ? 'подписано' : 'локально' }), эл('i', { text: СЕРВЕР.кто() ? 'сервер подтвердил подпись' : 'сервер не задан или не отвечен' })])
+  ]));
+  const стер = эл('button', { class: 'btn red', text: 'стереть личность с устройства' });
+  let дважды = false;
+  стер.addEventListener('click', function () {
+    if (!дважды) { дважды = true; стер.textContent = 'точно? нажми второй раз'; setTimeout(function () { дважды = false; стер.textContent = 'стереть личность с устройства'; }, 4000); return; }
+    бдУдали('личность').then(function () { С.личность = null; С.я = null; отрисоватьЛичность(); статус('Личность стёрта. Записи залов ·18 не тронуты.', 'ok'); });
+  });
+  бокс.appendChild(эл('div', { class: 'row' }, [стер]));
+}
+function отрисоватьСервер() {
+  const уз = $('#serverStatus');
+  $('#serverUrl').value = СЕРВЕР.адрес();
+  if (!СЕРВЕР.есть()) { уз.className = 'status'; уз.textContent = 'сервер не задан — офлайн-режим: личность только на устройстве, зал по коду/QR. Это не тупик: ниже подсказано, что доступно.'; return; }
+  уз.className = 'status';
+  уз.textContent = 'сервер: ' + СЕРВЕР.адрес() + ' — проверяю…';
+  СЕРВЕР.здоров().then(function (о) {
+    уз.className = 'status ok';
+    уз.textContent = 'сервер жив: ' + СЕРВЕР.адрес() + ' · аптайм ' + Math.round((о.uptime || 0)) + ' с · людей: ' + (о.users || '?') + ' · связей: ' + (о.relations || '?');
+  }).catch(function (e) {
+    уз.className = 'status err';
+    уз.textContent = 'сервер недоступен (' + (e.message || e) + ') — офлайн-режим сохранён, ничего не ломается.';
+  });
+}
+function чипЧеловека(имя, онлайн, класс) {
+  return эл('span', { class: 'chip ' + (класс || '') + (онлайн ? ' online' : '') }, [
+    эл('span', { class: 'dot' }), эл('span', { text: имя }), онлайн ? эл('span', { class: 'hint', text: 'в сети' }) : null
+  ]);
+}
+function отрисоватьЛюдей() {
+  const бокс = $('#peopleBox'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  if (!С.личность) { бокс.appendChild(эл('p', { class: 'hint', text: 'Сначала создай личность выше — она подписывает связь с людьми.' })); return; }
+  if (!СЕРВЕР.есть()) {
+    бокс.appendChild(эл('div', { class: 'status', text: '«Мои люди» живут на сервере связей — он не задан. Это честно: без сервера список не построить. Зал всё равно работает: создай в ·18 и передай код/QR любым удобным способом.' }));
+    return;
+  }
+  /* входящие запросы */
+  if (С.входящие.length) {
+    const под = эл('div', {}, [эл('p', { class: 'hint', text: 'Хотят быть в твоих людях — решаешь ты:' })]);
+    С.входящие.forEach(function (ч) {
+      const принять = эл('button', { class: 'btn pink', text: 'принять' });
+      принять.addEventListener('click', function () {
+        СЕРВЕР.api('/api/friends/accept', { method: 'POST', body: { userId: ч.id } }).then(обновитьЛюдей).catch(function (e) { АДАПТАЦИЯ.событие('Не приняли: ' + e.message, { срочно: true }); });
+      });
+      const отклонить = эл('button', { class: 'btn gray', text: 'отклонить' });
+      отклонить.addEventListener('click', function () {
+        СЕРВЕР.api('/api/friends/remove', { method: 'POST', body: { userId: ч.id } }).then(обновитьЛюдей).catch(function () {});
+      });
+      под.appendChild(эл('div', { class: 'person' }, [эл('span', { class: 'nm', text: ч.имя }), принять, отклонить]));
+    });
+    бокс.appendChild(под);
+  }
+  /* мои люди */
+  const список = эл('div', {});
+  if (!С.люди.length) список.appendChild(эл('p', { class: 'hint', text: 'Пока никого. Найди человека по имени ниже — он решит, принять ли связь. Связь двусторонняя и живёт, пока вы оба хотите.' }));
+  С.люди.forEach(function (ч) {
+    const позвать = эл('button', { class: 'btn', text: 'позвать спеть' });
+    позвать.addEventListener('click', function () {
+      С.выбраноДляПриглашения = {}; С.выбраноДляПриглашения[ч.id] = ч;
+      отрисоватьПриглашениеВыбор();
+      АДАПТАЦИЯ.событие(ч.имя + ' отмечен для приглашения: выбери зал ниже.', {});
+      document.getElementById('btnNewHall').focus();
+    });
+    const убрать = эл('button', { class: 'btn ghost', text: 'убрать' });
+    убрать.addEventListener('click', function () {
+      СЕРВЕР.api('/api/friends/remove', { method: 'POST', body: { userId: ч.id } }).then(обновитьЛюдей);
+    });
+    список.appendChild(эл('div', { class: 'person' }, [
+      эл('span', { class: 'nm', text: ч.имя }), чипЧеловека(ч.имя, С.онлайн[ч.id]), позвать, убрать
+    ]));
+  });
+  бокс.appendChild(список);
+  /* исходящие */
+  if (С.исходящие.length) {
+    const под = эл('div', {}, [эл('p', { class: 'hint', text: 'Ты позвал — они решают:' })]);
+    С.исходящие.forEach(function (ч) { под.appendChild(чипЧеловека(ч.имя, false, 'pending')); });
+    бокс.appendChild(под);
+  }
+  /* поиск */
+  const q = эл('input', { type: 'search', placeholder: 'найти человека по имени', style: 'max-width:320px;margin-top:10px', 'aria-label': 'поиск людей' });
+  const рез = эл('div', {});
+  let таймер = null;
+  q.addEventListener('input', function () {
+    clearTimeout(таймер);
+    const запрос = q.value.trim();
+    if (!запрос) { while (рез.firstChild) рез.removeChild(рез.firstChild); return; }
+    таймер = setTimeout(function () {
+      СЕРВЕР.api('/api/people?q=' + encodeURIComponent(запрос)).then(function (о) {
+        while (рез.firstChild) рез.removeChild(рез.firstChild);
+        if (!о.people.length) рез.appendChild(эл('p', { class: 'hint', text: 'Никого не нашлось. Система не притворяется.' }));
+        о.people.forEach(function (п) {
+          const добав = эл('button', { class: 'btn', text: 'позвать в люди' });
+          добав.addEventListener('click', function () {
+            СЕРВЕР.api('/api/friends/request', { method: 'POST', body: { userId: п.id } })
+              .then(function () { АДАПТАЦИЯ.событие('Запрос отправлен ' + п.имя + '. Дальше решает он.', {}); обновитьЛюдей(); })
+              .catch(function (e) { АДАПТАЦИЯ.событие('Запрос не ушёл: ' + e.message, { срочно: true }); });
+          });
+          рез.appendChild(эл('div', { class: 'person' }, [эл('span', { class: 'nm', text: п.имя }), чипЧеловека(п.имя, С.онлайн[п.id]), добав]));
+        });
+      }).catch(function (e) {
+        while (рез.firstChild) рез.removeChild(рез.firstChild);
+        рез.appendChild(эл('p', { class: 'hint', text: 'Поиск не удался: ' + (e.message || e) }));
+      });
+    }, 320);
+  });
+  бокс.appendChild(q); бокс.appendChild(рез);
+}
+function отрисоватьПриглашениеВыбор() {
+  const бокс = $('#invitePick'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  if (!С.люди.length) { бокс.appendChild(эл('p', { class: 'hint', text: 'Людей пока нет — приглашение можно передать кодом/QR зала любым способом.' })); return; }
+  С.люди.forEach(function (ч) {
+    const чб = эл('input', { type: 'checkbox' });
+    чб.checked = !!С.выбраноДляПриглашения[ч.id];
+    чб.addEventListener('change', function () {
+      if (чб.checked) С.выбраноДляПриглашения[ч.id] = ч; else delete С.выбраноДляПриглашения[ч.id];
+    });
+    бокс.appendChild(эл('label', { class: 'chk' }, [чб, эл('span', { text: ч.имя }), чипЧеловека(ч.имя, С.онлайн[ч.id])]));
+  });
+}
+function отрисоватьПриглашения() {
+  const бокс = $('#inviteInbox'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  if (!С.приглашения.length) { бокс.appendChild(эл('p', { class: 'hint', text: 'Пока тихо. Когда позовут спеть — здесь появится событие с кнопкой присоединения.' })); return; }
+  С.приглашения.slice().reverse().forEach(function (пр) {
+    const пойти = эл('button', { class: 'btn big', text: '▶ присоединиться' });
+    пойти.addEventListener('click', function () { зайтиВЗал18(пр.кодЗала); });
+    const код = эл('span', { class: 'roomcode', text: пр.кодЗала, style: 'font-size:20px;letter-spacing:.18em;color:var(--teal2)' });
+    бокс.appendChild(эл('div', { class: 'invite' }, [
+      эл('div', { class: 'who', text: пр.от }),
+      эл('div', { text: пр.песня ? 'зовёт спеть: ' + пр.песня : 'зовёт вас спеть вместе' }),
+      эл('div', { class: 'row' }, [код, пойти])
+    ]));
+  });
+}
+/* ── мост в зал ·18: контракт ?зал=КОД (гость) и ?хост=КОД (ведущий) ─────── */
+const АЛФАВИТ_КОДА = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; /* как в ·18: без 0,O,1,I,L */
+function кодЗала19() {
+  let s = '';
+  for (let i = 0; i < 5; i++) s += АЛФАВИТ_КОДА[Math.floor(Math.random() * АЛФАВИТ_КОДА.length)];
+  return s;
+}
+function чистКод(с) { return String(с || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5); }
+function зайтиВЗал18(код) {
+  const к = чистКод(код);
+  if (к.length !== 5) { АДАПТАЦИЯ.событие('Код зала должен быть 5 символов.', { срочно: true }); return; }
+  location.href = 'СИНГУЛЯР_18_СОБЫТИЕ.html?зал=' + encodeURIComponent(к);
+}
+function разослатьПриглашения(кодЗала, песня) {
+  const кому = Object.keys(С.выбраноДляПриглашения).map(function (id) { return id; });
+  const имена = Object.keys(С.выбраноДляПриглашения).map(function (id) { return С.выбраноДляПриглашения[id].имя; });
+  if (!СЕРВЕР.есть() || !С.я) {
+    АДАПТАЦИЯ.событие('Сервер не задан — живое приглашение не уйдёт. Передайте код ' + кодЗала + ' или QR зала любым удобным способом. Это не тупик.', { срочно: true, уведомление: false });
+    return Promise.resolve(false);
+  }
+  if (!кому.length) { АДАПТАЦИЯ.событие('Отметь хотя бы одного человека для приглашения.', { срочно: true }); return Promise.resolve(false); }
+  return СЕРВЕР.api('/api/sessions', { method: 'POST', body: { invitees: кому, hallCode: кодЗала, song: песня || null } })
+    .then(function (о) {
+      АДАПТАЦИЯ.событие('Приглашение ушло: ' + (имена.join(', ') || '—') + '. Код зала ' + кодЗала + '.', { уведомление: true });
+      return true;
+    })
+    .catch(function (e) {
+      АДАПТАЦИЯ.событие('Приглашение не ушло (' + (e.message || e) + '). Код ' + кодЗала + ' передайте вручную — зал уже работает.', { срочно: true });
+      return false;
+    });
+}
+/* ── события сервера → адаптация ──────────────────────────────────────────── */
+function отСервера(м) {
+  if (м.type === 'ws') {
+    статус(м.online ? 'связь с сервером установлена' : 'связь с сервером потеряна — офлайн-режим, всё локальное работает', м.online ? 'ok' : '');
+    return;
+  }
+  if (м.type === 'presence') { С.онлайн[м.userId] = !!м.online; отрисоватьЛюдей(); отрисоватьПриглашениеВыбор(); return; }
+  if (м.type === 'friend_request') {
+    обновитьЛюдей();
+    АДАПТАЦИЯ.событие((м.from && (м.from.имя || м.from.name) || 'Кто-то') + ' хочет быть в твоих людях. Решение — за тобой, раздел «Мои люди».', { срочно: true, уведомление: true });
+    return;
+  }
+  if (м.type === 'friend_accepted') {
+    обновитьЛюдей();
+    АДАПТАЦИЯ.событие((м.user && (м.user.имя || м.user.name) || 'Человек') + ' теперь в твоих людях.', { уведомление: true });
+    return;
+  }
+  if (м.type === 'sing_invite') {
+    С.приглашения.push({ от: (м.from && (м.from.имя || м.from.name)) || 'кто-то', песня: м.song || '', кодЗала: чистКод(м.hallCode) || '', когда: Date.now() });
+    отрисоватьПриглашения();
+    АДАПТАЦИЯ.событие('Вас зовут спеть: зал ' + (м.hallCode || '') + '. Кнопка присоединения — в разделе «Позвать спеть».', { срочно: true, уведомление: true });
+    return;
+  }
+  if (м.type === 'session_update' || м.type === 'session_started' || м.type === 'kicked' || м.type === 'participant_left') {
+    /* зал живёт в ·18; здесь только честный статус */
+    статус('событие зала: ' + м.type + ' — само пение в ·18 СОБЫТИЕ', '');
+  }
+}
+/* ── серверный цикл ───────────────────────────────────────────────────────── */
+function обновитьЛюдей() {
+  if (!СЕРВЕР.есть() || !СЕРВЕР.кто()) { отрисоватьЛюдей(); return Promise.resolve(); }
+  return СЕРВЕР.api('/api/me').then(function (о) {
+    С.я = о.user;
+    С.люди = (о.friends || []).map(function (п) { return { id: п.id, имя: п.name, создан: п.createdAt }; });
+    С.входящие = (о.incoming || []).map(function (п) { return { id: п.id, имя: п.name }; });
+    С.исходящие = (о.outgoing || []).map(function (п) { return { id: п.id, имя: п.name }; });
+    отрисоватьЛюдей(); отрисоватьПриглашениеВыбор();
+  }).catch(function (e) {
+    статус('сервер не ответил: ' + (e.message || e) + ' — офлайн-режим', 'err');
+  });
+}
+function серверВход() {
+  if (!СЕРВЕР.есть() || !С.личность) { отрисоватьСервер(); return; }
+  отрисоватьСервер();
+  СЕРВЕР.здоров().then(function () {
+    return СЕРВЕР.registered(С.личность).catch(function () { /* уже зарегистрирован — нормально */ });
+  }).then(function () {
+    return СЕРВЕР.вход(С.личность);
+  }).then(function () {
+    СЕРВЕР.соединить(отСервера);
+    обновитьЛюдей();
+    статус('сервер: подпись подтверждена, связь установлена', 'ok');
+  }).catch(function (e) {
+    статус('сервер не принял подпись: ' + (e.message || e) + ' — офлайн-режим сохранён', 'err');
+  });
+}
+/* ── кнопки ───────────────────────────────────────────────────────────────── */
+$('#btnTestChannel').addEventListener('click', function () {
+  АДАПТАЦИЯ.событие('Проверка канала: это событие пришло доступным способом — и его можно выключить в любой момент.', { срочно: false, эхо: $('#routeEcho') });
+});
+$('#btnServerSave').addEventListener('click', function () {
+  СЕРВЕР.задать($('#serverUrl').value);
+  отрисоватьСервер(); серверВход();
+});
+$('#btnServerCheck').addEventListener('click', function () { отрисоватьСервер(); });
+$('#btnServerClear').addEventListener('click', function () {
+  СЕРВЕР.задать(''); $('#serverUrl').value = '';
+  отрисоватьСервер(); отрисоватьЛюдей();
+  статус('сервер убран — офлайн-режим: зал по коду/QR, личность на устройстве', 'ok');
+});
+$('#btnNewHall').addEventListener('click', function () {
+  const код = кодЗала19();
+  разослатьПриглашения(код, '').then(function (ушло) {
+    /* мост: ·18 поддерживает ?хост=КОД — ведущий создаёт зал ровно с этим кодом */
+    setTimeout(function () { location.href = 'СИНГУЛЯР_18_СОБЫТИЕ.html?хост=' + encodeURIComponent(код); }, ушло ? 900 : 2600);
+  });
+});
+$('#btnInviteExisting').addEventListener('click', function () {
+  const код = чистКод($('#hallCode').value);
+  if (код.length !== 5) { АДАПТАЦИЯ.событие('Код зала — 5 символов, он показан крупно в ·18.', { срочно: true }); return; }
+  разослатьПриглашения(код, '');
+});
+/* ── BOOT ─────────────────────────────────────────────────────────────────── */
+АДАПТАЦИЯ.применитьСейчас();
+отрисоватьВозможности();
+отрисоватьПредпочтения();
+отрисоватьСервер();
+бдПолучи('личность').then(function (л) {
+  С.личность = л || null;
+  отрисоватьЛичность();
+  if (л) { серверВход(); } else { отрисоватьЛюдей(); }
+}).catch(function (e) {
+  отрисоватьЛичность();
+  статус('хранилище недоступно: ' + (e && e.message || e) + ' — личность создать нельзя (приватный режим браузера?)', 'err');
+});
+window.ЧЕЛОВЕК19 = { АДАПТАЦИЯ: АДАПТАЦИЯ, С: С, версия: '1.0' };
+</script>
+</body>
+</html>

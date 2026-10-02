@@ -1417,8 +1417,8 @@ function подключитьСлежениеЗаПирами(комната, т
     прошлые = теперь;
   });
 }
-function создатьЗал() {
-  const код = кодЗала();
+function создатьЗал(фиксКод) {
+  const код = фиксКод ? String(фиксКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5) : кодЗала();
   const вид = $('transportHost').value;
   const имя = нормИмя($('hostName').value || 'Ведущий');
   const политика = (document.querySelector('input[name=savePolicy]:checked') || {}).value || 'any';
@@ -1559,7 +1559,7 @@ $('btnLeaveRoom').addEventListener('click', function () {
   ПРИЛОЖЕНИЕ.комната = null; ПРИЛОЖЕНИЕ.транспорт = null;
   показ('scMenu');
 });
-$('btnCreate').addEventListener('click', создатьЗал);
+$('btnCreate').addEventListener('click', function () { создатьЗал(); });
 $('btnJoin').addEventListener('click', войтиВЗал);
 $('btnBackMenu').addEventListener('click', function () { показ('scMenu'); });
 $('btnGcNow').addEventListener('click', function () {
@@ -1595,6 +1595,11 @@ window.ЗАЛ18 = { ПРИЛОЖЕНИЕ: ПРИЛОЖЕНИЕ, ХРАНИЛИЩ
     $('guestName').focus();
   }
   if ((location.hash || '').indexOf('память') >= 0) показ('scMemory');
+  const хостКод = (п.get('хост') || п.get('host') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+  if (хостКод && хостКод.length === 5) {
+    лог('мост ·19 ЧЕЛОВЕК: создаём зал с кодом из приглашения ' + хостКод);
+    setTimeout(function () { создатьЗал(хостКод); }, 150);
+  }
 })();
 
 </script>
