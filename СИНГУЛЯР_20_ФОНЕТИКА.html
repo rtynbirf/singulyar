@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·20 — ФОНЕТИКА · романизация · вокальный гид</title>
+<meta name="description" content="СИНГУЛЯР ·20 «ФОНЕТИКА» — фонетический подсказчик по ТЗ KARAOKE_TREND: офлайн-романизация любых языков (any-ascii, ISC, 0 сети), разбивка на слоги-чипы, локальный вокальный гид через Web Speech API (медленный темп, выбор голоса), мост с ·16 СУФЛЁР: текущее и следующие слова песни с подсказкой произношения. 0 innerHTML.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--red:#ef4444;--green:#10b981;--pink:#f9a8d4;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d;white-space:nowrap}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.18;margin:24px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12.5px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:780px;font-size:15.5px}
+.hint{color:var(--dim);font-size:13px;margin-top:8px}
+code{font-family:var(--mono);font-size:12.5px;background:#16202e;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:11px 18px;font-weight:700;border:0;cursor:pointer;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.38;cursor:not-allowed;filter:none}
+.btn.gray{background:#223146;color:var(--tx)}
+.btn.ghost{background:transparent;color:var(--teal);border:1px solid #24534d}
+.btn.warn{background:var(--amber)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:10px}
+.status.ok{color:var(--green)} .status.err{color:var(--red)} .status.warn{color:var(--amber)}
+textarea{width:100%;min-height:110px;background:#0c141f;color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:16px/1.55 var(--mono);resize:vertical}
+textarea:focus{outline:2px solid #24534d}
+select,input[type=text]{background:#0c141f;color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:14px var(--mono)}
+label.chk{display:inline-flex;gap:8px;align-items:center;font-size:14px;color:var(--dim);cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:#0c141f;border:1px solid #24354a;border-radius:12px;padding:8px 12px;cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--teal)}
+.chip .o{display:block;font-size:15px}
+.chip .r{display:block;font-family:var(--mono);font-size:12.5px;color:var(--teal)}
+.bigword{background:#0c141f;border:1px solid #24354a;border-radius:14px;padding:14px 16px;margin-top:12px}
+.bigword .o{font-size:26px;line-height:1.3;word-break:break-word}
+.bigword .r{font-family:var(--mono);font-size:18px;color:var(--teal);margin-top:4px;word-break:break-word}
+.bigword .m{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:6px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#44566b;margin-right:7px;vertical-align:baseline}
+.dot.live{background:var(--green)} .dot.wait{background:var(--amber)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{color:var(--teal);font-family:var(--mono);font-size:12px}
+td code{white-space:nowrap}
+ul{margin:8px 0 0 20px}
+li{margin:5px 0}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--dim);font-size:13px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="logo">С20</div>
+    <div><b>СИНГУЛЯР ·20 «ФОНЕТИКА»</b><span>романизация · слоги · вокальный гид · мост ·16</span></div>
+    <div class="badge">офлайн · any-ascii ISC · 0 innerHTML</div>
+  </div>
+</header>
+<main class="wrap">
+  <h1>Пой на <em>незнакомом языке</em> — с подсказкой произношения</h1>
+  <p class="lead">Тезис из ТЗ KARAOKE_TREND: при 158 языках нужен инструмент освоения произношения — транскрипция (романизация) и локальный синтез речи. Модуль работает без сети: таблицы any-ascii вшиты рядом, голоса берутся из твоей системы (Web Speech API). Никаких аккаунтов, серверов, загрузок моделей.</p>
+
+  <h2>1 · Текст → фонетика <em id="coreTag">CORE</em></h2>
+  <div class="panel">
+    <label class="sr" for="txtIn">Текст для фонетической разметки</label>
+    <textarea id="txtIn" placeholder="Вставь строку песни на любом языке… Например: Когда теряем / 当我们失去彼此 / 우리가 잃을 때"></textarea>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="btnRoma" disabled>✦ ФОНЕТИКА</button>
+      <button class="btn gray" id="btnSpeak" disabled>▶ ПРОИЗНЕСТИ ВСЁ</button>
+      <label class="chk"><input type="checkbox" id="chkSlow"> 🐢 медленно</label>
+      <label class="chk" style="gap:6px">язык TTS
+        <select id="selLang" aria-label="Язык произношения"></select>
+      </label>
+    </div>
+    <div class="row" style="margin-top:10px" id="samples" role="group" aria-label="Примеры на разных письменностях"></div>
+    <div class="chips" id="chips" hidden></div>
+    <p class="status" id="status">инициализация…</p>
+    <div class="status err" id="loadBanner" hidden></div>
+  </div>
+
+  <h2>2 · Мост «СУФЛЁР ·16» — фонетика поверх поющей песни</h2>
+  <div class="panel">
+    <p class="status" style="margin-top:0"><span class="dot wait" id="bwdot"></span><span id="bridgeStatus">жду трансляции ·16…</span></p>
+    <p class="hint">Открой <a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>, включи там «📡 трансляция в зал», открой песню — здесь появится текущее слово с романизацией и ближайшие слова. ·20 ничего не отправляет: только слушает канал <code>singulyar-hall</code> (BroadcastChannel + localStorage-фолбэк). Ядро ·16 не затронуто.</p>
+    <div class="bigword" id="bwBox" hidden>
+      <div class="m" id="bwSong"></div>
+      <div class="o" id="bwOrig"></div>
+      <div class="r" id="bwRoma"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="btnBwSpeak">🔊 слово</button>
+      </div>
+    </div>
+    <div class="chips" id="bwNext" hidden></div>
+    <div class="sr" aria-live="polite" id="bwLive"></div>
+  </div>
+
+  <h2>3 · Как это работает</h2>
+  <div class="panel">
+    <table>
+      <tr><th>слой</th><th>что делает</th><th>откуда</th></tr>
+      <tr><td>романизация</td><td>Unicode → латиница для любой письменности, 1:1 по символам</td><td><code>БИБЛИОТЕКИ/any-ascii.bundle.mjs</code> (any-ascii 0.3.3, ISC, офлайн-таблицы)</td></tr>
+      <tr><td>слоги</td><td>хань/хангыль → слог-чипы (капитальный сплит), кана → кластеры (малые + ー слиты), прочие слова → по пробелам</td><td>ядро ·20, pure-функции</td></tr>
+      <tr><td>язык TTS</td><td>скрипт-детект → BCP-47 (uk/be/sr/kk отличимы от ru по буквам); ручной override</td><td>ядро ·20</td></tr>
+      <tr><td>голос</td><td>Web Speech API: точное совпадение языка → префикс → любой локальный голос</td><td>система (без сети для локальных голосов)</td></tr>
+      <tr><td>мост</td><td>читает STATE ·16 (слово/далее/песня), только слушатель</td><td><code>BroadcastChannel('singulyar-hall')</code> ver:1</td></tr>
+    </table>
+    <ul>
+      <li>Чипы — кнопки: тап = произнести это слово выбранным темпом.</li>
+      <li>«🐢 медленно» — rate 0.55 вместо 0.95, для разучивания строк.</li>
+      <li>Ничего не отправляется никуда: 0 fetch, 0 сети, 0 аккаунтов.</li>
+    </ul>
+  </div>
+
+  <h2>4 · Честные границы</h2>
+  <div class="panel">
+    <ul>
+      <li><b>Тоны пиньиня не подаются</b> — any-ascii даёт слоги без диакритики (dang wo men); тональная разметка — дорожная карта.</li>
+      <li><b>Арабский/иврит</b> — романизация без огласовок (char-таблицы), произношение приблизительное.</li>
+      <li><b>Хангыль</b> — по слогам без сандхи-слияний (anu → «an nyeong», не «annyaeng»).</li>
+      <li><b>Кана</b> — Hepburn-подобная таблица any-ascii; малая цу аппроксимирована (きっぷ → «kitpu»).</li>
+      <li><b>TTS зависит от ОС</b>: локальные голоса есть не для всех 158 языков; если голоса нет — звучит голос по умолчанию или честный статус «голоса нет». В headless-браузерах speechSynthesis может отсутствовать — романизация при этом работает полностью.</li>
+      <li><b>file://</b>: динамический import бандла может быть заблокирован браузером — открой модуль по HTTP (Pages или любой локальный сервер). Это то же ограничение, что у ·18.</li>
+      <li><b>IPA</b> — не подаётся; романизация по ТЗ («IPA / романизация» — выбран второй путь).</li>
+    </ul>
+  </div>
+</main>
+<footer><div class="wrap">СИНГУЛЯР ·20 «ФОНЕТИКА» v1.0 · ТЗ KARAOKE_TREND «Фонетический подсказчик и вокальный гид» · офлайн-first · 0 innerHTML ·
+<a href="index.html">← платформа</a> · <a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a> · <a href="README.md">README</a></div></footer>
+
+<script>
+/* ═══ СИНГУЛЯР ·20 «ФОНЕТИКА» — Local Phonetic Guide / Vocal Guide. Офлайн-first. 0 innerHTML. ═══
+   1. ЯДРО (pure): прогоны-скрипты → романизация → слоги-чипы → детект языка.
+   2. TTS: Web Speech API, голос по языку, темп медленно/обычно.
+   3. МОСТ: только-слушатель STATE ·16 (ver:1, word/next/song). */
+/* ── S20_CORE_START ── */
+const S20 = {};
+S20.КАНА_МАЛЫЕ = new Set([0x3041,0x3043,0x3045,0x3047,0x3049,0x3063,0x3083,0x3085,0x3087,0x30A1,0x30A3,0x30A5,0x30A7,0x30A9,0x30C3,0x30E3,0x30E5,0x30E7,0x30FC]);
+S20.вКат = function (cp) {
+  if ((cp >= 0x2E80 && cp <= 0x2EFF) || (cp >= 0x3400 && cp <= 0x4DBF) || (cp >= 0x4E00 && cp <= 0x9FFF) || (cp >= 0xF900 && cp <= 0xFAFF) || (cp >= 0x20000 && cp <= 0x2FA1F)) return 'han';
+  if ((cp >= 0x3040 && cp <= 0x30FF) || (cp >= 0x31F0 && cp <= 0x31FF) || (cp >= 0xFF66 && cp <= 0xFF9D)) return 'kana';
+  if ((cp >= 0x1100 && cp <= 0x11FF) || (cp >= 0x3130 && cp <= 0x318F) || (cp >= 0xAC00 && cp <= 0xD7AF) || (cp >= 0xFFA0 && cp <= 0xFFDC)) return 'hangul';
+  return 'other';
+};
+S20.прогоны = function (текст) {
+  const out = [];
+  let cur = null;
+  for (const ч of String(текст || '')) {
+    const к = S20.вКат(ч.codePointAt(0));
+    const кл = (к === 'other' && /\s/.test(ч)) ? 'space' : к;
+    if (!cur || cur.к !== кл) { cur = { к: кл, с: ч }; out.push(cur); }
+    else cur.с += ч;
+  }
+  return out;
+};
+S20.сплитКапс = function (roma) {
+  return String(roma || '').split(/(?=[A-Z])/).map(function (p) { return p.toLowerCase(); }).filter(Boolean);
+};
+S20.романизацияПрогона = function (к, с, anyAscii) {
+  if (к === 'space') return ' ';
+  let r;
+  try { r = anyAscii(с); } catch (e) { r = ''; }
+  if (к === 'han' || к === 'hangul') return S20.сплитКапс(r).join(' ');
+  return r;
+};
+S20.романизировать = function (текст, anyAscii) {
+  const ЦЗЖ = { han: 1, kana: 1, hangul: 1 };
+  let out = '';
+  let prev = null;
+  for (const p of S20.прогоны(текст)) {
+    if (p.к === 'space') { out += ' '; prev = 'space'; continue; }
+    if (out && prev !== 'space' && (ЦЗЖ[p.к] || ЦЗЖ[prev])) out += ' ';
+    out += S20.романизацияПрогона(p.к, p.с, anyAscii);
+    prev = p.к;
+  }
+  return out;
+};
+S20.скриптыТекста = function (текст) {
+  const сч = {};
+  for (const p of S20.прогоны(текст)) if (p.к !== 'space') сч[p.к] = (сч[p.к] || 0) + p.с.length;
+  return Object.keys(сч).sort(function (a, b) { return сч[b] - сч[a]; });
+};
+S20.кирилликаЯзык = function (текст) {
+  if (/[їєґ]/i.test(текст)) return 'uk';
+  if (/[ў]/i.test(текст)) return 'be';
+  if (/[ѓќѕџљњћ]/i.test(текст)) return 'sr';
+  if (/[әғқңөұүһі]/i.test(текст)) return 'kk';
+  return 'ru';
+};
+S20.СКРИПТ_ЯЗЫК = { han: 'zh', kana: 'ja', hangul: 'ko', devanagari: 'hi', arabic: 'ar', hebrew: 'he', greek: 'el', thai: 'th', armenian: 'hy', georgian: 'ka', bengali: 'bn', tamil: 'ta', telugu: 'te', kannada: 'kn', malayalam: 'ml', gujarati: 'gu', gurmukhi: 'pa', sinhala: 'si', myanmar: 'my', khmer: 'km', lao: 'lo', ethiopic: 'am', mongolian: 'mn', tibetan: 'bo' };
+S20.скриптПоCp = function (cp) {
+  if ((cp >= 0x0900 && cp <= 0x097F)) return 'devanagari';
+  if ((cp >= 0x0600 && cp <= 0x06FF) || (cp >= 0x0750 && cp <= 0x077F) || (cp >= 0xFB50 && cp <= 0xFDFF) || (cp >= 0xFE70 && cp <= 0xFEFF)) return 'arabic';
+  if (cp >= 0x0590 && cp <= 0x05FF) return 'hebrew';
+  if ((cp >= 0x0370 && cp <= 0x03FF) || (cp >= 0x1F00 && cp <= 0x1FFF)) return 'greek';
+  if (cp >= 0x0E00 && cp <= 0x0E7F) return 'thai';
+  if (cp >= 0x0530 && cp <= 0x058F) return 'armenian';
+  if (cp >= 0x10A0 && cp <= 0x10FF) return 'georgian';
+  if (cp >= 0x0980 && cp <= 0x09FF) return 'bengali';
+  if (cp >= 0x0B80 && cp <= 0x0BFF) return 'tamil';
+  if (cp >= 0x0C00 && cp <= 0x0C7F) return 'telugu';
+  if (cp >= 0x0C80 && cp <= 0x0CFF) return 'kannada';
+  if (cp >= 0x0D00 && cp <= 0x0D7F) return 'malayalam';
+  if (cp >= 0x0A80 && cp <= 0x0AFF) return 'gujarati';
+  if (cp >= 0x0A00 && cp <= 0x0A7F) return 'gurmukhi';
+  if (cp >= 0x0D80 && cp <= 0x0DFF) return 'sinhala';
+  if (cp >= 0x1000 && cp <= 0x109F) return 'myanmar';
+  if (cp >= 0x1780 && cp <= 0x17FF) return 'khmer';
+  if (cp >= 0x0E80 && cp <= 0x0EFF) return 'lao';
+  if (cp >= 0x1200 && cp <= 0x139F) return 'ethiopic';
+  if (cp >= 0x1800 && cp <= 0x18AF) return 'mongolian';
+  if (cp >= 0x0F00 && cp <= 0x0FFF) return 'tibetan';
+  return null;
+};
+S20.определитьЯзык = function (текст) {
+  const сч = {};
+  for (const ч of String(текст || '')) {
+    const cp = ч.codePointAt(0);
+    let к = S20.вКат(cp);
+    if (к === 'other') { const s = S20.скриптПоCp(cp); if (s) к = s; else continue; }
+    if (к === 'kana') { к = 'kana'; }
+    сч[к] = (сч[к] || 0) + 1;
+  }
+  let топ = null, макс = 0;
+  for (const к in сч) if (сч[к] > макс) { макс = сч[к]; топ = к; }
+  if (!топ || топ === 'other') return { язык: null, скрипт: 'latin' };
+  if (топ === 'kana' && сч.han && сч.han >= сч.kana) топ = 'han';
+  if (топ === 'han' && сч.kana && сч.kana >= сч.han) топ = 'kana';
+  if (топ === 'han' || топ === 'kana' || топ === 'hangul') return { язык: S20.СКРИПТ_ЯЗЫК[топ], скрипт: топ };
+  if (топ === 'other') return { язык: null, скрипт: 'latin' };
+  return { язык: S20.СКРИПТ_ЯЗЫК[топ] || null, скрипт: топ };
+};
+S20.языкКириллицы = function (текст) {
+  let cyr = 0;
+  for (const ч of String(текст || '')) if (/[\u0400-\u04FF]/.test(ч)) cyr++;
+  if (!cyr) return null;
+  return S20.кирилликаЯзык(текст);
+};
+S20.языкТекста = function (текст) {
+  const г = S20.определитьЯзык(текст);
+  if (г.язык) return г;
+  const к = S20.языкКириллицы(текст);
+  if (к) return { язык: к, скрипт: 'cyrillic' };
+  return { язык: null, скрипт: г.скрипт };
+};
+S20.фишки = function (текст, anyAscii) {
+  const out = [];
+  const токены = String(текст || '').split(/(\s+)/);
+  for (const т of токены) {
+    if (!т) continue;
+    if (/^\s+$/.test(т)) continue;
+    const ед = [];
+    for (const ч of т) {
+      const к = S20.вКат(ч.codePointAt(0));
+      if (к === 'han' || к === 'hangul') ед.push(ч);
+      else if (к === 'kana') {
+        if (ед.length && S20.КАНА_МАЛЫЕ.has(ч.codePointAt(0))) ед[ед.length - 1] += ч;
+        else ед.push(ч);
+      } else if (ед.length && S20.вКат(ед[ед.length - 1].codePointAt(0)) === 'other') ед[ед.length - 1] += ч;
+      else ед.push(ч);
+    }
+    for (const e of ед) out.push({ о: e, р: S20.романизировать(e, anyAscii) });
+  }
+  return out;
+};
+S20.фильтрМоста = function (m) {
+  try {
+    return !!(m && m.ver === 1 && m.t === 'STATE' && m.src && typeof m.d === 'object' && m.d !== null &&
+      typeof m.d.word === 'string' && Array.isArray(m.d.next));
+  } catch (e) { return false; }
+};
+S20.выбратьГолос = function (голоса, язык) {
+  if (!язык || !голоса || !голоса.length) return null;
+  const баз = String(язык).split('-')[0].toLowerCase();
+  let v = голоса.find(function (g) { return (g.lang || '').toLowerCase().replace('_', '-') === язык.toLowerCase(); });
+  if (v) return v;
+  v = голоса.find(function (g) { return (g.lang || '').toLowerCase().split(/[-_]/)[0] === баз; });
+  return v || null;
+};
+/* ── S20_CORE_END ── */
+/* ── 2. TTS ВОКАЛЬНЫЙ ГИД ─────────────────────────────────────────────────── */
+const TTS = (function () {
+  const синт = window.speechSynthesis || null;
+  let голоса = [];
+  function обновить() {
+    if (!синт) return;
+    try { голоса = синт.getVoices() || []; } catch (e) { голоса = []; }
+  }
+  if (синт) { обновить(); if (typeof синт.onvoiceschanged !== 'undefined') синт.onvoiceschanged = обновить; else setTimeout(обновить, 400); }
+  function говорить(текст, язык, медленно) {
+    if (!синт) return { ok: false, почему: 'нет speechSynthesis в этом браузере' };
+    const т = String(текст || '').trim();
+    if (!т) return { ok: false, почему: 'пустой текст' };
+    обновить();
+    try { синт.cancel(); } catch (e) {}
+    const u = new SpeechSynthesisUtterance(т);
+    const яз = язык || 'en';
+    u.lang = яз;
+    u.rate = медленно ? 0.55 : 0.95;
+    const г = S20.выбратьГолос(голоса, яз);
+    if (г) u.voice = г;
+    синт.speak(u);
+    return { ok: true, голос: г ? г.name : null, безГолоса: !г };
+  }
+  return { говорить, есть: function () { return !!синт; }, голоса: function () { return голоса; } };
+})();
+
+/* ── 3. UI ────────────────────────────────────────────────────────────────── */
+const $ = function (s) { return document.querySelector(s); };
+let anyAscii = null;
+let текущийЯзык = null;
+let текущийСкрипт = null;
+
+const ЯЗЫКИ_UI = [['', 'авто'], ['ru', 'ru — русский'], ['uk', 'uk — українська'], ['be', 'be — беларуская'], ['sr', 'sr — српски'], ['en', 'en — english'], ['es', 'es — español'], ['pt', 'pt — português'], ['fr', 'fr — français'], ['de', 'de — deutsch'], ['it', 'it — italiano'], ['pl', 'pl — polski'], ['tr', 'tr — türkçe'], ['vi', 'vi — tiếng Việt'], ['id', 'id — indonesia'], ['el', 'el — ελληνικά'], ['he', 'he — עברית'], ['ar', 'ar — العربية'], ['fa', 'fa — فارسی'], ['hi', 'hi — हिन्दी'], ['bn', 'bn — বাংলা'], ['ta', 'ta — தமிழ்'], ['te', 'te — తెలుగు'], ['kn', 'kn — ಕನ್ನಡ'], ['ml', 'ml — മലയാളം'], ['gu', 'gu — ગુજરાતી'], ['pa', 'pa — ਪੰਜਾਬੀ'], ['si', 'si — සිංහල'], ['ne', 'ne — नेपाली'], ['th', 'th — ไทย'], ['lo', 'lo — ລາວ'], ['km', 'km — ខ្មែរ'], ['my', 'my — မြန်မာ'], ['am', 'am — አማርኛ'], ['ka', 'ka — ქართული'], ['hy', 'hy — հայերեն'], ['zh', 'zh — 中文'], ['ja', 'ja — 日本語'], ['ko', 'ko — 한국어']];
+(function наполнитьЯзыки() {
+  const sel = $('#selLang');
+  for (const [v, т] of ЯЗЫКИ_UI) {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = т;
+    sel.appendChild(o);
+  }
+})();
+
+const ОБРАЗЦЫ = [
+  ['ru', 'Когда теряем'],
+  ['zh', '当我们失去彼此的时候'],
+  ['ja', '私たちが失うとき'],
+  ['ko', '우리가 잃을 때'],
+  ['hi', 'जब हम खोते हैं'],
+  ['ar', 'عندما نفقد بعضنا'],
+  ['el', 'Όταν χάνουμε'],
+  ['th', 'เมื่อเราสูญเสีย']
+];
+(function наполнитьОбразцы() {
+  const бокс = $('#samples');
+  for (const [яз, т] of ОБРАЗЦЫ) {
+    const b = document.createElement('button');
+    b.className = 'btn gray';
+    b.style.fontSize = '12.5px';
+    b.setAttribute('data-lang', яз);
+    b.textContent = т;
+    b.addEventListener('click', function () {
+      $('#txtIn').value = т;
+      сделать();
+    });
+    бокс.appendChild(b);
+  }
+})();
+
+function статус(текст, класс) {
+  const s = $('#status');
+  s.textContent = текст;
+  s.className = 'status' + (класс ? ' ' + класс : '');
+}
+function медленно() { return $('#chkSlow').checked; }
+function выбранныйЯзык(текст) {
+  const руч = $('#selLang').value;
+  if (руч) return руч;
+  const г = S20.языкТекста(текст);
+  текущийСкрипт = г.скрипт;
+  return г.язык;
+}
+function чипСоздать(ф, приТапе) {
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.setAttribute('aria-label', 'слово ' + ф.о + ', романизация ' + ф.р + ', нажми чтобы произнести');
+  const o = document.createElement('span'); o.className = 'o'; o.textContent = ф.о;
+  const r = document.createElement('span'); r.className = 'r'; r.textContent = ф.р;
+  b.appendChild(o); b.appendChild(r);
+  b.addEventListener('click', function () {
+    if (приТапе) приТапе(ф);
+    const яз = выбранныйЯзык(ф.о) || текущийЯзык;
+    const res = TTS.говорить(ф.о, яз, медленно());
+    if (!res.ok) статус('TTS: ' + res.почему + ' — романизация работает', 'warn');
+  });
+  return b;
+}
+function сделать() {
+  const текст = $('#txtIn').value;
+  const бокс = $('#chips');
+  бокс.textContent = '';
+  if (!текст.trim()) { бокс.hidden = true; статус('введи текст — и нажми ФОНЕТИКА'); return; }
+  if (!anyAscii) { статус('таблицы романизации ещё не загружены', 'err'); return; }
+  const фишки = S20.фишки(текст, anyAscii);
+  текущийЯзык = выбранныйЯзык(текст);
+  for (const ф of фишки) бокс.appendChild(чипСоздать(ф, null));
+  бокс.hidden = фишки.length === 0;
+  const скр = S20.скриптыТекста(текст).join(', ');
+  const г = S20.языкТекста(текст);
+  let гс = г.язык ? ('язык TTS: ' + г.язык) : 'язык TTS не определён — выбери вручную';
+  const гoл = TTS.голоса();
+  if (г.язык && гoл.length) {
+    const v = S20.выбратьГолос(гoл, г.язык);
+    гс += v ? (' · голос: ' + v.name) : ' · голоса для языка нет — прозвучит голос по умолчанию';
+  }
+  статус('скрипты: ' + (скр || '—') + ' · ' + гс + ' · слов/слогов: ' + фишки.length, 'ok');
+}
+$('#btnRoma').addEventListener('click', сделать);
+$('#txtIn').addEventListener('input', function () {
+  clearTimeout(window.__s20t);
+  window.__s20t = setTimeout(сделать, 350);
+});
+$('#btnSpeak').addEventListener('click', function () {
+  const текст = $('#txtIn').value.trim();
+  if (!текст) { статус('введи текст', 'warn'); return; }
+  const яз = выбранныйЯзык(текст) || текущийЯзык;
+  const res = TTS.говорить(текст, яз, медленно());
+  if (!res.ok) статус('TTS: ' + res.почему + ' — романизация работает', 'warn');
+  else if (res.безГолоса) статус('прозвучало голосом по умолчанию (локального голоса для языка нет)', 'warn');
+  else статус('прозвучало: ' + res.голос, 'ok');
+});
+$('#selLang').addEventListener('change', сделать);
+
+/* ── 4. МОСТ ·16 СУФЛЁР (только слушатель) ────────────────────────────────── */
+(function мост() {
+  const КЛЮЧ = 'singulyar-hall';
+  let bc = null;
+  let послСлово = null;
+  const dot = $('#bwdot'), ст = $('#bridgeStatus');
+  function применить(m) {
+    if (!S20.фильтрМоста(m)) return;
+    const d = m.d;
+    if ($('#bwBox').hidden) { $('#bwBox').hidden = false; dot.className = 'dot live'; ст.textContent = 'живая трансляция ·16 — слово меняется, тапай 🔊 и чипы'; }
+    $('#bwSong').textContent = d.song ? ('🎵 ' + d.song) : '';
+    if (d.word !== послСлово) {
+      послСлово = d.word;
+      $('#bwOrig').textContent = d.word;
+      $('#bwRoma').textContent = anyAscii ? S20.романизировать(d.word, anyAscii) : '…';
+      $('#bwLive').textContent = d.word + ' — ' + (anyAscii ? S20.романизировать(d.word, anyAscii) : '');
+      const н = $('#bwNext');
+      н.textContent = '';
+      const след = (d.next || []).slice(0, 6);
+      for (const сл of след) {
+        if (!сл) continue;
+        const ф = { о: сл, р: anyAscii ? S20.романизировать(сл, anyAscii) : '…' };
+        н.appendChild(чипСоздать(ф, null));
+      }
+      н.hidden = след.length === 0;
+    }
+  }
+  function поBC(ev) { применить(ev.data); }
+  function поStorage(e) {
+    if (e.key !== КЛЮЧ || !e.newValue) return;
+    try { применить(JSON.parse(e.newValue)); } catch (er) {}
+  }
+  try { bc = new BroadcastChannel(КЛЮЧ); bc.onmessage = поBC; } catch (e) { bc = null; }
+  window.addEventListener('storage', поStorage);
+  /* если ·16 уже вещает — storage не стрельнет без второго таба: разовый опрос ключа */
+  try {
+    const сыр = localStorage.getItem(КЛЮЧ);
+    if (сыр) { const m = JSON.parse(сыр); if (m && Date.now() - (m.ts || 0) < 1500) применить(m); }
+  } catch (e) {}
+  $('#btnBwSpeak').addEventListener('click', function () {
+    const сл = $('#bwOrig').textContent;
+    if (!сл) return;
+    const яз = выбранныйЯзык(сл) || текущийЯзык;
+    const res = TTS.говорить(сл, яз, медленно());
+    if (!res.ok) ст.textContent = 'TTS: ' + res.почему + ' — романизация работает';
+  });
+  if (!bc) ст.textContent = 'BroadcastChannel недоступен — только localStorage-фолбэк';
+})();
+
+/* ── 5. ЗАГРУЗКА БАНДЛА any-ascii (динамический import, как в ·18) ─────────── */
+(function загрузить() {
+  const старт = Date.now();
+  import(new URL('БИБЛИОТЕКИ/any-ascii.bundle.mjs', document.baseURI).href)
+    .then(function (m) {
+      anyAscii = m.default || m.anyAscii;
+      if (typeof anyAscii !== 'function') throw new Error('бандл без функции');
+      $('#btnRoma').disabled = false;
+      $('#btnSpeak').disabled = false;
+      $('#coreTag').textContent = 'any-ascii 0.3.3 ISC · ' + (Date.now() - старт) + ' мс';
+      сделать();
+      if (!TTS.есть()) статус('TTS недоступен в этом браузере — романизация работает полностью', 'warn');
+    })
+    .catch(function (e) {
+      $('#loadBanner').hidden = false;
+      $('#loadBanner').textContent = 'таблицы романизации не загрузились (' + (e && e.message ? e.message : e) + '). Если открыл файл по file:// — браузер блокирует module-import: открой по HTTP (Pages или локальный сервер).';
+      статус('офлайн-фолбэк недоступен', 'err');
+    });
+})();
+</script>
+</body>
+</html>
