@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР ·18 — СОБЫТИЕ · совместное пение · память</title>
+<meta name="description" content="СИНГУЛЯР ·18 «СОБЫТИЕ»: зал для совместного пения — комната по коду/QR, участники без аккаунтов, голоса WebRTC mesh, синхронный старт минусовки, общая запись, TEMPORARY 7 дней → ❤️ ПАМЯТЬ. Локальное ядро работает офлайн, соц-ядро включается по желанию.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--red:#ef4444;--green:#10b981;--pink:#f9a8d4;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d;white-space:nowrap}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.18;margin:24px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12.5px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:780px;font-size:15.5px}
+.hint{color:var(--dim);font-size:13px;margin-top:8px}
+code{font-family:var(--mono);font-size:12.5px;background:#16202e;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:11px 18px;font-weight:700;border:0;cursor:pointer;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.38;cursor:not-allowed;filter:none}
+.btn.gray{background:#223146;color:var(--tx)}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn.pink{background:var(--pink);color:#2b0b1a}
+.btn.red{background:var(--red);color:#fff}
+.btn.big{font-size:16px;padding:14px 24px;border-radius:13px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0}
+.stat>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.stat b{display:block;font-size:17px;font-family:var(--mono);color:var(--teal)}
+.stat i{font-style:normal;color:var(--dim);font-size:11.5px}
+input[type=text],input[type=search],select,textarea{background:#0d1520;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:14.5px/1.4 inherit;min-width:0}
+select{font-family:var(--mono);font-size:13px;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid #1f4d47;outline-offset:1px}
+label.chk{display:flex;gap:8px;align-items:center;font-size:13.5px;color:#c9d7e2;cursor:pointer}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#0d1a26;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:14px;margin:4px 6px 4px 0}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:#44546a;display:inline-block}
+.chip.ready .dot{background:var(--green)}
+.chip.host{border-color:#1f4d47}
+.chip .lv{width:44px;height:7px;border-radius:4px;background:#0a1622;overflow:hidden}
+.chip .lv i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width .08s linear}
+.emoji-pick{display:flex;gap:6px;flex-wrap:wrap}
+.emoji-pick button{font-size:21px;background:#0d1a26;border:1px solid var(--line);border-radius:10px;padding:5px 9px;cursor:pointer}
+.emoji-pick button[aria-pressed="true"]{border-color:var(--teal);background:#0b1f1d}
+.qrbox{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin:12px 0}
+.qrbox canvas{background:#fff;border-radius:12px;padding:6px}
+.roomcode{font-family:var(--mono);font-size:clamp(26px,6vw,40px);letter-spacing:.22em;color:var(--teal2);font-weight:800}
+.col{display:flex;flex-direction:column;gap:8px;min-width:230px;flex:1}
+.status{border:1px solid #1f3a5f;background:#0b1524;border-radius:14px;padding:13px 16px;font-size:13.5px;color:#b9cde0;margin:14px 0}
+.status.err{border-color:#5f1f1f;background:#190b0b;color:#f0c8c8}
+.status.ok{border-color:#1f4d3a;background:#0b1912;color:#c8ecd9}
+.screens>section{display:none}
+.screens>section.on{display:block}
+.count-overlay{position:fixed;inset:0;background:rgba(4,9,15,.93);display:none;place-items:center;z-index:60;text-align:center}
+.count-overlay.on{display:grid}
+.count-num{font-size:clamp(90px,22vw,190px);font-family:var(--mono);font-weight:800;color:var(--teal);line-height:1}
+.count-song{color:var(--dim);font-size:15px;margin-top:10px;max-width:520px}
+.mem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.mem-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.mem-card .date{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.mem-card .ttl{font-weight:700;font-size:15px}
+.mem-card .who{color:var(--dim);font-size:13px}
+.mem-card .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.mem-card .acts .btn{padding:7px 11px;font-size:12px}
+.mem-photo{width:100%;height:110px;object-fit:cover;border-radius:9px;border:1px solid var(--line)}
+.temp-tag{font-family:var(--mono);font-size:10.5px;color:var(--amber);border:1px solid #4d3a12;background:#1a1408;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.mem-tag{font-family:var(--mono);font-size:10.5px;color:var(--pink);border:1px solid #4d1f36;background:#1a0d14;border-radius:999px;padding:2px 9px;white-space:nowrap}
+audio.rec{width:100%;margin:8px 0}
+footer{margin-top:48px;border-top:1px solid var(--line);padding-top:16px;color:var(--dim);font-size:12px;font-family:var(--mono);line-height:1.7}
+.hidden{display:none!important}
+.stage2{position:relative}
+.mic-big{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.mic-big>div{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px;text-align:center}
+.mic-big .em{font-size:30px}
+.mic-big b{display:block;font-size:13.5px;margin-top:4px}
+.mic-big .lv{height:9px;border-radius:5px;background:#0a1622;overflow:hidden;margin-top:8px}
+.mic-big .lv i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--teal2))}
+.timer{font-family:var(--mono);font-size:22px;color:var(--teal2)}
+fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;min-width:0}
+legend{font-family:var(--mono);font-size:12px;color:var(--teal);padding:0 8px}
+</style>
+</head>
+
+<body>
+<header><div class="wrap hd">
+  <div class="logo" aria-hidden="true">·18</div>
+  <div><b>СИНГУЛЯР ·18 «СОБЫТИЕ» — совместное пение и память</b><span>комната по коду · голоса P2P · запись события · TEMPORARY 7 дней → ❤️ ПАМЯТЬ</span></div>
+  <div class="badge">SOCIAL CORE · без аккаунтов</div>
+</div></header>
+
+<main class="wrap screens">
+
+<!-- ═══════════ ЭКРАН МЕНЮ ═══════════ -->
+<section id="scMenu" class="on">
+  <h1>Собери своих — <em>спойте вместе</em> — оставьте память</h1>
+  <p class="lead">Бабушка, мама, внучка — каждый со своего устройства: телефон, планшет, телевизор с браузером.
+  Создатель зала получает код и QR, остальные вводят код (или сканируют QR) — и оказываются в одной комнате.
+  Никаких аккаунтов, почт и паролей: только имя и эмодзи. Офлайн-ядро СИНГУЛЯРА при этом не зависит от сети.</p>
+
+  <div class="panelbox">
+    <h2 style="margin-top:0;border:0;padding:0">СОЗДАТЬ ЗАЛ <em>ты — ведущий</em></h2>
+    <div class="row">
+      <input type="text" id="hostName" maxlength="24" placeholder="твоё имя (напр. Бабушка)" aria-label="имя ведущего" style="flex:1;max-width:280px">
+      <div class="emoji-pick" id="hostEmoji" role="radiogroup" aria-label="эмодзи ведущего"></div>
+    </div>
+    <fieldset><legend>правило сохранения памяти</legend>
+      <label class="chk"><input type="radio" name="savePolicy" value="any" checked> достаточно одного ❤️ (запись у каждого своя — каждый решает сам)</label>
+      <label class="chk"><input type="radio" name="savePolicy" value="all"> памятью станет то, что ♥-нут все участники (помета в манифесте события)</label>
+    </fieldset>
+    <div class="row">
+      <label class="chk">транспорт:
+        <select id="transportHost" aria-label="транспорт зала">
+          <option value="relay">📡 между устройствами (Nostr-сигналинг, нужен интернет)</option>
+          <option value="channel">🖥 этот браузер — два окна (BroadcastChannel, без сети)</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <button class="btn big" id="btnCreate">🎉 создать зал</button>
+    </div>
+    <p class="hint">Зал живёт, пока открыта вкладка ведущего. Сервера нет: между устройствами — публичные
+    Nostr-ретрансляторы только для «рукопожатия» (WebRTC-сигналинг), голос и команды летят напрямую P2P.</p>
+  </div>
+
+  <div class="panelbox">
+    <h2 style="margin-top:0;border:0;padding:0">ВОЙТИ В ЗАЛ <em>код или QR</em></h2>
+    <div class="row">
+      <input type="text" id="joinCode" maxlength="5" placeholder="код зала (напр. 7K4P2)" aria-label="код зала" style="flex:1;max-width:220px;text-transform:uppercase;letter-spacing:.15em;font-family:var(--mono)">
+      <input type="text" id="guestName" maxlength="24" placeholder="твоё имя (напр. Мама)" aria-label="имя гостя" style="flex:1;max-width:280px">
+      <div class="emoji-pick" id="guestEmoji" role="radiogroup" aria-label="эмодзи гостя"></div>
+    </div>
+    <div class="row">
+      <label class="chk">транспорт:
+        <select id="transportGuest" aria-label="транспорт зала">
+          <option value="relay">📡 между устройствами (Nostr-сигналинг, нужен интернет)</option>
+          <option value="channel">🖥 этот браузер — два окна (BroadcastChannel, без сети)</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <button class="btn big" id="btnJoin">→ войти в зал</button>
+      <span id="joinAuto" class="hint"></span>
+    </div>
+  </div>
+
+  <h2>МОИ ВОСПОМИНАНИЯ <em>живут в этом браузере</em></h2>
+  <div class="row">
+    <button class="btn ghost" id="btnGcNow">🧹 удалить просроченные сейчас</button>
+    <span class="hint" id="gcInfo">временные записи удаляются сами: 7 дней после события</span>
+  </div>
+  <div class="mem-grid" id="memList" aria-live="polite"></div>
+
+  <div class="status" id="menuStatus" role="status" aria-live="polite">
+    <b>Как это работает:</b> 1) ведущий создаёт зал и выбирает песню из каталога 62 минусовок;
+    2) участники входят по коду/QR — голос каждого идёт всем по WebRTC (mesh, до ~4–5 участников);
+    3) ведущий жмёт «начать» — обратный отсчёт синхронный, минусовка стартует у всех одновременно;
+    4) после песни — общая запись (микс голосов + минусовка) у каждого участника: послушать, сохранить ❤️
+    или забыть — через 7 дней временная запись стирается навсегда.
+  </div>
+</section>
+
+<!-- ═══════════ ЭКРАН КОМНАТА ═══════════ -->
+<section id="scRoom">
+  <h1>Зал <em class="roomcode" id="roomCodeBig">·····</em></h1>
+  <p class="lead" id="roomSub">Ждём участников…</p>
+  <div class="row" id="roomChips" aria-live="polite"></div>
+
+  <div class="panelbox" id="inviteBox">
+    <h2 style="margin-top:0;border:0;padding:0">ПРИГЛАСИТЬ <em>QR + код</em></h2>
+    <div class="qrbox">
+      <canvas id="roomQr" aria-label="QR для входа в зал"></canvas>
+      <div class="col">
+        <div>код зала: <b class="roomcode" id="roomCodeSmall" style="font-size:22px"></b></div>
+        <textarea class="hint" id="joinUrl" readonly rows="2" style="font-family:var(--mono)" aria-label="ссылка для входа"></textarea>
+        <div class="row">
+          <button class="btn gray" id="btnCopyLink">📋 скопировать ссылку</button>
+        </div>
+        <p class="hint" id="qrHint">QR открывает эту страницу с кодом зала: участнику остаётся ввести имя.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panelbox">
+    <h2 style="margin-top:0;border:0;padding:0">ПЕСНЯ <em>62 минусовки канала</em></h2>
+    <div class="row">
+      <select id="songSel" aria-label="выбор песни" style="flex:1;max-width:430px"></select>
+    </div>
+    <div class="row">
+      <span class="hint" id="songHint">выбор у ведущего; гости могут предложить песню — ведущий увидит ★ у названия</span>
+    </div>
+    <div class="row" id="roomActions">
+      <button class="btn big" id="btnReady">✋ я готов</button>
+      <button class="btn big" id="btnStart" disabled>🎤 НАЧАТЬ</button>
+      <button class="btn gray" id="btnLeaveRoom">выйти из зала</button>
+    </div>
+    <p class="hint" id="startHint"></p>
+  </div>
+
+  <div class="status" id="roomStatus" role="status" aria-live="polite">транспорт: подключение…</div>
+</section>
+
+<!-- ═══════════ ЭКРАН ПЕНИЕ ═══════════ -->
+<section id="scSing">
+  <h1 id="singTitle">Поём…</h1>
+  <div class="row"><span class="timer" id="singTimer">00:00.0</span><span class="hint" id="singStateHint"></span></div>
+  <div class="mic-big" id="micBig" aria-live="off"></div>
+  <audio id="minusAudio" preload="auto" class="hidden"></audio>
+  <div class="row">
+    <button class="btn red" id="btnEnd">⏹ завершить песню</button>
+    <button class="btn ghost hidden" id="btnSingSelf">🔊 слышать себя</button>
+  </div>
+  <p class="hint">Голоса идут напрямую между устройствами (P2P). В наушниках — идеально: эхо выключено
+  само (echoCancellation). Если у кого-то колонки рядом с микрофоном — браузер приглушит обратную связь.</p>
+</section>
+
+<!-- ═══════════ ЭКРАН ОБЗОР (после песни) ═══════════ -->
+<section id="scReview">
+  <h1>🎉 ГОТОВО!</h1>
+  <p class="lead" id="reviewWho"></p>
+  <div class="panelbox">
+    <div class="row"><b id="reviewSong" style="font-size:17px"></b></div>
+    <div class="row"><span class="hint" id="reviewMeta"></span></div>
+    <audio class="rec" id="reviewPlayer" controls></audio>
+    <div class="row">
+      <button class="btn pink big" id="btnSaveMem">❤️ СОХРАНИТЬ ПАМЯТЬ</button>
+      <button class="btn gray" id="btnDownload">↗ скачать запись</button>
+      <button class="btn ghost" id="btnAgain">🔁 спеть ещё раз</button>
+    </div>
+    <p class="hint" id="reviewExpire"></p>
+    <fieldset><legend>украсить воспоминание</legend>
+      <div class="row">
+        <label class="btn ghost" style="cursor:pointer">📷 фотография<input type="file" id="memPhoto" accept="image/*" class="hidden"></label>
+        <span class="hint" id="photoInfo">фото хранится только в этом браузере</span>
+      </div>
+      <input type="text" id="memNote" maxlength="120" placeholder="💬 подпись к воспоминанию (напр. День рождения бабушки!)" style="width:100%">
+    </fieldset>
+  </div>
+</section>
+
+<!-- ═══════════ ЭКРАН ВОСПОМИНАНИЯ ═══════════ -->
+<section id="scMemory">
+  <h1>❤️ МОИ ВОСПОМИНАНИЯ</h1>
+  <p class="lead">Память живёт в этом браузере (IndexedDB). Временные записи исчезают через 7 дней,
+  сохранённые ❤️ — остаются, пока ты сам не решишь иначе. Экспорт — кнопкой ⬇ (webm-файл события).</p>
+  <div class="row"><button class="btn ghost" id="btnBackMenu">← в меню</button></div>
+  <div class="mem-grid" id="memListFull" aria-live="polite"></div>
+</section>
+
+</main>
+
+<div class="count-overlay" id="countOverlay" role="alert" aria-live="assertive">
+  <div>
+    <div class="count-num" id="countNum">3</div>
+    <div class="count-song" id="countSong"></div>
+  </div>
+</div>
+
+<footer>
+  СИНГУЛЯР ·18 «СОБЫТИЕ» — SOCIAL CORE поверх локального ядра: ROOM (LOBBY→READY→COUNTDOWN→SINGING→FINISH→REVIEW),
+  голоса WebRTC mesh (MediaTransport: Nostr-ретрансляторы для сигналинга между устройствами / BroadcastChannel для окон одного браузера),
+  запись микса локально у каждого участника, TEMPORARY → ❤️ MEMORY, GC 7 дней.<br>
+  Серверной части нет: аудитории, лент и слежки тоже нет. Запись никогда не покидает устройства участников.<br>
+  github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar
+</footer>
+
+<script>
+/* ── 0. QR-ЭНКОДЕР: byte mode, ECC L, версии 1–40, автопробег масок ───────
+   0 зависимостей; таблицы сверены матрица-в-матрицу с эталонной реализацией
+   (python-qrcode) по всем 8 маскам: v1/v3/v10/v16/v17. */
+const QR_CAPL=[17,32,53,78,106,134,154,192,230,271,321,367,425,458,520,586,644,718,792,858,929,1003,1091,1171,1273,1367,1465,1528,1628,1732,1840,1952,2068,2188,2303,2431,2563,2699,2809,2953];
+const QR_ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+const QR_BLOCKS=[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]];
+class SingulyarQR {
+    constructor() { this._gf(); }
+    _gf() {
+        this.EXP = new Uint8Array(512); this.LOG = new Uint8Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) { this.EXP[i] = x; this.LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+        for (let i = 255; i < 512; i++) this.EXP[i] = this.EXP[i - 255];
+    }
+    gmul(a, b) { return (a === 0 || b === 0) ? 0 : this.EXP[this.LOG[a] + this.LOG[b]]; }
+    rsEcc(data, ecLen) {
+        const g = new Uint8Array(ecLen + 1); g[0] = 1;
+        for (let i = 0; i < ecLen; i++) {
+            const a = this.EXP[i];
+            for (let j = Math.min(i + 1, ecLen); j >= 1; j--) g[j] = g[j - 1] ^ this.gmul(g[j], a);
+            g[0] = this.gmul(g[0], a);
+        }
+        const gg = new Uint8Array(ecLen + 1);
+        for (let j = 0; j <= ecLen; j++) gg[j] = g[ecLen - j];
+        const buf = new Uint8Array(data.length + ecLen);
+        buf.set(data, 0);
+        for (let i = 0; i < data.length; i++) {
+            const f = buf[i];
+            if (f === 0) continue;
+            for (let j = 1; j <= ecLen; j++) buf[i + j] ^= this.gmul(gg[j], f);
+        }
+        return buf.slice(data.length);
+    }
+    pickVersion(len) {
+        for (let v = 1; v <= 40; v++) if (QR_CAPL[v - 1] >= len) return v;
+        throw new Error('QR: данные не влезают (' + len + ' Б)');
+    }
+    buildCodewords(bytes, v) {
+        const bits = [];
+        const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+        put(4, 4); put(bytes.length, v < 10 ? 8 : 16);
+        for (const b of bytes) put(b, 8);
+        const blocks = QR_BLOCKS[v - 1];
+        let dataTotal = 0;
+        for (let i = 0; i < blocks.length; i += 3) dataTotal += blocks[i] * blocks[i + 2];
+        for (let i = 0; i < Math.min(4, dataTotal * 8 - bits.length); i++) bits.push(0);
+        while (bits.length % 8) bits.push(0);
+        const out0 = [];
+        for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; out0.push(b); }
+        let pad = 0xEC;
+        while (out0.length < dataTotal) { out0.push(pad); pad = pad === 0xEC ? 0x11 : 0xEC; }
+        const specs = [];
+        for (let i = 0; i < blocks.length; i += 3) for (let k = 0; k < blocks[i]; k++) specs.push({ d: blocks[i + 2], e: blocks[i + 1] - blocks[i + 2] });
+        const dbs = [], ecs = [];
+        let pos = 0;
+        for (const s of specs) { const ch = out0.slice(pos, pos + s.d); pos += s.d; dbs.push(ch); ecs.push(this.rsEcc(ch, s.e)); }
+        const out = [];
+        const maxD = Math.max.apply(null, dbs.map(b => b.length));
+        for (let i = 0; i < maxD; i++) for (const b of dbs) if (i < b.length) out.push(b[i]);
+        const maxE = Math.max.apply(null, ecs.map(b => b.length));
+        for (let i = 0; i < maxE; i++) for (const b of ecs) if (i < b.length) out.push(b[i]);
+        return out;
+    }
+    makeMatrix(v) {
+        const size = 21 + (v - 1) * 4;
+        const m = [], fn = [];
+        for (let r = 0; r < size; r++) { m.push(new Uint8Array(size)); fn.push(new Uint8Array(size)); }
+        const setFn = (r, c) => { if (r >= 0 && r < size && c >= 0 && c < size) fn[r][c] = 1; };
+        const finder = (r0, c0) => {
+            for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+                const r = r0 + dr, c = c0 + dc;
+                if (r < 0 || r >= size || c < 0 || c >= size) continue;
+                const dark = (dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6) && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+                m[r][c] = dark ? 1 : 0; setFn(r, c);
+            }
+        };
+        finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+        const al = QR_ALIGN[v - 1] || [];
+        const inFinder = (r, c) => (r <= 7 && c <= 7) || (r <= 7 && c >= size - 8) || (r >= size - 8 && c <= 7);
+        for (let i = 0; i < al.length; i++) for (let j = 0; j < al.length; j++) {
+            const r = al[i], c = al[j];
+            if (inFinder(r, c)) continue;
+            for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+                const dark = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+                m[r + dr][c + dc] = dark ? 1 : 0; setFn(r + dr, c + dc);
+            }
+        }
+        for (let i = 8; i < size - 8; i++) {
+            if (!fn[6][i]) { m[6][i] = i % 2 === 0 ? 1 : 0; setFn(6, i); }
+            if (!fn[i][6]) { m[i][6] = i % 2 === 0 ? 1 : 0; setFn(i, 6); }
+        }
+        m[size - 8][8] = 1; setFn(size - 8, 8);
+        for (let i = 0; i < 9; i++) { setFn(8, i); setFn(i, 8); }
+        for (let i = 0; i < 8; i++) { setFn(8, size - 1 - i); setFn(size - 1 - i, 8); }
+        if (v >= 7) {
+            let rem = v;
+            for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) & 1) * 0x1F25;
+            const vb = ((v << 12) | rem) >>> 0;
+            for (let i = 0; i < 18; i++) {
+                const dark = ((vb >> i) & 1) === 1;
+                const a = Math.floor(i / 3), bc = (i % 3) + size - 11;
+                m[bc][a] = dark; setFn(bc, a); m[a][bc] = dark; setFn(a, bc);
+            }
+        }
+        return { m, fn, size };
+    }
+    formatBits(mask) {
+        const data = (1 << 3) | mask;   /* ECC L = 01 */
+        let rem = data;
+        for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) & 1) * 0x537;
+        return ((data << 10) | rem) ^ 0x5412;
+    }
+    placeData(ctx, cw) {
+        const { m, fn, size } = ctx;
+        let i = 0, bit = 7;
+        const nextBit = () => { if (i >= cw.length) return 0; const b = (cw[i] >> bit) & 1; if (bit-- === 0) { bit = 7; i++; } return b; };
+        for (let right = size - 1; right >= 1; right -= 2) {
+            if (right === 6) right = 5;
+            for (let vert = 0; vert < size; vert++) {
+                for (let j = 0; j < 2; j++) {
+                    const c = right - j;
+                    const up = ((right + 1) & 2) === 0;
+                    const r = up ? size - 1 - vert : vert;
+                    if (!fn[r][c]) m[r][c] = nextBit();
+                }
+            }
+        }
+    }
+    applyMask(ctx, mask) {
+        const { m, size } = ctx;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) {
+            if (ctx.fn[r][c]) continue;
+            let f = false;
+            switch (mask) {
+                case 0: f = (r + c) % 2 === 0; break;
+                case 1: f = r % 2 === 0; break;
+                case 2: f = c % 3 === 0; break;
+                case 3: f = (r + c) % 3 === 0; break;
+                case 4: f = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
+                case 5: f = ((r * c) % 2) + ((r * c) % 3) === 0; break;
+                case 6: f = (((r * c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+                case 7: f = (((r + c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+            }
+            if (f) m[r][c] ^= 1;
+        }
+    }
+    drawFormat(ctx, mask) {
+        const { m, size } = ctx;
+        const bits = this.formatBits(mask);
+        const dk = (i) => ((bits >> i) & 1) === 1;
+        for (let i = 0; i < 15; i++) {
+            if (i < 6) m[i][8] = dk(i); else if (i < 8) m[i + 1][8] = dk(i); else m[size - 15 + i][8] = dk(i);
+            if (i < 8) m[8][size - 1 - i] = dk(i); else if (i < 9) m[8][7] = dk(i); else m[8][14 - i] = dk(i);
+        }
+        m[size - 8][8] = 1;
+    }
+    penalty(m, size) {
+        let p = 0;
+        const line = (get) => {
+            let run = 1;
+            for (let i = 1; i <= size; i++) {
+                if (i < size && get(i) === get(i - 1)) run++;
+                else { if (run >= 5) p += 3 + (run - 5); run = 1; }
+            }
+        };
+        for (let r = 0; r < size; r++) line((c) => m[r][c]);
+        for (let c = 0; c < size; c++) line((r) => m[r][c]);
+        for (let r = 0; r < size - 1; r++) for (let c = 0; c < size - 1; c++) {
+            const v = m[r][c];
+            if (v === m[r][c + 1] && v === m[r + 1][c] && v === m[r + 1][c + 1]) p += 3;
+        }
+        const pat = [1, 0, 1, 1, 1, 0, 1];
+        const win = (get, i) => {
+            for (let k = 0; k < 7; k++) if (get(i + k) !== pat[k]) return false;
+            const l4 = [get(i - 4), get(i - 3), get(i - 2), get(i - 1)];
+            const r4 = [get(i + 7), get(i + 8), get(i + 9), get(i + 10)];
+            const light = (a) => a.every((x) => x === 0);
+            const lOK = i >= 4 && light(l4), rOK = i + 11 <= size && light(r4);
+            return (lOK || rOK) ? 40 : 0;
+        };
+        for (let r = 0; r < size; r++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[r][x]), i);
+        for (let c = 0; c < size; c++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[x][c]), i);
+        let dark = 0;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) dark += m[r][c];
+        p += Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
+        return p;
+    }
+    encode(text) {
+        const bytes = Array.from(new TextEncoder().encode(String(text)));
+        const v = this.pickVersion(bytes.length);
+        const cw = this.buildCodewords(bytes, v);
+        const ctx = this.makeMatrix(v);
+        this.placeData(ctx, cw);
+        let best = null, bestP = Infinity, bestMask = 0;
+        for (let mask = 0; mask < 8; mask++) {
+            const t = { m: ctx.m.map((row) => Uint8Array.from(row)), fn: ctx.fn, size: ctx.size };
+            this.applyMask(t, mask); this.drawFormat(t, mask);
+            const p = this.penalty(t.m, ctx.size);
+            if (p < bestP) { bestP = p; best = t; bestMask = mask; }
+        }
+        return { version: v, size: ctx.size, mask: bestMask, modules: best.m };
+    }
+    toCanvas(cv, text, px) {
+        const q = this.encode(text);
+        const quiet = 3, scale = px || Math.max(2, Math.floor(300 / (q.size + 6)));
+        const dim = (q.size + quiet * 2) * scale;
+        cv.width = dim; cv.height = dim;
+        cv.style.width = Math.min(280, dim) + 'px';
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#ffffff'; cx.fillRect(0, 0, dim, dim);
+        cx.fillStyle = '#000000';
+        for (let r = 0; r < q.size; r++) for (let c = 0; c < q.size; c++) if (q.modules[r][c]) cx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+        return q;
+    }
+}
+
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·18 «СОБЫТИЕ» — SOCIAL CORE поверх локального ядра.
+   1. ЯДРО (pure, тестируется в node): коды зала, машина фаз, clock-offset,
+      GC-фильтр, нормализация имён, время, манифест. Метки <ЯДРО> для тестов.
+   2. ХРАНИЛИЩЕ — IndexedDB «singular-event»: воспоминания + GC 7 дней.
+   3. ТРАНСПОРТЫ (MediaTransport): РЕТРАНСЛЯТОР (trystero/nostr, между
+      устройствами) и КАНАЛ (BroadcastChannel+WebRTC, окна одного браузера).
+   4. КОМНАТА — реплицируемое состояние, хост-авторитет, миграция хоста.
+   5. ГОЛОС — getUserMedia + WebAudio-граф (никто не слышит сам себя,
+      все слышат всех), ЗАПИСЬ — MediaRecorder микса у каждого участника.
+   6. ПАМЯТЬ — TEMPORARY 7 дней → ❤️ MEMORY; фото/заметка; экспорт webm.
+   0 innerHTML. Внешняя сеть — только Nostr-сигналинг зала, по твоему жесту.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*<ЯДРО>*/
+const ВЕРСИЯ_ПРОТОКОЛА = 2;
+const ПАПКА_МИНУС = './minus/';
+const СРОК_ВРЕМЕННОЙ_MS = 7 * 24 * 60 * 60 * 1000;   /* TEMPORARY: 7 дней */
+
+const АЛФАВИТ_КОДА = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';  /* без 0,O,1,I,L */
+function кодЗала(рандом) {
+  const rnd = рандом || Math.random;
+  let s = '';
+  for (let i = 0; i < 5; i++) s += АЛФАВИТ_КОДА[Math.floor(rnd() * АЛФАВИТ_КОДА.length)];
+  return s;
+}
+function кодКомнаты(код) { return 'singular-event-v1:' + String(код).toUpperCase(); }
+
+/* машина фаз события (по архитектуре СОБЫТИЕ) */
+const ФАЗЫ = ['LOBBY', 'READY', 'COUNTDOWN', 'SINGING', 'FINISH', 'REVIEW'];
+const ПЕРЕХОДЫ = {
+  LOBBY:     ['LOBBY', 'READY'],
+  READY:     ['READY', 'COUNTDOWN', 'LOBBY'],
+  COUNTDOWN: ['COUNTDOWN', 'SINGING', 'READY'],
+  SINGING:   ['SINGING', 'FINISH'],
+  FINISH:    ['FINISH', 'REVIEW'],
+  REVIEW:    ['REVIEW', 'LOBBY']
+};
+function фазаДопустима(из, в) {
+  return !!ПЕРЕХОДЫ[из] && ПЕРЕХОДЫ[из].indexOf(в) >= 0;
+}
+
+/* clock offset: замеры [{t0,t1,t2}] → медиана смещения по RTT ≤ 1000 мс */
+function смещениеЧасов(замеры) {
+  const годные = (замеры || [])
+    .map(function (z) { return { off: z.t1 - (z.t0 + z.t2) / 2, rtt: z.t2 - z.t0 }; })
+    .filter(function (z) { return z.rtt >= 0 && z.rtt <= 1000; });
+  if (!годные.length) return { offset: 0, rtt: Infinity, n: 0 };
+  годные.sort(function (a, b) { return a.off - b.off; });
+  const m = годные.length >> 1;
+  const медиана = годные.length % 2 ? годные[m].off : (годные[m - 1].off + годные[m].off) / 2;
+  const rtts = годные.map(function (z) { return z.rtt; }).sort(function (a, b) { return a - b; });
+  return { offset: медиана, rtt: rtts[rtts.length >> 1], n: годные.length };
+}
+
+/* GC: разделение записей на живые и просроченные TEMPORARY */
+function gcРазделить(записи, сейчас) {
+  const живые = [], просроченные = [];
+  (записи || []).forEach(function (r) {
+    if (r.state === 'TEMPORARY' && (r.expiresAt || 0) < сейчас) просроченные.push(r);
+    else живые.push(r);
+  });
+  return { живые: живые, просроченные: просроченные };
+}
+
+function нормИмя(s) {
+  const t = String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f]/g, '').trim();
+  return t.slice(0, 24) || 'Участник';
+}
+
+function фмс(мс) {
+  const t = Math.max(0, Math.round(мс || 0));
+  const м = Math.floor(t / 60000), с = Math.floor((t % 60000) / 1000), д = Math.floor((t % 1000) / 100);
+  return (м < 10 ? '0' : '') + м + ':' + (с < 10 ? '0' : '') + с + '.' + д;
+}
+function фДней(мс) {
+  const д = Math.ceil((мс || 0) / 86400000);
+  return д <= 0 ? 'меньше дня' : (д + ' ' + (д === 1 ? 'день' : (д < 5 ? 'дня' : 'дней')));
+}
+
+/* манифест события (расширяемый формат записи — участники/песня/даты) */
+function манифестЗала(st, доп) {
+  return Object.assign({
+    ver: ВЕРСИЯ_ПРОТОКОЛА,
+    kind: 'singular-event',
+    room: st.code,
+    participants: (st.participants || []).map(function (p) {
+      return { id: p.id, name: p.name, emoji: p.emoji, listener: !p.micReady };
+    }),
+    song: st.song ? { id: st.song.id, title: st.song.title } : null,
+    startedAt: st.startAt || null,
+    endedAt: st.endedAt || null,
+    durationMs: (st.endedAt && st.startAt) ? (st.endedAt - st.startAt) : null,
+    savePolicy: st.savePolicy || 'any'
+  }, доп || {});
+}
+/*</ЯДРО>*/
+
+/* ── 2. ХРАНИЛИЩЕ: IndexedDB ─────────────────────────────────────────────── */
+const ХРАНИЛИЩЕ = (function () {
+  const ИМЯ_БД = 'singular-event', СКЛАД = 'memories';
+  let dbp = null;
+  function бд() {
+    if (dbp) return dbp;
+    dbp = new Promise(function (res, rej) {
+      if (!('indexedDB' in window)) { rej(new Error('IndexedDB недоступен')); return; }
+      const rq = indexedDB.open(ИМЯ_БД, 1);
+      rq.onupgradeneeded = function () { rq.result.createObjectStore(СКЛАД, { keyPath: 'id' }); };
+      rq.onsuccess = function () { res(rq.result); };
+      rq.onerror = function () { rej(rq.error || new Error('IndexedDB open failed')); };
+    });
+    return dbp;
+  }
+  function reqP(rq) {
+    return new Promise(function (res, rej) { rq.onsuccess = function () { res(rq.result); }; rq.onerror = function () { rej(rq.error); }; });
+  }
+  function rw(fn) {
+    return бд().then(function (db) {
+      return new Promise(function (res, rej) {
+        const tx = db.transaction(СКЛАД, 'readwrite');
+        fn(tx.objectStore(СКЛАД));
+        tx.oncomplete = function () { res(); };
+        tx.onerror = function () { rej(tx.error); };
+        tx.onabort = function () { rej(tx.error || new Error('tx abort')); };
+      });
+    });
+  }
+  return {
+    put: function (rec) { return rw(function (st) { st.put(rec); }); },
+    get: function (id) { return бд().then(function (db) { return reqP(db.transaction(СКЛАД, 'readonly').objectStore(СКЛАД).get(id)); }); },
+    all: function () { return бд().then(function (db) { return reqP(db.transaction(СКЛАД, 'readonly').objectStore(СКЛАД).getAll()); }); },
+    del: function (id) { return rw(function (st) { st.delete(id); }); },
+    /* GC: TEMPORARY с истёкшим сроком удаляется безвозвратно (метаданные + blob) */
+    gc: function (сейчас) {
+      return this.all().then(function (записи) {
+        const р = gcРазделить(записи, сейчас || Date.now());
+        return Promise.all(р.просроченные.map(function (r) { return ХРАНИЛИЩЕ.del(r.id); }))
+          .then(function () { return { удалено: р.просроченные.length, осталось: р.живые.length }; });
+      });
+    }
+  };
+})();
+
+/* ── 3. ТРАНСПОРТЫ (MediaTransport) ──────────────────────────────────────── */
+/* Интерфейс: init()→Promise, id, send(d), sendTo(d,id), onData(cb),
+   onMedia(cb), onPeers(cb), peers:Map, sendMedia(stream), leave().         */
+
+/* 3a. КАНАЛ — окна одного браузера: BroadcastChannel-сигналинг + WebRTC. */
+function ТРАНСПОРТ_КАНАЛ(код, сам) {
+  const чан = new BroadcastChannel('singular-event-v1-' + код);
+  const peers = new Map();           /* id → {heartbeat, pc} */
+  const me = String(сам);
+  let cbData = null, cbMedia = null, cbPeers = null, жив = true;
+  let mediaStream = null, интервал = null;
+  const пост = function (m) { if (жив) { m.ver = ВЕРСИЯ_ПРОТОКОЛА; чан.postMessage(m); } };
+
+  function стартRTC(id) {
+    const p = peers.get(id); if (!p || p.pc) return;
+    const pc = new RTCPeerConnection({ iceServers: [] });   /* тот же браузер: host-кандидатов хватает */
+    p.pc = pc;
+    pc.onicecandidate = function (ev) { if (ev.candidate) пост({ t: 'SDP', from: me, to: id, d: { kind: 'cand', v: ev.candidate.toJSON() } }); };
+    pc.ontrack = function (ev) { cbMedia && cbMedia(ev.streams[0], id); };
+    if (me > id) {  /* детерминированный инициатор — у кого строка id «старше» */
+      pc.onnegotiationneeded = function () {
+        pc.createOffer().then(function (o) { return pc.setLocalDescription(o); })
+          .then(function () { пост({ t: 'SDP', from: me, to: id, d: { kind: 'sdp', v: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } } }); })
+          .catch(function () {});
+      };
+    }
+    if (mediaStream) mediaStream.getTracks().forEach(function (tr) { pc.addTrack(tr, mediaStream); });
+  }
+  async function принятьSDP(m) {
+    const p = peers.get(m.from); if (!p) return;
+    if (!p.pc) { стартRTC(m.from); if (!p.pc) return; }
+    const pc = p.pc;
+    try {
+      if (m.d.kind === 'sdp') {
+        await pc.setRemoteDescription(m.d.v);
+        if (m.d.v.type === 'offer') {
+          const a = await pc.createAnswer();
+          await pc.setLocalDescription(a);
+          пост({ t: 'SDP', from: me, to: m.from, d: { kind: 'sdp', v: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } } });
+        }
+      } else if (m.d.kind === 'cand') { await pc.addIceCandidate(m.d.v); }
+    } catch (e) { /* гонка SDP в лупбэке допустима: HB восстановит состояние */ }
+  }
+  чан.onmessage = function (ev) {
+    const m = ev.data;
+    if (!m || m.ver !== ВЕРСИЯ_ПРОТОКОЛА || m.id === me) return;
+    if (m.t === 'HB') {
+      if (!peers.has(m.id)) { peers.set(m.id, { heartbeat: Date.now(), pc: null }); cbPeers && cbPeers(peers); стартRTC(m.id); }
+      peers.get(m.id).heartbeat = Date.now();
+      return;
+    }
+    if (m.t === 'SDP') { if (m.to === me) принятьSDP(m); return; }
+    if (m.t === 'DATA') { if (!m._to || m._to === me) cbData && cbData(m.d, m.id); return; }
+  };
+  function пульс() {
+    пост({ t: 'HB', id: me });
+    const сейчас = Date.now();
+    let изменилось = false;
+    peers.forEach(function (p, id) {
+      if (сейчас - p.heartbeat > 3200) {
+        if (p.pc) { try { p.pc.close(); } catch (e) {} }
+        peers.delete(id); изменилось = true;
+      }
+    });
+    if (изменилось) cbPeers && cbPeers(peers);
+  }
+  return {
+    peers: peers,
+    get id() { return me; },
+    init: function () { пост({ t: 'HB', id: me }); пульс(); интервал = setInterval(пульс, 1100); return Promise.resolve(); },
+    send: function (d) { пост({ t: 'DATA', d: d }); },
+    sendTo: function (d, до) { пост({ t: 'DATA', d: d, _to: до }); },
+    onData: function (cb) { cbData = cb; },
+    onMedia: function (cb) { cbMedia = cb; },
+    onPeers: function (cb) { cbPeers = cb; },
+    sendMedia: function (stream) {
+      mediaStream = stream;
+      peers.forEach(function (p, id) {           /* пересоздать pc с дорожками */
+        if (p.pc) { try { p.pc.close(); } catch (e) {} p.pc = null; }
+        стартRTC(id);
+      });
+    },
+    leave: function () {
+      жив = false; clearInterval(интервал);
+      peers.forEach(function (p) { if (p.pc) try { p.pc.close(); } catch (e) {} });
+      peers.clear(); try { чан.close(); } catch (e) {}
+    }
+  };
+}
+
+/* 3b. РЕТРАНСЛЯТОР — между устройствами: trystero/nostr (публичные реле).
+   API v0.25: колбэки-свойства (onPeerJoin=fn), makeAction → {send, onMessage}. */
+function ТРАНСПОРТ_РЕТРАНСЛЯТОР(код) {
+  let комната = null, самId = null, почта = null;
+  const peers = new Map();
+  let cbData = null, cbMedia = null, cbPeers = null, mediaStream = null;
+  return {
+    peers: peers,
+    get id() { return самId; },
+    init: function () {
+      return import(new URL('БИБЛИОТЕКИ/trystero-nostr.bundle.mjs', document.baseURI).href)
+        .then(function (tr) {
+          комната = tr.joinRoom({
+            appId: 'singular-zal-event-v1',
+            /* явные реле вместо дефолтных: стабильнее, проверены 2026-10-02 */
+            relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+            /* STUN: голос ходит P2P напрямую; STUN нужен только для адреса
+               через NAT (LAN работает и без него). TURN-релея у нас нет —
+               симметричный NAT останется непробитым, это честно в доках. */
+            rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+          }, кодКомнаты(код));
+          самId = tr.selfId;
+          комната.onPeerJoin = function (id) {
+            if (!peers.has(id)) { peers.set(id, { heartbeat: Date.now() }); cbPeers && cbPeers(peers); }
+            if (mediaStream) комната.addStream(mediaStream, { target: id }).catch(function () {});
+          };
+          комната.onPeerLeave = function (id) { peers.delete(id); cbPeers && cbPeers(peers); };
+          комната.onPeerStream = function (stream, id) { cbMedia && cbMedia(stream, id); };
+          почта = комната.makeAction('msg');
+          почта.onMessage = function (d, ctx) { cbData && cbData(d, ctx.peerId); };
+          /* запас на подписку реле: юзер увидит «подключение…» до первого хендшейка */
+          return new Promise(function (res) { setTimeout(res, 800); });
+        });
+    },
+    send: function (d) { if (почта) почта.send(d).catch(function () {}); },
+    sendTo: function (d, id) { if (почта) почта.send(d, { target: id }).catch(function () {}); },
+    onData: function (cb) { cbData = cb; },
+    onMedia: function (cb) { cbMedia = cb; },
+    onPeers: function (cb) { cbPeers = cb; },
+    sendMedia: function (stream) {
+      mediaStream = stream;
+      if (комната) комната.addStream(stream).catch(function () {});
+    },
+    leave: function () { if (комната) try { комната.leave(); } catch (e) {} peers.clear(); }
+  };
+}
+
+
+/* ── 4. КОМНАТА: реплицируемое состояние, хост-авторитет, миграция ───────── */
+/*<КОМНАТА>*/
+function КОМНАТА(опции) {
+  /* опции: {транспорт, имя, эмодзи, микрофон:bool, код, хост:bool, savePolicy,
+             onСостояние(state), onФаза(фаза, prev), onЛог(текст, тип)} */
+  const т = опции.транспорт;
+  let ст = {
+    ver: ВЕРСИЯ_ПРОТОКОЛА,
+    code: опции.код,
+    phase: 'LOBBY',
+    host: null,
+    seq: 0,
+    participants: [],
+    song: null,
+    startAt: null,
+    endedAt: null,
+    savePolicy: опции.savePolicy || 'any'
+  };
+  let смещение = 0, замеры = [], таймерЧасов = null, прошлыеSeq = new Map(), снимокПришёл = false, таймерПриветствия = null;
+  const сам = { id: null, name: опции.имя, emoji: опции.эмодзи, micReady: !!опции.микрофон, ready: false, finished: false, listener: !опции.микрофон };
+
+  function найтиП(id) { return ст.participants.filter(function (p) { return p.id === id; })[0] || null; }
+  function хостП() { return найтиП(ст.host); }
+  function этохост() { return ст.host === сам.id; }
+  /* вся исходящая почта КОМНАТЫ идёт через неё: версия протокола ставится здесь */
+  function отослать(d, до) {
+    d.ver = ВЕРСИЯ_ПРОТОКОЛА;
+    if (до) т.sendTo(d, до); else т.send(d);
+  }
+
+  function бродить() {       /* хост: разослать снимок состояния */
+    if (!этохост()) return;
+    ст.seq++;
+    отослать({ t: 'ST', s: ст });
+    опции.onСостояние && опции.onСостояние(снап());
+  }
+  function снап() { return JSON.parse(JSON.stringify(ст)); }
+
+  function фаза(в, молча) {
+    if (!фазаДопустима(ст.phase, в)) return false;
+    const prev = ст.phase;
+    ст.phase = в;
+    опции.onФаза && опции.onФаза(в, prev);
+    if (!молча) бродить();
+    return true;
+  }
+
+  /* входящие сообщения */
+  function наСообщение(d, от) {
+    if (!d || d.ver !== ВЕРСИЯ_ПРОТОКОЛА) return;
+    switch (d.t) {
+      case 'ST': {   /* снимок от хоста */
+        const s = d.s; if (!s) return;
+        if (этохост()) return;                       /* два хоста: свой снимок важнее */
+        снимокПришёл = true;
+        const prev = (прошлыеSeq.get(s.host) || 0);
+        if (s.seq < prev) return;
+        прошлыеSeq.set(s.host, s.seq);
+        const былаФаза = ст.phase;
+        ст = s;
+        if (s.phase !== былаФаза) опции.onФаза && опции.onФаза(s.phase, былаФаза);
+        опции.onСостояние && опции.onСостояние(снап());
+        return;
+      }
+      case 'TQ': {   /* запрос времени от гостя */
+        if (этохост()) отослать({ t: 'TP', t0: d.t0, t1: Date.now() }, от);
+        return;
+      }
+      case 'TP': {   /* ответ времени хоста */
+        замеры.push({ t0: d.t0, t1: d.t1, t2: Date.now() });
+        if (замеры.length > 12) замеры.shift();
+        return;
+      }
+      case 'HI': {   /* гость представился */
+        if (!этохост()) return;
+        let p = найтиП(от);
+        if (!p) { p = { id: от, name: нормИмя(d.name), emoji: d.emoji || '👤', micReady: !!d.mic, ready: false, finished: false, listener: !d.mic }; ст.participants.push(p); }
+        else { p.name = нормИмя(d.name); p.emoji = d.emoji || p.emoji; p.micReady = !!d.mic; p.listener = !d.mic; }
+        опции.onЛог && опции.onЛог(p.emoji + ' ' + p.name + ' в зале', 'ok');
+        бродить();
+        return;
+      }
+      case 'RDY': {  /* гость готов/не готов */
+        if (!этохост()) return;
+        const p = найтиП(от); if (!p) return;
+        p.ready = !!d.v; бродить();
+        return;
+      }
+      case 'SGG': {  /* гость предложил песню */
+        if (!этохост()) return;
+        const песня = опции.песняПoId && опции.песняПoId(d.id);
+        if (песня && !ст.song) { ст.song = песня; опции.onЛог && опции.onЛог('предложена песня: ' + песня.title, 'ok'); бродить(); }
+        return;
+      }
+      case 'DN': {   /* гость дослушал/завершил у себя */
+        if (!этохост()) return;
+        const p = найтиП(от); if (!p) return;
+        p.finished = true; бродить();
+        можетФиниш();
+        return;
+      }
+      case 'BYE': {  /* гость ушёл сам */
+        if (!этохост()) return;
+        const p2 = найтиП(от);
+        if (p2) { ст.participants = ст.participants.filter(function (q) { return q.id !== от; }); опции.onЛог && опции.onЛог(p2.emoji + ' ' + p2.name + ' вышел', 'warn'); бродить(); }
+        return;
+      }
+    }
+  }
+
+  function можетФиниш() {   /* хост: все finished → FINISH */
+    if (!этохост() || ст.phase !== 'SINGING') return;
+    const актив = ст.participants;
+    const все = актив.length > 0 && актив.every(function (p) { return p.finished; });
+    if (все) ст.endedAt = Date.now(), завершитьХостом();
+  }
+  function завершитьХостом() {
+    if (!этохост()) return;
+    ст.endedAt = ст.endedAt || Date.now();
+    фаза('FINISH');
+    бродить();
+  }
+
+  /* публичное API */
+  return {
+    get state() { return снап(); },
+    get сам() { return сам; },
+    get смещение() { return смещение; },
+    этохост: этохост,
+    перевещать: function () { if (этохост()) бродить(); },
+    хостИмя: function () { const h = хостП(); return h ? h.name : null; },
+    старт: function () {   /* подключение к транспорту + представление + часы */
+      сам.id = т.id || null;
+      ст.host = опции.хост ? сам.id : null;
+      if (опции.хост) ст.participants.push(Object.assign({}, сам));
+      т.onData(наСообщение);
+      const хостЛи = !!опции.хост;
+      return т.init().then(function () {
+        сам.id = т.id || сам.id;
+        if (хостЛи) {
+          ст.host = сам.id;
+          if (!найтиП(сам.id)) {
+            const яп = найтиП(null);           /* участник, вставленный до selfId */
+            if (яп) яп.id = сам.id;
+            else ст.participants.push(Object.assign({}, сам, { id: сам.id }));
+          }
+          бродить();
+        } else {
+          /* гонка HI: DataChannel может быть ещё не открыт — повторяем,
+             пока хост не подтвердит: снимок пришёл И мы есть в списке */
+          отослать({ t: 'HI', name: сам.name, emoji: сам.emoji, mic: сам.micReady });
+          таймерПриветствия = setInterval(function () {
+            if (снимокПришёл && найтиП(сам.id)) { clearInterval(таймерПриветствия); таймерПриветствия = null; return; }
+            отослать({ t: 'HI', name: сам.name, emoji: сам.emoji, mic: сам.micReady });
+          }, 2500);
+        }
+        таймерЧасов = setInterval(function () {
+          if (этохост() || !ст.host) return;
+          const t0 = Date.now();
+          отослать({ t: 'TQ', t0: t0 }, ст.host);
+        }, 1500);
+        return true;
+      });
+    },
+    пересчитатьЧасы: function () {
+      const р = смещениеЧасов(замеры);
+      if (р.n > 0) смещение = р.offset;
+      return р;
+    },
+    готов: function (v) { сам.ready = !!v; if (этохост()) { const p = найтиП(сам.id); if (p) p.ready = !!v; бродить(); } else отослать({ t: 'RDY', v: !!v }); },
+    предложитьПесню: function (id) { if (этохост()) { const п = опции.песняПoId && опции.песняПoId(id); if (п) { ст.song = п; бродить(); } } else отослать({ t: 'SGG', id: id }); },
+    выбратьПесню: function (id) { if (!этохост()) return; const п = опции.песняПoId && опции.песняПoId(id); if (п) { ст.song = п; бродить(); } },
+    стартОтсчёта: function (мсЗадержка) {   /* хост: COUNTDOWN с синхронным startAt */
+      if (!этохост()) return null;
+      if (ст.phase === 'COUNTDOWN') return null;      /* даблклик — игнор */
+      if (ст.phase === 'LOBBY') ст.phase = 'READY';   /* LOBBY→READY→COUNTDOWN по машине */
+      if (!фазаДопустима(ст.phase, 'COUNTDOWN')) return null;
+      ст.startAt = Date.now() + (мсЗадержка == null ? 3400 : мсЗадержка);   /* до фазы: onФаза увидит startAt */
+      ст.endedAt = null;
+      фаза('COUNTDOWN');
+      бродить();
+      return ст.startAt;
+    },
+    фазаСинхронно: function (в) { return фаза(в); },
+    петь: function () { if (!фаза('SINGING')) return false; ст.endedAt = null; бродить(); return true; },
+    финиш: function () { завершитьХостом(); },
+    яДослушал: function () { if (этохост()) { const p = найтиП(сам.id); if (p) p.finished = true; можетФиниш(); } else отослать({ t: 'DN' }); },
+    миграция: function () {   /* хост пропал: старший по id берёт руль */
+      if (этохост() || ст.host == null) return;
+      ст.host = сам.id;
+      ст.seq++;
+      опции.onЛог && опции.onЛог('ведущий ушёл — руль взял ' + сам.name, 'warn');
+      бродить();
+    },
+    покинуть: function () {
+      clearInterval(таймерЧасов);
+      if (таймерПриветствия) { clearInterval(таймерПриветствия); таймерПриветствия = null; }
+      if (!этохост() && ст.host) { try { отослать({ t: 'BYE' }); } catch (e) {} }
+      т.leave();
+    },
+    хостОтвалился: function (id) {
+      ст.participants = ст.participants.filter(function (p) { return p.id !== id; });
+      if (id === ст.host && !этохост()) {
+        /* новый хост: наименьший id среди участников (сам должен быть там) */
+        const ids = ст.participants.map(function (p) { return p.id; }).sort();
+        if (ids[0] === сам.id) this.миграция();
+        else if (ids.length) ст.host = ids[0];
+      }
+      опции.onСостояние && опции.onСостояние(снап());
+    },
+    локальнаяФаза: function (в) { if (фазаДопустима(ст.phase, в)) { ст.phase = в; return true; } return false; },
+    итоговыйМанифест: function (доп) { return манифестЗала(ст, доп); }
+  };
+}
+/*</КОМНАТА>*/
+
+/* ── 5. ГОЛОС + ЗАПИСЬ: WebAudio-граф и MediaRecorder микса ──────────────── */
+function ГОЛОСЗАПИСЬ() {
+  let ctx = null, recDest = null, рекордер = null, чанки = [];
+  let микс = null;                 /* {аудио: HTMLAudioElement, src: MediaElementSource} */
+  let самSrc = null, самГейн = null, самАн = null, слышатьСебя = false;
+  const чужие = new Map();         /* peerId → {src, гейн, анализатор} */
+  let потокМикрофона = null;
+
+  function поддержкаМиме() {
+    const канд = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'];
+    if (typeof MediaRecorder === 'undefined') return null;
+    for (const c of канд) { try { if (MediaRecorder.isTypeSupported(c)) return c; } catch (e) {} }
+    return '';
+  }
+  function ensureCtx() {
+    if (ctx) return ctx;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    recDest = ctx.createMediaStreamDestination();
+    return ctx;
+  }
+  return {
+    get ctx() { return ctx; },
+    микрофон: async function () {
+      ensureCtx();
+      if (ctx.state === 'suspended') { try { await ctx.resume(); } catch (e) {} }
+      потокМикрофона = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }, video: false
+      });
+      самSrc = ctx.createMediaStreamSource(потокМикрофона);
+      самГейн = ctx.createGain(); самГейн.gain.value = 0;   /* по умолчанию себя не слышим */
+      самАн = ctx.createAnalyser(); самАн.fftSize = 256;
+      самSrc.connect(самГейн); самГейн.connect(ctx.destination); самГейн.connect(recDest); самSrc.connect(самАн);
+      return потокМикрофона;
+    },
+    get микрофонПоток() { return потокМикрофона; },
+    слышатьСебя: function (v) { if (самГейн) самГейн.gain.value = v ? 0.85 : 0; слышатьСебя = !!v; },
+    get слышуСебя() { return слышатьСебя; },
+    минус: function (аудио) {   /* <audio> минусовки в граф */
+      ensureCtx();
+      if (!микс) { микс = { аудио: аудио, src: ctx.createMediaElementSource(аудио) }; }
+      try { микс.src.disconnect(); } catch (e) {}
+      микс.src.connect(ctx.destination);
+      микс.src.connect(recDest);
+    },
+    чужой: function (stream, id) {   /* голос удалённого участника */
+      ensureCtx();
+      const стар = чужие.get(id);
+      if (стар) { try { стар.src.disconnect(); } catch (e) {} }
+      const src = ctx.createMediaStreamSource(stream);
+      const гейн = ctx.createGain(); гейн.gain.value = 1;
+      const анализатор = ctx.createAnalyser(); анализатор.fftSize = 256;
+      src.connect(гейн); гейн.connect(ctx.destination); гейн.connect(recDest); гейн.connect(анализатор);
+      чужие.set(id, { src: src, гейн: гейн, анализатор: анализатор });
+    },
+    уровень: function (id) {   /* 0..1 для индикаторов */
+      const ан = id === 'Я' ? самАн : (чужие.get(id) || {}).анализатор;
+      if (!ан) return 0;
+      const buf = new Uint8Array(ан.frequencyBinCount);
+      ан.getByteTimeDomainData(buf);
+      let mx = 0;
+      for (let i = 0; i < buf.length; i++) { const v = Math.abs(buf[i] - 128); if (v > mx) mx = v; }
+      return Math.min(1, mx / 64);
+    },
+    стартЗаписи: function () {
+      ensureCtx();
+      if (рекордер) return false;
+      const мим = поддержкаМиме();
+      if (мим === null) return false;
+      чанки = [];
+      try { рекордер = new MediaRecorder(recDest.stream, мим ? { mimeType: мим, audioBitsPerSecond: 96000 } : undefined); }
+      catch (e) { try { рекордер = new MediaRecorder(recDest.stream); } catch (e2) { return false; } }
+      рекордер.ondataavailable = function (e) { if (e.data && e.data.size) чанки.push(e.data); };
+      рекордер.start(1000);
+      return true;
+    },
+    стопЗаписи: function () {
+      return new Promise(function (res) {
+        if (!рекордер) { res(null); return; }
+        let готово = false;
+        const финал = function () {
+          if (готово) return; готово = true;
+          const тип = (рекордер && рекордер.mimeType || 'audio/webm').split(';')[0];
+          const blob = new Blob(чанки, { type: тип });
+          рекордер = null;
+          res(blob.size > 0 ? blob : (чанки.length ? blob : null));
+        };
+        рекордер.onstop = финал;
+        setTimeout(финал, 3000);   /* страховка: onstop обязан сработать, но не зависаем */
+        try { рекордер.stop(); } catch (e) { рекордер = null; готово = true; res(чанки.length ? new Blob(чанки, { type: 'audio/webm' }) : null); }
+      });
+    },
+    закрыть: function () {
+      чужие.forEach(function (c) { try { c.src.disconnect(); } catch (e) {} });
+      чужие.clear();
+      if (потокМикрофона) потокМикрофона.getTracks().forEach(function (t) { t.stop(); });
+      потокМикрофона = null;
+      if (ctx) { try { ctx.close(); } catch (e) {} ctx = null; микс = null; самSrc = null; самАн = null; }
+    }
+  };
+}
+
+
+/* ── 6. UI: DOM-фабрика (0 innerHTML), экраны, boot ──────────────────────── */
+function эл(тег, атр, дети) {
+  const n = document.createElement(тег);
+  if (атр) for (const k in атр) {
+    const v = атр[k];
+    if (v == null) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k === 'html') throw new Error('innerHTML запрещён в СИНГУЛЯРЕ');
+    else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v);
+  }
+  (дети || []).forEach(function (d) { if (d != null) n.appendChild(d); });
+  return n;
+}
+const $ = function (id) { return document.getElementById(id); };
+
+const КАТАЛОГ = [["1BZs_wUPn1s", "Я сам себе судья"], ["2g5n6B0bc2Q", "Не вам жить мою жизнь"], ["6woWDYcu1QY", "Разгадка в небесах"], ["8RRRYysSIHg", "Суть проста"], ["8zG2LBAn1AI", "Не играй в любовь"], ["9ys_TVEtda8", "Просто люби"], ["EFaMUciH3Do", "Цени моменты"], ["G7L2d0Z5xfY", "Вера остаётся"], ["GB31hcDi3lo", "Гордость нас убивает"], ["HupAWAt7CmQ", "А время капает"], ["JRTUNak53nU", "Компас на Дом"], ["KFnJwNv008s", "Свет в темноте"], ["KfKHWdiX3S4", "Смысл жизни прост"], ["KvzORszfsg8", "Крик в тишине"], ["LCADfnI8F-s", "Действуй сейчас"], ["LqMrrKqK3AE", "Одиночество среди людей"], ["M9o3ZIlhHrU", "Люди в Масках"], ["MSqK5ig-alE", "Не Угасай — трек который цепляет"], ["OHaRQj9PLUY", "Дорога мой Учитель"], ["PIyWwF0t4wQ", "Остаться человеком ·t4wQ"], ["POiQQ21I5n0", "Оставайся молодым"], ["Qb8xb0vUYDg", "Сборник Музыки со Смыслом 🎶 песни, в кот"], ["QpeYJU83XiQ", "Жизнь не прощает"], ["R0SOJreGbhM", "Цени моменты - трек который заставляет з"], ["TRcxZ7jfPsA", "Когда Теряем - трек о настоящих ценностя"], ["TkmSZp1dfBE", "Меня не сломать — Песня о свободе духа в"], ["TobJGYOPlnw", "Остаться человеком ·Plnw"], ["V-IaCbDUKao", "Твоё плавание не вечно"], ["VfnGUIhaK2Y", "А что если да"], ["VwoK5U0qOys", "Сердце в Огне"], ["WIrhIrDQvwY", "Страх не слабость"], ["WMU46n--Z-s", "Не теряй шанс — Трек о упущенных момента"], ["X90mDPOhvKc", "Когда погаснут огни"], ["X_-M_cjCFVg", "Когда ты удобен"], ["Y7Wy_JBkz7A", "Живи как умеешь"], ["YaY-ZJVXFjI", "Время как вода"], ["_E91VEQ-8lM", "Тишина спасает"], ["_KwlGQNmC1Q", "Ты одна дала"], ["_PCJ6fMfeRM", "Всё начинается с тебя"], ["_gNbMCINv1Y", "О чём мечтаешь ты"], ["ahmGGM-P0CA", "Начать сначала"], ["b_36rlzEIKk", "Ты Главный игрок"], ["cFHsQ-LP3ns", "Не тех мы ценим"], ["d2b72nYLiT8", "Не жди завтра"], ["eA-fyeSkavI", "Вне зоны доступа"], ["eOMrrezWEZM", "Код перемен"], ["fJwb931iJVg", "Живи сейчас"], ["gMASVVNFr_A", "Время покажет"], ["kziwaat2nu4", "Ангел без крыльев"], ["lkXLeITEtGA", "Тень ушедших"], ["n5IFJ-g1Rtc", "В чём смысл"], ["pP3Kk2_FHbE", "Цени время — трек который заставляет зад"], ["pervLR9m-vk", "Не спеши осуждать"], ["pv3GAlLG9Lk", "Нас учат потери — Трек о том, что делает"], ["q57MLk0Uf9c", "Неудача — не конец"], ["rWpYxmFjm9g", "Когда теряем (флагман ★)"], ["shs0TiOwx-M", "Где настоящее"], ["t9h3cCPCKoo", "А что если ДА"], ["ugjp6iaNplo", "Бой с собой - RUVSON"], ["vUb40twffCI", "Там где ты"], ["yK2aPehxmK8", "Пленники прошлого"], ["z3RcsfHajP8", "Я сам себе враг"]];
+
+const ЭМОДЗИ = ['👵', '👩', '👧', '🧑', '🧓', '👨', '👦', '👩‍🦳'];
+const ПРИЛОЖЕНИЕ = { комната: null, голос: null, транспорт: null, запись: null, роль: null, транспортВид: null, таймерРисования: null, таймерОтсчёта: null, локальноеУрл: null };
+
+function показ(экран) {
+  ['scMenu', 'scRoom', 'scSing', 'scReview', 'scMemory'].forEach(function (id) { $(id).classList.toggle('on', id === экран); });
+  window.scrollTo(0, 0);
+}
+function лог(текст, тип) {
+  const s = $('roomStatus');
+  s.className = 'status' + (тип === 'err' ? ' err' : тип === 'ok' ? ' ok' : '');
+  s.textContent = текст;
+}
+
+/* ── эмодзи-пикеры ── */
+function пикер(контейнер, стартовый, onSelect) {
+  let выбранный = стартовый;
+  ЭМОДЗИ.forEach(function (e, i) {
+    const b = эл('button', { type: 'button', text: e, 'aria-pressed': e === стартовый ? 'true' : 'false', 'aria-label': 'эмодзи ' + i });
+    b.addEventListener('click', function () {
+      выбранный = e;
+      Array.prototype.forEach.call(контейнер.children, function (c) { c.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      onSelect(e);
+    });
+    контейнер.appendChild(b);
+  });
+  return function () { return выбранный; };
+}
+const получитьЭмодзиХоста = пикер($('hostEmoji'), '👵', function () {});
+const получитьЭмодзиГостя = пикер($('guestEmoji'), '👩', function () {});
+
+/* ── каталог песен ── */
+function песняПoId(id) { const r = КАТАЛОГ.filter(function (p) { return p[0] === id; })[0]; return r ? { id: r[0], title: r[1] } : null; }
+function заполнитьКаталог() {
+  const sel = $('songSel');
+  КАТАЛОГ.forEach(function (p) {
+    sel.appendChild(эл('option', { value: p[0], text: p[1] }));
+  });
+}
+
+/* ── ТРАНСПОРТ-ФАБРИКА ── */
+function сделатьТранспорт(вид, код) {
+  if (вид === 'channel') {
+    const id = 'окно-' + кодЗала().toLowerCase() + '-' + Date.now().toString(36);
+    return ТРАНСПОРТ_КАНАЛ(код, id);
+  }
+  if (!navigator.onLine) throw new Error('нет сети: режим «между устройствами» требует интернет; для окон одного браузера выбери транспорт «этот браузер»');
+  return ТРАНСПОРТ_РЕТРАНСЛЯТОР(код);
+}
+
+/* ── ВОСПОМИНАНИЯ: карточки, GC, экспорт ── */
+function датаКратко(ts) {
+  const d = new Date(ts || Date.now());
+  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+function карточкаПамяти(rec, полный) {
+  const м = rec.manifest || {};
+  const кто = (м.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
+  const тег = rec.state === 'MEMORY'
+    ? эл('span', { class: 'mem-tag', text: '❤️ память' })
+    : эл('span', { class: 'temp-tag', text: '⏳ временная · ' + фДней((rec.expiresAt || 0) - Date.now()) });
+  const ауд = эл('audio', { controls: '', preload: 'none', class: 'rec' });
+  try { ауд.src = URL.createObjectURL(rec.audio); } catch (e) {}
+  const acts = эл('div', { class: 'acts' });
+  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { перерисоватьПамять(); }); } }));
+  acts.appendChild(эл('button', { class: 'btn gray', text: '⬇ webm', onclick: function () { скачать(rec); } }));
+  acts.appendChild(эл('button', { class: 'btn red', text: '🔥 удалить', onclick: function () { ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
+  const card = эл('div', { class: 'mem-card' }, [
+    эл('div', { class: 'date', text: датаКратко(м.startedAt || rec.createdAt) }),
+    м.song ? эл('div', { class: 'ttl', text: '🎵 ' + м.song.title }) : эл('div', { class: 'ttl', text: '🎵 событие' }),
+    кто ? эл('div', { class: 'who', text: кто }) : null,
+    rec.photo ? эл('img', { class: 'mem-photo', src: rec.photo, alt: 'фотография воспоминания' }) : null,
+    rec.note ? эл('div', { class: 'who', text: '💬 ' + rec.note }) : null,
+    эл('div', { class: 'row', style: 'margin:4px 0 0' }, [тег]),
+    ауд, acts
+  ]);
+  return card;
+}
+function скачать(rec) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(rec.audio);
+  a.download = 'singular-event-' + rec.id + '.webm';
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+function перерисоватьПамять() {
+  ['memList', 'memListFull'].forEach(function (ид) {
+    const бокс = $(ид); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  });
+  ХРАНИЛИЩЕ.all().then(function (записи) {
+    const р = gcРазделить(записи, Date.now());
+    р.живые.sort(function (a, b) { return (b.createdAt || 0) - (a.createdAt || 0); });
+    if (!р.живые.length) {
+      ['memList', 'memListFull'].forEach(function (ид) {
+        $(ид).appendChild(эл('div', { class: 'hint', text: 'пока пусто: спой вместе — событие появится здесь' }));
+      });
+      return;
+    }
+    р.живые.forEach(function (rec, i) {
+      $('memList').appendChild(карточкаПамяти(rec, false));
+      $('memListFull').appendChild(карточкаПамяти(rec, true));
+    });
+  }).catch(function (e) {
+    $('memList').appendChild(эл('div', { class: 'hint', text: 'хранилище недоступно: ' + (e && e.message || e) }));
+  });
+}
+
+
+/* ── 7. СОЗДАТЬ / ВОЙТИ / КОМНАТА ────────────────────────────────────────── */
+function показатьКомнату(ст) {
+  $('roomCodeBig').textContent = ст.code;
+  $('roomCodeSmall').textContent = ст.code;
+  const урл = new URL(location.href);
+  урл.hash = ''; урл.search = '?зал=' + encodeURIComponent(ст.code);
+  $('joinUrl').textContent = урл.href;
+  try {
+    new SingulyarQR().toCanvas($('roomQr'), урл.href, 4);
+    $('qrHint').textContent = 'QR открывает эту страницу с кодом зала: участнику остаётся ввести имя.';
+  } catch (e) {
+    $('qrHint').textContent = 'QR не уместился — участнику достаточно кода ' + ст.code;
+  }
+  показ('scRoom');
+}
+function чипыУчастников(ст) {
+  const бокс = $('roomChips'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  (ст.participants || []).forEach(function (p) {
+    const точка = эл('span', { class: 'dot' });
+    const lv = эл('span', { class: 'lv' }, [эл('i', {})]);
+    const ч = эл('span', {
+      class: 'chip' + (p.ready ? ' ready' : '') + (p.id === ст.host ? ' host' : ''),
+      title: (p.id === ст.host ? 'ведущий · ' : '') + (p.listener ? 'слушатель' : 'микрофон')
+    }, [
+      точка,
+      эл('span', { text: (p.emoji || '👤') + ' ' + p.name + (p.id === ст.host ? ' · ведущий' : '') + (p.listener ? ' 🎧' : ' 🎤') }),
+      lv
+    ]);
+    ч.dataset.pid = p.id || '';
+    бокс.appendChild(ч);
+  });
+}
+function готовЛи(ст, id) {
+  const p = (ст.participants || []).filter(function (q) { return q.id === id; })[0];
+  return !!(p && p.ready);
+}
+function обновитьКнопкиКомнаты(ст) {
+  const яХост = ПРИЛОЖЕНИЕ.комната && ПРИЛОЖЕНИЕ.комната.этохост();
+  const мой = ПРИЛОЖЕНИЕ.комната && ПРИЛОЖЕНИЕ.комната.сам;
+  $('btnStart').disabled = !(яХост && ст.song);
+  $('btnStart').textContent = '🎤 НАЧАТЬ' + (ст.song ? '' : ' (выбери песню)');
+  $('btnReady').textContent = готовЛи(ст, мой && мой.id) ? '✋ я готов ✓' : '✋ я готов';
+  $('songSel').disabled = !яХост;
+  $('songHint').textContent = яХост
+    ? 'ты ведущий: выбери песню и жми НАЧАТЬ, когда все на связи'
+    : 'выбор у ведущего; выбери из списка — ведущему прилетит предложение ★';
+  const готовых = (ст.participants || []).filter(function (p) { return p.ready; }).length;
+  $('roomSub').textContent = 'участников: ' + (ст.participants || []).length + ' · готовы: ' + готовых +
+    (ст.song ? ' · песня: «' + ст.song.title + '»' : ' · песня не выбрана');
+}
+function наСостояние(ст) {
+  if (!ПРИЛОЖЕНИЕ.комната) return;
+  чипыУчастников(ст);
+  обновитьКнопкиКомнаты(ст);
+  if (ст.song) {
+    const o = $('songSel');
+    if (o.value !== ст.song.id) o.value = ст.song.id;
+    /* preload минусовки у ВСЕХ — к концу отсчёта каждый должен быть готов */
+    const ауд = $('minusAudio');
+    if (ауд.dataset.song !== ст.song.id) { ауд.dataset.song = ст.song.id; ауд.src = ПАПКА_МИНУС + ст.song.id + '.mp3'; ауд.load(); }
+  }
+  const яХост = ПРИЛОЖЕНИЕ.комната.этохост();
+  if (!яХост && ст.phase === 'SINGING' && !ПРИЛОЖЕНИЕ.присоединилсяКПению) {
+    лог('песня уже идёт — ты в зале; следующая песня по счёту 3-2-1', 'warn');
+  }
+}
+function заполнитьОтсчёт(ст2, startAt, смещ) {
+  const localStart = startAt - смещ;   /* L = H − offset (offset = H − L) */
+  const over = $('countOverlay'), num = $('countNum');
+  $('countSong').textContent = '🎵 ' + (ст2.song ? ст2.song.title : '') + ' · ' + (ст2.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
+  over.classList.add('on');
+  clearInterval(ПРИЛОЖЕНИЕ.таймерОтсчёта);
+  ПРИЛОЖЕНИЕ.таймерОтсчёта = setInterval(function () {
+    const ост = localStart - Date.now();
+    if (ост <= 0) {
+      clearInterval(ПРИЛОЖЕНИЕ.таймерОтсчёта);
+      over.classList.remove('on');
+      стартПения();
+      return;
+    }
+    const сек = Math.ceil(ост / 1000);
+    num.textContent = сек >= 3 ? '3' : сек === 2 ? '2' : сек === 1 ? '1' : '🎵';
+    if (ост <= 900) num.textContent = '🎵';
+  }, 80);
+}
+function стартПения() {
+  const ауд = $('minusAudio');
+  ауд.play().catch(function (e) { лог('браузер не дал запустить звук: нажми ⏵ на плеере', 'err'); });
+  if (ПРИЛОЖЕНИЕ.комната.этохост()) ПРИЛОЖЕНИЕ.комната.петь();
+}
+function наФаза(фаза, пред) {
+  const ст = ПРИЛОЖЕНИЕ.комната.state;
+  if (фаза === 'COUNTDOWN') {
+    if (ст.startAt) заполнитьОтсчёт(ст, ст.startAt, ПРИЛОЖЕНИЕ.комната.смещение);
+  } else if (фаза === 'SINGING') {
+    показ('scSing');
+    $('singTitle').textContent = '🎵 ' + (ст.song ? ст.song.title : 'Поём вместе');
+    $('singStateHint').textContent = 'запись идёт у каждого участника локально';
+    начЗаписьИТаймер(ст);
+  } else if (фаза === 'FINISH') {
+    clearInterval(ПРИЛОЖЕНИЕ.таймерРисования);
+    $('minusAudio').pause();
+    финалЗаписиИОбзор('наФаза-FINISH');
+  } else if (фаза === 'REVIEW') {
+    показ('scReview');
+  }
+}
+function начЗаписьИТаймер(ст) {
+  ПРИЛОЖЕНИЕ.присоединилсяКПению = true;
+  const гз = ПРИЛОЖЕНИЕ.голос;
+  const ауд = $('minusAudio');
+  try { гз.минус(ауд); } catch (e) {}
+  гз.стартЗаписи();
+  const t0 = Date.now();
+  clearInterval(ПРИЛОЖЕНИЕ.таймерРисования);
+  ПРИЛОЖЕНИЕ.таймерРисования = setInterval(function () {
+    $('singTimer').textContent = фмс(Date.now() - t0);
+    /* уровни голосов в больших карточках */
+    const бокс = $('micBig');
+    Array.prototype.forEach.call(бокс.children, function (div) {
+      const lvl = ПРИЛОЖЕНИЕ.голос.уровень(div.dataset.pid || 'Я');
+      const bar = div.querySelector('.lv i');
+      if (bar) bar.style.width = Math.round(lvl * 100) + '%';
+    });
+  }, 100);
+  /* карточки голосов */
+  const бокс = $('micBig'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
+  (ст.participants || []).forEach(function (p) {
+    бокс.appendChild(эл('div', { 'data-pid': p.id || 'Я' }, [
+      эл('div', { class: 'em', text: p.emoji || '👤' }),
+      эл('b', { text: p.name + (p.listener ? ' 🎧' : '') }),
+      эл('div', { class: 'lv' }, [эл('i', {})])
+    ]));
+  });
+}
+function финалЗаписиИОбзор() {
+  const гз = ПРИЛОЖЕНИЕ.голос;
+  гз.стопЗаписи().then(function (blob) {
+    const ст = ПРИЛОЖЕНИЕ.комната.state;
+    const манифест = ПРИЛОЖЕНИЕ.комната.итоговыйМанифест({ transport: ПРИЛОЖЕНИЕ.транспортВид });
+    const rec = {
+      id: Date.now().toString(36) + '-' + кодЗала().toLowerCase(),
+      state: 'TEMPORARY',
+      createdAt: Date.now(),
+      expiresAt: Date.now() + СРОК_ВРЕМЕННОЙ_MS,
+      savedAt: null,
+      manifest: манифест,
+      audio: blob || new Blob([], { type: 'audio/webm' }),
+      photo: null, note: ''
+    };
+    ПРИЛОЖЕНИЕ.запись = rec;
+    if (blob) ХРАНИЛИЩЕ.put(rec).then(перерисоватьПамять);
+    /* экран обзора */
+    $('reviewWho').textContent = 'Вы спели вместе: ' + (манифест.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
+    $('reviewSong').textContent = '🎵 ' + (манифест.song ? манифест.song.title : '—');
+    $('reviewMeta').textContent = 'длительность ' + фмс(манифест.durationMs || 0) + ' · код зала ' + манифест.room +
+      ' · политика памяти: ' + (манифест.savePolicy === 'all' ? 'все должны ❤️' : 'достаточно одного ❤️');
+    const пл = $('reviewPlayer');
+    if (ПРИЛОЖЕНИЕ.локальноеУрл) { try { URL.revokeObjectURL(ПРИЛОЖЕНИЕ.локальноеУрл); } catch (e) {} }
+    ПРИЛОЖЕНИЕ.локальноеУрл = URL.createObjectURL(rec.audio);
+    пл.src = ПРИЛОЖЕНИЕ.локальноеУрл;
+    $('reviewExpire').textContent = blob
+      ? '⏳ это временная запись: через 7 дней она удалится навсегда — нажми ❤️, чтобы оставить память'
+      : '⚠ запись не получена (браузер без MediaRecorder), но событие зафиксировано в манифесте';
+    ПРИЛОЖЕНИЕ.комната.локальнаяФаза('REVIEW');
+    показ('scReview');   /* локальнаяФаза молчит — экран переключаем прямо здесь */
+  });
+}
+
+
+/* ── 8. КНОПКИ: создать, войти, комната, обзор, память ───────────────────── */
+function собратьГолоса(микрофонНужен) {
+  ПРИЛОЖЕНИЕ.голос = ГОЛОСЗАПИСЬ();
+  const т = ПРИЛОЖЕНИЕ.транспорт;
+  т.onMedia(function (stream, id) { ПРИЛОЖЕНИЕ.голос.чужой(stream, id); });
+  if (микрофонНужен) {
+    return ПРИЛОЖЕНИЕ.голос.микрофон().then(function (поток) {
+      т.sendMedia(поток);
+      return true;
+    }).catch(function (e) {
+      ПРИЛОЖЕНИЕ.голос.микрофонОтказ = true;
+      return false;
+    });
+  }
+  return Promise.resolve(false);
+}
+function подключитьСлежениеЗаПирами(комната, т) {
+  let прошлые = new Set();
+  т.onPeers(function (peers) {
+    const теперь = new Set(Array.from(peers.keys()));
+    теперь.forEach(function (id) {
+      if (!прошлые.has(id)) {
+        /* новый пир: хост перевещает снимок — поздно пришедшие получат состояние */
+        setTimeout(function () { комната.перевещать(); }, 600);
+      }
+    });
+    прошлые.forEach(function (id) { if (!теперь.has(id)) комната.хостОтвалился(id); });
+    прошлые = теперь;
+  });
+}
+function создатьЗал() {
+  const код = кодЗала();
+  const вид = $('transportHost').value;
+  const имя = нормИмя($('hostName').value || 'Ведущий');
+  const политика = (document.querySelector('input[name=savePolicy]:checked') || {}).value || 'any';
+  let т;
+  try { т = сделатьТранспорт(вид, код); }
+  catch (e) { лог('⚠ ' + (e.message || e), 'err'); return; }
+  ПРИЛОЖЕНИЕ.транспорт = т; ПРИЛОЖЕНИЕ.транспортВид = вид; ПРИЛОЖЕНИЕ.роль = 'хост';
+  лог('создаём зал ' + код + (вид === 'relay' ? ' · сигналинг через публичные реле…' : ' · локальный режим этого браузера'));
+  показатьКомнату({ code: код });
+  собратьГолоса(true).then(function (естьМикрофон) {
+    const комната = КОМНАТА({
+      транспорт: т, имя: имя, эмодзи: получитьЭмодзиХоста(), микрофон: естьМикрофон,
+      код: код, хост: true, savePolicy: политика,
+      песняПoId: песняПoId,
+      onСостояние: наСостояние,
+      onФаза: наФаза,
+      onЛог: лог
+    });
+    ПРИЛОЖЕНИЕ.комната = комната;
+    подключитьСлежениеЗаПирами(комната, т);
+    return комната.старт().then(function () {
+      лог(естьМикрофон
+        ? 'зал готов · код ' + код + ' · микрофон включён · жди участников и выбирай песню'
+        : 'зал готов · код ' + код + ' · ⚠ микрофон не дал браузер — ты ведущий-слушатель 🎧', 'ok');
+      unlockЗвука();
+    });
+  }).catch(function (e) { лог('⚠ зал не поднялся: ' + (e && e.message || e), 'err'); });
+}
+function войтиВЗал() {
+  const код = String($('joinCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (код.length !== 5) { лог('⚠ код зала — 5 символов', 'err'); return; }
+  const вид = $('transportGuest').value;
+  const имя = нормИмя($('guestName').value || 'Участник');
+  let т;
+  try { т = сделатьТранспорт(вид, код); }
+  catch (e) { лог('⚠ ' + (e.message || e), 'err'); return; }
+  ПРИЛОЖЕНИЕ.транспорт = т; ПРИЛОЖЕНИЕ.транспортВид = вид; ПРИЛОЖЕНИЕ.роль = 'гость';
+  лог('входим в зал ' + код + (вид === 'relay' ? ' · ищем через публичные реле (до ~15 с)…' : ' · локальный режим этого браузера'));
+  показатьКомнату({ code: код });
+  собратьГолоса(true).then(function (естьМикрофон) {
+    const комната = КОМНАТА({
+      транспорт: т, имя: имя, эмодзи: получитьЭмодзиГостя(), микрофон: естьМикрофон,
+      код: код, хост: false,
+      песняПoId: песняПoId,
+      onСостояние: наСостояние,
+      onФаза: наФаза,
+      onЛог: лог
+    });
+    ПРИЛОЖЕНИЕ.комната = комната;
+    подключитьСлежениеЗаПирами(комната, т);
+    return комната.старт().then(function () {
+      /* таймаут честности: если хост не откликнулся — говорим прямо */
+      setTimeout(function () {
+        if (ПРИЛОЖЕНИЕ.комната.state.participants.length < 2 && ПРИЛОЖЕНИЕ.комната.state.phase === 'LOBBY') {
+          лог('хост не отвечает: проверь код и что зал открыт, либо ведущий офлайн', 'warn');
+        }
+      }, 15000);
+      лог(естьМикрофон ? 'в зале · ждём ведущего…' : 'в зале · ⚠ микрофон не дал браузер — ты слушатель 🎧', 'ok');
+      unlockЗвука();
+    });
+  }).catch(function (e) { лог('⚠ вход не удался: ' + (e && e.message || e), 'err'); });
+}
+/* разлочка звука: короткий play/pause по жесту пользователя */
+function unlockЗвука() {
+  const ауд = $('minusAudio');
+  if (!ауд) return;
+  try { ауд.play().then(function () { ауд.pause(); ауд.currentTime = 0; }).catch(function () {}); } catch (e) {}
+}
+
+/* ── ОБЗОР: сохранить/скачать/фото/заметка/ещё раз ── */
+$('btnSaveMem').addEventListener('click', function () {
+  const rec = ПРИЛОЖЕНИЕ.запись; if (!rec) return;
+  rec.state = 'MEMORY'; rec.savedAt = Date.now();
+  ХРАНИЛИЩЕ.put(rec).then(function () {
+    $('reviewExpire').textContent = '❤️ сохранено как память — теперь не исчезнет (удалить можно в списке воспоминаний)';
+    перерисоватьПамять();
+  });
+});
+$('btnDownload').addEventListener('click', function () { if (ПРИЛОЖЕНИЕ.запись) скачать(ПРИЛОЖЕНИЕ.запись); });
+$('memPhoto').addEventListener('change', function (ev) {
+  const f = ev.target.files && ev.target.files[0]; if (!f) return;
+  const fr = new FileReader();
+  fr.onload = function () {
+    const img = new Image();
+    img.onload = function () {
+      const мах = 640, k = Math.min(1, мах / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const урл = cv.toDataURL('image/jpeg', 0.82);
+      const rec = ПРИЛОЖЕНИЕ.запись;
+      if (rec) { rec.photo = урл; ХРАНИЛИЩЕ.put(rec).then(function () { перерисоватьПамять(); }); }
+      $('photoInfo').textContent = '📷 фото прикреплено (' + cv.width + '×' + cv.height + ')';
+    };
+    img.src = fr.result;
+  };
+  fr.readAsDataURL(f);
+});
+$('memNote').addEventListener('change', function () {
+  const rec = ПРИЛОЖЕНИЕ.запись;
+  if (rec) { rec.note = String(this.value || '').slice(0, 120); ХРАНИЛИЩЕ.put(rec).then(перерисоватьПамять); }
+});
+$('btnAgain').addEventListener('click', function () {
+  /* спеть ещё раз: назад в LOBBY — записи создадутся новые */
+  if (ПРИЛОЖЕНИЕ.комната.этохост()) { ПРИЛОЖЕНИЕ.комната.фазаСинхронно('LOBBY'); }
+  else ПРИЛОЖЕНИЕ.комната.локальнаяФаза('LOBBY');
+  ПРИЛОЖЕНИЕ.присоединилсяКПению = false;
+  показ('scRoom');
+});
+$('btnEnd').addEventListener('click', function () { if (ПРИЛОЖЕНИЕ.комната.этохост()) ПРИЛОЖЕНИЕ.комната.финиш(); else ПРИЛОЖЕНИЕ.комната.яДослушал(); });
+$('btnSingSelf').addEventListener('click', function () {
+  const гз = ПРИЛОЖЕНИЕ.голос; if (!гз) return;
+  гз.слышатьСебя(!гз.слышуСебя);
+  this.textContent = гз.слышуСебя ? '🔇 не слышать себя' : '🔊 слышать себя';
+});
+$('btnReady').addEventListener('click', function () {
+  const ком = ПРИЛОЖЕНИЕ.комната; if (!ком) return;
+  const ст = ком.state;
+  ком.готов(!готовЛи(ст, ком.сам.id));
+});
+$('btnStart').addEventListener('click', function () {
+  const ком = ПРИЛОЖЕНИЕ.комната; if (!ком || !ком.этохост()) return;
+  const ст = ком.state;
+  if (!ст.song) return;   /* src уже выставлен в наСостояние (preload у всех) */
+  ком.стартОтсчёта(3400);
+});
+$('songSel').addEventListener('change', function () {
+  const ком = ПРИЛОЖЕНИЕ.комната; if (!ком || !this.value) return;
+  if (ком.этохост()) ком.выбратьПесню(this.value);
+  else ком.предложитьПесню(this.value);
+});
+$('btnCopyLink').addEventListener('click', function () {
+  const тa = $('joinUrl'); тa.select();
+  try { document.execCommand('copy'); this.textContent = '📋 скопировано ✓'; setTimeout(function (b) { return function () { b.textContent = '📋 скопировать ссылку'; }; }(this), 1600); } catch (e) {}
+});
+$('btnLeaveRoom').addEventListener('click', function () {
+  if (ПРИЛОЖЕНИЕ.комната) ПРИЛОЖЕНИЕ.комната.покинуть();
+  ПРИЛОЖЕНИЕ.комната = null; ПРИЛОЖЕНИЕ.транспорт = null;
+  показ('scMenu');
+});
+$('btnCreate').addEventListener('click', создатьЗал);
+$('btnJoin').addEventListener('click', войтиВЗал);
+$('btnBackMenu').addEventListener('click', function () { показ('scMenu'); });
+$('btnGcNow').addEventListener('click', function () {
+  ХРАНИЛИЩЕ.gc(Date.now()).then(function (р) {
+    $('gcInfo').textContent = 'удалено просроченных: ' + р.удалено + ' · осталось записей: ' + р.осталось;
+    перерисоватьПамять();
+  }).catch(function (e) { $('gcInfo').textContent = 'ошибка GC: ' + (e && e.message || e); });
+});
+$('minusAudio').addEventListener('ended', function () {
+  if (ПРИЛОЖЕНИЕ.комната) ПРИЛОЖЕНИЕ.комната.яДослушал();
+});
+window.addEventListener('beforeunload', function () {
+  if (ПРИЛОЖЕНИЕ.комната) { try { ПРИЛОЖЕНИЕ.комната.покинуть(); } catch (e) {} }
+});
+
+/* ── BOOT ── */
+заполнитьКаталог();
+перерисоватьПамять();
+/* программный хэндл: диагностика и продвинутые сценарии (не API для чужого кода) */
+window.ЗАЛ18 = { ПРИЛОЖЕНИЕ: ПРИЛОЖЕНИЕ, ХРАНИЛИЩЕ: ХРАНИЛИЩЕ, версия: ВЕРСИЯ_ПРОТОКОЛА };
+ХРАНИЛИЩЕ.gc(Date.now()).then(function (р) {
+  if (р.удалено > 0) {
+    $('gcInfo').textContent = 'при старте удалено просроченных временных записей: ' + р.удалено;
+    перерисоватьПамять();
+  }
+}).catch(function () {});
+(function () {
+  const п = new URLSearchParams(location.search);
+  const залКод = п.get('зал') || п.get('zal') || '';
+  if (залКод) {
+    $('joinCode').value = String(залКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+    $('joinAuto').textContent = 'код из QR: ' + $('joinCode').value + ' — введи имя и жми «войти»';
+    $('guestName').focus();
+  }
+  if ((location.hash || '').indexOf('память') >= 0) показ('scMemory');
+})();
+
+</script>
+<script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script>
+</body>
+</html>
