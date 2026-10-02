@@ -1040,6 +1040,18 @@ const S22 = (function () {
   })();
 })();
 </script>
+<script type="module">
+/* Adapter OS v0.1 · мост: транспорт зала ·22 регистрируется как адаптер-канал (проверка BroadcastChannel, зал открывается по коду); ядро страницы не тронуто */
+try {
+  const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
+  const естьБЧ = (typeof BroadcastChannel !== 'undefined');
+  const зал = { id: 'channel.22-зал', kind: 'channel', priority: 70,
+    status: () => естьБЧ
+      ? { state: 'READY', privacy: 'local-tabs', reason: 'локальный транспорт доступен; зал открывается по коду' }
+      : { state: 'UNAVAILABLE', privacy: 'local-tabs', reason: 'BroadcastChannel не работает в этом браузере' } };
+  await bootAdapterOS({ page: '22-СВЯЗЬ', adapters: [зал] });
+} catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '22-СВЯЗЬ', reason: String((e && e.message) || e) }; } catch (e2) {} }
+</script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>
 </body>
 </html>
