@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·21 — ОБЩЕНИЕ · смысл один — представления разные</title>
+<meta name="description" content="СИНГУЛЯР ·21 «ОБЩЕНИЕ» — универсальный механизм представления сообщений: человек задаёт возможности и предпочтения, система строит канал (текст, Брайль, речь, вибросигнал). Голос — личная настройка получателя: конкретный голос устройства, язык, темп, высота, громкость. Без классификации людей. Офлайн, 0 innerHTML.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--red:#ef4444;--green:#10b981;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d;white-space:nowrap}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.18;margin:24px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12.5px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:780px;font-size:15.5px}
+.hint{color:var(--dim);font-size:13px;margin-top:8px}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:11px 18px;font-weight:700;border:0;cursor:pointer;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn.gray{background:#223146;color:var(--tx)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:10px}
+select,input,textarea,button{font:inherit}
+label{display:block;margin:10px 0 4px;color:var(--dim);font-size:13.5px}
+select,textarea{width:100%;background:#0c141f;color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+textarea{min-height:96px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--teal)}
+output{font-family:var(--mono);color:var(--teal);font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:#0c141f;border:1px solid #24354a;border-radius:999px;padding:6px 12px;color:var(--dim);font-size:13px}
+.person{background:#0c141f;border:1px solid #24354a;border-radius:12px;padding:12px 14px;margin:8px 0}
+.person b{font-size:15px}
+.person .meta{color:var(--dim);font-size:13.5px;margin-top:6px}
+.msg{background:#0c141f;border:1px solid #24354a;border-left:4px solid var(--teal);border-radius:12px;padding:12px 14px;margin:10px 0}
+.msg .who{font-size:14px;color:var(--dim)}
+.msg .txt{margin:6px 0;font-size:16px}
+.msg .meta{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.msg .route{border-top:1px dashed #22334a;margin-top:8px;padding-top:8px;font-size:14px}
+.msg .route .lbl{font-family:var(--mono);font-size:12px;color:var(--teal);display:inline-block;min-width:110px}
+.braille{font-size:22px;letter-spacing:3px;line-height:1.7}
+ul{margin:8px 0 0 20px}
+li{margin:6px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--dim);font-size:13px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="logo">С21</div>
+    <div><b>СИНГУЛЯР ·21 «ОБЩЕНИЕ»</b><span>смысл один — представления разные · голос — личная настройка человека</span></div>
+    <div class="badge">офлайн · 0 innerHTML · без классификации человека</div>
+  </div>
+</header>
+<main class="wrap">
+  <h1>Смысл <em>один</em> — представлений столько, сколько нужно человеку</h1>
+  <p class="lead">Человек задаёт, как ему удобно принимать сообщения, — и система строит канал: текст, Брайль, речь, вибросигнал. Никаких «режимов для слепого, глухого или немого»: есть только возможности и предпочтения конкретного человека. Сообщение хранит смысл; представление строит адаптер. Голос, которым система озвучивает текст, — личная настройка получателя, а не свойство какой-то категории. Работает офлайн, данные остаются в этом браузере.</p>
+
+  <h2>1 · Люди и возможности <em>МОДЕЛЬ</em></h2>
+  <div class="panel">
+    <div id="people"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn gray" id="btnReset" type="button">Сбросить примеры</button>
+      <span class="hint">Участники примера нужны только для проверки маршрутов — это не категории людей.</span>
+    </div>
+  </div>
+
+  <h2>2 · Сообщение <em>МАРШРУТ</em></h2>
+  <div class="panel">
+    <div class="grid2">
+      <div><label for="msgFrom">От кого</label><select id="msgFrom"></select></div>
+      <div><label for="msgTo">Кому</label><select id="msgTo"></select></div>
+    </div>
+    <label for="msgText">Текст сообщения</label>
+    <textarea id="msgText" placeholder="Смысл сообщения…"></textarea>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="btnSend" type="button">Отправить</button>
+      <button class="btn gray" id="btnSpeakInput" type="button">Прочитать введённое вслух</button>
+    </div>
+    <div id="sendStatus" class="status" role="status"></div>
+  </div>
+
+  <h2>3 · Голос и манера речи человека <em>ГОЛОС</em></h2>
+  <div class="panel">
+    <p class="hint" style="margin:0 0 6px">Голос — личная настройка получателя. Система сама не назначает «мужской» или «женский» голос: можно выбрать конкретный голос устройства или задать язык, темп, высоту и громкость. Настройки принадлежат человеку, сохраняются и применяются к следующим сообщениям.</p>
+    <div class="grid2">
+      <div>
+        <label for="voicePerson">Для человека</label>
+        <select id="voicePerson"></select>
+        <label for="voicePreference">Пожелание к голосу</label>
+        <select id="voicePreference">
+          <option value="any">Любой доступный</option>
+          <option value="female">Женский</option>
+          <option value="male">Мужской</option>
+          <option value="neutral">Нейтральный</option>
+          <option value="custom">Конкретный голос</option>
+        </select>
+        <label for="voiceName">Конкретный голос устройства</label>
+        <select id="voiceName"></select>
+      </div>
+      <div>
+        <label for="voiceLang">Язык</label>
+        <select id="voiceLang">
+          <option value="auto">Автоматически</option>
+          <option value="ru-RU">Русский (Россия)</option>
+          <option value="de-DE">Deutsch (Deutschland)</option>
+          <option value="en-US">English (US)</option>
+        </select>
+        <label for="voiceRate">Темп <output id="rateOut">1.00</output></label>
+        <input id="voiceRate" type="range" min="0.5" max="2" step="0.05" value="1">
+        <label for="voicePitch">Высота голоса <output id="pitchOut">1.00</output></label>
+        <input id="voicePitch" type="range" min="0" max="2" step="0.05" value="1">
+        <label for="voiceVolume">Громкость <output id="volumeOut">1.00</output></label>
+        <input id="voiceVolume" type="range" min="0" max="1" step="0.05" value="1">
+      </div>
+    </div>
+    <label for="voicePreset">Профиль звучания</label>
+    <select id="voicePreset" style="max-width:340px">
+      <option value="custom">Мои настройки</option>
+      <option value="pleasant">Приятный / мягкий</option>
+      <option value="clear">Чёткий / разборчивый</option>
+      <option value="slow">Медленный / спокойный</option>
+      <option value="fast">Быстрый / компактный</option>
+    </select>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="btnTestVoice" type="button">Прослушать</button>
+      <button class="btn gray" id="btnStopVoice" type="button">Остановить речь</button>
+    </div>
+    <div id="voiceStatus" class="status" role="status"></div>
+  </div>
+
+  <h2>4 · Журнал сообщений <em>ЖУРНАЛ</em></h2>
+  <div class="panel"><div id="log" aria-live="polite"></div></div>
+
+  <h2>5 · Маршрутизация представлений <em>ПРИНЦИП</em></h2>
+  <div class="panel">
+    <p>Ядро хранит смысл сообщения. Адаптер строит представление по возможностям получателя. Смысл не меняется от канала — меняется только форма.</p>
+    <div class="chips"><span class="chip"><b>Ввод:</b>&nbsp;ТЕКСТ</span><span class="chip">РЕЧЬ</span><span class="chip">БРАЙЛЬ</span><span class="chip">ААК-СИМВОЛЫ</span><span class="chip">ЖЕСТЫ*</span></div>
+    <div class="chips"><span class="chip"><b>Вывод:</b>&nbsp;ТЕКСТ</span><span class="chip">РЕЧЬ</span><span class="chip">БРАЙЛЬ</span><span class="chip">ВИБРОСИГНАЛ</span><span class="chip">ЖЕСТЫ*</span></div>
+    <p class="hint">* Жесты — пока только контракт адаптера: автоматический перевод жестового языка не заявлен как решённый.</p>
+    <p class="hint">Полный жизненный цикл сообщения: создано → в очереди → отправлено → получено → показано → подтверждено. Здесь реализовано «создано → показано» — доставка остаётся зоне транспортов ·17/·18/·19.</p>
+  </div>
+
+  <h2>Честные границы</h2>
+  <div class="panel">
+    <ul>
+      <li>ввод в этом демо — текст: каналы ввода задекларированы моделью, реальный голосовой или символьный ввод подключается адаптерами платформы;</li>
+      <li>Брайль здесь — показ Unicode-шрифтом Брайля, а не управление обновляемым дисплеем;</li>
+      <li>вибросигнал в журнале — объявление канала: реальную вибрацию и уведомления уже умеет ·19 «ЧЕЛОВЕК»;</li>
+      <li>«женский» или «мужской» — пожелание человека: веб-платформа не угадывает характер голоса по имени, поэтому точный голос выбирается из реально доступных на устройстве (нативные платформы дают больше параметров);</li>
+      <li>межустройственная доставка — зона ·17 «ЗАЛ», ·18 «СОБЫТИЕ» и ·19 «ЧЕЛОВЕК»; здесь — только представление сообщения;</li>
+      <li>речь зависит от голосов конкретного устройства: где голосов нет, остаётся текст — отсутствие канала не тупик.</li>
+    </ul>
+  </div>
+</main>
+<div id="aria" class="sr" aria-live="polite"></div>
+<footer><div class="wrap">СИНГУЛЯР ·21 «ОБЩЕНИЕ» v0.2.1 · автономный модуль · данные не покидают браузер · смысл ≠ представление</div></footer>
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·21 «ОБЩЕНИЕ» — ядро (чистые функции, без доступа к документу).
+   Маркеры S21:CORE-BEGIN / S21:CORE-END нужны тестам: они достают блок
+   и исполняют его в Node, проверяя ровно тот код, что отгружен людям.
+   ═══════════════════════════════════════════════════════════════════ */
+/* S21:CORE-BEGIN */
+const S21 = (function(){
+  const VERSION = '0.2.1';
+  const STORE_KEY = 'singulyar.human.communication.v2';
+  /* Подписи каналов — единственное место, где живёт человеческое имя канала */
+  const CHANNEL = { text:'Текст', speech:'Речь', braille:'Брайль', haptic:'Вибросигнал', aac:'ААК-символы', sign:'Жесты' };
+  const PREF = { any:'любой', female:'женский', male:'мужской', neutral:'нейтральный', custom:'конкретный голос' };
+  const LANG = { auto:'авто', 'ru-RU':'русский', 'de-DE':'немецкий', 'en-US':'английский' };
+  const STATUS = { created:'создано', queued:'в очереди', sent:'отправлено', received:'получено', presented:'показано' };
+  const BRAILLE = { a:'⠁',b:'⠃',c:'⠉',d:'⠙',e:'⠑',f:'⠋',g:'⠛',h:'⠓',i:'⠊',j:'⠚',k:'⠅',l:'⠇',m:'⠍',n:'⠝',o:'⠕',p:'⠏',q:'⠟',r:'⠗',s:'⠎',t:'⠞',u:'⠥',v:'⠧',w:'⠺',x:'⠭',y:'⠽',z:'⠵',' ':' ' };
+  const PRESETS = { pleasant:{rate:.92,pitch:1.05,volume:1}, clear:{rate:.9,pitch:1,volume:1}, slow:{rate:.75,pitch:1,volume:1}, fast:{rate:1.2,pitch:1,volume:1} };
+
+  /* Брайль: латиница → шеститочие; символы вне таблицы остаются собой — смысл не теряется */
+  function braille(text){
+    return Array.from(String(text).toLowerCase()).map(function(c){ return BRAILLE[c] || c; }).join('');
+  }
+  function channelLabel(ch){ return CHANNEL[ch] || ch; }
+  function prefLabel(p){ return PREF[p] || p; }
+  function langLabel(l){ return LANG[l] || l; }
+  function statusLabel(s){ return STATUS[s] || s; }
+  /* Маршрутизация: смысл один — представлений по числу доступных каналов получателя.
+     Каждое представление несёт тот же смысл, меняется только форма. */
+  function route(person, text){
+    const out = [];
+    const list = (person && person.output) || [];
+    for (const ch of list){
+      if (ch === 'braille') out.push({ ch: ch, label: channelLabel(ch), view: braille(text) });
+      else if (ch === 'speech') out.push({ ch: ch, label: channelLabel(ch), view: String(text), voice: Object.assign({}, (person && person.voice) || {}) });
+      else if (ch === 'haptic') out.push({ ch: ch, label: channelLabel(ch), view: 'вибросигнал — канал объявлен' });
+      else out.push({ ch: ch, label: channelLabel(ch), view: String(text) });
+    }
+    return out;
+  }
+  return { VERSION: VERSION, STORE_KEY: STORE_KEY, braille: braille, route: route,
+           channelLabel: channelLabel, prefLabel: prefLabel, langLabel: langLabel,
+           statusLabel: statusLabel, PRESETS: PRESETS, CHANNEL: CHANNEL, PREF: PREF, LANG: LANG, STATUS: STATUS };
+})();
+/* S21:CORE-END */
+window.S21 = S21;
+
+/* ═══════════════ DOM-фабрика: 0 innerHTML — только узлы и текст ═══════════════ */
+function el(tag, attrs){
+  const node = document.createElement(tag);
+  if (attrs) for (const k in attrs){
+    const v = attrs[k];
+    if (k === 'class') node.className = v;
+    else if (k === 'text') node.textContent = v;
+    else if (k === 'id') node.id = v;
+    else if (k.slice(0,2) === 'on') node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v);
+  }
+  for (let i = 2; i < arguments.length; i++){
+    const kid = arguments[i];
+    if (kid == null) continue;
+    node.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return node;
+}
+function clear(node){ while (node.firstChild) node.removeChild(node.firstChild); return node; }
+
+/* ═══════════════ Модель: участники примера и хранилище ═══════════════ */
+const DEFAULT_PEOPLE = [
+  { id:'person-a', name:'Человек А', input:['text','speech'], output:['text','speech','haptic'],
+    voice:{ preference:'any', voiceURI:'', lang:'auto', rate:1, pitch:1, volume:1, preset:'custom' } },
+  { id:'person-b', name:'Человек Б', input:['text','braille'], output:['text','braille','speech'],
+    voice:{ preference:'female', voiceURI:'', lang:'ru-RU', rate:.9, pitch:1, volume:1, preset:'pleasant' } },
+  { id:'person-c', name:'Человек В', input:['aac','text'], output:['text','speech'],
+    voice:{ preference:'any', voiceURI:'', lang:'ru-RU', rate:.95, pitch:1, volume:1, preset:'clear' } }
+];
+let db = load();
+let voices = ('speechSynthesis' in window) ? (speechSynthesis.getVoices() || []) : [];
+
+function load(){
+  try { const x = JSON.parse(localStorage.getItem(S21.STORE_KEY)); if (x && x.people) return x; } catch(e){}
+  return { people: structuredClone(DEFAULT_PEOPLE), messages: [] };
+}
+function save(){ try { localStorage.setItem(S21.STORE_KEY, JSON.stringify(db)); } catch(e){} render(); }
+function personById(id){ return db.people.find(function(p){ return p.id === id; }); }
+function personName(id){ const p = personById(id); return p ? p.name : id; }
+
+/* ═══════════════ Отрисовка ═══════════════ */
+function voiceLine(v){
+  if (!v) return 'Голос: не настроен';
+  const rate = (v.rate == null) ? 1 : v.rate;
+  return 'Голос: ' + S21.prefLabel(v.preference || 'any') + ' · ' + S21.langLabel(v.lang || 'auto') + ' · темп ' + rate;
+}
+function renderPeople(){
+  const host = clear(document.getElementById('people'));
+  for (const p of db.people){
+    host.append(el('div', { class:'person' },
+      el('b', { text: p.name }),
+      el('div', { class:'meta' },
+        'Принимает: ' + p.input.map(S21.channelLabel).join(', '),
+        el('br'),
+        'Выводит: ' + p.output.map(S21.channelLabel).join(', '),
+        el('br'),
+        voiceLine(p.voice))));
+  }
+}
+function fillSelect(sel, items){
+  const current = sel.value;
+  clear(sel);
+  for (const it of items){
+    const o = el('option', { value: String(it.value), text: it.label });
+    if (String(it.value) === String(current)) o.selected = true;
+    sel.append(o);
+  }
+}
+function renderSelects(){
+  const items = db.people.map(function(p){ return { value: p.id, label: p.name }; });
+  for (const id of ['msgFrom','msgTo','voicePerson']) fillSelect(document.getElementById(id), items);
+}
+function renderLog(){
+  const host = clear(document.getElementById('log'));
+  if (!db.messages.length){ host.append(el('p', { class:'hint', text:'Сообщений пока нет.' })); return; }
+  for (const m of db.messages.slice().reverse()){
+    const box = el('div', { class:'msg' },
+      el('div', { class:'who', text: personName(m.from) + ' → ' + personName(m.to) }),
+      el('div', { class:'txt', text: m.text }),
+      el('div', { class:'meta', text: S21.statusLabel(m.status) + ' · ' + new Date(m.created).toLocaleString() }));
+    for (const r of m.routes){
+      const line = el('div', { class:'route' }, el('span', { class:'lbl', text: r.label + ':' }));
+      if (r.ch === 'braille') line.append(el('span', { class:'braille', text: r.view }));
+      else {
+        line.append(document.createTextNode(r.view));
+        if (r.ch === 'speech') line.append(el('span', { class:'hint', text: ' · голосом получателя' }));
+      }
+      box.append(line);
+    }
+    host.append(box);
+  }
+}
+function render(){ renderPeople(); renderSelects(); loadVoiceForm(); renderLog(); }
+
+/* ═══════════════ Голос: личная настройка человека ═══════════════ */
+function currentVoicePerson(){ return personById(document.getElementById('voicePerson').value) || db.people[0]; }
+function voicesByLang(lang){
+  let list = voices.filter(function(v){ return lang === 'auto' || v.lang === lang; });
+  if (!list.length) list = voices;
+  return list;
+}
+function renderVoiceList(){
+  const sel = clear(document.getElementById('voiceName'));
+  const cfg = currentVoicePerson().voice || {};
+  const list = voicesByLang(document.getElementById('voiceLang').value);
+  list.forEach(function(v, i){
+    sel.append(el('option', { value: String(i), text: v.name + ' — ' + v.lang + (v.localService ? ' · на устройстве' : '') }));
+  });
+  if (!list.length) sel.append(el('option', { value:'', text:'Голоса устройства ещё не загружены' }));
+  if (cfg.voiceURI){
+    const idx = list.findIndex(function(v){ return v.voiceURI === cfg.voiceURI; });
+    if (idx >= 0) sel.value = String(idx);
+  }
+  const st = document.getElementById('voiceStatus');
+  st.textContent = voices.length
+    ? 'Голосов на устройстве: ' + list.length + '. Характер голоса система не угадывает — точный выбор делает человек.'
+    : 'Голоса браузера ещё не загрузились.';
+}
+function updateOutputs(){
+  document.getElementById('rateOut').value = (+document.getElementById('voiceRate').value).toFixed(2);
+  document.getElementById('pitchOut').value = (+document.getElementById('voicePitch').value).toFixed(2);
+  document.getElementById('volumeOut').value = (+document.getElementById('voiceVolume').value).toFixed(2);
+}
+function loadVoiceForm(){
+  const v = currentVoicePerson().voice || {};
+  document.getElementById('voicePreference').value = v.preference || 'any';
+  document.getElementById('voiceLang').value = v.lang || 'auto';
+  document.getElementById('voiceRate').value = (v.rate == null) ? 1 : v.rate;
+  document.getElementById('voicePitch').value = (v.pitch == null) ? 1 : v.pitch;
+  document.getElementById('voiceVolume').value = (v.volume == null) ? 1 : v.volume;
+  document.getElementById('voicePreset').value = v.preset || 'custom';
+  updateOutputs();
+  renderVoiceList();
+}
+function saveVoiceField(){
+  const p = currentVoicePerson(); if (!p) return;
+  p.voice = p.voice || {};
+  p.voice.preference = document.getElementById('voicePreference').value;
+  p.voice.lang = document.getElementById('voiceLang').value;
+  p.voice.rate = +document.getElementById('voiceRate').value;
+  p.voice.pitch = +document.getElementById('voicePitch').value;
+  p.voice.volume = +document.getElementById('voiceVolume').value;
+  p.voice.preset = document.getElementById('voicePreset').value;
+  const list = voicesByLang(p.voice.lang);
+  const i = +document.getElementById('voiceName').value;
+  p.voice.voiceURI = (list[i] || {}).voiceURI || '';
+  save();
+}
+function applyPreset(){
+  const p = currentVoicePerson();
+  const values = S21.PRESETS[document.getElementById('voicePreset').value];
+  if (values){
+    p.voice = p.voice || {};
+    Object.assign(p.voice, values);
+    document.getElementById('voiceRate').value = values.rate;
+    document.getElementById('voicePitch').value = values.pitch;
+    document.getElementById('voiceVolume').value = values.volume;
+    updateOutputs();
+  }
+  saveVoiceField();
+  document.getElementById('voiceStatus').textContent = values
+    ? 'Профиль применён: темп ' + values.rate + ', высота ' + values.pitch + '.'
+    : 'Мои настройки: темп, высота и громкость остаются как задано.';
+}
+function speak(text){
+  const st = document.getElementById('voiceStatus');
+  if (!text){ st.textContent = 'Введи текст сообщения — и он прозвучит выбранным голосом.'; return; }
+  if (!('speechSynthesis' in window)){ st.textContent = 'Озвучивание недоступно в этом браузере — текст остаётся текстом.'; return; }
+  const cfg = currentVoicePerson().voice || {};
+  const list = voicesByLang(cfg.lang || 'auto');
+  const chosen = list.find(function(v){ return v.voiceURI === cfg.voiceURI; }) || list[0];
+  const u = new SpeechSynthesisUtterance(text);
+  if (chosen) u.voice = chosen;
+  if (cfg.lang && cfg.lang !== 'auto') u.lang = cfg.lang;
+  u.rate = (cfg.rate == null) ? 1 : cfg.rate;
+  u.pitch = (cfg.pitch == null) ? 1 : cfg.pitch;
+  u.volume = (cfg.volume == null) ? 1 : cfg.volume;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+  const wish = (cfg.preference && cfg.preference !== 'any' && cfg.preference !== 'custom' && !cfg.voiceURI)
+    ? ' · пожелание «' + S21.prefLabel(cfg.preference) + '» сохранено; веб не угадывает характер голоса — выбери конкретный голос из списка'
+    : '';
+  st.textContent = 'Читает: ' + (chosen ? chosen.name : 'системный голос') + ((cfg.lang && cfg.lang !== 'auto') ? ' · ' + cfg.lang : '') + wish;
+}
+
+/* ═══════════════ Сообщение ═══════════════ */
+function send(){
+  const from = document.getElementById('msgFrom').value;
+  const to = document.getElementById('msgTo').value;
+  const text = document.getElementById('msgText').value.trim();
+  const st = document.getElementById('sendStatus');
+  if (!text){ st.textContent = 'Смысл не задан: введи текст сообщения.'; return; }
+  if (from === to){ st.textContent = 'Отправитель и получатель совпадают — выбери разных людей.'; return; }
+  const m = { id: crypto.randomUUID(), from: from, to: to, text: text, created: Date.now(),
+              status: 'presented', routes: S21.route(personById(to), text) };
+  db.messages.push(m);
+  document.getElementById('msgText').value = '';
+  save();
+  st.textContent = 'Сообщение создано и показано получателю: ' + personName(to) + ' (' + m.routes.map(function(r){ return r.label; }).join(', ') + ').';
+  document.getElementById('aria').textContent = 'Сообщение для ' + personName(to) + '. ' + text;
+}
+
+/* ═══════════════ Связывание ═══════════════ */
+document.getElementById('btnSend').addEventListener('click', send);
+document.getElementById('btnSpeakInput').addEventListener('click', function(){ speak(document.getElementById('msgText').value.trim()); });
+document.getElementById('btnTestVoice').addEventListener('click', function(){ speak(document.getElementById('msgText').value.trim() || 'Здравствуйте. Это голос, выбранный для этого человека.'); });
+document.getElementById('btnStopVoice').addEventListener('click', function(){
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  document.getElementById('voiceStatus').textContent = 'Озвучивание остановлено.';
+});
+document.getElementById('btnReset').addEventListener('click', function(){ db = { people: structuredClone(DEFAULT_PEOPLE), messages: [] }; save(); });
+document.getElementById('voicePerson').addEventListener('change', loadVoiceForm);
+document.getElementById('voiceLang').addEventListener('change', function(){ saveVoiceField(); renderVoiceList(); });
+document.getElementById('voicePreference').addEventListener('change', saveVoiceField);
+document.getElementById('voiceName').addEventListener('change', saveVoiceField);
+document.getElementById('voicePreset').addEventListener('change', applyPreset);
+['voiceRate','voicePitch','voiceVolume'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', function(){
+    document.getElementById('voicePreset').value = 'custom';
+    saveVoiceField();
+  });
+});
+if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = renderVoiceList;
+
+render();
+</script>
+</body></html>
