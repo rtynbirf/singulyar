@@ -115,6 +115,20 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
     <div class="status" id="chartStatus" role="status" aria-live="polite">Карта не загружена — включится режим вокального монитора (без очков).</div>
   </div>
 
+  <h2>Fusion-автосборщик <em>слова ASR × ноты DSP = UltraStar .txt в один клик</em></h2>
+  <div class="panel">
+    <div class="row" style="margin:6px 0">
+      <button class="btn" id="btnFusion">🧬 собрать .txt</button>
+      <button class="btn gray" id="btnFusionDl" disabled>💾 скачать .txt</button>
+      <button class="btn gray" id="btnFusionMem" disabled>⬤ запомнить в памяти</button>
+    </div>
+    <p class="hint">Сведение по ТЗ KARAOKE_TREND «Fusion Engine»: тайминги слов из LRC/ASR × мелодическая линия
+    DSP-экстрактора → квантование к 1/16 бита (#BPM/#GAP), мелизмы «теря-а-ем» помечаются маркером <code>~</code>,
+    паузы &gt; 1,5 с нарезают строки. Результат — готовый UltraStar .txt: скачай или сохрани в память песни.</p>
+    <pre id="fusionPreview" class="hint" style="white-space:pre-wrap;background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:10px;max-height:180px;overflow:auto;font-family:var(--mono);font-size:12px;color:var(--teal);margin:8px 0 0">// собери карту ⚡ (или импортируй 📄), при желании подгрузи слова LRC — и жми «🧬 собрать .txt»</pre>
+    <div class="status" id="fusionStatus" role="status" aria-live="polite" style="margin-top:8px">Автосборщик ждёт карту и слова.</div>
+  </div>
+
   <h2>Микрофон и итог <em>оценка только по твоему голосу</em></h2>
   <div class="panel">
     <div class="row" style="margin:6px 0">
@@ -139,7 +153,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
   <a href="index.html">ОРКЕСТРАТОР ·15</a> · <a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">файл ·15</a> ·
   <a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">флагман ·01</a></p>
 
-  <footer>СИНГУЛЯР · ·16 СУФЛЁР v1.0 · сборка 2026-10-02 · офлайн-first, 0 внешних запросов<br>
+  <footer>СИНГУЛЯР · ·16 СУФЛЁР v1.1 · сборка 2026-10-02 · +Fusion-автосборщик · офлайн-first, 0 внешних запросов<br>
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
 </main>
 <script>
@@ -1083,6 +1097,115 @@ Object.defineProperty(SingulyarPrompterApp.prototype, 'init', { value: function 
     window.S16 = app;   /* отладка: S16.chart, S16.score, S16.audio */
 })();
 
+/* ── 7b. FUSION-АВТОСБОРЩИК: ASR-слова × DSP-ноты → UltraStar .txt ─────── */
+class SingulyarUltraStarAssembler {
+    constructor(options = {}) {
+        this.bpm = options.bpm || 120;
+        this.gap = options.gap || 0;                 /* сек */
+        this.bindWindow = options.bindWindow || 0.6; /* окно привязки слова, сек */
+        this.lineBreak = options.lineBreak || 1.5;   /* пауза для новой строки, сек */
+    }
+    /* LRC-строки → плоский список слов с оценкой тайминга внутри строки */
+    wordsFromLines(lines) {
+        const out = [];
+        for (let i = 0; i < lines.length; i++) {
+            const L = lines[i];
+            const next = lines[i + 1];
+            const span = Math.max(1, (next ? next.t : L.t + 4) - L.t);
+            const ws = String(L.words || '').split(/\s+/).filter(Boolean);
+            ws.forEach((w, k) => out.push({ t: L.t + (span * k) / Math.max(ws.length, 1), w }));
+        }
+        return out;
+    }
+    assemble(asrWords, dspNotes, opts = {}) {
+        const bpm = opts.bpm || this.bpm;
+        const gap = opts.gap != null ? opts.gap : this.gap;
+        const beat = 60 / (bpm * 4);                 /* UltraStar: бит = 1/4 четверти */
+        const q = (t) => Math.round((t - gap) / (beat / 16)) * (beat / 16);   /* сетка 1/16 бита */
+        /* 1) привязка слов: ближайшее слово к началу ноты (окно) */
+        const notes = [];
+        let wi = 0, bound = 0, melisma = 0;
+        const sorted = [...(asrWords || [])].sort((a, b) => a.t - b.t);
+        for (const n of dspNotes || []) {
+            let best = null, bestD = Infinity;
+            while (wi < sorted.length && sorted[wi].t < n.start - this.bindWindow) wi++;
+            for (let k = wi; k < sorted.length && sorted[k].t <= n.start + this.bindWindow; k++) {
+                const d = Math.abs(sorted[k].t - n.start);
+                if (d < bestD) { bestD = d; best = sorted[k]; }
+            }
+            notes.push({ type: n.type || 'NORMAL', start: n.start, end: n.end, pitch: n.pitch, word: best ? best.w : null });
+            if (best) bound++;
+        }
+        /* 2) мелизмы: одно слово тянется по нескольким нотам → «~» на продолжении;
+           «♪» — ноты, к которым слово так и не привязалось (пока слова нет вообще) */
+        let lastBound = null;
+        for (const n of notes) {
+            if (n.word === null) { n.word = lastBound ? '~' : '♪'; if (n.word === '~') melisma++; }
+            else if (n.word === lastBound) { n.word = '~'; melisma++; }
+            if (n.word !== '~' && n.word !== '♪') lastBound = n.word;
+        }
+        /* 3) квантование + нарезка строк по паузам */
+        const lines = ['#TITLE:' + (opts.title || 'СИНГУЛЯР ·16 Fusion'), '#ARTIST:' + (opts.artist || 'RUVSON'),
+            '#BPM:' + bpm, '#GAP:' + Math.round(gap * 1000)];
+        let prevEnd = null, lineCount = 0;
+        for (const n of notes) {
+            const qs = Math.max(0, Math.round((q(n.start)) / beat));
+            const qe = Math.max(qs + 1, Math.round((q(n.end)) / beat));
+            if (prevEnd !== null && n.start - prevEnd > this.lineBreak) { lines.push('- 0 0 0'); lineCount++; }
+            lines.push((n.type === 'GOLDEN' ? '*' : ':') + ' ' + qs + ' ' + (qe - qs) + ' ' + (n.pitch - 60) + ' ' + n.word);
+            prevEnd = n.end;
+        }
+        lines.push('E');
+        return { txt: lines.join('\n'), notes, stats: { bound, melisma, lineBreaks: lineCount, total: notes.length } };
+    }
+}
+
+/* ── 7c. FUSION UI: собрать / скачать / в память (0 innerHTML) ───────────── */
+(function fusionUI() {
+    const btnA = document.getElementById('btnFusion');
+    const btnD = document.getElementById('btnFusionDl');
+    const btnM = document.getElementById('btnFusionMem');
+    const prev = document.getElementById('fusionPreview');
+    const stat = document.getElementById('fusionStatus');
+    if (!btnA) return;
+    const asm = new SingulyarUltraStarAssembler({ bpm: 120 });
+    let out = null, chartOut = null;
+    const say = (msg) => { stat.textContent = msg; };
+    btnA.addEventListener('click', () => {
+        const app = window.S16;
+        if (!app || !app.chart || !app.chart.notes || !app.chart.notes.length) {
+            say('Сначала собери ноты из минусовки ⚡ или импортируй 📄 карту — Fusion сводит слова с нотами.'); return;
+        }
+        const words = app.lrcLines && app.lrcLines.length ? asm.wordsFromLines(app.lrcLines) : [];
+        const r = asm.assemble(words, app.chart.notes, { title: app.songTitle || 'СИНГУЛЯР ·16 Fusion', bpm: 120 });
+        out = r.txt; chartOut = { version: '1.0', bpm: 120, totalNotes: r.notes.length, notes: r.notes };
+        prev.textContent = r.txt.length > 1200 ? r.txt.slice(0, 1200) + '\n… (' + r.txt.length + ' симв. всего)' : r.txt;
+        btnD.disabled = false; btnM.disabled = false;
+        say('Fusion: ' + r.stats.total + ' нот · со словами ' + r.stats.bound + ' · мелизм ~ ' + r.stats.melisma +
+            ' · строк ' + (r.stats.lineBreaks + 1) + (words.length ? '' : ' · слова не подгружены — добавь LRC через 📄')); 
+    });
+    btnD.addEventListener('click', () => {
+        if (!out) return;
+        const app = window.S16;
+        const blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = ((app && app.songId) || 'song') + '_fusion_ultrastar.txt';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        say('Скачано: ' + a.download);
+    });
+    btnM.addEventListener('click', async () => {
+        if (!chartOut) return;
+        const app = window.S16;
+        if (!app || !app.songId) return;
+        try {
+            await app.loader.saveChart(app.songId, chartOut, out);
+            say('Fusion-карта сохранена в памяти (IndexedDB) — при открытии песни подхватится сама.');
+        } catch (e) { say('Не сохранилось: ' + e.message); }
+    });
+})();
+
 /* ── МОСТ «📡 В ЗАЛ» ·17: BroadcastChannel + localStorage-фолбэк, пульт CMD ── */
 (function hallBridge() {
     const chk = document.getElementById('chkHall');
@@ -1094,13 +1217,13 @@ Object.defineProperty(SingulyarPrompterApp.prototype, 'init', { value: function 
     const SRC = 'stage-' + Math.random().toString(36).slice(2, 8);
 
     function send(m) {
-        m.v = 1; m.src = SRC; m.seq = ++seq; m.ts = Date.now();
+        m.ver = 1; m.src = SRC; m.seq = ++seq; m.ts = Date.now();
         if (bc) { try { bc.postMessage(m); } catch (e) {} }
         try { localStorage.setItem(LS, JSON.stringify(m)); } catch (e2) {}
     }
     function onMsg(m) {
         try {
-            if (!m || m.v !== 1 || m.t !== 'CMD' || m.src === SRC) return;
+            if (!m || m.ver !== 1 || m.t !== 'CMD' || m.src === SRC) return;
             const id = m.src + ':' + m.seq;
             if (seenCmd.has(id)) return;
             seenCmd.set(id, 1); if (seenCmd.size > 200) seenCmd.clear();
@@ -1147,7 +1270,7 @@ Object.defineProperty(SingulyarPrompterApp.prototype, 'init', { value: function 
         send({ t: 'HELLO', role: 'stage' });
     }
     function close() {
-        if (bc) { try { bc.postMessage({ v: 1, t: 'BYE', src: SRC }); bc.close(); } catch (e) {} bc = null; }
+        if (bc) { try { bc.postMessage({ ver: 1, t: 'BYE', src: SRC }); bc.close(); } catch (e) {} bc = null; }
         window.removeEventListener('storage', onStorage);
         if (timer) { clearInterval(timer); timer = null; }
     }
