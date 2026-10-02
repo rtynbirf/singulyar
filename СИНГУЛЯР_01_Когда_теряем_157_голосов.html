@@ -480,6 +480,15 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 }
 
 </style>
+<style>
+/*<SEL-FIX> v1: нативные выпадающие списки = тёмный дизайн страницы */
+:root{color-scheme:dark}
+select{color-scheme:dark}
+select{background:#141110;color:#e8e4df;border:1px solid #2e2823;border-radius:8px;padding:.3rem .5rem;font:inherit}
+option,optgroup{background-color:#141110;color:#e8e4df}
+option:checked,option:hover{background-color:#2a241f;color:#ffab40}
+/*</SEL-FIX>*/
+</style>
 </head>
 <body>
 <canvas id="gl" aria-hidden="true"></canvas>

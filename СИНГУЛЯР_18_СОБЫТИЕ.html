@@ -89,6 +89,14 @@ footer{margin-top:48px;border-top:1px solid var(--line);padding-top:16px;color:v
 fieldset{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;min-width:0}
 legend{font-family:var(--mono);font-size:12px;color:var(--teal);padding:0 8px}
 </style>
+<style>
+/*<SEL-FIX> v1: нативные выпадающие списки = тёмный дизайн страницы */
+:root{color-scheme:dark}
+select{color-scheme:dark}
+option,optgroup{background-color:#101823;color:#e8f0f6}
+option:checked,option:hover{background-color:#10312c;color:#8ff0dc}
+/*</SEL-FIX>*/
+</style>
 </head>
 
 <body>

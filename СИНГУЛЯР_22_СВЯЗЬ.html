@@ -68,6 +68,15 @@ html[data-reduced-motion="true"] *{animation:none!important;transition:none!impo
 html[data-large-targets="true"] button{min-height:56px;font-size:17px}
 html[data-large-targets="true"] .chan-grid button{min-height:64px}
 </style>
+<style>
+/*<SEL-FIX> v1: нативные выпадающие списки = тёмный дизайн страницы */
+:root{color-scheme:dark}
+select{color-scheme:dark}
+select{background:#0c141f;color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;max-width:100%}select.grow{flex:1;min-width:0}
+option,optgroup{background-color:#101a24;color:#eaf3f8}
+option:checked,option:hover{background-color:#103a30;color:#9df0dc}
+/*</SEL-FIX>*/
+</style>
 </head>
 <body>
 <div id="ariaLive" aria-live="polite"></div>
