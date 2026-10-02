@@ -182,6 +182,145 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
+
+<style id="ts15-css">
+/*<TS15:CSS>*/
+/* ═══ СИСТЕМА ТАБЛИЦ ·15 — стили (тема ·15: тёмная, teal) ═══ */
+.ts-root{margin:10px 0}
+.ts-sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.ts-toolbar{display:flex;flex-direction:column;gap:8px;margin:10px 0 6px}
+.ts-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ts-sub{margin:0 0 6px;color:var(--dim,#8fa3b3)}
+.ts-count{font-family:var(--mono,ui-monospace,monospace)}
+
+/* поиск */
+.ts-search{flex:1;min-width:200px;max-width:340px;background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:10px;color:var(--tx,#e8f0f6);padding:8px 12px;font:inherit}
+.ts-search:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+
+/* фасеты */
+.ts-facets{display:flex;flex-wrap:wrap;gap:6px}
+.ts-facet{display:inline-flex;align-items:center;gap:6px;background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:999px;padding:5px 11px;color:#c9d7e2;font:inherit;font-size:13px;cursor:pointer;transition:border-color .15s}
+.ts-facet:hover{border-color:rgba(94,234,212,.5)}
+.ts-facet:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-facet.акт{border-color:var(--teal,#5eead4);background:#0b1f1d;color:var(--teal,#5eead4)}
+.ts-facet.ноль{opacity:.45}
+.ts-facet b{font-family:var(--mono,ui-monospace,monospace);font-weight:600}
+.ts-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.ts-d-verified{background:#7de8b8}.ts-d-machine{background:#ffcf6e}.ts-d-user{background:#8ecbff}.ts-d-bad{background:#ff8a80}
+.ts-facet[data-pressed="true"]{}
+
+/* чипы активных фильтров */
+.ts-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.ts-chip{display:inline-flex;align-items:center;gap:7px;background:#132030;border:1px dashed #2c4258;border-radius:9px;color:#c9d7e2;font-size:12.5px;padding:4px 9px;cursor:pointer}
+.ts-chip:hover{border-color:#ff8a80;color:#ffd9d5}
+.ts-chip:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-x{opacity:.7;font-weight:700}
+
+/* кнопки/меню */
+.ts-btn,.ts-btn2{background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:10px;color:#c9d7e2;padding:7px 11px;font:inherit;font-size:13px;cursor:pointer}
+.ts-btn:hover,.ts-btn2:hover{border-color:rgba(94,234,212,.5);color:var(--teal,#5eead4)}
+.ts-btn:focus-visible,.ts-btn2:focus-visible,.ts-link:focus-visible,.ts-segb:focus-visible,.ts-x2:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-btn[disabled]{opacity:.4;cursor:default}
+.ts-menu{position:relative}
+.ts-menu summary{list-style:none}
+.ts-menu summary::-webkit-details-marker{display:none}
+.ts-menu-body{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:300px;max-width:min(92vw,430px);max-height:min(70vh,520px);overflow:auto;background:#101823;border:1px solid #24364c;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.ts-mh{font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5eead4;margin:10px 0 4px}
+.ts-mh:first-child{margin-top:0}
+.ts-mrow{display:flex;align-items:center;gap:9px;padding:4px 0;font-size:13.5px;color:#c9d7e2;cursor:pointer}
+.ts-mrow input[type=checkbox]{accent-color:#5eead4;width:15px;height:15px}
+.ts-mrow input[type=text]{flex:1}
+.ts-seg{display:inline-flex;border:1px solid var(--line,#1f2b3a);border-radius:9px;overflow:hidden}
+.ts-segb{background:transparent;border:0;color:#8fa3b3;padding:6px 12px;font:inherit;font-size:12.5px;cursor:pointer}
+.ts-segb.акт{background:#0b1f1d;color:var(--teal,#5eead4)}
+.ts-view{justify-content:space-between}
+.ts-link{background:none;border:0;color:#8ecbff;font:inherit;font-size:13px;cursor:pointer;padding:2px 0;text-align:left}
+.ts-link:hover{text-decoration:underline}
+.ts-x2{background:none;border:0;color:#5b6a72;font-size:15px;cursor:pointer;padding:0 4px}
+.ts-x2:hover{color:#ff8a80}
+.ts-inp{background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:9px;color:var(--tx,#e8f0f6);padding:6px 9px;font:inherit;font-size:13px}
+
+/* таблица */
+.ts-wrap{position:relative;max-height:min(72vh,900px);overflow:auto;border:1px solid var(--line,#1f2b3a);border-radius:14px}
+.ts-wrap table{width:100%;border-collapse:separate;border-spacing:0}
+.ts-caption{caption-side:top;text-align:left;color:#8fa3b3;font-size:12.5px;padding:10px 12px;border-bottom:1px solid var(--line,#1f2b3a)}
+.ts-wrap th{position:sticky;top:0;z-index:5;background:#101823;border-bottom:2px solid #24364c;padding:0;text-align:left;white-space:nowrap}
+.ts-wrap th .ts-sort,.ts-wrap th .ts-th{display:inline-flex;align-items:center;gap:5px;width:100%;padding:9px 10px;font:inherit;font-size:12.5px;color:#8fa3b3}
+.ts-sort{background:none;border:0;cursor:pointer;font-weight:600}
+.ts-sort:hover{color:var(--teal,#5eead4)}
+.ts-sort:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:-2px}
+.ts-arr{font-size:10px;opacity:.55}
+.ts-arr.акт{opacity:1;color:var(--teal,#5eead4)}
+.ts-prio{color:#ffc36e;font-size:9.5px;margin-left:1px}
+.ts-jmp{background:none;border:0;color:#5b6a72;cursor:pointer;font-size:11px;padding:2px 4px}
+.ts-jmp:hover{color:#8ecbff}
+.ts-jmp:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:-2px}
+.ts-c-sel,.ts-c-exp{width:34px;min-width:34px;text-align:center}
+.ts-wrap th.ts-c-sel,.ts-wrap th.ts-c-exp{padding:9px 4px}
+
+/* ячейки */
+.ts-wrap td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px;white-space:nowrap}
+.ts-wrap tbody tr:hover td{background:rgba(94,234,212,.045)}
+.ts-wrap tbody tr.выбр td{background:rgba(142,203,255,.09)}
+.ts-wrap tbody tr.раскрыт td{background:rgba(255,255,255,.03)}
+.ts-num{font-family:var(--mono,ui-monospace,monospace);color:#a8bccb}
+.ts-title{font-weight:600}
+.ts-star{color:#ffc36e;font-size:11.5px}
+.ts-none{text-align:center}
+.ts-emptyCell{opacity:.35}
+.ts-c-sel input,.ts-c-exp input{accent-color:#5eead4}
+.ts-exp{background:none;border:0;color:#8fa3b3;cursor:pointer;font-size:12px;padding:3px 6px;border-radius:6px}
+.ts-exp:hover{color:#5eead4;background:rgba(94,234,212,.1)}
+.ts-exp:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-exp.акт{color:#5eead4}
+
+/* ячейка-кнопка языка — унаследованные статусы ·15 */
+.cellBtn{min-width:42px;padding:4px 8px;border-radius:8px;border:1px solid transparent;font-family:var(--mono,ui-monospace,monospace);font-size:12px;cursor:pointer}
+.st-verified{background:rgba(125,232,184,.14);color:#7de8b8;border-color:rgba(125,232,184,.35)}
+.st-machine{background:rgba(255,207,110,.12);color:#ffcf6e;border-color:rgba(255,207,110,.3)}
+.st-user{background:rgba(142,203,255,.12);color:#8ecbff;border-color:rgba(142,203,255,.3)}
+.st-bad{background:rgba(255,138,128,.14);color:#ff8a80;border-color:rgba(255,138,128,.4);font-weight:700}
+
+/* закрепление: колонка «песня» слева */
+.ts-wrap.ts-закреплено th.ts-пин,.ts-wrap.ts-закреплено td.ts-пин{position:sticky;left:0;z-index:6;background:#101823;border-right:1px solid #24364c;box-shadow:4px 0 8px -6px rgba(0,0,0,.6)}
+.ts-wrap.ts-закреплено tbody tr:hover td.ts-пин{background:#132030}
+.ts-wrap.ts-закреплено tbody tr.выбр td.ts-пин{background:#16283a}
+
+/* плотность */
+.ts-compact td{padding-top:2px;padding-bottom:2px;font-size:12.5px}
+.ts-compact th .ts-sort,.ts-compact th .ts-th{padding-top:6px;padding-bottom:6px}
+.ts-comfortable td{padding-top:11px;padding-bottom:11px}
+
+/* детали строки */
+.ts-details td{background:#0d1420;white-space:normal}
+.ts-det{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:4px 2px}
+.ts-kv{font-family:var(--mono,ui-monospace,monospace);font-size:12px;color:#a8bccb}
+.ts-det-lang{display:flex;flex-wrap:wrap;gap:5px}
+.ts-lchip{font-family:var(--mono,ui-monospace,monospace);font-size:11px;padding:2px 7px;border-radius:7px;border:1px solid #24364c;color:#8fa3b3}
+.ts-lchip.st-verified{color:#7de8b8;border-color:rgba(125,232,184,.35)}
+.ts-lchip.st-machine{color:#ffcf6e;border-color:rgba(255,207,110,.3)}
+.ts-lchip.st-user{color:#8ecbff;border-color:rgba(142,203,255,.3)}
+.ts-lchip.бад{color:#ff8a80;border-color:rgba(255,138,128,.45);font-weight:700}
+
+/* пустое состояние */
+.ts-empty td{padding:0}
+.ts-empty-box{display:flex;flex-direction:column;align-items:center;gap:9px;padding:44px 20px;text-align:center;color:#8fa3b3}
+.ts-empty-box b{color:#e8f0f6;font-size:16px}
+
+/* батч-бар */
+.ts-batch{position:sticky;bottom:0;z-index:20;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#132030;border:1px solid #24364c;border-radius:12px;padding:8px 12px;margin-top:8px;box-shadow:0 -6px 24px rgba(0,0,0,.4)}
+.ts-batch b{color:#ffc36e;font-family:var(--mono,ui-monospace,monospace);font-weight:600}
+.ts-ta{position:absolute;left:-9999px;top:0;width:1px;height:1px;opacity:0}
+
+/* легенда: доп. подсказка */
+.legend .ts-hint{opacity:.75}
+@media(max-width:760px){
+  .ts-facet span:nth-child(2){display:none}
+  .ts-search{max-width:none}
+}
+/*</TS15:CSS>*/
+
+</style>
 </head>
 <body>
 <div id="banner" role="alert"></div>
@@ -1697,5 +1836,1090 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 </script>
-<script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script></body>
+<script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script>
+<script id="ts15-js">
+/* ═══ СИСТЕМА ТАБЛИЦ ·15 (v1): headless-ядро + видовой слой ═══ */
+/*<TS15:ЯДРО>*/
+/* ════════════════════════════════════════════════════════════════════════
+   СИСТЕМА ТАБЛИЦ ·15 — HEADLESS-ЯДРО (v1)
+   Чистая логика без DOM. Тестируется в Node по маркерам.
+   Практики: Carbon Data Table · USWDS (числовые значения сортировки) ·
+   W3C APG (контракт доступности) · TanStack (headless-подход).
+   (см. также видовой слой: ноль строковой инъекции разметки)
+   Пагинация и виртуализация СОЗНАТЕЛЬНО НЕ НУЖНЫ: 62 строки × 13 колонок.
+   ════════════════════════════════════════════════════════════════════════ */
+'use strict';
+
+var TS15_СТАТУСЫ = ['verified', 'machine', 'user', 'bad'];
+var TS15_МАКС_КЛЮЧЕЙ = 3;      /* мульти-сортировка ≤ 3 (TanStack default) */
+var TS15_ВЕРСИЯ = 1;           /* versioned state */
+var TS15_ПЛОТНОСТИ = ['compact', 'standard', 'comfortable'];
+var TS15_ШИРИНА_МИН = 48, TS15_ШИРИНА_МАКС = 600;
+var TS15_ПРОЧИЕ_КОЛОНКИ = ['num', 'title', 'extra', 'langs']; /* служебные (не-языковые) колонки */
+function tsВалидКолонка(k, языки){ return языки.indexOf(k) !== -1 || TS15_ПРОЧИЕ_КОЛОНКИ.indexOf(k) !== -1; }
+
+/* ── Состояние по умолчанию ── */
+function tsДефолтСостояние(языки){
+  return {
+    version: TS15_ВЕРСИЯ,
+    q: '',                        /* поиск: название+номер+id */
+    статус: '',                   /* '' | verified | machine | user | bad */
+    проблемы: false,              /* только строки с ошибками таймлайна */
+    сорт: [{ col: 'num', dir: 'asc' }],
+    скрытые: [],                  /* ключи скрытых колонок */
+    порядок: [],                  /* порядок колонок (ключи, пусто = дефолт) */
+    ширины: {},                   /* {ключ: px 48..600} */
+    закреплённые: [],             /* ≤1: колонка прилипает влево */
+    плотность: 'standard',
+    колоФильтры: {}               /* {ключ: [статусы]} ИЛИ внутри колонки */
+  };
+}
+
+/* ── Нормализация: строгий ремонт чужого/битого состояния → [state, чинил] ── */
+function tsНормСостояние(raw, языки){
+  var ст = tsДефолтСостояние(языки), чинил = false;
+  function чинить(){ чинил = true; }
+
+  if (raw && typeof raw.q === 'string') ст.q = raw.q.slice(0, 200);
+  else if (raw && raw.q !== undefined && raw.q !== null) чинить();
+
+  if (raw && TS15_СТАТУСЫ.indexOf(raw.статус) !== -1) ст.статус = raw.статус;
+  else if (raw && raw.статус && raw.статус !== '') чинить();
+
+  if (raw && raw.проблемы === true) ст.проблемы = true;
+  else if (raw && raw.проблемы !== undefined && raw.проблемы !== false) чинить();
+
+  /* сорт: массив ≤3 {col,dir}, dir ∈ asc|desc */
+  if (Array.isArray(raw && raw.сорт)){
+    ст.сорт = raw.сорт.filter(function(s){
+      return s && typeof s.col === 'string' && (s.dir === 'asc' || s.dir === 'desc');
+    }).slice(0, TS15_МАКС_КЛЮЧЕЙ);
+    if (ст.сорт.length !== raw.сорт.length) чинить();
+  } else if (raw && raw.сорт !== undefined) чинить();
+  if (!ст.сорт.length){ ст.сорт = [{ col: 'num', dir: 'asc' }]; }
+
+  /* скрытые: только существующие ключи, без дублей; нельзя скрыть всё */
+  if (Array.isArray(raw && raw.скрытые)){
+    ст.скрытые = raw.скрытые.filter(function(k, i){
+      return typeof k === 'string' && tsВалидКолонка(k, языки) && raw.скрытые.indexOf(k) === i;
+    });
+    if (ст.скрытые.length !== raw.скрытые.length) чинить();
+    if (ст.скрытые.length >= языки.length){ ст.скрытые = []; чинить(); }
+  } else if (raw && raw.скрытые !== undefined) чинить();
+
+  /* порядок: перестановка существующих ключей, без дублей */
+  if (Array.isArray(raw && raw.порядок)){
+    var ок = ст.порядок = [];
+    raw.порядок.forEach(function(k){
+      if (typeof k === 'string' && tsВалидКолонка(k, языки) && ок.indexOf(k) === -1) ок.push(k);
+    });
+    if (ок.length !== raw.порядок.length) чинить();
+  } else if (raw && raw.порядок !== undefined) чинить();
+
+  /* ширины: 48..600 px, только числовые по существующим ключам */
+  if (raw && raw.ширины && typeof raw.ширины === 'object' && !Array.isArray(raw.ширины)){
+    Object.keys(raw.ширины).forEach(function(k){
+      var v = raw.ширины[k];
+      if (typeof v === 'number' && isFinite(v) && tsВалидКолонка(k, языки)){
+        if (v < TS15_ШИРИНА_МИН || v > TS15_ШИРИНА_МАКС){ v = Math.max(TS15_ШИРИНА_МИН, Math.min(TS15_ШИРИНА_МАКС, v)); чинить(); }
+        ст.ширины[k] = Math.round(v);
+      } else чинить();
+    });
+  } else if (raw && raw.ширины !== undefined) чинить();
+
+  /* закреплённые ≤1 */
+  if (Array.isArray(raw && raw.закреплённые)){
+    ст.закреплённые = raw.закреплённые.filter(function(k){
+      return typeof k === 'string' && tsВалидКолонка(k, языки);
+    }).slice(0, 1);
+    if (ст.закреплённые.length !== raw.закреплённые.length) чинить();
+  } else if (raw && raw.закреплённые !== undefined) чинить();
+
+  if (raw && TS15_ПЛОТНОСТИ.indexOf(raw.плотность) !== -1) ст.плотность = raw.плотность;
+  else if (raw && raw.плотность !== undefined) чинить();
+
+  /* колоФильтры: {ключ: [статусы валидные | 'none']} */
+  if (raw && raw.колоФильтры && typeof raw.колоФильтры === 'object' && !Array.isArray(raw.колоФильтры)){
+    Object.keys(raw.колоФильтры).forEach(function(k){
+      if (языки.indexOf(k) === -1 || !Array.isArray(raw.колоФильтры[k])){ чинить(); return; }
+      var vals = raw.колоФильтры[k].filter(function(s){ return TS15_СТАТУСЫ.indexOf(s) !== -1 || s === 'none'; });
+      if (vals.length !== raw.колоФильтры[k].length) чинить();
+      if (vals.length) ст.колоФильтры[k] = vals;
+    });
+  } else if (raw && raw.колоФильтры !== undefined) чинить();
+
+  return [ст, чинил];
+}
+
+/* ── Ранг ячейки: 0=none 1=bad 2=user 3=machine 4=verified ──
+   Числовые значения сортировки (USWDS): «verified» больше «machine»
+   математически, а не по ASCII. */
+function tsРангЯчейки(ячейка){
+  if (!ячейка || !ячейка.есть) return 0;
+  if (ячейка.валид === 'bad') return 1;
+  switch (ячейка.статус){
+    case 'user':     return 2;
+    case 'machine':  return 3;
+    case 'verified': return 4;
+    default: return 0;
+  }
+}
+var TS15_СТАТУС_ПО_РАНГУ = { 0: 'none', 1: 'bad', 2: 'user', 3: 'machine', 4: 'verified' };
+
+/* ── Значение строки по ключу сортировки ── */
+function tsЗначениеКлюча(строка, ключ){
+  switch (ключ){
+    case 'num':   return строка.номер;
+    case 'title': return (строка.название || '').toLowerCase();
+    case 'extra': return строка.ещё || 0;
+    case 'langs': return строка.всегоЯзыков || 0;
+    default:      return tsРангЯчейки(строка.ячейки && строка.ячейки[ключ]);
+  }
+}
+
+/* ── Сравнение строк: цепочка сорт-ключей; ничья → номер asc ── */
+function tsСравнитьСтроки(a, b, сорт){
+  for (var i = 0; i < сорт.length; i++){
+    var к = сорт[i].col, dir = сорт[i].dir === 'desc' ? -1 : 1;
+    var va = tsЗначениеКлюча(a, к), vb = tsЗначениеКлюча(b, к);
+    if (va < vb) return -1 * dir;
+    if (va > vb) return 1 * dir;
+  }
+  return a.номер < b.номер ? -1 : (a.номер > b.номер ? 1 : 0);
+}
+function tsОтсортировать(строки, сорт){
+  return строки.slice().sort(function(a, b){ return tsСравнитьСтроки(a, b, сорт); });
+}
+
+/* ── Поиск: название + номер + id, без регистра ── */
+function tsИщет(строка, q){
+  if (!q) return true;
+  var н = String(q).toLowerCase();
+  return (строка.название || '').toLowerCase().indexOf(н) !== -1
+      || String(строка.номер).indexOf(н) !== -1
+      || (строка.id || '').toLowerCase().indexOf(н) !== -1;
+}
+
+/* ── Фильтр строки: поиск И статус И проблемы И колонки(И);
+      внутри колонки — ИЛИ по статусам ('none' = дорожки нет) ── */
+function tsПропускает(строка, ст){
+  if (!tsИщет(строка, ст.q)) return false;
+  if (ст.статус){
+    var есть = false, ячейки = строка.ячейки || {};
+    for (var k in ячейки){
+      var я = ячейки[k];
+      if (я && я.есть && TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)] === ст.статус){ есть = true; break; }
+    }
+    if (!есть) return false;
+  }
+  if (ст.проблемы){
+    var пр = false, яч2 = строка.ячейки || {};
+    for (var k2 in яч2){ if (яч2[k2] && яч2[k2].валид === 'bad'){ пр = true; break; } }
+    if (!пр) return false;
+  }
+  var фильтры = ст.колоФильтры || {};
+  for (var ключ in фильтры){
+    var факт = TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(строка.ячейки && строка.ячейки[ключ])];
+    if (фильтры[ключ].indexOf(факт) === -1) return false;
+  }
+  return true;
+}
+
+/* ── Фасеты: считаются по строкам, прошедшим ПРОЧИЕ фильтры
+      (уникальные статусы на строку; «проблемы» отдельно) ── */
+function tsФасеты(строки, безСтатусаИПроблем){
+  var сч = { verified: 0, machine: 0, user: 0, bad: 0, проблемы: 0, всего: строки.length };
+  строки.forEach(function(с){
+    var seen = {}, яч = с.ячейки || {};
+    for (var k in яч){
+      var я = яч[k];
+      if (!я || !я.есть) continue;
+      seen[TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)]] = true;
+    }
+    if (!безСтатусаИПроблем) TS15_СТАТУСЫ.forEach(function(s){ if (seen[s]) сч[s]++; });
+    var п = false;
+    for (var k2 in яч){ if (яч[k2] && яч[k2].валид === 'bad'){ п = true; break; } }
+    if (!безСтатусаИПроблем && п) сч.проблемы++;
+  });
+  return сч;
+}
+
+/* ── Видимые колонки: порядок → скрытие ── */
+function tsВидимыеКолонки(ст, дефолтные){
+  var все = (ст.порядок && ст.порядок.length) ? ст.порядок.slice() : дефолтные.slice();
+  return все.filter(function(k){ return ст.скрытые.indexOf(k) === -1; });
+}
+
+/* ── Экспорт: csv | tsv | json ── */
+function tsCsvПоле(v, разделитель){
+  var s = String(v == null ? '' : v);
+  if (/["\n]|[\t"]/.test(s) && (разделитель === ',' || разделитель === '\t'))
+    return '"' + s.replace(/"/g, '""') + '"';
+  if (разделитель === ',' && s.indexOf(',') !== -1) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+function tsЭкспорт(строки, колонки, формат){
+  var исход = Array.isArray(строки) ? строки : [];
+  if (формат === 'json'){
+    return JSON.stringify(исход.map(function(с){
+      var o = { номер: с.номер, название: с.название, id: с.id, длительность: с.длительность, языков: с.всегоЯзыков, ещё: с.ещё };
+      var яч = с.ячейки || {};
+      колонки.forEach(function(к){
+        if (к.ключ === 'num' || к.ключ === 'title' || к.ключ === 'extra' || к.ключ === 'langs') return;
+        var я = яч[к.ключ];
+        o[к.ключ] = я && я.есть ? TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)] : 'none';
+      });
+      return o;
+    }), null, 2);
+  }
+  var разд = формат === 'tsv' ? '\t' : ',';
+  var head = колонки.map(function(к){ return tsCsvПоле(к.название, разд); }).join(разд);
+  var body = исход.map(function(с){
+    return колонки.map(function(к){
+      var v;
+      switch (к.ключ){
+        case 'num':   v = с.номер; break;
+        case 'title': v = с.название; break;
+        case 'extra': v = с.ещё ? '+' + с.ещё : ''; break;
+        case 'langs': v = с.всегоЯзыков; break;
+        default:
+          var я = с.ячейки && с.ячейки[к.ключ];
+          v = я && я.есть ? TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)] : '';
+      }
+      return tsCsvПоле(v, разд);
+    }).join(разд);
+  });
+  return head + '\n' + body.join('\n');
+}
+function tsИмяФайла(формат){
+  return 'реестр_15_' + new Date().toISOString().slice(0, 10) + '.' + (формат === 'tsv' ? 'tsv' : формат === 'json' ? 'json' : 'csv');
+}
+
+/* ── URL-состояние: только безопасное подмножество ──
+   q, f (статус), p (проблемы), s (col.a|d~…), h (скрытые ,), o (порядок ,),
+   d (плотность), pin, cf (ключ:статус|статус;…) */
+function tsUrlСжать(ст){
+  var p = {};
+  if (ст.q) p.q = ст.q;
+  if (ст.статус) p.f = ст.статус;
+  if (ст.проблемы) p.p = '1';
+  if (ст.сорт.length && !(ст.сорт.length === 1 && ст.сорт[0].col === 'num' && ст.сорт[0].dir === 'asc')){
+    p.s = ст.сорт.map(function(s){ return s.col + '.' + (s.dir === 'desc' ? 'd' : 'a'); }).join('~');
+  }
+  if (ст.скрытые.length) p.h = ст.скрытые.join(',');
+  if (ст.порядок.length) p.o = ст.порядок.join(',');
+  if (ст.плотность !== 'standard') p.d = ст.плотность;
+  if (ст.закреплённые.length) p.pin = ст.закреплённые[0];
+  var cf = '';
+  for (var k in ст.колоФильтры) cf += (cf ? ';' : '') + k + ':' + ст.колоФильтры[k].join('|');
+  if (cf) p.cf = cf;
+  return p;
+}
+function tsUrlРазжать(params, языки){
+  var raw = tsДефолтСостояние(языки);
+  if (params){
+    if (params.q) raw.q = String(params.q).slice(0, 200);
+    if (params.f) raw.статус = params.f;
+    if (params.p) raw.проблемы = true;
+    if (params.s){
+      raw.сорт = String(params.s).split('~').slice(0, TS15_МАКС_КЛЮЧЕЙ).map(function(chunk){
+        var i = chunk.indexOf('.');
+        if (i < 1) return null;
+        return { col: chunk.slice(0, i), dir: chunk.slice(i + 1) === 'd' ? 'desc' : 'asc' };
+      }).filter(Boolean);
+    }
+    if (params.h) raw.скрытые = String(params.h).split(',').filter(Boolean);
+    if (params.o) raw.порядок = String(params.o).split(',').filter(Boolean);
+    if (params.d) raw.плотность = params.d;
+    if (params.pin) raw.закреплённые = [params.pin];
+    if (params.cf){
+      String(params.cf).split(';').forEach(function(chunk){
+        var i = chunk.indexOf(':');
+        if (i < 1) return;
+        var k = chunk.slice(0, i), vals = chunk.slice(i + 1).split('|').filter(Boolean);
+        if (vals.length) raw.колоФильтры[k] = vals;
+      });
+    }
+  }
+  return tsНормСостояние(raw, языки);
+}
+
+/* ── Служебное ── */
+function tsРавны(a, b){
+  try { return JSON.stringify(a) === JSON.stringify(b); } catch (e) { return false; }
+}
+function tsСтрок(n){ return String(n); }
+/*</TS15:ЯДРО>*/
+
+/*<TS15:ВИД>*/
+/* ════════════════════════════════════════════════════════════════════════
+   СИСТЕМА ТАБЛИЦ ·15 — ВИДОВОЙ/ИНТЕРАКТИВНЫЙ СЛОЙ (v1)
+   DOM-движок поверх headless-ядра. Native <table>, ноль строковой инъекции разметки.
+   Интеграция: позднее переопределение rebuildMatrix (ядро ·15 не тронуто).
+   ════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ── мини-фабрика DOM (ни одного строкового присвоения разметки во всей системе) ── */
+function h(тег, атр, дети){
+  var n = document.createElement(тег);
+  if (атр) for (var k in атр){
+    if (k === 'text') n.textContent = атр[k];
+    else if (k === 'class') n.className = атр[k];
+    else if (k === 'style' && typeof атр[k] === 'object') for (var s in атр[k]) n.style[s] = атр[k][s];
+    else if (k === 'disabled' || k === 'checked' || k === 'required' || k === 'open'){
+      /* boolean-атрибуты: false НЕ должен оставлять атрибут */
+      if (атр[k]) n.setAttribute(k, ''); else n.removeAttribute(k);
+    }
+    else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), атр[k]);
+    else n.setAttribute(k, атр[k]);
+  }
+  if (дети) дети.forEach(function(d){ if (d) n.appendChild(d); });
+  return n;
+}
+
+/* ── зависимости ядра ·15 (глобальные, читаем только) ── */
+function _г(имя){ return (typeof window[имя] === 'function') ? window[имя] : null; }
+
+var TS = {
+  LANGS: ['ru','en','es','pt','fr','de','it','ja','ko','zh','ar','hi','uk'],
+  КОЛОНКИ: [
+    { ключ: 'num',    название: '№',      сорт: true,  узкая: true },
+    { ключ: 'title',  название: 'песня',  сорт: true },
+    { ключ: 'langs',  название: 'яз.',    сорт: true,  узкая: true, титул: 'всего языков у песни (вычисляется)' },
+    /* далее — 13 языковых колонок (вставляются кодом) */
+    { ключ: 'extra',  название: 'ещё',    сорт: true,  узкая: true, титул: 'дополнительные языки из реестра (вычисляется)' }
+  ],
+  ст: null,
+  данные: [],            /* строки данных (пересобираются на данных ядра) */
+  видимые: [],           /* текущий отсортированный+отфильтрованный список */
+  выбор: {},             /* {id: true} */
+  раскрытые: {},         /* {id: true} */
+  undo: [],
+  LS_СТ: 's15.ts.state.v1',
+  LS_ВИДЫ: 's15.ts.views.v1',
+  узлы: {}
+};
+
+TS.КОЛОНКИ.splice.apply(TS.КОЛОНКИ, [3, 0].concat(TS.LANGS.map(function(l){
+  return { ключ: l, название: l, сорт: true, узкая: true, язык: true, титул: '' };
+})));
+
+function кол(ключ){
+  for (var i = 0; i < TS.КОЛОНКИ.length; i++) if (TS.КОЛОНКИ[i].ключ === ключ) return TS.КОЛОНКИ[i];
+  return { ключ: ключ, название: ключ, сорт: false };
+}
+function названиеКол(ключ){
+  var к = кол(ключ);
+  return к.язык ? (langName(ключ) + ' (' + ключ + ')') : к.название;
+}
+
+/* ── сборка строк данных из ядра ·15 (единственный источник) ── */
+function собратьДанные(){
+  var песни = _г('allSongs')(), langs = _г('mainLangs')(), extra = _г('extraLangCount'), langOf = _г('langsOf');
+  TS.данные = песни.map(function(s){
+    var ячейки = {};
+    langs.forEach(function(l){
+      var lines = _г('trackLines')(s.id, l);
+      if (!lines){ ячейки[l] = { есть: false, статус: '', валид: '' }; return; }
+      var pr = _г('trackProvenance')(s.id, l);
+      var v = (window.S15 && S15.boot && S15.boot.validation) ? S15.boot.validation[s.id + '|' + l] : '';
+      ячейки[l] = { есть: true, статус: pr.status, валид: v === 'bad' ? 'bad' : '' };
+    });
+    return {
+      номер: s.n, название: s.t, id: s.id, длительность: s.d, звезда: !!s.star,
+      ещё: extra ? extra(s.id) : 0,
+      всегоЯзыков: langOf ? langOf(s.id).length : 0,
+      ячейки: ячейки
+    };
+  });
+}
+
+/* ── фильтры «кроме статуса/проблем» — для фасетов ── */
+function проходитПрочие(с){
+  if (!tsИщет(с, TS.ст.q)) return false;
+  for (var k in TS.ст.колоФильтры){
+    var факт = TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(с.ячейки[k])];
+    if (TS.ст.колоФильтры[k].indexOf(факт) === -1) return false;
+  }
+  return true;
+}
+
+/* ── состояние: загрузка/сохранение/undo ── */
+function грузСостояние(){
+  var деф = tsДефолтСостояние(TS.LANGS), ст = деф, источник = 'дефолт';
+  try {
+    var raw = localStorage.getItem(TS.LS_СТ);
+    if (raw) { ст = JSON.parse(raw); источник = 'localStorage'; }
+  } catch (e) { ст = деф; }
+  /* URL приоритетнее */
+  try {
+    var p = new URLSearchParams(location.search);
+    if (p.toString()){
+      var расж = tsUrlРазжать({
+        q: p.get('q'), f: p.get('f'), p: p.get('p'), s: p.get('s'),
+        h: p.get('h'), o: p.get('o'), d: p.get('d'), pin: p.get('pin'), cf: p.get('cf')
+      }, TS.LANGS);
+      ст = расж[0]; источник = 'URL';
+    }
+  } catch (e) { /* file:// и прочее — тихо */ }
+  var н = tsНормСостояние(ст, TS.LANGS);
+  TS.ст = н[0];
+  return н[1] || источник !== 'дефолт';
+}
+function сохранитьСостояние(){
+  try { localStorage.setItem(TS.LS_СТ, JSON.stringify(TS.ст)); } catch (e) {}
+  try {
+    var p = tsUrlСжать(TS.ст), qs = new URLSearchParams(p).toString();
+    history.replaceState(null, '', qs ? ('?' + qs) : location.pathname);
+  } catch (e) { /* file:// — тихо */ }
+}
+function сДанными(патч, опции){
+  опции = опции || {};
+  if (!опции.безUndo) { TS.undo.push(JSON.stringify(TS.ст)); if (TS.undo.length > 30) TS.undo.shift(); }
+  for (var k in патч) TS.ст[k] = патч[k];
+  сохранитьСостояние();
+  рендер();
+  if (опции.анонс) анонс(опции.анонс);
+}
+
+/* ── анонсы для скринридеров ── */
+var анонсТайм = null;
+function анонс(текст){
+  if (!TS.узлы.live) return;
+  clearTimeout(анонсТайм);
+  анонсТайм = setTimeout(function(){
+    TS.узлы.live.textContent = '';
+    setTimeout(function(){ if (TS.узлы.live) TS.узлы.live.textContent = текст; }, 30);
+  }, 200);
+}
+
+/* ── выбор видимых колонок ── */
+function видКолонки(){
+  var деф = TS.КОЛОНКИ.map(function(к){ return к.ключ; });
+  return tsВидимыеКолонки(TS.ст, деф);
+}
+
+/* ═══════════════ ТУЛБАР ═══════════════ */
+/* Поиск создаётся ОДИН раз (фокус не разрушается), остальное — перерисовывается независимо */
+function поискЭл(){
+  var inp = h('input', {
+    type: 'search', id: 'tsQ', class: 'ts-search',
+    placeholder: 'поиск: название, №, id…', 'aria-label': 'поиск по реестру: название, номер или id песни',
+    value: TS.ст.q
+  });
+  var тайм = null;
+  inp.addEventListener('input', function(){
+    clearTimeout(тайм);
+    тайм = setTimeout(function(){
+      сДанными({ q: inp.value }, { безUndo: true, анонс: inp.value ? ('поиск: ' + inp.value) : 'поиск очищен' });
+    }, 180);
+  });
+  TS.узлы.q = inp;
+  return inp;
+}
+
+function рендерТулбар(){
+  var т = TS.узлы.тулбар;
+  var былоОткрыто = TS.узлы.меню ? TS.узлы.меню.open : false;
+  var фокусВМеню = TS.узлы.меню ? TS.узлы.меню.contains(document.activeElement) : false;
+  т.textContent = '';
+  if (TS.узлы.q) т.appendChild(TS.узлы.q);
+  т.appendChild(h('div', { class: 'ts-row' }, [
+    TS.узлы.фасеты = фасетыЭл(),
+    TS.узлы.меню = менюЭл(),
+    действияЭл()
+  ]));
+  var ч = чипыЭл();
+  if (ч.childNodes.length) т.appendChild(ч);
+  TS.узлы.меню.open = былоОткрыто;
+  if (былоОткрыто && фокусВМеню) TS.узлы.меню.querySelector('summary').focus();
+}
+
+function фасетыЭл(){
+  var прочие = TS.данные.filter(проходитПрочие);
+  var ф = tsФасеты(прочие, false);
+  function фасет(ключ, счёт, подпись, титул){
+    var актив = (ключ === 'проблемы') ? TS.ст.проблемы : (TS.ст.статус === ключ);
+    var b = h('button', {
+      class: 'ts-facet' + (актив ? ' акт' : '') + (счёт ? '' : ' ноль'),
+      'aria-pressed': String(актив),
+      title: титул || ('показать строки, где есть дорожка статуса ' + подпись),
+      onclick: function(){
+        if (ключ === 'проблемы') сДанными({ проблемы: !TS.ст.проблемы }, { анонс: TS.ст.проблемы ? 'фильтр ошибок снят' : 'только строки с ошибками таймлайна' });
+        else сДанными({ статус: TS.ст.статус === ключ ? '' : ключ }, { анонс: 'статус-фильтр: ' + (TS.ст.статус === ключ ? 'все' : подпись) });
+      }
+    }, [
+      h('span', { class: 'ts-dot ts-d-' + ключ, 'aria-hidden': 'true' }),
+      h('span', { text: подпись }),
+      h('b', { text: String(счёт), 'aria-hidden': 'true' })
+    ]);
+    return b;
+  }
+  return h('div', { class: 'ts-facets', role: 'group', 'aria-label': 'фасеты статусов дорожек (числа — по строкам, прошедшим прочие фильтры)' }, [
+    фасет('verified', ф.verified, 'verified'),
+    фасет('machine', ф.machine, 'machine'),
+    фасет('user', ф.user, 'user'),
+    фасет('bad', ф.bad, 'bad'),
+    фасет('проблемы', ф.проблемы, 'ошибки', 'только строки с ошибками таймлайна')
+  ]);
+}
+
+function чипыЭл(){
+  var чипы = [];
+  function чип(подпись, снять){
+    return h('button', { class: 'ts-chip', title: 'снять фильтр: ' + подпись, 'aria-label': 'снять фильтр: ' + подпись,
+      onclick: снять }, [ h('span', { text: подпись }), h('span', { class: 'ts-x', 'aria-hidden': 'true', text: '×' }) ]);
+  }
+  if (TS.ст.q) чипы.push(чип('искать: «' + TS.ст.q + '»', function(){ сДанными({ q: '' }, { анонс: 'поиск очищен' }); }));
+  if (TS.ст.статус) чипы.push(чип('статус: ' + TS.ст.статус, function(){ сДанными({ статус: '' }, { анонс: 'статус-фильтр снят' }); }));
+  if (TS.ст.проблемы) чипы.push(чип('с ошибками таймлайна', function(){ сДанными({ проблемы: false }, { анонс: 'фильтр ошибок снят' }); }));
+  Object.keys(TS.ст.колоФильтры).forEach(function(k){
+    чипы.push(чип(названиеКол(k) + ': ' + TS.ст.колоФильтры[k].join('|'), function(){
+      var cf = {}; for (var x in TS.ст.колоФильтры) if (x !== k) cf[x] = TS.ст.колоФильтры[x];
+      сДанными({ колоФильтры: cf }, { анонс: 'фильтр колонки ' + названиеКол(k) + ' снят' });
+    }));
+  });
+  if (TS.ст.скрытые.length) чипы.push(чип('скрыто колонок: ' + TS.ст.скрытые.length, function(){ сДанными({ скрытые: [] }, { анонс: 'все колонки показаны' }); }));
+  if (!чипы.length) return h('div', { class: 'ts-chips', 'aria-hidden': 'true' });
+  var box = h('div', { class: 'ts-chips', 'aria-label': 'активные фильтры' }, чипы);
+  return box;
+}
+
+/* ── меню: колонки / плотность / виды / сброс-undo ── */
+function менюЭл(){
+  var det = h('details', { class: 'ts-menu' });
+  det.appendChild(h('summary', { class: 'ts-btn', 'aria-label': 'настройки таблицы: колонки, плотность, виды' }, [ h('span', { text: '☰ настроить' }) ]));
+  var тело = h('div', { class: 'ts-menu-body' });
+
+  /* колонки: видимость */
+  тело.appendChild(h('div', { class: 'ts-mh', text: 'колонки' }));
+  var видимые = видКолонки();
+  TS.КОЛОНКИ.forEach(function(к){
+    if (!к.язык) return;
+    var вкл = видимые.indexOf(к.ключ) !== -1;
+    var cb = h('input', { type: 'checkbox', 'aria-label': 'колонка ' + названиеКол(к.ключ) });
+    cb.checked = вкл;
+    cb.addEventListener('change', function(){
+      var ск = TS.ст.скрытые.slice();
+      if (cb.checked) ск = ск.filter(function(x){ return x !== к.ключ; });
+      else if (ск.length < TS.LANGS.length - 1) ск.push(к.ключ);
+      else { cb.checked = true; return; } /* нельзя скрыть все языки */
+      сДанными({ скрытые: ск }, { анонс: (cb.checked ? 'колонка показана: ' : 'колонка скрыта: ') + названиеКол(к.ключ) });
+    });
+    тело.appendChild(h('label', { class: 'ts-mrow' }, [ cb, h('span', { text: названиеКол(к.ключ) }) ]));
+  });
+
+  /* закрепление: только колонка «песня» (практичная фиксация влево) */
+  тело.appendChild(h('div', { class: 'ts-mh', text: 'закрепление' }));
+  var пин = h('input', { type: 'checkbox', id: 'tsPin', 'aria-label': 'закрепить колонку «песня» слева при горизонтальной прокрутке' });
+  пин.checked = TS.ст.закреплённые.indexOf('title') !== -1;
+  пин.addEventListener('change', function(){
+    сДанными({ закреплённые: пин.checked ? ['title'] : [] }, { анонс: пин.checked ? 'колонка «песня» закреплена' : 'закрепление снято' });
+  });
+  тело.appendChild(h('label', { class: 'ts-mrow' }, [ пин, h('span', { text: 'закрепить «песня» влево' }) ]));
+
+  /* плотность */
+  тело.appendChild(h('div', { class: 'ts-mh', text: 'плотность' }));
+  var гр = h('div', { class: 'ts-seg', role: 'group', 'aria-label': 'плотность таблицы' });
+  [['compact', 'плотно'], ['standard', 'обычно'], ['comfortable', 'просторно']].forEach(function(п){
+    var b = h('button', { class: 'ts-segb' + (TS.ст.плотность === п[0] ? ' акт' : ''), 'aria-pressed': String(TS.ст.плотность === п[0]), text: п[1],
+      onclick: function(){ сДанными({ плотность: п[0] }, { анонс: 'плотность: ' + п[1] }); } });
+    гр.appendChild(b);
+  });
+  тело.appendChild(гр);
+
+  /* сохранённые виды */
+  тело.appendChild(h('div', { class: 'ts-mh', text: 'мои виды' }));
+  var виды = грузВиды();
+  Object.keys(виды).forEach(function(имя){
+    var строка = h('div', { class: 'ts-mrow ts-view' }, [
+      h('button', { class: 'ts-link', text: имя, title: 'применить вид «' + имя + '»',
+        onclick: function(){
+          var н = tsНормСостояние(виды[имя], TS.LANGS);
+          TS.undo.push(JSON.stringify(TS.ст));
+          TS.ст = н[0]; сохранитьСостояние(); рендер();
+          анонс('вид применён: ' + имя + (н[1] ? ' (состояние вида починено)' : ''));
+        } }),
+      h('button', { class: 'ts-x2', 'aria-label': 'удалить вид ' + имя, title: 'удалить вид', text: '×',
+        onclick: function(){ удалятьВид(имя); рендер(); анонс('вид удалён: ' + имя); } })
+    ]);
+    тело.appendChild(строка);
+  });
+  var имяВх = h('input', { type: 'text', class: 'ts-inp', placeholder: 'название вида…', 'aria-label': 'название нового вида' });
+  var сохр = h('button', { class: 'ts-btn2', text: 'сохранить текущий вид', onclick: function(){
+    var имя = (имяВх.value || '').trim().slice(0, 40);
+    if (!имя){ имяВх.focus(); анонс('введите название вида'); return; }
+    var виды2 = грузВиды(); виды2[имя] = JSON.parse(JSON.stringify(TS.ст));
+    try { localStorage.setItem(TS.LS_ВИДЫ, JSON.stringify(виды2)); } catch (e) {}
+    сДанными({}, { анонс: 'вид сохранён: ' + имя });
+  } });
+  тело.appendChild(h('div', { class: 'ts-mrow' }, [ имяВх, сохр ]));
+
+  /* undo / сброс */
+  тело.appendChild(h('div', { class: 'ts-mh', text: 'состояние' }));
+  тело.appendChild(h('div', { class: 'ts-mrow' }, [
+    h('button', { class: 'ts-btn2', text: '↶ отменить' + (TS.undo.length ? ' (' + TS.undo.length + ')' : ''), disabled: !TS.undo.length,
+      onclick: function(){ undo(); } }),
+    h('button', { class: 'ts-btn2', text: 'сбросить всё', onclick: function(){
+      сДанными(tsДефолтСостояние(TS.LANGS), { анонс: 'таблица сброшена к состоянию по умолчанию' });
+    } })
+  ]));
+
+  det.appendChild(тело);
+  return det;
+}
+/* закрытие меню — один делегированный слушатель (без утечек при перерендере) */
+function wiredМеню(){
+  if (document._ts15MenuWired) return;
+  document._ts15MenuWired = true;
+  document.addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('.ts-menu')) return;
+    var открыт = document.querySelectorAll('details.ts-menu[open]');
+    for (var i = 0; i < открыт.length; i++) открыт[i].open = false;
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    var открыт = document.querySelectorAll('details.ts-menu[open]');
+    for (var i = 0; i < открыт.length; i++) открыт[i].open = false;
+  });
+}
+
+function грузВиды(){
+  try { return JSON.parse(localStorage.getItem(TS.LS_ВИДЫ) || '{}') || {}; } catch (e) { return {}; }
+}
+function удалятьВид(имя){
+  var виды = грузВиды(); delete виды[имя];
+  try { localStorage.setItem(TS.LS_ВИДЫ, JSON.stringify(виды)); } catch (e) {}
+}
+function undo(){
+  if (!TS.undo.length) return;
+  var пред = TS.undo.pop();
+  try { TS.ст = tsНормСостояние(JSON.parse(пред), TS.LANGS)[0]; } catch (e) { return; }
+  сохранитьСостояние(); рендер();
+  анонс('действие отменено');
+}
+
+/* ── действия: экспорт / копирование ── */
+function действияЭл(){
+  var box = h('div', { class: 'ts-actions', role: 'group', 'aria-label': 'экспорт реестра' });
+  [['csv', 'CSV'], ['tsv', 'TSV'], ['json', 'JSON']].forEach(function(ф){
+    box.appendChild(h('button', { class: 'ts-btn', text: '⬇ ' + ф[1], title: 'скачать видимые строки в формате ' + ф[1],
+      onclick: function(){ экспорт(ф[0]); } }));
+  });
+  box.appendChild(h('button', { class: 'ts-btn', text: '⧉ копировать', title: 'копировать выбранные строки (или все видимые) в буфер обмена как TSV',
+    onclick: function(){ копировать(); } }));
+  return box;
+}
+function экспортКонтент(формат, строки){
+  var видимые = видКолонки();
+  var колонки = видимые.map(function(ключ){
+    var к = кол(ключ);
+    return { ключ: ключ, название: к.язык ? ключ : к.название };
+  });
+  return tsЭкспорт(строки, колонки, формат);
+}
+function скачать(имя, текст, mime){
+  var blob = new Blob(['\ufeff' + текст], { type: mime });
+  var url = URL.createObjectURL(blob);
+  var a = h('a', { href: url, download: имя });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+}
+function экспорт(формат){
+  var строки = выбранныеИлиВидимые();
+  var текст = экспортКонтент(формат, строки);
+  скачать(tsИмяФайла(формат), текст, формат === 'json' ? 'application/json' : 'text/csv');
+  анонс('экспорт ' + формат + ': ' + строки.length + ' строк');
+  alog('таблица: экспорт ' + формат.toUpperCase() + ' (' + строки.length + ' строк)');
+}
+function выбранныеИлиВидимые(){
+  var выб = Object.keys(TS.выбор);
+  var src = выб.length ? TS.видимые.filter(function(r){ return TS.выбор[r.id]; }) : TS.видимые;
+  return src;
+}
+function копировать(){
+  var строки = выбранныеИлиВидимые();
+  var текст = экспортКонтент('tsv', строки);
+  function фолбэк(){
+    var ta = h('textarea', { class: 'ts-ta', 'aria-hidden': 'true' });
+    ta.value = текст;
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(текст).catch(фолбэк);
+  } else фолбэк();
+  анонс('скопировано строк: ' + строки.length);
+  alog('таблица: скопировано ' + строки.length + ' строк');
+}
+
+/* ═══════════════ ТАБЛИЦА ═══════════════ */
+function сортировкаЦикл(ключ, расширить){
+  var сорт = TS.ст.сорт.map(function(s){ return { col: s.col, dir: s.dir }; });
+  var тек = null;
+  for (var i = 0; i < сорт.length; i++) if (сорт[i].col === ключ){ тек = сорт[i]; break; }
+  if (расширить){ /* shift/ctrl — мульти-сорт до 3 */
+    if (!тек){
+      if (сорт.length >= 3) сорт.shift();
+      сорт.push({ col: ключ, dir: 'asc' });
+    } else if (тек.dir === 'asc') тек.dir = 'desc';
+    else сорт = сорт.filter(function(s){ return s.col !== ключ; });
+    if (!сорт.length) сорт = [{ col: 'num', dir: 'asc' }];
+  } else {
+    if (!тек) сорт = [{ col: ключ, dir: 'asc' }];
+    else if (тек.dir === 'asc') { тек.dir = 'desc'; сорт = [тек]; }
+    else сорт = [{ col: 'num', dir: 'asc' }];
+  }
+  var назв = сорт.map(function(s){ return названиеКол(s.col) + ' ' + (s.dir === 'asc' ? '↑' : '↓'); }).join(', затем ');
+  сДанными({ сорт: сорт }, { анонс: 'сортировка: ' + назв });
+}
+
+function ячейкаЗначение(строка, ключ){
+  var к = кол(ключ);
+  if (к.язык) return null; /* языковые — отдельно */
+  var td;
+  switch (ключ){
+    case 'num':
+      td = h('td', { class: 'num ts-num' }, [ h('span', { class: 'mini', text: ('0' + строка.номер).slice(-2) + (строка.звезда ? '★' : '') }) ]);
+      break;
+    case 'title':
+      var чист = строка.звезда ? (строка.название.split(' ★')[0]) : строка.название;
+      td = h('td', { class: 'rowhead' }, [
+        h('span', { class: 'ts-title', text: чист }),
+        строка.звезда ? h('span', { class: 'ts-star', title: 'флагман: 157 переводов YouTube', text: ' ★×157' }) : null
+      ]);
+      td.title = строка.название + ' · ' + fmtT(строка.длительность) + ' · ' + строка.id;
+      break;
+    case 'langs':
+      td = h('td', { class: 'num ts-num', text: String(строка.всегоЯзыков) });
+      break;
+    case 'extra':
+      td = h('td', { class: 'num ts-num', text: строка.ещё ? '+' + строка.ещё : '' });
+      break;
+    default:
+      td = h('td', { class: 'num ts-num', text: '' });
+  }
+  return td;
+}
+
+function ячейкаЯзык(строка, л){
+  var я = строка.ячейки[л];
+  if (!я || !я.есть){
+    return h('td', { class: 'ts-none' }, [ h('span', { class: 'emptyCell', 'aria-hidden': 'true', text: '·' }),
+      h('span', { class: 'ts-sr', text: ' — дорожки нет' }) ]);
+  }
+  var статус = TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)];
+  var cls = я.валид === 'bad' ? 'st-bad' : (я.статус === 'user' ? 'st-user' : (я.статус === 'machine' ? 'st-machine' : 'st-verified'));
+  var подпись = { 'verified': 'проверено владельцем (ASR)', 'machine': 'черновик конвейера (LLM)', 'user': 'импорт пользователя' }[я.статус] || я.статус;
+  if (я.валид === 'bad') подпись += ' — ошибки таймлайна';
+  return h('td', {}, [ h('button', {
+    class: 'cellBtn ' + cls,
+    'aria-label': 'песня ' + строка.номер + ' ' + строка.название + ' — язык ' + langName(л) + ' — ' + подпись,
+    text: л,
+    onclick: function(){
+      $('#chSong').value = строка.id; refreshLangs(); $('#chLang').value = л;
+      showTab('vChoir'); startSinging();
+    }
+  }) ]);
+}
+
+function шапкаЭл(видимые){
+  var thead = h('thead');
+  var hr = h('tr');
+
+  /* select-all */
+  var thSel = h('th', { class: 'ts-c-sel', scope: 'col', 'aria-label': 'выбрать строки' });
+  var all = h('input', { type: 'checkbox', 'aria-label': 'выбрать все видимые строки' });
+  var видИд = TS.видимые.map(function(r){ return r.id; });
+  var отмеч = видИд.filter(function(id){ return TS.выбор[id]; });
+  all.checked = видИд.length > 0 && отмеч.length === видИд.length;
+  all.indeterminate = отмеч.length > 0 && отмеч.length < видИд.length;
+  all.addEventListener('change', function(){
+    видИд.forEach(function(id){ if (all.checked) TS.выбор[id] = true; else delete TS.выбор[id]; });
+    рендер();
+    анонс(all.checked ? 'выбраны все видимые строки: ' + видИд.length : 'выделение снято');
+  });
+  thSel.appendChild(all); hr.appendChild(thSel);
+
+  /* expander */
+  hr.appendChild(h('th', { class: 'ts-c-exp', scope: 'col', 'aria-label': 'раскрыть строку' }));
+
+  видимые.forEach(function(ключ){
+    var к = кол(ключ);
+    var атр = { scope: 'col', class: (к.узкая ? 'ts-узкая ' : '') + (TS.ст.закреплённые.indexOf(ключ) !== -1 ? 'ts-пин' : '') };
+    var сорт = null;
+    for (var i = 0; i < TS.ст.сорт.length; i++) if (TS.ст.сорт[i].col === ключ){ сорт = TS.ст.сорт[i]; break; }
+    if (сорт) атр['aria-sort'] = сорт.dir === 'asc' ? 'ascending' : 'descending';
+    else if (к.сорт) атр['aria-sort'] = 'none';
+    var th = h('th', атр);
+    var внутр = h('span', { class: 'ts-th' });
+    if (к.сорт){
+      var btn = h('button', { class: 'ts-sort', title: 'сортировать по «' + названиеКол(ключ) + '» (Shift — в мульти-сортировку)',
+        'aria-label': 'сортировать по ' + названиеКол(ключ) + (сорт ? (сорт.dir === 'asc' ? ', сейчас по возрастанию' : ', сейчас по убыванию') : '') });
+      btn.appendChild(h('span', { text: к.язык ? ключ : к.название }));
+      btn.appendChild(h('span', { class: 'ts-arr' + (сорт ? ' акт' : ''), 'aria-hidden': 'true',
+        text: сорт ? (сорт.dir === 'asc' ? '▲' : '▼') : '⇅' }));
+      if (сорт && TS.ст.сорт.length > 1){
+        var п = TS.ст.сорт.indexOf(сорт) + 1;
+        btn.appendChild(h('sup', { class: 'ts-prio', 'aria-hidden': 'true', text: String(п) }));
+      }
+      btn.addEventListener('click', function(e){ сортировкаЦикл(ключ, e.shiftKey || e.ctrlKey || e.metaKey); });
+      th.appendChild(btn);
+    } else {
+      внутр.appendChild(h('span', { text: к.название }));
+      th.appendChild(внутр);
+    }
+    if (к.язык){
+      th.title = langName(ключ);
+      var jmp = h('button', { class: 'ts-jmp', 'aria-label': 'перейти к хору на языке ' + langName(ключ), title: 'открыть хор на этом языке', text: '→' });
+      jmp.addEventListener('click', function(){ setSongLangLang(ключ); });
+      th.appendChild(jmp);
+    }
+    if (TS.ст.ширины[ключ]) th.style.width = TS.ст.ширины[ключ] + 'px';
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  return thead;
+}
+
+function деталиСтроки(строка, колво){
+  var tr = h('tr', { class: 'ts-details' });
+  var td = h('td', { colspan: String(колво) });
+  var бок = h('div', { class: 'ts-det' });
+  бок.appendChild(h('span', { class: 'ts-kv', text: 'id: ' + строка.id }));
+  бок.appendChild(h('span', { class: 'ts-kv', text: 'длительность: ' + fmtT(строка.длительность, true) }));
+  бок.appendChild(h('span', { class: 'ts-kv', text: 'языков в реестре: ' + строка.всегоЯзыков + (строка.ещё ? (' (+' + строка.ещё + ' сверх основных)') : '') }));
+  /* все языки песни, включая сверхосновные */
+  var все = _г('langsOf')(строка.id);
+  var чипы = h('div', { class: 'ts-det-lang', role: 'list', 'aria-label': 'дорожки песни по языкам' });
+  все.forEach(function(l){
+    var есть = TS.LANGS.indexOf(l) !== -1 ? строка.ячейки[l] : null;
+    var ст, валидБад = false;
+    if (есть && есть.есть){
+      ст = есть.статус; валидБад = есть.валид === 'bad';
+    } else {
+      var pr = _г('trackProvenance')(строка.id, l);
+      var v = (window.S15 && S15.boot && S15.boot.validation) ? S15.boot.validation[строка.id + '|' + l] : '';
+      ст = pr ? pr.status : ''; валидБад = v === 'bad';
+    }
+    чипы.appendChild(h('span', { role: 'listitem',
+      class: 'ts-lchip' + (валидБад ? ' бад' : ' ст-' + (ст || 'none')),
+      title: langName(l) + (ст ? (': ' + ст + (валидБад ? ' + ошибки таймлайна' : '')) : ''),
+      text: l }));
+  });
+  бок.appendChild(чипы);
+  td.appendChild(бок);
+  tr.appendChild(td);
+  return tr;
+}
+
+function телоЭл(видимые, колво){
+  var tbody = h('tbody');
+  if (!TS.видимые.length){
+    var tr = h('tr', { class: 'ts-empty' });
+    var td = h('td', { colspan: String(колво) });
+    td.appendChild(h('div', { class: 'ts-empty-box' }, [
+      h('b', { text: 'Ничего не найдено' }),
+      h('span', { text: 'Ни одна строка не проходит фильтры. Реестр не притворяется: пусто — значит пусто.' }),
+      h('button', { class: 'ts-btn2', text: 'сбросить фильтры', onclick: function(){
+        сДанными({ q: '', статус: '', проблемы: false, колоФильтры: {} }, { анонс: 'фильтры сброшены' });
+      } })
+    ]));
+    tr.appendChild(td); tbody.appendChild(tr);
+    return tbody;
+  }
+  TS.видимые.forEach(function(строка){
+    var раскрыт = !!TS.раскрытые[строка.id];
+    var выбран = !!TS.выбор[строка.id];
+    var tr = h('tr', { class: 'ts-row' + (выбран ? ' выбр' : '') + (раскрыт ? ' раскрыт' : ''), 'data-id': строка.id });
+
+    var тдС = h('td', { class: 'ts-c-sel' });
+    var cb = h('input', { type: 'checkbox', 'aria-label': 'выбрать песню ' + строка.номер + ' ' + строка.название });
+    cb.checked = выбран;
+    cb.addEventListener('change', function(){
+      if (cb.checked) TS.выбор[строка.id] = true; else delete TS.выбор[строка.id];
+      рендер();
+      анонс('выбрано строк: ' + Object.keys(TS.выбор).length);
+    });
+    тдС.appendChild(cb); tr.appendChild(тдС);
+
+    var тдE = h('td', { class: 'ts-c-exp' });
+    var exp = h('button', { class: 'ts-exp' + (раскрыт ? ' акт' : ''),
+      'aria-expanded': String(раскрыт),
+      'aria-label': (раскрыт ? 'свернуть детали песни ' : 'раскрыть детали песни ') + строка.номер + ' ' + строка.название,
+      text: раскрыт ? '▾' : '▸' });
+    exp.addEventListener('click', function(){
+      if (TS.раскрытые[строка.id]) delete TS.раскрытые[строка.id]; else TS.раскрытые[строка.id] = true;
+      рендер();
+    });
+    тдE.appendChild(exp); tr.appendChild(тдE);
+
+    видимые.forEach(function(ключ){
+      if (ключ === 'num' || ключ === 'title' || ключ === 'langs' || ключ === 'extra'){
+        var td = ячейкаЗначение(строка, ключ);
+        if (TS.ст.закреплённые.indexOf(ключ) !== -1) td.classList.add('ts-пин');
+        if (TS.ст.ширины[ключ]) td.style.width = TS.ст.ширины[ключ] + 'px';
+        tr.appendChild(td);
+      } else {
+        tr.appendChild(ячейкаЯзык(строка, ключ));
+      }
+    });
+    tbody.appendChild(tr);
+    if (раскрыт) tbody.appendChild(деталиСтроки(строка, колво));
+  });
+  return tbody;
+}
+
+function батчЭл(){
+  var n = Object.keys(TS.выбор).length;
+  if (!n) return null;
+  var бар = h('div', { class: 'ts-batch', role: 'toolbar', 'aria-label': 'действия с выбранными строками' }, [
+    h('b', { text: 'выбрано: ' + n })
+  ]);
+  [['csv', 'CSV'], ['tsv', 'TSV'], ['json', 'JSON']].forEach(function(ф){
+    бар.appendChild(h('button', { class: 'ts-btn2', text: '⬇ ' + ф[1], title: 'экспорт выбранных строк',
+      onclick: function(){ экспорт(ф[0]); } }));
+  });
+  бар.appendChild(h('button', { class: 'ts-btn2', text: '⧉ копировать', onclick: function(){ копировать(); } }));
+  бар.appendChild(h('button', { class: 'ts-btn2', text: 'снять выделение', onclick: function(){
+    TS.выбор = {}; рендер(); анонс('выделение снято');
+  } }));
+  return бар;
+}
+
+/* ── caption: живые числа из данных ── */
+function captionЭл(){
+  var всего = TS.данные.length, показ = TS.видимые.length;
+  var текст = 'Реестр СИНГУЛЯР ·15: ' + всего + ' песен × ' + TS.LANGS.length + ' основных языков. ';
+  if (показ === всего) текст += 'Показаны все ' + всего + ' строк.';
+  else текст += 'После фильтров показано ' + показ + ' из ' + всего + ' строк.';
+  var акт = [];
+  if (TS.ст.q) акт.push('поиск «' + TS.ст.q + '»');
+  if (TS.ст.статус) акт.push('статус ' + TS.ст.статус);
+  if (TS.ст.проблемы) акт.push('только с ошибками');
+  if (Object.keys(TS.ст.колоФильтры).length) акт.push('фильтры колонок');
+  if (акт.length) текст += ' Активны: ' + акт.join(', ') + '.';
+  return h('caption', { class: 'ts-caption', text: текст });
+}
+
+/* ═══════════════ ГЛАВНЫЙ РЕНДЕР ═══════════════ */
+var рендерГлубина = 0;
+function рендер(){
+  if (рендерГлубина > 3) return; /* защита от циклов */
+  /* предохранитель: данные ядра ещё не развёрнуты — оригинальный boot
+     сам вызовет rebuildMatrix после загрузки пака */
+  if (!window.S15 || !S15.pack || !S15.pack.cat || typeof allSongs !== 'function') return;
+  рендерГлубина++;
+  try {
+    собратьДанные();
+    TS.видимые = tsОтсортировать(TS.данные.filter(function(с){ return tsПропускает(с, TS.ст); }), TS.ст.сорт);
+
+    /* фокус/скролл для восстановления */
+    var акт = document.activeElement;
+    var фокусКлюч = акт && акт.getAttribute ? (акт.getAttribute('data-ts-focus') || (акт.id === 'tsQ' ? 'q' : null)) : null;
+    var фокусПоз = (акт && акт.id === 'tsQ') ? акт.selectionStart : null;
+    var обёртка = TS.узлы.обёртка;
+    var скролл = обёртка ? { l: обёртка.scrollLeft, t: обёртка.scrollTop } : null;
+
+    /* таблица */
+    var tbl = TS.узлы.таблица;
+    tbl.textContent = '';
+    var видимые = видКолонки();
+    var колво = видимые.length + 2; /* + выбор + expander */
+    tbl.appendChild(captionЭл());
+    tbl.appendChild(шапкаЭл(видимые));
+    tbl.appendChild(телоЭл(видимые, колво));
+
+    /* плотность/классы обёртки */
+    if (обёртка){
+      обёртка.className = 'tblWrap ts-wrap ts-' + TS.ст.плотность +
+        (TS.ст.закреплённые.length ? ' ts-закреплено' : '');
+      if (скролл) { обёртка.scrollLeft = скролл.l; обёртка.scrollTop = скролл.t; }
+    }
+
+    /* тулбар (поиск не пересоздаётся — фокус живёт) и батч */
+    рендерТулбар();
+    var батч = TS.узлы.батч;
+    батч.textContent = '';
+    var б = батчЭл();
+    if (б) батч.appendChild(б);
+    TS.узлы.счёт.textContent = 'строк: ' + TS.видимые.length + ' из ' + TS.данные.length;
+
+    /* восстановление фокуса */
+    if (фокусКлюч === 'q' && TS.узлы.q && document.activeElement !== TS.узлы.q){
+      try { TS.узлы.q.focus(); TS.узлы.q.setSelectionRange(фокусПоз, фокусПоз); } catch (e) {}
+    }
+  } finally {
+    рендерГлубина--;
+  }
+}
+
+/* ── позднее переопределение rebuildMatrix: ядро ·15 не тронуто ── */
+window.rebuildMatrix = function(){ рендер(); };
+
+/* ── установка в DOM ── */
+function установить(){
+  try { return установитьВнутр(); }
+  catch (e){
+    window.__TS15_ERR = String(e && e.stack || e);
+    try { alog('таблица ·15: ошибка установки — см. консоль'); } catch (_){}
+    return false;
+  }
+}
+function установитьВнутр(){
+  var section = document.getElementById('matrix');
+  if (!section) return false;
+  /* #matrix — это <table>; тулбар — перед .tblWrap, затем tblWrap переносится внутрь корня */
+  var tblWrap = section.parentNode;
+  var sec = tblWrap.parentNode;
+  var старые = document.getElementById('regCtrls');
+  if (старые) старые.style.display = 'none';
+
+  TS.узлы.live = h('div', { class: 'ts-sr-only', 'aria-live': 'polite', 'role': 'status' });
+  TS.узлы.тулбар = h('div', { class: 'ts-toolbar', role: 'search' });
+  TS.узлы.батч = h('div', { class: 'ts-batch-host' });
+  TS.узлы.счёт = h('span', { class: 'mini ts-count', text: 'строк: …' });
+  TS.узлы.таблица = section;
+  TS.узлы.обёртка = tblWrap;
+
+  var юай = h('div', { class: 'ts-root' }, [
+    TS.узлы.live,
+    TS.узлы.тулбар,
+    h('div', { class: 'ts-sub' }, [ TS.узлы.счёт ]),
+    TS.узлы.батч
+  ]);
+  sec.insertBefore(юай, tblWrap);
+  юай.insertBefore(tblWrap, TS.узлы.батч);
+  window.__TS15_STEP = 'вставлено';
+  wiredМеню();
+  чинилЛегенду(sec.querySelector('.legend'));
+
+  /* состояние ДО создания поиска: поискЭл читает TS.ст.q */
+  грузСостояние();
+  TS.узлы.q = поискЭл();
+  TS.узлы.тулбар.appendChild(TS.узлы.q);
+  рендер();
+  return true;
+}
+function чинилЛегенду(легенда){
+  if (!легенда) return;
+  легенда.appendChild(h('span', { text: 'клик по ячейке — петь · по заголовку — сортировка (Shift — мульти) · ▸ — детали строки' }));
+}
+
+/* ── boot ── */
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tryBoot);
+else tryBoot();
+var попытки = 0;
+function tryBoot(){
+  if (установить()) return;
+  if (++попытки < 40) setTimeout(tryBoot, 250);
+  else alog('таблица ·15: контейнер реестра не найден — система не установлена');
+}
+})();
+/*</TS15:ВИД>*/
+
+</script>
+</body>
 </html>

@@ -54,7 +54,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
 <header><div class="wrap hd">
   <div class="logo">S·15</div>
   <div><b>СИНГУЛЯР RUVSON</b><span>офлайн-вселенная караоке · читай отчёт — начинай действовать</span></div>
-  <div class="badge">v1.12 · PWA · офлайн</div>
+  <div class="badge">v1.13 · PWA · офлайн</div>
 </div></header>
 
 <main class="wrap">
@@ -67,7 +67,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     <div class="card"><div class="t">🎤 СПЕТЬ ОДНОМУ</div><div class="d">СУФЛЁР ·16: подсветка слов, колбаски, счёт и рейтинг. Микрофон по желанию.</div><div class="m">·16 · 73 КБ</div><a class="btn" href="СИНГУЛЯР_16_СУФЛЁР.html">▶ петь</a></div>
     <div class="card"><div class="t">👨‍👩‍👧 СПЕТЬ ВМЕСТЕ</div><div class="d">СОБЫТИЕ ·18: зал по коду/QR — бабушка, мама, внучка со своих устройств. Голоса P2P, синхронный старт, общая запись.</div><div class="m">·18 · соц-ядро</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ создать зал</a></div>
     <div class="card"><div class="t">❤️ МОИ ВОСПОМИНАНИЯ</div><div class="d">Живут в браузере: TEMPORARY 7 дней → ❤️ навсегда. Фото, подпись, экспорт webm.</div><div class="m">·18 · IndexedDB</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html#память">▶ открыть</a></div>
-    <div class="card"><div class="t">🎵 ПЕСНИ И КАТАЛОГ</div><div class="d">Оркестратор ·15: реестр 62×13, хор, темп/тональность, импорт/экспорт.</div><div class="m">·15 · 0.7 МБ</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
+    <div class="card"><div class="t">🎵 ПЕСНИ И КАТАЛОГ</div><div class="d">Оркестратор ·15: реестр 62×13 с полной системой таблиц (поиск, фасеты, мульти-сорт, выбор+батч, сохранённые виды, экспорт CSV/TSV/JSON, закрепление, плотность, undo/URL-состояние), хор, темп/тональность, импорт/экспорт.</div><div class="m">·15 · 0.8 МБ</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
   </div>
 
   <div class="nums">
@@ -89,7 +89,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     <div class="card"><div class="t">ОРГАНИЗМ v0.9</div><div class="d">Живой прототип-эскиз: манифест организма, из которого выросла вся платформа.</div><div class="m">34 КБ · автономный файл</div><a class="btn" href="organism-living-prototype.html">▶ открыть</a></div>
     <div class="card"><div class="t">СУФЛЁР ·16 ★ NEW</div><div class="d">Оценка вокала UltraStar-стиля: McLeod MPM в AudioWorklet, ноты-«колбаски» с анимацией, HUD Score/Combo/Rating, автогенерация нотной карты из минусовки, Fusion-автосборщик UltraStar .txt (слова ASR × ноты DSP, мелизмы ~), трансляция в зал ·17.</div><div class="m">73 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_16_СУФЛЁР.html">▶ открыть</a></div>
     <div class="card"><div class="t">ЗАЛ ·17</div><div class="d">P2P двойной экран без сервера: зал показывает слова/колбаски/счёт из ·16 СУФЛЁР, пульт рулит плеером. Плюс air-gapped WebRTC: телефон-микрофон и пульт по QR-коду (свой QR-энкодер, DataChannel, ноль серверов). BroadcastChannel + localStorage-фолбэк.</div><div class="m">60 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_17_ЗАЛ.html">▶ открыть</a></div>
-    <div class="card"><div class="t">СОБЫТИЕ ·18 ★ NEW</div><div class="d">SOCIAL CORE: зал для совместного пения — комната по коду/QR без аккаунтов, голоса WebRTC mesh (Nostr-сигналинг между устройствами / BroadcastChannel для окон одного браузера), синхронный старт по clock-offset, запись микса у каждого, TEMPORARY 7 дней → ❤️ ПАМЯТЬ + GC.</div><div class="m">93 КБ + библиотека</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ открыть</a></div>
+    <div class="card"><div class="t">СОБЫТИЕ ·18 ★ NEW</div><div class="d">SOCIAL CORE: зал для совместного пения — комната по коду/QR без аккаунтов, голоса WebRTC mesh (Nostr-сигналинг между устройствами / BroadcastChannel для окон одного браузера), синхронный старт по clock-offset, запись микса у каждого, TEMPORARY 7 дней → ❤️ ПАМЯТЬ + GC. v1.13: свой TURN-релей (coturn) за симметричный NAT + честный статус связи (P2P/релей) + политика >5 (бюджет соединений, щадящее кодирование >8).</div><div class="m">105 КБ + библиотека</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ открыть</a></div>
     <div class="card"><div class="t">ЧЕЛОВЕК ·19</div><div class="d">Human-First слой: событие одно — каналы разные. Адаптация по возможностям и предпочтениям (без «режимов для типа человека», автоматика отменяется), личность ECDSA P-256 non-exportable на устройстве, мои люди и «позвать спеть» в зал ·18. Сервер связей опционален.</div><div class="m">40 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">▶ открыть</a></div>
     <div class="card"><div class="t">ФОНЕТИКА ·20</div><div class="d">Фонетический подсказчик и вокальный гид по ТЗ KARAOKE_TREND: офлайн-романизация любой письменности в латиницу (any-ascii ISC — кириллица, хань, кана, хангыль, деванагари, арабский, иврит, греческий, тайский…), слог-чипы — тап и слушаешь, локальный TTS с медленным темпом для разучивания, мост ·16 СУФЛЁР: текущее и следующие слова песни сами получают подсказку произношения.</div><div class="m">32 КБ + библиотека</div><a class="btn" href="СИНГУЛЯР_20_ФОНЕТИКА.html">▶ открыть</a></div>
     <div class="card"><div class="t">ОБЩЕНИЕ ·21</div><div class="d">Смысл один — представления разные: человек задаёт, как удобно принимать, система строит канал — текст, Брайль, речь, вибросигнал. Никаких режимов «для слепого/глухого/немого» — только возможности и предпочтения. Голос — личная настройка получателя: конкретный голос устройства, язык, темп, высота, громкость, профили звучания. Живой мост со СВЯЗЬЮ ·22 — представления строятся там, где их принимает человек.</div><div class="m">33 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">▶ открыть</a></div>
@@ -118,6 +118,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
       <li><span class="ok">✓</span> ноль innerHTML → DOM-XSS исключён (assert сборки)</li>
       <li><span class="ok">✓</span> нет fetch/XHR/WebSocket/sendBeacon — офлайн доказан</li>
       <li><span class="ok">✓</span> валидатор таймлайна бракует мусор ДО сортировки</li>
+      <li><span class="ok">✓</span> таблица ·15: ядро 51/51 Node + 43/43 браузер (сорт/фасеты/выбор/экспорт)</li>
+      <li><span class="ok">✓</span> ·18 TURN: инъекция ICE проверена, зал ведущий+гость жив (4/4)</li>
     </ul></div>
     <div class="box"><h3>ЧЕСТНО НЕ СДЕЛАНО</h3><ul>
       <li><span class="no">○</span> стемы (Demucs в браузере) — заменят репетицию</li>
@@ -125,6 +127,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
       <li><span class="no">○</span> тональность для файлов — нужен AudioWorklet (синтез уже умеет)</li>
       <li><span class="no">○</span> скоринг пения — только после появления эталона</li>
       <li><span class="no">○</span> переводы LLM: 228/793 — демон добивает восточные</li>
+      <li><span class="no">○</span> SFU для залов >8 — план готов (Galène), нужен сервер с Go; сейчас честно: предупреждение + щадящее кодирование</li>
+      <li><span class="no">○</span> реальный звонок через поднятый coturn — нужен внешний хост (инструкция готова)</li>
       <li><span class="no">○</span> LRCv2 / Background Fetch / MSE — горизонт v1.2+</li>
     </ul></div>
   </div>
@@ -143,6 +147,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     </ul></div>
     <div class="box"><h3>ДОКУМЕНТЫ</h3><ul>
       <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md">ОТЧЁТ_ПОЛНЫЙ — вся хронология, инвентарь, доказательства</a></li>
+      <li><a href="ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md">·18 TURN и большие залы: coturn одной командой, политика >5, честный SFU-план</a></li>
       <li><a href="server/README.md">SINGULAR SERVER v1 — сервер связей: личность, люди, приглашения, записи 7 дней, GC</a></li>
       <li><a href="ИНСТРУКЦИЯ_СТАРТ.md">ИНСТРУКЦИЯ_СТАРТ — начал действовать за 2 минуты</a></li>
       <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md">Трассировка: ревизия ·14 → код → тесты</a></li>
@@ -153,11 +158,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     </ul></div>
   </div>
 
-  <div class="warn">⚠ Безопасность: в переписке по проекту ранее фигурировали активные cookies
-  (GitHub, Google/YouTube). В поставку и коммиты они не входили. Рекомендуется ротация всех
-  сессий (выйти и войти заново).</div>
-
-  <footer>СИНГУЛЯР · RUVSON · сборка v1.12 от 2026-10-02 · офлайн-first, accessibility-first, provenance-first<br>
+  <footer>СИНГУЛЯР · RUVSON · сборка v1.13 от 2026-10-02 · офлайн-first, accessibility-first, provenance-first<br>
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
 </main>
 <script>
