@@ -94,6 +94,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16202e;border:1px solid v
     <button class="btn ghost" id="btnFile">📁 своя минусовка…</button>
     <input type="file" id="fileAudio" accept="audio/*" aria-label="Файл минусовки">
     <label class="chk"><input type="checkbox" id="chkPhones">🎧 я в наушниках (честный захват без фильтров)</label>
+    <label class="chk"><input type="checkbox" id="chkHall">📡 в зал (·17)</label>
   </div>
 
   <h2>Нотная карта <em>откуда берутся «колбаски»</em></h2>
@@ -1081,6 +1082,87 @@ Object.defineProperty(SingulyarPrompterApp.prototype, 'init', { value: function 
     app.bus.on('PITCH_FRAME', (f) => { app._lastMidi = f.midi; app.engine._lastCents = f.cents; });
     window.S16 = app;   /* отладка: S16.chart, S16.score, S16.audio */
 })();
+
+/* ── МОСТ «📡 В ЗАЛ» ·17: BroadcastChannel + localStorage-фолбэк, пульт CMD ── */
+(function hallBridge() {
+    const chk = document.getElementById('chkHall');
+    const hint = document.getElementById('micStatus');
+    if (!chk) return;
+    let bc = null, timer = null, lastRating = '', lastPitch = null, seq = 0;
+    const seenCmd = new Map();
+    const LS = 'singulyar-hall';
+    const SRC = 'stage-' + Math.random().toString(36).slice(2, 8);
+
+    function send(m) {
+        m.v = 1; m.src = SRC; m.seq = ++seq; m.ts = Date.now();
+        if (bc) { try { bc.postMessage(m); } catch (e) {} }
+        try { localStorage.setItem(LS, JSON.stringify(m)); } catch (e2) {}
+    }
+    function onMsg(m) {
+        try {
+            if (!m || m.v !== 1 || m.t !== 'CMD' || m.src === SRC) return;
+            const id = m.src + ':' + m.seq;
+            if (seenCmd.has(id)) return;
+            seenCmd.set(id, 1); if (seenCmd.size > 200) seenCmd.clear();
+            const app = window.S16; if (!app) return;
+            if (m.cmd === 'play') app.audio.play().catch(() => {});
+            else if (m.cmd === 'pause') app.audio.pause();
+            else if (m.cmd === 'stop') { app.audio.pause(); app.audio.currentTime = 0; }
+            else if (m.cmd === 'seek' && app.audio.duration) {
+                app.audio.currentTime = Math.max(0, Math.min(app.audio.duration, app.audio.currentTime + (m.v || 0)));
+            }
+        } catch (e) {}
+    }
+    function onStorage(e) { if (e.key === LS && e.newValue) { try { onMsg(JSON.parse(e.newValue)); } catch (e2) {} } }
+    function tick() {
+        const app = window.S16; if (!app) return;
+        const t = app.audio.currentTime || 0, dur = app.audio.duration || 0;
+        const N = (app.chart && app.chart.notes) || [];
+        const notes = [];
+        for (let i = 0; i < N.length; i++) {
+            const n = N[i];
+            if (n.end > t - 2 && n.start < t + 12) notes.push({ s: n.start, e: n.end, p: n.pitch, g: n.type === 'GOLDEN', w: n.word });
+        }
+        let word = '';
+        const cur = N.find(n => t >= n.start && t <= n.end);
+        if (cur) word = cur.word;
+        else if (app.lrcLines && app.lrcLines.length) {
+            let L = null;
+            for (const ln of app.lrcLines) { if (ln.t <= t) L = ln; else break; }
+            if (L) word = L.words || '';
+        }
+        const next = [];
+        for (const n of N) { if (n.start > t) { next.push(n.word); if (next.length >= 6) break; } }
+        send({ t: 'STATE', d: {
+            song: app.songTitle, playing: !app.audio.paused, pos: t, dur,
+            score: app.score || 0, combo: app.combo || 0, rating: lastRating,
+            pitch: lastPitch, word, next, notes
+        }});
+    }
+    function open() {
+        try { bc = new BroadcastChannel('singulyar-hall'); } catch (e) { bc = null; }
+        if (bc) bc.onmessage = onMsg;
+        window.addEventListener('storage', onStorage);
+        timer = setInterval(tick, 125);   /* 8 Гц */
+        send({ t: 'HELLO', role: 'stage' });
+    }
+    function close() {
+        if (bc) { try { bc.postMessage({ v: 1, t: 'BYE', src: SRC }); bc.close(); } catch (e) {} bc = null; }
+        window.removeEventListener('storage', onStorage);
+        if (timer) { clearInterval(timer); timer = null; }
+    }
+    window.S16.bus.on('PITCH_FRAME', (f) => { lastPitch = (f && f.midi) ? { midi: f.midi, cents: f.cents, clarity: f.clarity } : null; });
+    window.S16.bus.on('ACCURACY_EVALUATED', (d) => { if (d) lastRating = d.rating || ''; });
+    chk.addEventListener('change', () => {
+        if (chk.checked) {
+            open();
+            hint.textContent = '📡 Трансляция в зал включена: канал singulyar-hall (BroadcastChannel' + (bc ? ' активен' : ' недоступен — только localStorage') + '). Открой ·17 ЗАЛ во втором окне.';
+        } else {
+            close();
+            hint.textContent = '📡 Трансляция в зал выключена.';
+        }
+    });
+})();
 </script>
-</body>
+<script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script></body>
 </html>
