@@ -1041,7 +1041,9 @@ const S22 = (function () {
 })();
 </script>
 <script type="module">
-/* Adapter OS v0.1 · мост: транспорт зала ·22 регистрируется как адаптер-канал (проверка BroadcastChannel, зал открывается по коду); ядро страницы не тронуто */
+/* Adapter OS v0.2 · мост ·22 (срез 2): транспорт зала как канал-адаптер +
+   зеркало смыслов зала в шину Adapter OS. Ядро страницы не тронуто:
+   представление входящего по-прежнему строит получатель (·21). */
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
   const естьБЧ = (typeof BroadcastChannel !== 'undefined');
@@ -1049,7 +1051,28 @@ try {
     status: () => естьБЧ
       ? { state: 'READY', privacy: 'local-tabs', reason: 'локальный транспорт доступен; зал открывается по коду' }
       : { state: 'UNAVAILABLE', privacy: 'local-tabs', reason: 'BroadcastChannel не работает в этом браузере' } };
-  await bootAdapterOS({ page: '22-СВЯЗЬ', adapters: [зал] });
+  const os = await bootAdapterOS({ page: '22-СВЯЗЬ', adapters: [зал] });
+
+  /* срез 2: когда ·22 пересылает смысл зала на представление в ·21
+     (singular-most-21-22-v1, тип incoming), зеркало публикует конверт смысла
+     в шину — смысл оставляет след, форма остаётся на получателе.
+     Формат моста 21-22 не изменён: зеркальный инстанс только читает. */
+  if (os && os.state === 'ready' && естьБЧ) {
+    try {
+      const зеркало = new BroadcastChannel('singular-most-21-22-v1');
+      зеркало.onmessage = function (е) {
+        const д = е && е.data;
+        if (!д || д.мост !== '21-22' || д.v !== 1 || д.тип !== 'incoming') return;
+        try {
+          os.bus.publish('meaning.22.зал', {
+            зал: String(д.зал || '').slice(0, 5),
+            от: String(д.от || '').slice(0, 80),
+            text: String(д.текст || '').slice(0, 2000)
+          });
+        } catch (e) { /* конверт не собрался — мост работает как раньше */ }
+      };
+    } catch (e) { /* зеркало не поднялось — проводка остаётся прежней */ }
+  }
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '22-СВЯЗЬ', reason: String((e && e.message) || e) }; } catch (e2) {} }
 </script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>

@@ -536,19 +536,64 @@ if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = renderVoiceLi
 render();
 </script>
 <script type="module">
-/* Adapter OS v0.1 · мост: проверенные механизмы ·21 регистрируются как адаптеры (S21.braille / S21.route); ядро страницы не тронуто */
+/* Adapter OS v0.2 · проводка ·21 на реестр (срез 2): представления строит
+   реестр адаптеров, ядро остаётся исполнителем истины и фолбэком.
+   Порядок: СМЫСЛ → реестр (каналы получателя) → адаптер → ядро → представление.
+   Контракт среза 1 не тронут: output.21-брайль / tool.21-маршрутизация на месте. */
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
+  const естьЯдро = (typeof S21 !== 'undefined' && S21 && typeof S21.route === 'function');
   const адаптеры = [];
-  if (typeof S21 !== 'undefined' && S21 && typeof S21.braille === 'function') {
+  if (естьЯдро) {
     адаптеры.push({ id: 'output.21-брайль', kind: 'output', priority: 60,
       status: () => ({ state: 'READY', privacy: 'local' }),
       render: (m) => S21.braille((m && m.text) || '') });
     адаптеры.push({ id: 'tool.21-маршрутизация', kind: 'tool', priority: 55,
       status: () => ({ state: 'READY', privacy: 'local' }),
       build: (person, text) => S21.route(person, text) });
+    /* канальные адаптеры среза 2: по одному на канал ·21; render строит ровно
+       те же объекты {ch,label,view[,voice]}, что и ветки ядра — байт-в-байт */
+    const канал = (ch, приор, рендер) => адаптеры.push({ id: 'output.21-канал-' + ch, kind: 'output', channel: ch, priority: приор,
+      status: () => ({ state: 'READY', privacy: 'local' }), render: рендер });
+    канал('text', 50, (m) => ({ ch: 'text', label: S21.channelLabel('text'), view: String(m.text) }));
+    канал('speech', 60, (m) => ({ ch: 'speech', label: S21.channelLabel('speech'), view: String(m.text), voice: Object.assign({}, (m.person && m.person.voice) || {}) }));
+    канал('braille', 60, (m) => ({ ch: 'braille', label: S21.channelLabel('braille'), view: S21.braille(m.text) }));
+    канал('haptic', 40, (m) => ({ ch: 'haptic', label: S21.channelLabel('haptic'), view: 'вибросигнал — канал объявлен' }));
+    канал('aac', 30, (m) => ({ ch: 'aac', label: S21.channelLabel('aac'), view: String(m.text) }));
+    канал('sign', 30, (m) => ({ ch: 'sign', label: S21.channelLabel('sign'), view: String(m.text) }));
   }
-  await bootAdapterOS({ page: '21-ОБЩЕНИЕ', adapters: адаптеры });
+  const os = await bootAdapterOS({ page: '21-ОБЩЕНИЕ', adapters: адаптеры });
+
+  /* production-проводка: S21.route спрашивает реестр по каналам получателя.
+     Реестр ответил не полностью или упал → исходная функция ядра без изменений.
+     Поведение страницы идентично прежнему — это проверяют тесты. */
+  if (os && os.state === 'ready' && естьЯдро) {
+    const оригинал = S21.route;
+    S21.route = function (получатель, текст) {
+      const ветки = (получатель && получатель.output) || [];
+      let ответ = null;
+      try {
+        const через = ветки.map(function (ch) {
+          const а = os.registry.get('output.21-канал-' + ch);
+          if (!а) return null;
+          const ст = а.status();
+          if (!ст || ст.state !== 'READY') return null;
+          return а.render({ text: текст, person: получатель, channel: ch });
+        });
+        ответ = (через.length === ветки.length && через.every(Boolean)) ? через : null;
+      } catch (e) { ответ = null; }
+      const результат = (ответ !== null) ? ответ : оригинал(получатель, текст);
+      try {
+        os.bus.publish('meaning.21.route', {
+          text: String(текст == null ? '' : текст).slice(0, 2000),
+          channels: ветки.slice(),
+          via: (ответ && ответ.length === ветки.length && ответ.every(Boolean)) ? 'registry' : 'kernel'
+        });
+      } catch (e) {}
+      return результат;
+    };
+    S21.route.kernel = оригинал; /* ядро доступно для проверок равенства */
+  }
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '21-ОБЩЕНИЕ', reason: String((e && e.message) || e) }; } catch (e2) {} }
 </script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>
