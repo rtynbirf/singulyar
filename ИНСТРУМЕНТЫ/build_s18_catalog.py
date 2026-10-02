@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # Каталог песен для ·18 СОБЫТИЕ: ID минусовки → название.
 # Источник названий: ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md; истина множества: minus/*.mp3.
+# Запуск: python3 ИНСТРУМЕНТЫ/build_s18_catalog.py   (пишет ИНСТРУМЕНТЫ/s18_catalog.json)
 import json, re, os
 
-REPO = '/home/z/my-project/repo_check'
-minus = {f[:-4] for f in os.listdir(os.path.join(REPO, 'minus')) if f.endswith('.mp3')}
+ЗДЕСЬ = os.path.dirname(os.path.abspath(__file__))
+РЕПО = os.path.dirname(ЗДЕСЬ)
+minus = {f[:-4] for f in os.listdir(os.path.join(РЕПО, 'minus')) if f.endswith('.mp3')}
 
 pairs = {}
 pat = re.compile(r'`([A-Za-z0-9_-]{11})`\s+(.+?)\s+—\s+\d+/\d+')
-with open(os.path.join(REPO, 'ДАННЫЕ', 'ИНДЕКС_МУЛЬТИЯЗЫК.md'), encoding='utf-8') as f:
+with open(os.path.join(РЕПО, 'ДАННЫЕ', 'ИНДЕКС_МУЛЬТИЯЗЫК.md'), encoding='utf-8') as f:
     for line in f:
         m = pat.search(line)
         if m:
@@ -41,7 +43,7 @@ for i, (vid, t) in enumerate(cat):
         cat[i][1] = t + ' ·' + vid[-4:]
 
 out = json.dumps(cat, ensure_ascii=False, separators=(',', ':'))
-with open('/home/z/my-project/scripts/s18_catalog.json', 'w', encoding='utf-8') as f:
+with open(os.path.join(ЗДЕСЬ, 's18_catalog.json'), 'w', encoding='utf-8') as f:
     f.write(out)
 
 print('minus файлов:', len(minus))

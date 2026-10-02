@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-/* test_bridge_logic.js — контракт моста ·21⇄·22 + регрессия ядер (S21/S22 из отгруженных файлов) */
+/* test_bridge_logic.js — контракт моста ·21⇄·22 + регрессия ядер (S21/S22 из отгруженных файлов)
+   Запуск: node ИНСТРУМЕНТЫ/test_bridge_logic.js   (читает живые файлы репо, пути от файла) */
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
 
-const DIR = '/home/z/my-project/work/bridge2122';
-const F21 = path.join(DIR, 'СИНГУЛЯР_21_ОБЩЕНИЕ.html');
-const F22 = path.join(DIR, 'СИНГУЛЯР_22_СВЯЗЬ.html');
+const REPO = path.join(__dirname, '..');
+const F21 = path.join(REPO, 'СИНГУЛЯР_21_ОБЩЕНИЕ.html');
+const F22 = path.join(REPO, 'СИНГУЛЯР_22_СВЯЗЬ.html');
 const s21 = fs.readFileSync(F21, 'utf8');
 const s22 = fs.readFileSync(F22, 'utf8');
 

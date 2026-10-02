@@ -3,10 +3,11 @@
 # текст, голосовое сообщение (fake-микрофон), файл; субтитры; профиль
 # (сохранение/перезагрузка/сброс); мосты ·19 (адаптация, имя из личности) и
 # ·18 (ссылка на зал, ?зал=КОД); честные статусы; 0 ошибок консоли.
-import subprocess, time, sys, os, json
+# Запуск: python3 ИНСТРУМЕНТЫ/test_s22_browser.py   (пути считаются от файла — из любого клона репо)
+import subprocess, time, sys, os, json, tempfile
 from playwright.sync_api import sync_playwright
 
-РЕПО = '/home/z/my-project/singulyar_work'
+РЕПО = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
 PORT = int(os.environ.get('S22_PORT', '8927'))
 БАЗА = f'http://127.0.0.1:{PORT}'
 
@@ -24,7 +25,7 @@ t.start()
 time.sleep(1.2)
 
 КОД = 'Q7W2N'
-ФАЙЛ_ТЕСТ = '/home/z/my-project/work/s22_upload_test.png'
+ФАЙЛ_ТЕСТ = os.path.join(tempfile.gettempdir(), 's22_upload_test.png')
 os.makedirs(os.path.dirname(ФАЙЛ_ТЕСТ), exist_ok=True)
 # корректный минимальный PNG 1x1
 import struct, zlib

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # test_bridge_browser.py — живой мост ·21⇄·22 в Playwright: 2 окна ·22 одного зала + 1 окно ·21
-import sys, time
+# Запуск: python3 ИНСТРУМЕНТЫ/test_bridge_browser.py   (страницы грузятся file:// прямо из репо)
+import sys, time, os
 from playwright.sync_api import sync_playwright
 
-DIR = "/home/z/my-project/work/bridge2122"
+DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
 F22 = "file://" + DIR + "/СИНГУЛЯР_22_СВЯЗЬ.html"
 F21 = "file://" + DIR + "/СИНГУЛЯР_21_ОБЩЕНИЕ.html"
-SHOTS = DIR + "/shots"
-import os; os.makedirs(SHOTS, exist_ok=True)
+SHOTS = os.path.join(DIR, "СКРИНШОТЫ", "МОСТ_21_22")
+os.makedirs(SHOTS, exist_ok=True)
 
 ok = 0; fail = 0
 def T(name, cond):

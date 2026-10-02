@@ -1,12 +1,20 @@
-/* Мини-тест логики ·16 без DOM: шина, парсер UltraStar, LRC, round-trip */
+/* Мини-тест логики ·16 без DOM: шина, парсер UltraStar, LRC, round-trip.
+   Код страницы извлекает сам из живого файла репо — внешних файлов не нужно.
+   Запуск: node ИНСТРУМЕНТЫ/test_s16_logic.js */
 const fs = require('fs');
-const src = fs.readFileSync('/tmp/s16.js', 'utf8');
+const os = require('os');
+const path = require('path');
+const html = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_16_СУФЛЁР.html'), 'utf8');
+const src = (html.match(/<script[^>]*>([\s\S]*?)<\/script>/g) || [])
+    .map(s => s.replace(/^<script[^>]*>/, '').replace(/<\/script>$/, ''))
+    .join('\n');
 const grab = (re) => src.match(re)[0];
 const busCode = grab(/class SingulyarEventBus \{[\s\S]*?\n\}/);
 const parserCode = grab(/class SingulyarNoteChart \{[\s\S]*?\n\}(?=\n\/\* ── 4)/);
+const tmp = os.tmpdir();
 const code = busCode + '\n' + parserCode + '\nmodule.exports = { SingulyarEventBus, SingulyarNoteChart };';
-fs.writeFileSync('/tmp/s16_classes.js', code);
-const { SingulyarEventBus, SingulyarNoteChart } = require('/tmp/s16_classes.js');
+fs.writeFileSync(path.join(tmp, 's16_classes.js'), code);
+const { SingulyarEventBus, SingulyarNoteChart } = require(path.join(tmp, 's16_classes.js'));
 
 let fails = 0;
 const check = (name, cond) => { console.log(name + ':', cond ? 'OK' : 'FAIL'); if (!cond) fails++; };
@@ -34,8 +42,8 @@ check('lrc', lrc.length === 2 && lrc[0].t === 5 && lrc[1].t === 12.5);
 const segCode = grab(/segmentPitchTimeline\(timeline\) \{[\s\S]*?\n    \}/);
 const fmtCode = grab(/formatToNoteChart\(rawNotes\) \{[\s\S]*?\n    \}/);
 const extCode = 'class T { constructor(){ this.bpm=120; } ' + segCode + ' ' + fmtCode + ' }\nmodule.exports = T;';
-fs.writeFileSync('/tmp/s16_ext.js', extCode);
-const T = require('/tmp/s16_ext.js');
+fs.writeFileSync(path.join(tmp, 's16_ext.js'), extCode);
+const T = require(path.join(tmp, 's16_ext.js'));
 const t = new T();
 const tl = [{ time: 1.0, midi: 60 }, { time: 1.05, midi: 60 }, { time: 1.1, midi: 60 },
             { time: 1.15, midi: null }, { time: 1.2, midi: 64 }, { time: 1.25, midi: 64 }];

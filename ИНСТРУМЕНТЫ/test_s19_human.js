@@ -1,7 +1,8 @@
 /* ═══ ТЕСТ ·19 ЧЕЛОВЕК + SINGULAR SERVER v1 (node --test ИНСТРУМЕНТЫ/test_s19_human.js) ═══
    Инварианты Human-First ТЗ + интеграционный тест GC из ТЗ:
    CREATE → TEMPORARY → EXPIRE → GC → метаданные отсутствуют + блоб отсутствует.
-   Живой сервер поднимается на случайном порту с DATA_DIR во временной папке. */
+   Живой сервер поднимается на случайном порту с DATA_DIR во временной папке.
+   Запуск: node --test ИНСТРУМЕНТЫ/test_s19_human.js */
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');

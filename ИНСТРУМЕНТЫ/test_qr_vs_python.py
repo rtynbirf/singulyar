@@ -1,27 +1,57 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Сверка матриц JS-энкодера (через node) с эталонным python qrcode.
-Для набора (текст, маска) строим обе матрицы (border=0, ECC L) и сравниваем."""
-import json, subprocess, sys
+"""Сверка матриц JS-энкодера с эталонным python qrcode.
+JS-класс извлекается в рантайме из живой страницы репо (СИНГУЛЯР_17_ЗАЛ.html) —
+внешних копий не нужно. Для набора (текст, маска) строим обе матрицы
+(border=0, ECC L) и сравниваем попиксельно.
+Запуск: python3 ИНСТРУМЕНТЫ/test_qr_vs_python.py   (пути считаются от файла)
+"""
+import json, subprocess, sys, os, re, tempfile
 import qrcode
 from qrcode.constants import ERROR_CORRECT_L
 
+ЗДЕСЬ = os.path.dirname(os.path.abspath(__file__))
+РЕПО = os.path.dirname(ЗДЕСЬ)
+
+with open(os.path.join(РЕПО, 'СИНГУЛЯР_17_ЗАЛ.html'), encoding='utf-8') as f:
+    html = f.read()
+
+tables = re.search(r'const QR_CAPL=[\s\S]*?(?=class SingulyarQR)', html).group(0)
+cls = re.search(r'class SingulyarQR \{[\s\S]*?\n\}(?=\n\n/\* ── 0b)', html).group(0)
+
+# принудительная маска — теми же внутренностями, что и auto-encode на странице
+# (патчим прототип извлечённого класса; нового класса не объявляем)
+MASKED = '''
+;(function () {
+    SingulyarQR.prototype.encodeMasked = function (text, mask) {
+        const bytes = Array.from(new TextEncoder().encode(String(text)));
+        const v = this.pickVersion(bytes.length);
+        const cw = this.buildCodewords(bytes, v);
+        const ctx = this.makeMatrix(v);
+        this.placeData(ctx, cw);
+        const t = { m: ctx.m.map((row) => Uint8Array.from(row)), fn: ctx.fn, size: ctx.size };
+        this.applyMask(t, mask); this.drawFormat(t, mask);
+        return { version: v, size: ctx.size, mask, modules: t.m };
+    };
+})();
+'''
+
 NODE_SCRIPT = r'''
-const { SingulyarQR } = require('/home/z/my-project/scripts/qr_dev.js');
+const { SingulyarQR } = require(process.env.QR_MOD);
 const q = new SingulyarQR();
 const tasks = JSON.parse(process.env.TASKS);
 const out = [];
 for (const t of tasks) {
-    const r = q.encode(t.text, t.mask);
+    const r = q.encodeMasked(t.text, t.mask);
     out.push({ mask: r.mask, size: r.size, version: r.version, rows: r.modules.map(row => Array.from(row).join('')) });
 }
 process.stdout.write(JSON.stringify(out));
 '''
 
-# qr_dev.js уже содержит encode(text, forceMask) — патчинг не нужен
-with open('/home/z/my-project/scripts/qr_dev.js', 'r', encoding='utf-8') as f:
-    src = f.read()
-assert '_encWithMask' in src, 'qr_dev.js должен содержать _encWithMask'
+# модуль: таблицы + класс страницы + принудительная маска
+fd, qr_mod = tempfile.mkstemp(suffix='.js')
+with os.fdopen(fd, 'w', encoding='utf-8') as f:
+    f.write(tables + '\n' + cls + '\n' + MASKED + '\nmodule.exports = { SingulyarQR };\n')
 
 def py_matrix(text, mask):
     qr = qrcode.QRCode(error_correction=ERROR_CORRECT_L, border=0, mask_pattern=mask)
@@ -38,7 +68,8 @@ for text in ['hello', 'https://rtynbirf.github.io/singulyar/test', 'А' * 120, '
 
 tasks = [{'text': t, 'mask': m} for (t, m) in CASES]
 res = subprocess.run(['node', '-e', NODE_SCRIPT], capture_output=True, text=True,
-                     env={**__import__('os').environ, 'TASKS': json.dumps(tasks)})
+                     env={**os.environ, 'TASKS': json.dumps(tasks), 'QR_MOD': qr_mod})
+os.unlink(qr_mod)
 if res.returncode != 0:
     print('NODE FAIL:', res.stderr[:2000]); sys.exit(1)
 js = json.loads(res.stdout)
