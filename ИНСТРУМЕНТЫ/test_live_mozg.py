@@ -31,7 +31,9 @@ for путь, имя in [("index.html", "индекс"), ("СИНГУЛЯР_21_�
         код = str(e)
     check(f"прод отдаёт {имя}", код == 200, str(код))
 
-# 2. Репа singulyar-llm: правила и словарь v0.3 доступны с открытого CORS
+# 2. Репа singulyar-llm: правила и словарь доступны с открытого CORS.
+#    Число фраз НЕ прибито (урок 88e446c): сверяем синхронность — сколько
+#    фраз в jsonl репы llm против вшитого словаря живого llm.mjs платформы.
 правила = None
 try:
     req = urllib.request.Request("https://raw.githubusercontent.com/rtynbirf/singulyar-llm/main/" + urllib.parse.quote("ОБУЧЕНИЕ/ПРАВИЛА_СИНГУЛЯРА.txt"))
@@ -46,7 +48,18 @@ try:
 except Exception:
     pass
 фраз = len([l for l in (словарь or "").strip().split("\n") if l.strip()])
-check(f"словарь v0.3 в репе llm: 41 фраза (нашлось {фраз})", фраз == 41)
+вшито = None
+версия = None
+try:
+    код = urllib.request.urlopen(PROD + urllib.parse.quote("БИБЛИОТЕКИ/adapter-os/llm.mjs"), timeout=30)
+    исходник = код.read().decode()
+    import re as _re
+    вшито = len(_re.findall(r"фраза: '[^']*', намерение: '[^']*'", исходник))
+    мВ = _re.search(r"СЛОВАРЬ_ВЕРСИЯ = '([^']+)'", исходник)
+    версия = мВ.group(1) if мВ else None
+except Exception:
+    pass
+check(f"словарь репы llm синхронен с llm.mjs платформы (jsonl {фраз} = вшито {вшито})", вшито is not None and фраз == вшито and фраз > 0)
 
 # 3. Живая страница ·21: МОЗГ работает (панель, статусы, команда без модели)
 handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=ROOT)
@@ -77,7 +90,7 @@ with sync_playwright() as pw:
     page.click("#мозг-сказать")
     page.wait_for_timeout(500)
     лог = page.locator("#мозг-лог").inner_text()
-    check("живой прод: «что ты умеешь» ответил правило-слой", "Команды" in лог and "v0.3" in лог, лог[:150])
+    check("живой прод: «что ты умеешь» ответил правило-слой с живой версией словаря (" + str(версия) + ")", "Команды" in лог and bool(версия) and версия in лог, лог[:150])
     env = page.evaluate("""(t) => {
       const log = window.SingulyarOS.bus.log();
       for (let i = log.length - 1; i >= 0; i--) if (log[i].type === t) return log[i];
