@@ -145,6 +145,17 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var
   <h2>4 · Журнал сообщений <em>ЖУРНАЛ</em></h2>
   <div class="panel"><div id="log" aria-live="polite"></div></div>
 
+  <h2>Мост со СВЯЗЬЮ ·22 <em>МОСТ</em></h2>
+  <div class="panel">
+    <div id="mostStatus" class="status" role="status">ищу ·22 СВЯЗЬ в соседней вкладке…</div>
+    <div id="mostLog"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="btnToHall" type="button">В зал ·22</button>
+      <span class="hint">отправит текст из поля «Сообщение» в зал ·22 — при открытой вкладке ·22</span>
+    </div>
+    <p class="hint" style="margin-top:8px">Мост живёт, пока открыты обе вкладки одного браузера: входящие залов ·22 приходят сюда на представление, «В зал ·22» уносит смысл в журнал связи. Представление строится у получателя — в зал уходит только смысл.</p>
+  </div>
+
   <h2>5 · Маршрутизация представлений <em>ПРИНЦИП</em></h2>
   <div class="panel">
     <p>Ядро хранит смысл сообщения. Адаптер строит представление по возможностям получателя. Смысл не меняется от канала — меняется только форма.</p>
@@ -162,12 +173,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var
       <li>вибросигнал в журнале — объявление канала: реальную вибрацию и уведомления уже умеет ·19 «ЧЕЛОВЕК»;</li>
       <li>«женский» или «мужской» — пожелание человека: веб-платформа не угадывает характер голоса по имени, поэтому точный голос выбирается из реально доступных на устройстве (нативные платформы дают больше параметров);</li>
       <li>межустройственная доставка — зона ·17 «ЗАЛ», ·18 «СОБЫТИЕ» и ·19 «ЧЕЛОВЕК»; здесь — только представление сообщения;</li>
+      <li>мост с ·22 «СВЯЗЬ» работает между открытыми вкладками одного браузера: ·21 строит представления входящих текстов зала, «В зал ·22» передаёт смысл; пока вкладки закрыты, мост молчит — это не поломка;</li>
       <li>речь зависит от голосов конкретного устройства: где голосов нет, остаётся текст — отсутствие канала не тупик.</li>
     </ul>
   </div>
 </main>
 <div id="aria" class="sr" aria-live="polite"></div>
-<footer><div class="wrap">СИНГУЛЯР ·21 «ОБЩЕНИЕ» v0.2.1 · автономный модуль · данные не покидают браузер · смысл ≠ представление</div></footer>
+<footer><div class="wrap">СИНГУЛЯР ·21 «ОБЩЕНИЕ» v0.3.0 · автономный модуль · мост со СВЯЗЬЮ ·22 — между открытыми вкладками · данные не покидают браузер · смысл ≠ представление</div></footer>
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════
@@ -177,7 +189,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var
    ═══════════════════════════════════════════════════════════════════ */
 /* S21:CORE-BEGIN */
 const S21 = (function(){
-  const VERSION = '0.2.1';
+  const VERSION = '0.3.0';
   const STORE_KEY = 'singulyar.human.communication.v2';
   /* Подписи каналов — единственное место, где живёт человеческое имя канала */
   const CHANNEL = { text:'Текст', speech:'Речь', braille:'Брайль', haptic:'Вибросигнал', aac:'ААК-символы', sign:'Жесты' };
@@ -379,11 +391,11 @@ function applyPreset(){
     ? 'Профиль применён: темп ' + values.rate + ', высота ' + values.pitch + '.'
     : 'Мои настройки: темп, высота и громкость остаются как задано.';
 }
-function speak(text){
+function speak(text, person){
   const st = document.getElementById('voiceStatus');
   if (!text){ st.textContent = 'Введи текст сообщения — и он прозвучит выбранным голосом.'; return; }
   if (!('speechSynthesis' in window)){ st.textContent = 'Озвучивание недоступно в этом браузере — текст остаётся текстом.'; return; }
-  const cfg = currentVoicePerson().voice || {};
+  const cfg = (person || currentVoicePerson()).voice || {};
   const list = voicesByLang(cfg.lang || 'auto');
   const chosen = list.find(function(v){ return v.voiceURI === cfg.voiceURI; }) || list[0];
   const u = new SpeechSynthesisUtterance(text);
@@ -417,8 +429,82 @@ function send(){
   document.getElementById('aria').textContent = 'Сообщение для ' + personName(to) + '. ' + text;
 }
 
+/* ═══════════════ Мост со СВЯЗЬЮ ·22: живой канал открытых вкладок ═══════════════ */
+let most = null; let связьГотова = false;
+try {
+  most = (typeof BroadcastChannel !== 'undefined') ? new BroadcastChannel('singular-most-21-22-v1') : null;
+} catch(e){ most = null; }
+function mostPost(д){
+  if (!most) return;
+  д.мост = '21-22'; д.v = 1; д.t = Date.now();
+  try { most.postMessage(д); } catch(e){}
+}
+function mostStatusLine(т){ document.getElementById('mostStatus').textContent = т; }
+function mostLogCard(узел){
+  const host = document.getElementById('mostLog');
+  host.append(узел);
+  while (host.children.length > 6) host.removeChild(host.firstChild);
+}
+function мостВходящее(д){
+  const зал = String(д.зал || '').slice(0, 5);
+  const от = String(д.от || 'человек').slice(0, 80);
+  const текст = String(д.текст || '').slice(0, 2000);
+  if (!текст) return;
+  const кому = personById(document.getElementById('msgTo').value) || db.people[0];
+  if (!кому) return;
+  const routes = S21.route(кому, текст);
+  const card = el('div', { class:'msg' },
+    el('div', { class:'who', text: 'зал ' + (зал || '—') + ' · от ' + от + ' → представления для ' + кому.name }),
+    el('div', { class:'txt', text: текст }));
+  for (const r of routes){
+    const line = el('div', { class:'route' }, el('span', { class:'lbl', text: r.label + ':' }));
+    if (r.ch === 'braille') line.append(el('span', { class:'braille', text: r.view }));
+    else line.append(document.createTextNode(r.view));
+    card.append(line);
+  }
+  if (routes.some(function(r){ return r.ch === 'speech'; })){
+    const rowBtn = el('div', { class:'row' });
+    rowBtn.style.marginTop = '8px';
+    rowBtn.append(el('button', { class:'btn gray', type:'button', onclick: function(){ speak(текст, кому); }, text: 'Произнести голосом получателя' }));
+    card.append(rowBtn);
+  }
+  mostLogCard(card);
+  mostPost({ тип:'presented', зал: зал, от: кому.name, представления: routes.map(function(r){ return r.label; }) });
+  document.getElementById('aria').textContent = 'Сообщение из зала ' + зал + ' от ' + от + '. Представления построены.';
+}
+if (most){
+  most.onmessage = function(е){
+    const д = е.data;
+    if (!д || д.мост !== '21-22' || д.v !== 1) return;
+    if (д.тип === 'hello' && д.side === '22'){
+      связьГотова = true; mostStatusLine('·22 «СВЯЗЬ» на связи: кнопка «В зал ·22» активна, входящие залов приходят сюда на представление.');
+      /* отвечаем только на зов (эхо пуст); на эхо-ответ не отвечаем — петля невозможна */
+      if (!д.эхо) mostPost({ тип:'hello', side:'21', эхо: д.н || '' });
+    } else if (д.тип === 'bye' && д.side === '22'){
+      связьГотова = false; mostStatusLine('·22 закрыла вкладку. Мост молчит — это не поломка.');
+    } else if (д.тип === 'incoming'){
+      связьГотова = true;
+      mostStatusLine('·22 «СВЯЗЬ» на связи: последнее входящее показано ниже.');
+      мостВходящее(д);
+    }
+  };
+  mostPost({ тип:'hello', side:'21', эхо:'', н:'н'+Math.random().toString(36).slice(2,8) });
+  window.addEventListener('pagehide', function(){ mostPost({ тип:'bye', side:'21' }); });
+} else {
+  mostStatusLine('BroadcastChannel не работает в этом браузере: мост с ·22 недоступен, ·21 работает сама.');
+}
+
 /* ═══════════════ Связывание ═══════════════ */
 document.getElementById('btnSend').addEventListener('click', send);
+document.getElementById('btnToHall').addEventListener('click', function(){
+  const text = document.getElementById('msgText').value.trim();
+  const st = document.getElementById('mostStatus');
+  if (!text){ st.textContent = 'Смысл не задан: введи текст в поле «Сообщение», затем «В зал ·22».'; return; }
+  if (!most){ st.textContent = 'Мост недоступен в этом браузере: сообщение осталось в ·21.'; return; }
+  const отКто = personName(document.getElementById('msgFrom').value);
+  mostPost({ тип:'tohall', от: отКто, текст: text });
+  st.textContent = 'Отдано в мост: зал ·22 получит сообщение от «' + отКто + '», если вкладка ·22 открыта.';
+});
 document.getElementById('btnSpeakInput').addEventListener('click', function(){ speak(document.getElementById('msgText').value.trim()); });
 document.getElementById('btnTestVoice').addEventListener('click', function(){ speak(document.getElementById('msgText').value.trim() || 'Здравствуйте. Это голос, выбранный для этого человека.'); });
 document.getElementById('btnStopVoice').addEventListener('click', function(){
