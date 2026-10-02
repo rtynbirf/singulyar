@@ -535,5 +535,21 @@ if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = renderVoiceLi
 
 render();
 </script>
+<script type="module">
+/* Adapter OS v0.1 · мост: проверенные механизмы ·21 регистрируются как адаптеры (S21.braille / S21.route); ядро страницы не тронуто */
+try {
+  const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
+  const адаптеры = [];
+  if (typeof S21 !== 'undefined' && S21 && typeof S21.braille === 'function') {
+    адаптеры.push({ id: 'output.21-брайль', kind: 'output', priority: 60,
+      status: () => ({ state: 'READY', privacy: 'local' }),
+      render: (m) => S21.braille((m && m.text) || '') });
+    адаптеры.push({ id: 'tool.21-маршрутизация', kind: 'tool', priority: 55,
+      status: () => ({ state: 'READY', privacy: 'local' }),
+      build: (person, text) => S21.route(person, text) });
+  }
+  await bootAdapterOS({ page: '21-ОБЩЕНИЕ', adapters: адаптеры });
+} catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '21-ОБЩЕНИЕ', reason: String((e && e.message) || e) }; } catch (e2) {} }
+</script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>
 </body></html>

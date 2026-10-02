@@ -681,6 +681,17 @@ $('#btnInviteExisting').addEventListener('click', function () {
 });
 window.ЧЕЛОВЕК19 = { АДАПТАЦИЯ: АДАПТАЦИЯ, С: С, версия: '1.0' };
 </script>
+<script type="module">
+/* Adapter OS v0.1 · мост: предпочтения ·19 (человека, не автоматики) → capability-модель; ядро страницы не тронуто */
+try {
+  const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
+  const prefs = (function(){ try { return JSON.parse(localStorage.getItem('singulyar.adaptation.v1') || '{}'); } catch (e) { return {}; } })();
+  const адаптация = { id: 'source.19-адаптация', kind: 'source', priority: 90,
+    status: () => ({ state: 'READY', privacy: 'local' }),
+    read: () => { try { return JSON.parse(localStorage.getItem('singulyar.adaptation.v1') || '{}'); } catch (e) { return {}; } } };
+  await bootAdapterOS({ page: '19-ЧЕЛОВЕК', preferences: { адаптация: prefs }, adapters: [адаптация] });
+} catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '19-ЧЕЛОВЕК', reason: String((e && e.message) || e) }; } catch (e2) {} }
+</script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>
 </body>
 </html>
