@@ -17,8 +17,9 @@ def ок(name, cond):
     print(('  ✓ ' if cond else '  ✗ FAIL: ') + name)
 
 def http_serve():
-    os.chdir(REPO)
-    subprocess.run([sys.executable, '-m', 'http.server', str(PORT), '--bind', '127.0.0.1'],
+    # python3 -m http.server в песочнице виснет (мёртвый пайп при capture_output)
+    # → статический сервер на node: ИНСТРУМЕНТЫ/serve_repo.mjs
+    subprocess.run(['node', os.path.join(REPO, 'ИНСТРУМЕНТЫ', 'serve_repo.mjs'), str(PORT), REPO],
                    capture_output=True)
 
 t = threading.Thread(target=http_serve, daemon=True)
