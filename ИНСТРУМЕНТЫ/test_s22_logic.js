@@ -29,7 +29,7 @@ vm.createContext(песочница);
 vm.runInContext(ядро + '\nthis.S22 = S22;', песочница);
 const S22 = песочница.S22;
 ок('S22 определён', !!S22 && typeof S22 === 'object');
-ок('версия 1.0.0', S22.VERSION === '1.0.0');
+ок('версия 1.1.0', S22.VERSION === '1.1.0');
 ок('протокол = 1', S22.PROTO === 1);
 ок('ключ профиля singulyar.svyaz.v1', S22.STORE_KEY === 'singulyar.svyaz.v1');
 
