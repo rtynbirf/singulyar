@@ -38,8 +38,10 @@ def шина(последний_тип):
     return JS_LAST_ENV.replace("__T__", последний_тип)
 
 def main():
+    class ПереиспользуемыйСервер(socketserver.TCPServer):
+        allow_reuse_address = True  # тест не должен зависеть от TIME_WAIT прошлых прогонов
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=ROOT)
-    httpd = socketserver.TCPServer(("127.0.0.1", PORT), handler)
+    httpd = ПереиспользуемыйСервер(("127.0.0.1", PORT), handler)
     t = threading.Thread(target=httpd.serve_forever, daemon=True); t.start()
 
     with sync_playwright() as pw:
@@ -137,7 +139,26 @@ def main():
         лог = инструкция("какая завтра погода")
         check("неизвестная фраза — без выдумок, путь к загрузке назван", "загруз" in лог.lower(), лог[:160])
 
-        # 9. чистая консоль
+        # 8b. доучка v0.4: пинг / счёт фраз / кто ты / честная навигация
+        лог = инструкция("пинг")
+        check("«пинг» откликнулся и назвал версию словаря", "здесь" in лог.lower() and "v0.4" in лог, лог[:140])
+        лог = инструкция("сколько команд ты знаешь")
+        числа = [int(w) for w in лог.replace(",", " ").split() if w.isdigit()]
+        check("«сколько команд» назвал число фраз ≥ 60", any(n >= 60 for n in числа), лог[:140])
+        лог = инструкция("кто ты")
+        check("«кто ты» — правило-слой отвечает без модели", "правило-слой" in лог.lower(), лог[:160])
+        лог = инструкция("открой чепуху неведомую")
+        check("«открой <незнаю>» — честный список страниц без выдумок", "не понял" in лог.lower() and "знаю" in лог.lower(), лог[:160])
+
+        # 9. «открой зал» реально ведёт на страницу ЗАЛ (голосовая навигация)
+        from urllib.parse import unquote
+        инструкция("открой зал")
+        page.wait_for_function("() => decodeURIComponent(location.href).includes('СИНГУЛЯР_17_ЗАЛ')", timeout=6000)
+        check("«открой зал» привёл на СИНГУЛЯР_17_ЗАЛ.html", "СИНГУЛЯР_17_ЗАЛ.html" in unquote(page.url), unquote(page.url))
+        page.goto(f"http://127.0.0.1:{PORT}/СИНГУЛЯР_21_ОБЩЕНИЕ.html")
+        page.wait_for_timeout(1200)
+
+        # 10. чистая консоль
         check("0 ошибок консоли", not errors, "; ".join(errors[:3]))
 
         browser.close()
