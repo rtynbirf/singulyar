@@ -594,6 +594,173 @@ try {
     };
     S21.route.kernel = оригинал; /* ядро доступно для проверок равенства */
   }
+
+  /* ── Срез 4 «МОЗГ»: голосовое управление ──
+     Правило-слой исполняет команды словаря БЕЗ модели (платформа
+     управляема всегда); свободная речь — локальная модель llm.local
+     из репы rtynbirf/singulyar-llm (веса качаются один раз, живут в
+     кеше браузера). Голосовой ввод — Web Speech API, честно о среде. */
+  try {
+    const мозгМодуль = await import('./БИБЛИОТЕКИ/adapter-os/llm.mjs');
+    const llm = os.registerAdapter(мозгМодуль.создатьLlmАдаптер());
+    const речь = os.registerAdapter(мозгМодуль.создатьРечьАдаптер());
+
+    function б(тег, атр) {
+      const узел = document.createElement(тег);
+      if (атр) for (const к in атр) {
+        const зн = атр[к];
+        if (к === 'class') узел.className = зн;
+        else if (к === 'text') узел.textContent = зн;
+        else if (к === 'id') узел.id = зн;
+        else if (к === 'style') узел.setAttribute('style', зн);
+        else if (к.slice(0, 2) === 'on') узел.addEventListener(к.slice(2), зн);
+        else узел.setAttribute(к, зн);
+      }
+      for (let i = 2; i < arguments.length; i++) {
+        const потомок = arguments[i];
+        if (потомок == null) continue;
+        узел.append(потомок.nodeType ? потомок : document.createTextNode(String(потомок)));
+      }
+      return узел;
+    }
+
+    const статусЛиния = б('div', { id: 'мозг-статус', class: 'hint', text: 'модель не загружена' });
+    const прогресс = б('progress', { id: 'мозг-прогресс', max: '100', value: '0', style: 'width:100%', hidden: '' });
+    const ввод = б('input', { id: 'мозг-ввод', placeholder: 'Голосовая команда или свободная фраза…', style: 'flex:1;min-width:220px' });
+    const лог = б('div', { id: 'мозг-лог', 'aria-live': 'polite', style: 'margin-top:10px' });
+
+    function логМозг(от, текст) {
+      лог.prepend(б('div', { class: 'msg' },
+        б('div', { class: 'who', text: от }),
+        б('div', { class: 'txt', text: String(текст == null ? '' : текст).slice(0, 2000) })));
+      while (лог.children.length > 8) лог.removeChild(лог.lastChild);
+    }
+    function статус(т) { статусЛиния.textContent = String(т == null ? '' : т); }
+    function говорить(т) { try { if (typeof speak === 'function' && т) speak(String(т)); } catch (e) { /* без голоса — текст остаётся */ } }
+
+    const поле = () => document.getElementById('msgText');
+    const исполнитель = {
+      send: function (текст) {
+        if (!текст) return 'текст не назван: скажи «отправь: …» и что именно';
+        поле().value = текст;
+        /* голос не знает про форму: если отправитель = получатель, честно
+           выбираем другого участника средствами самой формы (ядро не тронуто) */
+        const из = document.getElementById('msgFrom').value;
+        const кому = document.getElementById('msgTo');
+        if (из === кому.value && typeof db !== 'undefined' && db.people) {
+          const другой = db.people.find(function (п) { return п.id !== из; });
+          if (другой) кому.value = другой.id;
+        }
+        const было = db.messages.length;
+        send();
+        return db.messages.length > было ? 'отправлено ' + personName(кому.value) + ': ' + текст : 'отправка не прошла — смотри статус на форме сообщения';
+      },
+      read: function () {
+        const т = поле().value.trim();
+        return т ? 'читаю: ' + т : 'поле сообщения пустое';
+      },
+      clear: function () { db.messages = []; save(); return 'журнал очищен'; },
+      clearField: function () { поле().value = ''; return 'поле сообщения очищено'; },
+      readLog: function () {
+        if (!db.messages.length) return 'журнал пуст';
+        const строки = db.messages.slice(-5).reverse().map(function (м) { return personName(м.from) + ' → ' + personName(м.to) + ': ' + м.text; });
+        return 'в журнале ' + db.messages.length + ' сообщений. ' + строки.join('. ');
+      },
+      status: function () {
+        const все = os.statuses();
+        const список = все.map(function (а) { return а.id + ' ' + а.state + (а.reason ? ' (' + а.reason + ')' : ''); });
+        const готовых = все.filter(function (а) { return а.state === 'READY'; }).length;
+        return 'Адаптеров: ' + все.length + ', готовых: ' + готовых + '. ' + список.join('; ');
+      },
+      help: function () {
+        return 'Команды: «статус», «отправь: …», «прочитай поле сообщения», «прочитай журнал», «очисти журнал», «очисти поле сообщения», «стоп», «что ты умеешь», «загрузи модель». Свободная речь — локальной модели, если загружена. Словарь: ' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ + '.';
+      },
+      stop: function () { try { speechSynthesis.cancel(); } catch (e) {} llm.abort(); return 'остановлено'; },
+      loadModel: function () {
+        if (llm.status().state === 'READY') return 'модель уже готова';
+        начатьЗагрузку();
+        return 'загружаю модель: шесть частей, около 469 мегабайт, первый раз — потом из кеша';
+      }
+    };
+
+    const слой = мозгМодуль.создатьПравилоСлой(исполнитель);
+    async function обработать(фраза) {
+      фраза = String(фраза == null ? '' : фраза).trim();
+      if (!фраза) { статус('скажи или напиши команду — словарь ' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ); return; }
+      логМозг('человек', фраза);
+      const черезСлой = await слой.исполнить(фраза);
+      if (черезСлой) {
+        try { os.bus.publish('meaning.21.инструкция', { фраза: фраза.slice(0, 300), намерение: черезСлой.намерение, via: 'rule-layer' }); } catch (e) {}
+        логМозг('мозг · правило-слой', черезСлой.ответ);
+        говорить(черезСлой.ответ.slice(0, 240));
+        статусыОбновить();
+        return;
+      }
+      if (llm.status().state === 'READY') {
+        статус('думаю…');
+        try {
+          const ответ = await llm.generate(фраза);
+          try { os.bus.publish('meaning.21.инструкция', { фраза: фраза.slice(0, 300), намерение: 'llm', via: 'llm.local' }); } catch (e) {}
+          логМозг('мозг · локальная модель', ответ || '(пустой ответ)');
+          говорить(ответ);
+        } catch (о) {
+          логМозг('мозг · ошибка', String((о && о.message) || о));
+        } finally { статусыОбновить(); }
+      } else {
+        const честно = 'Свободная речь, но модель не загружена. Скажи «загрузи модель» — качается ≈469 МБ один раз, дальше из кеша браузера. Команды словаря работают уже сейчас.';
+        try { os.bus.publish('meaning.21.инструкция', { фраза: фраза.slice(0, 300), намерение: 'llm', via: 'none', модель: 'не загружена' }); } catch (e) {}
+        логМозг('мозг · правило-слой', честно);
+        говорить(честно);
+        статусыОбновить();
+      }
+    }
+
+    function начатьЗагрузку() {
+      if (llm.status().state === 'READY' || !прогресс.hidden) return;
+      прогресс.hidden = false;
+      статус('загрузка весов из репы ' + мозгМодуль.LLM_РЕПО + '…');
+      llm.load(function (д) {
+        прогресс.value = д.percent || 0;
+        статус((д.faza || 'загрузка') + ' — ' + (д.percent || 0) + '%');
+      }).then(function () {
+        прогресс.hidden = true;
+        статусыОбновить();
+        логМозг('мозг', 'модель готова: Qwen2.5-0.5B (q4_k_m) работает локально в браузере');
+        говорить('модель готова. Я локальный голос СИНГУЛЯРА.');
+      }).catch(function (о) {
+        прогресс.hidden = true;
+        статусыОбновить();
+        логМозг('мозг · ошибка', 'загрузка не удалась: ' + String((о && о.message) || о));
+      });
+    }
+
+    function статусыОбновить() {
+      const стL = llm.status(); const стР = речь.status();
+      статус('Модель: ' + (стL.state === 'READY' ? 'готова — Qwen2.5-0.5B локально' : (стL.reason || стL.state)) +
+        ' · Голосовой ввод: ' + (стР.state === 'READY' ? 'готов' : (стР.reason || стР.state)));
+      загрузить.disabled = стL.state === 'READY';
+      if (стL.state === 'READY') прогресс.hidden = true;
+    }
+
+    const сказать = б('button', { id: 'мозг-сказать', class: 'btn', type: 'button', text: 'сказать', onclick: function () { обработать(ввод.value); ввод.value = ''; } });
+    ввод.addEventListener('keydown', function (e) { if (e.key === 'Enter') { обработать(ввод.value); ввод.value = ''; } });
+    const загрузить = б('button', { id: 'мозг-загрузить', class: 'btn gray', type: 'button', text: 'загрузить модель (≈469 МБ, один раз)', onclick: function () { начатьЗагрузку(); } });
+    const микрофон = б('button', { id: 'мозг-микрофон', class: 'btn gray', type: 'button', text: '🎙 голос', onclick: function () {
+      логМозг('микрофон', 'слушаю…');
+      речь.listen({ onResult: function (т) { ввод.value = т; обработать(т); }, onError: function (о) { логМозг('микрофон', String(о)); } });
+    } });
+
+    const mainEl = document.querySelector('main.wrap') || document.body;
+    mainEl.appendChild(б('section', { class: 'panel', id: 'мозг-панель' },
+      б('h2', null, 'МОЗГ · голосовое управление ', б('em', { text: 'ЛОКАЛЬНАЯ МОДЕЛЬ' })),
+      б('p', { class: 'hint', text: 'Команды словаря (' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ + ') исполняет правило-слой — без модели. Свободную речь отвечает локальная модель Qwen2.5-0.5B из репы rtynbirf/singulyar-llm: шесть частей ≈469 МБ качаются один раз и живут в кеше браузера. Распознавание голоса — Web Speech API браузера; в Chrome звук уходит на серверы Google — сказано прямо.' }),
+      статусЛиния, прогресс,
+      б('div', { class: 'row', style: 'margin-top:12px;display:flex;gap:8px;flex-wrap:wrap' }, ввод, сказать, микрофон),
+      б('div', { class: 'row', style: 'margin-top:8px' }, загрузить),
+      лог));
+
+    статусыОбновить();
+  } catch (мозгОшибка) { try { console.warn('МОЗГ не собрался:', мозгОшибка); } catch (e) {} }
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '21-ОБЩЕНИЕ', reason: String((e && e.message) || e) }; } catch (e2) {} }
 </script>
 <script defer src="./singulyar-ux-engine-v8.js"></script>
