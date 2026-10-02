@@ -2,7 +2,7 @@
    Честно и минимально: cache-first для same-origin GET, офлайн-фолбэк.
    На file:// не работает (так устроены браузеры) — модулю там и не нужен:
    пак данных вшит, внешних запросов нет. */
-var S15_CACHE = 's15-orkestrator-v11';
+var S15_CACHE = 's15-orkestrator-v12';
 var S15_CORE = [
   './',
   './singulyar-ux-engine-v8.js',
@@ -11,6 +11,9 @@ var S15_CORE = [
   './БИБЛИОТЕКИ/adapter-os/adapters/basic.mjs',
   './БИБЛИОТЕКИ/adapter-os/adapters/contracts.mjs',
   './БИБЛИОТЕКИ/adapter-os/bridge.mjs',
+  './БИБЛИОТЕКИ/adapter-os/llm.mjs',
+  './БИБЛИОТЕКИ/wllama/index.js',
+  './БИБЛИОТЕКИ/wllama/wasm/wllama.wasm',
   './СИНГУЛЯР_15_ОРКЕСТРАТОР.html',
   './СИНГУЛЯР_17_ЗАЛ.html',
   './СИНГУЛЯР_18_СОБЫТИЕ.html',
