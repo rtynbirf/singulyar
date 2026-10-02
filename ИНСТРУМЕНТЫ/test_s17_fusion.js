@@ -1,15 +1,17 @@
-/* Логические тесты ·16 Fusion + ·17 P2P (без DOM): asembly, SDP-пак, QR из страницы */
-const fs = require('fs'), vm = require('vm');
+/* Логические тесты ·16 Fusion + ·17 P2P (без DOM): asembly, SDP-пак, QR из страницы.
+   Код извлекается из живых файлов репо; эталонная сверка QR с python qrcode — в test_qr_vs_python.py.
+   Запуск: node ИНСТРУМЕНТЫ/test_s17_fusion.js */
+const fs = require('fs'), vm = require('vm'), os = require('os'), path = require('path');
 let fails = 0;
 const check = (name, cond, extra) => { console.log((cond ? 'OK  ' : 'FAIL') + ' ' + name + (cond ? '' : ' — ' + (extra || ''))); if (!cond) fails++; };
 
 /* ── 1. Fusion: извлекаем классы из ·16 ── */
-const s16 = fs.readFileSync('/home/z/my-project/repo_check/СИНГУЛЯР_16_СУФЛЁР.html', 'utf8');
+const s16 = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_16_СУФЛЁР.html'), 'utf8');
 const grab16 = (re) => s16.match(re)[0];
 const busCode = grab16(/class SingulyarEventBus \{[\s\S]*?\n\}/);
 const parserCode = grab16(/class SingulyarNoteChart \{[\s\S]*?\n\}(?=\n\/\* ── 4)/);
 const fusionCode = grab16(/class SingulyarUltraStarAssembler \{[\s\S]*?\n\}(?=\n\n\/\* ── 7c)/);
-const modPath = '/tmp/s16_fusion_classes.js';
+const modPath = path.join(os.tmpdir(), 's16_fusion_classes.js');
 fs.writeFileSync(modPath, busCode + '\n' + parserCode + '\n' + fusionCode + '\nmodule.exports = { SingulyarEventBus, SingulyarNoteChart, SingulyarUltraStarAssembler };');
 const { SingulyarNoteChart, SingulyarUltraStarAssembler } = require(modPath);
 
@@ -43,9 +45,9 @@ const r2 = asm.assemble([], dspNotes, {});
 check('fusion no words → ♪', r2.txt.split('\n').filter(l => l.startsWith(':')).every(l => l.split(' ').slice(4).join(' ') === '♪'));
 
 /* ── 2. SDP-пак/анпак: SQ1 (deflate-raw), SQ2, SQ0 ── */
-const s17 = fs.readFileSync('/home/z/my-project/repo_check/СИНГУЛЯР_17_ЗАЛ.html', 'utf8');
+const s17 = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_17_ЗАЛ.html'), 'utf8');
 const packCode = s17.match(/const SDP_B64[\s\S]*?async function sdUnpack\(str\) \{[\s\S]*?\n\}/)[0];
-const sdMod = '/tmp/s17_sdp.js';
+const sdMod = path.join(os.tmpdir(), 's17_sdp.js');
 fs.writeFileSync(sdMod, packCode + '\nmodule.exports = { sdPack, sdUnpack };');
 const { sdPack, sdUnpack } = require(sdMod);
 (async () => {
@@ -62,19 +64,37 @@ const { sdPack, sdUnpack } = require(sdMod);
     check('sdp wrong tag fails', ok2);
     console.log('размер SQ1-кода:', c1.length, 'симв. для', JSON.stringify(obj).length, 'симв. JSON');
 
-    /* ── 3. QR-класс из страницы vs эталон qr_dev (те же матрицы) ── */
+    /* ── 3. QR-класс страницы: детерминизм и полнота масок.
+       Внешняя dev-копия (qr_dev.js) удалена из истории — эталонная сверка
+       с python qrcode живёт в test_qr_vs_python.py (тоже без автора).
+       Здесь: каждая из 8 масок строит валидную матрицу средствами самого
+       класса, auto-encode выбирает минимум штрафа, результат детерминирован. ── */
     const tables = s17.match(/const QR_CAPL=[\s\S]*?(?=class SingulyarQR)/)[0];
     const qrPage = tables + '\n' + s17.match(/class SingulyarQR \{[\s\S]*?\n\}(?=\n\n\/\* ── 0b)/)[0];
-    const qrMod = '/tmp/s17_qr.js';
+    const qrMod = path.join(os.tmpdir(), 's17_qr.js');
     fs.writeFileSync(qrMod, qrPage + '\nmodule.exports = { SingulyarQR };');
     const { SingulyarQR: QRPage } = require(qrMod);
-    const { SingulyarQR: QRDev } = require('/home/z/my-project/scripts/qr_dev.js');
-    const a = new QRPage(), b = new QRDev();
+    /* принудительная маска — теми же внутренностями, что и auto-encode */
+    QRPage.prototype.encodeMasked = function (text, mask) {
+        const bytes = Array.from(new TextEncoder().encode(String(text)));
+        const v = this.pickVersion(bytes.length);
+        const cw = this.buildCodewords(bytes, v);
+        const ctx = this.makeMatrix(v);
+        this.placeData(ctx, cw);
+        const t = { m: ctx.m.map((row) => Uint8Array.from(row)), fn: ctx.fn, size: ctx.size };
+        this.applyMask(t, mask); this.drawFormat(t, mask);
+        return { version: v, size: ctx.size, mask, modules: t.m };
+    };
+    const q = new QRPage();
+    const sameM = (x, y) => x.version === y.version && x.size === y.size &&
+        x.modules.every((row, i) => Array.from(row).join('') === Array.from(y.modules[i]).join(''));
     for (const t of ['hello', 'А'.repeat(120), 'https://rtynbirf.github.io/singulyar/СИНГУЛЯР_17_ЗАЛ.html#join=SQ1.abc', 'СИНГУЛЯР ·17 зал: ' + 'b'.repeat(600)]) {
-        const ra = a.encode(t), rb = b.encode(t);
-        const same = ra.version === rb.version && ra.mask === rb.mask &&
-            ra.modules.every((row, i) => Array.from(row).join('') === Array.from(rb.modules[i]).join(''));
-        check('qr page==dev v' + ra.version, same, 'v' + ra.version + '/' + rb.version + ' mask ' + ra.mask + '/' + rb.mask);
+        const auto = q.encode(t);
+        const force = [];
+        for (let m = 0; m < 8; m++) force.push(q.encodeMasked(t, m));
+        const best = force.reduce((b, x) => q.penalty(x.modules, x.size) < q.penalty(b.modules, b.size) ? x : b, force[0]);
+        check('qr auto == min-штраф маска v' + auto.version, sameM(auto, best), 'auto mask ' + auto.mask);
+        check('qr детерминизм v' + auto.version, sameM(q.encode(t), auto));
     }
 
     console.log(fails ? '\nЕСТЬ ПРОВАЛЫ: ' + fails : '\nВСЕ ТЕСТЫ ПРОШЛИ');

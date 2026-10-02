@@ -3,10 +3,11 @@
 # отправка сообщения и разбор представлений (текст/брайль/речь), персонализация
 # голоса (профили, ползунки, сохранение в localStorage), честные статусы,
 # сброс, отсутствие JSON-дампа состояния, 0 ошибок консоли.
+# Запуск: python3 ИНСТРУМЕНТЫ/test_s21_browser.py   (пути считаются от файла — из любого клона репо)
 import subprocess, time, sys, os
 from playwright.sync_api import sync_playwright
 
-РЕПО = '/home/z/my-project/singulyar_work'
+РЕПО = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
 PORT = int(os.environ.get('S21_PORT', '8925'))
 URL = f'http://127.0.0.1:{PORT}/СИНГУЛЯР_21_ОБЩЕНИЕ.html'
 

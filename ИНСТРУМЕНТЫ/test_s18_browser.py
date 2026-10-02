@@ -3,10 +3,11 @@
 # отсчёт → пение → завершение → REVIEW → ❤️ память → GC-список» через
 # КАНАЛ-транспорт (BroadcastChannel + WebRTC-лупбэк). Реле-транспорт — мягкий
 # тест (SKIP, если песочница без сети к Nostr).
+# Запуск: python3 ИНСТРУМЕНТЫ/test_s18_browser.py   (пути считаются от файла — из любого клона репо)
 import subprocess, time, sys, os, threading, json
 from playwright.sync_api import sync_playwright
 
-REPO = '/home/z/my-project/repo_check'
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
 PORT = int(os.environ.get('S18_PORT', '8921'))
 URL = f'http://127.0.0.1:{PORT}/СИНГУЛЯР_18_СОБЫТИЕ.html'
 

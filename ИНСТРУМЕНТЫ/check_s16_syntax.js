@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-/* Синтакс-чек всех JS-блоков СИНГУЛЯР_16: главный <script> + worklet-строка (шаблон `...`) */
-const fs = require('fs'), vm = require('vm');
-const h = fs.readFileSync(process.argv[2] || '/home/z/my-project/repo_check/СИНГУЛЯР_16_СУФЛЁР.html', 'utf8');
+/* Синтакс-чек всех JS-блоков СИНГУЛЯР_16: главный <script> + worklet-строка (шаблон `...`)
+   Запуск: node ИНСТРУМЕНТЫ/check_s16_syntax.js [путь-к-HTML]  (по умолчанию — файл из репо) */
+const fs = require('fs'), vm = require('vm'), path = require('path');
+const h = fs.readFileSync(process.argv[2] || path.join(__dirname, '..', 'СИНГУЛЯР_16_СУФЛЁР.html'), 'utf8');
 let fails = 0;
 
 /* 1) обычные <script> блоки (без src) */

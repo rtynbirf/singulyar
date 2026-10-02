@@ -2,10 +2,11 @@
 # Браузерный тест ·20 ФОНЕТИКА: загрузка бандла, чипы-слоги по образцам,
 # ручной ввод, тап по чипу без голосов, мост ·16 (BroadcastChannel STATE →
 # большое слово + романизация + «далее»), фильтр мусора, 0 ошибок консоли.
+# Запуск: python3 ИНСТРУМЕНТЫ/test_s20_browser.py   (пути считаются от файла — из любого клона репо)
 import subprocess, time, sys, os, json
 from playwright.sync_api import sync_playwright
 
-РЕПО = '/home/z/my-project/singulyar_work'
+РЕПО = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
 PORT = int(os.environ.get('S20_PORT', '8923'))
 URL = f'http://127.0.0.1:{PORT}/СИНГУЛЯР_20_ФОНЕТИКА.html'
 
