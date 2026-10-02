@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР ·22 — СВЯЗЬ</title>
+<meta name="description" content="СВЯЗЬ ·22: смысл один — каналов много. Текст, файл, субтитры, голосовое сообщение, озвучка, аудиозвонок, видеозвонок, экран, совместное пение. Выбирает человек.">
+<style>
+:root{
+  --bg:#0a0f15;--panel:#101a24;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
+  --teal:#61e1c4;--teal2:#38bdf8;--amber:#ffc36e;--red:#f87171;
+  --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
+}
+*{box-sizing:border-box}
+html{font-size:16px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+main{max-width:1120px;margin:0 auto;padding:0 18px 70px}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.2;margin:0 0 6px}
+h2{font-size:17px;margin:0 0 10px;color:var(--teal2);font-family:var(--mono);letter-spacing:.04em}
+h3{font-size:15px;margin:12px 0 6px}
+p{margin:8px 0}
+.hint{color:var(--dim);font-size:13.5px}
+.mono{font-family:var(--mono);font-size:12.5px}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.grow{flex:1 1 160px}
+button,input,select,textarea{font:inherit;color:var(--tx);background:#0b131c;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+button{cursor:pointer;min-height:44px}
+button:hover{border-color:var(--teal)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+button:disabled{opacity:.42;cursor:not-allowed;border-color:var(--line)}
+button.primary{background:var(--teal);border-color:var(--teal);color:#04121c;font-weight:700}
+button.on{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal) inset}
+button.danger{border-color:#7a3030;color:#ffb4b4}
+input[type=checkbox]{width:19px;height:19px;min-height:0;accent-color:var(--teal)}
+label.chk{display:flex;gap:9px;align-items:center;padding:6px 0;cursor:pointer}
+.state{font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.state b{color:var(--teal);font-weight:600}
+#ariaLive,#ariaAssertive{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#toasts{position:fixed;right:14px;bottom:14px;display:grid;gap:8px;z-index:9;max-width:340px}
+#toasts div{background:#132230;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 12px;font-size:14px}
+.journal{border:1px solid var(--line);border-radius:12px;background:#0b131c;min-height:180px;max-height:320px;overflow:auto;padding:4px 0}
+.jmsg{padding:8px 12px;border-bottom:1px solid #17222e}
+.jmsg .who{font-family:var(--mono);font-size:12px;color:var(--teal)}
+.jmsg .when{color:var(--dim);font-size:11px;font-family:var(--mono);margin-left:8px}
+.jmsg .body{margin-top:2px;white-space:pre-wrap;word-break:break-word}
+.jmsg.voice audio{width:100%;margin-top:6px}
+.jmsg .meta{color:var(--dim);font-size:12.5px}
+.subtitle{background:#04121c;border:1px solid #1f4d47;border-radius:12px;min-height:64px;padding:14px;font-size:clamp(20px,3.4vw,30px);line-height:1.35;text-align:center}
+.subtitle .old{color:var(--dim)}
+table.fall{width:100%;border-collapse:collapse;font-size:13.5px}
+table.fall td,table.fall th{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+table.fall th{color:var(--teal2);font-family:var(--mono);font-size:12px}
+video{width:100%;max-height:260px;background:#030609;border:1px solid var(--line);border-radius:12px}
+pre.contract{white-space:pre-wrap;background:#080f16;border:1px solid var(--line);border-radius:12px;padding:14px;font-family:var(--mono);font-size:12.5px;line-height:1.5;overflow:auto}
+ul.bounds{list-style:none;margin:0;padding:0}
+ul.bounds li{padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.06);font-size:14px}
+.btn-file{display:inline-flex;align-items:center;cursor:pointer;font:inherit;color:var(--tx);background:#0b131c;border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+.btn-file:hover{border-color:var(--teal)}
+.chan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
+.chan-grid button{width:100%;text-align:left;min-height:56px}
+.chan-grid .why{display:block;font-size:11px;color:var(--dim);font-family:var(--mono)}
+footer{color:var(--dim);font-size:12.5px;font-family:var(--mono);margin-top:30px}
+html[data-reduced-motion="true"] *{animation:none!important;transition:none!important}
+html[data-large-targets="true"] button{min-height:56px;font-size:17px}
+html[data-large-targets="true"] .chan-grid button{min-height:64px}
+</style>
+</head>
+<body>
+<div id="ariaLive" aria-live="polite"></div>
+<div id="ariaAssertive" aria-live="assertive"></div>
+<div id="toasts"></div>
+<main>
+<header>
+  <h1>СИНГУЛЯР ·22 «СВЯЗЬ»</h1>
+  <p class="hint">Смысл один — каналов много. Цель связи: донести мысль. Канал — средство, не условие участия. Что выбрать — решает человек; автоматика только предлагает и объясняет.</p>
+  <p class="state" id="statCaps">возможности устройства: определяются…</p>
+</header>
+
+<section class="card" id="scZal">
+  <h2>1 · ЗАЛ СВЯЗИ</h2>
+  <div class="row">
+    <input id="inCode" class="mono" maxlength="5" placeholder="КОД" aria-label="Код зала связи" style="width:130px;text-transform:uppercase">
+    <button id="btnOpen" class="primary">открыть канал</button>
+    <button id="btnClose" disabled>закрыть</button>
+  </div>
+  <p class="state" id="stZal">Канал — это зал по коду, как в ·18: без аккаунтов, почт и паролей. Один код связывает окна этого браузера. Связь между разными устройствами ведёт зал ·18: ссылка ниже открывает его с этим же кодом.</p>
+  <div class="row" style="margin-top:8px">
+    <button id="btnLinkZal" disabled>ссылка на зал ·18 с этим кодом</button>
+    <input id="inLink" class="mono grow" readonly aria-label="Ссылка на зал" placeholder="ссылка появится здесь">
+  </div>
+</section>
+
+<section class="card" id="scHuman">
+  <h2>2 · ЧЕЛОВЕК</h2>
+  <div class="row">
+    <input id="inName" class="grow" maxlength="80" aria-label="Имя в связи" placeholder="имя">
+  </div>
+  <p class="state" id="stName">имя локальное</p>
+  <p class="hint">Если на этом устройстве есть личность из <a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>, имя берётся из неё — ключ остаётся на устройстве и не покидает его. Личность не создаётся здесь и не редактируется здесь: это не аккаунт.</p>
+</section>
+
+<section class="card" id="scChan">
+  <h2>3 · КАНАЛ</h2>
+  <p class="hint">Девять способов донести мысль. Недоступный канал затемнён с причиной — он не выбрасывает человека из связи, а передаёт ход ближайшему доступному каналу.</p>
+  <div class="chan-grid" id="chanGrid"></div>
+  <p class="state" id="stChan" style="margin-top:10px">Канал не выбран. Решение за человеком.</p>
+</section>
+
+<div class="grid">
+  <section class="card" id="scJournal">
+    <h2>4 · ЖУРНАЛ СВЯЗИ</h2>
+    <div id="journal" class="journal" aria-live="polite"></div>
+    <div class="row" style="margin-top:10px">
+      <input id="inMsg" class="grow" maxlength="2000" aria-label="Текст сообщения" placeholder="сказать текстом…">
+      <button id="btnSend" class="primary">отправить</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="btnRec">записать голосовое</button>
+      <button id="btnRecStop" disabled>стоп</button>
+      <label class="btn-file">приложить файл<input id="inFile" type="file" hidden></label>
+      <button id="btnSTT" title="Речь в текст">речь → текст</button>
+    </div>
+    <p class="state" id="stRec">Запись остановлена.</p>
+    <p class="state" id="stSTT"></p>
+  </section>
+
+  <section class="card" id="scSub">
+    <h2>5 · СУБТИТРЫ</h2>
+    <div class="subtitle" id="subNow" aria-live="polite">Здесь крупно появится последнее текстовое сообщение.</div>
+    <p class="hint">Субтитры — это показ входящих текстов крупным шрифтом. Он работает всегда, без микрофона и сети.</p>
+    <h3>Озвучка входящих</h3>
+    <div class="row">
+      <select id="selVoice" class="grow" aria-label="Голос озвучки"></select>
+      <button id="btnSpeakLast">озвучить последнее</button>
+      <button id="btnShut">стоп</button>
+    </div>
+    <p class="state" id="stTTS"></p>
+  </section>
+</div>
+
+<div class="grid">
+  <section class="card" id="scCam">
+    <h2>6 · КАМЕРА И МИКРОФОН</h2>
+    <video id="vidCam" autoplay muted playsinline></video>
+    <div class="row" style="margin-top:8px">
+      <button id="btnCamOn">включить</button>
+      <button id="btnCamOff">выключить</button>
+    </div>
+    <p class="state" id="stCam">Камера и микрофон выключены.</p>
+    <p class="hint">Изображение и звук с этого устройства в ·22 — предпросмотр и подготовка. Транспорт между устройствами выполняет зал ·18: голоса участников идут через WebRTC mesh там.</p>
+  </section>
+
+  <section class="card" id="scScreen">
+    <h2>7 · ЭКРАН</h2>
+    <video id="vidScr" autoplay muted playsinline></video>
+    <div class="row" style="margin-top:8px">
+      <button id="btnShare">выбрать окно или экран</button>
+      <button id="btnShareOff">остановить</button>
+    </div>
+    <p class="state" id="stScr">Экран не показывается.</p>
+    <p class="hint">Источник выбирает человек в диалоге браузера: ничего не показывается без явного разрешения.</p>
+  </section>
+</div>
+
+<section class="card" id="scProfile">
+  <h2>8 · ПРОФИЛЬ СПОСОБА ОБЩЕНИЯ</h2>
+  <p class="hint">Предпочтения хранятся на устройстве. Явный выбор человека имеет приоритет над автоматикой — это правило платформы СИНГУЛЯР.</p>
+  <label class="chk"><input type="checkbox" id="pText" checked> предпочитаю текст</label>
+  <label class="chk"><input type="checkbox" id="pSound"> предпочитаю звук</label>
+  <label class="chk"><input type="checkbox" id="pSub" checked> субтитры крупным шрифтом</label>
+  <label class="chk"><input type="checkbox" id="pTts"> озвучивать входящие</label>
+  <label class="chk"><input type="checkbox" id="pVib"> вибросигнал при входящем</label>
+  <label class="chk"><input type="checkbox" id="pMove"> меньше движения</label>
+  <label class="chk"><input type="checkbox" id="pBig"> крупные кнопки</label>
+  <div class="row" style="margin-top:8px">
+    <button id="btnSaveP" class="primary">сохранить локально</button>
+    <button id="btnResetP">сбросить</button>
+  </div>
+  <p class="state" id="stProf"></p>
+  <h3>Что уже решено в ·19 ЧЕЛОВЕК</h3>
+  <p class="state" id="stAdapt">читаю адаптацию ·19…</p>
+  <p class="hint">Если решение в ·19 есть, СВЯЗЬ его уважает; твой выбор здесь — выше автоматики, но не выше твоего же решения в ·19.</p>
+</section>
+
+<section class="card" id="scFall">
+  <h2>9 · ЕСЛИ КАНАЛ НЕДОСТУПЕН</h2>
+  <p class="hint">Пути рассчитаны для этого устройства из его реальных возможностей. Текст — базовый канал: он доступен без всяких устройств, поэтому ни один путь не кончается тупиком.</p>
+  <table class="fall" id="tblFall"></table>
+</section>
+
+<section class="card" id="scContract">
+  <h2>10 · КОНТРАКТ</h2>
+<pre class="contract">ЧЕЛОВЕК ·19  →  СОБЫТИЕ ·18  →  СВЯЗЬ ·22  →  ПАМЯТЬ
+     │              │                │             │
+  личность      зал по коду      каналы        журнал
+  адаптация     WebRTC mesh      fallback      записи
+     │              │                │             │
+     └──────────────┴────────┬───────┴─────────────┘
+                             ▼
+                     смысл доходит до человека
+
+КАНАЛЫ: ТЕКСТ · ФАЙЛ · СУБТИТРЫ · ГОЛОСОВОЕ · ОЗВУЧКА ·
+        АУДИОЗВОНОК · ВИДЕОЗВОНОК · ЭКРАН · СОВМЕСТНОЕ ПЕНИЕ
+
+ПРАВИЛА:
+  зал ≠ аккаунт          — вход по коду, без учётных записей
+  канал ≠ личность       — способ связи не создаёт профиль
+  сервер ≠ хозяин речи   — транспорт удобство, не власть
+  недоступность ≠ исключение — fallback ведёт к базовому каналу
+  выбор человека ≥ автоматика — override всегда выигрывает</pre>
+</section>
+
+<section class="card" id="scBounds">
+  <h2>ЧЕСТНЫЕ ГРАНИЦЫ</h2>
+  <ul class="bounds">
+    <li>Локальный канал связывает окна одного браузера (BroadcastChannel). Связь между разными устройствами ведёт зал ·18 — там сигналинг и голоса идут через WebRTC mesh.</li>
+    <li>Аудиозвонок, видеозвонок и экран в ·22 — включение, предпросмотр и выбор источника. Межустройственный транспорт этих каналов выполняет зал ·18.</li>
+    <li>«Речь → текст» зависит от браузера: в нём нет гарантированно локального распознавания, поэтому статус честный — работает или нет.</li>
+    <li>Озвучка зависит от голосов, установленных в системе: конкретный голос, темп и высота настраиваются в ·21 ОБЩЕНИЕ.</li>
+    <li>Журнал и записи хранятся только на устройстве. Экспорт выгружает текст и метаданные; звук и файлы остаются локально.</li>
+    <li>Здесь нет регистрации, телефона, почты, CAPTCHA, обязательной MFA, биометрии, рекламы и телеметрии. Сервер связей ·19 — опция человека, не условие связи.</li>
+  </ul>
+</section>
+
+<footer>СИНГУЛЯР ·22 «СВЯЗЬ» v1.0 · слой над ·18 СОБЫТИЕ, ·19 ЧЕЛОВЕК и ·21 ОБЩЕНИЕ · ядро не зависит от сети</footer>
+</main>
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·22 «СВЯЗЬ» — ядро.
+   Реестр каналов, граф fallback, расчёт маршрута и профиля — чистые
+   функции без обращений к документу и сети: проверяются тестом ровно в
+   том виде, в каком отгружены.
+   Маркеры S22:CORE-BEGIN / S22:CORE-END нужны тестам: они достают блок
+   из отгруженного файла и исполняют его в песочнице.
+   ════════════════════════════════════════════════════════════════════════ */
+/* S22:CORE-BEGIN */
+const S22 = (function () {
+  const VERSION = '1.0.0';
+  const STORE_KEY = 'singulyar.svyaz.v1';          /* профиль способов общения */
+  const PROTO = 1;                                  /* версия протокола канала */
+
+  /* Реестр каналов — единственное место, где живут человеческие имена.
+     треб: что нужно устройству, чтобы канал заработал. */
+  const CHANNELS = {
+    text:      { имя: 'Текст',              треб: [] },
+    file:      { имя: 'Файл',               треб: [] },
+    captions:  { имя: 'Субтитры',           треб: [] },
+    voice:     { имя: 'Голосовое',          треб: ['микрофон'] },
+    tts:       { имя: 'Озвучка',            треб: ['синтезРечи'] },
+    callAudio: { имя: 'Аудиозвонок',        треб: ['микрофон', 'сеть'] },
+    callVideo: { имя: 'Видеозвонок',        треб: ['микрофон', 'камера', 'сеть'] },
+    screen:    { имя: 'Экран',              треб: ['дисплей', 'сеть'] },
+    activity:  { имя: 'Совместное пение',   треб: [] }
+  };
+
+  /* Граф fallback: каждому каналу — упорядоченные альтернативы.
+     Каждый список кончается «text»: базовый канал доступен всегда,
+     поэтому ни один путь не кончается тупиком. */
+  const FALLBACK = {
+    text:      [],
+    file:      ['text'],
+    captions:  ['text'],
+    voice:     ['text'],
+    tts:       ['text'],
+    callAudio: ['voice', 'text'],
+    callVideo: ['callAudio', 'voice', 'text'],
+    screen:    ['captions', 'text'],
+    activity:  ['voice', 'text']
+  };
+
+  /* Обозначения причин — человеческие, без кодов. */
+  const ТРЕБ_ИМЯ = {
+    микрофон: 'нужен микрофон',
+    камера: 'нужна камера',
+    дисплей: 'нужен доступ к экрану',
+    синтезРечи: 'нужен синтез речи',
+    сеть: 'нужна сеть'
+  };
+
+  /* Возможности устройства — единственное место, где трогаются браузерные API.
+     аргумент — для тестов: подставь свои возможности. */
+  function возможности(источник) {
+    const n = (источник && источник.navigator) || (typeof navigator !== 'undefined' ? navigator : null);
+    const w = (источник && источник.window) || (typeof window !== 'undefined' ? window : null);
+    if (!n) {
+      return { микрофон: false, камера: false, дисплей: false, синтезРечи: false, распознаваниеРечи: false, вибрация: false, сеть: false };
+    }
+    return {
+      микрофон: !!(n.mediaDevices && n.mediaDevices.getUserMedia),
+      камера: !!(n.mediaDevices && n.mediaDevices.getUserMedia),
+      дисплей: !!(n.mediaDevices && n.mediaDevices.getDisplayMedia),
+      синтезРечи: !!(w && w.speechSynthesis),
+      распознаваниеРечи: !!(w && (w.SpeechRecognition || w.webkitSpeechRecognition)),
+      вибрация: !!(n && n.vibrate),
+      сеть: !!(n && n.onLine !== false)
+    };
+  }
+
+  function доступен(id, кап) {
+    const ч = CHANNELS[id];
+    if (!ч) return false;
+    return ч.треб.every(function (т) { return !!(кап && кап[т]); });
+  }
+
+  /* Человеческая причина недоступности: «нужны микрофон и сеть — их нет». */
+  function причина(id, кап) {
+    const ч = CHANNELS[id];
+    if (!ч) return 'такого канала нет';
+    const нет = ч.треб.filter(function (т) { return !(кап && кап[т]); });
+    if (нет.length === 0) return '';
+    return нет.map(function (т) { return ТРЕБ_ИМЯ[т] || т; }).join(' и ') + ' — на этом устройстве недоступно';
+  }
+
+  /* Маршрут: смысл один, форма подстраивается.
+     Возвращает {канал, путь, причина} — путь начинается с желаемого и ведёт
+     по графу fallback до первого доступного; терминал гарантирован («text»). */
+  function маршрут(желаемый, кап) {
+    const ж = CHANNELS[желаемый] ? желаемый : 'text';
+    const путь = [ж];
+    let cur = ж;
+    while (!доступен(cur, кап)) {
+      const алт = (FALLBACK[cur] || []).find(function (a) { return доступен(a, кап); });
+      if (!алт) {
+        if (cur !== 'text') путь.push('text');
+        return { канал: 'text', путь: путь, причина: '«' + имяКанала(ж) + '» недоступно: ' + (причина(ж, кап) || 'нет пути') + ' — остаётся «Текст»' };
+      }
+      путь.push(алт);
+      cur = алт;
+    }
+    if (путь.length === 1) return { канал: cur, путь: путь, причина: 'доступен' };
+    const цеп = путь.slice(1).map(имяКанала).join(' → ');
+    return { канал: cur, путь: путь, причина: '«' + имяКанала(ж) + '» недоступно — предложено: ' + цеп };
+  }
+
+  /* Явный выбор человека: высший закон, но не над реальностью.
+     Если выбор недоступен — возвращаем отказ с причиной, не подменяем молча. */
+  function выборЧеловека(канал, кап) {
+    if (!канал || !CHANNELS[канал]) return null;
+    if (доступен(канал, кап)) return { канал: канал, путь: [канал], причина: 'выбор человека', override: true };
+    return { канал: null, путь: [канал], причина: 'твой выбор «' + имяКанала(канал) + '» сейчас недоступно: ' + причина(канал, кап), override: true };
+  }
+
+  /* Профиль способов общения: prefs + явный override канала. */
+  function профильПустой() {
+    return { override: null, текст: true, звук: false, субтитры: true, озвучка: false, вибро: false, движение: false, крупные: false };
+  }
+  function профильОк(p) {
+    const б = профильПустой();
+    if (!p || typeof p !== 'object') return б;
+    const out = {};
+    Object.keys(б).forEach(function (k) {
+      if (k === 'override') out[k] = (p[k] && CHANNELS[p[k]]) ? p[k] : null;
+      else out[k] = typeof p[k] === 'boolean' ? p[k] : б[k];
+    });
+    return out;
+  }
+
+  /* Чтение адаптации ·19: решение человека там — уже сделанный выбор.
+     Форма: {решение(ключ, авто), prefs}. Здесь — только данные, не DOM. */
+  function адаптация19(raw) {
+    let prefs = {};
+    try { prefs = JSON.parse(String(raw || '{}')) || {}; } catch (e) { prefs = {}; }
+    function решение(ключ, авто) {
+      const v = prefs[ключ];
+      if (v === true || v === false) return v;   /* человек решал — человек прав */
+      if (авто === true) return true;            /* автоматика предлагает */
+      if (авто === false) return false;
+      return null;                               /* «не решено» ≠ «решено: нет» */
+    }
+    return {
+      крупныеЦели: решение('largeTargets', true),
+      вибрация: решение('haptic', null),
+      уведомления: решение('notifications', null),
+      движениеМеньше: решение('reducedMotion', null)
+    };
+  }
+
+  function имяКанала(id) { return (CHANNELS[id] && CHANNELS[id].имя) || id; }
+
+  /* Контракт — слова, которые не расходятся с кодом. */
+  const КОНТРАКТ = {
+    зал: 'зал ≠ аккаунт',
+    канал: 'канал ≠ личность',
+    сервер: 'сервер ≠ хозяин речи',
+    недоступность: 'недоступность ≠ исключение',
+    выбор: 'выбор человека ≥ автоматика'
+  };
+
+  return {
+    VERSION: VERSION, STORE_KEY: STORE_KEY, PROTO: PROTO,
+    CHANNELS: CHANNELS, FALLBACK: FALLBACK, КОНТРАКТ: КОНТРАКТ,
+    возможности: возможности, доступен: доступен, причина: причина,
+    маршрут: маршрут, выборЧеловека: выборЧеловека,
+    профильПустой: профильПустой, профильОк: профильОк,
+    адаптация19: адаптация19, имяКанала: имяКанала
+  };
+})();
+/* S22:CORE-END */
+/* ════════════════════════════════════════════════════════════════════════
+   ПРИЛОЖЕНИЕ ·22 — представление и транспорт. Без innerHTML: любая
+   строка попадает в документ только через textContent.
+   ════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  const $ = function (id) { return document.getElementById(id); };
+
+  /* ── DOM-фабрика ── */
+  function эл(тег, атрибуты, дети) {
+    const н = document.createElement(тег);
+    if (атрибуты) Object.keys(атрибуты).forEach(function (к) {
+      const v = атрибуты[к];
+      if (к === 'class') н.className = v;
+      else if (к === 'text') н.textContent = v;
+      else if (к === 'onclick') н.addEventListener('click', v);
+      else if (v !== null && v !== undefined) н.setAttribute(к, v);
+    });
+    (дети || []).forEach(function (д) { if (д) н.appendChild(д); });
+    return н;
+  }
+
+  /* ── каналы уведомлений (как в ·19: событие одно — каналы разные) ── */
+  function объявить(текст, срочно) {
+    const узел = $(срочно ? 'ariaAssertive' : 'ariaLive');
+    if (узел) { узел.textContent = ''; requestAnimationFrame(function () { узел.textContent = текст; }); }
+  }
+  function тост(текст) {
+    const бокс = $('toasts'); if (!бокс) return;
+    const т = эл('div', { text: текст });
+    бокс.appendChild(т);
+    setTimeout(function () { т.remove(); }, 5200);
+  }
+  function событие(текст, срочно) { объявить(текст, срочно); тост(текст); }
+
+  /* ── хранилище: IndexedDB «singular-svyaz» — журнал + блобы ── */
+  const ХРАНИЛИЩЕ = (function () {
+    const ИМЯ = 'singular-svyaz';
+    function открой() {
+      return new Promise(function (res, rej) {
+        if (!('indexedDB' in window)) { rej(new Error('IndexedDB недоступен')); return; }
+        const rq = indexedDB.open(ИМЯ, 1);
+        rq.onupgradeneeded = function () {
+          const б = rq.result;
+          if (!б.objectStoreNames.contains('journal')) б.createObjectStore('journal', { keyPath: 'id' });
+          if (!б.objectStoreNames.contains('blobs')) б.createObjectStore('blobs');
+        };
+        rq.onsuccess = function () { res(rq.result); };
+        rq.onerror = function () { rej(rq.error); };
+      });
+    }
+    function положи(store, значение, ключ) {
+      return открой().then(function (б) {
+        return new Promise(function (res, rej) {
+          const t = б.transaction(store, 'readwrite');
+          if (store === 'journal') t.objectStore(store).put(значение);
+          else t.objectStore(store).put(значение, ключ);
+          t.oncomplete = function () { res(); };
+          t.onerror = function () { rej(t.error); };
+        });
+      });
+    }
+    function все(store) {
+      return открой().then(function (б) {
+        return new Promise(function (res, rej) {
+          const rq = б.transaction(store, 'readonly').objectStore(store).getAll();
+          rq.onsuccess = function () { res(rq.result || []); };
+          rq.onerror = function () { rej(rq.error); };
+        });
+      });
+    }
+    function получи(store, ключ) {
+      return открой().then(function (б) {
+        return new Promise(function (res, rej) {
+          const rq = б.transaction(store, 'readonly').objectStore(store).get(ключ);
+          rq.onsuccess = function () { res(rq.result); };
+          rq.onerror = function () { rej(rq.error); };
+        });
+      });
+    }
+    function удалиВсё() {
+      return открой().then(function (б) {
+        return new Promise(function (res, rej) {
+          const t = б.transaction(['journal', 'blobs'], 'readwrite');
+          t.objectStore('journal').clear();
+          t.objectStore('blobs').clear();
+          t.oncomplete = function () { res(); };
+          t.onerror = function () { rej(t.error); };
+        });
+      });
+    }
+    return { положи: положи, все: все, получи: получи, удалиВсё: удалиВсё };
+  })();
+
+  /* ── состояние ── */
+  let кап = S22.возможности();
+  let профиль = S22.профильОк(readJSON(S22.STORE_KEY));
+  let желаемый = 'text';
+  let текущийМаршрут = null;
+  let чан = null;
+  let код = '';
+  let имя = 'Человек';
+  let имяИсточник = 'локальное имя';
+  let запись = null; let куски = []; let секСтарт = 0; let таймерЗаписи = null;
+  let потокКам = null; let потокЭкр = null;
+  let распознавание = null;
+  let последние = [];
+
+  function readJSON(ключ) {
+    try { return JSON.parse(localStorage.getItem(ключ) || 'null'); } catch (e) { return null; }
+  }
+  function сохранитьПрофиль() {
+    try { localStorage.setItem(S22.STORE_KEY, JSON.stringify(профиль)); } catch (e) {}
+  }
+  function экранироватьИмя(с) { return String(с || '').replace(/\s+/g, ' ').trim().slice(0, 80) || 'Человек'; }
+  function время(мс) {
+    const д = new Date(мс);
+    return ('0' + д.getHours()).slice(-2) + ':' + ('0' + д.getMinutes()).slice(-2) + ':' + ('0' + д.getSeconds()).slice(-2);
+  }
+  function размер(байт) {
+    if (байт < 1024) return байт + ' Б';
+    if (байт < 1048576) return (байт / 1024).toFixed(1) + ' КБ';
+    return (байт / 1048576).toFixed(1) + ' МБ';
+  }
+  function алфавитКода() { return 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; }
+  function случайныйКод() {
+    const а = алфавитКода(); let с = '';
+    for (let i = 0; i < 5; i++) с += а[Math.floor(Math.random() * а.length)];
+    return с;
+  }
+
+  /* ── 3. КАНАЛ: сетка кнопок ── */
+  function отрисоватьКаналы() {
+    const сетка = $('chanGrid'); сетка.replaceChildren();
+    Object.keys(S22.CHANNELS).forEach(function (id) {
+      const дос = S22.доступен(id, кап);
+      const прич = дос ? '' : S22.причина(id, кап);
+      const б = эл('button', {
+        text: S22.имяКанала(id),
+        'aria-label': S22.имяКанала(id) + (дос ? '' : ' — ' + прич),
+        onclick: function () { выбратьКанал(id); }
+      });
+      if (!дос) б.disabled = true;
+      if (дос) б.appendChild(эл('span', { class: 'why', text: 'доступно' }));
+      else б.appendChild(эл('span', { class: 'why', text: прич }));
+      if (id === желаемый && дос) б.classList.add('on');
+      сетка.appendChild(б);
+    });
+  }
+
+  function выбратьКанал(id) {
+    if (id === 'activity') { открытьЗал18(); return; }
+    желаемый = id;
+    профиль.override = id; сохранитьПрофиль();
+    применитьМаршрут();
+    отрисоватьКаналы();
+  }
+
+  function применитьМаршрут() {
+    const выбор = S22.выборЧеловека(профиль.override, кап);
+    let м;
+    if (выбор && выбор.канал) {
+      м = выбор;                                    /* явный выбор человека доступен */
+    } else if (выбор && !выбор.канал) {
+      событие(выбор.причина, false);
+      м = S22.маршрут(желаемый, кап);
+    } else {
+      м = S22.маршрут(желаемый, кап);
+    }
+    текущийМаршрут = м;
+    $('stChan').textContent = 'Канал: «' + S22.имяКанала(м.канал) + '». ' + м.причина + (м.путь.length > 1 ? ' Путь: ' + м.путь.map(S22.имяКанала).join(' → ') + '.' : '');
+    объявить($('stChan').textContent, false);
+  }
+
+  /* ── 1. ЗАЛ СВЯЗИ: BroadcastChannel-транспорт ── */
+  function открытьКанал(фиксКод) {
+    закрытьКанал(true);
+    код = String(фиксКод || $('inCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+    if (код.length < 4) код = случайныйКод();
+    $('inCode').value = код;
+    try {
+      чан = new BroadcastChannel('singular-svyaz-v1-' + код);
+    } catch (e) {
+      $('stZal').textContent = 'BroadcastChannel не работает в этом браузере: локальный канал недоступен, журнал ведётся локально.';
+      чан = null; $('btnClose').disabled = false; обновитьСсылку(); return;
+    }
+    чан.onmessage = function (е) { принять(е.data); };
+    $('stZal').textContent = 'Канал открыт: зал «' + код + '». Сообщения идут между окнами этого браузера; для другой машины открой зал ·18 по ссылке ниже.';
+    $('btnClose').disabled = false;
+    событие('Канал «' + код + '» открыт', false);
+    обновитьСсылку();
+  }
+  function закрытьКанал(тихо) {
+    if (чан) { try { чан.close(); } catch (e) {} чан = null; }
+    $('btnClose').disabled = true;
+    if (!тихо) { $('stZal').textContent = 'Канал закрыт. Журнал остался на устройстве.'; событие('Канал закрыт', false); }
+  }
+  function ссылкаЗала18() {
+    const у = new URL(location.href);
+    у.hash = ''; у.search = '';
+    у.pathname = у.pathname.replace(/[^/]*$/, 'СИНГУЛЯР_18_СОБЫТИЕ.html');
+    у.search = '?зал=' + encodeURIComponent(код);
+    return у.href;
+  }
+  function обновитьСсылку() {
+    $('inLink').value = код ? ссылкаЗала18() : '';
+    $('btnLinkZal').disabled = !код;
+  }
+  function открытьЗал18() {
+    if (!код) открытьКанал();
+    window.open(ссылкаЗала18(), '_blank');
+    событие('Открываю зал ·18 с кодом ' + код, false);
+  }
+
+  /* ── 4. ЖУРНАЛ ── */
+  function карточкаСообщения(м, блоб) {
+    const к = эл('div', { class: 'jmsg' + (м.вид === 'голос' ? ' voice' : '') });
+    к.appendChild(эл('span', { class: 'who', text: м.от }));
+    к.appendChild(эл('span', { class: 'when', text: время(м.t) }));
+    if (м.вид === 'текст') {
+      к.appendChild(эл('div', { class: 'body', text: м.текст }));
+    } else if (м.вид === 'голос' && блоб) {
+      const аудио = document.createElement('audio');
+      аудио.controls = true; аудио.src = URL.createObjectURL(блоб);
+      к.appendChild(аудио);
+      к.appendChild(эл('div', { class: 'meta', text: 'голосовое сообщение · ' + размер(блоб.size) + (м.длительность ? ' · ' + м.длительность + ' с' : '') }));
+    } else if (м.вид === 'файл' && блоб) {
+      const сс = эл('a', { href: URL.createObjectURL(блоб), download: м.имяФайла || 'файл', text: 'скачать' });
+      к.appendChild(эл('div', { class: 'body' }, [сс]));
+      к.appendChild(эл('div', { class: 'meta', text: (м.имяФайла || 'файл') + ' · ' + размер(м.размер || (блоб && блоб.size) || 0) }));
+    } else {
+      к.appendChild(эл('div', { class: 'meta', text: м.вид === 'голос' ? 'голосовое сообщение — звук не получен' : 'файл — содержимое не получено' }));
+    }
+    return к;
+  }
+  function показатьЖурнал(м, блоб, прокрутить) {
+    const ж = $('journal');
+    ж.appendChild(карточкаСообщения(м, блоб));
+    while (ж.children.length > 200) ж.removeChild(ж.firstChild);
+    if (прокрутить) ж.scrollTop = ж.scrollHeight;
+  }
+  function отправить(вид, текст, блоб, имяФайла, длительность) {
+    const м = { v: S22.PROTO, t: Date.now(), от: имя, вид: вид, текст: текст || '', имяФайла: имяФайла || '', размер: блоб ? блоб.size : 0, длительность: длительность || 0 };
+    if (блоб) м.блоб = блоб;                       /* Blob переживёт structured clone BroadcastChannel */
+    const id = 'м' + м.t + '-' + Math.random().toString(36).slice(2, 8);
+    const зап = { id: id, t: м.t, от: м.от, вид: вид, текст: м.текст, имяФайла: м.имяФайла, размер: м.размер, длительность: м.длительность, входящее: false, канал: желаемый };
+    const п = блоб ? ХРАНИЛИЩЕ.положи('blobs', блоб, id) : Promise.resolve();
+    п.then(function () { return ХРАНИЛИЩЕ.положи('journal', зап); })
+      .then(function () { показатьЖурнал(м, блоб, true); })
+      .catch(function (e) { показатьЖурнал(м, блоб, true); $('stRec').textContent = 'журнал: ' + (e && e.message || e); });
+    if (чан) { try { чан.postMessage(м); } catch (e) { $('stRec').textContent = 'не отправлено: ' + (e && e.message || e); } }
+    else $('stRec').textContent = 'Канал закрыт — сообщение в локальном журнале.';
+  }
+  function принять(м) {
+    if (!м || м.v !== S22.PROTO || !м.от) return;
+    const вид = (м.вид === 'голос' || м.вид === 'файл') ? м.вид : 'текст';
+    const м2 = { v: м.v, t: м.t || Date.now(), от: экранироватьИмя(м.от), вид: вид, текст: String(м.текст || '').slice(0, 2000), имяФайла: String(м.имяФайла || '').slice(0, 200), размер: м.размер | 0, длительность: м.длительность | 0 };
+    const блоб = (м.блоб instanceof Blob) ? м.блоб : null;
+    const id = 'м' + м2.t + '-' + Math.random().toString(36).slice(2, 8);
+    const зап = { id: id, t: м2.t, от: м2.от, вид: вид, текст: м2.текст, имяФайла: м2.имяФайла, размер: м2.размер, длительность: м2.длительность, входящее: true, канал: текущийМаршрут ? текущийМаршрут.канал : 'text' };
+    const п = блоб ? ХРАНИЛИЩЕ.положи('blobs', блоб, id) : Promise.resolve();
+    п.then(function () { return ХРАНИЛИЩЕ.положи('journal', зап); }).catch(function () {});
+    показатьЖурнал(м2, блоб, true);
+    /* представление входящего по профилю: субтитры, озвучка, вибро */
+    if (вид === 'текст') {
+      последние.push(м2.текст); if (профиль.субтитры) показатьСубтитры(м2.текст);
+      if (профиль.озвучка) озвучить(м2.текст);
+    }
+    if (профиль.вибро && адапт19.вибрация !== false && navigator.vibrate) { try { navigator.vibrate(40); } catch (e) {} }
+    событие('Сообщение от ' + м2.от + ' — ' + (вид === 'текст' ? м2.текст.slice(0, 80) : S22.имяКанала(вид === 'голос' ? 'voice' : 'file')), false);
+  }
+
+  /* ── 5. СУБТИТРЫ И ОЗВУЧКА ── */
+  function показатьСубтитры(текст) {
+    const з = $('subNow');
+    з.replaceChildren();
+    з.appendChild(эл('div', { class: 'old', text: з.textContent && з.dataset.last ? з.dataset.last : '' }));
+    з.appendChild(эл('div', { text: текст }));
+    з.dataset.last = текст;
+  }
+  function голосаОсвежить() {
+    const sel = $('selVoice'); if (!('speechSynthesis' in window)) return;
+    const список = speechSynthesis.getVoices();
+    sel.replaceChildren();
+    список.forEach(function (v, i) {
+      const о = document.createElement('option');
+      о.value = String(i); о.textContent = v.name + ' — ' + v.lang;
+      sel.appendChild(о);
+    });
+    if (!список.length) $('stTTS').textContent = 'Голосов в системе нет: озвучка недоступна, текст остаётся текстом.';
+  }
+  function озвучить(текст) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      const у = new SpeechSynthesisUtterance(String(текст).slice(0, 400));
+      const v = speechSynthesis.getVoices()[+$('selVoice').value];
+      if (v) { у.voice = v; у.lang = v.lang; }
+      speechSynthesis.speak(у);
+    } catch (e) { $('stTTS').textContent = 'озвучка не удалась: ' + (e && e.message || e); }
+  }
+
+  /* ── запись голосового ── */
+  function стартЗаписи() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('stRec').textContent = 'микрофон недоступен в этом браузере'; return; }
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (поток) {
+      куски = []; секСтарт = Date.now();
+      запись = new MediaRecorder(поток);
+      запись.ondataavailable = function (е) { if (е.data && е.data.size) куски.push(е.data); };
+      запись.onstop = function () {
+        поток.getTracks().forEach(function (т) { т.stop(); });
+        const сек = Math.max(1, Math.round((Date.now() - секСтарт) / 1000));
+        const блоб = new Blob(куски, { type: запись.mimeType || 'audio/webm' });
+        отправить('голос', '', блоб, '', сек);
+        запись = null; clearInterval(таймерЗаписи);
+        $('btnRec').disabled = false; $('btnRecStop').disabled = true;
+        $('stRec').textContent = 'Голосовое отправлено · ' + сек + ' с · ' + размер(блоб.size) + '.';
+      };
+      запись.start();
+      $('btnRec').disabled = true; $('btnRecStop').disabled = false;
+      $('stRec').textContent = 'Запись идёт… 0 с';
+      таймерЗаписи = setInterval(function () {
+        $('stRec').textContent = 'Запись идёт… ' + Math.round((Date.now() - секСтарт) / 1000) + ' с';
+      }, 500);
+    }).catch(function (e) {
+      $('stRec').textContent = 'микрофон: ' + (e && e.name === 'NotAllowedError' ? 'доступ не выдан' : (e && e.message || 'ошибка'));
+    });
+  }
+  function стопЗаписи() { if (запись && запись.state !== 'inactive') запись.stop(); }
+
+  /* ── файл ── */
+  function файлВыбран(е) {
+    const ф = е.target.files && е.target.files[0];
+    if (!ф) return;
+    if (ф.size > 50 * 1048576) { $('stRec').textContent = 'файл больше 50 МБ — для ·22 это слишком много'; е.target.value = ''; return; }
+    отправить('файл', '', ф, ф.name, 0);
+    е.target.value = '';
+  }
+
+  /* ── речь → текст ── */
+  function сттСтарт() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { $('stSTT').textContent = 'В этом браузере распознавания речи нет: «речь → текст» не работает, текст остаётся каналом.'; return; }
+    try {
+      распознавание = new SR();
+      распознавание.lang = 'ru-RU';
+      распознавание.continuous = true;
+      распознавание.interimResults = true;
+      распознавание.onresult = function (е) {
+        let с = '';
+        for (let i = е.resultIndex; i < е.results.length; i++) с += е.results[i][0].transcript;
+        $('inMsg').value = с;
+        $('stSTT').textContent = 'распознано (зависит от браузера) — проверь и отправь';
+      };
+      распознавание.onerror = function (е) { $('stSTT').textContent = 'ошибка распознавания: ' + (е && е.error || 'неизвестная'); };
+      распознавание.onend = function () { $('btnSTT').classList.remove('on'); };
+      распознавание.start();
+      $('btnSTT').classList.add('on');
+      $('stSTT').textContent = 'слушаю…';
+    } catch (e) { $('stSTT').textContent = 'распознавание не запустилось: ' + (e && e.message || e); }
+  }
+
+  /* ── 6/7. КАМЕРА И ЭКРАН ── */
+  function камВкл() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('stCam').textContent = 'камера и микрофон недоступны в этом браузере'; return; }
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function (п) {
+      потокКам = п; $('vidCam').srcObject = п;
+      $('stCam').textContent = 'Камера и микрофон включены (локально). Транспорт между устройствами — зал ·18.';
+    }).catch(function (e) {
+      $('stCam').textContent = e && e.name === 'NotAllowedError' ? 'доступ к камере и микрофону не выдан' : 'камера/микрофон: ' + (e && e.message || 'ошибка');
+    });
+  }
+  function камВыкл() {
+    if (потокКам) { потокКам.getTracks().forEach(function (т) { т.stop(); }); потокКам = null; }
+    $('vidCam').srcObject = null;
+    $('stCam').textContent = 'Камера и микрофон выключены.';
+  }
+  function экранВкл() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) { $('stScr').textContent = 'доступ к экрану браузер не предоставляет'; return; }
+    navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(function (п) {
+      потокЭкр = п; $('vidScr').srcObject = п;
+      $('stScr').textContent = 'Экран показывается (локально). Транспорт между устройствами — зал ·18.';
+      п.getVideoTracks()[0].onended = function () { экранВыкл(); };
+    }).catch(function () { $('stScr').textContent = 'экран не выбран — это твой выбор, а не ошибка'; });
+  }
+  function экранВыкл() {
+    if (потокЭкр) { потокЭкр.getTracks().forEach(function (т) { т.stop(); }); потокЭкр = null; }
+    $('vidScr').srcObject = null;
+    $('stScr').textContent = 'Экран не показывается.';
+  }
+
+  /* ── 8. ПРОФИЛЬ ── */
+  const ФЛАЖКИ = [['pText', 'текст'], ['pSound', 'звук'], ['pSub', 'субтитры'], ['pTts', 'озвучка'], ['pVib', 'вибро'], ['pMove', 'движение'], ['pBig', 'крупные']];
+  let адапт19 = S22.адаптация19('');
+
+  function профильВФлажки() {
+    ФЛАЖКИ.forEach(function (п) { $(п[0]).checked = !!профиль[п[1]]; });
+  }
+  function флажкиВПрофиль() {
+    ФЛАЖКИ.forEach(function (п) { профиль[п[1]] = $(п[0]).checked; });
+  }
+  function применитьПрофиль() {
+    /* любые «да» человека выигрывают: и здесь, и в ·19 */
+    document.documentElement.dataset.reducedMotion = (профиль.движение || адапт19.движениеМеньше === true) ? 'true' : 'false';
+    document.documentElement.dataset.largeTargets = (профиль.крупные || адапт19.крупныеЦели) ? 'true' : 'false';
+  }
+  function адаптацию19Показать() {
+    адапт19 = S22.адаптация19(localStorage.getItem('singulyar.adaptation.v1'));
+    const ниче = адапт19.крупныеЦели === null && адапт19.вибрация === null && адапт19.уведомления === null && адапт19.движениеМеньше === null;
+    $('stAdapt').textContent = ниче
+      ? 'в ·19 решений ещё нет — автоматика предлагает по умолчанию'
+      : 'в ·19 решено: крупные цели — ' + да(адапт19.крупныеЦели) + ', вибрация — ' + (адапт19.вибрация === null ? 'не решено' : да(адапт19.вибрация)) + ', уведомления — ' + (адапт19.уведомления === null ? 'не решено' : да(адапт19.уведомления)) + ', меньше движения — ' + (адапт19.движениеМеньше === null ? 'не решено' : да(адапт19.движениеМеньше));
+    применитьПрофиль();
+  }
+  function да(б) { return б ? 'да' : 'нет'; }
+
+  /* ── 9. ТАБЛИЦА FALLBACK ── */
+  function таблицуОтрисовать() {
+    const т = $('tblFall');
+    т.replaceChildren();
+    const заг = эл('tr', null, [эл('th', { text: 'канал' }), эл('th', { text: 'статус на этом устройстве' }), эл('th', { text: 'путь, если недоступен' })]);
+    т.appendChild(заг);
+    Object.keys(S22.CHANNELS).forEach(function (id) {
+      const м = S22.маршрут(id, кап);
+      т.appendChild(эл('tr', null, [
+        эл('td', { text: S22.имяКанала(id) }),
+        эл('td', { text: S22.доступен(id, кап) ? 'доступен' : S22.причина(id, кап) }),
+        эл('td', { text: м.путь.length > 1 ? м.путь.map(S22.имяКанала).join(' → ') : 'доступен напрямую' })
+      ]));
+    });
+  }
+
+  /* ── экспорт и очистка журнала ── */
+  function экспорт() {
+    ХРАНИЛИЩЕ.все('journal').then(function (записи) {
+      const данные = { экспорт: 'СИНГУЛЯР ·22 СВЯЗЬ', версия: S22.VERSION, время: new Date().toISOString(), записи: записи };
+      const бл = new Blob([JSON.stringify(данные, null, 2)], { type: 'application/json' });
+      const сс = эл('a', { href: URL.createObjectURL(бл), download: 'связь-журнал.json' });
+      document.body.appendChild(сс); сс.click(); сс.remove();
+      $('stProf').textContent = 'выгружено записей: ' + записи.length + ' (текст и метаданные; звук и файлы остаются на устройстве)';
+    }).catch(function (e) { $('stProf').textContent = 'экспорт не удался: ' + (e && e.message || e); });
+  }
+  function очистить() {
+    ХРАНИЛИЩЕ.удалиВсё().then(function () {
+      $('journal').replaceChildren(); последние = [];
+      событие('Журнал связи очищен', false);
+      $('stProf').textContent = 'журнал и записи удалены с устройства';
+    }).catch(function (e) { $('stProf').textContent = 'очистка не удалась: ' + (e && e.message || e); });
+  }
+
+  /* ── мост ·19: имя из личности (только чтение; случайно созданную базу удаляем) ── */
+  function имяИзЛичности() {
+    return new Promise(function (res) {
+      try {
+        if (!('indexedDB' in window)) { res(null); return; }
+        let наша = false;
+        const rq = indexedDB.open('singulyar-human-v1', 1);
+        rq.onupgradeneeded = function () { наша = true; };   /* база не существовала — создали мы, ·19 её так не увидит */
+        rq.onerror = function () { res(null); };
+        rq.onsuccess = function () {
+          const б = rq.result;
+          const добрать = function (значение) {
+            try { б.close(); } catch (e) {}
+            if (наша) { try { indexedDB.deleteDatabase('singulyar-human-v1'); } catch (e) {} }
+            res(значение);
+          };
+          try {
+            if (!б.objectStoreNames.contains('kv')) { добрать(null); return; }
+            const q = б.transaction('kv', 'readonly').objectStore('kv').get('личность');
+            q.onerror = function () { добрать(null); };
+            q.onsuccess = function () { добрать(q.result && q.result.имя ? String(q.result.имя) : null); };
+          } catch (e) { добрать(null); }
+        };
+      } catch (e) { res(null); }
+    });
+  }
+
+  /* ── кнопки ── */
+  $('btnOpen').addEventListener('click', function () { открытьКанал(); });
+  $('btnClose').addEventListener('click', function () { закрытьКанал(false); });
+  $('btnLinkZal').addEventListener('click', function () {
+    $('inLink').value = ссылкаЗала18();
+    try { $('inLink').select(); document.execCommand('copy'); событие('Ссылка на зал ·18 скопирована', false); } catch (e) {}
+  });
+  $('btnSend').addEventListener('click', function () {
+    const т = $('inMsg').value.trim();
+    if (!т) return;
+    отправить('текст', т, null, '', 0);
+    $('inMsg').value = '';
+    if (профиль.субтитры) показатьСубтитры('ты: ' + т);
+  });
+  $('inMsg').addEventListener('keydown', function (е) { if (е.key === 'Enter') $('btnSend').click(); });
+  $('btnRec').addEventListener('click', стартЗаписи);
+  $('btnRecStop').addEventListener('click', стопЗаписи);
+  $('inFile').addEventListener('change', файлВыбран);
+  $('btnSTT').addEventListener('click', сттСтарт);
+  $('btnSpeakLast').addEventListener('click', function () {
+    if (!('speechSynthesis' in window)) { $('stTTS').textContent = 'синтеза речи в этом браузере нет'; return; }
+    if (!последние.length) { $('stTTS').textContent = 'пока нечего озвучивать'; return; }
+    озвучить(последние[последние.length - 1]);
+  });
+  $('btnShut').addEventListener('click', function () { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
+  if ('speechSynthesis' in window) { голосаОсвежить(); speechSynthesis.onvoiceschanged = голосаОсвежить; }
+  else { $('stTTS').textContent = 'синтеза речи в этом браузере нет'; $('selVoice').disabled = true; }
+  $('btnCamOn').addEventListener('click', камВкл);
+  $('btnCamOff').addEventListener('click', камВыкл);
+  $('btnShare').addEventListener('click', экранВкл);
+  $('btnShareOff').addEventListener('click', экранВыкл);
+  $('btnSaveP').addEventListener('click', function () {
+    флажкиВПрофиль(); сохранитьПрофиль(); применитьПрофиль();
+    $('stProf').textContent = 'профиль сохранён на устройстве. Твой выбор — выше автоматики.';
+  });
+  $('btnResetP').addEventListener('click', function () {
+    профиль = S22.профильПустой(); сохранитьПрофиль(); профильВФлажки(); применитьПрофиль();
+    $('stProf').textContent = 'профиль сброшен к автоматике';
+  });
+  $('inName').addEventListener('input', function () {
+    имя = экранироватьИмя(this.value);
+    имяИсточник = 'локальное имя';
+    $('stName').textContent = 'имя: ' + имя + ' · источник: локальное (личность ·19 не найдена или не используется)';
+  });
+
+  /* ── строка возможностей ── */
+  $('statCaps').replaceChildren(эл('span', { text: 'возможности устройства: ' + Object.keys(кап).map(function (к) { return к + ' — ' + (кап[к] ? 'есть' : 'нет'); }).join(' · ') }));
+
+  /* ── boot ── */
+  отрисоватьКаналы();
+  таблицуОтрисовать();
+  профильВФлажки();
+  адаптацию19Показать();
+  применитьПрофиль();
+  применитьМаршрут();
+  $('stName').textContent = 'имя: ' + имя + ' · источник: локальное';
+  имяИзЛичности().then(function (н) {
+    if (н) {
+      имя = экранироватьИмя(н); $('inName').value = имя;
+      имяИсточник = 'личность ·19';
+      $('stName').textContent = 'имя: ' + имя + ' · источник: личность ·19 (ключ остаётся на устройстве)';
+    } else {
+      $('stName').textContent = 'имя: ' + экранироватьИмя($('inName').value) + ' · источник: локальное (личность ·19 на устройстве не найдена)';
+    }
+  });
+  (function () {
+    const п = new URLSearchParams(location.search);
+    const зал = п.get('зал') || п.get('zal') || '';
+    if (зал) { открытьКанал(зал); }
+  })();
+})();
+</script>
+</body>
+</html>
