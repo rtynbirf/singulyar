@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР ·17 — ЗАЛ · P2P двойной экран · офлайн</title>
+<meta name="description" content="СИНГУЛЯР ·17 «ЗАЛ»: P2P-экран зала без сервера — BroadcastChannel + localStorage-фолбэк. Большой экран показывает слова, колбаски и счёт; пульт управляет ·16 СУФЛЁР. Ноль сети, ноль зависимостей, ноль innerHTML.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--red:#ef4444;--green:#10b981;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:60px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d;white-space:nowrap}
+h1{font-size:clamp(24px,4.2vw,36px);line-height:1.18;margin:26px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:18px;margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:860px;font-size:15.5px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.btn{display:inline-block;font-family:var(--mono);font-size:13px;background:var(--teal);color:#04121c;border-radius:10px;padding:9px 14px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn.gray{background:var(--panel);color:var(--tx);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stat>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{font-family:var(--mono);font-size:26px;display:block}
+.stat i{color:var(--dim);font-size:11.5px;font-style:normal;text-transform:uppercase;letter-spacing:.6px}
+#bigword{font-size:clamp(38px,8vw,92px);font-weight:800;line-height:1.1;min-height:1.2em;text-align:center;padding:18px 8px 8px;letter-spacing:.5px}
+#nextwords{text-align:center;color:var(--dim);font-size:clamp(15px,2.4vw,24px);min-height:1.6em;padding-bottom:12px}
+#songtitle{font-family:var(--mono);color:var(--teal2);text-align:center;font-size:15px}
+.stage{position:relative;background:#070b11;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:16px 0}
+.stage canvas{display:block;width:100%;height:300px}
+.progress{height:8px;background:var(--panel);border-radius:99px;overflow:hidden;margin:10px 0}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width .2s linear}
+.status{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px;color:var(--dim);margin:10px 0}
+.status b{color:var(--tx)}
+.live{color:var(--green);font-weight:700}
+.waiting{color:var(--amber);font-weight:700}
+.rating{font-family:var(--mono);font-size:15px;margin-left:8px;padding:3px 10px;border-radius:8px;background:#0b1f1d;color:var(--teal);display:inline-block}
+.rating.PERFECT{color:#04121c;background:var(--amber)}
+.rating.GOOD{color:#04121c;background:var(--teal)}
+.rating.MISS{background:#2a1216;color:var(--red)}
+.hint{color:var(--dim);font-size:13px}
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var(--dim);font-size:12.5px}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <div class="logo" aria-hidden="true">·17</div>
+  <div><b>СИНГУЛЯР ·17 «ЗАЛ» — P2P двойной экран</b><span>экран зала + пульт · BroadcastChannel + localStorage · без сервера</span></div>
+  <div class="badge">офлайн · 0 запросов · 0 innerHTML</div>
+</div></header>
+
+<main class="wrap">
+  <h1>Открой <em>два окна</em> — зал увидит песню</h1>
+  <p class="lead">Это окно — большой экран зала. В ·16 «СУФЛЁР» включи галочку «📡 в зал» — слова, колбаски
+  и счёт полетят сюда без единого сервера (BroadcastChannel, фолбэк — localStorage). Из этого окна можно
+  рулить плеером СУФЛЁРА кнопками пульта. Телевизор с браузером = экран зала; ноутбук/телефон = сцена.</p>
+
+  <div class="stat" role="status" aria-live="polite">
+    <div><b id="stConn" class="waiting">—</b><i>канал</i></div>
+    <div><b id="stScore">000000</b><i>счёт</i></div>
+    <div><b id="stCombo">×0</b><i>комбо</i></div>
+    <div><b id="stMic">—</b><i>голос</i></div>
+    <div><b id="stMsgs">0</b><i>пакетов</i></div>
+  </div>
+
+  <div class="stage"><canvas id="hallCanvas" aria-hidden="true"></canvas></div>
+  <div class="progress" aria-hidden="true"><div id="pbar"></div></div>
+  <div id="songtitle">песня: —</div>
+  <div id="bigword">…</div>
+  <div id="nextwords"></div>
+
+  <div class="row" style="justify-content:center">
+    <span id="lastRating" class="rating" style="display:none"></span>
+  </div>
+
+  <h2>Пульт <em>команды летят в ·16 СУФЛЁР</em></h2>
+  <div class="row">
+    <button class="btn" id="cmdPlay">▶ играть</button>
+    <button class="btn gray" id="cmdPause">⏸ пауза</button>
+    <button class="btn gray" id="cmdStop">⏹ стоп</button>
+    <button class="btn ghost" id="cmdBack">−5 с</button>
+    <button class="btn ghost" id="cmdFwd">+5 с</button>
+  </div>
+  <p class="hint">Команды применяются в том окне СУФЛЁРА, где включена трансляция. Зал ничего не скачивает и не играет — он только показывает.</p>
+
+  <h2>Демо <em>проверка зала без СУФЛЁРА</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <button class="btn ghost" id="btnDemo">🎬 тест-демо (синтетический источник)</button>
+      <button class="btn gray" id="btnDemoOff" disabled>⏹ выключить демо</button>
+    </div>
+    <p class="hint">Демо имитирует источник: поток STATE с нотами, счётом и словами. Так проверяют зал на одном
+    устройстве — второе окно с «ЗАЛом» должно оживить в ту же секунду.</p>
+  </div>
+
+  <div class="status" id="hallStatus" role="status" aria-live="polite">
+    <b>Как соединить:</b> 1) открой этот файл/страницу во втором окне или на ТВ;
+    2) в ·16 СУФЛЁР включи «📡 в зал»; 3) этот экран оживёт. На сайте (https) работает всегда;
+    на file:// — Chrome обычно да, Firefox/Safari изолируют file-вкладки (тогда запускай локальный
+    сервер: <code>python -m http.server</code>).
+  </div>
+
+  <h2>Протокол <em>открытый, версионированный</em></h2>
+  <p class="hint">Канал <code>singulyar-hall</code>, пакеты <code>{v:1, t:HELLO|STATE|CMD|BYE, src, seq, ts, …}</code>.
+  Транспорт-двойник: BroadcastChannel + localStorage-события, дедуп по <code>src:seq</code>. Зал — только
+  рендер и пульт; аудио всегда живёт в окне сцены (·16).</p>
+
+  <footer>СИНГУЛЯР ·17 «ЗАЛ» · KARAOKE_TREND.txt «Подсистема 1: Бессерверный P2P-экран зала» (Local Dual-Screen) ·
+  github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
+</main>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·17 «ЗАЛ» — единый файл. Архитектура:
+   1. TRANSPORT — BroadcastChannel + localStorage-фолбэк, дедуп по src:seq
+   2. STATE    — последний STATE источника: песня, позиция, слова, счёт, голос
+   3. RENDER   — большой текст (DOM-фабрика), canvas-колбаски, прогресс, HUD
+   4. REMOTE   — пульт: CMD play/pause/stop/seek в окно сцены (·16)
+   5. DEMO     — синтетический источник для проверки зала без СУФЛЁРА
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. ТРАНСПОРТ ────────────────────────────────────────────────────────── */
+class HallTransport {
+    constructor(onMsg) {
+        this.onMsg = onMsg;
+        this.seen = new Map();          /* src:seq → ts, дедуп двойного транспорта */
+        this.mode = '—';
+        this.bc = null;
+        try {
+            this.bc = new BroadcastChannel('singulyar-hall');
+            this.bc.onmessage = (e) => this.recv(e.data, 'bc');
+            this.mode = 'bc';
+        } catch (e) { this.bc = null; }
+        /* localStorage-фолбэк (и второй канал для bc-браузеров) */
+        this.lsKey = 'singulyar-hall';
+        if (!this._lsHandler) {
+            this._lsHandler = (e) => { if (e.key === this.lsKey && e.newValue) { try { this.recv(JSON.parse(e.newValue), 'ls'); } catch (_) {} } };
+            window.addEventListener('storage', this._lsHandler);
+        }
+        window.addEventListener('unload', () => { if (this.bc) { try { this.bc.postMessage({ v: 1, t: 'BYE', src: this.src }); } catch (_) {} } });
+    }
+    recv(msg, via) {
+        if (!msg || msg.v !== 1) return;
+        const id = msg.src + ':' + msg.seq;
+        if (id === 'undefined:undefined') return;
+        if (this.seen.has(id)) return;
+        this.seen.set(id, Date.now());
+        if (this.seen.size > 400) { const cut = Date.now() - 30000; for (const [k, t] of this.seen) if (t < cut) this.seen.delete(k); }
+        this.mode = via;
+        this.onMsg(msg);
+    }
+    send(msg) {
+        msg.v = 1;
+        if (msg.seq === undefined) msg.seq = ++HallTransport._seq;
+        if (!msg.src) msg.src = HallTransport._src;
+        if (this.bc) { try { this.bc.postMessage(msg); } catch (_) {} }
+        try { localStorage.setItem(this.lsKey, JSON.stringify(msg)); } catch (_) {}
+    }
+}
+HallTransport._src = 'hall-' + Math.random().toString(36).slice(2, 8);
+HallTransport._seq = 0;
+
+/* ── 2. СОСТОЯНИЕ ────────────────────────────────────────────────────────── */
+class HallState {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.song = null; this.playing = false;
+        this.pos = 0; this.dur = 0;
+        this.score = 0; this.combo = 0; this.rating = '';
+        this.pitch = null;               /* {midi, cents, clarity} */
+        this.word = ''; this.next = [];
+        this.notes = [];                 /* [{s,e,p,g,w}] — окно вокруг курсора */
+        this.updated = 0;
+    }
+    apply(msg) {
+        const d = msg.d || {};
+        if (msg.t === 'HELLO') { this.hello = Date.now(); return; }
+        if (msg.t !== 'STATE') return;
+        this.song = d.song || this.song;
+        this.playing = !!d.playing;
+        this.pos = d.pos || 0; this.dur = d.dur || 0;
+        if (d.score !== undefined) this.score = d.score;
+        if (d.combo !== undefined) this.combo = d.combo;
+        if (d.rating !== undefined) this.rating = d.rating;
+        if (d.pitch !== undefined) this.pitch = d.pitch;
+        if (d.word !== undefined) this.word = d.word;
+        if (d.next !== undefined) this.next = d.next;
+        if (d.notes !== undefined) this.notes = d.notes;
+        this.updated = Date.now();
+    }
+    live() { return this.updated && (Date.now() - this.updated) < 2500; }
+}
+
+/* ── 3. РЕНДЕР ───────────────────────────────────────────────────────────── */
+class HallRenderer {
+    constructor(state) {
+        this.state = state;
+        this.el = {};
+        ['stConn','stScore','stCombo','stMic','stMsgs','bigword','nextwords','songtitle',
+         'pbar','lastRating','hallCanvas','hallStatus'].forEach(id => this.el[id] = document.getElementById(id));
+        this.cv = this.el.hallCanvas;
+        this.cx = this.cv.getContext('2d');
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.msgCount = 0;
+    }
+    resize() {
+        const r = this.cv.getBoundingClientRect();
+        this.cv.width = Math.max(320, r.width * (window.devicePixelRatio || 1));
+        this.cv.height = 300 * (window.devicePixelRatio || 1);
+    }
+    noteMidiColor(p) { const hue = (p % 12) * 30; return 'hsl(' + hue + ',70%,62%)'; }
+    frame() {
+        const s = this.state;
+        this.msgCountEl = this.msgCount;
+        /* HUD */
+        this.el.stConn.textContent = s.live() ? 'в эфире' : (this.transport ? this.transport.mode : '—');
+        this.el.stConn.className = s.live() ? 'live' : 'waiting';
+        this.el.stScore.textContent = String(s.score).padStart(6, '0');
+        this.el.stCombo.textContent = '×' + s.combo;
+        this.el.stMic.textContent = s.pitch && s.pitch.midi ? 'нота ' + s.pitch.midi : (s.live() ? 'тихо' : '—');
+        this.el.stMsgs.textContent = String(this.msgCount);
+        this.el.songtitle.textContent = 'песня: ' + (s.song || '—') + (s.live() ? (s.playing ? ' · ▶ играет' : ' · ⏸ пауза') : ' · ожидание');
+        /* слова */
+        this.el.bigword.textContent = s.word || (s.live() ? '…' : '…');
+        this.el.nextwords.textContent = s.next && s.next.length ? s.next.slice(0, 6).join(' · ') : '';
+        /* рейтинг */
+        const lr = this.el.lastRating;
+        if (s.rating) {
+            lr.style.display = 'inline-block';
+            if (lr.textContent !== s.rating) { lr.textContent = s.rating; lr.className = 'rating ' + s.rating; }
+        } else lr.style.display = 'none';
+        /* прогресс */
+        const pr = s.dur > 0 ? Math.min(100, (s.pos / s.dur) * 100) : 0;
+        this.el.pbar.style.width = pr.toFixed(2) + '%';
+        this.draw();
+    }
+    draw() {
+        const s = this.state, cx = this.cx, W = this.cv.width, H = this.cv.height, dpr = window.devicePixelRatio || 1;
+        cx.clearRect(0, 0, W, H);
+        /* сетка октавных линий */
+        cx.strokeStyle = 'rgba(31,43,58,.55)'; cx.lineWidth = 1;
+        for (let m = 48; m <= 84; m += 12) {
+            const y = this.midiToY(m, H);
+            cx.beginPath(); cx.moveTo(0, y); cx.lineTo(W, y); cx.stroke();
+        }
+        if (!s.notes.length) {
+            cx.fillStyle = 'rgba(143,163,179,.5)';
+            cx.font = (15 * dpr) + 'px system-ui';
+            cx.textAlign = 'center';
+            cx.fillText(s.live() ? 'нотная карта не передаётся — монитор голоса' : 'ожидание трансляции из ·16 СУФЛЁР', W / 2, H / 2);
+            this.ball(s, W, H, dpr);
+            return;
+        }
+        /* колбаски: окно ±6 с вокруг позиции */
+        const span = 12, t0 = s.pos - 6;
+        for (const n of s.notes) {
+            const x0 = ((n.s - t0) / span) * W, x1 = ((n.e - t0) / span) * W;
+            if (x1 < 0 || x0 > W) continue;
+            const y = this.midiToY(n.p, H), h = 16 * dpr;
+            const active = s.pos >= n.s && s.pos <= n.e;
+            cx.globalAlpha = active ? 1 : 0.45;
+            cx.fillStyle = n.g ? '#ffc36e' : this.noteMidiColor(n.p);
+            const rr = 6 * dpr, w = Math.max(4 * dpr, x1 - x0);
+            cx.beginPath();
+            if (cx.roundRect) cx.roundRect(x0, y - h / 2, w, h, rr); else cx.rect(x0, y - h / 2, w, h);
+            cx.fill();
+            if (n.w && (x1 - x0) > 46 * dpr) {
+                cx.globalAlpha = active ? 1 : 0.75;
+                cx.fillStyle = '#e8f0f6'; cx.font = (13 * dpr) + 'px system-ui'; cx.textAlign = 'left';
+                cx.fillText(n.w, x0 + 6 * dpr, y - h);
+            }
+            cx.globalAlpha = 1;
+        }
+        /* курсор */
+        const cxp = ((s.pos - t0) / span) * W;
+        cx.strokeStyle = 'rgba(94,234,212,.8)'; cx.lineWidth = 2 * dpr;
+        cx.beginPath(); cx.moveTo(cxp, 0); cx.lineTo(cxp, H); cx.stroke();
+        this.ball(s, W, H, dpr);
+    }
+    ball(s, W, H, dpr) {
+        /* шар вокалиста: позиция по X = прогресс окна, по Y = нота */
+        if (!s.pitch || !s.pitch.midi) return;
+        const y = this.midiToY(s.pitch.midi + (s.pitch.cents || 0) / 100, H);
+        const x = W * 0.5;
+        const rad = 11 * dpr;
+        const cl = Math.max(0.25, Math.min(1, s.pitch.clarity || 0));
+        const g = this.cx.createRadialGradient(x, y, 1, x, y, rad * 2.2);
+        g.addColorStop(0, 'rgba(94,234,212,' + (0.5 * cl) + ')');
+        g.addColorStop(1, 'rgba(94,234,212,0)');
+        this.cx.fillStyle = g;
+        this.cx.beginPath(); this.cx.arc(x, y, rad * 2.2, 0, Math.PI * 2); this.cx.fill();
+        this.cx.fillStyle = '#5eead4';
+        this.cx.beginPath(); this.cx.arc(x, y, rad, 0, Math.PI * 2); this.cx.fill();
+    }
+    midiToY(m, H) {
+        const lo = 46, hi = 86;
+        return H - ((Math.max(lo, Math.min(hi, m)) - lo) / (hi - lo)) * (H - 40 * (window.devicePixelRatio || 1)) - 20 * (window.devicePixelRatio || 1);
+    }
+}
+
+/* ── 4. ПРИЛОЖЕНИЕ ───────────────────────────────────────────────────────── */
+class HallApp {
+    constructor() {
+        window.__HALL = this;   /* отладка и автотесты */
+        this.state = new HallState();
+        this.renderer = new HallRenderer(this.state);
+        this.renderer.transport = null;
+        this.transport = new HallTransport((m) => this.onMsg(m));
+        this.renderer.transport = this.transport;
+        this.bindUI();
+        this.loop = this.loop.bind(this);
+        requestAnimationFrame(this.loop);
+        this.helloTimer = setInterval(() => {
+            this.transport.send({ t: 'HELLO', role: 'hall' });
+        }, 1000);
+    }
+    onMsg(msg) {
+        this.renderer.msgCount++;
+        if (msg.t === 'STATE') this.state.apply(msg);
+        else if (msg.t === 'HELLO') this.state.hello = Date.now();
+    }
+    sendCmd(cmd, v) {
+        this.transport.send({ t: 'CMD', cmd, v });
+    }
+    bindUI() {
+        const el = this.renderer.el;
+        document.getElementById('cmdPlay').addEventListener('click', () => this.sendCmd('play'));
+        document.getElementById('cmdPause').addEventListener('click', () => this.sendCmd('pause'));
+        document.getElementById('cmdStop').addEventListener('click', () => this.sendCmd('stop'));
+        document.getElementById('cmdBack').addEventListener('click', () => this.sendCmd('seek', -5));
+        document.getElementById('cmdFwd').addEventListener('click', () => this.sendCmd('seek', 5));
+        document.getElementById('btnDemo').addEventListener('click', () => this.demoOn());
+        document.getElementById('btnDemoOff').addEventListener('click', () => this.demoOff());
+    }
+    loop() {
+        this.renderer.frame();
+        requestAnimationFrame(this.loop);
+    }
+    /* ── 5. ДЕМО-ИСТОЧНИК ── */
+    demoOn() {
+        if (this.demo) return;
+        const words = ['когда', 'теряем', 'всё', 'сразу', 'мгновенья', 'ценой', 'весом', 'годы', 'помни', 'свет'];
+        const demoNotes = [];
+        let beat = 0.5;
+        for (let i = 0; i < 64; i++) {
+            const p = 60 + Math.round(7 * Math.sin(i / 3.4)) + (i % 5 === 4 ? 12 : 0);
+            demoNotes.push({ s: i * beat, e: i * beat + beat * 0.94, p, g: i % 8 === 7, w: words[i % words.length] });
+        }
+        let seq = 0, score = 0, combo = 0;
+        this.demo = setInterval(() => {
+            const pos = (Date.now() / 1000) % (64 * beat);
+            const cur = demoNotes.find(n => pos >= n.s && pos <= n.e);
+            const r = Math.random();
+            if (cur) { combo = r > 0.15 ? combo + 1 : 0; score += 100 * Math.min(Math.floor(combo / 5) + 1, 4); }
+            else combo = 0;
+            const payload = { song: 'ТЕСТ-ДЕМО · Когда теряем (синтетика)',
+                playing: true, pos, dur: 64 * beat,
+                score, combo, rating: cur ? (r > 0.3 ? 'PERFECT' : 'GOOD') : 'MISS',
+                pitch: cur ? { midi: cur.p, cents: Math.round(Math.sin(Date.now() / 200) * 12), clarity: 0.93 } : null,
+                word: cur ? cur.w : '',
+                next: demoNotes.filter(n => n.s > pos).slice(0, 6).map(n => n.w),
+                notes: demoNotes.filter(n => n.e > pos - 6 && n.s < pos + 6)
+            };
+            const msg = { t: 'STATE', seq: seq++, d: payload };
+            this.transport.send(msg);
+            this.state.apply(msg);   /* демо рисуется и в своём окне */
+            document.getElementById('btnDemoOff').disabled = false;
+        }, 120);
+    }
+    demoOff() {
+        if (this.demo) { clearInterval(this.demo); this.demo = null; }
+        document.getElementById('btnDemoOff').disabled = true;
+        this.state.reset();
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => { new HallApp(); });
+</script>
+<script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script>
+</body>
+</html>
