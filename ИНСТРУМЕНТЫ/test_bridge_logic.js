@@ -49,9 +49,9 @@ T('в ·21 нет присваиваний innerHTML (0 innerHTML в коде)',
 
 console.log('== ВЕРСИИ ==');
 T('S22.VERSION 1.1.0', s22.includes("const VERSION = '1.1.0';"));
-T('S21.VERSION 0.3.0', s21.includes("const VERSION = '0.3.0';"));
+T('S21.VERSION 0.4.0', s21.includes("const VERSION = '0.4.0';"));
 T('footer ·22 v1.1', s22.includes('«СВЯЗЬ» v1.1'));
-T('footer ·21 v0.3.0', s21.includes('«ОБЩЕНИЕ» v0.3.0'));
+T('footer ·21 v0.4.0', s21.includes('«ОБЩЕНИЕ» v0.4.0'));
 
 console.log('== ЯДРО S22 (из отгруженного файла, в песочнице) ==');
 const ctx22 = {};

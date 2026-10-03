@@ -36,6 +36,18 @@ function ок(name, cond) {
 }
 function сек(t) { console.log('— ' + t); }
 
+/* ─── 0. v1.22: UI memory.decide (решение человека = неизменяемое событие) ─── */
+сек('v1.22: memory.decide UI');
+{
+  ок('мостРешение определена в ·18', /function мостРешение\(/.test(HTML));
+  ок('решение remember привязано к «❤️ сохранить»', /мостРешение\('remember', rec\)/.test(HTML));
+  ок('решение expire привязано к «🔥 удалить»', /мостРешение\('expire', rec\)/.test(HTML));
+  ок('решение строится bridges.memoryDecisionEvent', /memoryDecisionEvent\(решение/.test(HTML));
+  ок('решение идёт через опубликуй (makeBridge)', /МОСТ18\.б\.опубликуй\(п\.event\)\.then\(function \(р\) \{\s*if \(р\.ok\) лог\('решение записано/.test(HTML));
+  ок('дедуп-ответ не спамит статус', /р\.reason !== 'DUPLICATE'/.test(HTML));
+  ок('цель решения = запись, комната из манифеста', /цельId: запись\.id/.test(HTML) && /комната: \(запись\.manifest && запись\.manifest\.room\)/.test(HTML));
+}
+
 /* ─── 1. ЯДРО ─── */
 сек('ЯДРО: код зала');
 {
