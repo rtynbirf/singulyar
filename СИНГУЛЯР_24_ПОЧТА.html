@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·24 — ПОЧТА · свой ящик у каждого</title>
+<meta name="description" content="СИНГУЛЯР ·24 «ПОЧТА» — свой почтовый ящик для каждого из круга: адрес имя@singulyar, письма ходят P2P между устройствами, ящики хранятся только на твоём устройстве, подпись и шифрование в покое, офлайн-исходящие, экспорт EML/JSON, рецепты настоящей своей почты (свой сервер, Delta Chat, алиасы).">
+<meta name="theme-color" content="#0a0f15">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<style>
+:root{
+  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
+  --teal:#61e1c4;--teal2:#38bdf8;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#a78bfa;
+  --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+html{font-size:16px}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea,select{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--teal2);outline-offset:1px}
+::placeholder{color:#5d7180}
+
+/* ── шапка ── */
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#61e1c4,#38bdf8,#61e1c4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
+.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+
+/* ── вкладки ── */
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{padding:10px 4px 12px;text-align:center;color:var(--dim);font-size:12px}
+nav.tabs button .и{font-size:22px;display:block;line-height:1.15}
+nav.tabs button[aria-selected="true"]{color:var(--teal)}
+nav.tabs button .bdg{position:relative;top:-2px;margin-left:2px;background:var(--red);color:#fff;border-radius:999px;font-size:10.5px;padding:1px 6px;font-weight:700}
+main{padding-top:16px}
+section.v{display:none}
+section.v.on{display:block}
+h2.сек{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 10px;font-family:var(--mono)}
+h2.сек:first-child{margin-top:4px}
+
+/* ── панели ── */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.note{color:var(--dim);font-size:13.5px}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);min-height:1.4em}
+.status.ok{color:var(--green)} .status.warn{color:var(--amber)} .status.err{color:var(--red)}
+
+/* ── папки ── */
+.папки{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.папки button{flex:none;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--dim)}
+.папки button[aria-pressed="true"]{color:#04121c;background:linear-gradient(135deg,var(--teal),var(--teal2));border-color:transparent;font-weight:700}
+.папки .счёт{font-family:var(--mono);font-size:11px;margin-left:4px}
+
+/* ── список писем ── */
+.list{display:flex;flex-direction:column;gap:8px}
+.письмо{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.письмо:hover{border-color:#2e4155}
+.письмо.не-прочитано{border-left:3px solid var(--teal)}
+.письмо .ав{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:24px;background:var(--panel2);flex:none}
+.письмо .тело{flex:1;min-width:0}
+.письмо .от-строка{display:flex;gap:8px;align-items:baseline}
+.письмо .от{font-weight:700}
+.письмо .адрес{color:var(--dim);font-size:12px;font-family:var(--mono)}
+.письмо .тема{font-size:15px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.письмо.не-прочитано .тема{font-weight:700}
+.письмо .превью{color:var(--dim);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.письмо .мета{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none}
+.письмо .время{color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.письмо .скрепка{font-size:14px}
+.письмо .папка-мета{font-size:10px;color:var(--violet);border:1px solid #3b2e63;border-radius:6px;padding:0 6px;background:#171226;font-family:var(--mono)}
+.пусто{text-align:center;color:var(--dim);padding:26px 10px;border:1px dashed var(--line);border-radius:var(--r)}
+
+/* ── композер ── */
+.поле{margin-bottom:10px}
+.поле label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:4px;font-family:var(--mono)}
+.книга{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin-top:6px}
+.книга button{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 4px;font-size:11px}
+.книга button .ав{font-size:22px}
+.книга button[aria-pressed="true"]{border-color:var(--teal);background:#0f2620}
+.вложения{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.вложения .вл{display:flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:12.5px}
+.ряд-кнопок{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ряд-кнопок .осн{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:11px 18px}
+.ряд-кнопок .тих{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 16px}
+.ряд-кнопок .опас{background:#2a1215;border:1px solid #5b2323;color:var(--red);border-radius:12px;padding:11px 16px}
+
+/* ── чтение ── */
+.овер{position:fixed;inset:0;z-index:60;background:rgba(4,8,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.овер.on{display:flex}
+.карта{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:22px}
+.карта h3{font-size:19px;margin-bottom:6px}
+.письмо-полное .шапка{border-bottom:1px dashed var(--line);padding-bottom:10px;margin-bottom:10px}
+.письмо-полное .текст{white-space:pre-wrap;word-break:break-word;font-size:15px;margin:10px 0}
+.вл-строка{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13.5px;margin-top:6px}
+.идент-сетка{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin:14px 0}
+.идент-карт{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.идент-карт .ав{font-size:26px}
+.идент-карт b{font-size:12px}
+.идент-карт[aria-pressed="true"]{border-color:var(--teal);background:#0f2620}
+
+/* ── рецепты / аккордеоны ── */
+details.рец{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+details.рец summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
+details.рец summary::-webkit-details-marker{display:none}
+details.рец summary::before{content:'▸';color:var(--teal);font-family:var(--mono)}
+details.рец[open] summary::before{content:'▾'}
+details.рец ol,details.рец ul{margin:10px 0 2px 20px;display:flex;flex-direction:column;gap:6px}
+details.рец li{font-size:14.5px}
+details.рец .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
+
+.сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
+footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
+.toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
+.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+@media (max-width:640px){
+  .wrap{padding:0 10px}
+  .я-chip em{max-width:70px}
+  .книга{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <div class="logo">S·24</div>
+  <div><b>ПОЧТА</b><span>свой ящик у каждого · письма P2P · вселенная RUVSON</span></div>
+  <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипАдрес">нет ящика</small></span></button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ═════════ ЯЩИК ═════════ -->
+<section class="v on" id="v-mail" role="tabpanel" aria-label="Ящик">
+  <h2 class="сек">Папки</h2>
+  <div class="папки" id="папки" role="tablist" aria-label="Папки почты"></div>
+  <div class="list" id="списокПисем"></div>
+  <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
+
+  <h2 class="сек">Быстрое действие</h2>
+  <div class="ряд-кнопок" style="margin-top:0">
+    <button class="осн" id="btnНаписать">✏️ написать</button>
+    <button class="тих" id="btnОбновить">↻ добрать историю</button>
+    <button class="тих" id="btnВсеПрочитано">✓ всё прочитано</button>
+  </div>
+</section>
+
+<!-- ═════════ НАПИСАТЬ ═════════ -->
+<section class="v" id="v-compose" role="tabpanel" aria-label="Написать">
+  <h2 class="сек">Новое письмо</h2>
+  <div class="panel">
+    <div class="поле">
+      <label for="полеКому">Кому (адрес или имя круга; можно несколько через запятую)</label>
+      <input id="полеКому" placeholder="anya@singulyar или АНЯ, ИВАН" autocomplete="off">
+      <div class="книга" id="книга"></div>
+    </div>
+    <div class="поле">
+      <label for="полеТема">Тема</label>
+      <input id="полеТема" placeholder="о чём письмо" autocomplete="off">
+    </div>
+    <div class="поле">
+      <label for="полеТекст">Письмо</label>
+      <textarea id="полеТекст" rows="7" placeholder="текст письма…"></textarea>
+    </div>
+    <div class="вложения" id="вложения"></div>
+    <div class="ряд-кнопок">
+      <button class="осн" id="btnОтправить">➤ отправить</button>
+      <button class="тих" id="btnЧерновик">📝 в черновики</button>
+      <button class="тих" id="btnВложение">📎 вложение</button>
+      <button class="тих" id="btnОчистить">✖ очистить</button>
+    </div>
+    <input type="file" id="файлВложение" hidden>
+    <p class="note" style="margin-top:10px">Письмо подписывается твоим ключом и уходит P2P — напрямую адресату, без почтовых серверов. Пока адресат офлайн, письмо ждёт в «Исходящих» и уйдёт при встрече устройств. Вложение — до 512 КБ.</p>
+  </div>
+</section>
+
+<!-- ═════════ Я И ЯЩИК ═════════ -->
+<section class="v" id="v-me" role="tabpanel" aria-label="Ящик и настройки">
+  <h2 class="сек">Мой ящик</h2>
+  <div class="panel" id="яКто"></div>
+
+  <h2 class="сек">СВОЯ почта настоящая — лучшие практики · без вендорской клетки</h2>
+  <p class="note" style="margin-bottom:10px">Ящик выше живёт в сети СИНГУЛЯРА (P2P). Если нужна почта для всего остального мира — она тоже должна быть ТВОЯ: свой домен, свой сервер или свой существующий ящик с шифрованием. Ниже — рабочие пути 2025–2026, выбирай по силам.</p>
+  <details class="рец"><summary>🏠 Путь 1 · свой почтовый сервер (полная автономия)</summary>
+    <ol>
+      <li><b>Stalwart</b> (Rust, всё-в-одном: SMTP+IMAP+JMAP, веб-админка) — самый современный, лёгкий: <a href="https://stalw.art" rel="noopener" target="_blank">stalw.art</a></li>
+      <li><b>Mail-in-a-Box</b> — «нажал и работает» на Ubuntu: DNS, SPF, DKIM, webmail: <a href="https://mailinabox.email" rel="noopener" target="_blank">mailinabox.email</a></li>
+      <li><b>Mailu</b> или <b>mailcow</b> — docker-наборы с веб-почтой и админкой.</li>
+    </ol>
+    <p class="пимечт">Нужен: свой домен (~200–900 ₽/год), VPS с портом 25 открытым и чистым IP. DNS-записи (MX, SPF, DKIM, DMARC) сервер настроит подскажет сам. После подъёма — у каждого из круга может быть свой ящик на ТВОЁМ домене: pasha@твой-домен, anya@твой-домен…</p>
+  </details>
+  <details class="рец"><summary>🔒 Путь 2 · свой существующий ящик + шифрование (без сервера)</summary>
+    <ol>
+      <li><b>Delta Chat</b> — мессенджер поверх обычной почты: подключает ТВОЙ существующий ящик (любого провайдера), письма шифруются Autocrypt/OpenPGP, выглядит как чат: <a href="https://delta.chat" rel="noopener" target="_blank">delta.chat</a></li>
+      <li>Thunderbird + OpenPGP — классика на ноутбук/ПК.</li>
+    </ol>
+    <p class="пимечт">Никакого своего сервера: IMAP/SMTP делает твой почтовый провайдер, ключи — только у тебя. Это путь «свой ящик сегодня вечером».</p>
+  </details>
+  <details class="рец"><summary>🎭 Путь 3 · алиасы вместо настоящего адреса (приватность)</summary>
+    <ol>
+      <li><b>addy.io</b> (ex-AnonAddy) и <b>SimpleLogin</b> (Proton) — генераторы алиасов: письма на алиас падают в твой настоящий ящик, продавец алиаса не знает настоящий адрес.</li>
+      <li>Свой домен + catch-all — алиасы без лимитов: купил домен, всё что угодно@твой-домен — уже твой.</li>
+    </ol>
+    <p class="пимечт">Правило гигиены: каждому сервису — свой алиас; спам? отключил алиас — и его больше нет.</p>
+  </details>
+  <details class="рец"><summary>🧾 Путь 4 · мост СИНГУЛЯР ⇄ настоящая почта (честный статус)</summary>
+    <ol>
+      <li>Браузер не умеет SMTP/IMAP — порты закрыты везде и всеми, это не «наша» граница, а закон браузеров.</li>
+      <li>Мост работает так: поднимаешь Путь 1 или ставишь Delta Chat (Путь 2) — и передаёшь письма через <b>экспорт EML</b> (кнопка ниже в письме) / импорт.</li>
+      <li>Прямой автоматический мост — нужен свой маленький сервер-ретранслятор рядом с SINGULAR SERVER v1 (рецепт в ДОКУМЕНТЫ).</li>
+    </ol>
+    <p class="пимечт" id="мостСтатус">Статус моста SMTP: ЧЕСТНО НЕДОСТУПЕН, пока нет своего сервера — выдумывать не будем.</p>
+  </details>
+
+  <h2 class="сек">Данные и границы</h2>
+  <div class="panel">
+    <p class="note" id="границаТекст">Ящики хранятся только на устройстве (IndexedDB, шифрование в покое твоим ключом). Серверу СИНГУЛЯРА не достаётся ни письма, ни адресной книги — его и нет. Экспорт — право человека.</p>
+    <div class="ряд-кнопок">
+      <button class="тих" id="btnЭкспортJSON">⬇ экспорт всего (JSON)</button>
+      <button class="опас" id="btnСтеретьВсё">🗑 стереть все письма</button>
+    </div>
+  </div>
+
+  <h2 class="сек">Вся вселенная · модули</h2>
+  <div class="сетка-ссылки" id="модулиСсылки"></div>
+</section>
+
+</main>
+
+<!-- ═════════ ВКЛАДКИ ═════════ -->
+<nav class="tabs" role="tablist" aria-label="Разделы ПОЧТЫ">
+  <button id="tab-mail" aria-selected="true" aria-controls="v-mail"><span class="и">📮</span>ЯЩИК<span class="bdg" id="бейджВсего" hidden>0</span></button>
+  <button id="tab-compose" aria-selected="false" aria-controls="v-compose"><span class="и">✏️</span>НАПИСАТЬ</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🔑</span>ЯЩИК-Я</button>
+</nav>
+
+<!-- ═════════ ЧТЕНИЕ ПИСЬМА ═════════ -->
+<div class="овер" id="чтоОвер" role="dialog" aria-modal="true" aria-label="Письмо">
+  <div class="карта письмо-полное" id="чтоКарта"></div>
+</div>
+
+<!-- ═════════ КТО ТЫ ═════════ -->
+<div class="овер" id="идентОвер" role="dialog" aria-modal="true" aria-label="Кто ты">
+  <div class="карта">
+    <h3>Кто ты — тот и ящик</h3>
+    <p class="note">Выбери себя — ящик создастся мгновенно: имя@singulyar. Если тебя нет в круге — впиши своё имя (короткие имена круга защищены, гости пишут нейтральное слово ПЕРЕД именем: «ГОСТЬ МАША»).</p>
+    <div class="идент-сетка" id="идентСетка"></div>
+    <label class="note" for="идентВвод">Или твоё имя:</label>
+    <input id="идентВвод" placeholder="например: ГОСТЬ МАША или КАПИТАН ДИМА" style="margin-top:6px">
+    <div class="status" id="идентСтатус" role="status"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:12px">создать мой ящик →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-холд" id="toastХолд" aria-live="polite"></div>
+
+<footer><div class="wrap">
+  СИНГУЛЯР ·24 «ПОЧТА» v1.0 · свой ящик у каждого · подпись ECDSA + шифрование в покое · P2P-доставка (Nostr-сигналинг) + мост вкладок одного браузера · офлайн-исходящие · экспорт EML/JSON · данные только на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
+</div></footer>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·24 «ПОЧТА» v1.0 — свой ящик у каждого.
+   Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
+   Слои: РЕЕСТР → АДРЕСА → ГВАРД → КРИПТО → ХРАН → ЯДРО → UI → СЕТЬ → PWA.
+   Тестовые крюки: window.K24 (только чтение).
+   ═══════════════════════════════════════════════════════════════════ */
+'use strict';
+/* S24:CORE-BEGIN */
+const VERSION = '1.0.0';
+const ДОМЕН = 'singulyar';
+const ФОРДЕРЫ = ['входящие','исходящие','отправленные','черновики','архив','корзина'];
+
+/* ── 1 · РЕЕСТР КРУГА (как в ·23) ── */
+const РЕЕСТР = [
+  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'] },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
+  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[] },
+  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[] },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[] },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[] },
+  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[] },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[] },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[] },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[] },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[] },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[] },
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'] }
+];
+
+/* ── 2 · АДРЕСА ── */
+function норм(с){ return String(с||'').toUpperCase().replace(/Ё/g,'Е').replace(/\s+/g,' ').trim(); }
+function адресПоИд(ид){ return String(ид).toLowerCase() + '@' + ДОМЕН; }
+function человекПоАдресу(адрес){
+  const а = String(адрес||'').toLowerCase().trim();
+  const безДомена = а.indexOf('@' + ДОМЕН) === а.length - ДОМЕН.length - 1 && а.indexOf('@') !== -1 ? а.slice(0, а.indexOf('@')) : null;
+  if (!безДомена) return null;
+  return РЕЕСТР.find(function(ч){ return ч.id === безДомена; }) || null;
+}
+function адресГостя(deviceId){
+  const х = String(deviceId||'x');
+  let сум = 0; for (let i = 0; i < х.length; i++) сум = (сум * 31 + х.charCodeAt(i)) >>> 0;
+  return 'g' + (сум % 10000).toString().padStart(4,'0') + '@' + ДОМЕН;
+}
+function мойАдрес(Я){
+  if (!Я) return null;
+  if (Я.тип === 'свой') { const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; }); if (ч) return адресПоИд(ч.id); }
+  return адресГостя(Я.deviceId);
+}
+/* Разбор строки «Кому»: имена круга (ПАША, БАБА…), адреса целиком, через запятую.
+   Возвращает {ok, адреса:[], причины:[]} — чужой строке отказ без молчалки. */
+function разбериКому(ввод){
+  const причины = [], адреса = [];
+  String(ввод||'').split(',').forEach(function(кусок){
+    const с = кусок.trim();
+    if (!с) return;
+    if (с.indexOf('@') !== -1) {
+      if (с.toLowerCase().endsWith('@' + ДОМЕН) && (человекПоАдресу(с) || /^g\d{4}@/.test(с.toLowerCase()))) {
+        if (адреса.indexOf(с.toLowerCase()) === -1) адреса.push(с.toLowerCase());
+      } else причины.push(с + ' — не адрес сети ' + ДОМЕН);
+      return;
+    }
+    const н = норм(с);
+    const ч = РЕЕСТР.find(function(x){ return норм(x.имя) === н || x.алиасы.some(function(а){ return норм(а) === н; }); });
+    if (ч) { const адр = адресПоИд(ч.id); if (адреса.indexOf(адр) === -1) адреса.push(адр); }
+    else причины.push(с + ' — нет в круге и не адрес');
+  });
+  if (!адреса.length && !причины.length) причины.push('впиши получателя');
+  return { ok: причины.length === 0 && адреса.length > 0, адреса: адреса, причины: причины };
+}
+
+/* ── 3 · ГВАРД КОРОТКИХ ИМЁН (как в ·23) ── */
+const ЗАЩИЩЁННЫЕ = (function(){
+  const s = new Set();
+  РЕЕСТР.forEach(function(ч){ s.add(норм(ч.имя)); ч.алиасы.forEach(function(а){ s.add(норм(а)); }); });
+  s.add('RUVSON'); s.add('РУВСОН');
+  return s;
+})();
+function этоЗащищённоеИмя(имя){ return ЗАЩИЩЁННЫЕ.has(норм(имя)); }
+function проверьИмя(ввод){
+  const н = норм(ввод);
+  if (!н) return { ok:false, причина:'впиши имя' };
+  if (н.length > 40) return { ok:false, причина:'имя длиннее 40 знаков — короче' };
+  if (!этоЗащищённоеИмя(н)) return { ok:true, тип:'гость', имя:н };
+  return { ok:false, причина:'короткое имя защищено' };
+}
+function собериСПрефиксом(префикс, имя){
+  const п = норм(префикс), и = норм(имя);
+  if (!п || п.length < 2) return { ok:false, причина:'префикс слишком короткий' };
+  if (этоЗащищённоеИмя(п)) return { ok:false, причина:'это слово само защищено' };
+  if (!и) return { ok:false, причина:'нужно и имя' };
+  return { ok:true, тип:'гость', имя: п + ' ' + и };
+}
+
+/* ── 4 · КРИПТО: подпись ECDSA P-256 + шифрование в покое AES-GCM ── */
+const КР = (globalThis.crypto && globalThis.crypto.subtle) ? globalThis.crypto : null;
+function б64изБуфера(б){ const байты = new Uint8Array(б); let с = ''; for (let i = 0; i < байты.length; i++) с += String.fromCharCode(байты[i]); return btoa(с); }
+function буферИзБ64(с){ const сырьё = atob(String(с)); const байты = new Uint8Array(сырьё.length); for (let i = 0; i < сырьё.length; i++) байты[i] = сырьё.charCodeAt(i); return байты.buffer; }
+function б64urlИзJwk(ж){ return б64изБуфера(new TextEncoder().encode(JSON.stringify(ж))); }
+/* Подпись строки личным ключом: {sig,.pub} — pub прикладывается к письму */
+function криптоПодпись(ключ, строка){
+  const данные = new TextEncoder().encode(String(строка));
+  return КР.subtle.sign({ name:'ECDSA', hash:'SHA-256' }, ключ, данные).then(б64изБуфера);
+}
+function криптоПроверка(публJwk, строка, sig64){
+  return КР.subtle.importKey('jwk', публJwk, { name:'ECDSA', namedCurve:'P-256' }, true, ['verify'])
+    .then(function(публ){
+      return КР.subtle.verify({ name:'ECDSA', hash:'SHA-256' }, публ, буферИзБ64(sig64), new TextEncoder().encode(String(строка)));
+    })
+    .catch(function(){ return false; });
+}
+/* Письмо для подписи: канонический JSON без sig/pub */
+function строкаПодписи(п){
+  const копия = Object.assign({}, п); delete копия.sig; delete копия.pub;
+  return JSON.stringify({ id:копия.id, от:копия.от, кому:копия.кому, тема:копия.тема, текст:копия.текст, ts:копия.ts, вложения:копия.вложения || [] });
+}
+function валидноеПисьмо(п){
+  if (!п || typeof п !== 'object') return { ok:false, причина:'не письмо' };
+  if (!п.id || typeof п.id !== 'string') return { ok:false, причина:'без id' };
+  if (!п.от || !п.от.адрес || typeof п.от.адрес !== 'string') return { ok:false, причина:'без отправителя' };
+  if (!Array.isArray(п.кому) || !п.кому.length || !п.кому.every(function(а){ return typeof а === 'string'; })) return { ok:false, причина:'без получателей' };
+  if (typeof п.тема !== 'string' || п.тема.length > 200) return { ok:false, причина:'тема' };
+  if (typeof п.текст !== 'string' || п.текст.length > 60000) return { ok:false, причина:'текст: пусто или слишком длинно' };
+  if (!Number.isFinite(п.ts)) return { ok:false, причина:'без времени' };
+  if (п.вложения && !Array.isArray(п.вложения)) return { ok:false, причина:'вложения' };
+  if (п.вложения && п.вложения.length > 8) return { ok:false, причина:'вложений больше 8' };
+  return { ok:true };
+}
+
+/* ── 5 · ХРАН (IndexedDB): письма зашифрованы в покое, ключ non-exportable ── */
+const ХРАН = (function(){
+  let дбП = null;
+  function открой(){
+    if (дбП) return дбП;
+    дбП = new Promise(function(res, rej){
+      const rq = indexedDB.open('singular-mail-v1', 1);
+      rq.onupgradeneeded = function(){
+        const б = rq.result;
+        if (!б.objectStoreNames.contains('письма')) б.createObjectStore('письма', { keyPath:'id' });
+        if (!б.objectStoreNames.contains('блоб')) б.createObjectStore('блоб');
+        if (!б.objectStoreNames.contains('ключи')) б.createObjectStore('ключи');
+      };
+      rq.onsuccess = function(){ res(rq.result); };
+      rq.onerror = function(){ rej(rq.error); };
+    });
+    return дбП;
+  }
+  function транз(склад, режим){ return открой().then(function(б){ return б.transaction(склад, режим).objectStore(склад); }); }
+  function запрос(rq){
+    return new Promise(function(res, rej){ rq.onsuccess = function(){ res(rq.result); }; rq.onerror = function(){ rej(rq.error); }; });
+  }
+  /* ключ шифрования в покое: один на устройство, non-extractable */
+  let аесП = null;
+  function ключПокоя(){
+    if (аесП) return аесП;
+    аесП = транз('ключи','readonly').then(function(ск){ return запрос(ск.get('покой')); }).then(function(наш){
+      if (наш) return наш;
+      return КР.subtle.generateKey({ name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']).then(function(к){
+        return транз('ключи','readwrite').then(function(ск){ return запрос(ск.put(к,'покой')).then(function(){ return к; }); });
+      });
+    });
+    return аесП;
+  }
+  function шифруй(объект){
+    return ключПокоя().then(function(к){
+      const iv = КР.getRandomValues(new Uint8Array(12));
+      return КР.subtle.encrypt({ name:'AES-GCM', iv:iv }, к, new TextEncoder().encode(JSON.stringify(объект))).then(function(шифр){
+        return { ш:б64изБуфера(шифр), iv:б64изБуфера(iv.buffer) };
+      });
+    });
+  }
+  function расшифруй(пак){
+    return ключПокоя().then(function(к){
+      return КР.subtle.decrypt({ name:'AES-GCM', iv:new Uint8Array(буферИзБ64(пак.iv)) }, к, буферИзБ64(пак.ш))
+        .then(function(ясный){ return JSON.parse(new TextDecoder().decode(ясный)); });
+    }).catch(function(){ return null; });
+  }
+  function положиПисьмо(п, блобы){
+    return шифруй(п).then(function(пак){
+      return транз('письма','readwrite').then(function(ск){
+        return запрос(ск.put(Object.assign({ _пак:пак }, { id:п.id, папка:п.папка, ts:п.ts, прочитано:!!п.прочитано }))).then(function(){
+          return Promise.all((блобы || []).map(function(б){ return транз('блоб','readwrite').then(function(скб){ return запрос(скб.put(б.блоб, б.ид)); }); }));
+        });
+      });
+    });
+  }
+  function возьмиПисьмо(ид){
+    return транз('письма','readonly').then(function(ск){ return запрос(ск.get(ид)); })
+      .then(function(сырое){ return сырое ? расшифруй(сырое._пак).then(function(п){ return п ? Object.assign(п, { папка:сырое.папка, прочитано:сырое.прочитано }) : null; }) : null; });
+  }
+  function всеПисьма(){
+    return транз('письма','readonly').then(function(ск){ return запрос(ск.getAll()); }).then(function(сырые){
+      return Promise.all(сырые.map(function(с){ return расшифруй(с._пак).then(function(п){ return п ? Object.assign(п, { папка:с.папка, прочитано:с.прочитано }) : null; }); }));
+    }).then(function(спис){ return спис.filter(Boolean); });
+  }
+  function движПисьмо(ид, папка, прочитано){
+    return транз('письма','readonly').then(function(ск){ return запрос(ск.get(ид)); }).then(function(с){
+      if (!с) return null;
+      return транз('письма','readwrite').then(function(ск2){
+        const новый = Object.assign({}, с, { папка: папка === undefined ? с.папка : папка, прочитано: прочитано === undefined ? с.прочитано : !!прочитано });
+        return запрос(ск2.put(новый)).then(function(){ return новый; });
+      });
+    });
+  }
+  function стеретьВсё(){
+    return транз('письма','readwrite').then(function(ск){ return запрос(ск.clear()); })
+      .then(function(){ return транз('блоб','readwrite').then(function(ск){ return запрос(ск.clear()); }); });
+  }
+  return { открой:открой, положиПисьмо:положиПисьмо, возьмиПисьмо:возьмиПисьмо, всеПисьма:всеПисьма, движПисьмо:движПисьмо, стеретьВсё:стеретьВсё, положиBlob:function(ид,блоб){ return транз('блоб','readwrite').then(function(ск){ return запрос(ск.put(блоб, ид)); }); }, возьмиBlob:function(ид){ return транз('блоб','readonly').then(function(ск){ return запрос(ск.get(ид)); }); }, ключи:function(){ return транз('ключи','readwrite'); } };
+})();
+
+/* личность почты: ключ подписи ECDSA non-exportable в IndexedDB,
+   публичный JWK хранится рядом — он уходит с письмом для проверки подписи */
+const ЛИЧНОСТЬ = (function(){
+  let кэш = null;
+  function создать(){
+    if (!КР) return Promise.resolve(null);
+    return КР.subtle.generateKey({ name:'ECDSA', namedCurve:'P-256' }, false, ['sign','verify']).then(function(пара){
+      return КР.subtle.exportKey('jwk', пара.publicKey).then(function(публ){
+        кэш = { приват:пара.privateKey, публ:публ };
+        return ХРАН.открой().then(function(б){
+          const ск = б.transaction('ключи','readwrite').objectStore('ключи');
+          ск.put(пара.privateKey, 'подпись'); ск.put(публ, 'публичный');
+          return кэш;
+        });
+      });
+    });
+  }
+  function получить(){
+    if (кэш) return Promise.resolve(кэш);
+    return ХРАН.открой().then(function(б){
+      const ск = б.transaction('ключи').objectStore('ключи');
+      const гет = function(к){ return new Promise(function(res){ const rq = ск.get(к); rq.onsuccess = function(){ res(rq.result || null); }; rq.onerror = function(){ res(null); }; }); };
+      return Promise.all([гет('подпись'), гет('публичный')]);
+    }).then(function(пара){
+      if (пара && пара[0] && пара[1]) { кэш = { приват:пара[0], публ:пара[1] }; return кэш; }
+      return создать();
+    });
+  }
+  return { получить:получить, создать:создать, сейчас:function(){ return кэш; } };
+})();
+
+/* ── 6 · ЯДРО: очередь доставки, папки, объединение истории, EML ── */
+/* Жизнь письма: черновик → (подпись) → исходящие → ack → отправленные.
+   Входящее падает в «входящие» сразу при приёме. */
+function письмо_в_исходящие(п){
+  const в = валидноеПисьмо(п);
+  if (!в.ok) return { ok:false, причина:в.причина };
+  const копия = Object.assign({}, п, { папка:'исходящие', прочитано:true, подписано:false });
+  return { ok:true, письмо:копия };
+}
+function письмо_подписано(п, sig, публJwk){
+  return Object.assign({}, п, { sig:sig, pub:публJwk, подписано:true });
+}
+function письмо_доставлено(п){ /* ack пришёл — переносим в отправленные */
+  if (п.папка !== 'исходящие') return { ok:false, причина:'не в исходящих' };
+  return { ok:true, письмо:Object.assign({}, п, { папка:'отправленные', доставлено:Date.now() }) };
+}
+function письмо_в_корзину(п){ return Object.assign({}, п, { папка:'корзина' }); }
+function письмо_в_архив(п){ return Object.assign({}, п, { папка:'архив' }); }
+/* Объединение истории при встрече устройств: дедуп по id, стабильный порядок по ts */
+function объединитьИсторию(локал, пришедшие){
+  const карта = {};
+  (локал || []).forEach(function(п){ if (п && п.id) карта[п.id] = п; });
+  (пришедшие || []).forEach(function(п){ if (п && п.id && валидноеПисьмо(п).ok && !карта[п.id]) карта[п.id] = п; });
+  return Object.keys(карта).map(function(к){ return карта[к]; }).sort(function(а, б){ return а.ts - б.ts; });
+}
+/* EML-экспорт (RFC-подобный, честно помечен) */
+function экспортEML(п){
+  const дата = new Date(п.ts).toUTCString();
+  const строки = [
+    'From: ' + (п.от.имя || п.от.адрес) + ' <' + п.от.адрес + '>',
+    'To: ' + (п.кому || []).join(', '),
+    'Subject: ' + String(п.тема || '(без темы)'),
+    'Date: ' + дата,
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=utf-8',
+    'X-Singulyar-Sig: ' + (п.sig || 'нет'),
+    'X-Singulyar-Network: P2P singulyar (не SMTP)',
+    '',
+    String(п.текст || '')
+  ];
+  if (п.вложения && п.вложения.length) строки.splice(8, 0, 'X-Singulyar-Attachments: ' + п.вложения.map(function(в){ return в.имя; }).join('; '));
+  return строки.join('\r\n');
+}
+/* Балидж непрочитанных по папкам (считается, не зашит) */
+function балиджиПапок(спис){
+  const м = {};
+  ФОРДЕРЫ.forEach(function(ф){ м[ф] = 0; });
+  (спис || []).forEach(function(п){ if (м[п.папка] !== undefined) { м[п.папка]++; if (!п.прочитано && п.папка === 'входящие') м._непрочит = (м._непрочит || 0) + 1; } });
+  return м;
+}
+
+const S24 = {
+  VERSION: VERSION, ДОМЕН: ДОМЕН, ФОРДЕРЫ: ФОРДЕРЫ, РЕЕСТР: РЕЕСТР,
+  норм:норм, адресПоИд:адресПоИд, человекПоАдресу:человекПоАдресу, адресГостя:адресГостя, мойАдрес:мойАдрес,
+  разбериКому:разбериКому, этоЗащищённоеИмя:этоЗащищённоеИмя, проверьИмя:проверьИмя, собериСПрефиксом:собериСПрефиксом,
+  криптоПодпись:криптоПодпись, криптоПроверка:криптоПроверка, строкаПодписи:строкаПодписи, валидноеПисьмо:валидноеПисьмо,
+  письмо_в_исходящие:письмо_в_исходящие, письмо_подписано:письмо_подписано, письмо_доставлено:письмо_доставлено,
+  письмо_в_корзину:письмо_в_корзину, письмо_в_архив:письмо_в_архив,
+  объединитьИсторию:объединитьИсторию, экспортEML:экспортEML, балиджиПапок:балиджиПапок,
+  ХРАН:ХРАН, ЛИЧНОСТЬ:ЛИЧНОСТЬ, криптоЖивой:function(){ return !!КР; }
+};
+/* S24:CORE-END */
+</script>
+<script>
+'use strict';
+/* ───────────────────── 7 · DOM-фабрика и утилиты ───────────────────── */
+function эл(тег, атр, дети){
+  const н = document.createElement(тег);
+  if (атр) Object.keys(атр).forEach(function(к){
+    if (к === 'class') н.className = атр[к];
+    else if (к === 'text') н.textContent = атр[к];
+    else if (к.slice(0,2) === 'on') н.addEventListener(к.slice(2), атр[к]);
+    else if (атр[к] !== null && атр[к] !== undefined) н.setAttribute(к, атр[к]);
+  });
+  (дети || []).forEach(function(д){ if (д) н.appendChild(д); });
+  return н;
+}
+function $(ид){ return document.getElementById(ид); }
+function тост(с){
+  const узел = эл('div', { class:'toast', text:с });
+  $('toastХолд').appendChild(узел);
+  setTimeout(function(){ узел.remove(); }, 4200);
+}
+function времяК(ц){ const d = new Date(ц); return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2); }
+function деньК(ц){
+  const d = new Date(ц), с = new Date(); const в = new Date(с.getFullYear(), с.getMonth(), с.getDate());
+  const дн = Math.round((в - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
+  if (дн === 0) return 'сегодня ' + времяК(ц);
+  if (дн === 1) return 'вчера ' + времяК(ц);
+  return d.toLocaleDateString('ru-RU', { day:'numeric', month:'short' }) + ' ' + времяК(ц);
+}
+
+/* ───────────────────── 8 · ЛИЧНОСТЬ ПОЧТЫ (мост к КРУГУ ·23 read-only) ───────────────────── */
+let Я = null;
+try { Я = JSON.parse(localStorage.getItem('singular.krug.v1.identity') || 'null'); } catch (e) { Я = null; }
+const КЛЮЧ_ЛИЧН = 'singular.mail.v1.identity';
+function лсЧитай(ключ, дефо){ try { const v = localStorage.getItem(ключ); return v === null ? дефо : JSON.parse(v); } catch (e) { return дефо; } }
+function лсПиши(ключ, зн){ try { localStorage.setItem(ключ, JSON.stringify(зн)); } catch (e) {} }
+if (!Я || !Я.deviceId) Я = лсЧитай(КЛЮЧ_ЛИЧН, null); /* своя локальная личность, если КРУГА нет */
+function сохраниЛичность(л){ Я = л; лсПиши(КЛЮЧ_ЛИЧН, л); рендерЯЧип(); рендерЯ(); }
+
+/* ───────────────────── 9 · ВКЛАДКИ ───────────────────── */
+let активПапка = 'входящие';
+function откройВкладку(имя){
+  ['mail','compose','me'].forEach(function(v){
+    $('v-' + v).classList.toggle('on', v === имя);
+    $('tab-' + v).setAttribute('aria-selected', v === имя ? 'true' : 'false');
+  });
+  if (имя === 'mail') рендерСписок();
+  if (имя === 'compose') рендерКнига();
+  if (имя === 'me') рендерЯ();
+}
+['mail','compose','me'].forEach(function(v){
+  $('tab-' + v).addEventListener('click', function(){ откройВкладку(v); });
+});
+
+/* ───────────────────── 10 · РЕНДЕР: папки, список, книга, я ───────────────────── */
+let КЭШ_ПИСЕМ = [];
+function обновиКэш(){ return ХРАН.всеПисьма().then(function(спис){ КЭШ_ПИСЕМ = спис; return спис; }); }
+function рендерПапки(){
+  const холд = $('папки'); холд.textContent = '';
+  const м = балиджиПапок(КЭШ_ПИСЕМ);
+  ФОРДЕРЫ.forEach(function(ф){
+    const б = эл('button', { text:ф, role:'tab', 'aria-pressed':String(ф === активПапка), onclick:function(){ активПапка = ф; рендерПапки(); рендерСписок(); } });
+    б.appendChild(эл('span', { class:'счёт', text:String(м[ф] || 0) }));
+    холд.appendChild(б);
+  });
+  const всего = м._непрочит || 0;
+  const бд = $('бейджВсего');
+  бд.hidden = всего === 0; бд.textContent = String(всего);
+}
+function рендерСписок(){
+  рендерПапки();
+  const холд = $('списокПисем'); холд.textContent = '';
+  const список = КЭШ_ПИСЕМ.filter(function(п){ return п.папка === активПапка; })
+    .sort(function(а, б){ return б.ts - а.ts; });
+  if (!список.length) {
+    холд.appendChild(эл('div', { class:'пусто', text:'папка «' + активПапка + '» пуста — это честно, писем не выдумываем' }));
+    return;
+  }
+  список.forEach(function(п){ холд.appendChild(узелПисьма(п)); });
+}
+function узелПисьма(п){
+  const моё = Я && п.от.адрес === мойАдрес(Я);
+  const ч = человекПоАдресу(моё ? (п.кому[0] || '') : п.от.адрес);
+  const ав = ч ? ч.эмодзи : (моё ? '📤' : '👤');
+  const тема = п.тема || '(без темы)';
+  const карточка = эл('div', { class:'письмо' + (п.папка === 'входящие' && !п.прочитано ? ' не-прочитано' : ''), role:'button', tabindex:'0' });
+  const открыть = function(){ открытьПисьмо(п.id); };
+  карточка.addEventListener('click', открыть);
+  карточка.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.repeat) открыть(); });
+  const мета = эл('div', { class:'мета' }, [эл('span', { class:'время', text:деньК(п.ts) })]);
+  if (п.вложения && п.вложения.length) мета.appendChild(эл('span', { class:'скрепка', text:'📎 ' + п.вложения.length }));
+  if (п.папка === 'исходящие') мета.appendChild(эл('span', { class:'папка-мета', text:'ждёт встречи' }));
+  if (п.папка === 'отправленные' && п.доставлено) мета.appendChild(эл('span', { class:'папка-мета', text:'доставлено' }));
+  const тело = эл('div', { class:'тело' }, [
+    эл('div', { class:'от-строка' }, [
+      эл('span', { class:'от', text:моё ? 'моё →' : (п.от.имя || 'гость') }),
+      эл('span', { class:'адрес', text:моё ? (п.кому || []).join(', ') : п.от.адрес })
+    ]),
+    эл('div', { class:'тема', text:тема }),
+    эл('div', { class:'превью', text:String(п.текст || '').slice(0, 90) })
+  ]);
+  карточка.appendChild(эл('span', { class:'ав', text:ав }));
+  карточка.appendChild(тело);
+  карточка.appendChild(мета);
+  return карточка;
+}
+function рендерКнига(){
+  const холд = $('книга'); холд.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    холд.appendChild(эл('button', { onclick:function(){
+      const поле = $('полеКому');
+      const адр = адресПоИд(ч.id);
+      const уже = поле.value.split(',').map(function(с){ return с.trim(); }).filter(Boolean);
+      if (уже.indexOf(адр) === -1 && уже.indexOf(ч.имя) === -1) { уже.push(ч.имя); поле.value = уже.join(', '); }
+    } }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя }),
+      эл('small', { class:'note', text:'@' + ч.id })
+    ]));
+  });
+}
+function рендерЯ(){
+  const холд = $('яКто'); холд.textContent = '';
+  if (!Я) {
+    холд.appendChild(эл('p', { class:'note', text:'ящик не создан: выбери, кто ты — и ящик появится мгновенно.' }));
+    холд.appendChild(эл('button', { class:'осн', onclick:открытьИдентОвер, text:'кто ты?', style:'margin-top:10px' }));
+    return;
+  }
+  const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
+  холд.appendChild(эл('div', {}, [
+    эл('b', { text:(ч ? ч.эмодзи : '👤') + ' ' + Я.имя }),
+    эл('div', { class:'note', text:'адрес: ' + (мойАдрес(Я) || '—') }),
+    эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId }),
+    эл('small', { class:'note', style:'display:block', text:'ключ подписи: ECDSA P-256, non-exportable, живёт в этом браузере' })
+  ]));
+  /* модули */
+  const м = $('модулиСсылки'); м.textContent = '';
+  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_23_КРУГ.html','👥 КРУГ ·23'],['СИНГУЛЯР_25_КОШЕЛЁК.html','👛 КОШЕЛЁК ·25'],['СИНГУЛЯР_26_ЛИНИЯ.html','☎️ ЛИНИЯ ·26'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['СИНГУЛЯР_21_ОБЩЕНИЕ.html','🗣 ОБЩЕНИЕ ·21'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+    м.appendChild(эл('a', { href:п[0], text:п[1] }));
+  });
+}
+function рендерЯЧип(){
+  if (Я) {
+    const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
+    $('яЧипАв').textContent = ч ? ч.эмодзи : '👤';
+    $('яЧипИмя').textContent = Я.имя;
+    $('яЧипАдрес').textContent = мойАдрес(Я) || '';
+  } else {
+    $('яЧипАв').textContent = '👤';
+    $('яЧипИмя').textContent = 'кто ты?';
+    $('яЧипАдрес').textContent = 'нет ящика';
+  }
+}
+function статусСвязи(текст, класс){
+  const с = $('статусСвязи');
+  с.textContent = '· ' + текст;
+  с.className = 'status' + (класс ? ' ' + класс : '');
+}
+
+/* ───────────────────── 11 · ЧТЕНИЕ ПИСЬМА ───────────────────── */
+function открытьПисьмо(ид){
+  ХРАН.возьмиПисьмо(ид).then(function(п){
+    if (!п) { тост('письмо не нашлось'); return; }
+    if (п.папка === 'входящие' && !п.прочитано) { ХРАН.движПисьмо(ид, undefined, true).then(обновиВсё); п.прочитано = true; }
+    const карта = $('чтоКарта'); карта.textContent = '';
+    const моё = Я && п.от.адрес === мойАдрес(Я);
+    /* проверка подписи — если она есть */
+    const блПровер = (п.sig && п.pub)
+      ? криптоПроверка(п.pub, строкаПодписи(п), п.sig).then(function(жива){ return жива ? 'подпись верна ✓' : 'ПОДПИСЬ НЕ СХОДИТСЯ — письмо подделано или битое'; })
+      : Promise.resolve('без подписи (черновик или старое)');
+    блПровер.then(function(статПодпи){
+      const шапка = эл('div', { class:'шапка' }, [
+        эл('div', {}, [эл('b', { text:моё ? 'моё письмо' : (п.от.имя || 'гость') }), эл('span', { class:'note', text:' <' + п.от.адрес + '>' })]),
+        эл('div', { class:'note', text:'кому: ' + (п.кому || []).join(', ') }),
+        эл('div', { class:'note', text:'тема: ' + (п.тема || '(без темы)') }),
+        эл('div', { class:'note', text:деньК(п.ts) + ' · ' + статПодпи })
+      ]);
+      карта.appendChild(шапка);
+      карта.appendChild(эл('div', { class:'текст', text:п.текст || '' }));
+      (п.вложения || []).forEach(function(в){
+        const строка = эл('div', { class:'вл-строка' }, [эл('span', { text:'📎 ' + в.имя + ' · ' + Math.ceil((в.размер || 0) / 1024) + ' КБ' })]);
+        const кнопка = эл('button', { class:'note', text:'⬇ скачать', onclick:function(){
+          ХРАН.возьмиBlob(в.ид).then(function(блоб){
+            if (!блоб) { тост('вложение не нашлось на этом устройстве'); return; }
+            const урл = URL.createObjectURL(блоб);
+            const а = эл('a', { href:урл, download:в.имя || 'файл' });
+            document.body.appendChild(а); а.click(); а.remove();
+            setTimeout(function(){ URL.revokeObjectURL(урл); }, 3000);
+          });
+        } });
+        строка.appendChild(кнопка);
+        карта.appendChild(строка);
+      });
+      const ряд = эл('div', { class:'ряд-кнопок' });
+      if (п.папка === 'входящие') {
+        ряд.appendChild(эл('button', { class:'осн', text:'↩ ответить', onclick:function(){
+          $('чтоОвер').classList.remove('on');
+          откройВкладку('compose');
+          $('полеКому').value = п.от.адрес;
+          $('полеТема').value = 'Re: ' + (п.тема || '');
+          $('полеТекст').value = '';
+          $('полеТекст').focus();
+        } }));
+        ряд.appendChild(эл('button', { class:'тих', text:'🗂 в архив', onclick:function(){ ХРАН.движПисьмо(п.id, 'архив').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); }); } }));
+      }
+      if (п.папка === 'исходящие') {
+        ряд.appendChild(эл('button', { class:'тих', text:'↻ послать сейчас', onclick:function(){ $('чтоОвер').classList.remove('on'); сетьРазошлиПисьмо(п); } }));
+      }
+      ряд.appendChild(эл('button', { class:'тих', text:'⬇ EML', onclick:function(){
+        скачайФайл(экспортEML(п), (п.тема || 'письмо').slice(0, 24).replace(/[\\/:*?"<>|]/g,'') + '.eml', 'message/rfc822');
+      } }));
+      ряд.appendChild(эл('button', { class:'опас', text:'🗑 в корзину', onclick:function(){ ХРАН.движПисьмо(п.id, 'корзина').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); тост('в корзине'); }); } }));
+      карта.appendChild(ряд);
+      карта.appendChild(эл('button', { class:'тих', text:'✖ закрыть', style:'margin-top:10px;width:100%', onclick:function(){ $('чтоОвер').classList.remove('on'); } }));
+      $('чтоОвер').classList.add('on');
+    });
+  });
+}
+function скачайФайл(содержимое, имя, тип){
+  const блоб = содержимое instanceof Blob ? содержимое : new Blob([содержимое], { type:тип || 'application/octet-stream' });
+  const урл = URL.createObjectURL(блоб);
+  const а = эл('a', { href:урл, download:имя });
+  document.body.appendChild(а); а.click(); а.remove();
+  setTimeout(function(){ URL.revokeObjectURL(урл); }, 3000);
+}
+function обновиВсё(){ return обновиКэш().then(function(){ рендерПапки(); рендерСписок(); }); }
+
+/* ───────────────────── 12 · КОМПОЗЕР ───────────────────── */
+let вложенияКомпозера = [];
+function перерисуйВложения(){
+  const холд = $('вложения'); холд.textContent = '';
+  вложенияКомпозера.forEach(function(в, и){
+    холд.appendChild(эл('span', { class:'вл' }, [
+      эл('span', { text:'📎 ' + в.имя + ' (' + Math.ceil(в.размер / 1024) + ' КБ)' }),
+      эл('button', { class:'note', text:'✖', 'aria-label':'убрать вложение', onclick:function(){ вложенияКомпозера.splice(и, 1); перерисуйВложения(); } })
+    ]));
+  });
+}
+$('btnВложение').addEventListener('click', function(){ $('файлВложение').click(); });
+$('файлВложение').addEventListener('change', function(){
+  const файл = this.files && this.files[0];
+  this.value = '';
+  if (!файл) return;
+  if (файл.size > 512 * 1024) { тост('вложение больше 512 КБ — пока не потянет P2P'); return; }
+  вложенияКомпозера.push({ имя:файл.name, размер:файл.size, тип:файл.type, блоб:файл });
+  перерисуйВложения();
+});
+$('btnОчистить').addEventListener('click', function(){
+  $('полеКому').value = ''; $('полеТема').value = ''; $('полеТекст').value = '';
+  вложенияКомпозера = []; перерисуйВложения();
+});
+$('btnЧерновик').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const п = { id:идМ(), от:{ адрес:мойАдрес(Я), имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId },
+    кому:разбериКому($('полеКому').value).адреса, тема:$('полеТема').value.trim(), текст:$('полеТекст').value,
+    ts:Date.now(), папка:'черновики', прочитано:true };
+  ХРАН.положиПисьмо(п, []).then(function(){ обновиВсё(); тост('черновик сохранён'); откройВкладку('mail'); });
+});
+$('btnОтправить').addEventListener('click', function(){ отправитьПисьмо(false); });
+function отправитьПисьмо(тихо){
+  if (!Я) { открытьИдентОвер(); return; }
+  const кому = разбериКому($('полеКому').value);
+  if (!кому.ok) { тост('кому: ' + (кому.причины.join('; ') || 'впиши получателя')); return; }
+  const тема = $('полеТема').value.trim();
+  const текст = $('полеТекст').value;
+  if (!текст.trim() && !вложениямиЕсть()) { тост('пустое письмо не отправим: есть что сказать?'); return; }
+  const блобы = вложенияКомпозера.map(function(в, и){ return { ид:идМ() + '-' + и, блоб:в.блоб, имя:в.имя }; });
+  const п = { id:идМ(), от:{ адрес:мойАдрес(Я), имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId },
+    кому:кому.адреса, тема:тема, текст:текст, ts:Date.now(),
+    вложения:вложенияКомпозера.map(function(в, и){ return { имя:в.имя, размер:в.размер, тип:в.тип, ид:блобы[и].ид }; }) };
+  const в = письмо_в_исходящие(п);
+  if (!в.ok) { тост('письмо не прошло проверку: ' + в.причина); return; }
+  ЛИЧНОСТЬ.получить().then(function(лич){
+    if (!лич || !лич.публ) { тост('ключ подписи не создался — CryptoIndex недоступен?'); return; }
+    return криптоПодпись(лич.приват, строкаПодписи(в.письмо)).then(function(sig){
+      const подписанное = письмо_подписано(в.письмо, sig, лич.публ);
+      const блобы2 = блобы.map(function(б){ return { ид:б.ид, блоб:б.блоб }; });
+      return ХРАН.положиПисьмо(подписанное, блобы2).then(function(){
+        вложенияКомпозера = []; перерисуйВложения();
+        $('полеКому').value = ''; $('полеТема').value = ''; $('полеТекст').value = '';
+        обновиВсё().then(function(){ сетьРазошлиПисьмо(подписанное); });
+        if (!тихо) тост('письмо в исходящих — уйдёт сразу, если адресат в сети');
+        откройВкладку('mail');
+      });
+    });
+  }).catch(function(ошибка){ тост('не получилось: ' + (ошибка && ошибка.message || ошибка)); });
+}
+function вложениямиЕсть(){ return вложенияКомпозера.length > 0; }
+function идМ(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9); }
+
+/* ───────────────────── 13 · СЕТЬ: мост вкладок + P2P Nostr ───────────────────── */
+const ШИНА = 'singular-mail-v1';
+const TR_APP = 'singular-mail-v1';
+const TR_КОМНАТА = 'm';
+let локШина = null;
+try { локШина = new BroadcastChannel(ШИНА); } catch (e) { локШина = null; }
+let tr = null, импортОбещан = null, комната = null, почта = {};
+function trysteroМодуль(){
+  if (импортОбещан) return импортОбещан;
+  импортОбещан = import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs')
+    .then(function(м){ tr = м; return м; })
+    .catch(function(e){ tr = null; throw e; });
+  return импортОбещан;
+}
+локШина && локШина.addEventListener('message', function(e){ принялПакет(e.data); });
+function конв(вид, поля){
+  return Object.assign({ шина:ШИНА, v:1, вид:вид, от:{ адрес:Я && мойАдрес(Я), имя:Я && Я.имя, deviceId:Я && Я.deviceId }, ts:Date.now() }, поля || {});
+}
+function принялПакет(д){
+  if (!д || д.шина !== ШИНА || д.v !== 1) return;
+  if (Я && д.от && д.от.deviceId === Я.deviceId) return;
+  switch (д.вид) {
+    case 'letter': принялПисьмо(д.п); сетьРазошли('ack', { ид:д.п.id }); break;
+    case 'ack': осениДоставку(д.ид); break;
+    case 'hist-req':
+      обновиКэш().then(function(){ сетьРазошли('hist', { мс:КЭШ_ПИСЕМ.slice(-60) }); });
+      break;
+    case 'hist': слилИсторию(д.мс || []); break;
+  }
+}
+function принялПисьмо(п){
+  if (!п || !валидноеПисьмо(п).ok) return;
+  const дляМеня = Я && п.кому.indexOf(мойАдрес(Я)) !== -1;
+  if (!дляМеня) return; /* не моё — не беру (ящики личные) */
+  /* проверка подписи автора, если она приложена */
+  const сохран = function(){ return ХРАН.положиПисьмо(Object.assign({}, п, { папка:'входящие', прочитано:false }), []).then(function(){
+    return обновиВсё().then(function(){ тост('📮 письмо от ' + (п.от.имя || п.от.адрес)); });
+  }); };
+  if (п.sig && п.pub) {
+    криптоПроверка(п.pub, строкаПодписи(п), п.sig).then(function(жива){
+      п.проверка = жива ? 'верна' : 'НЕ сошлась';
+      return сохран();
+    });
+  } else сохран();
+}
+function осениДоставку(ид){
+  const п = КЭШ_ПИСЕМ.find(function(x){ return x.id === ид; });
+  if (!п || п.папка !== 'исходящие') return;
+  const рез = письмо_доставлено(п);
+  if (рез.ok) ХРАН.положиПисьмо(рез.письмо, []).then(обновиВсё);
+}
+function слилИсторию(мс){
+  const чужие = мс.filter(function(п){ return Я && п.кому && п.кому.indexOf(мойАдрес(Я)) !== -1 && п.от.адрес !== мойАдрес(Я); });
+  if (!чужие.length) return;
+  Promise.all(чужие.map(function(п){
+    return ХРАН.возьмиПисьмо(п.id).then(function(есть){ return есть ? null : Object.assign({}, п, { папка:'входящие', прочитано:false }); });
+  })).then(function(новые){
+    const брать = новые.filter(Boolean);
+    if (!брать.length) return;
+    Promise.all(брать.map(function(п){ return ХРАН.положиПисьмо(п, []); })).then(обновиВсё);
+  });
+}
+function сетьРазошли(вид, поля){
+  const п = конв(вид, поля);
+  локШина && локШина.postMessage(п);
+  if (почта[вид]) почта[вид].send(п).catch(function(){});
+}
+function сетьРазошлиПисьмо(п){
+  /* письмо летит целиком (без блобов: их получатель заберёт куски vbin) */
+  const пакет = конв('letter', { п:п });
+  локШина && локШина.postMessage(пакет);
+  if (почта.letter) {
+    почта.letter.send(пакет).then(function(){ тост('ушло по P2P — ждём ack'); }).catch(function(){
+      тост('адресат не в сети — письмо ждёт в исходящих');
+    });
+    (п.вложения || []).forEach(function(в, и){
+      ХРАН.возьмиBlob(в.ид).then(function(блоб){
+        if (!блоб || !почта.влож) return;
+        блоб.arrayBuffer().then(function(буф){
+          почта.влож.send({ ид:в.ид, и:и, имя:в.имя, тип:в.тип, б:new Uint8Array(буф) }).catch(function(){});
+        });
+      });
+    });
+  }
+}
+function сетьЗапусти(){
+  if (!Я) { статусСвязи('личность не выбрана — ящик ждёт тебя', 'warn'); return; }
+  if (локШина) статусСвязи('мост вкладок активен', 'ok');
+  trysteroМодуль().then(function(){
+    комната = tr.joinRoom({
+      appId: TR_APP,
+      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+    }, TR_КОМНАТА);
+    ['letter','ack','hist-req','hist'].forEach(function(канал){
+      const п = комната.makeAction(канал);
+      п.onMessage = function(д){ принялПакет(д); };
+      почта[канал] = п;
+    });
+    почта.влож = комната.makeAction('влож');
+    почта.влож.onMessage = function(д){
+      if (!д || !д.ид || !д.б) return;
+      ХРАН.положиBlob(д.ид, new Blob([д.б], { type:д.тип || 'application/octet-stream' })).catch(function(){});
+    };
+    комната.onPeerJoin = function(){
+      статусСвязи('P2P жива: письма уходят напрямую, без серверов', 'ok');
+      /* дотолкаем исходящие и попросим историю */
+      обновиКэш().then(function(){
+        КЭШ_ПИСЕМ.filter(function(п){ return п.папка === 'исходящие'; }).forEach(сетьРазошлиПисьмо);
+      });
+      сетьРазошли('hist-req', null);
+    };
+    статусСвязи('сеть P2P готова · мост вкладок активен · ящик твой', 'ok');
+  }).catch(function(){
+    статусСвязи('P2P недоступен здесь (file:// или без сети): работает мост вкладок одного браузера; между устройствами открой сайт по https', 'warn');
+  });
+}
+
+/* ───────────────────── 14 · КТО ТЫ (оверлей) ───────────────────── */
+function открытьИдентОвер(){
+  const сетка = $('идентСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    сетка.appendChild(эл('button', { class:'идент-карт', 'aria-pressed':'false', onclick:function(){
+      сетка.querySelectorAll('.идент-карт').forEach(function(к){ к.setAttribute('aria-pressed','false'); });
+      сетка.setAttribute('data-выбор', ч.имя);
+      this.setAttribute('aria-pressed','true');
+      $('идентВвод').value = '';
+      $('идентСтатус').textContent = '';
+    } }, [эл('span', { class:'ав', text:ч.эмодзи }), эл('b', { text:ч.имя })]));
+  });
+  $('идентОвер').classList.add('on');
+}
+$('идентГотово').addEventListener('click', function(){
+  const выбр = $('идентСетка').getAttribute('data-выбор');
+  const ч = выбр ? РЕЕСТР.find(function(x){ return x.имя === выбр; }) : null;
+  if (ч) {
+    сохраниЛичность({ имя:ч.имя, эмодзи:ч.эмодзи, тип:'свой', deviceId: deviceIdМой() });
+    $('идентОвер').classList.remove('on');
+    тост('ящик ' + мойАдрес(Я) + ' готов');
+    сетьЗапусти(); обновиВсё();
+    return;
+  }
+  const ввод = $('идентВвод').value;
+  let рез = проверьИмя(ввод);
+  if (!рез.ok && рез.причина === 'короткое имя защищено') {
+    /* подсказываем префикс: «ГОСТЬ МАША» */
+    const слова = норм(ввод).split(' ');
+    if (слова.length >= 2) рез = собериСПрефиксом(слова[0], слова.slice(1).join(' '));
+  }
+  if (!рез.ok) { $('идентСтатус').textContent = рез.причина + ' · попробуй нейтральное слово ПЕРЕД именем: «ГОСТЬ ' + норм(ввод) + '»'; $('идентСтатус').className = 'status err'; return; }
+  сохраниЛичность({ имя:рез.имя, эмодзи:'👤', тип:'гость', deviceId: deviceIdМой() });
+  $('идентОвер').classList.remove('on');
+  тост('ящик ' + мойАдрес(Я) + ' готов');
+  сетьЗапусти(); обновиВсё();
+});
+function deviceIdМой(){
+  let ид = лсЧитай('singular.mail.v1.deviceId', null);
+  if (!ид) { ид = 'mail-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); лсПиши('singular.mail.v1.deviceId', ид); }
+  return ид;
+}
+
+/* ───────────────────── 15 · КНОПКИ ВЕРХНЕГО ЯРУСА ───────────────────── */
+$('btnНаписать').addEventListener('click', function(){ откройВкладку('compose'); $('полеТекст').focus(); });
+$('btnОбновить').addEventListener('click', function(){ сетьРазошли('hist-req', null); тост('спросили историю у устройств в сети'); });
+$('btnВсеПрочитано').addEventListener('click', function(){
+  Promise.all(КЭШ_ПИСЕМ.filter(function(п){ return п.папка === 'входящие' && !п.прочитано; }).map(function(п){ return ХРАН.движПисьмо(п.id, undefined, true); }))
+    .then(обновиВсё);
+});
+$('btnЭкспортJSON').addEventListener('click', function(){
+  обновиКэш().then(function(){
+    const дамп = { модуль:'СИНГУЛЯР ·24 ПОЧТА', версия:VERSION, адрес:Я && мойАдрес(Я), экспорт:new Date().toISOString(), письма:КЭШ_ПИСЕМ };
+    скачайФайл(JSON.stringify(дамп, null, 1), 'сингуляр-почта-' + Date.now() + '.json', 'application/json');
+  });
+});
+$('btnСтеретьВсё').addEventListener('click', function(){
+  if (!confirm('Стереть ВСЕ письма и вложения на этом устройстве? Отменить нельзя.')) return;
+  ХРАН.стеретьВсё().then(function(){ обновиВсё(); тост('ящик пуст — всё стёрто'); });
+});
+
+/* ───────────────────── 16 · PWA install ───────────────────── */
+let отложенныйПромпт = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); отложенныйПромпт = e; $('btnInstall').hidden = false; });
+[['btnInstall'],['btnInstall2']].forEach(function(и){
+  const б = $(и[0]); if (!б) return;
+  б.addEventListener('click', function(){
+    if (!отложенныйПромпт) { location.href = 'ИНСТРУКЦИЯ_УСТАНОВКИ.html'; return; }
+    отложенныйПромпт.prompt();
+    отложенныйПромпт = null; б.hidden = true;
+  });
+});
+
+/* ───────────────────── 17 · СТАРТ ───────────────────── */
+рендерЯЧип();
+обновиВсё();
+рендерКнига();
+сетьЗапусти();
+if (!Я) setTimeout(открытьИдентОвер, 400);
+
+/* тестовый крюк: только чтение */
+window.K24 = {
+  версия:VERSION,
+  я:function(){ return Я && { имя:Я.имя, тип:Я.тип, адрес:мойАдрес(Я) }; },
+  папка:function(){ return активПапка; },
+  письма:function(){ return КЭШ_ПИСЕМ.map(function(п){ return { id:п.id, папка:п.папка, кому:п.кому, от:п.от.адрес, тема:п.тема, подписано:!!п.sig, прочитано:!!п.прочитано }; }); },
+  сеть:function(){ return { вкладки:!!локШина, trystero:!!tr, комната:!!комната }; },
+  ядро:S24
+};
+</script>
+<script>
+/* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-ux-engine-v8.js"></script>
+</body>
+</html>
