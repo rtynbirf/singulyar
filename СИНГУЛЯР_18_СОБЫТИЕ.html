@@ -1118,7 +1118,39 @@ const $ = function (id) { return document.getElementById(id); };
 const КАТАЛОГ = [["1BZs_wUPn1s", "Я сам себе судья"], ["2g5n6B0bc2Q", "Не вам жить мою жизнь"], ["6woWDYcu1QY", "Разгадка в небесах"], ["8RRRYysSIHg", "Суть проста"], ["8zG2LBAn1AI", "Не играй в любовь"], ["9ys_TVEtda8", "Просто люби"], ["EFaMUciH3Do", "Цени моменты"], ["G7L2d0Z5xfY", "Вера остаётся"], ["GB31hcDi3lo", "Гордость нас убивает"], ["HupAWAt7CmQ", "А время капает"], ["JRTUNak53nU", "Компас на Дом"], ["KFnJwNv008s", "Свет в темноте"], ["KfKHWdiX3S4", "Смысл жизни прост"], ["KvzORszfsg8", "Крик в тишине"], ["LCADfnI8F-s", "Действуй сейчас"], ["LqMrrKqK3AE", "Одиночество среди людей"], ["M9o3ZIlhHrU", "Люди в Масках"], ["MSqK5ig-alE", "Не Угасай — трек который цепляет"], ["OHaRQj9PLUY", "Дорога мой Учитель"], ["PIyWwF0t4wQ", "Остаться человеком ·t4wQ"], ["POiQQ21I5n0", "Оставайся молодым"], ["Qb8xb0vUYDg", "Сборник Музыки со Смыслом 🎶 песни, в кот"], ["QpeYJU83XiQ", "Жизнь не прощает"], ["R0SOJreGbhM", "Цени моменты - трек который заставляет з"], ["TRcxZ7jfPsA", "Когда Теряем - трек о настоящих ценностя"], ["TkmSZp1dfBE", "Меня не сломать — Песня о свободе духа в"], ["TobJGYOPlnw", "Остаться человеком ·Plnw"], ["V-IaCbDUKao", "Твоё плавание не вечно"], ["VfnGUIhaK2Y", "А что если да"], ["VwoK5U0qOys", "Сердце в Огне"], ["WIrhIrDQvwY", "Страх не слабость"], ["WMU46n--Z-s", "Не теряй шанс — Трек о упущенных момента"], ["X90mDPOhvKc", "Когда погаснут огни"], ["X_-M_cjCFVg", "Когда ты удобен"], ["Y7Wy_JBkz7A", "Живи как умеешь"], ["YaY-ZJVXFjI", "Время как вода"], ["_E91VEQ-8lM", "Тишина спасает"], ["_KwlGQNmC1Q", "Ты одна дала"], ["_PCJ6fMfeRM", "Всё начинается с тебя"], ["_gNbMCINv1Y", "О чём мечтаешь ты"], ["ahmGGM-P0CA", "Начать сначала"], ["b_36rlzEIKk", "Ты Главный игрок"], ["cFHsQ-LP3ns", "Не тех мы ценим"], ["d2b72nYLiT8", "Не жди завтра"], ["eA-fyeSkavI", "Вне зоны доступа"], ["eOMrrezWEZM", "Код перемен"], ["fJwb931iJVg", "Живи сейчас"], ["gMASVVNFr_A", "Время покажет"], ["kziwaat2nu4", "Ангел без крыльев"], ["lkXLeITEtGA", "Тень ушедших"], ["n5IFJ-g1Rtc", "В чём смысл"], ["pP3Kk2_FHbE", "Цени время — трек который заставляет зад"], ["pervLR9m-vk", "Не спеши осуждать"], ["pv3GAlLG9Lk", "Нас учат потери — Трек о том, что делает"], ["q57MLk0Uf9c", "Неудача — не конец"], ["rWpYxmFjm9g", "Когда теряем (флагман ★)"], ["shs0TiOwx-M", "Где настоящее"], ["t9h3cCPCKoo", "А что если ДА"], ["ugjp6iaNplo", "Бой с собой - RUVSON"], ["vUb40twffCI", "Там где ты"], ["yK2aPehxmK8", "Пленники прошлого"], ["z3RcsfHajP8", "Я сам себе враг"]];
 
 const ЭМОДЗИ = ['👵', '👩', '👧', '🧑', '🧓', '👨', '👦', '👩‍🦳'];
-const ПРИЛОЖЕНИЕ = { комната: null, голос: null, транспорт: null, запись: null, роль: null, транспортВид: null, таймерРисования: null, таймерОтсчёта: null, локальноеУрл: null };
+const ПРИЛОЖЕНИЕ = { комната: null, голос: null, транспорт: null, запись: null, роль: null, транспортВид: null, таймерРисования: null, таймерОтсчёта: null, локальноеУрл: null, кристСессия: null };
+
+/* ── КРИСТАЛЛ: мост shared.activity (v1.18) ──
+   ·18 → протокольный слой: «в зале пели вместе». Сессия — temporary
+   (TTL зеркалит СРОК_ВРЕМЕННОЙ_MS), память ❤️ — persistent и ссылается
+   на сессию через replyTo. Падение импорта/журнала = зал работает как
+   раньше (честный fallback). Аудио и фото в событии НЕ переносятся. */
+const МОСТ18 = { б: null, модуль: null, готов: false, последняя: null };
+import('./БИБЛИОТЕКИ/кристалл/bridges.mjs').then(function (м) {
+  МОСТ18.модуль = м;
+  МОСТ18.б = м.makeBridge({ источник: '·18 СОБЫТИЕ' });
+  return МОСТ18.б.готовь;
+}).then(function () { МОСТ18.готов = МОСТ18.б.готов; })
+  .catch(function () { МОСТ18.готов = false; МОСТ18.б = null; });
+function мостСессия(манифест, сессияId) {
+  ПРИЛОЖЕНИЕ.кристСессия = null;
+  if (!МОСТ18.б || !МОСТ18.б.готов || !МОСТ18.модуль) return;
+  const п = МОСТ18.модуль.activitySessionEvent(манифест, { сессияId: сессияId, ttlMs: СРОК_ВРЕМЕННОЙ_MS });
+  МОСТ18.б.опубликуй(п.event).then(function (р) {
+    МОСТ18.последняя = р.ok ? 'сессия в журнале' : (р.reason === 'DUPLICATE' ? 'сессия уже в журнале' : 'fallback: ' + р.reason);
+    if (р.ok) ПРИЛОЖЕНИЕ.кристСессия = п.event.id;
+    лог('кристалл: ' + МОСТ18.последняя);
+  }).catch(function () { лог('кристалл: fallback — журнал недоступен, зал работает без него'); });
+}
+function мостПамять(запись) {
+  if (!МОСТ18.б || !МОСТ18.б.готов || !МОСТ18.модуль || !запись) return;
+  const п = МОСТ18.модуль.activityMemoryEvent(запись, {
+    сессияId: запись.id, sessionEventId: ПРИЛОЖЕНИЕ.кристСессия
+  });
+  МОСТ18.б.опубликуй(п.event).then(function (р) {
+    МОСТ18.последняя = р.ok ? 'память в журнале' : (р.reason === 'DUPLICATE' ? 'память уже в журнале' : 'fallback: ' + р.reason);
+  }).catch(function () {});
+}
 
 function показ(экран) {
   ['scMenu', 'scRoom', 'scSing', 'scReview', 'scMemory'].forEach(function (id) { $(id).classList.toggle('on', id === экран); });
@@ -1181,7 +1213,7 @@ function карточкаПамяти(rec, полный) {
   const ауд = эл('audio', { controls: '', preload: 'none', class: 'rec' });
   try { ауд.src = URL.createObjectURL(rec.audio); } catch (e) {}
   const acts = эл('div', { class: 'acts' });
-  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { перерисоватьПамять(); }); } }));
+  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { мостПамять(rec); перерисоватьПамять(); }); } }));
   acts.appendChild(эл('button', { class: 'btn gray', text: '⬇ webm', onclick: function () { скачать(rec); } }));
   acts.appendChild(эл('button', { class: 'btn red', text: '🔥 удалить', onclick: function () { ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
   const card = эл('div', { class: 'mem-card' }, [
@@ -1376,6 +1408,7 @@ function финалЗаписиИОбзор() {
       photo: null, note: ''
     };
     ПРИЛОЖЕНИЕ.запись = rec;
+    мостСессия(манифест, rec.id);
     if (blob) ХРАНИЛИЩЕ.put(rec).then(перерисоватьПамять);
     /* экран обзора */
     $('reviewWho').textContent = 'Вы спели вместе: ' + (манифест.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
@@ -1501,6 +1534,7 @@ $('btnSaveMem').addEventListener('click', function () {
   const rec = ПРИЛОЖЕНИЕ.запись; if (!rec) return;
   rec.state = 'MEMORY'; rec.savedAt = Date.now();
   ХРАНИЛИЩЕ.put(rec).then(function () {
+    мостПамять(rec);
     $('reviewExpire').textContent = '❤️ сохранено как память — теперь не исчезнет (удалить можно в списке воспоминаний)';
     перерисоватьПамять();
   });
@@ -1609,6 +1643,17 @@ window.ЗАЛ18 = { ПРИЛОЖЕНИЕ: ПРИЛОЖЕНИЕ, ХРАНИЛИЩ
     setTimeout(function () { создатьЗал(хостКод); }, 150);
   }
 })();
+
+/* наблюдательный хэндл протокола (только чтение): тесты и диагностика
+   ходят через __КРИСТ18, инкапсуляция страницы не вскрывается */
+try {
+  Object.defineProperty(window, '__КРИСТ18', { configurable: true, value: {
+    get готов() { return !!(МОСТ18.б && МОСТ18.б.готов); },
+    get статус() { return МОСТ18.последняя || (МОСТ18.б && МОСТ18.б.готов ? 'журнал готов' : 'fallback'); },
+    события: function (р) { return МОСТ18.б ? МОСТ18.б.события(р) : Promise.resolve([]); },
+    количество: function (р) { return МОСТ18.б ? МОСТ18.б.события(р).then(function (х) { return х.length; }) : Promise.resolve(0); }
+  } });
+} catch (е) {}
 
 </script>
 <script defer src="./singulyar-ux-engine-v8.js" data-hotkeys="off"></script>

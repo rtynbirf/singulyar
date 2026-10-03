@@ -51,7 +51,14 @@ test('синтаксис JS ·19 и ·18 валиден (vm, блок за бл�
     let проверено = 0;
     for (const b of blocks) {
       if (/\bsrc=/.test(b[0])) continue;
-      new (require('node:vm').Script)(b[1]); /* бросит при ошибке */
+      const модуль = /type\s*=\s*["']?module/i.test(b[0]);
+      /* module-блоки: top-level await и динамический import легальны в
+         браузере, но vm.Script парсит как классический скрипт — для
+         синтакс-проверки аппроксимируем (как в check_page_scripts.js) */
+      const код = модуль
+        ? b[1].replace(/\bimport\s*\(/g, 'IMPORT_ВЫЗОВ(').replace(/\bawait\s+/g, '')
+        : b[1];
+      new (require('node:vm').Script)(код); /* бросит при ошибке */
       проверено++;
     }
     assert.ok(проверено >= 1, f + ': хотя бы один встроенный блок проверен');
