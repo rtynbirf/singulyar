@@ -1,10 +1,13 @@
 /* СИНГУЛЯР·15 «ОРКЕСТРАТОР» — сервис-воркер для хостинга (PWA).
-   Честно и минимально: cache-first для same-origin GET, офлайн-фолбэк.
+   Честно и минимально: cache-first для same-origin GET, офлайн-фолбэк,
+   навигации без кеша отвечаем оболочкой index.html.
    На file:// не работает (так устроены браузеры) — модулю там и не нужен:
    пак данных вшит, внешних запросов нет. */
-var S15_CACHE = 's15-orkestrator-v13';
+var S15_CACHE = 's15-orkestrator-v14';
 var S15_CORE = [
   './',
+  './index.html',
+  './manifest.webmanifest',
   './singulyar-ux-engine-v8.js',
   './БИБЛИОТЕКИ/adapter-os/src/core.mjs',
   './БИБЛИОТЕКИ/adapter-os/src/store.mjs',
@@ -21,6 +24,13 @@ var S15_CORE = [
   './СИНГУЛЯР_20_ФОНЕТИКА.html',
   './СИНГУЛЯР_21_ОБЩЕНИЕ.html',
   './СИНГУЛЯР_22_СВЯЗЬ.html',
+  './СИНГУЛЯР_23_КРУГ.html',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-192-maskable.png',
+  './icons/icon-512-maskable.png',
+  './icons/icon-180.png',
+  './ИНСТРУКЦИЯ_УСТАНОВКИ.md',
   './БИБЛИОТЕКИ/trystero-nostr.bundle.mjs',
   './БИБЛИОТЕКИ/any-ascii.bundle.mjs'
 ];
@@ -61,6 +71,21 @@ self.addEventListener('fetch', function(e){
         return res;
       }).catch(function(){
         return caches.match(req);
+      })
+    );
+    return;
+  }
+  /* навигация по страницам: сеть-первая, офлайн — оболочка */
+  if (req.mode === 'navigate'){
+    e.respondWith(
+      fetch(req).then(function(res){
+        var copy = res.clone();
+        caches.open(S15_CACHE).then(function(c){ c.put(req, copy); });
+        return res;
+      }).catch(function(){
+        return caches.match(req).then(function(hit){
+          return hit || caches.match('./index.html');
+        });
       })
     );
     return;
