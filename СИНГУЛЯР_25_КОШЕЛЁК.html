@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·25 — КОШЕЛЁК · тихие переводы и ХОТЕЛКИ</title>
+<meta name="description" content="СИНГУЛЯР ·25 «КОШЕЛЁК» — семейный учёт денег без вопросов и уведомлений: бабушка перечисляет внучке на пирожок молча, хотким взглядом никто не ходит по чужим тратам. Append-only журнал с подписью ECDSA, ХОТЕЛКИ с тихим финансированием, бумажки-токены, честные рецепты своих рельс (Cashu/Fedimint/Lightning/свой банк).">
+<meta name="theme-color" content="#0a0f15">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<style>
+:root{
+  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
+  --teal:#61e1c4;--teal2:#38bdf8;--amber:#ffc36e;--red:#f87171;--green:#34d399;--gold:#ffd700;
+  --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+html{font-size:16px}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,textarea:focus{outline:2px solid var(--teal2);outline-offset:1px}
+::placeholder{color:#5d7180}
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#ffd700,#ff8c42,#ffd700);display:grid;place-items:center;color:#231a02;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
+.btn-install{background:linear-gradient(135deg,var(--gold),#ff8c42);color:#231a02;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{padding:10px 4px 12px;text-align:center;color:var(--dim);font-size:12px}
+nav.tabs button .и{font-size:22px;display:block;line-height:1.15}
+nav.tabs button[aria-selected="true"]{color:var(--gold)}
+main{padding-top:16px}
+section.v{display:none}
+section.v.on{display:block}
+h2.сек{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 10px;font-family:var(--mono)}
+h2.сек:first-child{margin-top:4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.note{color:var(--dim);font-size:13.5px}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);min-height:1.4em}
+.status.ok{color:var(--green)} .status.warn{color:var(--amber)} .status.err{color:var(--red)}
+.баланс-карта{background:linear-gradient(160deg,#132232,#0d1a26);border:1px solid #2b4257;border-radius:20px;padding:22px;text-align:center;margin-bottom:14px}
+.баланс-карта .цифра{font-family:var(--mono);font-size:44px;font-weight:800;color:var(--gold);line-height:1.1}
+.баланс-карта .подпись{color:var(--dim);font-size:13px;margin-top:6px}
+.люди{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.person{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px 12px;text-align:center;cursor:pointer}
+.person:hover{border-color:#2e4155}
+.person .ав{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:var(--panel2)}
+.person b{font-size:14px}
+.person small{color:var(--dim);font-size:11px;line-height:1.3}
+.журнал{display:flex;flex-direction:column;gap:6px}
+.запись{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px}
+.запись .и{font-size:20px;flex:none}
+.запись .тело{flex:1;min-width:0}
+.запись b{display:block}
+.запись small{color:var(--dim);display:block;font-size:11.5px}
+.запись .сумма{font-family:var(--mono);font-weight:800;flex:none}
+.запись .сумма.приход{color:var(--green)}
+.запись .сумма.уход{color:var(--red)}
+.запись.бумага{border-color:#5a4a12;background:#171407}
+.хотелка{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.хотелка .эм{font-size:26px;flex:none}
+.хотелка .тело{flex:1;min-width:0}
+.хотелка b{display:block}
+.хотелка.закрыта{opacity:.55}
+.хотелка.закрыта b{text-decoration:line-through}
+.кноп{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:13.5px}
+.кноп.осн{background:linear-gradient(135deg,var(--gold),#ff8c42);color:#231a02;font-weight:800;border:none}
+.кноп.опас{background:#2a1215;border-color:#5b2323;color:var(--red)}
+.кноп:disabled{opacity:.4;cursor:not-allowed}
+.ряд-кнопок{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.поле{margin-bottom:10px}
+.поле label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:4px;font-family:var(--mono)}
+.овер{position:fixed;inset:0;z-index:60;background:rgba(4,8,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.овер.on{display:flex}
+.карта{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:520px;width:100%;max-height:92vh;overflow:auto;padding:22px}
+.карта h3{font-size:19px;margin-bottom:6px}
+.идент-сетка{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin:14px 0}
+.идент-карт{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.идент-карт .ав{font-size:26px}
+.идент-карт b{font-size:12px}
+.идент-карт[aria-pressed="true"]{border-color:var(--gold);background:#221d07}
+details.рец{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+details.рец summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
+details.рец summary::-webkit-details-marker{display:none}
+details.рец summary::before{content:'▸';color:var(--gold);font-family:var(--mono)}
+details.рец[open] summary::before{content:'▾'}
+details.рец ol,details.рец ul{margin:10px 0 2px 20px;display:flex;flex-direction:column;gap:6px}
+details.рец li{font-size:14.5px}
+details.рец .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
+.сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
+footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
+.toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
+.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+@media (max-width:640px){
+  .wrap{padding:0 10px}
+  .люди{grid-template-columns:repeat(auto-fill,minmax(124px,1fr))}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <div class="logo">S·25</div>
+  <div><b>КОШЕЛЁК</b><span>семейный учёт · тихие переводы · ХОТЕЛКИ · вселенная RUVSON</span></div>
+  <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипБаланс">нет кошелька</small></span></button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ═════════ КОШЕЛЁК ═════════ -->
+<section class="v on" id="v-wallet" role="tabpanel" aria-label="Кошелёк">
+  <h2 class="сек">Мой баланс</h2>
+  <div class="баланс-карта">
+    <div class="цифра" id="цифраБаланс">0 ₽</div>
+    <div class="подпись" id="подписьБаланс">семейный учёт · не банк · никто не видит твоих трат</div>
+  </div>
+
+  <h2 class="сек">Перевести · молча, без вопросов и уведомлений</h2>
+  <div class="panel">
+    <div class="люди" id="людскаяСетка"></div>
+    <p class="note" style="margin-top:10px">Нажми на человека — откроется перевод. Сумма, записка (по желанию) — и всё: деньги ушли. Никаких «подтвердите перевод», никаких уведомлений третьим лицам, никакой публичной ленты трат. Куда и зачем ты тратишь свои средства — знает только ты.</p>
+    <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
+  </div>
+
+  <h2 class="сек">Мой журнал · виден только мне</h2>
+  <div class="журнал" id="журналСписок"></div>
+  <div class="ряд-кнопок">
+    <button class="кноп" id="btnПополнить">➕ пополнить (наличными в семейной кассе)</button>
+    <button class="кноп" id="btnЭкспортJSON">⬇ экспорт журнала (JSON)</button>
+  </div>
+
+  <h2 class="сек">Бумажки · семейные токены</h2>
+  <div class="panel">
+    <p class="note">Бумажка — подписанный эмитентом токен с номиналом. Передаётся как купюра: через ПОЧТУ ·24, ЛИНИЮ ·26 или из рук в руки (строкой). Кто держит бумажку — тот и владеет. Проверяется подпись эмитента.</p>
+    <div class="ряд-кнопок">
+      <button class="кноп осн" id="btnВыпуститьБумажки">🖋 выпустить бумажки</button>
+      <button class="кноп" id="btnПринятьБумажку">💵 принять бумажку (строкой)</button>
+    </div>
+    <div class="журнал" id="бумажкиСписок" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<!-- ═════════ ХОТЕЛКИ ═════════ -->
+<section class="v" id="v-wishes" role="tabpanel" aria-label="Хотелки">
+  <h2 class="сек">Мои хотелки</h2>
+  <div class="panel" style="margin-bottom:12px">
+    <div class="поле"><label for="хотелЧто">Чего хочется (например: пирожок в школе)</label><input id="хотелЧто" placeholder="пирожок в школе"></div>
+    <div class="поле"><label for="хотелСколько">Сколько стоит (₽)</label><input id="хотелСколько" type="number" min="1" placeholder="50"></div>
+    <div class="ряд-кнопок" style="margin-top:0"><button class="кноп осн" id="btnДобавитьХотелку">＋ добавить хотелку</button></div>
+    <p class="note" style="margin-top:8px">Твои хотелки видит круг — а кто их закроет и когда, решает только тот, кто тратит СВОИ деньги. Закрытие — молча: без запросов, без согласований, без объявлений.</p>
+  </div>
+  <div class="журнал" id="моиХотелки"></div>
+
+  <h2 class="сек">Хотелки круга · можешь закрыть любую молча</h2>
+  <div class="журнал" id="чужиеХотелки"></div>
+</section>
+
+<!-- ═════════ Я ═════════ -->
+<section class="v" id="v-me" role="tabpanel" aria-label="Настройки и границы">
+  <h2 class="сек">Кто я</h2>
+  <div class="panel" id="яКто"></div>
+
+  <h2 class="сек">PIN-замок · от лишних глаз</h2>
+  <div class="panel">
+    <p class="note">Честно: это замок от домашних глаз на экране, а не банковское хранилище. Журнал и так виден только на твоём устройстве — PIN лишь закрывает экран.</p>
+    <div class="ряд-кнопок">
+      <button class="кноп" id="btnЗадатьПин">🔐 задать PIN</button>
+      <button class="кноп опас" id="btnСнятьПин" hidden>🔓 снять PIN</button>
+    </div>
+  </div>
+
+  <h2 class="сек">РЕАЛЬНЫЕ ДЕНЬГИ — СВОИ РЕЛЬСЫ · лучшие практики</h2>
+  <p class="note" style="margin-bottom:10px">Кошелёк выше — семейный учёт договорённостей. Настоящий рубль должен идти по рельсам, которые принадлежат ТЕБЕ, а не «добрым дядям». Проверенные пути 2025–2026:</p>
+  <details class="рец"><summary>🤝 Путь 1 · семейный учёт + реальный перевод руками (уже работает)</summary>
+    <ol>
+      <li>Здесь — договорённости и учёт (кто кому сколько). Реальные деньги бабушка переводит привычным способом: карта, СБП, наличные.</li>
+      <li>Реквизиты внучки хранятся у бабушки локально (или в блокноте) — приложение не посредник и не видит банк.</li>
+      <li>Перечислила — отметила здесь молча (или не отмечала вовсе): учёт не обязателен для жизни.</li>
+    </ol>
+    <p class="пимечт">Это путь «ничего лишнего»: ни KYC-шных посредников, ни комиссий третьего сервиса, ни вопросов «куда и зачем».</p>
+  </details>
+  <details class="рец"><summary>⚡ Путь 2 · ecash и self-custody (деньги как купюры в кармане)</summary>
+    <ul>
+      <li><b>Cashu</b> — ecash с слепыми подписями: монеты живут у тебя файлами/токенами, минт выбираешь сам (можно свой), переводы приватны как наличные: <a href="https://cashu.space" rel="noopener" target="_blank">cashu.space</a></li>
+      <li><b>Fedimint</b> — общинное хранение: семья/сообщество держат общий «сейф», никто извне не видит, кто кому перевёл: <a href="https://fedimint.org" rel="noopener" target="_blank">fedimint.org</a></li>
+      <li><b>Lightning Network</b> — моментальные переводы с минимальными комиссиями, свой узел для полной автономии: <a href="https://lightning.network" rel="noopener" target="_blank">lightning.network</a></li>
+    </ul>
+    <p class="пимечт">Сценарий «бабушка → внучка» здесь без вопросов: перевела токен/сатоши — всё. Никто не спрашивает назначение, банк не блокирует «подозрительный перевод родной внучке».</p>
+  </details>
+  <details class="рец"><summary>🧾 Путь 3 · семейный минт (продвинутым)</summary>
+    <ol>
+      <li>Поднять свой Cashu-минт на своём VPS — эмитентом становится семья, а не компания.</li>
+      <li>Бабушка, родители, дети держат токены этого минта: переводы — просто передача токенов.</li>
+      <li>Номинал в токенах привязываете договорённостью к рублю (учёт можно вести здесь, в ·25).</li>
+    </ol>
+    <p class="пимечт">Честные границы: свой минт требует своего сервера и понимания рисков; для большинства семей достаточно Пути 1 + бумажки ·25 как «семейной валюты».</p>
+  </details>
+
+  <h2 class="сек">Данные и границы</h2>
+  <div class="panel">
+    <p class="note">Журнал хранится на устройстве (localStorage), записи подписаны твоим ключом ECDSA. Серверу не достаётся ни суммы, ни назначения, ни факта перевода. Баланс считается из журнала — не зашит. Двойной траты бумажек без общего реестра не избежать — честно: бумажки держатся на доверии эмитента (как настоящие купюры — на доверии государству).</p>
+    <div class="ряд-кнопок">
+      <button class="кноп опас" id="btnСтеретьВсё">🗑 стереть мой журнал и хотелки</button>
+    </div>
+  </div>
+
+  <h2 class="сек">Вся вселенная · модули</h2>
+  <div class="сетка-ссылки" id="модулиСсылки"></div>
+</section>
+
+</main>
+
+<!-- ═════════ ВКЛАДКИ ═════════ -->
+<nav class="tabs" role="tablist" aria-label="Разделы КОШЕЛЬКА">
+  <button id="tab-wallet" aria-selected="true" aria-controls="v-wallet"><span class="и">👛</span>КОШЕЛЁК</button>
+  <button id="tab-wishes" aria-selected="false" aria-controls="v-wishes"><span class="и">🧸</span>ХОТЕЛКИ</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🛡</span>Я</button>
+</nav>
+
+<!-- ═════════ ПЕРЕВОД ═════════ -->
+<div class="овер" id="переводОвер" role="dialog" aria-modal="true" aria-label="Перевод">
+  <div class="карта">
+    <h3 id="переводЗаголовок">Перевод</h3>
+    <p class="note" id="переводКому"></p>
+    <div class="поле" style="margin-top:10px"><label for="переводСумма">Сумма, ₽</label><input id="переводСумма" type="number" min="1" placeholder="50"></div>
+    <div class="поле"><label for="переводЗаписка">Записка (по желанию — увидит только получатель)</label><input id="переводЗаписка" placeholder="на пирожок"></div>
+    <div class="ряд-кнопок">
+      <button class="кноп осн" id="переводГотово">→ перечислить молча</button>
+      <button class="кноп" id="переводОтмена">отмена</button>
+    </div>
+    <p class="note" style="margin-top:10px">Без подтверждений, без SMS, без «вы уверены» — взяла и перечислила. Уведомление получателю не отправляется: он увидит факт, когда откроет кошелёк.</p>
+  </div>
+</div>
+
+<!-- ═════════ КТО ТЫ ═════════ -->
+<div class="овер" id="идентОвер" role="dialog" aria-modal="true" aria-label="Кто ты">
+  <div class="карта">
+    <h3>Чей кошелёк?</h3>
+    <p class="note">Выбери себя — один раз. Если тебя нет в круге — впиши имя с нейтральным словом ПЕРЕД ним («ГОСТЬ МАША»).</p>
+    <div class="идент-сетка" id="идентСетка"></div>
+    <label class="note" for="идентВвод">Или твоё имя:</label>
+    <input id="идентВвод" placeholder="например: ГОСТЬ МАША" style="margin-top:6px">
+    <div class="status" id="идентСтатус" role="status"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--gold),#ff8c42);color:#231a02;font-weight:800;border-radius:12px;padding:12px">открыть кошелёк →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ БУМАЖКИ ═════════ -->
+<div class="овер" id="бумажкаОвер" role="dialog" aria-modal="true" aria-label="Бумажки">
+  <div class="карта">
+    <h3 id="бумажкаЗаголовок">Бумажки</h3>
+    <div id="бумажкаТело"></div>
+    <div class="ряд-кнопок" id="бумажкиКнопки"></div>
+  </div>
+</div>
+
+<!-- ═════════ ПИН ═════════ -->
+<div class="овер" id="пинОвер" role="dialog" aria-modal="true" aria-label="PIN">
+  <div class="карта" style="max-width:360px;text-align:center">
+    <h3>🔐 Замок</h3>
+    <p class="note">Введи PIN</p>
+    <input id="пинВвод" type="password" inputmode="numeric" maxlength="8" style="text-align:center;font-size:22px;letter-spacing:.3em">
+    <div class="status" id="пинСтатус" role="status"></div>
+    <div class="ряд-кнопок" style="justify-content:center">
+      <button class="кноп осн" id="пинГотово">открыть</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-холд" id="toastХолд" aria-live="polite"></div>
+
+<footer><div class="wrap">
+  СИНГУЛЯР ·25 «КОШЕЛЁК» v1.0 · тихие переводы без вопросов и уведомлений · append-only журнал с подписью ECDSA · ХОТЕЛКИ с молчаливым финансированием · бумажки-токены · данные только на твоём устройстве · не банк · <a href="index.html">→ оркестратор ·15</a>
+</div></footer>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·25 «КОШЕЛЁК» v1.0 — тихие переводы, ХОТЕЛКИ, бумажки.
+   Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
+   Слои: РЕЕСТР → ГВАРД → ЖУРНАЛ → ПРАВИЛА → КРИПТО → ХОТЕЛКИ → БУМАЖКИ → UI → СЕТЬ.
+   Тестовые крюки: window.K25 (только чтение).
+   ═══════════════════════════════════════════════════════════════════ */
+'use strict';
+/* S25:CORE-BEGIN */
+const VERSION = '1.0.0';
+
+/* ── 1 · РЕЕСТР КРУГА (как в ·23) ── */
+const РЕЕСТР = [
+  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'] },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
+  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[] },
+  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[] },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[] },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[] },
+  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[] },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[] },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[] },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[] },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[] },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[] },
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'] }
+];
+function норм(с){ return String(с||'').toUpperCase().replace(/Ё/g,'Е').replace(/\s+/g,' ').trim(); }
+function человекПоИмени(имя){
+  const н = норм(имя);
+  return РЕЕСТР.find(function(ч){ return норм(ч.имя) === н; }) || null;
+}
+const ЗАЩИЩЁННЫЕ = (function(){
+  const s = new Set();
+  РЕЕСТР.forEach(function(ч){ s.add(норм(ч.имя)); ч.алиасы.forEach(function(а){ s.add(норм(а)); }); });
+  s.add('RUVSON'); s.add('РУВСОН');
+  return s;
+})();
+function этоЗащищённоеИмя(имя){ return ЗАЩИЩЁННЫЕ.has(норм(имя)); }
+function проверьИмя(ввод){
+  const н = норм(ввод);
+  if (!н) return { ok:false, причина:'впиши имя' };
+  if (н.length > 40) return { ok:false, причина:'имя длиннее 40 знаков — короче' };
+  if (!этоЗащищённоеИмя(н)) return { ok:true, тип:'гость', имя:н };
+  return { ok:false, причина:'короткое имя защищено' };
+}
+function собериСПрефиксом(префикс, имя){
+  const п = норм(префикс), и = норм(имя);
+  if (!п || п.length < 2) return { ok:false, причина:'префикс слишком короткий' };
+  if (этоЗащищённоеИмя(п)) return { ok:false, причина:'это слово само защищено' };
+  if (!и) return { ok:false, причина:'нужно и имя' };
+  return { ok:true, тип:'гость', имя: п + ' ' + и };
+}
+
+/* ── 2 · ЖУРНАЛ: append-only, баланс считается из фактов ── */
+/* факт = {id, тип:'перевод'|'пополнение'|'списание'|'бумажка', от:{имя,deviceId},
+            кому:{имя,deviceId}, сумма, записка?, серийник?, ts, sig?, pub?} */
+const ФАКТЫ = ['перевод','пополнение','списание','бумажка'];
+function валидныйФакт(ф){
+  if (!ф || typeof ф !== 'object') return { ok:false, причина:'не факт' };
+  if (!ф.id || typeof ф.id !== 'string') return { ok:false, причина:'без id' };
+  if (ФАКТЫ.indexOf(ф.тип) === -1) return { ok:false, причина:'тип: ' + String(ф.тип) };
+  if (!Number.isFinite(ф.сумма) || ф.сумма <= 0 || Math.round(ф.сумма) !== ф.сумма) return { ok:false, причина:'сумма: целое больше нуля' };
+  if (!Number.isFinite(ф.ts)) return { ok:false, причина:'без времени' };
+  if (!ф.от || typeof ф.от.имя !== 'string' || !ф.от.deviceId) return { ok:false, причина:'без отправителя' };
+  if ((ф.тип === 'перевод') && (!ф.кому || typeof ф.кому.имя !== 'string' || !ф.кому.deviceId)) return { ok:false, причина:'перевод без получателя' };
+  if (ф.записка !== undefined && typeof ф.записка !== 'string') return { ok:false, причина:'записка' };
+  if (ф.записка && ф.записка.length > 200) return { ok:false, причина:'записка длиннее 200 знаков' };
+  if (ф.сумма > 100000000) return { ok:false, причина:'сумма нереальна — проверь' };
+  return { ok:true };
+}
+/* Баланс человека из фактов. Журнал каждого устройства может знать не всё —
+   честно: баланс локального знания. */
+function балансИзФактов(факты, кто){
+  const цель = typeof кто === 'string' ? { имя:кто } : кто;
+  const совпадает = function(сторона){
+    if (!сторона) return false;
+    if (цель.deviceId) return сторона.deviceId === цель.deviceId || норм(сторона.имя) === норм(цель.имя);
+    return норм(сторона.имя) === норм(цель.имя);
+  };
+  let баланс = 0;
+  (факты || []).forEach(function(ф){
+    if (!валидныйФакт(ф).ok) return;
+    if (ф.тип === 'пополнение' && совпадает(ф.кому || ф.от)) баланс += ф.сумма;
+    else if (ф.тип === 'списание' && совпадает(ф.от)) баланс -= ф.сумма;
+    else if (ф.тип === 'перевод') {
+      if (совпадает(ф.от)) баланс -= ф.сумма;
+      if (совпадает(ф.кому)) баланс += ф.сумма;
+    } else if (ф.тип === 'бумажка' && совпадает(ф.кому || ф.от)) баланс += ф.сумма;
+  });
+  return баланс;
+}
+/* ТИХИЙ ПЕРЕВОД: никаких подтверждений и уведомлений — факт создаётся сразу.
+   Единственная проверка — не уйти в минус у отправителя (по локальному знанию). */
+function тихийПеревод(факты, отКто, комуКто, сумма, записка, ид, ts){
+  const с = Number(сумма);
+  if (!Number.isFinite(с) || с <= 0 || Math.round(с) !== с) return { ok:false, причина:'сумма: целое больше нуля' };
+  if (!отКто || !комуКто) return { ok:false, причина:'нужны двое' };
+  if (норм(отКто.имя) === норм(комуКто.имя) && отКто.deviceId === комуКто.deviceId) return { ok:false, причина:'себе переводить незачем' };
+  const мойБаланс = балансИзФактов(факты, отКто);
+  if (мойБаланс < с) return { ok:false, причина:'не хватает: баланс ' + мойБаланс + ' ₽' };
+  const ф = { id:ид, тип:'перевод', от:{ имя:отКто.имя, deviceId:отКто.deviceId },
+    кому:{ имя:комуКто.имя, deviceId:комуКто.deviceId }, сумма:с,
+    записка: записка ? String(записка).slice(0, 200) : undefined, ts:ts };
+  const в = валидныйФакт(ф);
+  if (!в.ok) return { ok:false, причина:в.причина };
+  return { ok:true, факт:ф };
+}
+function фактПополнение(кто, сумма, ид, ts){
+  const с = Number(сумма);
+  if (!Number.isFinite(с) || с <= 0 || Math.round(с) !== с) return { ok:false, причина:'сумма: целое больше нуля' };
+  const ф = { id:ид, тип:'пополнение', от:{ имя:'семейная касса', deviceId:'касса' },
+    кому:{ имя:кто.имя, deviceId:кто.deviceId }, сумма:с, ts:ts };
+  const в = валидныйФакт(ф);
+  if (!в.ok) return { ok:false, причина:в.причина };
+  return { ok:true, факт:ф };
+}
+function фактСписание(кто, сумма, записка, ид, ts){
+  const с = Number(сумма);
+  if (!Number.isFinite(с) || с <= 0 || Math.round(с) !== с) return { ok:false, причина:'сумма: целое больше нуля' };
+  const ф = { id:ид, тип:'списание', от:{ имя:кто.имя, deviceId:кто.deviceId }, сумма:с,
+    записка: записка ? String(записка).slice(0, 200) : undefined, ts:ts };
+  const в = валидныйФакт(ф);
+  if (!в.ok) return { ok:false, причина:в.причина };
+  return { ok:true, факт:ф };
+}
+/* Merge журналов двух устройств: дедуп по id (первый подписанный выигрывает) */
+function объединитьФакты(мой, чужой){
+  const карта = {};
+  (мой || []).concat(чужой || []).forEach(function(ф){
+    if (!ф || !ф.id || !валидныйФакт(ф).ok) return;
+    if (!карта[ф.id]) карта[ф.id] = ф;
+    else if (!карта[ф.id].sig && ф.sig) карта[ф.id] = ф; /* подписанный сильнее */
+  });
+  return Object.keys(карта).map(function(к){ return карта[к]; }).sort(function(а, б){ return а.ts - б.ts || (а.id < б.id ? -1 : 1); });
+}
+
+/* ── 3 · КРИПТО: подпись ECDSA P-256 (как в ·24) ── */
+const КР = (globalThis.crypto && globalThis.crypto.subtle) ? globalThis.crypto : null;
+function б64изБуфера(б){ const байты = new Uint8Array(б); let с = ''; for (let i = 0; i < байты.length; i++) с += String.fromCharCode(байты[i]); return btoa(с); }
+function буферИзБ64(с){ const сырьё = atob(String(с)); const байты = new Uint8Array(сырьё.length); for (let i = 0; i < сырьё.length; i++) байты[i] = сырьё.charCodeAt(i); return байты.buffer; }
+function криптоПодпись(ключ, строка){
+  const данные = new TextEncoder().encode(String(строка));
+  return КР.subtle.sign({ name:'ECDSA', hash:'SHA-256' }, ключ, данные).then(б64изБуфера);
+}
+function криптоПроверка(публJwk, строка, sig64){
+  return КР.subtle.importKey('jwk', публJwk, { name:'ECDSA', namedCurve:'P-256' }, true, ['verify'])
+    .then(function(публ){ return КР.subtle.verify({ name:'ECDSA', hash:'SHA-256' }, публ, буферИзБ64(sig64), new TextEncoder().encode(String(строка))); })
+    .catch(function(){ return false; });
+}
+function строкаПодписиФакта(ф){
+  return JSON.stringify({ id:ф.id, тип:ф.тип, от:ф.от, кому:ф.кому || null, сумма:ф.сумма, записка:ф.записка || null, серийник:ф.серийник || null, ts:ф.ts });
+}
+
+/* ── 4 · ХОТЕЛКИ ── */
+/* хотелка = {id, хозяин:{имя,deviceId}, что, сколько, статус:'ждёт'|'закрыта',
+              закрыл:{имя,deviceId}?, закрытоКак?:'перевод'|'сам', ts, закрыто_ts?} */
+function валиднаяХотелка(х){
+  if (!х || typeof х !== 'object') return { ok:false, причина:'не хотелка' };
+  if (!х.id || typeof х.id !== 'string') return { ok:false, причина:'без id' };
+  if (!х.хозяин || typeof х.хозяин.имя !== 'string') return { ok:false, причина:'без хозяина' };
+  if (typeof х.что !== 'string' || !х.что.trim() || х.что.length > 120) return { ok:false, причина:'что: опиши в 120 знаках' };
+  if (!Number.isFinite(х.сколько) || х.сколько <= 0 || Math.round(х.сколько) !== х.сколько) return { ok:false, причина:'сколько: целое больше нуля' };
+  if (['ждёт','закрыта'].indexOf(х.статус) === -1) return { ok:false, причина:'статус' };
+  return { ok:true };
+}
+/* ЗАКРЫТЬ МОЛЧА: перевод + отметка закрытия. Никаких уведомлений, никаких
+   подтверждений у получателя. Возвращает оба артефакта. */
+function закрытьХотелкуМолча(факты, хотелка, кто, идФакта, ts){
+  if (!валиднаяХотелка(хотелка).ok) return { ok:false, причина:'хотелка битая' };
+  if (хотелка.статус === 'закрыта') return { ok:false, причина:'уже закрыта' };
+  const рез = тихийПеревод(факты, кто, хотелка.хозяин, хотелка.сколько, 'хотелка: ' + хотелка.что, идФакта, ts);
+  if (!рез.ok) return рез;
+  const закрытая = Object.assign({}, хотелка, { статус:'закрыта', закрыл:{ имя:кто.имя, deviceId:кто.deviceId }, закрытоКак:'перевод', закрыто_ts:ts });
+  return { ok:true, факт:рез.факт, хотелка:закрытая };
+}
+/* объединение хотелок: дедуп по id, закрытая сильнее ждущей */
+function объединитьХотелки(мой, чужой){
+  const карта = {};
+  (мой || []).concat(чужой || []).forEach(function(х){
+    if (!х || !х.id || !валиднаяХотелка(х).ok) return;
+    if (!карта[х.id]) карта[х.id] = х;
+    else if (карта[х.id].статус !== 'закрыта' && х.статус === 'закрыта') карта[х.id] = х;
+  });
+  return Object.keys(карта).map(function(к){ return карта[к]; }).sort(function(а, б){ return б.ts - а.ts; });
+}
+
+/* ── 5 · БУМАЖКИ (ecash-стиль: подпись эмитента, предъявитель владеет) ── */
+/* бумажка = {v:1, серийник, номинал, эмитент:{имя, deviceId}, sig, pub} */
+function серийникНовый(){
+  const байты = КР ? КР.getRandomValues(new Uint8Array(8)) : new Uint8Array(8);
+  let с = ''; байты.forEach(function(б){ с += ('0' + б.toString(16)).slice(-2); });
+  return 'SNG-' + с;
+}
+function строкаПодписиБумажки(б){ return JSON.stringify({ v:б.v, серийник:б.серийник, номинал:б.номинал, эмитент:б.эмитент }); }
+function бумажкаСтрокой(б){ return 'СНГ-БУМАЖКА|' + б.v + '|' + б.серийник + '|' + б.номинал + '|' + б.эмитент.имя + '|' + б.эмитент.deviceId + '|' + б.sig + '|' + б64изБуфера(new TextEncoder().encode(JSON.stringify(б.pub))); }
+function бумажкаИзСтроки(с){
+  const части = String(с||'').trim().split('|');
+  if (части.length !== 8 || части[0] !== 'СНГ-БУМАЖКА') return { ok:false, причина:'не похоже на бумажку' };
+  try {
+    const б = { v:Number(части[1]), серийник:части[2], номинал:Number(части[3]),
+      эмитент:{ имя:части[4], deviceId:части[5] }, sig:части[6],
+      pub:JSON.parse(new TextDecoder().decode(буферИзБ64(части[7]))) };
+    if (!Number.isFinite(б.номинал) || б.номинал <= 0) return { ok:false, причина:'номинал' };
+    if (!б.серийник || !б.sig) return { ok:false, причина:'без серийника или подписи' };
+    return { ok:true, бумажка:б };
+  } catch (е) { return { ok:false, причина:'битая строка' }; }
+}
+function проверитьБумажку(б){
+  return криптоПроверка(б.pub, строкаПодписиБумажки(б), б.sig);
+}
+/* приём бумажки: факт 'бумажка' кому=мне; серийники уже принятых купюр —
+   локальная защита от повторного приёма той же купюры (без общего реестра
+   двойная трата между ЧУЖИМИ устройствами честно не исключена — доверие эмитенту) */
+function приёмБумажки(бумажка, кто, использованныеСерийники, ид, ts){
+  const в = бумажка && бумажка.серийник ? { ok:true } : { ok:false, причина:'не бумажка' };
+  if (!в.ok) return в;
+  if (бумажка.номинал <= 0 || Math.round(бумажка.номинал) !== бумажка.номинал) return { ok:false, причина:'номинал' };
+  const уже = использованныеСерийники || [];
+  if (уже.indexOf(бумажка.серийник) !== -1) return { ok:false, причина:'эта бумажка уже принята на устройстве' };
+  const ф = { id:ид, тип:'бумажка', от:{ имя:бумажка.эмитент.имя, deviceId:бумажка.эмитент.deviceId },
+    кому:{ имя:кто.имя, deviceId:кто.deviceId }, сумма:бумажка.номинал,
+    серийник:бумажка.серийник, ts:ts };
+  const вф = валидныйФакт(ф);
+  if (!вф.ok) return { ok:false, причина:вф.причина };
+  return { ok:true, факт:ф };
+}
+
+const S25 = {
+  VERSION: VERSION, РЕЕСТР: РЕЕСТР, ФАКТЫ: ФАКТЫ,
+  норм:норм, человекПоИмени:человекПоИмени, этоЗащищённоеИмя:этоЗащищённоеИмя, проверьИмя:проверьИмя, собериСПрефиксом:собериСПрефиксом,
+  валидныйФакт:валидныйФакт, балансИзФактов:балансИзФактов, тихийПеревод:тихийПеревод,
+  фактПополнение:фактПополнение, фактСписание:фактСписание, объединитьФакты:объединитьФакты,
+  криптоПодпись:криптоПодпись, криптоПроверка:криптоПроверка, строкаПодписиФакта:строкаПодписиФакта,
+  валиднаяХотелка:валиднаяХотелка, закрытьХотелкуМолча:закрытьХотелкуМолча, объединитьХотелки:объединитьХотелки,
+  серийникНовый:серийникНовый, строкаПодписиБумажки:строкаПодписиБумажки, бумажкаСтрокой:бумажкаСтрокой, бумажкаИзСтроки:бумажкаИзСтроки, проверитьБумажку:проверитьБумажку, приёмБумажки:приёмБумажки,
+  криптоЖивой:function(){ return !!КР; }
+};
+/* S25:CORE-END */
+</script>
+<script>
+'use strict';
+/* ───────────────────── 6 · DOM-фабрика и утилиты ───────────────────── */
+function эл(тег, атр, дети){
+  const н = document.createElement(тег);
+  if (атр) Object.keys(атр).forEach(function(к){
+    if (к === 'class') н.className = атр[к];
+    else if (к === 'text') н.textContent = атр[к];
+    else if (к.slice(0,2) === 'on') н.addEventListener(к.slice(2), атр[к]);
+    else if (атр[к] !== null && атр[к] !== undefined) н.setAttribute(к, атр[к]);
+  });
+  (дети || []).forEach(function(д){ if (д) н.appendChild(д); });
+  return н;
+}
+function $(ид){ return document.getElementById(ид); }
+function тост(с){
+  const узел = эл('div', { class:'toast', text:с });
+  $('toastХолд').appendChild(узел);
+  setTimeout(function(){ узел.remove(); }, 4200);
+}
+function идМ(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9); }
+
+/* ───────────────────── 7 · ЛИЧНОСТЬ (мост к КРУГУ ·23 read-only) ───────────────────── */
+let Я = null;
+try { Я = JSON.parse(localStorage.getItem('singular.krug.v1.identity') || 'null'); } catch (e) { Я = null; }
+const КЛЮЧ_ЛИЧН = 'singular.wallet.v1.identity';
+function лсЧитай(ключ, дефо){ try { const v = localStorage.getItem(ключ); return v === null ? дефо : JSON.parse(v); } catch (e) { return дефо; } }
+function лсПиши(ключ, зн){ try { localStorage.setItem(ключ, JSON.stringify(зн)); } catch (e) {} }
+if (!Я || !Я.deviceId) Я = лсЧитай(КЛЮЧ_ЛИЧН, null);
+function сохраниЛичность(л){ Я = л; лсПиши(КЛЮЧ_ЛИЧН, л); рендерВсё(); }
+function deviceIdМой(){
+  let ид = лсЧитай('singular.wallet.v1.deviceId', null);
+  if (!ид) { ид = 'wal-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); лсПиши('singular.wallet.v1.deviceId', ид); }
+  return ид;
+}
+
+/* ───────────────────── 8 · ХРАН (localStorage) ───────────────────── */
+const КЛЮЧ = { журнал:'singular.wallet.v1.ledger', хотелки:'singular.wallet.v1.wishes', бумажки:'singular.wallet.v1.notes', серийники:'singular.wallet.v1.serials', пин:'singular.wallet.v1.pin' };
+let ЖУРНАЛ = лсЧитай(КЛЮЧ.журнал, []);
+let ХОТЕЛКИ = лсЧитай(КЛЮЧ.хотелки, []);
+let БУМАЖКИ = лсЧитай(КЛЮЧ.бумажки, []);       /* мои бумажки на руках */
+let СЕРИЙНИКИ = лсЧитай(КЛЮЧ.серийники, []);   /* принятые на устройстве */
+function сохраниЖурнал(){ лсПиши(КЛЮЧ.журнал, ЖУРНАЛ); }
+function сохраниХотелки(){ лсПиши(КЛЮЧ.хотелки, ХОТЕЛКИ); }
+function сохраниБумажки(){ лсПиши(КЛЮЧ.бумажки, БУМАЖКИ); лсПиши(КЛЮЧ.серийники, СЕРИЙНИКИ); }
+function добавьФакт(ф, гнать){
+  if (ЖУРНАЛ.some(function(x){ return x.id === ф.id; })) return false;
+  ЖУРНАЛ.push(ф); сохраниЖурнал(); рендерВсё();
+  if (гнать !== false) сетьРазошли('fact', { ф:ф });
+  return true;
+}
+
+/* ───────────────────── 9 · КРИПТО-ЛИЧНОСТЬ (ключ подписи) ───────────────────── */
+let МОЙ_КЛЮЧ = null; /* {приват, публ} */
+function ключПолучить(){
+  if (МОЙ_КЛЮЧ) return Promise.resolve(МОЙ_КЛЮЧ);
+  if (!КР) return Promise.resolve(null);
+  const сохранён = лсЧитай('singular.wallet.v1.pub', null);
+  if (сохранён) {
+    /* приватный non-extractable между перезагрузками не живёт — пересоздаём пару;
+       честно: старые подписи проверяются по pub из факта, так что это безболезненно */
+  }
+  return КР.subtle.generateKey({ name:'ECDSA', namedCurve:'P-256' }, false, ['sign','verify']).then(function(пара){
+    return КР.subtle.exportKey('jwk', пара.publicKey).then(function(публ){
+      МОЙ_КЛЮЧ = { приват:пара.privateKey, публ:публ };
+      лсПиши('singular.wallet.v1.pub', публ);
+      return МОЙ_КЛЮЧ;
+    });
+  });
+}
+
+/* ───────────────────── 10 · ВКЛАДКИ ───────────────────── */
+function откройВкладку(имя){
+  ['wallet','wishes','me'].forEach(function(v){
+    $('v-' + v).classList.toggle('on', v === имя);
+    $('tab-' + v).setAttribute('aria-selected', v === имя ? 'true' : 'false');
+  });
+  if (имя === 'wishes') рендерХотелки();
+  if (имя === 'me') рендерЯ();
+}
+['wallet','wishes','me'].forEach(function(v){
+  $('tab-' + v).addEventListener('click', function(){ откройВкладку(v); });
+});
+
+/* ───────────────────── 11 · РЕНДЕР ───────────────────── */
+function мойБаланс(){ return Я ? балансИзФактов(ЖУРНАЛ, Я) : 0; }
+function рендерВсё(){ рендерБаланс(); рендерЛюди(); рендерЖурнал(); рендерБумажки(); рендерЯЧип(); }
+function рендерБаланс(){
+  $('цифраБаланс').textContent = (Я ? мойБаланс() : 0) + ' ₽';
+  $('подписьБаланс').textContent = Я
+    ? 'семейный учёт · не банк · траты видны только тебе'
+    : 'выбери, кто ты — и появится кошелёк';
+}
+function рендерЯЧип(){
+  if (Я) {
+    const ч = человекПоИмени(Я.имя);
+    $('яЧипАв').textContent = ч ? ч.эмодзи : '👤';
+    $('яЧипИмя').textContent = Я.имя;
+    $('яЧипБаланс').textContent = мойБаланс() + ' ₽';
+  } else {
+    $('яЧипАв').textContent = '👤';
+    $('яЧипИмя').textContent = 'кто ты?';
+    $('яЧипБаланс').textContent = 'нет кошелька';
+  }
+}
+function рендерЛюди(){
+  const холд = $('людскаяСетка'); холд.textContent = '';
+  if (!Я) { холд.appendChild(эл('p', { class:'note', text:'сначала скажи, кто ты' })); return; }
+  РЕЕСТР.filter(function(ч){ return ч.имя !== Я.имя; }).forEach(function(ч){
+    холд.appendChild(эл('button', { class:'person', onclick:function(){ открытьПеревод({ имя:ч.имя, deviceId:'k-' + ч.id }, ч.эмодзи); } }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя }),
+      эл('small', { class:'note', text:'перечислить' })
+    ]));
+  });
+}
+function рендерЖурнал(){
+  const холд = $('журналСписок'); холд.textContent = '';
+  if (!Я) return;
+  const записи = ЖУРНАЛ.slice().sort(function(а, б){ return б.ts - а.ts; }).slice(0, 50);
+  if (!записи.length) {
+    холд.appendChild(эл('div', { class:'note', style:'text-align:center;padding:18px;border:1px dashed var(--line);border-radius:12px',
+      text:'журнал пуст. Пополнение с семейной кассы — кнопкой ниже. Переводы появятся здесь — и только здесь.' }));
+    return;
+  }
+  записи.forEach(function(ф){
+    const моёСписание = норм(ф.от && ф.от.имя) === норм(Я.имя) && (ф.тип === 'перевод' || ф.тип === 'списание');
+    const моёПриход = ф.тип === 'пополнение' || ф.тип === 'бумажка' || (ф.тип === 'перевод' && норм(ф.кому && ф.кому.имя) === норм(Я.имя));
+    const значок = ф.тип === 'перевод' ? (моёСписание ? '↗' : '↘') : ф.тип === 'пополнение' ? '➕' : ф.тип === 'бумажка' ? '💵' : '➖';
+    const кто = моёСписание ? ('→ ' + (ф.кому ? ф.кому.имя : '?')) : (ф.тип === 'перевод' ? ('← ' + (ф.от ? ф.от.имя : '?')) : (ф.от ? ф.от.имя : ''));
+    const строка = эл('div', { class:'запись' + (ф.тип === 'бумажка' ? ' бумага' : '') }, [
+      эл('span', { class:'и', text:значок }),
+      эл('div', { class:'тело' }, [
+        эл('b', { text:(ф.тип === 'бумажка' ? 'бумажка от ' : (ф.тип === 'пополнение' ? 'пополнение от ' : '')) + кто }),
+        эл('small', { text:new Date(ф.ts).toLocaleString('ru-RU', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) + (ф.записка ? ' · ' + ф.записка : '') + (ф.sig ? ' · подписано' : '') })
+      ]),
+      эл('span', { class:'сумма ' + (моёПриход ? 'приход' : 'уход'), text:(моёПриход ? '+' : '−') + ф.сумма + ' ₽' })
+    ]);
+    холд.appendChild(строка);
+  });
+}
+function рендерБумажки(){
+  const холд = $('бумажкиСписок'); холд.textContent = '';
+  if (!БУМАЖКИ.length) { холд.appendChild(эл('small', { class:'note', text:'на руках бумажек нет' })); return; }
+  БУМАЖКИ.forEach(function(б, и){
+    холд.appendChild(эл('div', { class:'запись бумага' }, [
+      эл('span', { class:'и', text:'💵' }),
+      эл('div', { class:'тело' }, [
+        эл('b', { text:б.номинал + ' ₽ · ' + б.серийник }),
+        эл('small', { text:'эмитент: ' + б.эмитент.имя })
+      ]),
+      эл('button', { class:'кноп', text:'передать →', onclick:function(){ передатьБумажку(и); } })
+    ]));
+  });
+}
+function рендерХотелки(){
+  /* мои */
+  const мои = $('моиХотелки'); мои.textContent = '';
+  const чужие = $('чужиеХотелки'); чужие.textContent = '';
+  if (!Я) { мои.appendChild(эл('p', { class:'note', text:'сначала скажи, кто ты' })); return; }
+  const список = объединитьХотелки(ХОТЕЛКИ, []);
+  let естьМои = false, естьЧужие = false;
+  список.forEach(function(х){
+    const моё = норм(х.хозяин.имя) === норм(Я.имя);
+    if (моё) {
+      естьМои = true;
+      const ряд = эл('div', { class:'хотелка' + (х.статус === 'закрыта' ? ' закрыта' : '') }, [
+        эл('span', { class:'эм', text:х.статус === 'закрыта' ? '✅' : '✨' }),
+        эл('div', { class:'тело' }, [
+          эл('b', { text:х.что }),
+          эл('small', { class:'note', text:х.статус === 'закрыта'
+            ? ('закрыта ' + (х.закрыл ? '— ' + х.закрыл.имя : '') + ' · +' + х.сколько + ' ₽')
+            : ('стоит ' + х.сколько + ' ₽ · ждёт') })
+        ])
+      ]);
+      if (х.статус !== 'закрыта') {
+        ряд.appendChild(эл('button', { class:'кноп опас', text:'✖', 'aria-label':'убрать хотелку', onclick:function(){
+          ХОТЕЛКИ = ХОТЕЛКИ.filter(function(y){ return y.id !== х.id; }); сохраниХотелки(); рендерХотелки();
+        } }));
+      }
+      мои.appendChild(ряд);
+    } else {
+      естьЧужие = true;
+      const ряд = эл('div', { class:'хотелка' + (х.статус === 'закрыта' ? ' закрыта' : '') }, [
+        эл('span', { class:'эм', text:х.статус === 'закрыта' ? '✅' : '🧸' }),
+        эл('div', { class:'тело' }, [
+          эл('b', { text:х.что }),
+          эл('small', { class:'note', text:х.хозяин.имя + ' · ' + х.сколько + ' ₽' + (х.статус === 'закрыта' ? ' · закрыто ' + (х.закрыл ? х.закрыл.имя : '') : ' · ждёт') })
+        ])
+      ]);
+      if (х.статус !== 'закрыта') {
+        ряд.appendChild(эл('button', { class:'кноп осн', text:'закрыть молча', onclick:function(){ закрытьМолча(х); } }));
+      }
+      чужие.appendChild(ряд);
+    }
+  });
+  if (!естьМои) мои.appendChild(эл('div', { class:'note', style:'text-align:center;padding:14px;border:1px dashed var(--line);border-radius:12px', text:'своих хотелок нет — добавь сверху' }));
+  if (!естьЧужие) чужие.appendChild(эл('div', { class:'note', style:'text-align:center;padding:14px;border:1px dashed var(--line);border-radius:12px', text:'пока хотелок круга не видно — они появятся, когда устройства встретятся (или когда кто-то из круга зайдёт сюда на этом браузере)' }));
+}
+function рендерЯ(){
+  const холд = $('яКто'); холд.textContent = '';
+  if (!Я) {
+    холд.appendChild(эл('p', { class:'note', text:'кошелёк не открыт: выбери, кто ты.' }));
+    холд.appendChild(эл('button', { class:'кноп осн', onclick:открытьИдентОвер, text:'кто ты?', style:'margin-top:10px' }));
+    return;
+  }
+  const ч = человекПоИмени(Я.имя);
+  холд.appendChild(эл('div', {}, [
+    эл('b', { text:(ч ? ч.эмодзи : '👤') + ' ' + Я.имя }),
+    эл('div', { class:'note', text:'баланс: ' + мойБаланс() + ' ₽ · фактов в журнале: ' + ЖУРНАЛ.length }),
+    эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId })
+  ]));
+  const м = $('модулиСсылки'); м.textContent = '';
+  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_23_КРУГ.html','👥 КРУГ ·23'],['СИНГУЛЯР_24_ПОЧТА.html','📮 ПОЧТА ·24'],['СИНГУЛЯР_26_ЛИНИЯ.html','☎️ ЛИНИЯ ·26'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+    м.appendChild(эл('a', { href:п[0], text:п[1] }));
+  });
+  const пинЕсть = !!лсЧитай(КЛЮЧ.пин, null);
+  $('btnЗадатьПин').hidden = пинЕсть;
+  $('btnСнятьПин').hidden = !пинЕсть;
+}
+
+/* ───────────────────── 12 · ПЕРЕВОД ───────────────────── */
+let адресатПеревода = null;
+function открытьПеревод(комуКто, эмодзи){
+  if (!Я) { открытьИдентОвер(); return; }
+  адресатПеревода = комуКто;
+  $('переводЗаголовок').textContent = (эмодзи || '👤') + ' ' + комуКто.имя;
+  $('переводКому').textContent = 'твой баланс: ' + мойБаланс() + ' ₽ → кому: ' + комуКто.имя;
+  $('переводСумма').value = '';
+  $('переводЗаписка').value = '';
+  $('переводОвер').classList.add('on');
+}
+$('переводОтмена').addEventListener('click', function(){ $('переводОвер').classList.remove('on'); });
+$('переводГотово').addEventListener('click', function(){
+  if (!адресатПеревода) return;
+  const сумма = Number($('переводСумма').value);
+  const записка = $('переводЗаписка').value.trim();
+  const рез = тихийПеревод(ЖУРНАЛ, Я, адресатПеревода, сумма, записка, идМ(), Date.now());
+  if (!рез.ok) { тост('не вышло: ' + рез.причина); return; }
+  ключПолучить().then(function(ключ){
+    if (ключ) {
+      return криптоПодпись(ключ.приват, строкаПодписиФакта(рез.факт)).then(function(sig){
+        рез.факт.sig = sig; рез.факт.pub = ключ.публ;
+      });
+    }
+  }).catch(function(){}).then(function(){
+    добавьФакт(рез.факт);
+    $('переводОвер').classList.remove('on');
+    тост('перечислено ' + рез.факт.сумма + ' ₽ → ' + адресатПеревода.имя + ' · молча');
+    адресатПеревода = null;
+  });
+});
+
+/* ───────────────────── 13 · ХОТЕЛКИ: действия ───────────────────── */
+$('btnДобавитьХотелку').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const что = $('хотелЧто').value.trim();
+  const сколько = Number($('хотелСколько').value);
+  const х = { id:идМ(), хозяин:{ имя:Я.имя, deviceId:Я.deviceId }, что:что, сколько:сколько, статус:'ждёт', ts:Date.now() };
+  const в = валиднаяХотелка(х);
+  if (!в.ok) { тост(в.причина); return; }
+  ХОТЕЛКИ.push(х); сохраниХотелки();
+  $('хотелЧто').value = ''; $('хотелСколько').value = '';
+  сетьРазошли('хотел', { х:х });
+  рендерХотелки();
+  тост('хотелка заявлена — кто захочет, закроет молча');
+});
+function закрытьМолча(хотелка){
+  if (!Я) { открытьИдентОвер(); return; }
+  const рез = закрытьХотелкуМолча(ЖУРНАЛ, хотелка, Я, идМ(), Date.now());
+  if (!рез.ok) { тост('не вышло: ' + рез.причина); return; }
+  ключПолучить().then(function(ключ){
+    if (ключ) {
+      return криптоПодпись(ключ.приват, строкаПодписиФакта(рез.факт)).then(function(sig){ рез.факт.sig = sig; рез.факт.pub = ключ.публ; });
+    }
+  }).catch(function(){}).then(function(){
+    добавьФакт(рез.факт);
+    ХОТЕЛКИ = объединитьХотелки(ХОТЕЛКИ, [рез.хотелка]);
+    сохраниХотелки();
+    сетьРазошли('хотел', { х:рез.хотелка });
+    рендерХотелки(); рендерВсё();
+    /* бабушкин сценарий: перевела — и никто ни о чём не спрашивал */
+    тост('закрыто молча: ' + рез.факт.сумма + ' ₽ → ' + хотелка.хозяин.имя);
+  });
+}
+
+/* ───────────────────── 14 · ПОПОЛНЕНИЕ / СПИСАНИЕ ───────────────────── */
+$('btnПополнить').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const ввод = prompt('Пополнение семейной кассой (наличные в конверте). Сколько внести, ₽?', '500');
+  if (ввод === null) return;
+  const рез = фактПополнение(Я, Number(ввод), идМ(), Date.now());
+  if (!рез.ok) { тост(рез.причина); return; }
+  ключПолучить().then(function(ключ){
+    if (ключ) return криптоПодпись(ключ.приват, строкаПодписиФакта(рез.факт)).then(function(sig){ рез.факт.sig = sig; рез.факт.pub = ключ.публ; });
+  }).catch(function(){}).then(function(){
+    добавьФакт(рез.факт);
+    тост('+' + рез.факт.сумма + ' ₽ — касса пополнилась');
+  });
+});
+
+/* ───────────────────── 15 · БУМАЖКИ ───────────────────── */
+$('btnВыпуститьБумажки').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const ввод = prompt('Выпустить бумажки на сумму (₽) — они спишутся с твоего баланса:', '100');
+  if (ввод === null) return;
+  const всего = Number(ввод);
+  if (!Number.isFinite(всего) || всего <= 0 || Math.round(всего) !== всего) { тост('сумма: целое больше нуля'); return; }
+  const резСпис = фактСписание(Я, всего, 'выпуск бумажек', идМ(), Date.now());
+  if (!резСпис.ok) { тост('не вышло: ' + резСпис.причина); return; }
+  ключПолучить().then(function(ключ){
+    if (!ключ) { тост('ключ недоступен'); return; }
+    return криптоПодпись(ключ.приват, строкаПодписиФакта(резСпис.факт)).then(function(sig){
+      резСпис.факт.sig = sig; резСпис.факт.pub = ключ.публ;
+      /* разбиваем на бумажки по 50/20/10/5/1 */
+      const номиналы = [50, 20, 10, 5, 1];
+      let остаток = всего; const выпущенные = [];
+      const цепочка = Promise.resolve();
+      номиналы.forEach(function(н){
+        while (остаток >= н) {
+          const б = { v:1, серийник:серийникНовый(), номинал:н, эмитент:{ имя:Я.имя, deviceId:Я.deviceId }, sig:null, pub:ключ.публ };
+          выпущенные.push(б); остаток -= н;
+        }
+      });
+      return Promise.all(выпущенные.map(function(б){
+        return криптоПодпись(ключ.приват, строкаПодписиБумажки(б)).then(function(sig){ б.sig = sig; });
+      })).then(function(){
+        добавьФакт(резСпис.факт);
+        БУМАЖКИ = БУМАЖКИ.concat(выпущенные); сохраниБумажки();
+        рендерВсё();
+        тост('выпущено бумажек: ' + выпущенные.length + ' на ' + всего + ' ₽');
+        показатьБумажкиСтроками();
+      });
+    });
+  }).catch(function(ошибка){ тост('не вышло: ' + (ошибка && ошибка.message || ошибка)); });
+});
+function показатьБумажкиСтроками(){
+  const тело = $('бумажкаТело'); тело.textContent = '';
+  $('бумажкаЗаголовок').textContent = 'Бумажки на руках';
+  БУМАЖКИ.forEach(function(б){
+    тело.appendChild(эл('div', { class:'вл-строка', style:'margin-bottom:6px' }, [
+      эл('span', { style:'flex:1;font-family:var(--mono);font-size:11px;word-break:break-all', text:бумажкаСтрокой(б) })
+    ]));
+  });
+  const кнопки = $('бумажкиКнопки'); кнопки.textContent = '';
+  кнопки.appendChild(эл('button', { class:'кноп', text:'✖ закрыть', onclick:function(){ $('бумажкаОвер').classList.remove('on'); } }));
+  $('бумажкаОвер').classList.add('on');
+}
+function передатьБумажку(и){
+  const б = БУМАЖКИ[и];
+  if (!б) return;
+  const строка = бумажкаСтрокой(б);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(строка).then(function(){
+      тост('токен скопирован — вставь в ПОЧТУ ·24 или передай строкой');
+    }, function(){ prompt('Токен бумажки — скопируй:', строка); });
+  } else {
+    prompt('Токен бумажки — скопируй:', строка);
+  }
+}
+$('btnПринятьБумажку').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const строка = prompt('Вставь токен бумажки (строка СНГ-БУМАЖКА|…):', '');
+  if (!строка) return;
+  const рез = бумажкаИзСтроки(строка);
+  if (!рез.ok) { тост('не вышло: ' + рез.причина); return; }
+  проверитьБумажку(рез.бумажка).then(function(жива){
+    if (!жива) { тост('подпись эмитента НЕ сошлась — бумажка фальшивая'); return; }
+    const приём = приёмБумажки(рез.бумажка, Я, СЕРИЙНИКИ, идМ(), Date.now());
+    if (!приём.ok) { тост('не вышло: ' + приём.причина); return; }
+    СЕРИЙНИКИ.push(рез.бумажка.серийник);
+    БУМАЖКИ.push(рез.бумажка);
+    добавьФакт(приём.факт);
+    сохраниБумажки(); рендерВсё();
+    тост('принято: ' + рез.бумажка.номинал + ' ₽ от ' + рез.бумажка.эмитент.имя + ' (подпись верна)');
+  });
+});
+
+/* ───────────────────── 16 · СЕТЬ: мост вкладок + P2P ───────────────────── */
+const ШИНА = 'singular-wallet-v1';
+const TR_APP = 'singular-wallet-v1';
+let локШина = null;
+try { локШина = new BroadcastChannel(ШИНА); } catch (e) { локШина = null; }
+let tr = null, импортОбещан = null, комната = null, почта = {};
+function trysteroМодуль(){
+  if (импортОбещан) return импортОбещан;
+  импортОбещан = import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs')
+    .then(function(м){ tr = м; return м; })
+    .catch(function(e){ tr = null; throw e; });
+  return импортОбещан;
+}
+локШина && локШина.addEventListener('message', function(e){ принялПакет(e.data); });
+function принялПакет(д){
+  if (!д || д.шина !== ШИНА || д.v !== 1) return;
+  switch (д.вид) {
+    case 'fact': {
+      const ф = д.ф;
+      if (!валидныйФакт(ф).ok) return;
+      if (Я && ф.кому && норм(ф.кому.имя) === норм(Я.имя)) {
+        /* мой приход — молча добавить: никаких уведомлений никому */
+        if (добавьФакт(ф, false)) { тост('+' + ф.сумма + ' ₽ · факт добавлен молча'); }
+      } else if (Я && ф.от && норм(ф.от.имя) === норм(Я.имя)) {
+        добавьФакт(ф, false); /* синхронизация моих устройств */
+      }
+      break;
+    }
+    case 'хотел': {
+      const х = д.х;
+      if (!валиднаяХотелка(х).ok) return;
+      const до = ХОТЕЛКИ.length;
+      ХОТЕЛКИ = объединитьХотелки(ХОТЕЛКИ, [х]);
+      if (ХОТЕЛКИ.length !== до || ХОТЕЛКИ.some(function(y){ return y.id === х.id; })) {
+        сохраниХотелки(); рендерХотелки();
+      }
+      break;
+    }
+    case 'hist-req': сетьРазошли('hist', { факты:ЖУРНАЛ.slice(-200), хотелки:ХОТЕЛКИ }); break;
+    case 'hist': {
+      const до = ЖУРНАЛ.length;
+      ЖУРНАЛ = объединитьФакты(ЖУРНАЛ, д.факты || []);
+      ХОТЕЛКИ = объединитьХотелки(ХОТЕЛКИ, д.хотелки || []);
+      if (ЖУРНАЛ.length !== до) { сохраниЖурнал(); рендерВсё(); }
+      сохраниХотелки(); рендерХотелки();
+      break;
+    }
+  }
+}
+function конв(вид, поля){
+  return Object.assign({ шина:ШИНА, v:1, вид:вид, от:{ имя:Я && Я.имя, deviceId:Я && Я.deviceId }, ts:Date.now() }, поля || {});
+}
+function сетьРазошли(вид, поля){
+  const п = конв(вид, поля);
+  локШина && локШина.postMessage(п);
+  if (почта[вид]) почта[вид].send(п).catch(function(){});
+}
+function статусСвязи(текст, класс){
+  const с = $('статусСвязи');
+  с.textContent = '· ' + текст;
+  с.className = 'status' + (класс ? ' ' + класс : '');
+}
+function сетьЗапусти(){
+  if (!Я) { статусСвязи('личность не выбрана — кошелёк ждёт тебя', 'warn'); return; }
+  if (локШина) статусСвязи('мост вкладок активен', 'ok');
+  trysteroМодуль().then(function(){
+    комната = tr.joinRoom({
+      appId: TR_APP,
+      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+    }, 'led');
+    ['fact','хотел','hist-req','hist'].forEach(function(канал){
+      const п = комната.makeAction(канал);
+      п.onMessage = function(д){ принялПакет(д); };
+      почта[канал] = п;
+    });
+    комната.onPeerJoin = function(){
+      статусСвязи('P2P жива: факты и хотелки расходятся между устройствами напрямую', 'ok');
+      сетьРазошли('hist-req', null);
+    };
+    статусСвязи('сеть P2P готова · мост вкладок активен', 'ok');
+  }).catch(function(){
+    статусСвязи('P2P недоступен здесь: работает мост вкладок одного браузера; между устройствами — https', 'warn');
+  });
+}
+
+/* ───────────────────── 17 · КТО ТЫ / PIN / ЭКСПОРТ ───────────────────── */
+function открытьИдентОвер(){
+  const сетка = $('идентСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    сетка.appendChild(эл('button', { class:'идент-карт', 'aria-pressed':'false', onclick:function(){
+      сетка.querySelectorAll('.идент-карт').forEach(function(к){ к.setAttribute('aria-pressed','false'); });
+      сетка.setAttribute('data-выбор', ч.имя);
+      this.setAttribute('aria-pressed','true');
+      $('идентВвод').value = '';
+      $('идентСтатус').textContent = '';
+    } }, [эл('span', { class:'ав', text:ч.эмодзи }), эл('b', { text:ч.имя })]));
+  });
+  $('идентОвер').classList.add('on');
+}
+$('идентГотово').addEventListener('click', function(){
+  const выбр = $('идентСетка').getAttribute('data-выбор');
+  const ч = выбр ? РЕЕСТР.find(function(x){ return x.имя === выбр; }) : null;
+  if (ч) {
+    сохраниЛичность({ имя:ч.имя, эмодзи:ч.эмодзи, тип:'свой', deviceId: deviceIdМой() });
+    $('идентОвер').classList.remove('on');
+    сетьЗапусти(); рендерВсё();
+    return;
+  }
+  const ввод = $('идентВвод').value;
+  let рез = проверьИмя(ввод);
+  if (!рез.ok && рез.причина === 'короткое имя защищено') {
+    const слова = норм(ввод).split(' ');
+    if (слова.length >= 2) рез = собериСПрефиксом(слова[0], слова.slice(1).join(' '));
+  }
+  if (!рез.ok) { $('идентСтатус').textContent = рез.причина + ' · попробуй: «ГОСТЬ ' + норм(ввод) + '»'; $('идентСтатус').className = 'status err'; return; }
+  сохраниЛичность({ имя:рез.имя, эмодзи:'👤', тип:'гость', deviceId: deviceIdМой() });
+  $('идентОвер').classList.remove('on');
+  сетьЗапусти(); рендерВсё();
+});
+$('btnЗадатьПин').addEventListener('click', function(){
+  const пин = prompt('PIN (4–8 цифр). Честно: это замок экрана, не крипто-хранилище.', '');
+  if (!пин || !/^\d{4,8}$/.test(пин)) { тост('PIN: 4–8 цифр'); return; }
+  хешПин(пин).then(function(х){ лсПиши(КЛЮЧ.пин, х); рендерЯ(); тост('PIN задан'); });
+});
+$('btnСнятьПин').addEventListener('click', function(){
+  try { localStorage.removeItem(КЛЮЧ.пин); } catch (e) {}
+  рендерЯ(); тост('PIN снят');
+});
+function хешПин(пин){
+  const данные = new TextEncoder().encode('снг25|' + пин);
+  return КР.subtle.digest('SHA-256', данные).then(function(б){ return б64изБуфера(б); });
+}
+function проверитьПинПриСтарте(){
+  const х = лсЧитай(КЛЮЧ.пин, null);
+  if (!х) return;
+  $('пинОвер').classList.add('on');
+  $('пинГотово').addEventListener('click', function(){
+    хешПин($('пинВвод').value).then(function(мой){
+      if (мой === х) { $('пинОвер').classList.remove('on'); $('пинВвод').value = ''; }
+      else { $('пинСтатус').textContent = 'не тот PIN'; $('пинСтатус').className = 'status err'; }
+    });
+  });
+}
+$('btnЭкспортJSON').addEventListener('click', function(){
+  const дамп = { модуль:'СИНГУЛЯР ·25 КОШЕЛЁК', версия:VERSION, экспорт:new Date().toISOString(),
+    кто:Я && Я.имя, журнал:ЖУРНАЛ, хотелки:ХОТЕЛКИ, бумажки:БУМАЖКИ };
+  const блоб = new Blob([JSON.stringify(дамп, null, 1)], { type:'application/json' });
+  const урл = URL.createObjectURL(блоб);
+  const а = эл('a', { href:урл, download:'сингуляр-кошелёк-' + Date.now() + '.json' });
+  document.body.appendChild(а); а.click(); а.remove();
+  setTimeout(function(){ URL.revokeObjectURL(урл); }, 3000);
+});
+$('btnСтеретьВсё').addEventListener('click', function(){
+  if (!confirm('Стереть журнал, хотелки и бумажки на этом устройстве? Отменить нельзя.')) return;
+  ЖУРНАЛ = []; ХОТЕЛКИ = []; БУМАЖКИ = []; СЕРИЙНИКИ = [];
+  сохраниЖурнал(); сохраниХотелки(); сохраниБумажки();
+  рендерВсё(); тост('всё стёрто');
+});
+
+/* ───────────────────── 18 · PWA install ───────────────────── */
+let отложенныйПромпт = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); отложенныйПромпт = e; $('btnInstall').hidden = false; });
+$('btnInstall').addEventListener('click', function(){
+  if (!отложенныйПромпт) { location.href = 'ИНСТРУКЦИЯ_УСТАНОВКИ.html'; return; }
+  отложенныйПромпт.prompt();
+  отложенныйПромпт = null; this.hidden = true;
+});
+
+/* ───────────────────── 19 · СТАРТ ───────────────────── */
+рендерВсё();
+сетьЗапусти();
+проверитьПинПриСтарте();
+if (!Я) setTimeout(открытьИдентОвер, 400);
+
+/* тестовый крюк: только чтение */
+window.K25 = {
+  версия:VERSION,
+  я:function(){ return Я && { имя:Я.имя, тип:Я.тип }; },
+  баланс:function(){ return мойБаланс(); },
+  факты:function(){ return ЖУРНАЛ.length; },
+  хотелки:function(){ return ХОТЕЛКИ.map(function(х){ return { что:х.что, сколько:х.сколько, статус:х.статус, хозяин:х.хозяин.имя }; }); },
+  бумажки:function(){ return БУМАЖКИ.length; },
+  сеть:function(){ return { вкладки:!!локШина, trystero:!!tr, комната:!!комната }; },
+  ядро:S25
+};
+</script>
+<script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-ux-engine-v8.js"></script>
+</body>
+</html>

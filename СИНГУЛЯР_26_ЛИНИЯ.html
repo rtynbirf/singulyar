@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·26 — ЛИНИЯ · свой номер, SMS и OTP</title>
+<meta name="description" content="СИНГУЛЯР ·26 «ЛИНИЯ» — у каждого из круга свой внутренний номер: SMS ходят P2P между устройствами без операторов, свои одноразовые коды подтверждения (OTP) внутри экосистемы, честные рецепты своего внешнего номера без «добрых дядей»: своя SIM + шлюз-форвардер, свой CPaaS-аккаунт с ключом локально, свой GSM-шлюз.">
+<meta name="theme-color" content="#0a0f15">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<style>
+:root{
+  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
+  --teal:#61e1c4;--teal2:#38bdf8;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#a78bfa;
+  --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+html{font-size:16px}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,textarea:focus{outline:2px solid var(--teal2);outline-offset:1px}
+::placeholder{color:#5d7180}
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#38bdf8,#a78bfa,#38bdf8);display:grid;place-items:center;color:#0b1024;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
+.btn-install{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{padding:10px 4px 12px;text-align:center;color:var(--dim);font-size:11.5px}
+nav.tabs button .и{font-size:21px;display:block;line-height:1.15}
+nav.tabs button[aria-selected="true"]{color:var(--teal2)}
+nav.tabs button .bdg{position:relative;top:-2px;margin-left:2px;background:var(--red);color:#fff;border-radius:999px;font-size:10.5px;padding:1px 6px;font-weight:700}
+main{padding-top:16px}
+section.v{display:none}
+section.v.on{display:block}
+h2.сек{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 10px;font-family:var(--mono)}
+h2.сек:first-child{margin-top:4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.note{color:var(--dim);font-size:13.5px}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);min-height:1.4em}
+.status.ok{color:var(--green)} .status.warn{color:var(--amber)} .status.err{color:var(--red)}
+.мой-номер{background:linear-gradient(160deg,#12213a,#0d1626);border:1px solid #2b4257;border-radius:20px;padding:22px;text-align:center;margin-bottom:14px}
+.мой-номер .номер{font-family:var(--mono);font-size:42px;font-weight:800;color:var(--teal2);line-height:1.1;letter-spacing:.06em}
+.мой-номер .подпись{color:var(--dim);font-size:13px;margin-top:6px}
+.люди{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.person{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px 12px;text-align:center}
+.person .ав{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:27px;background:var(--panel2)}
+.person b{font-size:13.5px}
+.person .номер-чип{font-family:var(--mono);font-size:11px;color:var(--teal);background:#0d1f2c;border:1px solid #1f3b4a;border-radius:6px;padding:1px 7px}
+.person .ряд{display:flex;gap:6px;margin-top:6px}
+.person .ряд button{border-radius:9px;background:var(--panel2);border:1px solid var(--line);font-size:14px;padding:6px 9px}
+.person .ряд button:hover{border-color:var(--teal2)}
+.диалоги{display:flex;flex-direction:column;gap:8px}
+.диалог{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.диалог:hover{border-color:#2e4155}
+.диалог .ав{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:23px;background:var(--panel2);flex:none}
+.диалог .тело{flex:1;min-width:0}
+.диалог b{display:block}
+.диалог .превью{color:var(--dim);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.диалог .бейдж{background:var(--teal2);color:#0b1024;font-weight:800;border-radius:999px;font-size:11px;padding:1px 7px}
+.chat-шапка{display:flex;align-items:center;gap:10px;padding:10px 0}
+.msg-лента{display:flex;flex-direction:column;gap:6px;padding:10px 0 14px;min-height:36vh}
+.msg{max-width:84%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:8px 12px;align-self:flex-start}
+.msg.моё{align-self:flex-end;background:#14263c;border-color:#22405e}
+.msg .текст{white-space:pre-wrap;word-break:break-word;font-size:15px}
+.msg .время{font-size:10.5px;color:var(--dim);font-family:var(--mono);text-align:right;margin-top:2px}
+.composer{display:flex;gap:8px;padding:8px 0}
+.composer input{flex:1;border-radius:999px;padding:11px 16px}
+.composer button{width:46px;height:46px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:19px;flex:none}
+.composer button.послать{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;border:none;font-weight:800}
+.код-карта{background:#0d1f2c;border:1px solid #1f3b4a;border-radius:16px;padding:16px;text-align:center;margin-top:10px}
+.код-карта .цифры{font-family:var(--mono);font-size:36px;letter-spacing:.35em;color:var(--teal);font-weight:800}
+.овер{position:fixed;inset:0;z-index:60;background:rgba(4,8,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.овер.on{display:flex}
+.карта{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:20px}
+.чат-карта{max-width:860px;height:94vh;display:flex;flex-direction:column;padding:12px 16px}
+.идент-сетка{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin:14px 0}
+.идент-карт{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.идент-карт .ав{font-size:26px}
+.идент-карт b{font-size:12px}
+.идент-карт[aria-pressed="true"]{border-color:var(--teal2);background:#101f30}
+details.рец{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+details.рец summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
+details.рец summary::-webkit-details-marker{display:none}
+details.рец summary::before{content:'▸';color:var(--teal2);font-family:var(--mono)}
+details.рец[open] summary::before{content:'▾'}
+details.рец ol,details.рец ul{margin:10px 0 2px 20px;display:flex;flex-direction:column;gap:6px}
+details.рец li{font-size:14.5px}
+details.рец .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
+.поле{margin-bottom:10px}
+.поле label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:4px;font-family:var(--mono)}
+.ряд-кнопок{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.кноп{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13.5px}
+.кноп.осн{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:800;border:none}
+.кноп.опас{background:#2a1215;border-color:#5b2323;color:var(--red)}
+.сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
+footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
+.toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
+.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal2);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+@media (max-width:640px){
+  .wrap{padding:0 10px}
+  .люди{grid-template-columns:repeat(auto-fill,minmax(126px,1fr))}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <div class="logo">S·26</div>
+  <div><b>ЛИНИЯ</b><span>свой номер · SMS P2P · свои OTP · вселенная RUVSON</span></div>
+  <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипНомер">нет линии</small></span></button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ═════════ ЛИНИЯ ═════════ -->
+<section class="v on" id="v-line" role="tabpanel" aria-label="Линия">
+  <h2 class="сек">Мой номер</h2>
+  <div class="мой-номер">
+    <div class="номер" id="мойНомерЭл">— — —</div>
+    <div class="подпись" id="мойНомерПодпись">внутренняя линия сингуляра · работает P2P, без операторов</div>
+  </div>
+  <h2 class="сек">Номера круга · 16</h2>
+  <div class="люди" id="людскаяСетка"></div>
+  <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
+  <p class="note" style="margin-top:10px">📞 ведёт в КРУГ ·23 — там живут аудио- и видеозвонки P2P с автоответчиками. SMS и OTP живут здесь. Гостям номер выдаётся от устройства — короткие номера круга защищены.</p>
+</section>
+
+<!-- ═════════ SMS ═════════ -->
+<section class="v" id="v-sms" role="tabpanel" aria-label="SMS">
+  <h2 class="сек">Диалоги</h2>
+  <div class="диалоги" id="диалогиСписок"></div>
+  <div class="ряд-кнопок">
+    <button class="кноп осн" id="btnНовыйСмс">✏️ новое SMS</button>
+    <button class="кноп" id="btnСмсОбновить">↻ добрать историю</button>
+  </div>
+  <p class="note" style="margin-top:10px">Внутренние SMS идут напрямую между устройствами (P2P, шифрование транспорта) — без операторов, без серверов, без очередей «добрых дядей». Внешние SMS — свои рельсы, см. вкладку Я.</p>
+</section>
+
+<!-- ═════════ OTP ═════════ -->
+<section class="v" id="v-otp" role="tabpanel" aria-label="Свои коды подтверждения">
+  <h2 class="сек">Выдать код · подтвердить что-то у другого человека</h2>
+  <div class="panel">
+    <div class="поле"><label for="otpКому">Кому выдаёшь (имя круга или номер)</label><input id="otpКому" placeholder="ЖЕНЯ или 04"></div>
+    <div class="поле"><label for="otpЗачем">Зачем (записка, увидит получатель)</label><input id="otpЗачем" placeholder="подтверди перевод"></div>
+    <div class="ряд-кнопок" style="margin-top:0">
+      <button class="кноп осн" id="otpВыдать">🔑 выдать код</button>
+    </div>
+    <div class="код-карта" id="otpКодКарта" hidden>
+      <div class="цифры" id="otpКодЭл">——</div>
+      <p class="note" id="otpКодЗаметка"></p>
+      <div class="ряд-кнопок" style="justify-content:center">
+        <button class="кноп" id="otpОтправитьСмс">✉️ послать по SMS</button>
+        <button class="кноп" id="otpСкопировать">📋 скопировать</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="сек">Подтвердить · ввести чужой код</h2>
+  <div class="panel">
+    <div class="поле"><label for="otpВвод">Код, который тебе прислали</label><input id="otpВвод" inputmode="numeric" maxlength="6" placeholder="000000" style="font-family:var(--mono);letter-spacing:.3em;text-align:center;font-size:20px"></div>
+    <div class="ряд-кнопок" style="margin-top:0"><button class="кноп осн" id="otpПроверить">✓ подтвердить</button></div>
+    <div class="status" id="otpСтатус" role="status"></div>
+    <p class="note" style="margin-top:8px">Код живёт 5 минут и одноразовый. Честно: это подтверждения ВНУТРИ круга (действия в СИНГУЛЯРЕ, встречи устройств). Внешние сайты просят коды на внешние номера — свои рельсы для этого во вкладке Я.</p>
+  </div>
+
+  <h2 class="сек">Активные мои коды</h2>
+  <div class="диалоги" id="otpАктивные"></div>
+</section>
+
+<!-- ═════════ Я ═════════ -->
+<section class="v" id="v-me" role="tabpanel" aria-label="Я и свои рельсы">
+  <h2 class="сек">Кто я</h2>
+  <div class="panel" id="яКто"></div>
+
+  <h2 class="сек">МОЙ внешний номер — без добрых дядей · лучшие практики</h2>
+  <p class="note" style="margin-bottom:10px">Внутренняя линия выше работает уже сейчас. Для SMS/звонков с внешним миром номер должен принадлежать ТЕБЕ. Рабочие пути 2025–2026:</p>
+  <details class="рец"><summary>📱 Путь 1 · своя SIM/eSIM + телефон как шлюз (приватнее всего)</summary>
+    <ol>
+      <li>Свой номер на своей SIM (или eSIM — второй «пустой» тариф под подтверждения).</li>
+      <li>На Android — приложение-форвардер (например, «SMS Forwarder» из Play Market): пришедшее SMS уходит <b>webhook'ом на ТВОЙ адрес</b> (твой сервер, свой endpoint, или в СИНГУЛЯР через мост).</li>
+      <li>iOS честно ограничен — форвардеры SMS там нет, используй Путь 2.</li>
+    </ol>
+    <p class="пимечт">Номер твой, SMS приходят тебе, провайдер-«дядя» исключён из чтения твоих сообщений (кроме самого оператора связи — от этого защищает только e2e-мессенджер).</p>
+  </details>
+  <details class="рец"><summary>🏢 Путь 2 · свой CPaaS-аккаунт (виртуальный номер по API)</summary>
+    <ol>
+      <li>Регистрируешь СВОЙ аккаунт у провайдера: <b>Telnyx</b> (дешевле: SMS ~$0.003–0.0085/шт), <b>Twilio</b> (экосистема богаче, ~$0.05/шт US), <b>Vonage</b>, <b>46elks</b> (ЕС).</li>
+      <li>Покупаешь виртуальный номер на СВОЙ аккаунт — он твой, номер портабелен.</li>
+      <li>API-ключ вводишь здесь (хранится ТОЛЬКО в этом браузере, в репу и на серверы сингуляра не уходит — их и нет).</li>
+      <li>Честная граница: прямые запросы к API из браузера часто упираются в CORS провайдера — тогда поднимается свой крошечный мост рядом с SINGULAR SERVER v1 (рецепт в server/). Шлюз SMS приходит к тебе webhook'ом.</li>
+    </ol>
+    <p class="пимечт">Ключ — твой, номер — твой, счёт — твой. Никаких «общих сервисов приёма SMS», где твой номер видят незнакомцы.</p>
+  </details>
+  <details class="рец"><summary>🛰 Путь 3 · свой GSM-шлюз (полная автономия)</summary>
+    <ol>
+      <li>Raspberry Pi / любой мини-ПК + GSM-модем (SIM800/SIM7600) + своя SIM.</li>
+      <li><b>Gammu</b>/<b>SMSTools</b> — приём/отправка SMS, экспорт в файл/HTTP — твой собственный SMS-центр.</li>
+      <li>Подтверждения (OTP) любых сайтов приходят на ТВОЙ номер и остаются в ТВОЁМ железе.</li>
+    </ol>
+    <p class="пимечт">Разово ~2–4 тыс ₽ на железо — и ни одна SMS не проходит через чужие руки. Лучший вариант для семьи.</p>
+  </details>
+  <details class="рец"><summary>🧪 Путь 4 · свои OTP вместо чужих SMS</summary>
+    <ol>
+      <li>Внутри СИНГУЛЯРА подтверждения уже ходят по внутренней линии (вкладка OTP) — без внешних номеров вообще.</li>
+      <li>Для внешних регистраций — почтовые алиасы (ПОЧТА ·24, Путь 3) вместо телефона там, где сервис позволяет.</li>
+    </ol>
+  </details>
+
+  <div class="panel" style="margin-top:10px">
+    <div class="поле"><label for="внешНомер">Мой внешний номер (просто запомнить здесь — локально на устройстве)</label><input id="внешНомер" placeholder="+7 900 000-00-00"></div>
+    <div class="поле"><label for="внешWebhook">Мой webhook для приёма SMS (URL моего шлюза/сервера — тоже только локально)</label><input id="внешWebhook" placeholder="https://мой-сервер/sms-in"></div>
+    <div class="ряд-кнопок" style="margin-top:0">
+      <button class="кноп осн" id="btnСохранитьВнешнее">💾 запомнить локально</button>
+      <button class="кноп опас" id="btnСтеретьВнешнее">✖ стереть</button>
+    </div>
+    <p class="note" style="margin-top:8px" id="внешнееСтатус">Честно: связь со своим шлюзом из этой страницы заработает, когда твой webhook будет доступен и разрешит CORS — это твоя инфраструктура, подключается без нас.</p>
+  </div>
+
+  <h2 class="сек">Данные</h2>
+  <div class="panel">
+    <div class="ряд-кнопок">
+      <button class="кноп" id="btnЭкспортJSON">⬇ экспорт SMS/OTP (JSON)</button>
+      <button class="кноп опас" id="btnСтеретьВсё">🗑 стереть все SMS и коды</button>
+    </div>
+  </div>
+
+  <h2 class="сек">Вся вселенная · модули</h2>
+  <div class="сетка-ссылки" id="модулиСсылки"></div>
+</section>
+
+</main>
+
+<!-- ═════════ ВКЛАДКИ ═════════ -->
+<nav class="tabs" role="tablist" aria-label="Разделы ЛИНИИ">
+  <button id="tab-line" aria-selected="true" aria-controls="v-line"><span class="и">☎️</span>ЛИНИЯ</button>
+  <button id="tab-sms" aria-selected="false" aria-controls="v-sms"><span class="и">💬</span>SMS<span class="bdg" id="бейджСмс" hidden>0</span></button>
+  <button id="tab-otp" aria-selected="false" aria-controls="v-otp"><span class="и">🔑</span>OTP</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🛰</span>Я</button>
+</nav>
+
+<!-- ═════════ SMS-ЧАТ ═════════ -->
+<div class="овер" id="смсОвер" role="dialog" aria-modal="true" aria-label="SMS-чат">
+  <div class="карта чат-карта">
+    <div class="chat-шапка">
+      <button id="смсНазад" aria-label="Назад" style="font-size:22px;padding:4px 8px">←</button>
+      <span class="ав" id="смсАв">👤</span>
+      <div style="flex:1;min-width:0"><b id="смсИмя">…</b><small id="смсПодзаг" class="note" style="display:block">…</small></div>
+    </div>
+    <div class="msg-лента" id="смсЛента" aria-live="polite"></div>
+    <div class="composer">
+      <input id="смсПоле" placeholder="SMS…" autocomplete="off" enterkeyhint="send">
+      <button id="смсПослать" class="послать" title="Отправить">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ НОВОЕ SMS ═════════ -->
+<div class="овер" id="новСмсОвер" role="dialog" aria-modal="true" aria-label="Новое SMS">
+  <div class="карта">
+    <h3>Новое SMS</h3>
+    <div class="поле" style="margin-top:10px"><label for="новСмсКому">Кому (номер или имя круга)</label><input id="новСмсКому" placeholder="04 или ЖЕНЯ"></div>
+    <div class="ряд-кнопок"><button class="кноп осн" id="новСмсГотово">открыть диалог →</button><button class="кноп" id="новСмсОтмена">отмена</button></div>
+  </div>
+</div>
+
+<!-- ═════════ КТО ТЫ ═════════ -->
+<div class="овер" id="идентОвер" role="dialog" aria-modal="true" aria-label="Кто ты">
+  <div class="карта">
+    <h3>Твоя линия</h3>
+    <p class="note">Выбери себя — номер линии выдастся сразу. Гость: впиши имя с нейтральным словом ПЕРЕД ним («ГОСТЬ МАША»), номер будет от устройства.</p>
+    <div class="идент-сетка" id="идентСетка"></div>
+    <label class="note" for="идентВвод">Или твоё имя:</label>
+    <input id="идентВвод" placeholder="например: ГОСТЬ МАША" style="margin-top:6px">
+    <div class="status" id="идентСтатус" role="status"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:800;border-radius:12px;padding:12px">получить номер →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-холд" id="toastХолд" aria-live="polite"></div>
+
+<footer><div class="wrap">
+  СИНГУЛЯР ·26 «ЛИНИЯ» v1.0 · свой номер у каждого · SMS P2P без операторов · свои одноразовые OTP · рецепты своих внешних рельс (своя SIM + шлюз, свой CPaaS, GSM-модем) · данные только на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
+</div></footer>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·26 «ЛИНИЯ» v1.0 — номера, SMS P2P, свои OTP.
+   Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
+   Слои: РЕЕСТР → НОМЕРА → ГВАРД → SMS → OTP → UI → СЕТЬ → PWA.
+   Тестовые крюки: window.K26 (только чтение).
+   ═══════════════════════════════════════════════════════════════════ */
+'use strict';
+/* S26:CORE-BEGIN */
+const VERSION = '1.0.0';
+
+/* ── 1 · РЕЕСТР КРУГА (как в ·23) ── */
+const РЕЕСТР = [
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'] },
+  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'] },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
+  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[] },
+  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[] },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[] },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[] },
+  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[] },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[] },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[] },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[] },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[] },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[] }
+];
+/* номер = двузначный индекс реестра (00–15) */
+const НОМЕРА = {};
+РЕЕСТР.forEach(function(ч, и){ НОМЕРА[ч.id] = ('0' + и).slice(-2); });
+function норм(с){ return String(с||'').toUpperCase().replace(/Ё/g,'Е').replace(/\s+/g,' ').trim(); }
+function человекПоНомеру(номер){
+  const н = String(номер||'').trim();
+  if (!/^\d{2}$/.test(н)) return null;
+  return РЕЕСТР[Number(н)] || null;
+}
+function номерПоИмени(имя){
+  const н = норм(имя);
+  const ч = РЕЕСТР.find(function(x){ return норм(x.имя) === н || x.алиасы.some(function(а){ return норм(а) === н; }); });
+  return ч ? НОМЕРА[ч.id] : null;
+}
+function номерГостя(deviceId){
+  const х = String(deviceId||'x');
+  let сум = 0; for (let i = 0; i < х.length; i++) сум = (сум * 31 + х.charCodeAt(i)) >>> 0;
+  return 'G' + (1000 + сум % 9000);
+}
+function мойНомер(Я){
+  if (!Я) return null;
+  if (Я.тип === 'свой') {
+    const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
+    if (ч) return НОМЕРА[ч.id];
+  }
+  return номерГостя(Я.deviceId);
+}
+function красивыйНомер(номер){
+  const ч = человекПоНомеру(номер);
+  return ч ? (номер + '·' + ч.имя) : String(номер);
+}
+/* строка «Кому» → номер: имена, алиасы, номера, гостевые */
+function разбериНомер(ввод){
+  const с = String(ввод||'').trim();
+  if (!с) return { ok:false, причина:'впиши адресата' };
+  const поИмени = номерПоИмени(с);
+  if (поИмени) return { ok:true, номер:поИмени };
+  if (/^\d{2}$/.test(с) && человекПоНомеру(с)) return { ok:true, номер:с };
+  if (/^G\d{4}$/i.test(с)) return { ok:true, номер:с.toUpperCase() };
+  return { ok:false, причина:'нет такого номера или имени в круге' };
+}
+
+/* ── 2 · ГВАРД (как в ·23) ── */
+const ЗАЩИЩЁННЫЕ = (function(){
+  const s = new Set();
+  РЕЕСТР.forEach(function(ч){ s.add(норм(ч.имя)); ч.алиасы.forEach(function(а){ s.add(норм(а)); }); });
+  s.add('RUVSON'); s.add('РУВСОН');
+  return s;
+})();
+function этоЗащищённоеИмя(имя){ return ЗАЩИЩЁННЫЕ.has(норм(имя)); }
+function проверьИмя(ввод){
+  const н = норм(ввод);
+  if (!н) return { ok:false, причина:'впиши имя' };
+  if (н.length > 40) return { ok:false, причина:'имя длиннее 40 знаков — короче' };
+  if (!этоЗащищённоеИмя(н)) return { ok:true, тип:'гость', имя:н };
+  return { ok:false, причина:'короткое имя защищено' };
+}
+function собериСПрефиксом(префикс, имя){
+  const п = норм(префикс), и = норм(имя);
+  if (!п || п.length < 2) return { ok:false, причина:'префикс слишком короткий' };
+  if (этоЗащищённоеИмя(п)) return { ok:false, причина:'это слово само защищено' };
+  if (!и) return { ok:false, причина:'нужно и имя' };
+  return { ok:true, тип:'гость', имя: п + ' ' + и };
+}
+
+/* ── 3 · SMS ── */
+/* sms = {id, от:'04', кому:'02', текст, ts} */
+function валидныйСмс(с){
+  if (!с || typeof с !== 'object') return { ok:false, причина:'не SMS' };
+  if (!с.id || typeof с.id !== 'string') return { ok:false, причина:'без id' };
+  if (!(/^(G\d{4}|\d{2})$/).test(String(с.от||''))) return { ok:false, причина:'от: номер' };
+  if (!(/^(G\d{4}|\d{2})$/).test(String(с.кому||''))) return { ok:false, причина:'кому: номер' };
+  if (typeof с.текст !== 'string' || !с.текст.trim()) return { ok:false, причина:'пустой текст' };
+  if (с.текст.length > 2000) return { ok:false, причина:'текст длиннее 2000 знаков' };
+  if (!Number.isFinite(с.ts)) return { ok:false, причина:'без времени' };
+  return { ok:true };
+}
+function диалогИзСписка(спис, мойНомерЗн){
+  /* карта: номер → {номер, последнее, непрочитано}; чужие диалоги (не мои ни от, ни кому) не мои дела */
+  const м = {};
+  (спис || []).forEach(function(с){
+    if (!валидныйСмс(с).ok) return;
+    if (с.от !== мойНомерЗн && с.кому !== мойНомерЗн) return;
+    const чужой = с.от === мойНомерЗн ? с.кому : с.от;
+    if (!м[чужой] || м[чужой].ts < с.ts) м[чужой] = { номер:чужой, последнее:с, ts:с.ts };
+  });
+  return Object.keys(м).map(function(к){ return м[к]; }).sort(function(а, б){ return б.ts - а.ts; });
+}
+function непрочитанныеСмс(спис, мойНомерЗн){
+  return (спис || []).filter(function(с){ return валидныйСмс(с).ok && с.кому === мойНомерЗн && !с.прочитано; }).length;
+}
+
+/* ── 4 · СВОИ OTP: одноразовые коды с TTL ── */
+const ОТП_TTL = 5 * 60 * 1000;
+function сгенерируйКод(){
+  if (!globalThis.crypto || !globalThis.crypto.getRandomValues) return '000000';
+  const б = globalThis.crypto.getRandomValues(new Uint32Array(1));
+  return ('000000' + (б[0] % 1000000)).slice(-6);
+}
+/* выдать = {код, кому, зачем, ts, использован:false} */
+function валидныйВыданный(в){
+  return в && typeof в === 'object' && /^\d{6}$/.test(String(в.код)) && Number.isFinite(в.ts);
+}
+function проверьКод(выданные, код, сейчас){
+  const к = String(код||'').trim();
+  if (!/^\d{6}$/.test(к)) return { ok:false, причина:'код из 6 цифр' };
+  const инд = (выданные || []).findIndex(function(в){
+    return валидныйВыданный(в) && в.код === к && !в.использован && (сейчас - в.ts) < ОТП_TTL;
+  });
+  if (инд === -1) {
+    /* различаем: истёк / использован / не наш */
+    const был = (выданные || []).find(function(в){ return валидныйВыданный(в) && в.код === к; });
+    if (!был) return { ok:false, причина:'такого кода здесь не выдавали' };
+    if (был.использован) return { ok:false, причина:'код уже использован — одноразовый' };
+    return { ok:false, причина:'код истёк (5 минут)' };
+  }
+  return { ok:true, выданный:выданные[инд], инд:инд };
+}
+function чистьПросроченные(выданные, сейчас){
+  /* использованные храним до конца TTL — чтобы честно сказать «одноразовый», а не «не выдавали» */
+  return (выданные || []).filter(function(в){ return валидныйВыданный(в) && (сейчас - в.ts) < ОТП_TTL; });
+}
+
+/* ── 5 · КРИПТО (подпись SMS — как в ·24/·25) ── */
+const КР = (globalThis.crypto && globalThis.crypto.subtle) ? globalThis.crypto : null;
+function б64изБуфера(б){ const байты = new Uint8Array(б); let с = ''; for (let i = 0; i < байты.length; i++) с += String.fromCharCode(байты[i]); return btoa(с); }
+function криптоПодпись(ключ, строка){
+  const данные = new TextEncoder().encode(String(строка));
+  return КР.subtle.sign({ name:'ECDSA', hash:'SHA-256' }, ключ, данные).then(б64изБуфера);
+}
+function строкаПодписиСмс(с){ return JSON.stringify({ id:с.id, от:с.от, кому:с.кому, текст:с.текст, ts:с.ts }); }
+
+const S26 = {
+  VERSION: VERSION, РЕЕСТР: РЕЕСТР, НОМЕРА: НОМЕРА,
+  норм:норм, человекПоНомеру:человекПоНомеру, номерПоИмени:номерПоИмени, номерГостя:номерГостя, мойНомер:мойНомер,
+  красивыйНомер:красивыйНомер, разбериНомер:разбериНомер,
+  этоЗащищённоеИмя:этоЗащищённоеИмя, проверьИмя:проверьИмя, собериСПрефиксом:собериСПрефиксом,
+  валидныйСмс:валидныйСмс, диалогИзСписка:диалогИзСписка, непрочитанныеСмс:непрочитанныеСмс,
+  ОТП_TTL:ОТП_TTL, сгенерируйКод:сгенерируйКод, валидныйВыданный:валидныйВыданный, проверьКод:проверьКод, чистьПросроченные:чистьПросроченные,
+  криптоПодпись:криптоПодпись, строкаПодписиСмс:строкаПодписиСмс, криптоЖивой:function(){ return !!КР; }
+};
+/* S26:CORE-END */
+</script>
+<script>
+'use strict';
+/* ───────────────────── 6 · DOM-фабрика и утилиты ───────────────────── */
+function эл(тег, атр, дети){
+  const н = document.createElement(тег);
+  if (атр) Object.keys(атр).forEach(function(к){
+    if (к === 'class') н.className = атр[к];
+    else if (к === 'text') н.textContent = атр[к];
+    else if (к.slice(0,2) === 'on') н.addEventListener(к.slice(2), атр[к]);
+    else if (атр[к] !== null && атр[к] !== undefined) н.setAttribute(к, атр[к]);
+  });
+  (дети || []).forEach(function(д){ if (д) н.appendChild(д); });
+  return н;
+}
+function $(ид){ return document.getElementById(ид); }
+function т(с){ return document.createTextNode(String(с == null ? '' : с)); }
+function тост(с){
+  const узел = эл('div', { class:'toast', text:с });
+  $('toastХолд').appendChild(узел);
+  setTimeout(function(){ узел.remove(); }, 4200);
+}
+function идМ(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9); }
+
+/* ───────────────────── 7 · ЛИЧНОСТЬ (мост к КРУГУ ·23 read-only) ───────────────────── */
+let Я = null;
+try { Я = JSON.parse(localStorage.getItem('singular.krug.v1.identity') || 'null'); } catch (e) { Я = null; }
+const КЛЮЧ_ЛИЧН = 'singular.line.v1.identity';
+function лсЧитай(ключ, дефо){ try { const v = localStorage.getItem(ключ); return v === null ? дефо : JSON.parse(v); } catch (e) { return дефо; } }
+function лсПиши(ключ, зн){ try { localStorage.setItem(ключ, JSON.stringify(зн)); } catch (e) {} }
+if (!Я || !Я.deviceId) Я = лсЧитай(КЛЮЧ_ЛИЧН, null);
+function deviceIdМой(){
+  let ид = лсЧитай('singular.line.v1.deviceId', null);
+  if (!ид) { ид = 'lin-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); лсПиши('singular.line.v1.deviceId', ид); }
+  return ид;
+}
+function сохраниЛичность(л){ Я = л; лсПиши(КЛЮЧ_ЛИЧН, л); рендерВсё(); }
+
+/* ───────────────────── 8 · ХРАН ───────────────────── */
+const КЛЮЧ_СМС = 'singular.line.v1.sms';
+let СМС = лсЧитай(КЛЮЧ_СМС, []);
+let ОТП_ВЫДАННЫЕ = лсЧитай('singular.line.v1.otp.issued', []);
+function сохраниСмс(){ лсПиши(КЛЮЧ_СМС, СМС.slice(-500)); }
+function сохраниОТП(){ лсПиши('singular.line.v1.otp.issued', ОТП_ВЫДАННЫЕ); }
+function добавитьСмс(с){
+  if (СМС.some(function(x){ return x.id === с.id; })) return false;
+  СМС.push(Object.assign({}, с, { прочитано: с.прочитано || (Я && с.от === мойНомер(Я)) }));
+  сохраниСмс(); рендерДиалоги(); обновиБейдж();
+  return true;
+}
+
+/* ───────────────────── 9 · ВКЛАДКИ ───────────────────── */
+function откройВкладку(имя){
+  ['line','sms','otp','me'].forEach(function(v){
+    $('v-' + v).classList.toggle('on', v === имя);
+    $('tab-' + v).setAttribute('aria-selected', v === имя ? 'true' : 'false');
+  });
+  if (имя === 'sms') рендерДиалоги();
+  if (имя === 'otp') рендерОТП();
+  if (имя === 'me') рендерЯ();
+}
+['line','sms','otp','me'].forEach(function(v){
+  $('tab-' + v).addEventListener('click', function(){ откройВкладку(v); });
+});
+
+/* ───────────────────── 10 · РЕНДЕР ───────────────────── */
+function рендерВсё(){ рендерЛиния(); рендерДиалоги(); рендерОТП(); рендерЯЧип(); }
+function рендерЛиния(){
+  const номер = мойНомер(Я);
+  $('мойНомерЭл').textContent = номер ? красивыйНомер(номер) : '— — —';
+  $('мойНомерПодпись').textContent = Я
+    ? 'твой номер на внутренней линии сингуляра · SMS P2P · звонки в КРУГЕ ·23'
+    : 'выбери, кто ты — линия выдаст номер';
+  const холд = $('людскаяСетка'); холд.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    const н = НОМЕРА[ч.id];
+    const это_я = Я && номер === н;
+    const ряд = эл('div', { class:'person' }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя + (это_я ? ' (ты)' : '') }),
+      эл('span', { class:'номер-чип', text:красивыйНомер(н) }),
+      эл('div', { class:'ряд' }, [
+        эл('button', { title:'SMS', onclick:function(){ открытьСмсДиалог(н); } }, [ т('💬') ]),
+        эл('a', { href:'СИНГУЛЯР_23_КРУГ.html', title:'звонки — в КРУГЕ ·23' }, [ т('📞') ])
+      ])
+    ]);
+    холд.appendChild(ряд);
+  });
+}
+function рендерДиалоги(){
+  if (!Я) return;
+  const номер = мойНомер(Я);
+  const холд = $('диалогиСписок'); холд.textContent = '';
+  const диалоги = диалогИзСписка(СМС, номер);
+  if (!диалоги.length) {
+    холд.appendChild(эл('div', { class:'note', style:'text-align:center;padding:16px;border:1px dashed var(--line);border-radius:12px',
+      text:'диалогов нет — SMS появятся, когда придут (или когда сам напишешь)' }));
+    return;
+  }
+  диалоги.forEach(function(д){
+    const ч = человекПоНомеру(д.номер);
+    const непрочит = СМС.filter(function(с){ return с.кому === номер && с.от === д.номер && !с.прочитано; }).length;
+    const карточка = эл('button', { class:'диалог', onclick:function(){ открытьСмсДиалог(д.номер); } }, [
+      эл('span', { class:'ав', text:ч ? ч.эмодзи : '👤' }),
+      эл('div', { class:'тело' }, [
+        эл('b', { text:(ч ? ч.имя + ' ' : '') + красивыйНомер(д.номер) }),
+        эл('span', { class:'превью', text:(д.последнее.от === номер ? 'ты: ' : '') + д.последнее.текст.slice(0, 60) })
+      ]),
+      непрочит ? эл('span', { class:'бейдж', text:String(непрочит) }) : null
+    ]);
+    холд.appendChild(карточка);
+  });
+}
+function обновиБейдж(){
+  if (!Я) return;
+  const н = непрочитанныеСмс(СМС, мойНомер(Я));
+  const б = $('бейджСмс');
+  б.hidden = н === 0; б.textContent = String(н);
+}
+function рендерОТП(){
+  ОТП_ВЫДАННЫЕ = чистьПросроченные(ОТП_ВЫДАННЫЕ, Date.now());
+  сохраниОТП();
+  const холд = $('otpАктивные'); холд.textContent = '';
+  const активные = ОТП_ВЫДАННЫЕ.filter(function(в){ return !в.использован; });
+  if (!активные.length) { холд.appendChild(эл('small', { class:'note', text:'активных кодов нет' })); return; }
+  активные.forEach(function(в){
+    const осталось = Math.ceil((в.ts + ОТП_TTL - Date.now()) / 60000);
+    холд.appendChild(эл('div', { class:'диалог' }, [
+      эл('span', { class:'ав', text:'🔑' }),
+      эл('div', { class:'тело' }, [
+        эл('b', { style:'font-family:var(--mono);letter-spacing:.2em', text:в.код }),
+        эл('small', { class:'note', text:'кому: ' + в.кому + (в.зачем ? ' · ' + в.зачем : '') + ' · истекает через ' + осталось + ' мин' })
+      ]),
+      эл('button', { class:'кноп опас', text:'✖', 'aria-label':'отозвать код', onclick:function(){
+        ОТП_ВЫДАННЫЕ = ОТП_ВЫДАННЫЕ.filter(function(x){ return x !== в; }); сохраниОТП(); рендерОТП();
+      } })
+    ]));
+  });
+}
+function рендерЯЧип(){
+  const номер = мойНомер(Я);
+  if (Я) {
+    const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
+    $('яЧипАв').textContent = ч ? ч.эмодзи : '👤';
+    $('яЧипИмя').textContent = Я.имя;
+    $('яЧипНомер').textContent = номер ? красивыйНомер(номер) : '';
+  } else {
+    $('яЧипАв').textContent = '👤';
+    $('яЧипИмя').textContent = 'кто ты?';
+    $('яЧипНомер').textContent = 'нет линии';
+  }
+}
+function рендерЯ(){
+  const холд = $('яКто'); холд.textContent = '';
+  if (!Я) {
+    холд.appendChild(эл('p', { class:'note', text:'линия не выдана: выбери, кто ты.' }));
+    холд.appendChild(эл('button', { class:'кноп осн', onclick:открытьИдентОвер, text:'кто ты?', style:'margin-top:10px' }));
+    return;
+  }
+  const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
+  const внешнее = лсЧитай('singular.line.v1.external', null);
+  холд.appendChild(эл('div', {}, [
+    эл('b', { text:(ч ? ч.эмодзи : '👤') + ' ' + Я.имя }),
+    эл('div', { class:'note', text:'номер линии: ' + красивыйНомер(мойНомер(Я)) }),
+    эл('small', { class:'note', style:'display:block', text:'внешний номер: ' + (внешнее && внешнее.номер ? внешнее.номер : 'не задан (свои рельсы — рецепты ниже)') }),
+    эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId })
+  ]));
+  const м = $('модулиСсылки'); м.textContent = '';
+  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_23_КРУГ.html','👥 КРУГ ·23 (звонки)'],['СИНГУЛЯР_24_ПОЧТА.html','📮 ПОЧТА ·24'],['СИНГУЛЯР_25_КОШЕЛЁК.html','👛 КОШЕЛЁК ·25'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+    м.appendChild(эл('a', { href:п[0], text:п[1] }));
+  });
+  if (внешнее) {
+    $('внешНомер').value = внешнее.номер || '';
+    $('внешWebhook').value = внешнее.webhook || '';
+    $('внешнееСтатус').textContent = 'запомнено локально: ' + (внешнее.номер || 'номер не указан');
+  }
+}
+function статусСвязи(текст, класс){
+  const с = $('статусСвязи');
+  с.textContent = '· ' + текст;
+  с.className = 'status' + (класс ? ' ' + класс : '');
+}
+
+/* ───────────────────── 11 · SMS-ЧАТ ───────────────────── */
+let открытыйНомер = null;
+function открытьСмсДиалог(номер){
+  if (!Я) { открытьИдентОвер(); return; }
+  открытыйНомер = номер;
+  const ч = человекПоНомеру(номер);
+  $('смсАв').textContent = ч ? ч.эмодзи : '👤';
+  $('смсИмя').textContent = красивыйНомер(номер);
+  $('смсПодзаг').textContent = ч ? 'внутренняя линия · P2P' : 'гостевая линия · P2P';
+  рендерЛенту();
+  $('смсОвер').classList.add('on');
+  СМС.forEach(function(с){ if (с.кому === мойНомер(Я) && с.от === номер) с.прочитано = true; });
+  сохраниСмс(); обновиБейдж();
+  setTimeout(function(){ $('смсПоле').focus(); }, 60);
+}
+$('смсНазад').addEventListener('click', function(){ $('смсОвер').classList.remove('on'); открытыйНомер = null; рендерДиалоги(); });
+function рендерЛенту(){
+  const лента = $('смсЛента'); лента.textContent = '';
+  const номерМой = мойНомер(Я);
+  СМС.filter(function(с){ return (с.от === открытыйНомер && с.кому === номерМой) || (с.от === номерМой && с.кому === открытыйНомер); })
+    .sort(function(а, б){ return а.ts - б.ts; })
+    .forEach(function(с){
+      const моё = с.от === номерМой;
+      лента.appendChild(эл('div', { class:'msg' + (моё ? ' моё' : '') }, [
+        эл('div', { class:'текст', text:с.текст }),
+        эл('div', { class:'время', text:new Date(с.ts).toLocaleString('ru-RU', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) })
+      ]));
+    });
+  лента.scrollTop = лента.scrollHeight;
+}
+function послатьСмс(){
+  if (!Я || !открытыйНомер) return;
+  const поле = $('смсПоле');
+  const текст = поле.value.trim();
+  if (!текст) return;
+  const с = { id:идМ(), от:мойНомер(Я), кому:открытыйНомер, текст:текст.slice(0, 2000), ts:Date.now() };
+  const в = валидныйСмс(с);
+  if (!в.ok) { тост('SMS не прошло проверку: ' + в.причина); return; }
+  поле.value = '';
+  добавитьСмс(с);
+  рендерЛенту();
+  сетьРазошли('sms', { с:с });
+}
+$('смсПослать').addEventListener('click', послатьСмс);
+$('смсПоле').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); послатьСмс(); } });
+$('btnНовыйСмс').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  $('новСмсКому').value = '';
+  $('новСмсОвер').classList.add('on');
+});
+$('новСмсОтмена').addEventListener('click', function(){ $('новСмсОвер').classList.remove('on'); });
+$('новСмсГотово').addEventListener('click', function(){
+  const рез = разбериНомер($('новСмсКому').value);
+  if (!рез.ok) { тост(рез.причина); return; }
+  $('новСмсОвер').classList.remove('on');
+  откройВкладку('sms');
+  открытьСмсДиалог(рез.номер);
+});
+$('btnСмсОбновить').addEventListener('click', function(){ сетьРазошли('hist-req', null); тост('спросили историю у устройств в сети'); });
+
+/* ───────────────────── 12 · OTP ───────────────────── */
+let выданныйСейчас = null;
+$('otpВыдать').addEventListener('click', function(){
+  if (!Я) { открытьИдентОвер(); return; }
+  const кому = разбериНомер($('otpКому').value);
+  if (!кому.ok) { тост(кому.причина); return; }
+  ОТП_ВЫДАННЫЕ = чистьПросроченные(ОТП_ВЫДАННЫЕ, Date.now());
+  const код = сгенерируйКод();
+  выданныйСейчас = { код:код, кому:красивыйНомер(кому.номер), комуНомер:кому.номер, зачем:$('otpЗачем').value.trim(), ts:Date.now(), использован:false };
+  ОТП_ВЫДАННЫЕ.push(выданныйСейчас);
+  сохраниОТП();
+  $('otpКодКарта').hidden = false;
+  $('otpКодЭл').textContent = код;
+  $('otpКодЗаметка').textContent = 'для ' + выданныйСейчас.кому + ' · живёт 5 минут · одноразовый' + (выданныйСейчас.зачем ? ' · ' + выданныйСейчас.зачем : '');
+  рендерОТП();
+});
+$('otpОтправитьСмс').addEventListener('click', function(){
+  if (!выданныйСейчас) return;
+  const с = { id:идМ(), от:мойНомер(Я), кому:выданныйСейчас.комуНомер,
+    текст:'Код подтверждения: ' + выданныйСейчас.код + (выданныйСейчас.зачем ? ' (' + выданныйСейчас.зачем + ')' : '') + ' — живёт 5 минут', ts:Date.now() };
+  добавитьСмс(с);
+  сетьРазошли('sms', { с:с });
+  тост('код ушёл по SMS на ' + выданныйСейчас.кому);
+});
+$('otpСкопировать').addEventListener('click', function(){
+  if (!выданныйСейчас) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(выданныйСейчас.код).then(function(){ тост('код скопирован'); }, function(){});
+  }
+});
+$('otpПроверить').addEventListener('click', function(){
+  const рез = проверьКод(ОТП_ВЫДАННЫЕ, $('otpВвод').value, Date.now());
+  const ст = $('otpСтатус');
+  if (!рез.ok) { ст.textContent = '✖ ' + рез.причина; ст.className = 'status err'; return; }
+  ОТП_ВЫДАННЫЕ[рез.инд].использован = true;
+  сохраниОТП();
+  $('otpВвод').value = '';
+  ст.textContent = '✓ подтверждено' + (рез.выданный.зачем ? ': ' + рез.выданный.зачем : '');
+  ст.className = 'status ok';
+  рендерОТП();
+});
+
+/* ───────────────────── 13 · ВНЕШНИЕ РЕЛЬСЫ (локально) ───────────────────── */
+$('btnСохранитьВнешнее').addEventListener('click', function(){
+  лсПиши('singular.line.v1.external', { номер:$('внешНомер').value.trim(), webhook:$('внешWebhook').value.trim() });
+  $('внешнееСтатус').textContent = 'запомнено локально: ' + ($('внешНомер').value.trim() || 'номер не указан') + ' · в репе и на серверах этого нет';
+  тост('сохранили локально — ключи и реквизиты в этом браузере');
+});
+$('btnСтеретьВнешнее').addEventListener('click', function(){
+  try { localStorage.removeItem('singular.line.v1.external'); } catch (e) {}
+  $('внешНомер').value = ''; $('внешWebhook').value = '';
+  $('внешнееСтатус').textContent = 'стерто';
+});
+
+/* ───────────────────── 14 · СЕТЬ ───────────────────── */
+const ШИНА = 'singular-line-v1';
+const TR_APP = 'singular-line-v1';
+let локШина = null;
+try { локШина = new BroadcastChannel(ШИНА); } catch (e) { локШина = null; }
+let tr = null, импортОбещан = null, комната = null, почта = {};
+function trysteroМодуль(){
+  if (импортОбещан) return импортОбещан;
+  импортОбещан = import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs')
+    .then(function(м){ tr = м; return м; })
+    .catch(function(e){ tr = null; throw e; });
+  return импортОбещан;
+}
+локШина && локШина.addEventListener('message', function(e){ принялПакет(e.data); });
+function принялПакет(д){
+  if (!д || д.шина !== ШИНА || д.v !== 1) return;
+  switch (д.вид) {
+    case 'sms': {
+      const с = д.с;
+      if (!валидныйСмс(с).ok) return;
+      if (Я && с.кому !== мойНомер(Я)) return; /* чужие SMS не беру */
+      if (добавитьСмс(с)) тост('💬 SMS от ' + красивыйНомер(с.от));
+      break;
+    }
+    case 'hist-req': сетьРазошли('hist', { мс:СМС.slice(-200) }); break;
+    case 'hist': {
+      (д.мс || []).forEach(function(с){
+        if (валидныйСмс(с).ok && Я && с.кому === мойНомер(Я)) добавитьСмс(с);
+      });
+      break;
+    }
+  }
+}
+function конв(вид, поля){
+  return Object.assign({ шина:ШИНА, v:1, вид:вид, от:{ имя:Я && Я.имя, deviceId:Я && Я.deviceId }, ts:Date.now() }, поля || {});
+}
+function сетьРазошли(вид, поля){
+  const п = конв(вид, поля);
+  локШина && локШина.postMessage(п);
+  if (почта[вид]) почта[вид].send(п).catch(function(){});
+}
+function сетьЗапусти(){
+  if (!Я) { статусСвязи('личность не выбрана — линия ждёт тебя', 'warn'); return; }
+  if (локШина) статусСвязи('мост вкладок активен', 'ok');
+  trysteroМодуль().then(function(){
+    комната = tr.joinRoom({
+      appId: TR_APP,
+      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+    }, 'sms');
+    ['sms','hist-req','hist'].forEach(function(канал){
+      const п = комната.makeAction(канал);
+      п.onMessage = function(д){ принялПакет(д); };
+      почта[канал] = п;
+    });
+    комната.onPeerJoin = function(){
+      статусСвязи('P2P жива: SMS ходят напрямую между устройствами', 'ok');
+      сетьРазошли('hist-req', null);
+    };
+    статусСвязи('сеть P2P готова · мост вкладок активен · линия твоя', 'ok');
+  }).catch(function(){
+    статусСвязи('P2P недоступен здесь: работает мост вкладок одного браузера; между устройствами — https', 'warn');
+  });
+}
+
+/* ───────────────────── 15 · КТО ТЫ / ЭКСПОРТ ───────────────────── */
+function открытьИдентОвер(){
+  const сетка = $('идентСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    сетка.appendChild(эл('button', { class:'идент-карт', 'aria-pressed':'false', onclick:function(){
+      сетка.querySelectorAll('.идент-карт').forEach(function(к){ к.setAttribute('aria-pressed','false'); });
+      сетка.setAttribute('data-выбор', ч.имя);
+      this.setAttribute('aria-pressed','true');
+      $('идентВвод').value = '';
+      $('идентСтатус').textContent = '';
+    } }, [эл('span', { class:'ав', text:ч.эмодзи }), эл('b', { text:ч.имя })]));
+  });
+  $('идентОвер').classList.add('on');
+}
+$('идентГотово').addEventListener('click', function(){
+  const выбр = $('идентСетка').getAttribute('data-выбор');
+  const ч = выбр ? РЕЕСТР.find(function(x){ return x.имя === выбр; }) : null;
+  if (ч) {
+    сохраниЛичность({ имя:ч.имя, эмодзи:ч.эмодзи, тип:'свой', deviceId: deviceIdМой() });
+    $('идентОвер').classList.remove('on');
+    тост('линия выдана: ' + красивыйНомер(мойНомер(Я)));
+    сетьЗапусти(); рендерВсё();
+    return;
+  }
+  const ввод = $('идентВвод').value;
+  let рез = проверьИмя(ввод);
+  if (!рез.ok && рез.причина === 'короткое имя защищено') {
+    const слова = норм(ввод).split(' ');
+    if (слова.length >= 2) рез = собериСПрефиксом(слова[0], слова.slice(1).join(' '));
+  }
+  if (!рез.ok) { $('идентСтатус').textContent = рез.причина + ' · попробуй: «ГОСТЬ ' + норм(ввод) + '»'; $('идентСтатус').className = 'status err'; return; }
+  сохраниЛичность({ имя:рез.имя, эмодзи:'👤', тип:'гость', deviceId: deviceIdМой() });
+  $('идентОвер').classList.remove('on');
+  тост('линия выдана: ' + красивыйНомер(мойНомер(Я)));
+  сетьЗапусти(); рендерВсё();
+});
+$('btnЭкспортJSON').addEventListener('click', function(){
+  const дамп = { модуль:'СИНГУЛЯР ·26 ЛИНИЯ', версия:VERSION, экспорт:new Date().toISOString(),
+    кто:Я && Я.имя, номер:Я && мойНомер(Я), смс:СМС, otp_выданные:ОТП_ВЫДАННЫЕ };
+  const блоб = new Blob([JSON.stringify(дамп, null, 1)], { type:'application/json' });
+  const урл = URL.createObjectURL(блоб);
+  const а = эл('a', { href:урл, download:'сингуляр-линия-' + Date.now() + '.json' });
+  document.body.appendChild(а); а.click(); а.remove();
+  setTimeout(function(){ URL.revokeObjectURL(урл); }, 3000);
+});
+$('btnСтеретьВсё').addEventListener('click', function(){
+  if (!confirm('Стереть все SMS и коды на этом устройстве? Отменить нельзя.')) return;
+  СМС = []; ОТП_ВЫДАННЫЕ = [];
+  сохраниСмс(); сохраниОТП();
+  рендерВсё(); тост('всё стёрто');
+});
+
+/* ───────────────────── 16 · PWA install ───────────────────── */
+let отложенныйПромпт = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); отложенныйПромпт = e; $('btnInstall').hidden = false; });
+$('btnInstall').addEventListener('click', function(){
+  if (!отложенныйПромпт) { location.href = 'ИНСТРУКЦИЯ_УСТАНОВКИ.html'; return; }
+  отложенныйПромпт.prompt();
+  отложенныйПромпт = null; this.hidden = true;
+});
+
+/* ───────────────────── 17 · СТАРТ ───────────────────── */
+рендерВсё();
+сетьЗапусти();
+if (!Я) setTimeout(открытьИдентОвер, 400);
+
+/* тестовый крюк: только чтение */
+window.K26 = {
+  версия:VERSION,
+  я:function(){ return Я && { имя:Я.имя, тип:Я.тип, номер:мойНомер(Я) }; },
+  смс:function(){ return СМС.length; },
+  диалоги:function(){ return диалогИзСписка(СМС, мойНомер(Я)).map(function(д){ return д.номер; }); },
+  otp:function(){ return ОТП_ВЫДАННЫЕ.length; },
+  сеть:function(){ return { вкладки:!!локШина, trystero:!!tr, комната:!!комната }; },
+  ядро:S26
+};
+</script>
+<script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-ux-engine-v8.js"></script>
+</body>
+</html>
