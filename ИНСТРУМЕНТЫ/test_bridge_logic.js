@@ -48,7 +48,7 @@ T('в ·22 нет присваиваний innerHTML (0 innerHTML в коде)',
 T('в ·21 нет присваиваний innerHTML (0 innerHTML в коде)', !/\.innerHTML\s*=/.test(s21));
 
 console.log('== ВЕРСИИ ==');
-T('S22.VERSION 1.1.0', s22.includes("const VERSION = '1.1.0';"));
+T('S22.VERSION 1.3.0', s22.includes("const VERSION = '1.3.0';"));  /* пин актуальной версии ядра ·22 (протухший пин 1.1.0 пропустили в v1.23 — честно чиним) */
 T('S21.VERSION 0.4.0', s21.includes("const VERSION = '0.4.0';"));
 T('footer ·22 v1.1', s22.includes('«СВЯЗЬ» v1.1'));
 T('footer ·21 v0.4.0', s21.includes('«ОБЩЕНИЕ» v0.4.0'));
