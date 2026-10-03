@@ -57,13 +57,14 @@ CREATED → QUEUED → SENT → ACKED → DELIVERED → READ
 ACKED. DELIVERED ставится на стороне получателя при приёме. READ пока
 не отправляется нигде — честный GAP, не притворяемся.
 
-## Мосты (bridges.mjs, v1.2.0, ненормативно)
+## Мосты (bridges.mjs, v1.3.0, ненормативно)
 
 | Мост | Событие | retention | Ключ |
 |---|---|---|---|
 | ·19 → журнал | `identity.ref` (id/имя/дата, БЕЗ ключей) | persistent | `identity-ref:<uuid>` |
 | ·19 → зал | `hall.join` (верификация ·19: публичный JWK подписи + подпись факта; E2EE v2) | persistent | `hall-join:<room>:<id>:<эпоха>` |
 | ·22 → журнал | `hall.epoch` (объявление ротации ключей — ОТКРЫТОЕ: метаданные не секрет; E2EE v2) | persistent | `hall-epoch:<room>:<эпоха>` |
+| ·22 → журнал | `call.signal` (звонок как факт: ring/accept/decline/cancel/end — каждый акт отдельное неизменяемое событие; подпись ·19 где есть; SDP/ICE — транспорт, в журнал не пишется) | temporary, TTL = 10 мин | `call-signal:<room>:<звонкаId>:<действие>:<от>` |
 | ·18 → журнал | `hall.session` (зеркало манифеста, без аудио) | temporary, TTL = 7 дней зала | `hall-session:<id>` |
 | ·18 → журнал | `hall.memory` (память ❤️, replyTo → сессия) | persistent | `hall-memory:<id>` |
 | ·18 → журнал | `hall.memory.decide` (решение человека помнить/забыть — неизменяемое событие) | persistent | `hall-decide:<цель>:<решение>:<акт>` |

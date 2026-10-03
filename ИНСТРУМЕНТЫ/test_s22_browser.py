@@ -198,6 +198,106 @@ with sync_playwright() as p:
     ок('код подставлен из ссылки', D.input_value('#inCode') == 'Z9Q7B')
     ок('канал открыт автоматически', 'Канал открыт' in D.text_content('#stZal'))
 
+    print('— V1.23: ЗВОНОК ЧЕРЕЗ КРИСТАЛЛ — полный цикл (ring → accept → разговор → end)')
+    ЗАЛ2 = 'C4L1V'
+    JS_ЛИЧ = """async (а) => {
+      const [ид, имя] = а;
+      const пара = await crypto.subtle.generateKey({name:'ECDSA', namedCurve:'P-256', hash:'SHA-256'}, false, ['sign','verify']);
+      const pub = await crypto.subtle.exportKey('jwk', пара.publicKey);
+      const л = { id: ид, имя: имя, создана: Date.now(), приватный: пара.privateKey, публичныйJWK: pub };
+      await new Promise((res, rej) => {
+        const rq = indexedDB.open('singulyar-human-v1', 1);
+        rq.onupgradeneeded = () => { if (!rq.result.objectStoreNames.contains('kv')) rq.result.createObjectStore('kv'); };
+        rq.onerror = () => rej(rq.error);
+        rq.onsuccess = () => {
+          const б = rq.result; const т = б.transaction('kv', 'readwrite');
+          т.objectStore('kv').put(л, 'личность');
+          т.oncomplete = () => { б.close(); res(); };
+          т.onerror = () => rej(т.error);
+        };
+      });
+      return ид;
+    }"""
+    E = ctx.new_page()
+    E.on('pageerror', lambda e: ошибки.append('E: ' + str(e)))
+    E.goto(БАЗА + '/СИНГУЛЯР_22_СВЯЗЬ.html')
+    E.wait_for_selector('.chan-grid button', timeout=10000)
+    ок('v1.23: личность Веры создана на устройстве (как создаёт ·19)', bool(E.evaluate(JS_ЛИЧ, ['ид-E-0001', 'Вера·19'])))
+    E.reload(); E.wait_for_selector('.chan-grid button', timeout=10000)
+    ок('v1.23: у E имя из своей личности ·19', 'Вера·19' in E.input_value('#inName'))
+    E.fill('#inCode', ЗАЛ2); E.click('#btnOpen')
+    F = ctx.new_page()
+    F.on('pageerror', lambda e: ошибки.append('F: ' + str(e)))
+    F.goto(БАЗА + '/СИНГУЛЯР_22_СВЯЗЬ.html')
+    F.wait_for_selector('.chan-grid button', timeout=10000)
+    ок('v1.23: личность Глеба создана (подмена до загрузки второго окна)', bool(F.evaluate(JS_ЛИЧ, ['ид-F-0002', 'Глеб·19'])))
+    F.reload(); F.wait_for_selector('.chan-grid button', timeout=10000)
+    F.fill('#inCode', ЗАЛ2); F.click('#btnOpen')
+    E.wait_for_function("document.getElementById('stVer').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    F.wait_for_function("document.getElementById('stVer').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    ок('v1.23: две разные личности верифицировали друг друга', True)
+    ок('v1.23: список звонка у E: Глеб с честной меткой подписи', 'звук · Глеб·19' in E.text_content('#callList') and 'подпись ·19 сошлась' in E.text_content('#callList'))
+    ок('v1.23: список звонка у F: Вера', 'звук · Вера·19' in F.text_content('#callList'))
+    ок('v1.23: свободное состояние — кнопки решения скрыты', E.locator('#callActions').is_hidden())
+    E.click('#callList button:has-text("звук · Глеб·19")')
+    E.wait_for_function("document.getElementById('stCall').textContent.includes('звоню')", timeout=5000)
+    ок('v1.23: E звонит — статус «звоню»', True)
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('ВХОДЯЩИЙ ЗВОНОК')", timeout=5000)
+    ок('v1.23: F видит ВХОДЯЩИЙ ЗВОНОК', True)
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    ок('v1.23: F видит вердикт подписи звонка СОШЛАСЬ', True)
+    ок('v1.23: кнопки решения активны у F', not F.locator('#btnAccept').is_disabled() and not F.locator('#btnDecline').is_disabled())
+    F.click('#btnAccept')
+    E.wait_for_function("document.getElementById('stCall').textContent.includes('разговор')", timeout=8000)
+    ок('v1.23: разговор установлен (E)', True)
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('разговор')", timeout=5000)
+    ок('v1.23: разговор установлен (F)', True)
+    try:
+        E.wait_for_function("document.getElementById('vidRem').classList.contains('live')", timeout=15000)
+        ок('v1.23: WebRTC медиа дошло (vidRem live у E)', True)
+    except Exception:
+        дам = {'E': E.evaluate("window.__КРИСТ22.звонок"), 'F': F.evaluate("window.__КРИСТ22.звонок")}
+        ок('v1.23: WebRTC медиа дошло (vidRem live у E)', False, 'ontrack за 15 с | ' + json.dumps(дам, ensure_ascii=False))
+    факты = E.evaluate("async () => { const все = await window.__КРИСТ22.события(); return все.filter(e => e.conversation === 'call.signal').map(e => e.semantic.attachments[0].действие + ':' + e.semantic.attachments[0].от.имя); }")
+    ок('v1.23: в журнале факты ring(Вера) и accept(Глеб)', 'ring:Вера·19' in факты and 'accept:Глеб·19' in факты, факты)
+    ок('v1.23: дедуп — каждый факт звонка в журнале один раз', len(факты) == len(set(факты)), факты)
+    E.click('#btnEnd')
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('завершён')", timeout=5000)
+    ок('v1.23: F увидел «завершён» после end от E', True)
+    E.wait_for_function("document.getElementById('stCall').textContent.includes('завершён')", timeout=5000)
+    ок('v1.23: E видит свой «завершён» и свободен', 'свободен' not in E.text_content('#stCall') or 'завершён' in E.text_content('#stCall'))
+
+    print('— V1.23: ОТКЛОН И ЗАНЯТОСТЬ (третий участник)')
+    E.click('#callList button:has-text("звук · Глеб·19")')
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('ВХОДЯЩИЙ ЗВОНОК')", timeout=5000)
+    F.click('#btnDecline')
+    E.wait_for_function("document.getElementById('stCall').textContent.includes('отклонён')", timeout=5000)
+    ок('v1.23: отклон — E честно видит «отклонён»', True)
+    G = ctx.new_page()
+    G.on('pageerror', lambda e: ошибки.append('G: ' + str(e)))
+    G.goto(БАЗА + '/СИНГУЛЯР_22_СВЯЗЬ.html')
+    G.wait_for_selector('.chan-grid button', timeout=10000)
+    ок('v1.23: личность Ганы создана', bool(G.evaluate(JS_ЛИЧ, ['ид-G-0003', 'Гана·19'])))
+    G.reload(); G.wait_for_selector('.chan-grid button', timeout=10000)
+    G.fill('#inCode', ЗАЛ2); G.click('#btnOpen')
+    G.wait_for_function("document.getElementById('stVer').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    G.wait_for_function("document.getElementById('callList').textContent.includes('звук · Вера·19')", timeout=8000)
+    ок('v1.23: третий участник вошёл и верифицирован', True)
+    E.click('#callList button:has-text("звук · Глеб·19")')
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('ВХОДЯЩИЙ ЗВОНОК')", timeout=5000)
+    F.click('#btnAccept')
+    F.wait_for_function("document.getElementById('stCall').textContent.includes('разговор')", timeout=8000)
+    ок('v1.23: E–F снова в разговоре (для сцены занятости)', True)
+    G.click('#callList button:has-text("звук · Вера·19")')
+    G.wait_for_function("document.getElementById('stCall').textContent.includes('отклонён') && document.getElementById('stCall').textContent.includes('занят')", timeout=8000)
+    ок('v1.23: занятый звонок честно авто-отклонил: «отклонён (занят)»', True)
+    ок('v1.23: активный разговор E–F не пострадал от авто-отказа', 'разговор' in E.text_content('#stCall') and 'разговор' in F.text_content('#stCall'))
+    E.click('#btnEnd')
+    E.wait_for_function("document.getElementById('stCall').textContent.includes('завершён')", timeout=5000)
+    факты2 = E.evaluate("async () => { const все = await window.__КРИСТ22.события(); return все.filter(e => e.conversation === 'call.signal').map(e => e.idempotencyKey); }")
+    ок('v1.23: журнал знает все действия звонка (ring/accept/end/decline)', set(['ring', 'accept', 'end', 'decline']).issubset(set(к.split(':')[3] for к in факты2)), факты2)
+    ок('v1.23: дедуп журнала по актам финальный (ключ идемпотентности уникален)', len(факты2) == len(set(факты2)), факты2)
+
     print('— ОШИБКИ КОНСОЛИ')
     важные = [о for о in ошибки if 'favicon' not in о]
     ок('0 ошибок консоли во всех окнах', not важные, важные[:3])

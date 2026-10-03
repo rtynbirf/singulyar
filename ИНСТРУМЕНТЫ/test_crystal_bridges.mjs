@@ -213,8 +213,10 @@ test('makeBridge: события() без журнала — пусто, без 
 
 test('мосты — ненормативный слой: своя версия, РАЗГОВОРЫ зафиксированы', () => {
   assert.equal(Б.BRIDGES.name, 'singulyar-crystal-bridges');
+  assert.equal(Б.BRIDGES.version, '1.3.0');
   assert.equal(Б.РАЗГОВОРЫ.identity, 'identity.ref');
   assert.equal(Б.РАЗГОВОРЫ.activity, 'shared.activity');
+  assert.equal(Б.РАЗГОВОРЫ.call, 'call.signal');
   /* ядро при этом не тронуто — его версия остаётся нормативной */
   assert.equal(К.CRYSTAL.version, '1.0.0');
 });
@@ -351,6 +353,74 @@ test('hall.join/epoch: публикация через мост и schema-лег
   assert.ok(рэ.ok);
   const все = await мост.события('shared.activity');
   assert.equal(все.length, 2);
+  const схема = JSON.parse(fs.readFileSync(path.join(КОРЕНЬ, 'БИБЛИОТЕКИ/кристалл/semantic-event.schema.json'), 'utf-8'));
+  for (const событие of все) {
+    for (const поле of схема.required) assert.ok(поле in событие, 'нет required-поля ' + поле);
+    assert.equal(событие.type, схема.properties.type.const);
+    assert.ok(событие.id.length >= 8);
+  }
+  /* ядро по-прежнему не тронуто */
+  assert.equal(К.CRYSTAL.version, '1.0.0');
+});
+
+/* ═════════ v1.3.0: call.signal — звонок как факт ═════════ */
+
+test('call.signal: ring — факт звонка, temporary с TTL звонка, подпись честна', () => {
+  const { event, вложение } = Б.callSignalEvent({
+    room: 'P7J97', звонкаId: 'з123-abc', действие: 'ring', канал: 'audio',
+    от: { id: 'ид-77', имя: 'ПАША' }, кому: { id: 'ид-9', имя: 'Гость' }, эпоха: 2, подпись: 'ПОДПИСЬ' });
+  assert.equal(вложение.kind, 'call.signal');
+  assert.equal(вложение.действие, 'ring');
+  assert.equal(вложение.канал, 'audio');
+  assert.equal(вложение.подписана, true);
+  assert.equal(event.from, '·22');
+  assert.equal(event.conversation, 'call.signal');
+  assert.equal(event.policy.retention, 'temporary');
+  assert.equal(event.policy.ttl, 600000);
+  assert.equal(event.idempotencyKey, 'call-signal:P7J97:з123-abc:ring:ид-77');
+  assert.ok(event.semantic.text.includes('звонит'), 'текст человекочитаем');
+  assert.ok(event.semantic.text.includes('подпись ·19 сошлась'));
+  assert.ok(event.id.length >= 8);
+  const сыр = JSON.stringify(event);
+  assert.ok(!сыр.includes('privateKey'), 'не утекает privateKey');
+});
+
+test('call.signal: каждый акт — отдельное событие; дедуп бережёт АКТ, не ход звонка', () => {
+  const а = Б.callSignalEvent({ room: 'Z', звонкаId: 'к1', действие: 'ring', от: { id: 'и1', имя: 'А' } });
+  const б = Б.callSignalEvent({ room: 'Z', звонкаId: 'к1', действие: 'accept', от: { id: 'и2', имя: 'Б' } });
+  const в = Б.callSignalEvent({ room: 'Z', звонкаId: 'к1', действие: 'end', от: { id: 'и1', имя: 'А' } });
+  assert.notEqual(а.event.idempotencyKey, б.event.idempotencyKey);
+  assert.notEqual(а.event.idempotencyKey, в.event.idempotencyKey);
+  const а2 = Б.callSignalEvent({ room: 'Z', звонкаId: 'к1', действие: 'ring', от: { id: 'и1', имя: 'А' } });
+  assert.equal(а.event.idempotencyKey, а2.event.idempotencyKey, 'повтор того же акта = тот же ключ (дедуп)');
+  assert.equal(а.event.id, а2.event.id);
+});
+
+test('call.signal: канал нормализуется, мусорное действие — честный throw', () => {
+  assert.equal(Б.callSignalEvent({ звонкаId: 'к', действие: 'ring', канал: 'video' }).вложение.канал, 'video');
+  assert.equal(Б.callSignalEvent({ звонкаId: 'к', действие: 'ring', канал: 'чушь' }).вложение.канал, 'audio');
+  assert.throws(() => Б.callSignalEvent({ звонкаId: 'к', действие: 'чушь' }), /ring/);
+  assert.throws(() => Б.callSignalEvent({ звонкаId: 'к', действие: '' }), /ring/);
+});
+
+test('call.signal: без подписи — честный текст; причина попадает в событие', () => {
+  const п = Б.callSignalEvent({ room: 'Z', звонкаId: 'к2', действие: 'decline', от: { id: 'и1', имя: 'А' }, причина: 'занят' });
+  assert.equal(п.вложение.подписана, false);
+  assert.ok(п.event.semantic.text.includes('занят'));
+  assert.ok(!п.event.semantic.text.includes('сошлась'));
+});
+
+test('call.signal: публикация через мост и schema-легальность', async () => {
+  const ж = фальшЖурнал();
+  const мост = Б.makeBridge({ источник: 'тест-звонок', журнал: ж });
+  await мост.готовь;
+  const р = Б.callSignalEvent({ room: 'Z', звонкаId: 'к3', действие: 'ring', от: { id: 'и1', имя: 'А' } });
+  const р1 = await мост.опубликуй(р.event);
+  assert.ok(р1.ok && р1.reason === 'PUBLISHED');
+  const р2 = await мост.опубликуй(р.event);
+  assert.ok(!р2.ok && р2.reason === 'DUPLICATE', 'дедуп по акту работает');
+  const все = await мост.события('call.signal');
+  assert.equal(все.length, 1);
   const схема = JSON.parse(fs.readFileSync(path.join(КОРЕНЬ, 'БИБЛИОТЕКИ/кристалл/semantic-event.schema.json'), 'utf-8'));
   for (const событие of все) {
     for (const поле of схема.required) assert.ok(поле in событие, 'нет required-поля ' + поле);
