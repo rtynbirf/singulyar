@@ -1,15 +1,41 @@
 {
+  "id": "/singulyar/",
   "name": "СИНГУЛЯР RUVSON — вселенная караоке",
   "short_name": "СИНГУЛЯР",
-  "description": "61 песня × 158 языков · ОРКЕСТРАТОР ·15 · 13 модулей · офлайн",
+  "description": "61 песня × 158 языков · ОРКЕСТРАТОР ·15 · КРУГ ·23 (люди, румы, звонки) · офлайн",
   "lang": "ru",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
   "background_color": "#0a0e14",
   "theme_color": "#0a0e14",
+  "categories": ["entertainment", "music", "social"],
   "icons": [
-    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {
+      "name": "КРУГ ·23 — люди, румы, звонки",
+      "short_name": "КРУГ",
+      "url": "./СИНГУЛЯР_23_КРУГ.html",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Спеть · СУФЛЁР ·16",
+      "short_name": "СПЕТЬ",
+      "url": "./СИНГУЛЯР_16_СУФЛЁР.html",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Зал · СОБЫТИЕ ·18",
+      "short_name": "ЗАЛ",
+      "url": "./СИНГУЛЯР_18_СОБЫТИЕ.html",
+      "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
+    }
   ]
 }
