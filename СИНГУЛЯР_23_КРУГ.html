@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·23 — КРУГ · люди, румы, звонки</title>
+<meta name="description" content="СИНГУЛЯР ·23 «КРУГ» — живой круг людей вселенной RUVSON: 16 людей с весёлыми эмодзи, румы (ПАПА-ДОМ — чат всегда сохраняется), аудио- и видеозвонки P2P, автоответчики, голосовые сообщения. Устанавливается как приложение на телефон, планшет, ноутбук и ПК.">
+<meta name="theme-color" content="#0a0f15">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<style>
+:root{
+  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
+  --teal:#61e1c4;--teal2:#38bdf8;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#a78bfa;
+  --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,textarea:focus{outline:2px solid var(--teal2);outline-offset:1px}
+::placeholder{color:#5d7180}
+
+/* ── шапка ── */
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#61e1c4,#38bdf8,#61e1c4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
+.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+
+/* ── табы ── */
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{padding:10px 4px 12px;text-align:center;color:var(--dim);font-size:12px}
+nav.tabs button .и{font-size:22px;display:block;line-height:1.15}
+nav.tabs button[aria-selected="true"]{color:var(--teal)}
+nav.tabs button .bdg{position:relative;top:-2px;margin-left:2px;background:var(--red);color:#fff;border-radius:999px;font-size:10.5px;padding:1px 6px;font-weight:700}
+main{padding-top:16px}
+section.v{display:none}
+section.v.on{display:block}
+h2.сек{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:22px 0 10px;font-family:var(--mono)}
+h2.сек:first-child{margin-top:4px}
+
+/* ── панели/карточки ── */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.note{color:var(--dim);font-size:13.5px}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);min-height:1.4em}
+.status.ok{color:var(--green)} .status.warn{color:var(--amber)} .status.err{color:var(--red)}
+
+/* ── список рум ── */
+.list{display:flex;flex-direction:column;gap:8px}
+.room{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.room:hover{border-color:#2e4155;text-decoration:none}
+.room .ав{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:26px;background:var(--panel2);flex:none}
+.room .тело{flex:1;min-width:0}
+.room .имя{font-weight:700;display:flex;gap:8px;align-items:center}
+.room .имя .замок{font-size:11px;color:var(--amber);border:1px solid #4a3a1b;border-radius:6px;padding:0 6px;background:#1c1708;font-family:var(--mono);white-space:nowrap}
+.room .превью{color:var(--dim);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room .превью b{color:var(--tx);font-weight:600}
+.room .мета{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.room .время{color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.room .бейдж{background:var(--teal);color:#04121c;font-weight:800;border-radius:999px;font-size:11.5px;padding:1px 7px}
+.room .онлайн{width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;box-shadow:0 0 6px var(--green)}
+
+/* ── люди ── */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.person{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px 12px;text-align:center;cursor:pointer}
+.person:hover{border-color:#2e4155}
+.person .ав{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:var(--panel2)}
+.person b{font-size:14px}
+.person small{color:var(--dim);font-size:11px;line-height:1.3}
+.person .ряд{display:flex;gap:6px;margin-top:6px}
+.person .ряд button{width:38px;height:34px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);font-size:16px}
+.person .ряд button:hover{border-color:var(--teal)}
+.точка{width:9px;height:9px;border-radius:50%;background:#4a5a68;display:inline-block;margin-left:6px}
+.точка.on{background:var(--green);box-shadow:0 0 6px var(--green)}
+
+/* ── чат ── */
+.chat-шапка{display:flex;align-items:center;gap:10px;padding:10px 0}
+.chat-шапка .ав{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--panel2)}
+.chat-шапка b{font-size:16px}
+.chat-шапка small{display:block;color:var(--dim);font-size:11.5px}
+.msg-лента{display:flex;flex-direction:column;gap:6px;padding:10px 0 14px;min-height:40vh}
+.день{text-align:center;color:var(--dim);font-size:11.5px;font-family:var(--mono);margin:10px 0 4px}
+.msg{max-width:82%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:8px 12px;align-self:flex-start}
+.msg.моё{align-self:flex-end;background:#123028;border-color:#1d4a3e}
+.msg .автор{font-size:12px;color:var(--teal2);font-weight:700;margin-bottom:2px}
+.msg .текст{white-space:pre-wrap;word-break:break-word;font-size:15px}
+.msg .время{font-size:10.5px;color:var(--dim);font-family:var(--mono);text-align:right;margin-top:2px}
+.msg.система{align-self:center;background:transparent;border:1px dashed var(--line);color:var(--amber);font-size:13px;max-width:94%}
+.msg audio{width:min(320px,60vw);height:36px;margin-top:4px}
+.composer{position:sticky;bottom:66px;display:flex;gap:8px;background:var(--bg);padding:8px 0}
+.composer input{flex:1;border-radius:999px;padding:11px 16px}
+.composer button{width:46px;height:46px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:19px;flex:none}
+.composer button.послать{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;border:none;font-weight:800}
+.rec-бар{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.rec-точка{width:11px;height:11px;border-radius:50%;background:var(--red);animation:пульс 1s infinite}
+@keyframes пульс{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.rec-точка{animation:none}}
+
+/* ── звонки ── */
+.звон-настройки{margin-top:14px}
+.перекл{display:flex;align-items:center;gap:10px;padding:8px 0}
+.перекл .гальо{width:44px;height:26px;border-radius:999px;background:#33404c;position:relative;flex:none;transition:background .2s}
+.перекл .гальо::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
+.перекл .гальо[aria-checked="true"]{background:var(--green)}
+.перекл .гальо[aria-checked="true"]::after{left:21px}
+.журнал{display:flex;flex-direction:column;gap:6px}
+.звон-запись{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:14px}
+.звон-запись .и{font-size:20px}
+.звон-запись small{color:var(--dim);display:block;font-size:11.5px}
+.звон-запись.пропущен{border-color:#5b2323}
+
+/* ── оверлеи ── */
+.овер{position:fixed;inset:0;z-index:60;background:rgba(4,8,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.овер.on{display:flex}
+.карта{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:520px;width:100%;max-height:92vh;overflow:auto;padding:22px}
+.карта h3{font-size:19px;margin-bottom:6px}
+.идент-сетка{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin:14px 0}
+.идент-карт{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.идент-карт .ав{font-size:26px}
+.идент-карт b{font-size:12px}
+.идент-карт[aria-pressed="true"]{border-color:var(--teal);background:#0f2620}
+
+/* звонковый оверлей */
+.звон-овер{position:fixed;inset:0;z-index:70;background:#050b10;display:none;flex-direction:column}
+.звон-овер.on{display:flex}
+.звон-овер .верх{padding:max(20px,env(safe-area-inset-top)) 18px 8px;text-align:center}
+.звон-овер .ав{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:52px;background:var(--panel);margin:18px auto 10px;border:2px solid var(--line)}
+.звон-овер.звонит .ав{border-color:var(--teal);animation:звон-пульс 1.1s infinite}
+@keyframes звон-пульс{50%{box-shadow:0 0 0 14px rgba(97,225,196,.08)}}
+@media (prefers-reduced-motion: reduce){.звон-овер.звонит .ав{animation:none}}
+.звон-овер b.имя{font-size:24px}
+.звон-овер .состояние{color:var(--dim);font-family:var(--mono);font-size:13px;margin-top:4px}
+.видео-зона{flex:1;position:relative;min-height:0}
+.видео-зона video{width:100%;height:100%;object-fit:cover;background:#000}
+.видео-зона video.моё-вид{position:absolute;right:14px;bottom:14px;width:110px;height:150px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.звон-кнопки{display:flex;justify-content:center;gap:18px;padding:18px 12px calc(20px + env(safe-area-inset-bottom))}
+.звон-кнопки button{width:64px;height:64px;border-radius:50%;font-size:26px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel)}
+.звон-кнопки .принять{background:var(--green);color:#04121c;border:none}
+.звон-кнопки .отклонить{background:var(--red);color:#04121c;border:none}
+.звон-кнопки button.выкл{opacity:.45}
+.звон-кнопки small{display:block;font-size:9.5px;margin-top:2px;font-family:var(--mono)}
+
+/* ── аккордеон установки ── */
+details.уст{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+details.уст summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
+details.уст summary::-webkit-details-marker{display:none}
+details.уст summary::before{content:'▸';color:var(--teal);font-family:var(--mono)}
+details.уст[open] summary::before{content:'▾'}
+details.уст ol{margin:10px 0 2px 20px;display:flex;flex-direction:column;gap:6px}
+details.уст li{font-size:14.5px}
+details.уст .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
+
+.сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
+footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
+.toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
+.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+@media (max-width:640px){
+  .wrap{padding:0 10px}
+  .people{grid-template-columns:repeat(auto-fill,minmax(124px,1fr))}
+  .я-chip em{max-width:70px}
+  .msg{max-width:90%}
+}
+</style>
+</head>
+<body>
+<a href="#v-rooms" class="skip" hidden>к румам</a>
+<header><div class="wrap hd">
+  <div class="logo">S·23</div>
+  <div><b>КРУГ</b><span>люди · румы · звонки · вселенная RUVSON</span></div>
+  <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипТип">нажми и выбери</small></span></button>
+</div></header>
+
+<main class="wrap">
+
+<!-- ═════════ РУМЫ ═════════ -->
+<section class="v on" id="v-rooms" role="tabpanel" aria-label="Румы и люди">
+  <h2 class="сек">Румы</h2>
+  <div class="list" id="румаСписок"></div>
+  <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
+
+  <h2 class="сек">Люди круга · 16 · личные чаты</h2>
+  <div class="people" id="людскаяСетка"></div>
+  <p class="note" style="margin-top:10px">Короткие имена круга защищены: гости пишут своё имя с нейтральным словом ПЕРЕД ним — «ГОСТЬ МАША», «СОСЕД ВАНЯ». Это для ориентирования, не для деления на своих и чужих.</p>
+</section>
+
+<!-- ═════════ ЗВОНКИ ═════════ -->
+<section class="v" id="v-calls" role="tabpanel" aria-label="Звонки">
+  <h2 class="сек">Кому звонить · аудио 📞 и видео 🎥</h2>
+  <div class="people" id="звонСетка"></div>
+
+  <h2 class="сек">Автоответчик</h2>
+  <div class="panel звон-настройки">
+    <div class="перекл">
+      <button class="гальо" id="гальоАвто" role="switch" aria-checked="true" aria-labelledby="автоЗагл"></button>
+      <span id="автоЗагл"><b>Автоответчик включён</b><br><small class="note" id="автоСтатус">пропущенный звонок сам ответит и предложит оставить голосовое</small></span>
+    </div>
+    <label for="автоТекст" class="note">Текст автоответчика (каждый правит под себя):</label>
+    <textarea id="автоТекст" rows="2" style="margin-top:6px">Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.</textarea>
+  </div>
+
+  <h2 class="сек">Журнал звонков</h2>
+  <div class="журнал" id="журналЗвонков"></div>
+</section>
+
+<!-- ═════════ Я ═════════ -->
+<section class="v" id="v-me" role="tabpanel" aria-label="Я и устройство">
+  <h2 class="сек">Кто я</h2>
+  <div class="panel" id="яКто"></div>
+
+  <h2 class="сек">Установить как приложение</h2>
+  <div class="panel" style="margin-bottom:10px">
+    <p class="note">СИНГУЛЯР ставится штатным образом на всё: телефон, планшет, ноутбук, ПК. После установки открывается без адресной строки, как обычное приложение, работает офлайн. Выбери своё устройство:</p>
+    <button class="btn-install" id="btnInstall2" style="margin-top:10px" hidden>⬇ установить сейчас</button>
+  </div>
+  <details class="уст" id="устАндроид"><summary>🤖 Android · Chrome, Яндекс, Samsung Internet</summary>
+    <ol>
+      <li>Открой <b>rtynbirf.github.io/singulyar</b> в Chrome.</li>
+      <li>Меню <b>⋮</b> (справа сверху) → <b>«Установить приложение»</b> или «Добавить на главный экран».</li>
+      <li>Подтверди — иконка 🎤 появится на рабочем столе.</li>
+    </ol>
+    <p class="пимечт">Совет: если в меню нет пункта — сайт уже открыт как установленное приложение.</p>
+  </details>
+  <details class="уст" id="устIos"><summary>🍎 iPhone / iPad · Safari</summary>
+    <ol>
+      <li>Открой сайт именно в <b>Safari</b> (не в Chrome — iOS разрешает установку только через Safari).</li>
+      <li>Кнопка <b>«Поделиться»</b> (квадрат со стрелкой вверх).</li>
+      <li>Прокрути и выбери <b>«На экран «Домой»»</b> → <b>«Добавить»</b>.</li>
+    </ol>
+    <p class="пимечт">Иконка появится рядом с приложениями. Свайп по центру снизу — домой к СИНГУЛЯРУ.</p>
+  </details>
+  <details class="уст" id="устWin"><summary>🪟 Windows · Chrome, Edge</summary>
+    <ol>
+      <li>Открой сайт в Chrome или Edge.</li>
+      <li>В адресной строке справа нажми иконку <b>⊕ / экран с стрелкой</b> → «Установить».</li>
+      <li>Или меню <b>⋮</b> → «Транслировать, сохранить и поделиться» → «Установить страницу как приложение».</li>
+    </ol>
+    <p class="пимечт">Появится в меню «Пуск», можно закрепить на панели задач.</p>
+  </details>
+  <details class="уст" id="устMac"><summary>🍏 macOS · Chrome, Edge, Safari</summary>
+    <ol>
+      <li>Chrome/Edge: иконка установки в адресной строке → «Установить».</li>
+      <li>Safari 17+: меню <b>Файл</b> → <b>«Добавить в Dock»</b>.</li>
+    </ol>
+    <p class="пимечт">Приложение появится в Dock и Launchpad.</p>
+  </details>
+  <details class="уст" id="устLinux"><summary>🐧 Linux · Chrome, Chromium, Edge</summary>
+    <ol>
+      <li>Открой сайт в Chrome/Chromium.</li>
+      <li>Меню <b>⋮</b> → <b>«Установить приложение»</b> (или иконка ⊕ в адресной строке).</li>
+    </ol>
+    <p class="пимечт">Иконка появится в меню приложений дистрибутива.</p>
+  </details>
+
+  <h2 class="сек">Вся вселенная · модули</h2>
+  <div class="сетка-ссылки" id="модулиСсылки"></div>
+</section>
+
+</main>
+
+<!-- ═════════ ВКЛАДКИ ═════════ -->
+<nav class="tabs" role="tablist" aria-label="Разделы КРУГА">
+  <button id="tab-rooms" aria-selected="true" aria-controls="v-rooms"><span class="и">💬</span>РУМЫ<span class="bdg" id="бейджВсего" hidden>0</span></button>
+  <button id="tab-calls" aria-selected="false" aria-controls="v-calls"><span class="и">📞</span>ЗВОНКИ</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🙂</span>Я</button>
+</nav>
+
+<!-- ═════════ ЧАТ (полноэкранный) ═════════ -->
+<div class="овер" id="чатОвер" role="dialog" aria-modal="true" aria-label="Чат">
+  <div class="карта" style="max-width:860px;height:94vh;display:flex;flex-direction:column;padding:12px 16px">
+    <div class="chat-шапка">
+      <button id="чатНазад" aria-label="Назад" style="font-size:22px;padding:4px 8px">←</button>
+      <span class="ав" id="чатАв">🏠</span>
+      <div style="flex:1;min-width:0"><b id="чатИмя">рума</b><small id="чатПодзаг">…</small></div>
+      <span class="точка" id="чатОнлайн"></span>
+    </div>
+    <div class="msg-лента" id="лента" aria-live="polite"></div>
+    <div class="rec-бар" id="recБар" hidden>
+      <span class="rec-точка"></span><b id="recВремя">0:00</b>
+      <span style="flex:1"></span>
+      <button id="recОтмена" class="note">✖ отменить</button>
+      <button id="recСтоп" style="color:var(--green);font-weight:700">➤ отправить</button>
+    </div>
+    <div class="composer" id="композер">
+      <button id="btnМикр" title="Голосовое сообщение">🎙</button>
+      <input id="полеТекст" placeholder="Сообщение…" autocomplete="off" enterkeyhint="send">
+      <button id="btnПослать" class="послать" title="Отправить">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ КТО ТЫ ═════════ -->
+<div class="овер" id="идентОвер" role="dialog" aria-modal="true" aria-label="Кто ты">
+  <div class="карта">
+    <h3>Кто ты в КРУГЕ?</h3>
+    <p class="note">Выбери себя — один раз, устройство запомнит. Если тебя нет в круге — впиши своё имя внизу.</p>
+    <div class="идент-сетка" id="идентСетка"></div>
+    <label class="note" for="идентВвод">Или твоё имя (короткие имена круга защищены):</label>
+    <input id="идентВвод" placeholder="например: ГОСТЬ МАША или КАПИТАН ДИМА" style="margin-top:6px">
+    <div class="status" id="идентСтатус" role="status"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:12px">войти в круг →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ ЗВОНОК ═════════ -->
+<div class="звон-овер" id="звонОвер" role="dialog" aria-modal="true" aria-label="Звонок">
+  <div class="верх">
+    <span class="ав" id="звонАв">👤</span>
+    <b class="имя" id="звонИмя">…</b>
+    <div class="состояние" id="звонСостояние">…</div>
+  </div>
+  <div class="видео-зона">
+    <video id="видУдалённый" autoplay playsinline></video>
+    <video id="видМой" autoplay playsinline muted class="моё-вид"></video>
+  </div>
+  <div class="звон-кнопки">
+    <button id="звонМикр" title="Микрофон вкл/выкл">🎤<small>мик</small></button>
+    <button id="звонКамера" title="Камера вкл/выкл">📷<small>кам</small></button>
+    <button id="звонПринять" class="принять" title="Принять">✓<small>принять</small></button>
+    <button id="звонОтклонить" class="отклонить" title="Отклонить">✕<small>отклонить</small></button>
+    <button id="звонЗавершить" class="отклонить" title="Завершить" hidden>📞<small>завершить</small></button>
+  </div>
+</div>
+
+<div class="toast-холд" id="toastХолд" aria-live="polite"></div>
+
+<footer><div class="wrap">
+  СИНГУЛЯР ·23 «КРУГ» v1.0 · 16 людей · румы · звонки аудио+видео · автоответчики · голосовые · ПАПА-ДОМ сохраняет всегда · P2P (Nostr-сигналинг) + мост вкладок одного браузера · данные живут на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
+</div></footer>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·23 «КРУГ» v1.0 — люди, румы, звонки.
+   Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
+   Слои: РЕЕСТР → ГВАРД → ХРАН → ЛИЧНОСТЬ → UI → СЕТЬ → ЗВОНКИ → ГОЛОС → PWA.
+   Тестовые крюки: window.K23 (только чтение).
+   ═══════════════════════════════════════════════════════════════════ */
+'use strict';
+
+/* ───────────────────────── 1 · РЕЕСТР КРУГА ───────────────────────── */
+/* 16 людей вселенной RUVSON. Алиасы — как зовут дома. Короткие имена и
+   алиасы защищены: чужой не может просто взять «МАША» — только «ГОСТЬ МАША». */
+const РЕЕСТР = [
+  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'],               метка:'основатель вселенной' },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'], метка:'сердце дома' },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'],           метка:'' },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'],    метка:'' },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'],        метка:'' },
+  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[], метка:'' },
+  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[], метка:'' },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[], метка:'' },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[], метка:'' },
+  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[], метка:'Витина систра — вторая Маша' },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[], метка:'' },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[], метка:'' },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[], метка:'' },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[], метка:'' },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[], метка:'' },
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'], метка:'голос вселенной', система:true }
+];
+
+/* Румы. ПАПА-ДОМ — чат, который сохраняется ВСЕГДА: кнопки «стереть» нет,
+   локальная копия вечна, синхронизация добирает историю при встрече устройств. */
+const РУМЫ = [
+  { id:'dom',     имя:'ПАПА-ДОМ',  эмодзи:'🏠', сохран:'всегда', описание:'чат ВСЕГДА СОХРАНЯЕТСЯ' },
+  { id:'karaoke', имя:'КАРАОКЕ',   эмодзи:'🎤', сохран:'да',     описание:'петь вместе · зовёт зал ·18' },
+  { id:'kuxnya',  имя:'КУХНЯ',     эмодзи:'☕', сохран:'да',     описание:'болтовня ни о чём' },
+  { id:'vsem',    имя:'ВСЕМ-ВСЕМ', эмодзи:'📣', сохран:'да',     описание:'объявления на всех' }
+];
+
+const ЗАЩИТА_ПРЕФИКСЫ = ['ГОСТЬ','ДРУГ','СОСЕД','КАПИТАН','ЧЕЛОВЕК','ГЕРОЙ','ТАЛИСМАН'];
+const ПРЕФИКС_ПОДСКАЗКА = 'ГОСТЬ, ДРУГ, СОСЕД, КАПИТАН…';
+
+/* ───────────────────── 2 · ГВАРД КОРОТКИХ ИМЁН ───────────────────── */
+function норм(с){ return String(с||'').toUpperCase().replace(/Ё/g,'Е').replace(/\s+/g,' ').trim(); }
+const ЗАЩИЩЁННЫЕ = (function(){
+  const s = new Set();
+  РЕЕСТР.forEach(function(ч){ s.add(норм(ч.имя)); ч.алиасы.forEach(function(а){ s.add(норм(а)); }); });
+  s.add('RUVSON'); s.add('РУВСОН');
+  return s;
+})();
+function этоЗащищённоеИмя(имя){ return ЗАЩИЩЁННЫЕ.has(норм(имя)); }
+/* Проверка имени гостя: короткие имена запрещены; выручает нейтральное
+   слово ПЕРЕД именем («ГОСТЬ МАША»). Возвращает {ok, причина, ответ?} */
+function проверьИмя(ввод){
+  const н = норм(ввод);
+  if (!н) return { ok:false, причина:'впиши имя' };
+  if (н.length > 40) return { ok:false, причина:'имя длиннее 40 знаков — короче' };
+  if (!этоЗащищённоеИмя(н)) {
+    const слова = н.split(' ');
+    if (ЗАЩИЩЁННЫЕ.has(слова[0]) && слова.length === 1) {
+      return { ok:false, причина:'короткое имя защищено' };
+    }
+    return { ok:true, тип:'гость', имя:н };
+  }
+  return { ok:false, причина:'короткое имя защищено' };
+}
+/* Нейтральный префикс = любое незащищённое слово ≥2 букв ПЕРЕД именем. */
+function собериСПрефиксом(префикс, имя){
+  const п = норм(префикс), и = норм(имя);
+  if (!п || п.length < 2) return { ok:false, причина:'префикс слишком короткий' };
+  if (этоЗащищённоеИмя(п)) return { ok:false, причина:'это слово само защищено' };
+  if (!и) return { ok:false, причина:'нужно и имя' };
+  return { ok:true, тип:'гость', имя: п + ' ' + и };
+}
+
+/* ───────────────────── 3 · ХРАНИЛИЩЕ (локально) ───────────────────── */
+const КЛЮЧ = {
+  личность:'singular.krug.v1.identity',
+  msgs:'singular.krug.v1.msgs.',
+  непрочит:'singular.krug.v1.unread',
+  журнал:'singular.krug.v1.calls',
+  авто:'singular.krug.v1.автоответ',
+  послРума:'singular.krug.v1.lastRoom'
+};
+function лс(ключ, дефо){
+  try { const v = localStorage.getItem(ключ); return v === null ? дефо : JSON.parse(v); }
+  catch (e) { return дефо; }
+}
+function лсПиши(ключ, зн){ try { localStorage.setItem(ключ, JSON.stringify(зн)); } catch (e) {} }
+const ЛИМИТ_РУМ = { 'dom': 5000 };
+const ЛИМИТ_ДЕФО = 1500;
+
+function сообщения(румаИд){ return лс(КЛЮЧ.msgs + румаИд, []); }
+function сохраниСообщения(румаИд, список){
+  const лимит = ЛИМИТ_РУМ[румаИд] || ЛИМИТ_ДЕФО;
+  if (список.length > лимит) список = список.slice(список.length - лимит);
+  лсПиши(КЛЮЧ.msgs + румаИд, список);
+}
+function добавьСообщение(м){ /* м = {id,рума,от:{имя,эмодзи,deviceId},текст,ts,тип,аудиоид?} */
+  const список = сообщения(м.рума);
+  if (список.some(function(x){ return x.id === м.id; })) return false;
+  список.push(м); сохраниСообщения(м.рума, список);
+  return true;
+}
+function непрочитанные(){ return лс(КЛЮЧ.непрочит, {}); }
+function бейдж(румаИд, дельта){
+  const у = непрочитанные();
+  if (дельта === 0) delete у[румаИд]; else у[румаИд] = (у[румаИд] || 0) + дельта;
+  лсПиши(КЛЮЧ.непрочит, у);
+  обновиБейджи();
+}
+/* Голосовые и тяжёлые blob — в IndexedDB (localStorage только для текста). */
+const БАЗА = (function(){
+  let дбП = null;
+  function открой(){
+    if (дбП) return дбП;
+    дбП = new Promise(function(res, rej){
+      const rq = indexedDB.open('singular-krug-v1', 1);
+      rq.onupgradeneeded = function(){ rq.result.createObjectStore('blobs'); };
+      rq.onsuccess = function(){ res(rq.result); };
+      rq.onerror = function(){ rej(rq.error); };
+    });
+    return дбП;
+  }
+  function положи(ключ, блоб){
+    return открой().then(function(б){ return new Promise(function(res, rej){
+      const t = б.transaction('blobs','readwrite'); t.objectStore('blobs').put(блоб, ключ);
+      t.oncomplete = function(){ res(); }; t.onerror = function(){ rej(t.error); };
+    }); });
+  }
+  function возьми(ключ){
+    return открой().then(function(б){ return new Promise(function(res, rej){
+      const rq = б.transaction('blobs').objectStore('blobs').get(ключ);
+      rq.onsuccess = function(){ res(rq.result || null); }; rq.onerror = function(){ rej(rq.error); };
+    }); });
+  }
+  return { положи:положи, возьми:возьми };
+})();
+
+/* ───────────────────── 4 · ЛИЧНОСТЬ ───────────────────── */
+let Я = лс(КЛЮЧ.личность, null); /* {id?, имя, эмодзи, тип:'свой'|'гость', deviceId, метка?} */
+if (!Я || !Я.deviceId) {
+  Я = null; /* без deviceId старые записи не признаём — честно просим заново */
+  try { localStorage.removeItem(КЛЮЧ.личность); } catch (e) {}
+}
+function deviceIdМой(){ return Я && Я.deviceId; }
+function человекПоИмени(имя){
+  const н = норм(имя);
+  return РЕЕСТР.find(function(ч){ return норм(ч.имя) === н; }) || null;
+}
+function назначьЛичность(л){
+  Я = л; лсПиши(КЛЮЧ.личность, л);
+  рендерЯ(); рендерЯЧип();
+  if (сетьСтартована) { мойРегИд = регИдМой(); сетьВступи(мойРегИд); маячокКто(); }
+  else сетьЗапусти();
+}
+
+/* ───────────────────── 5 · DOM-фабрика и утилиты ───────────────────── */
+function эл(тег, атр, дети){
+  const н = document.createElement(тег);
+  if (атр) Object.keys(атр).forEach(function(к){
+    if (к === 'class') н.className = атр[к];
+    else if (к === 'text') н.textContent = атр[к];
+    else if (к.slice(0,2) === 'on') н.addEventListener(к.slice(2), атр[к]);
+    else if (атр[к] !== null && атр[к] !== undefined) н.setAttribute(к, атр[к]);
+  });
+  (дети || []).forEach(function(д){ if (д) н.appendChild(д); });
+  return н;
+}
+function т(с){ return document.createTextNode(String(с == null ? '' : с)); }
+function $(ид){ return document.getElementById(ид); }
+function тост(с){
+  const холд = $('toastХолд');
+  const узел = эл('div', { class:'toast', text:с });
+  холд.appendChild(узел);
+  setTimeout(function(){ узел.remove(); }, 4200);
+}
+function времяК(ц){ const d = new Date(ц); return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2); }
+function деньК(ц){
+  const d = new Date(ц), с = new Date(); const в = new Date(с.getFullYear(), с.getMonth(), с.getDate());
+  const дн = Math.round((в - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
+  if (дн === 0) return 'сегодня';
+  if (дн === 1) return 'вчера';
+  return d.toLocaleDateString('ru-RU', { day:'numeric', month:'long' });
+}
+
+/* ───────────────────── 6 · ВКЛАДКИ ───────────────────── */
+function откройВкладку(имя){
+  ['rooms','calls','me'].forEach(function(v){
+    $('v-' + v).classList.toggle('on', v === имя);
+    $('tab-' + v).setAttribute('aria-selected', v === имя ? 'true' : 'false');
+  });
+  if (имя === 'calls') рендерЗвонки();
+  if (имя === 'me') рендерЯ();
+}
+['rooms','calls','me'].forEach(function(v){
+  $('tab-' + v).addEventListener('click', function(){ откройВкладку(v); });
+});
+
+/* ───────────────────── 7 · РЕНДЕР: румы, люди, звонки, я ───────────────────── */
+function последнийТекст(румаИд){
+  const с = сообщения(румаИд);
+  if (!с.length) return null;
+  return с[с.length - 1];
+}
+function рендерРумы(){
+  const холд = $('румаСписок'); холд.textContent = '';
+  const все = РУМЫ.slice();
+  /* личные румы, где уже была переписка */
+  const личные = Object.keys(localStorage)
+    .filter(function(к){ return к.indexOf(КЛЮЧ.msgs + 'dm-') === 0; })
+    .map(function(к){ return к.slice((КЛЮЧ.msgs).length); });
+  личные.forEach(function(р){ if (!все.some(function(x){ return x.id === р; })) все.push({ id:р, имя:имяРумы(р), эмодзи:эмодзиРумы(р), сохран:'да', описание:'личный чат', личный:true }); });
+  все.forEach(function(р){
+    const посл = последнийТекст(р.id);
+    const у = непрочитанные()[р.id] || 0;
+    const имя = р.личный ? р.имя : р.имя;
+    const пв = эл('span', { class:'превью' });
+    if (посл) {
+      const от = (Я && посл.от.deviceId === Я.deviceId) ? 'ты' : (посл.от.имя || '');
+      пв.appendChild(т(от ? от + ': ' : ''));
+      const б = эл('b', { text: посл.тип === 'голос' ? '🎙 голосовое' : (посл.тип === 'система' ? посл.текст : посл.текст) });
+      пв.appendChild(б);
+    } else пв.appendChild(т(р.личный ? 'напиши первым' : р.описание));
+    const метка = эл('span', { class:'мета' });
+    if (посл) метка.appendChild(эл('span', { class:'время', text:времяК(посл.ts) }));
+    if (у > 0) метка.appendChild(эл('span', { class:'бейдж', text:String(у) }));
+    const имяРяд = эл('span', { class:'имя' });
+    имяРяд.appendChild(т(имя));
+    if (р.сохран === 'всегда') имяРяд.appendChild(эл('span', { class:'замок', text:'🔒 сохраняется всегда' }));
+    холд.appendChild(эл('button', { class:'room', 'data-рума':р.id, onclick:function(){ открытьЧат(р.id); } }, [
+      эл('span', { class:'ав', text:р.эмодзи }),
+      эл('span', { class:'тело' }, [ имяРяд, пв ]),
+      метка
+    ]));
+  });
+}
+function человекРумы(румаИд){
+  if (румаИд.indexOf('dm-') !== 0) return null;
+  const хвост = румаИд.slice(3);
+  const ч = РЕЕСТР.find(function(x){ return x.id === хвост; });
+  if (ч) return ч;
+  if (хвост.indexOf('g-') === 0) {
+    const дв = хвост.slice(2);
+    if (Я && дв === Я.deviceId) return { имя:'заметки себе', эмодзи:'🗒' };
+    const у = известныеУстройства[дв];
+    if (у) return { имя:у.имя, эмодзи:у.эмодзи };
+    return { имя:'гость круга', эмодзи:'💬' };
+  }
+  return { имя:'личное', эмодзи:'💬' };
+}
+function имяРумы(румаИд){
+  const ч = человекРумы(румаИд);
+  if (ч) return (ч.эмодзи && румаИд.indexOf('dm-') === 0 ? ч.имя : ч.имя);
+  const р = РУМЫ.find(function(x){ return x.id === румаИд; });
+  return р ? р.имя : румаИд;
+}
+function эмодзиРумы(румаИд){
+  const ч = человекРумы(румаИд);
+  if (ч) return ч.эмодзи || '💬';
+  const р = РУМЫ.find(function(x){ return x.id === румаИд; });
+  return (р && р.эмодзи) || '💬';
+}
+
+function рендерЛюди(){
+  const сетка = $('людскаяСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    const метки = [];
+    if (ч.метка) метки.push(ч.метка);
+    if (ч.алиасы.length) метки.push('также: ' + ч.алиасы.join(', '));
+    const ряд = эл('div', { class:'ряд' });
+    ряд.appendChild(эл('button', { title:'написать', onclick:function(e){ e.stopPropagation(); открытьЧат(dmИд(ч)); } }, [ т('💬') ]));
+    if (!ч.система) {
+      ряд.appendChild(эл('button', { title:'аудиозвонок', onclick:function(e){ e.stopPropagation(); позвони(ч, 'аудио'); } }, [ т('📞') ]));
+      ряд.appendChild(эл('button', { title:'видеозвонок', onclick:function(e){ e.stopPropagation(); позвони(ч, 'видео'); } }, [ т('🎥') ]));
+    }
+    сетка.appendChild(эл('div', { class:'person', 'data-имя':ч.имя }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя }),
+      эл('small', { text:метки.join(' · ') || 'человек круга' }),
+      ряд
+    ]));
+  });
+}
+/* DM-рума: хостится у адресата. Писать Ивану → комната dm-<deviceId Ивана>. */
+function dmИд(ч){
+  const уст = устройствоЧеловека(ч);
+  if (уст) return 'dm-' + уст;
+  /* человек ещё не в сети / не известен его deviceId — рума по id человека */
+  return 'dm-' + ч.id;
+}
+function устройствоЧеловека(ч){ /* найдём deviceId по последнему сообщению от него или по presence */
+  const н = норм(ч.имя);
+  for (const д in известныеУстройства) {
+    if (норм(известныеУстройства[д].имя) === н) return д;
+  }
+  return null;
+}
+
+function рендерЗвонки(){
+  const сетка = $('звонСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    if (ч.система) return; /* RUVSON не звонит — он в тексте */
+    const ряд = эл('div', { class:'ряд' });
+    ряд.appendChild(эл('button', { title:'аудиозвонок', onclick:function(){ позвони(ч, 'аудио'); } }, [ т('📞') ]));
+    ряд.appendChild(эл('button', { title:'видеозвонок', onclick:function(){ позвони(ч, 'видео'); } }, [ т('🎥') ]));
+    сетка.appendChild(эл('div', { class:'person', 'data-имя':ч.имя }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя }),
+      эл('small', { text:ч.метка || (ч.алиасы.length ? ч.алиасы.join(', ') : 'человек круга') }),
+      ряд
+    ]));
+  });
+  const авт = лс(КЛЮЧ.авто, { вкл:true, текст:'Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.' });
+  $('гальоАвто').setAttribute('aria-checked', авт.вкл ? 'true' : 'false');
+  $('автоСтатус').textContent = авт.вкл
+    ? 'пропущенный звонок сам ответит: «' + (авт.текст || '…') + '»'
+    : 'автоответчик выключен — пропущенные останутся просто пропущенными';
+  $('автоТекст').value = авт.текст || '';
+  рендерЖурнал();
+}
+function рендерЖурнал(){
+  const х = $('журналЗвонков'); х.textContent = '';
+  const ж = лс(КЛЮЧ.журнал, []).slice(-24).reverse();
+  if (!ж.length) { х.appendChild(эл('p', { class:'note', text:'пока тихо — никто не звонил. Это честно.' })); return; }
+  ж.forEach(function(з){
+    const икон = з.статус === 'пропущен' ? '↙' : (з.статус === 'исходящий' ? '↗' : '↙');
+    х.appendChild(эл('div', { class:'звон-запись' + (з.статус === 'пропущен' ? ' пропущен' : '') }, [
+      эл('span', { class:'и', text:икон }),
+      эл('div', { style:'flex:1' }, [
+        эл('b', { text:(з.эмодзи || '👤') + ' ' + (з.имя || 'человек') }),
+        эл('small', { text:(з.режим === 'видео' ? 'видеозвонок · ' : 'аудиозвонок · ') + з.статус + (з.длительность ? ' · ' + з.длительность : '') + ' · ' + new Date(з.ts).toLocaleString('ru-RU') })
+      ])
+    ]));
+  });
+}
+function журналЗапиши(з){
+  const ж = лс(КЛЮЧ.журнал, []); ж.push(з);
+  if (ж.length > 100) ж.splice(0, ж.length - 100);
+  лсПиши(КЛЮЧ.журнал, ж); рендерЖурнал();
+}
+
+function рендерЯ(){
+  const х = $('яКто'); х.textContent = '';
+  if (!Я) { х.appendChild(эл('p', { class:'note', text:'личность не выбрана' })); return; }
+  const ч = человекПоИмени(Я.имя);
+  х.appendChild(эл('div', { style:'display:flex;gap:14px;align-items:center' }, [
+    эл('span', { class:'ав', text:Я.эмодзи, style:'width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:var(--panel2)' }),
+    эл('div', {}, [
+      эл('b', { text:Я.имя }),
+      эл('small', { class:'note', text:(Я.тип === 'свой' ? 'ты в круге · ' + (ч ? ч.метка || 'человек круга' : '') : 'гость круга') }),
+      эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId })
+    ]),
+    эл('span', { style:'flex:1' }),
+    эл('button', { class:'btn-install', onclick:открытьИдентОвер, text:'сменить' })
+  ]));
+  /* модули */
+  const м = $('модулиСсылки'); м.textContent = '';
+  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_15_ОРКЕСТРАТОР.html','🎵 ОРКЕСТРАТОР ·15'],['СИНГУЛЯР_16_СУФЛЁР.html','🎤 СУФЛЁР ·16'],['СИНГУЛЯР_17_ЗАЛ.html','🏛 ЗАЛ ·17'],['СИНГУЛЯР_18_СОБЫТИЕ.html','🎪 СОБЫТИЕ ·18'],['СИНГУЛЯР_19_ЧЕЛОВЕК.html','🙂 ЧЕЛОВЕК ·19'],['СИНГУЛЯР_20_ФОНЕТИКА.html','🔤 ФОНЕТИКА ·20'],['СИНГУЛЯР_21_ОБЩЕНИЕ.html','🗣 ОБЩЕНИЕ ·21'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+    м.appendChild(эл('a', { href:п[0], text:п[1] }));
+  });
+}
+function рендерЯЧип(){
+  const чип = $('яЧип');
+  if (Я) {
+    $('яЧипАв').textContent = Я.эмодзи;
+    $('яЧипИмя').textContent = Я.имя;
+    $('яЧипТип').textContent = Я.тип === 'свой' ? 'круг' : 'гость';
+  } else {
+    $('яЧипАв').textContent = '👤';
+    $('яЧипИмя').textContent = 'кто ты?';
+    $('яЧипТип').textContent = 'нажми и выбери';
+  }
+}
+function обновиБейджи(){
+  const у = непрочитанные(); let всего = 0;
+  Object.keys(у).forEach(function(к){ всего += у[к]; });
+  const б = $('бейджВсего');
+  б.hidden = всего === 0; б.textContent = String(всего);
+  рендерРумы();
+}
+</script>
+<script>
+'use strict';
+/* ───────────────────── 8 · ЧАТ ───────────────────── */
+let открытаяРума = null;
+function открытьЧат(румаИд){
+  if (!Я) { открытьИдентОвер(); return; }
+  открытаяРума = румаИд;
+  лсПиши(КЛЮЧ.послРума, румаИд);
+  $('чатАв').textContent = эмодзиРумы(румаИд);
+  $('чатИмя').textContent = имяРумы(румаИд);
+  const р = РУМЫ.find(function(x){ return x.id === румаИд; });
+  $('чатПодзаг').textContent = р
+    ? (р.сохран === 'всегда' ? '🔒 чат сохраняется всегда — стереть нельзя' : р.описание)
+    : 'личный чат · сохраняется на устройстве';
+  бейдж(румаИд, 0);
+  рендерЛента();
+  $('чатОвер').classList.add('on');
+  сетьВступи(румаИд);
+  setTimeout(function(){ $('полеТекст').focus(); }, 60);
+}
+function закрытьЧат(){ $('чатОвер').classList.remove('on'); открытаяРума = null; }
+
+function рендерЛента(){
+  const лента = $('лента'); лента.textContent = '';
+  const список = сообщения(открытаяРума);
+  let послДень = '';
+  список.forEach(function(м){
+    const д = деньК(м.ts);
+    if (д !== послДень) { лента.appendChild(эл('div', { class:'день', text:д })); послДень = д; }
+    лента.appendChild(узелСообщения(м));
+  });
+  лента.scrollTop = лента.scrollHeight;
+}
+function узелСообщения(м){
+  const моё = Я && м.от.deviceId === Я.deviceId;
+  if (м.тип === 'система') return эл('div', { class:'msg система' }, [
+    эл('span', { class:'текст', text:м.текст }),
+    эл('div', { class:'время', text:времяК(м.ts) })
+  ]);
+  const тела = [];
+  if (!моё && м.рума.indexOf('dm-') !== 0) тела.push(эл('div', { class:'автор', text:(м.от.эмодзи || '') + ' ' + (м.от.имя || 'гость') }));
+  if (м.тип === 'голос' && м.аудиоид) {
+    const ауд = эл('audio', { controls:'', preload:'metadata', 'data-аудио':м.аудиоид });
+    тела.push(ауд);
+    БАЗА.возьми(м.аудиоид).then(function(блоб){ if (блоб) ауд.src = URL.createObjectURL(блоб); }).catch(function(){});
+  } else {
+    тела.push(эл('div', { class:'текст', text:м.текст }));
+  }
+  тела.push(эл('div', { class:'время', text:времяК(м.ts) }));
+  return эл('div', { class:'msg' + (моё ? ' моё' : ''), 'data-id':м.id }, тела);
+}
+function отошлиСообщение(м, только_локально){
+  if (добавьСообщение(м)) {
+    if (открытаяРума === м.рума) { рендерЛента(); } else { бейдж(м.рума, 1); }
+    рендерРумы();
+  }
+  if (!только_локально) сетьРазошли(м.рума, 'msg', м);
+}
+function пошлиТекст(){
+  const поле = $('полеТекст');
+  const текст = поле.value.trim();
+  if (!текст || !Я || !открытаяРума) return;
+  const м = { id:идМ(), рума:открытаяРума, от:{ имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId }, текст:текст, ts:Date.now(), тип:'текст' };
+  поле.value = '';
+  отошлиСообщение(м);
+  if (открытаяРума.indexOf('dm-') === 0) смыслШина('dm.исходящее', текст);
+}
+$('btnПослать').addEventListener('click', пошлиТекст);
+$('полеТекст').addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); пошлиТекст(); } });
+function идМ(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9); }
+
+/* ───────────────── 9 · СЕТЬ: мост вкладок + P2P Nostr ───────────────── */
+/* Уровень 1 (всегда): BroadcastChannel — окна одного браузера, мгновенно.
+   Уровень 2 (https): trystero-nostr — устройства через публичные Nostr-релеи.
+   Конверт один и тот же: {шина, v, вид, от, …}. История рум добирается при
+   встрече устройств: hist-req → hist (последние 100). */
+const ЛОКАЛЬНАЯ_ШИНА = 'singular-krug-v1';
+let локШина = null;
+try { локШина = new BroadcastChannel(ЛОКАЛЬНАЯ_ШИНА); } catch (e) { локШина = null; }
+const известныеУстройства = {}; /* deviceId → {имя, эмодзи, ts} */
+let мойРегИд = null;
+
+локШина && локШина.addEventListener('message', function(e){ принялПакет(e.data); });
+window.addEventListener('storage', function(e){
+  if (e.key && e.key.indexOf(КЛЮЧ.msgs) === 0 && открытаяРума && e.key === КЛЮЧ.msgs + открытаяРума) рендерЛента();
+});
+function увиделУстройство(от){
+  if (!от || !от.deviceId) return;
+  if (Я && от.deviceId === Я.deviceId) return;
+  const ст = известныеУстройства[от.deviceId] || {};
+  известныеУстройства[от.deviceId] = { имя:от.имя || ст.имя, эмодзи:от.эмодзи || ст.эмодзи, ts:Date.now() };
+}
+function принялПакет(д){
+  if (!д || д.шина !== ЛОКАЛЬНАЯ_ШИНА || д.v !== 1) return;
+  if (Я && д.от && д.от.deviceId === Я.deviceId) return;
+  увиделУстройство(д.от);
+  switch (д.вид) {
+    case 'msg': принялСообщение(д.м); break;
+    case 'hist-req': if (д.рума) сетьРазошли(д.рума, 'hist', сообщения(д.рума).slice(-100)); break;
+    case 'hist':
+      (д.мс || []).forEach(function(м){ принялСообщение(м, true); });
+      if (открытаяРума === д.рума) рендерЛента();
+      рендерРумы();
+      break;
+    case 'кто': рендерОнлайн(); break;
+    case 'звоно': принялЗвонковыйСигнал(д.з); break;
+    case 'vhead': принялГолову(д.з); break;
+    case 'vbin': принялКусок(д.аудиоид, д.и, д.б); break;
+    case 'vtail': принялХвост(д.аудиоид); break;
+  }
+}
+function принялСообщение(м, тихо){
+  if (!м || !м.рума || !м.id) return;
+  if (м.тип !== 'голос' && typeof м.текст !== 'string') return;
+  if (м.текст && м.текст.length > 4000) return;
+  const ново = добавьСообщение(м);
+  if (!ново) return;
+  const мояРума = открытаяРума === м.рума;
+  if (мояРума) рендерЛента(); else бейдж(м.рума, 1);
+  рендерРумы();
+  if (!мояРума && !тихо && м.рума.indexOf('dm-') === 0) {
+    тост((м.от.эмодзи || '') + ' ' + (м.от.имя || '') + ': ' + (м.тип === 'голос' ? '🎙 голосовое' : String(м.текст).slice(0, 60)));
+    смыслШина('dm.входящее', м.текст);
+  }
+}
+
+/* — trystero слой — */
+const TR_APP = 'singular-krug-v1';
+const TR_ЗВОНКИ = 'krug-calls';
+let tr = null;
+let импортОбещан = null;
+function trysteroМодуль(){
+  if (импортОбещан) return импортОбещан;
+  импортОбещан = import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs')
+    .then(function(м){ tr = м; return м; })
+    .catch(function(e){ tr = null; throw e; });
+  return импортОбещан;
+}
+const активРумы = {};  /* румаИд → { комната, почта:{} } */
+let звонКомната = null;
+const звонПочта = {};
+
+function сетьЗапусти(){
+  рендерЯЧип(); рендерРумы(); рендерЛюди(); рендерЗвонки(); обновиБейджи();
+  if (!Я) { статусСвязи('личность не выбрана — сеть ждёт тебя', 'warn'); return; }
+  if (сетьСтартована) { мойРегИд = регИдМой(); сетьВступи(мойРегИд); маячокКто(); return; }
+  сетьСтартована = true;
+  мойРегИд = регИдМой();
+  маячокКто(); setInterval(маячокКто, 25000); setInterval(сверьОнлайн, 30000);
+  trysteroМодуль().then(function(){
+    звонКомната = tr.joinRoom({
+      appId: TR_APP,
+      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+    }, TR_ЗВОНКИ);
+    звонКомната.onPeerJoin = function(){ статусСвязи('сеть P2P жива: румы и звонки между устройствами идут через Nostr-релеи', 'ok'); };
+    ['звоно','кто'].forEach(function(канал){
+      const почта = звонКомната.makeAction(канал);
+      почта.onMessage = function(д){
+        if (канал === 'звоно') принялЗвонковыйСигнал(д && д.з ? д.з : д);
+        else { увиделУстройство(д); рендерОнлайн(); }
+      };
+      звонПочта[канал] = почта;
+    });
+    статусСвязи('сеть P2P готова · мост вкладок активен · ПАПА-ДОМ на связи', 'ok');
+    сетьВступи('dom');       /* семейная рума всегда на связи */
+    сетьВступи(мойРегИд);    /* своя личная рума — почта для сообщений тебе */
+    const посл = лс(КЛЮЧ.послРума, null);
+    if (посл && посл !== 'dom') сетьВступи(посл);
+  }).catch(function(){
+    статусСвязи('P2P недоступен здесь (file:// или без сети): работает мост вкладок одного браузера; между устройствами открой сайт по https (GitHub Pages)', 'warn');
+  });
+  маячокКто();
+}
+function регИдМой(){
+  if (!Я) return 'dm-g-x';
+  if (Я.тип === 'свой') {
+    const ч = человекПоИмени(Я.имя);
+    if (ч) return 'dm-' + ч.id;
+  }
+  return 'dm-g-' + Я.deviceId;
+}
+function dmИд(ч){ return 'dm-' + ч.id; } /* стабильная личная рума адресата */
+function маячокКто(){
+  if (!Я) return;
+  const кто = { имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId };
+  локШина && локШина.postMessage({ шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:'кто', от:кто });
+  звонПочта['кто'] && звонПочта['кто'].send(кто).catch(function(){});
+}
+function сверьОнлайн(){
+  const гран = Date.now() - 65000;
+  Object.keys(известныеУстройства).forEach(function(д){ if (известныеУстройства[д].ts < гран) delete известныеУстройства[д]; });
+  рендерОнлайн();
+}
+function рендерОнлайн(){
+  if (!открытаяРума) return;
+  const кто_то = Object.keys(известныеУстройства).length > 0;
+  $('чатОнлайн').classList.toggle('on', кто_то);
+  const р = РУМЫ.find(function(x){ return x.id === открытаяРума; });
+  const база = кто_то ? 'в сети: ' + Object.keys(известныеУстройства).length + ' · устройства видят друг друга' : 'жду устройства круга… история доберётся при встрече';
+  $('чатПодзаг').textContent = р && р.сохран === 'всегда' ? '🔒 ' + база + ' · сохраняется всегда' : база;
+}
+function статусСвязи(текст, класс){
+  const с = $('статусСвязи');
+  с.textContent = '· ' + текст;
+  с.className = 'status' + (класс ? ' ' + класс : '');
+}
+function сетьВступи(румаИд){
+  if (!tr || активРумы[румаИд]) return;
+  const идКомнаты = румаИд.indexOf('dm-') === 0 ? румаИд : ('r-' + румаИд);
+  let к;
+  try {
+    к = tr.joinRoom({
+      appId: TR_APP,
+      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+    }, идКомнаты);
+  } catch (e) { return; }
+  const узел = { комната:к, почта:{} };
+  активРумы[румаИд] = узел;
+  ['msg','hist-req','hist','vhead','vtail'].forEach(function(канал){
+    const почта = к.makeAction(канал);
+    почта.onMessage = function(д){ принялПакет(д); };
+    узел.почта[канал] = почта;
+  });
+  const бин = к.makeAction('vbin');
+  бин.onMessage = function(буфер){ разборКуска(буфер); };
+  узел.почта.vbin = бин;
+  к.onPeerJoin = function(){ сетьРазошли(румаИд, 'hist-req', null); };
+  сетьРазошли(румаИд, 'hist-req', null);
+}
+function конв(вид, румаИд, поля){
+  return Object.assign({ шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:вид, рума:румаИд,
+    от:{ имя:Я && Я.имя, эмодзи:Я && Я.эмодзи, deviceId:Я && Я.deviceId }, ts:Date.now() }, поля || {});
+}
+function сетьРазошли(румаИд, вид, нагрузка){
+  const п = вид === 'msg' ? конв(вид, румаИд, { м:нагрузка })
+    : вид === 'hist' ? конв(вид, румаИд, { мс:нагрузка })
+    : конв(вид, румаИд, null);
+  локШина && локШина.postMessage(п);
+  const а = активРумы[румаИд];
+  if (!а) return;
+  if (вид === 'msg' && а.почта.msg) а.почта.msg.send(п).catch(function(){});
+  if (вид === 'hist-req' && а.почта['hist-req']) а.почта['hist-req'].send(п).catch(function(){});
+  if (вид === 'hist' && а.почта.hist) а.почта.hist.send(п).catch(function(){});
+}
+/* голосовое между устройствами: голова → куски (20Б заголовок: 16Б id + 4Б №) → хвост */
+const КУСОК = 60 * 1024;
+function сетьГолос(румаИд, аудиоид, блоб, mime){
+  const н = Math.max(1, Math.ceil(блоб.size / КУСОК));
+  const голов = конв('vhead', румаИд, { з:{ аудиоид:аудиоид, mime:mime, n:н, от:{ имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId } } });
+  локШина && локШина.postMessage(голов);
+  const а = активРумы[румаИд];
+  а && а.почта.vhead && а.почта.vhead.send(голов).catch(function(){});
+  блоб.arrayBuffer().then(function(буфер){
+    const байты = new Uint8Array(буфер);
+    for (let i = 0; i < н; i++) {
+      const часть = байты.slice(i * КУСОК, (i + 1) * КУСОК);
+      локШина && локШина.postMessage({ шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:'vbin', аудиоид:аудиоид, и:i, б:часть, от:{ deviceId:Я.deviceId } });
+      if (а && а.почта.vbin) а.почта.vbin.send(пакетКуска(аудиоид, i, часть)).catch(function(){});
+    }
+    const хвост = конв('vtail', румаИд, { аудиоид:аудиоид });
+    локШина && локШина.postMessage(хвост);
+    а && а.почта.vtail && а.почта.vtail.send(хвост).catch(function(){});
+  });
+}
+function пакетКуска(аудиоид, и, данные){
+  const п = new Uint8Array(20 + данные.length);
+  const тхт = new TextEncoder().encode(String(аудиоид).slice(0, 16));
+  п.set(тхт, 0);
+  new DataView(п.buffer).setUint32(16, и);
+  п.set(данные, 20);
+  return п;
+}
+function разборКуска(буфер){
+  try {
+    const ви = буфер instanceof Uint8Array ? буфер : new Uint8Array(буфер);
+    if (viLen(ви) < 24) return;
+    const идБайты = ви.slice(0, 16);
+    let аудиоид = '';
+    for (let i = 0; i < 16 && идБайты[i]; i++) аудиоид += String.fromCharCode(идБайты[i]);
+    const и = new DataView(ви.buffer, ви.byteOffset).getUint32(16);
+    принялКусок(аудиоид, и, ви.slice(20));
+  } catch (e) {}
+}
+function viLen(ви){ return ви.length; }
+/* приём голосового (и из локальной шины) */
+const собираем = {};
+function принялГолову(з){
+  if (!з || !з.аудиоид) return;
+  if (Я && з.от && з.от.deviceId === Я.deviceId) return;
+  собираем[з.аудиоид] = { куски:[], н:з.n || 0, mime:з.mime || 'audio/webm', от:з.от, рума:з.рума || открытаяРума,
+    таймер:setTimeout(function(){ delete собираем[з.аудиоид]; }, 120000) };
+}
+function принялКусок(аудиоид, и, часть){
+  const сб = собираем[аудиоид];
+  if (!сб) return;
+  сб.куски[и] = часть;
+}
+function принялХвост(аудиоид){
+  const сб = собираем[аудиоид];
+  if (!сб) return;
+  clearTimeout(сб.таймер);
+  const всё = сб.куски.filter(Boolean);
+  delete собираем[аудиоид];
+  if (!всё.length || !сб.от) return;
+  const полный = new Blob(всё, { type:сб.mime });
+  БАЗА.положи(аудиоид, полный).catch(function(){});
+  const м = { id:аудиоид, рума:сб.рума, от:{ имя:сб.от.имя, эмодзи:сб.от.эмодзи, deviceId:сб.от.deviceId }, текст:'🎙 голосовое', ts:Date.now(), тип:'голос', аудиоид:аудиоид };
+  принялСообщение(м);
+}
+
+/* ───────────── 10 · СМЫСЛОВАЯ ШИНА (мост ·21/·22) ───────────── */
+let смыслШинаКанал = null;
+try { смыслШинаКанал = new BroadcastChannel('singular-meaning-bus-v1'); } catch (e) { смыслШинаКанал = null; }
+function смыслШина(событие, текст){
+  if (!смыслШинаКанал || !текст) return;
+  try {
+    смыслШинаКанал.postMessage({ meaning:'23.' + событие, text:String(текст).slice(0, 2000), channels:['room'], via:'·23 КРУГ', ts:Date.now() });
+    лсПиши('singular.meaningbus.v1', { meaning:'23.' + событие, text:String(текст).slice(0, 2000), via:'·23 КРУГ', ts:Date.now() });
+  } catch (e) {}
+}
+</script>
+<script>
+'use strict';
+/* ───────────── 11 · ЗВОНКИ: сигналинг + медиа-рума + рингтон ───────────── */
+/* Сигналинг — через всегда-живую комнату krug-calls (действие «звоно»).
+   Медиа — отдельная комната krug-call-<callId>: звонящий добавляет свои
+   дорожки сразу, принимающий — после «Принять». Аудио + видео.
+   Таймаут 30с → пропущен → автоответчик отвечает текстом. */
+const ЗВОН_ТАЙМАУТ = 30000;
+const ЗВОН_ГРЯДУЩИЙ = { state:'idle' }; /* {state:'входящий'|'исходящий'|'разговор', …} */
+let звонПоток = null;
+let звонКомнатаМедиа = null;
+let звонТаймер = null;
+let звонТик = null;
+let рингтСтоп = null;
+let вибрТаймер = null;
+
+function позвони(ч, режим){
+  if (!Я) { открытьИдентОвер(); return; }
+  if (ч.система) { тост('🤖 RUVSON — голос вселенной: он отвечает в чате, а не звонком'); return; }
+  if (ЗВОН_ГРЯДУЩИЙ.state !== 'idle') { тост('линия занята — сначала заверши текущий звонок'); return; }
+  if (!звонКомната || !звонПочта['звоно']) { тост('сеть P2P ещё поднимается — пару секунд и попробуй снова'); return; }
+  const callId = идМ();
+  const з = { callId:callId, режим:режим, кому:норм(ч.имя), комуИд:ч.id,
+    от:{ deviceId:Я.deviceId, имя:Я.имя, эмодзи:Я.эмодзи }, ts:Date.now() };
+  ЗВОН_ГРЯДУЩИЙ.state = 'исходящий';
+  ЗВОН_ГРЯДУЩИЙ.callId = callId;
+  ЗВОН_ГРЯДУЩИЙ.режим = режим;
+  ЗВОН_ГРЯДУЩИЙ.ч = ч;
+  звонОВерли('исходящий', ч, режим);
+  звонПочта['звоно'].send({ шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:'звоно', от:{ deviceId:Я.deviceId }, з:з }).catch(function(){});
+  локШина && локШина.postMessage({ шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:'звоно', от:{ deviceId:Я.deviceId }, з:з });
+  /* стартую медиа-руму сразу: мои дорожки ждут принимающего */
+  стартМедиаРумы(callId, режим, false).catch(function(ошибка){
+    тост('микрофон/камера недоступны: ' + ошибка);
+    отмениЗвонок('нет доступа к микрофону');
+  });
+  clearTimeout(звонТаймер);
+  звонТаймер = setTimeout(function(){
+    if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий') {
+      журналЗапиши({ имя:ч.имя, эмодзи:ч.эмодзи, режим:режим, статус:'не отвечает', ts:Date.now() });
+      завершитьЗвонок();
+      тост('📲 ' + ч.имя + ' не отвечает' + (автоВключён() ? ' — автоответчик предложит оставить голосовое' : ''));
+    }
+  }, ЗВОН_ТАЙМАУТ + 4000);
+}
+function отмениЗвонок(причина){
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий') {
+    сигналЗвонка({ callId:ЗВОН_ГРЯДУЩИЙ.callId, действие:'cancel', от:{ deviceId:Я.deviceId }, причина:причина || 'отменён' });
+    журналЗапиши({ имя:ЗВОН_ГРЯДУЩИЙ.ч.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.ч.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'отменён', ts:Date.now() });
+  }
+  завершитьЗвонок();
+}
+function сигналЗвонка(з){
+  const п = { шина:ЛОКАЛЬНАЯ_ШИНА, v:1, вид:'звоно', от:{ deviceId:Я && Я.deviceId }, з:з };
+  звонПочта['звоно'] && звонПочта['звоно'].send(п).catch(function(){});
+  локШина && локШина.postMessage(п);
+}
+function принялЗвонковыйСигнал(з){
+  if (!з || !з.callId) return;
+  if (Я && з.от && з.от.deviceId === Я.deviceId) return;
+  switch (з.действие || 'ring') {
+    case 'ring': {
+      /* это звонят мне? адресат: по deviceId (если известен) или по защищённому имени */
+      const мне = (з.комуИд && человекПоИмени(Я && Я.имя || '') && человекПоИмени(Я.имя).id === з.комуИд) ||
+                  (з.кому && Я && норм(Я.имя) === з.кому);
+      if (!мне || з.от.deviceId === deviceIdМой()) return;
+      if (ЗВОН_ГРЯДУЩИЙ.state !== 'idle') {
+        сигналЗвонка({ callId:з.callId, действие:'decline', от:{ deviceId:Я.deviceId }, причина:'занят' });
+        return;
+      }
+      ЗВОН_ГРЯДУЩИЙ.state = 'входящий';
+      ЗВОН_ГРЯДУЩИЙ.callId = з.callId;
+      ЗВОН_ГРЯДУЩИЙ.режим = з.режим;
+      ЗВОН_ГРЯДУЩИЙ.от = з.от;
+      звонОВерли('входящий', { имя:з.от.имя, эмодзи:з.от.эмодзи }, з.режим);
+      рингтонПусти();
+      clearTimeout(звонТаймер);
+      звонТаймер = setTimeout(function(){
+        if (ЗВОН_ГРЯДУЩИЙ.state === 'входящий') {
+          журналЗапиши({ имя:з.от.имя, эмодзи:з.от.эмодзи, режим:з.режим, статус:'пропущен', ts:Date.now() });
+          if (автоВключён()) {
+            сигналЗвонка({ callId:з.callId, действие:'decline', от:{ deviceId:Я.deviceId }, причина:'автоответчик', автоТекст:автоТекстМой() });
+            автоответКарточка(з);
+          } else {
+            сигналЗвонка({ callId:з.callId, действие:'decline', от:{ deviceId:Я.deviceId }, причина:'нет на месте' });
+          }
+          завершитьЗвонок();
+        }
+      }, ЗВОН_ТАЙМАУТ);
+      break;
+    }
+    case 'accept':
+      if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий' && ЗВОН_ГРЯДУЩИЙ.callId === з.callId) {
+        clearTimeout(звонТаймер);
+        ЗВОН_ГРЯДУЩИЙ.state = 'разговор';
+        ЗВОН_ГРЯДУЩИЙ.ч = ЗВОН_ГРЯДУЩИЙ.ч || { имя:з.от && з.от.имя, эмодзи:з.от && з.от.эмодзи };
+        звонОВерли('разговор', ЗВОН_ГРЯДУЩИЙ.ч, ЗВОН_ГРЯДУЩИЙ.режим);
+        журналЗапиши({ имя:ЗВОН_ГРЯДУЩИЙ.ч.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.ч.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'отвечен', ts:Date.now() });
+        стартТик();
+      }
+      break;
+    case 'decline':
+      if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий' && ЗВОН_ГРЯДУЩИЙ.callId === з.callId) {
+        clearTimeout(звонТаймер);
+        const имя = ЗВОН_ГРЯДУЩИЙ.ч && ЗВОН_ГРЯДУЩИЙ.ч.имя;
+        const эмодзи = ЗВОН_ГРЯДУЩИЙ.ч && ЗВОН_ГРЯДУЩИЙ.ч.эмодзи;
+        журналЗапиши({ имя:имя, эмодзи:эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим,
+          статус:з.причина === 'автоответчик' ? 'автоответчик' : 'отклонён', ts:Date.now() });
+        завершитьЗвонок();
+        if (з.причина === 'автоответчик') {
+          тост('🤖 автоответчик ' + эмодзи + ' ' + имя + ': ' + (з.автоТекст || 'оставь голосовое'));
+          if (имя) автоответКарточка({ от:з.от, автоТекст:з.автоТекст, имя:имя, эмодзи:эмодзи });
+        } else {
+          тост((эмодзи || '') + ' ' + (имя || 'человек') + ' отклонил звонок');
+        }
+      }
+      break;
+    case 'cancel':
+      if ((ЗВОН_ГРЯДУЩИЙ.state === 'входящий' || ЗВОН_ГРЯДУЩИЙ.state === 'разговор') && ЗВОН_ГРЯДУЩИЙ.callId === з.callId) {
+        if (ЗВОН_ГРЯДУЩИЙ.state === 'входящий') журналЗапиши({ имя:ЗВОН_ГРЯДУЩИЙ.от && ЗВОН_ГРЯДУЩИЙ.от.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.от && ЗВОН_ГРЯДУЩИЙ.от.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'сорвался', ts:Date.now() });
+        тост('звонок отменили на той стороне');
+        завершитьЗвонок();
+      }
+      break;
+    case 'bye':
+      if (ЗВОН_ГРЯДУЩИЙ.callId === з.callId && ЗВОН_ГРЯДУЩИЙ.state === 'разговор') {
+        тост('на той стороне положили трубку');
+        завершитьЗвонок();
+      }
+      break;
+  }
+}
+function автоВключён(){ const а = лс(КЛЮЧ.авто, null); return !а || а.вкл !== false; }
+function автоТекстМой(){
+  const а = лс(КЛЮЧ.авто, null);
+  return (а && а.текст) || 'Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.';
+}
+function автоответКарточка(з){
+  /* системная карточка в личной руме звонившего: автоответчик + приглашение голосового */
+  const ч = человекПоИмени((з.от && з.от.имя) || з.имя || '');
+  const румаИд = ч ? dmИд(ч) : (з.от && з.от.deviceId ? 'dm-g-' + з.от.deviceId : null);
+  if (!румаИд) return;
+  const м = { id:идМ(), рума:румаИд,
+    от:{ имя:'🤖 Автоответчик', эмодзи:'🤖', deviceId:(з.от && з.от.deviceId) || 'auto' },
+    текст:'🤖 ' + ((з.от && з.от.имя) || з.имя || '') + ': ' + (з.автоТекст || автоТекстМой()),
+    ts:Date.now(), тип:'система' };
+  добавьСообщение(м); рендерРумы();
+  if (открытаяРума === румаИд) рендерЛента(); else бейдж(румаИд, 1);
+}
+function приняЗвонок(){
+  if (ЗВОН_ГРЯДУЩИЙ.state !== 'входящий') return;
+  рингтонСтоп();
+  const callId = ЗВОН_ГРЯДУЩИЙ.callId;
+  стартМедиаРумы(callId, ЗВОН_ГРЯДУЩИЙ.режим, true).then(function(){
+    сигналЗвонка({ callId:callId, действие:'accept', от:{ deviceId:Я.deviceId, имя:Я.имя, эмодзи:Я.эмодзи } });
+    ЗВОН_ГРЯДУЩИЙ.state = 'разговор';
+    звонОВерли('разговор', { имя:ЗВОН_ГРЯДУЩИЙ.от.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.от.эмодзи }, ЗВОН_ГРЯДУЩИЙ.режим);
+    журналЗапиши({ имя:ЗВОН_ГРЯДУЩИЙ.от.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.от.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'входящий', ts:Date.now() });
+    стартТик();
+  }).catch(function(ошибка){ тост('микрофон/камера недоступны: ' + ошибка); отклониЗвонок('нет доступа к микрофону'); });
+}
+function отклониЗвонок(причина){
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'входящий') {
+    журналЗапиши({ имя:ЗВОН_ГРЯДУЩИЙ.от.имя, эмодзи:ЗВОН_ГРЯДУЩИЙ.от.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'отклонён', ts:Date.now() });
+    сигналЗвонка({ callId:ЗВОН_ГРЯДУЩИЙ.callId, действие:'decline', от:{ deviceId:Я.deviceId, имя:Я.имя, эмодзи:Я.эмодзи }, причина:причина || 'отклонён' });
+  }
+  завершитьЗвонок();
+}
+function завершиЗвонокКнопкой(){
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий') { отмениЗвонок(); return; }
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'разговор') сигналЗвонка({ callId:ЗВОН_ГРЯДУЩИЙ.callId, действие:'bye', от:{ deviceId:Я.deviceId } });
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'разговор') {
+    const ч = ЗВОН_ГРЯДУЩИЙ.ч || {};
+    журналЗапиши({ имя:ч.имя, эмодзи:ч.эмодзи, режим:ЗВОН_ГРЯДУЩИЙ.режим, статус:'завершён · ' + звонДлительность(), ts:Date.now() });
+  }
+  завершитьЗвонок();
+}
+$('звонПринять').addEventListener('click', приняЗвонок);
+$('звонОтклонить').addEventListener('click', function(){
+  if (ЗВОН_ГРЯДУЩИЙ.state === 'исходящий') { отмениЗвонок(); return; }
+  отклониЗвонок();
+});
+$('звонЗавершить').addEventListener('click', завершиЗвонокКнопкой);
+
+function стартМедиаРумы(callId, режим, принимаю){
+  return new Promise(function(res, rej){
+    if (!tr) { rej('P2P-сеть недоступна — открой сайт по https (GitHub Pages)'); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { rej('браузер не даёт доступ к камере/микрофону'); return; }
+    navigator.mediaDevices.getUserMedia({ audio:true, video: режим === 'видео' }).then(function(поток){
+      звонПоток = поток;
+      $('видМой').srcObject = поток;
+      const комната = tr.joinRoom({
+        appId: TR_APP,
+        relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+        rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
+      }, 'krug-call-' + callId);
+      звонКомнатаМедиа = { комната:комната, потоки:0 };
+      try { комната.addStream(поток).catch(function(){}); } catch (e) {}
+      комната.onPeerStream = function(стрим){
+        $('видУдалённый').srcObject = стрим;
+        $('видУдалённый').style.display = '';
+        звонКомнатаМедиа.потоки++;
+        $('звонСостояние').textContent = 'связь прямая · P2P';
+      };
+      комната.onPeerLeave = function(){ /* вторая сторона вышла — ждём bye */ };
+      res();
+    }).catch(function(e){ rej(переведиМедиаОшибку(e)); });
+  });
+}
+function переведиМедиаОшибку(e){
+  const н = (e && e.name) || '';
+  if (н === 'NotAllowedError') return 'доступ запрещён — разреши камеру/микрофон в браузере';
+  if (н === 'NotFoundError') return 'устройство не найдено';
+  if (н === 'NotReadableError') return 'камера/микрофон заняты другой программой';
+  return 'не удалось получить доступ';
+}
+function завершитьЗвонок(){
+  clearTimeout(звонТаймер); clearInterval(звонТик); звонТик = null;
+  рингтонСтоп();
+  if (звонПоток) { звонПоток.getTracks().forEach(function(тр){ тр.stop(); }); звонПоток = null; }
+  $('видМой').srcObject = null;
+  $('видУдалённый').srcObject = null;
+  звонКомнатаМедиа = null;
+  ЗВОН_ГРЯДУЩИЙ.state = 'idle';
+  $('звонОвер').classList.remove('on');
+  рендерЗвонки();
+}
+function звонОВерли(состояние, ч, режим){
+  const о = $('звонОвер');
+  $('звонАв').textContent = (ч && ч.эмодзи) || '👤';
+  $('звонИмя').textContent = (ч && ч.имя) || 'человек';
+  о.classList.add('on');
+  о.classList.toggle('звонит', состояние === 'входящий' || состояние === 'исходящий');
+  $('звонПринять').hidden = состояние !== 'входящий';
+  $('звонОтклонить').hidden = состояние === 'разговор';
+  $('звонОтклонить').textContent = состояние === 'входящий' ? '✕' : '✕';
+  $('звонЗавершить').hidden = состояние !== 'разговор' && состояние !== 'исходящий';
+  $('видУдалённый').style.display = состояние === 'разговор' && режим === 'видео' ? '' : 'none';
+  $('звонКамера').style.display = режим === 'видео' ? '' : 'none';
+  const сл = { 'входящий':'входящий звонок · ' + (режим === 'видео' ? 'видео' : 'аудио'), 'исходящий':'звоню…', 'разговор':'разговор · 0:00' }[состояние];
+  $('звонСостояние').textContent = сл;
+  if (состояние !== 'разговор') $('видМой').srcObject = null;
+}
+function стартТик(){
+  const т0 = Date.now();
+  clearInterval(звонТик);
+  звонТик = setInterval(function(){ $('звонСостояние').textContent = 'разговор · ' + звонДлительность(т0); }, 1000);
+}
+function звонДлительность(т0){
+  const сек = Math.floor((Date.now() - (т0 || Date.now() - 1)) / 1000);
+  return Math.floor(сек / 60) + ':' + ('0' + (сек % 60)).slice(-2);
+}
+/* микрофон/камера в разговоре */
+$('звонМикр').addEventListener('click', function(){
+  if (!звонПоток) return;
+  const тр = звонПоток.getAudioTracks()[0];
+  if (тр) { тр.enabled = !тр.enabled; this.classList.toggle('выкл', !тр.enabled); }
+});
+$('звонКамера').addEventListener('click', function(){
+  if (!звонПоток) return;
+  const тр = звонПоток.getVideoTracks()[0];
+  if (тр) { тр.enabled = !тр.enabled; this.classList.toggle('выкл', !тр.enabled); }
+});
+/* рингтон: синтез WebAudio — без внешних файлов */
+function рингтонПусти(){
+  try {
+    const АК = window.AudioContext || window.webkitAudioContext;
+    if (!АК) return;
+    const акт = new АК();
+    const гейн = акт.createGain(); гейн.gain.value = 0.0001; гейн.connect(акт.destination);
+    let жив = true;
+    function цикл(момент){
+      if (!жив) return;
+      [880, 660].forEach(function(частота, и){
+        const осц = акт.createOscillator(); осц.type = 'sine'; осц.frequency.value = частота;
+        const г = акт.createGain();
+        осц.connect(г); г.connect(гейн);
+        осц.start(момент + и * 0.18); осц.stop(момент + и * 0.18 + 0.16);
+      });
+      setTimeout(function(){ if (жив) цикл(акт.currentTime + 0.5); }, 900);
+    }
+    цикл(акт.currentTime + 0.05);
+    гейн.gain.setTargetAtTime(0.22, акт.currentTime + 0.05, 0.05);
+    рингтСтоп = function(){ жив = false; try { акт.close(); } catch (e) {} };
+    if (navigator.vibrate) {
+      const вибр = function(){ navigator.vibrate([400, 250, 400]); вибрТаймер = setTimeout(вибр, 1400); };
+      вибр();
+    }
+  } catch (e) {}
+}
+function рингтонСтоп(){
+  рингтСтоп && рингтСтоп(); рингтСтоп = null;
+  clearTimeout(вибрТаймер); navigator.vibrate && navigator.vibrate(0);
+}
+
+/* ───────────── 12 · АВТООТВЕТЧИК: настройки ───────────── */
+$('гальоАвто').addEventListener('click', function(){
+  const а = лс(КЛЮЧ.авто, { вкл:true, текст:$('автоТекст').value });
+  а.вкл = !(а.вкл !== false);
+  а.текст = $('автоТекст').value || а.текст;
+  лсПиши(КЛЮЧ.авто, а);
+  рендерЗвонки();
+  тост(а.вкл ? '🤖 автоответчик включён' : 'автоответчик выключен');
+});
+$('автоТекст').addEventListener('change', function(){
+  const а = лс(КЛЮЧ.авто, { вкл:true, текст:'' });
+  а.текст = this.value; лсПиши(КЛЮЧ.авто, а);
+});
+
+/* ───────────── 13 · ГОЛОСОВЫЕ СООБЩЕНИЯ (MediaRecorder) ───────────── */
+let рекордер = null;
+let рекордКуски = [];
+let рекордСтарт = 0;
+let рекордТик = null;
+let сетьСтартована = false;
+$('btnМикр').addEventListener('click', function(){
+  if (рекордер) return; /* запись уже идёт */
+  if (!открытаяРума) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { тост('микрофон недоступен в этом браузере'); return; }
+  if (!window.MediaRecorder) { тост('MediaRecorder не поддерживается — гость может писать текстом'); return; }
+  navigator.mediaDevices.getUserMedia({ audio:true }).then(function(поток){
+    рекордКуски = [];
+    рекордер = new MediaRecorder(поток);
+    рекордер.ondataavailable = function(e){ if (e.data && e.data.size) рекордКуски.push(e.data); };
+    рекордер.onstop = function(){
+      поток.getTracks().forEach(function(тр){ тр.stop(); });
+      clearInterval(рекордТик);
+      const длительность = Date.now() - рекордСтарт;
+      $('recБар').hidden = true; $('композер').style.display = '';
+      if (рекордОтменён || рекордКуски.length === 0 || длительность < 400) { рекордер = null; рекордОтменён = false; return; }
+      const блоб = new Blob(рекордКуски, { type:рекордер.mimeType || 'audio/webm' });
+      рекордер = null;
+      отправьГолосовое(блоб);
+    };
+    рекордСтарт = Date.now();
+    рекордер.start(250);
+    $('композер').style.display = 'none';
+    $('recБар').hidden = false;
+    рекордТик = setInterval(function(){
+      const сек = Math.floor((Date.now() - рекордСтарт) / 1000);
+      $('recВремя').textContent = Math.floor(сек / 60) + ':' + ('0' + сек % 60).slice(-2);
+      if (сек >= 120) рекордер && рекордер.state === 'recording' && рекордер.stop();
+    }, 250);
+  }).catch(function(e){ тост('микрофон: ' + переведиМедиаОшибку(e)); });
+});
+let рекордОтменён = false;
+$('recОтмена').addEventListener('click', function(){ рекордОтменён = true; рекордер && рекордер.state === 'recording' && рекордер.stop(); });
+$('recСтоп').addEventListener('click', function(){ рекордОтменён = false; рекордер && рекордер.state === 'recording' && рекордер.stop(); });
+function отправьГолосовое(блоб){
+  const аудиоид = идМ();
+  БАЗА.положи(аудиоид, блоб).catch(function(){});
+  const м = { id:аудиоид, рума:открытаяРума, от:{ имя:Я.имя, эмодзи:Я.эмодзи, deviceId:Я.deviceId }, текст:'🎙 голосовое', ts:Date.now(), тип:'голос', аудиоид:аудиоид };
+  добавьСообщение(м); рендерЛента(); рендерРумы();
+  сетьГолос(открытаяРума, аудиоид, блоб, блоб.type);
+}
+
+/* ───────────── 14 · ЛИЧНОСТЬ: «КТО ТЫ» ───────────── */
+let выбранный = null;
+function открытьИдентОвер(){
+  $('идентОвер').classList.add('on');
+  рендерИдентСетку();
+}
+$('яЧип').addEventListener('click', открытьИдентОвер);
+function рендерИдентСетку(){
+  const сетка = $('идентСетка'); сетка.textContent = '';
+  РЕЕСТР.forEach(function(ч){
+    const к = эл('button', { class:'идент-карт', 'aria-pressed': String(выбранный && выбранный.id === ч.id) }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:ч.имя }),
+      эл('small', { text:ч.алиасы.length ? ч.алиасы[0] : (ч.метка || '') })
+    ]);
+    к.addEventListener('click', function(){
+      выбранный = ч; $('идентВвод').value = ''; рендерИдентСетку();
+      $('идентСтатус').textContent = 'выбран: ' + ч.имя + ' ' + ч.эмодзи;
+      $('идентСтатус').className = 'status ok';
+    });
+    сетка.appendChild(к);
+  });
+}
+$('идентВвод').addEventListener('input', function(){
+  выбранный = null;
+  рендерИдентСетку();
+  const в = this.value.trim();
+  if (!в) { $('идентСтатус').textContent = ''; return; }
+  const рез = проверьИмя(в);
+  if (рез.ok) {
+    $('идентСтатус').textContent = 'имя свободно: ' + рез.имя;
+    $('идентСтатус').className = 'status ok';
+  } else {
+    $('идентСтатус').textContent = '⛔ ' + рез.причина + '. Напиши нейтральное слово ПЕРЕД именем: «ГОСТЬ ' + в.trim().toUpperCase() + '» или «СОСЕД ' + в.trim().toUpperCase() + '»';
+    $('идентСтатус').className = 'status err';
+  }
+});
+$('идентГотово').addEventListener('click', function(){
+  if (выбранный) {
+    назначьЛичность({ id:выбранный.id, имя:выбранный.имя, эмодзи:выбранный.эмодзи, тип:'свой', deviceId:deviceIdНовый(), метка:выбранный.метка });
+    $('идентОвер').classList.remove('on');
+    тост('Привет, ' + выбранный.имя + ' ' + выбранный.эмодзи);
+    return;
+  }
+  const в = $('идентВвод').value.trim();
+  const рез = проверьИмя(в);
+  if (!рез.ok) {
+    $('идентСтатус').textContent = '⛔ ' + рез.причина + ' — короткие имена круга защищены. Вариант: «ГОСТЬ ' + в.trim().toUpperCase() + '»';
+    $('идентСтатус').className = 'status err';
+    return;
+  }
+  const ГАММА_ЭМОДЗИ = ['🙂','🌊','🍀','⭐','🎈','🧩','🔥','🍉','🛸','🍩'];
+  const эмодзи = ГАММА_ЭМОДЗИ[Math.abs(хешСтроки(рез.имя)) % ГАММА_ЭМОДЗИ.length];
+  назначьЛичность({ имя:рез.имя, эмодзи:эмодзи, тип:'гость', deviceId:deviceIdНовый() });
+  $('идентОвер').classList.remove('on');
+  тост('Добро пожаловать, ' + рез.имя);
+});
+function deviceIdНовый(){
+  return 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+function хешСтроки(с){
+  let х = 0;
+  for (let i = 0; i < с.length; i++) { х = (х * 31 + с.charCodeAt(i)) | 0; }
+  return х;
+}
+</script>
+<script>
+'use strict';
+/* ───────────── 15 · PWA: установка ───────────── */
+let отложенныйПромпт = null;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  отложенныйПромпт = e;
+  $('btnInstall').hidden = false;
+  $('btnInstall2').hidden = false;
+});
+function попробуйУстановить(){
+  if (!отложенныйПромпт) {
+    /* нет промпта: iOS или уже установлено — честно ведём к инструкции */
+    const иос = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    тост(иос ? 'В Safari: «Поделиться» → «На экран «Домой»»' : 'Твой браузер предложит установку в меню — см. подсказки ниже');
+    откройВкладку('me');
+    return;
+  }
+  отложенныйПромпт.prompt();
+  отложенныйПромпт.userChoice.then(function(){ отложенныйПромпт = null; $('btnInstall').hidden = true; $('btnInstall2').hidden = true; });
+}
+$('btnInstall').addEventListener('click', попробуйУстановить);
+$('btnInstall2').addEventListener('click', попробуйУстановить);
+window.addEventListener('appinstalled', function(){ тост('🎤 СИНГУЛЯР установлен — открой с рабочего стола'); });
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  navigator.serviceWorker.register('sw15.js').catch(function(){ /* офлайн-кеш появится при следующем визите */ });
+}
+
+/* ───────────── 16 · ИНИЦИАЛИЗАЦИЯ ───────────── */
+рендерЯЧип(); рендерРумы(); рендерЛюди(); рендерЗвонки(); рендерЯ(); обновиБейджи();
+сетьЗапусти();
+if (!Я) открытьИдентОвер();
+window.addEventListener('keydown', function(e){
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if ($('чатОвер').classList.contains('on') || $('идентОвер').classList.contains('on') || $('звонОвер').classList.contains('on')) {
+    if (e.key === 'Escape') { if ($('чатОвер').classList.contains('on')) закрытьЧат(); }
+    return;
+  }
+  if (e.key === '1') откройВкладку('rooms');
+  if (e.key === '2') откройВкладку('calls');
+  if (e.key === '3') откройВкладку('me');
+});
+
+/* ───────────── 17 · ТЕСТОВЫЕ КРЮКИ (только чтение) ───────────── */
+window.K23 = {
+  версия: '1.0.0',
+  реестр: РЕЕСТР,
+  румы: РУМЫ,
+  защищённые: function(){ return Array.from(ЗАЩИЩЁННЫЕ); },
+  норм: норм,
+  проверьИмя: проверьИмя,
+  собериСПрефиксом: собериСПрефиксом,
+  кто: function(){ return Я; },
+  румаИдМой: регИдМой,
+  сообщения: сообщения,
+  непрочитанные: непрочитанные,
+  журнал: function(){ return лс(КЛЮЧ.журнал, []); },
+  сеть: function(){ return { trystero: !!tr, звонКомната: !!звонКомната, румы: Object.keys(активРумы), известные: Object.keys(известныеУстройства).length }; },
+  звон: function(){ return { state: ЗВОН_ГРЯДУЩИЙ.state }; },
+  добавьЛокально: function(румаИд, текст){
+    const м = { id:идМ(), рума:румаИд, от:{ имя:Я ? Я.имя : 'тест', эмодзи:Я ? Я.эмодзи : '🧪', deviceId:Я ? Я.deviceId : 'тест' }, текст:текст, ts:Date.now(), тип:'текст' };
+    добавьСообщение(м); if (открытаяРума === румаИд) рендерЛента(); рендерРумы();
+    return м.id;
+  }
+};
+</script>
+</body>
+</html>
