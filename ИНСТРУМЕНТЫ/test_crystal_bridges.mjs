@@ -285,3 +285,78 @@ test('memory.decide: schema-легальность нового события',
   /* ядро при этом не тронуто */
   assert.equal(К.CRYSTAL.version, '1.0.0');
 });
+
+/* ═════════ v1.2.0: верификация личности (hall.join) и ротация (hall.epoch) ═════════ */
+
+test('hall.join: форма события — публичный JWK + подпись, без секретов', () => {
+  const jwk = { kty: 'EC', crv: 'P-256', x: 'X', y: 'Y' };
+  const { event, вложение } = Б.hallJoinEvent(
+    { id: 'ид-77', имя: 'ПАША', публичныйJWK: jwk },
+    { room: 'P7J97', эпоха: 2, подпись: 'ПОДПИСЬ' });
+  assert.equal(вложение.kind, 'hall.join');
+  assert.equal(вложение.room, 'P7J97');
+  assert.equal(вложение.эпоха, 2);
+  assert.deepEqual(вложение.участник, { id: 'ид-77', имя: 'ПАША' });
+  assert.equal(вложение.публичныйJWK, jwk, 'наружу только публичный JWK');
+  assert.equal(вложение.подписана, true);
+  assert.equal(event.from, '·19');
+  assert.equal(event.conversation, 'shared.activity');
+  assert.equal(event.idempotencyKey, 'hall-join:P7J97:ид-77:2');
+  assert.ok(event.semantic.text.includes('сошлась'), 'честный текст при подписи');
+  assert.ok(event.id.length >= 8);
+  assert.equal(event.policy.retention, 'persistent');
+  /* приватных ключей в событии нет и быть не должно:
+     JWK не несёт приватную компоненту d, слов privateKey/d в полях нет */
+  assert.equal(вложение.публичныйJWK.d, undefined, 'в JWK нет приватной компоненты d');
+  const сыр = JSON.stringify(event);
+  assert.ok(!сыр.includes('privateKey'), 'не утекает privateKey');
+});
+
+test('hall.join: без подписи — честный «без подписи», ключ идемпотентности стабилен', () => {
+  const а = Б.hallJoinEvent({ id: 'ид-1', имя: 'Гость' }, { room: 'ZZ11', эпоха: 1 });
+  const б = Б.hallJoinEvent({ id: 'ид-1', имя: 'Гость' }, { room: 'ZZ11', эпоха: 1 });
+  assert.equal(а.вложение.подписана, false);
+  assert.ok(а.event.semantic.text.includes('без подписи'));
+  assert.equal(а.event.idempotencyKey, б.event.idempotencyKey, 'повторный вход в ту же эпоху = дедуп');
+  const в = Б.hallJoinEvent({ id: 'ид-1', имя: 'Гость' }, { room: 'ZZ11', эпоха: 2 });
+  assert.notEqual(а.event.idempotencyKey, в.event.idempotencyKey, 'новая эпоха = честно новое событие');
+});
+
+test('hall.epoch: открытое событие — метаданные не секрет, одна эпоха = одно объявление', () => {
+  const а = Б.hallEpochEvent({ room: 'P7J97', эпоха: 3, причина: 'смена фразы (rekey)', инициатор: { id: 'ид-1', имя: 'ПАША' }, подпись: 'S' });
+  assert.equal(а.вложение.kind, 'hall.epoch');
+  assert.equal(а.вложение.эпоха, 3);
+  assert.equal(а.вложение.подписана, true);
+  assert.equal(а.event.from, '·22');
+  assert.equal(а.event.idempotencyKey, 'hall-epoch:P7J97:3');
+  const б = Б.hallEpochEvent({ room: 'P7J97', эпоха: 3, причина: 'повтор' });
+  assert.equal(а.event.idempotencyKey, б.event.idempotencyKey, 'переобъявление эпохи = дедуп');
+  const в = Б.hallEpochEvent({ room: 'P7J97', эпоха: 4, причина: 'ротация' });
+  assert.notEqual(а.event.idempotencyKey, в.event.idempotencyKey);
+  assert.ok(а.event.semantic.text.includes('эпоха 3'));
+  assert.ok(в.вложение.подписана === false, 'без подписи — честно');
+});
+
+test('hall.join/epoch: публикация через мост и schema-легальность', async () => {
+  const ж = фальшЖурнал();
+  const мост = Б.makeBridge({ источник: 'тест-v2', журнал: ж });
+  await мост.готовь;
+  const j = Б.hallJoinEvent({ id: 'ид-9', имя: 'Гость', публичныйJWK: { kty: 'EC' } }, { room: 'ZZ11', эпоха: 1, подпись: 'S1' });
+  const рj = await мост.опубликуй(j.event);
+  assert.ok(рj.ok && рj.reason === 'PUBLISHED');
+  const рj2 = await мост.опубликуй(j.event);
+  assert.ok(!рj2.ok && рj2.reason === 'DUPLICATE', 'дедуп работает и здесь');
+  const э = Б.hallEpochEvent({ room: 'ZZ11', эпоха: 2, причина: 'ротация' });
+  const рэ = await мост.опубликуй(э.event);
+  assert.ok(рэ.ok);
+  const все = await мост.события('shared.activity');
+  assert.equal(все.length, 2);
+  const схема = JSON.parse(fs.readFileSync(path.join(КОРЕНЬ, 'БИБЛИОТЕКИ/кристалл/semantic-event.schema.json'), 'utf-8'));
+  for (const событие of все) {
+    for (const поле of схема.required) assert.ok(поле in событие, 'нет required-поля ' + поле);
+    assert.equal(событие.type, схема.properties.type.const);
+    assert.ok(событие.id.length >= 8);
+  }
+  /* ядро по-прежнему не тронуто */
+  assert.equal(К.CRYSTAL.version, '1.0.0');
+});

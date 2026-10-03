@@ -66,9 +66,32 @@ with sync_playwright() as p:
     ок('личности ·19 нет — честный статус', 'личность ·19 на устройстве не найдена' in A.text_content('#stName'))
     A.fill('#inName', 'Алиса')
 
+    print('— V1.22: ЛИЧНОСТЬ ·19 ДЛЯ ВЕРИФИКАЦИИ')
+    # личность создаётся ровно так, как её создаёт ·19 ЧЕЛОВЕК:
+    # ECDSA P-256 non-extractable в IndexedDB (singulyar-human-v1, kv 'личность')
+    ид19 = A.evaluate("""async () => {
+      const пара = await crypto.subtle.generateKey({name:'ECDSA', namedCurve:'P-256', hash:'SHA-256'}, false, ['sign','verify']);
+      const pub = await crypto.subtle.exportKey('jwk', пара.publicKey);
+      const л = { id: crypto.randomUUID(), имя: 'Алиса·19', создана: Date.now(), приватный: пара.privateKey, публичныйJWK: pub };
+      await new Promise((res, rej) => {
+        const rq = indexedDB.open('singulyar-human-v1', 1);
+        rq.onupgradeneeded = () => { if (!rq.result.objectStoreNames.contains('kv')) rq.result.createObjectStore('kv'); };
+        rq.onerror = () => rej(rq.error);
+        rq.onsuccess = () => {
+          const б = rq.result; const т = б.transaction('kv', 'readwrite');
+          т.objectStore('kv').put(л, 'личность');
+          т.oncomplete = () => { б.close(); res(); };
+          т.onerror = () => rej(т.error);
+        };
+      });
+      return л.id;
+    }""")
+    ок('личность ·19 создана на устройстве (как создаёт ·19)', bool(ид19))
+
     print('— КАНАЛ МЕЖДУ ОКНАМИ: ТЕКСТ')
     A.fill('#inCode', КОД); A.click('#btnOpen')
     ок('канал открыт', 'Канал открыт' in A.text_content('#stZal'))
+    ок('v1.22: ротация честно недоступна, пока крипта выкл', A.locator('#btnEpo').is_disabled() and A.locator('#btnWipe').is_disabled())
     B = ctx.new_page()
     B.on('pageerror', lambda e: ошибки.append('B: ' + str(e)))
     B.goto(БАЗА + '/СИНГУЛЯР_22_СВЯЗЬ.html')
@@ -84,6 +107,15 @@ with sync_playwright() as p:
     A.wait_for_function("document.getElementById('journal').textContent.includes('привет с юга')", timeout=5000)
     ок('ответ дошёл из B в A', True)
     ок('своё сообщение B показал себе в субтитрах', 'ты: привет с юга' in B.text_content('#subNow'))
+
+    print('— V1.22: ВЕРИФИКАЦИЯ ПОДПИСАННОГО ПРИВЕТСТВИЯ')
+    A.wait_for_function("document.getElementById('stVer').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    ок('v1.22: подпись ·19 СОШЛАСЬ — имя подтверждено ключом с устройства', True)
+    ок('v1.22: в вердикте имя личности из ·19 (не локальное имя окна)', 'Алиса·19' in A.text_content('#stVer'))
+    # эхо-рукопожатие: получив первый «прив», вкладка отвечает своим —
+    # поздний участник тоже получает подписанное приветствие и верифицирует
+    B.wait_for_function("document.getElementById('stVer').textContent.includes('СОШЛАСЬ')", timeout=8000)
+    ок('v1.22: эхо-рукопожатие — обе вкладки верифицировали друг друга', True)
 
     print('— ГОЛОСОВОЕ МЕЖДУ ОКНАМИ (fake-микрофон)')
     A.click('#btnRec'); time.sleep(1.1); A.click('#btnRecStop')

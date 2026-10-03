@@ -168,6 +168,39 @@ with sync_playwright() as p:
     ок('GC удалил просрочку (' + инфо.strip()[:40] + ')', 'удалено просроченных: 1' in инфо)
     ок('память ❤️ пережила GC', A.evaluate('document.querySelectorAll("#memList .mem-card").length') >= 1)
 
+    print('— v1.22: memory.decide — решение человека в журнале кристалла')
+    решения = A.evaluate('''() => new Promise(res => {
+        const r = indexedDB.open('singulyar-crystal', 1);
+        r.onsuccess = () => {
+            const db = r.result;
+            if (!db.objectStoreNames.contains('events')) { res([]); return; }
+            const rq = db.transaction('events','readonly').objectStore('events').getAll();
+            rq.onsuccess = () => {
+                const дец = rq.result.filter(e => (e.semantic&&e.semantic.attachments||[]).some(a => a.kind==='hall.memory.decide'));
+                res(дец.map(e => e.semantic.attachments[0].решение));
+            };
+        };
+        r.onupgradeneeded = () => res([]);   /* базы ещё нет — решений нет */
+    })''')
+    ок('❤️ сохранили → решение «remember» записано как неизменяемое событие', isinstance(решения, list) and 'remember' in решения)
+
+    до = A.evaluate('document.querySelectorAll("#memList .mem-card").length')
+    A.click('#memList .mem-card .acts button.red')   # 🔥 удалить
+    time.sleep(1.2)
+    решения2 = A.evaluate('''() => new Promise(res => {
+        const r = indexedDB.open('singulyar-crystal', 1);
+        r.onsuccess = () => {
+            const db = r.result;
+            const rq = db.transaction('events','readonly').objectStore('events').getAll();
+            rq.onsuccess = () => {
+                const дец = rq.result.filter(e => (e.semantic&&e.semantic.attachments||[]).some(a => a.kind==='hall.memory.decide'));
+                res(дец.map(e => e.semantic.attachments[0].решение));
+            };
+        };
+    })''')
+    ок('🔥 удалили → решение «expire» записано (журнал помнит решение, файл ушёл)', isinstance(решения2, list) and 'expire' in решения2)
+    ок('карточка ушла из UI', A.evaluate('document.querySelectorAll("#memList .mem-card").length') == до - 1)
+
     print('— ЧЕСТНОСТЬ: консоль')
     real_errs = [e for e in ошибки_консоли if 'favicon' not in e and 'net::' not in e]
     ок('консоль без ошибок (' + str(len(real_errs)) + ')', len(real_errs) == 0)

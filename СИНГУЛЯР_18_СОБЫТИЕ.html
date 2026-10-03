@@ -1151,6 +1151,24 @@ function мостПамять(запись) {
     МОСТ18.последняя = р.ok ? 'память в журнале' : (р.reason === 'DUPLICATE' ? 'память уже в журнале' : 'fallback: ' + р.reason);
   }).catch(function () {});
 }
+/* Решение человека о памяти (v1.22, синтез «TTL ≠ MEMORY»):
+   помню ❤️ / забыть 🔥 — отдельные НЕИЗМЕНЯЕМЫЕ события журнала,
+   ссылаются на память/сессию через replyTo. Каждое нажатие — новый акт
+   (акт = момент решения): передумать можно, но новым событием, а не
+   переписыванием истории. Файл аудио при этом не трогается: решение
+   меняет семантику, не данные. */
+function мостРешение(решение, запись) {
+  if (!МОСТ18.б || !МОСТ18.б.готов || !МОСТ18.модуль || !запись || (решение !== 'remember' && решение !== 'expire')) return;
+  const п = МОСТ18.модуль.memoryDecisionEvent(решение, {
+    цельId: запись.id,
+    комната: (запись.manifest && запись.manifest.room) || '',
+    цельСобытиеId: ПРИЛОЖЕНИЕ.кристСессия
+  });
+  МОСТ18.б.опубликуй(п.event).then(function (р) {
+    if (р.ok) лог('решение записано в журнал: ' + (решение === 'remember' ? '❤️ помнить' : '🔥 забыть') + ' (неизменяемое событие)');
+    else if (р.reason !== 'DUPLICATE') лог('решение не записалось (' + р.reason + ') — зал работает без него');
+  }).catch(function () {});
+}
 
 function показ(экран) {
   ['scMenu', 'scRoom', 'scSing', 'scReview', 'scMemory'].forEach(function (id) { $(id).classList.toggle('on', id === экран); });
@@ -1213,9 +1231,9 @@ function карточкаПамяти(rec, полный) {
   const ауд = эл('audio', { controls: '', preload: 'none', class: 'rec' });
   try { ауд.src = URL.createObjectURL(rec.audio); } catch (e) {}
   const acts = эл('div', { class: 'acts' });
-  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { мостПамять(rec); перерисоватьПамять(); }); } }));
+  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { мостРешение('remember', rec); мостПамять(rec); перерисоватьПамять(); }); } }));
   acts.appendChild(эл('button', { class: 'btn gray', text: '⬇ webm', onclick: function () { скачать(rec); } }));
-  acts.appendChild(эл('button', { class: 'btn red', text: '🔥 удалить', onclick: function () { ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
+  acts.appendChild(эл('button', { class: 'btn red', text: '🔥 удалить', onclick: function () { мостРешение('expire', rec); ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
   const card = эл('div', { class: 'mem-card' }, [
     эл('div', { class: 'date', text: датаКратко(м.startedAt || rec.createdAt) }),
     м.song ? эл('div', { class: 'ttl', text: '🎵 ' + м.song.title }) : эл('div', { class: 'ttl', text: '🎵 событие' }),
@@ -1534,6 +1552,7 @@ $('btnSaveMem').addEventListener('click', function () {
   const rec = ПРИЛОЖЕНИЕ.запись; if (!rec) return;
   rec.state = 'MEMORY'; rec.savedAt = Date.now();
   ХРАНИЛИЩЕ.put(rec).then(function () {
+    мостРешение('remember', rec);
     мостПамять(rec);
     $('reviewExpire').textContent = '❤️ сохранено как память — теперь не исчезнет (удалить можно в списке воспоминаний)';
     перерисоватьПамять();
