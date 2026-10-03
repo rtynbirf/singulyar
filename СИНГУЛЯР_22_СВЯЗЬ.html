@@ -128,6 +128,9 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
       <button id="btnSend" class="primary">отправить</button>
     </div>
     <div class="row" style="margin-top:8px">
+      <label style="display:inline-flex;align-items:center;gap:.45em;font-size:.92em"><input id="inTtl" type="checkbox"> временное · исчезнет через 7 дней</label>
+    </div>
+    <div class="row" style="margin-top:8px">
       <button id="btnRec">записать голосовое</button>
       <button id="btnRecStop" disabled>стоп</button>
       <label class="btn-file">приложить файл<input id="inFile" type="file" hidden></label>
@@ -135,6 +138,7 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
     </div>
     <p class="state" id="stRec">Запись остановлена.</p>
     <p class="state" id="stSTT"></p>
+    <p class="state" id="stCrystal" aria-live="polite">КРИСТАЛЛ: протокольный слой загружается…</p>
   </section>
 
   <section class="card" id="scSub">
@@ -526,6 +530,39 @@ const S22 = (function () {
   let последние = [];
   let мост = null; let мостГотов = false; let мостСигнал = 0;
 
+  /* ── КРИСТАЛЛ: протокольное ядро связи (v1.16) ──
+     СМЫСЛ ≠ ПРЕДСТАВЛЕНИЕ ≠ КАНАЛ ≠ ТРАНСПОРТ ≠ ХРАНЕНИЕ.
+     Ядро усиливает связь, а не заменяет: канонический semantic event,
+     durable журнал, дедуп повторной доставки, машина доставки.
+     Падение импорта = связь работает как раньше (честный fallback). */
+  let чанКрист = null;
+  const КРИСТ = { ядро: null, жу: null, готов: false, отброшено: 0, заметка: '' };
+  Promise.all([
+    import('./БИБЛИОТЕКИ/кристалл/crystal-core.mjs'),
+    import('./БИБЛИОТЕКИ/кристалл/journal.mjs')
+  ]).then(function (м) {
+    КРИСТ.ядро = м[0]; КРИСТ.жу = м[1]; КРИСТ.готов = true;
+    чиститьВременные();
+  }).catch(function () {
+    КРИСТ.готов = false;
+    кристаллСтатус('протокольный слой недоступен — связь работает без него (честный fallback)');
+  });
+
+  /* наблюдательный хэндл протокола: только чтение и явно открытые операции;
+     инкапсуляция IIFE не вскрывается, тесты и диагностика ходят через хэндл */
+  try {
+    Object.defineProperty(window, '__КРИСТ22', { configurable: true, value: {
+      get готов() { return КРИСТ.готов; },
+      get отброшено() { return КРИСТ.отброшено; },
+      get зал() { return код; },
+      get ackКанал() { return чанКрист ? чанКрист.name : null; },
+      события: function () { return КРИСТ.жу ? КРИСТ.жу.all() : Promise.resolve([]); },
+      количество: function () { return КРИСТ.жу ? КРИСТ.жу.count() : Promise.resolve(0); },
+      доставка: function (ид) { return КРИСТ.жу ? КРИСТ.жу.getDelivery(ид) : Promise.resolve(null); },
+      почисти: function (т) { return КРИСТ.жу ? КРИСТ.жу.purgeExpired(т) : Promise.resolve(null); }
+    } });
+  } catch (е2) {}
+
   function readJSON(ключ) {
     try { return JSON.parse(localStorage.getItem(ключ) || 'null'); } catch (e) { return null; }
   }
@@ -605,6 +642,16 @@ const S22 = (function () {
       чан = null; $('btnClose').disabled = false; обновитьСсылку(); return;
     }
     чан.onmessage = function (е) { принять(е.data); };
+    /* кристалл: отдельный ACK-канал — старые вкладки его не знают и не ломаются;
+       ACK ≠ READ, ACK подтверждает доставку пакета, не чтение */
+    try {
+      чанКрист = new BroadcastChannel('singular-crystal-v1-' + код);
+      чанКрист.onmessage = function (е) {
+        const д = е && е.data;
+        if (!д || д.тип !== 'ack' || !д.ид) return;
+        кристаллАЦК(String(д.ид), д.от);
+      };
+    } catch (е) { чанКрист = null; }
     $('stZal').textContent = 'Канал открыт: зал «' + код + '». Сообщения идут между окнами этого браузера; для другой машины открой зал ·18 по ссылке ниже.';
     $('btnClose').disabled = false;
     событие('Канал «' + код + '» открыт', false);
@@ -612,6 +659,7 @@ const S22 = (function () {
   }
   function закрытьКанал(тихо) {
     if (чан) { try { чан.close(); } catch (e) {} чан = null; }
+    if (чанКрист) { try { чанКрист.close(); } catch (e) {} чанКрист = null; }
     $('btnClose').disabled = true;
     if (!тихо) { $('stZal').textContent = 'Канал закрыт. Журнал остался на устройстве.'; событие('Канал закрыт', false); }
   }
@@ -630,6 +678,86 @@ const S22 = (function () {
     if (!код) открытьКанал();
     window.open(ссылкаЗала18(), '_blank');
     событие('Открываю зал ·18 с кодом ' + код, false);
+  }
+
+  /* ── 3а. КРИСТАЛЛ: канонические события и доставка ──
+     Событие строится ядром (идемпотентный ключ = id на проводе — стабилен
+     между повторами), идёт по проводу полем «кр» (старые вкладки поле
+     игнорируют), хранится в durable журнале. Получатель дедуплицирует
+     по ключу и отвечает ACK по отдельному каналу. */
+  function кристаллСобери(м, вид, временное) {
+    try {
+      const соб = (вид === 'текст') ? [] : [{ kind: вид, name: String(м.имяФайла || (вид === 'голос' ? 'голосовое' : 'файл')), size: м.размер | 0, содержимое: 'журнал UI · blobs' }];
+      const событие = КРИСТ.ядро.message({
+        from: м.от, conversation: 'зал-' + код, text: String(м.текст || ''),
+        attachments: соб,
+        retention: временное ? 'temporary' : 'persistent',
+        ttl: временное ? 7 * 24 * 3600 * 1000 : null,
+        idempotencyKey: String(м.ид || '')
+      });
+      событие.id = 'кр-' + м.ид;              /* id события выводится из id провода — стабильность */
+      return событие;
+    } catch (e) { return null; }
+  }
+  function кристаллИсходящее(событие) {
+    if (!событие) return;
+    try {
+      КРИСТ.жу.append(событие).catch(function () {});
+      const шаг1 = КРИСТ.ядро.advance({ eventId: событие.id, state: 'CREATED', history: [], attempts: 0 }, 'QUEUED', 'собрано ядром ·22');
+      const шаг2 = шаг1.ok ? КРИСТ.ядро.advance(шаг1.delivery, 'SENT', 'BroadcastChannel') : { ok: false };
+      /* слияние вместо слепой перезаписи: поздняя запись не откатит уже записанные факты */
+      КРИСТ.жу.applyDelivery(шаг2.ok ? шаг2.delivery : шаг1.delivery).catch(function () {});
+      кристаллСтатус();
+    } catch (e) {}
+  }
+  function кристаллВходящее(м, вид) {
+    if (!КРИСТ.готов || !м.ид) return;
+    try {
+      КРИСТ.жу.claimKey(String(м.ид)).then(function (принято) {
+        if (!принято) { КРИСТ.отброшено += 1; кристаллСтатус('дубликат доставки отброшен'); return; }
+        const событие = (м.кр && м.кр.type === 'semantic.message') ? м.кр
+          : КРИСТ.ядро.message({ from: String(м.от || 'неизвестный'), conversation: 'зал-' + код, text: String(м.текст || ''), attachments: вид === 'текст' ? [] : [{ kind: вид, name: String(м.имяФайла || ''), size: м.размер | 0 }] });
+        КРИСТ.жу.append(событие).catch(function () {});
+        /* SENT → DELIVERED на стороне получателя (транспорт доставил);
+           запись СНАЧАЛА, потом ACK — чтобы состояние не отставало от подтверждения */
+        const продв = КРИСТ.ядро.advance({ eventId: событие.id, state: 'SENT', history: [], attempts: 0 }, 'DELIVERED', 'принято получателем');
+        const послатьАЦК = function () {
+          /* ACK ≠ READ: подтверждаем доставку, не чтение */
+          if (чанКрист) { try { чанКрист.postMessage({ тип: 'ack', ид: String(м.ид), от: имя }); } catch (e) {} }
+          кристаллСтатус();
+        };
+        if (продв.ok) КРИСТ.жу.applyDelivery(продв.delivery).then(послатьАЦК, послатьАЦК);
+        else послатьАЦК();
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function кристаллАЦК(ид, от) {
+    if (!КРИСТ.готов) return;
+    try {
+      КРИСТ.жу.getDelivery('кр-' + ид).then(function (з) {
+        if (!з || з.state === 'ACKED' || з.state === 'DELIVERED' || з.state === 'READ') return;
+        const продв = КРИСТ.ядро.advance(з, 'ACKED', 'ACK от ' + (от || 'получателя'));
+        if (!продв.ok) { кристаллСтатус('ACK отклонён: ' + продв.reason); return; }
+        КРИСТ.жу.applyDelivery(продв.delivery).catch(function () {});
+        кристаллСтатус();
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function чиститьВременные() {
+    if (!КРИСТ.готов) return;
+    КРИСТ.жу.purgeExpired().then(function (р) {
+      if (р && р.удалено) кристаллСтатус('истёкших временных удалено: ' + р.удалено);
+      else кристаллСтатус();
+    }).catch(function () {});
+  }
+  function кристаллСтатус(заметка) {
+    if (заметка) КРИСТ.заметка = String(заметка);
+    const элСт = document.getElementById('stCrystal');
+    if (!элСт) return;
+    if (!КРИСТ.готов) { элСт.textContent = 'КРИСТАЛЛ: ' + КРИСТ.заметка; return; }
+    КРИСТ.жу.count().then(function (н) {
+      элСт.textContent = 'КРИСТАЛЛ · ядро ' + КРИСТ.ядро.CRYSTAL.version + ': событий ' + н + ' · дубликатов отброшено ' + КРИСТ.отброшено + (КРИСТ.заметка ? ' · ' + КРИСТ.заметка : '');
+    }).catch(function () { элСт.textContent = 'КРИСТАЛЛ: журнал недоступен.'; });
   }
 
   /* ── 4. ЖУРНАЛ ── */
@@ -663,6 +791,11 @@ const S22 = (function () {
     const м = { v: S22.PROTO, t: Date.now(), от: имя, вид: вид, текст: текст || '', имяФайла: имяФайла || '', размер: блоб ? блоб.size : 0, длительность: длительность || 0 };
     if (блоб) м.блоб = блоб;                       /* Blob переживёт structured clone BroadcastChannel */
     const id = 'м' + м.t + '-' + Math.random().toString(36).slice(2, 8);
+    м.ид = id;                                     /* кристалл: id на проводе — ключ ACK и дедупа */
+    if (КРИСТ.готов) {
+      const кр = кристаллСобери(м, вид, !!($('inTtl') && $('inTtl').checked));
+      if (кр) { м.кр = кр; кристаллИсходящее(кр); } /* старые вкладки поле «кр» игнорируют */
+    }
     const зап = { id: id, t: м.t, от: м.от, вид: вид, текст: м.текст, имяФайла: м.имяФайла, размер: м.размер, длительность: м.длительность, входящее: false, канал: желаемый };
     const п = блоб ? ХРАНИЛИЩЕ.положи('blobs', блоб, id) : Promise.resolve();
     п.then(function () { return ХРАНИЛИЩЕ.положи('journal', зап); })
@@ -674,6 +807,9 @@ const S22 = (function () {
   function принять(м) {
     if (!м || м.v !== S22.PROTO || !м.от) return;
     const вид = (м.вид === 'голос' || м.вид === 'файл') ? м.вид : 'текст';
+    /* кристалл: дедуп повторной доставки по durable ключу — копии не создаются;
+       UI-журнал остаётся прежним (совместимость), протокольный слой — канонический */
+    кристаллВходящее(м, вид);
     const м2 = { v: м.v, t: м.t || Date.now(), от: экранироватьИмя(м.от), вид: вид, текст: String(м.текст || '').slice(0, 2000), имяФайла: String(м.имяФайла || '').slice(0, 200), размер: м.размер | 0, длительность: м.длительность | 0 };
     const блоб = (м.блоб instanceof Blob) ? м.блоб : null;
     const id = 'м' + м2.t + '-' + Math.random().toString(36).slice(2, 8);

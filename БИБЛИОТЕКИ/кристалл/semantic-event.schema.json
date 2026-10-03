@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://singulyar.example/protocol/semantic-event.schema.json",
+  "title": "Singulyar Crystal Semantic Event",
+  "type": "object",
+  "required": ["ver", "type", "id", "from", "conversation", "createdAt", "semantic", "policy", "revision"],
+  "properties": {
+    "ver": { "type": "string" },
+    "type": { "const": "semantic.message" },
+    "id": { "type": "string", "minLength": 8 },
+    "idempotencyKey": { "type": "string", "minLength": 8 },
+    "from": { "type": "string", "minLength": 1 },
+    "conversation": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "integer", "minimum": 0 },
+    "semantic": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string" },
+        "attachments": { "type": "array" },
+        "replyTo": { "type": ["string", "null"] }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": ["retention"],
+      "properties": {
+        "retention": { "enum": ["persistent", "temporary"] },
+        "ttl": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "revision": { "type": "integer", "minimum": 1 }
+  }
+}
