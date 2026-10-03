@@ -1,6 +1,6 @@
 /* Тест КРИПТЫ (v1.19→v2.0.0): математика, эпохи (ротация), канонизация и
    подписи фактов (верификация ·19), честные границы.
-   node --test ИНСТРУМЕНТЫ/test_crypto_logic.mjs */
+   Запуск: node --test ИНСТРУМЕНТЫ/test_crypto_logic.mjs */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
