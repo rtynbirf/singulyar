@@ -542,6 +542,12 @@ render();
    Контракт среза 1 не тронут: output.21-брайль / tool.21-маршрутизация на месте. */
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
+  /* КРИСТАЛЛ (v1.16): ·21 = слой представлений. Ядро протокола вшивается
+     рядом с реестром: решение выбора представления фиксируется как
+     канонический semantic event на шине — наблюдаемо, но не навязано.
+     Падение импорта — мост просто не публикуется, UI не меняется. */
+  const КРИСТ = await import('./БИБЛИОТЕКИ/кристалл/crystal-core.mjs').catch(function () { return null; });
+  const кристСобытия = [];   /* последние решения представлений (наблюдение + тесты) */
   const естьЯдро = (typeof S21 !== 'undefined' && S21 && typeof S21.route === 'function');
   const адаптеры = [];
   if (естьЯдро) {
@@ -590,9 +596,31 @@ try {
           via: (ответ && ответ.length === ветки.length && ответ.every(Boolean)) ? 'registry' : 'kernel'
         });
       } catch (e) {}
+      /* КРИСТАЛЛ: маршрут фиксируется как каноническое событие. Каналы
+         получателя из профиля ·21 отображаются в режимы протокола
+         (speech→tts, braille→braille, haptic→tactile); недоступность
+         конкретного режима в этой среде даёт честный fallback с причиной. */
+      if (КРИСТ) {
+        try {
+          const мапа = { text: 'text', speech: 'tts', braille: 'braille', haptic: 'tactile' };
+          const событие = КРИСТ.message({ from: 'человек.21', conversation: 'маршрут-21', text: String(текст == null ? '' : текст).slice(0, 2000) });
+          const реш = КРИСТ.chooseRepresentation(событие, { preferred: ветки.map(function (ч) { return мапа[ч]; }).filter(Boolean) }, globalThis);
+          const предс = КРИСТ.represent(событие, реш);
+          os.bus.publish('meaning.21.crystal', {
+            ver: КРИСТ.CRYSTAL.version,
+            event: событие,
+            decision: реш,
+            representation: { mode: предс.mode, ok: предс.ok }
+          });
+          кристСобытия.push({ событие: событие, реш: реш });
+          if (кристСобытия.length > 30) кристСобытия.shift();
+        } catch (e) { /* протокольный след не строится — маршрут работает как раньше */ }
+      }
       return результат;
     };
     S21.route.kernel = оригинал; /* ядро доступно для проверок равенства */
+    /* КРИСТАЛЛ: окно наблюдения за решениями протокола (не влияет на UI) */
+    try { window.__КРИСТ21 = { версия: КРИСТ.CRYSTAL.version, события: кристСобытия }; } catch (e) {}
   }
 
   /* ── Срез 4 «МОЗГ»: голосовое управление ──
