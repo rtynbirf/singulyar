@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   СИНГУЛЯР · КРИСТАЛЛ — мосты модулей, v1.0.0
+   СИНГУЛЯР · КРИСТАЛЛ — мосты модулей, v1.1.0
    ───────────────────────────────────────────────────────────────────
    НЕНОРМАТИВНЫЙ файл: потребители контракта, а не его часть.
    Ядро (crystal-core.mjs), журнал (journal.mjs) и схема не тронуты.
@@ -7,6 +7,11 @@
    Карта мостов (README кристалла):
      ·19 ЧЕЛОВЕК → identity.ref    — «эта личность живёт на устройстве»
      ·18 ЗАЛ     → shared.activity — «в зале пели вместе» (сессия+память)
+     ·18 ЗАЛ     → memory.decide   — «память решено хранить/забыть» (решение
+                   человека — отдельное семантическое событие; идея синтеза
+                   Human Runtime v0.1 «TTL ≠ MEMORY», проведённая нашим путём:
+                   хранение и память — разные вещи, решение меняет семантику,
+                   а не файл; события неизменяемы, решение = новое событие)
 
    Правила моста:
      • событие моста — обычный semantic.message из ЯДРА: вид смысла в
@@ -28,7 +33,7 @@
    (·22, ·18) не трогаются никогда.
    ═══════════════════════════════════════════════════════════════════ */
 
-export const BRIDGES = Object.freeze({ name: 'singulyar-crystal-bridges', version: '1.0.0' });
+export const BRIDGES = Object.freeze({ name: 'singulyar-crystal-bridges', version: '1.1.0' });
 
 export const РАЗГОВОРЫ = Object.freeze({
   identity: 'identity.ref',
@@ -141,6 +146,44 @@ export function activityMemoryEvent(запись, надстройка = {}) {
         attachments: [вложение],
         replyTo: надстройка.sessionEventId || null
       },
+      policy: { retention: 'persistent', ttl: null },
+      capabilities: ['text'],
+      revision: 1
+    },
+    вложение: вложение
+  };
+}
+
+/* ── ·18: shared.activity — решение о памяти (TTL ≠ MEMORY) ──
+   Решение человека — ОТДЕЛЬНОЕ неизменяемое семантическое событие,
+   ссылающееся на память/сессию через semantic.replyTo. remember =
+   «хранить вечно по решению человека», expire = «забыть по решению
+   человека». Хранение и память — разные вещи; решение меняет семантику,
+   а не файл. Повторный акт решения (передумал) — НОВОЕ событие:
+   idempotencyKey включает актId (или решеноAt), дедуп бережёт повторную
+   публикацию того же акта, а не свободу передумать. */
+export function memoryDecisionEvent(решение, надстройка = {}) {
+  const р = (решение === 'remember' || решение === 'expire') ? решение : null;
+  if (!р) throw new Error('решение должно быть remember|expire');
+  const вложение = {
+    kind: 'hall.memory.decide',
+    решение: р,
+    цель: String(надстройка.цельId || ''),
+    комната: String(надстройка.комната || ''),
+    решеноAt: Number.isFinite(надстройка.решеноAt) ? надстройка.решеноAt : Date.now()
+  };
+  const акт = надстройка.актId || String(вложение.решеноAt);
+  const текст = р === 'remember'
+    ? 'Память решено хранить (человек): зал ' + вложение.комната
+    : 'Память решено забыть (человек): зал ' + вложение.комната;
+  return {
+    event: {
+      ver: '1.0.0', type: 'semantic.message',
+      id: надстройка.id || стабильныйId('dec_', вложение.цель + ':' + р + ':' + акт),
+      idempotencyKey: 'hall-decide:' + вложение.цель + ':' + р + ':' + акт,
+      from: '·18', conversation: РАЗГОВОРЫ.activity,
+      createdAt: Date.now(),
+      semantic: { text: текст, attachments: [вложение], replyTo: надстройка.цельСобытиеId || null },
       policy: { retention: 'persistent', ttl: null },
       capabilities: ['text'],
       revision: 1
