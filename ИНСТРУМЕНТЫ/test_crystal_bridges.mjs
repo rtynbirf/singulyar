@@ -218,3 +218,70 @@ test('мосты — ненормативный слой: своя версия,
   /* ядро при этом не тронуто — его версия остаётся нормативной */
   assert.equal(К.CRYSTAL.version, '1.0.0');
 });
+
+/* ── 8. memory.decide — решение о памяти (синтез Human Runtime, TTL ≠ MEMORY) ── */
+
+test('memory.decide: remember — отдельное неизменяемое семантическое событие', () => {
+  const { event, вложение } = Б.memoryDecisionEvent('remember', {
+    цельId: 'mem_A1', цельСобытиеId: 'mem_event_1', комната: 'P7J97', актId: 'акт-1' });
+  assert.equal(вложение.kind, 'hall.memory.decide');
+  assert.equal(вложение.решение, 'remember');
+  assert.equal(вложение.цель, 'mem_A1');
+  assert.equal(event.type, 'semantic.message');
+  assert.equal(event.conversation, 'shared.activity');
+  assert.equal(event.from, '·18');
+  assert.equal(event.policy.retention, 'persistent');
+  assert.equal(event.semantic.replyTo, 'mem_event_1');
+  assert.ok(event.id.length >= 8, 'id schema-легален');
+  assert.ok(event.semantic.text.includes('хранить'));
+});
+
+test('memory.decide: expire — забвение по решению человека', () => {
+  const { event, вложение } = Б.memoryDecisionEvent('expire', {
+    цельId: 'mem_A1', комната: 'P7J97', актId: 'акт-2' });
+  assert.equal(вложение.решение, 'expire');
+  assert.equal(event.idempotencyKey, 'hall-decide:mem_A1:expire:акт-2');
+  assert.ok(event.semantic.text.includes('забыть'));
+  assert.equal(event.semantic.replyTo, null, 'цельСобытиеId не задан — честный null');
+});
+
+test('memory.decide: дедуп бережёт АКТ, не свободу передумать', () => {
+  const а = Б.memoryDecisionEvent('remember', { цельId: 'm1', актId: 'акт-9' });
+  const б = Б.memoryDecisionEvent('remember', { цельId: 'm1', актId: 'акт-9' });
+  const в = Б.memoryDecisionEvent('expire', { цельId: 'm1', актId: 'акт-10' });
+  assert.equal(а.event.idempotencyKey, б.event.idempotencyKey, 'тот же акт — тот же ключ (дедуп)');
+  assert.equal(а.event.id, б.event.id);
+  assert.notEqual(а.event.idempotencyKey, в.event.idempotencyKey, 'передумал — новое событие');
+  assert.notEqual(а.event.id, в.event.id);
+});
+
+test('memory.decide: мусорное решение — честный throw', () => {
+  assert.throws(() => Б.memoryDecisionEvent('незнаю'), /remember/);
+  assert.throws(() => Б.memoryDecisionEvent(''), /remember/);
+});
+
+test('memory.decide: публикация через мост — PUBLISHED и дедуп работают', async () => {
+  const ж = фальшЖурнал();
+  const мост = Б.makeBridge({ источник: 'тест-decide', журнал: ж });
+  await мост.готовь;
+  const { event } = Б.memoryDecisionEvent('remember', { цельId: 'mem_B2', комната: 'ZZ11', актId: 'акт-3' });
+  const р1 = await мост.опубликуй(event);
+  assert.ok(р1.ok && р1.reason === 'PUBLISHED', 'первый акт публикуется');
+  const р2 = await мост.опубликуй(event);
+  assert.ok(!р2.ok && р2.reason === 'DUPLICATE', 'повтор того же акта = дедуп');
+  const все = await мост.события('shared.activity');
+  assert.equal(все.length, 1);
+  assert.equal(все[0].semantic.attachments[0].kind, 'hall.memory.decide');
+});
+
+test('memory.decide: schema-легальность нового события', () => {
+  const схема = JSON.parse(fs.readFileSync(path.join(КОРЕНЬ, 'БИБЛИОТЕКИ/кристалл/semantic-event.schema.json'), 'utf-8'));
+  const м = Б.memoryDecisionEvent('expire', { цельId: 'mem_C3', цельСобытиеId: 'e9', актId: 'акт-4' }).event;
+  for (const поле of схема.required) assert.ok(поле in м, 'нет required-поля ' + поле);
+  assert.equal(м.type, схема.properties.type.const);
+  assert.ok(м.id.length >= 8 && м.idempotencyKey.length >= 8);
+  assert.ok(Number.isInteger(м.createdAt) && м.createdAt >= 0);
+  assert.ok(['persistent', 'temporary'].includes(м.policy.retention));
+  /* ядро при этом не тронуто */
+  assert.equal(К.CRYSTAL.version, '1.0.0');
+});

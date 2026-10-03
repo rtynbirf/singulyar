@@ -15,7 +15,7 @@ let passed = 0;
 const ok = (cond, name) => { if (!cond) throw new Error('FAIL: ' + name); passed++; };
 
 /* ── Файл и структура ── */
-ok(fs.statSync(file).size > 25000 && fs.statSync(file).size < 60000, 'размер модуля в норме');
+ok(fs.statSync(file).size > 25000 && fs.statSync(file).size < 65000, 'размер модуля в норме (граница поднята честно: след маршрутизации +1.6 КБ)');
 ok(/<!DOCTYPE html>/i.test(html), 'доктайп на месте (не quirks)');
 ok(/<html lang="ru">/.test(html), 'язык страницы объявлен');
 ok(html.includes('СИНГУЛЯР ·21 «ОБЩЕНИЕ»'), 'имя модуля чёткое');
@@ -26,7 +26,7 @@ const m = html.match(/\/\* S21:CORE-BEGIN \*\/([\s\S]*?)\/\* S21:CORE-END \*\//)
 ok(m, 'ядро извлечено');
 const S21 = new Function(m[1] + '\nreturn S21;')();
 
-ok(S21.VERSION === '0.3.0', 'версия 0.3.0 (мост ·22)');
+ok(S21.VERSION === '0.4.0', 'версия 0.4.0 (след маршрутизации — синтез Human Runtime)');
 ok(S21.braille('abc') === '⠁⠃⠉', 'брайль: abc');
 ok(S21.braille('Hello') === '⠓⠑⠇⠇⠕', 'брайль: регистр приводится');
 ok(S21.braille('ж') === 'ж' && S21.braille('') === '', 'брайль: вне таблицы не теряется, пусто → пусто');
@@ -41,6 +41,16 @@ r[1].voice.rate = 9; ok(A.voice.rate === 0.9, 'профиль не мутиру�
 ok(S21.route({ output: [] }, 'х').length === 0 && S21.route(null, 'х').length === 0, 'без каналов/профиля — без падения');
 const ord = S21.route({ output: ['braille','text'] }, 'z');
 ok(ord[0].ch === 'braille' && ord[1].ch === 'text', 'порядок представлений задаёт человек');
+
+/* ── След маршрутизации (синтез Human Runtime v0.1, AD-S1) ── */
+ok(r.every(function(п){ return п.trace && п.trace.источник === 'выбор человека' && п.trace.смыслСохранён === true && п.trace.канал === п.ch; }),
+  'след: каждое представление объясняет источник канала');
+ok(r.след && r.след.каналов === 4 && r.след.человек === 'x', 'след: маршрут несёт человека и число каналов');
+ok(Array.isArray(r.след.порядокПриоритета) && r.след.порядокПриоритета[0] === 'выбор человека',
+  'след: порядок приоритета уважен (explicit первым)');
+ok(Array.isArray(r) && r.length === 4, 'контракт не сломан: route возвращает массив');
+ok(S21.РАНГ && S21.РАНГ[0] === 'выбор человека' && Object.isFrozen(S21.РАНГ), 'РАНГ экспортирован и заморожен');
+ok(S21.route(null, 'х').след.каналов === 0, 'след: пустой маршрут честен');
 
 ok(S21.channelLabel('text') === 'Текст' && S21.channelLabel('haptic') === 'Вибросигнал', 'подписи каналов');
 ok(S21.channelLabel('aac') === 'ААК-символы' && S21.channelLabel('sign') === 'Жесты', 'подписи каналов: аак/жесты');

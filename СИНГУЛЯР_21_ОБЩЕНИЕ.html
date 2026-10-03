@@ -187,7 +187,7 @@ option:checked,option:hover{background-color:#10312c;color:#8ff0dc}
   </div>
 </main>
 <div id="aria" class="sr" aria-live="polite"></div>
-<footer><div class="wrap">СИНГУЛЯР ·21 «ОБЩЕНИЕ» v0.3.0 · автономный модуль · мост со СВЯЗЬЮ ·22 — между открытыми вкладками · данные не покидают браузер · смысл ≠ представление</div></footer>
+<footer><div class="wrap">СИНГУЛЯР ·21 «ОБЩЕНИЕ» v0.4.0 · автономный модуль · мост со СВЯЗЬЮ ·22 — между открытыми вкладками · данные не покидают браузер · смысл ≠ представление</div></footer>
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════
@@ -197,7 +197,7 @@ option:checked,option:hover{background-color:#10312c;color:#8ff0dc}
    ═══════════════════════════════════════════════════════════════════ */
 /* S21:CORE-BEGIN */
 const S21 = (function(){
-  const VERSION = '0.3.0';
+  const VERSION = '0.4.0';
   const STORE_KEY = 'singulyar.human.communication.v2';
   /* Подписи каналов — единственное место, где живёт человеческое имя канала */
   const CHANNEL = { text:'Текст', speech:'Речь', braille:'Брайль', haptic:'Вибросигнал', aac:'ААК-символы', sign:'Жесты' };
@@ -216,21 +216,37 @@ const S21 = (function(){
   function langLabel(l){ return LANG[l] || l; }
   function statusLabel(s){ return STATUS[s] || s; }
   /* Маршрутизация: смысл один — представлений по числу доступных каналов получателя.
-     Каждое представление несёт тот же смысл, меняется только форма. */
+     Каждое представление несёт тот же смысл, меняется только форма.
+     СЛЕД (синтез Human Runtime v0.1, их AD-004 «fallback observable»):
+     почему построен канал — видно коду и человеку, автоматика не молчит.
+     Наша модель — веер представлений: человек сам задаёт список каналов
+     (person.output), система ничего не подмешивает — след это доказывает.
+     Порядок приоритета их ядра (explicit > preference > context > fallback >
+     default) уважен как РАНГ — у нас он вырожден в «выбор человека»,
+     потому что автоматика отменяется по принципу модуля. */
+  const РАНГ = Object.freeze(['выбор человека', 'возможности', 'фолбэк', 'дефолт']);
   function route(person, text){
     const out = [];
     const list = (person && person.output) || [];
     for (const ch of list){
-      if (ch === 'braille') out.push({ ch: ch, label: channelLabel(ch), view: braille(text) });
-      else if (ch === 'speech') out.push({ ch: ch, label: channelLabel(ch), view: String(text), voice: Object.assign({}, (person && person.voice) || {}) });
-      else if (ch === 'haptic') out.push({ ch: ch, label: channelLabel(ch), view: 'вибросигнал — канал объявлен' });
-      else out.push({ ch: ch, label: channelLabel(ch), view: String(text) });
+      const пункт = (ch === 'braille')
+        ? { ch: ch, label: channelLabel(ch), view: braille(text) }
+        : (ch === 'speech')
+          ? { ch: ch, label: channelLabel(ch), view: String(text), voice: Object.assign({}, (person && person.voice) || {}) }
+          : (ch === 'haptic')
+            ? { ch: ch, label: channelLabel(ch), view: 'вибросигнал — канал объявлен' }
+            : { ch: ch, label: channelLabel(ch), view: String(text) };
+      пункт.trace = { канал: ch, источник: 'выбор человека', смыслСохранён: true };
+      out.push(пункт);
     }
+    out.след = { человек: (person && person.id) || null, каналов: out.length,
+                 модель: 'веер представлений — смысл один, форм много',
+                 порядокПриоритета: РАНГ };
     return out;
   }
   return { VERSION: VERSION, STORE_KEY: STORE_KEY, braille: braille, route: route,
            channelLabel: channelLabel, prefLabel: prefLabel, langLabel: langLabel,
-           statusLabel: statusLabel, PRESETS: PRESETS, CHANNEL: CHANNEL, PREF: PREF, LANG: LANG, STATUS: STATUS };
+           statusLabel: statusLabel, PRESETS: PRESETS, CHANNEL: CHANNEL, PREF: PREF, LANG: LANG, STATUS: STATUS, РАНГ: РАНГ };
 })();
 /* S21:CORE-END */
 window.S21 = S21;
