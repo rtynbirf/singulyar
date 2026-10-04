@@ -202,21 +202,61 @@ test('приглашение спеть несёт код зала ·18', {timeo
   const в = await reg(await jwkOf('Внучка3'));
   await api(б.token, 'POST', '/api/friends/request', {userId: в.user.id});
   await api(в.token, 'POST', '/api/friends/accept', {userId: б.user.id});
-  const r = await api(б.token, 'POST', '/api/sessions', {invitees: [в.user.id], hallCode: 'k4p2m', song: 'Когда теряем'});
-  assert.equal(r.status, 201);
-  assert.equal(r.data.hallCode, 'K4P2M', 'код нормализован к алфавиту залов');
-  /* подпись события уходит по WS — проверим сырым клиентом ws из node_modules сервера */
+  /* подпись события уходит по WS — проверим сырым клиентом ws из node_modules сервера.
+     v1.25.1 (ревью S1): вход в ws — ТОЛЬКО через одноразовый короткоживущий ticket;
+     токен в query закрыт навсегда (долгий секрет не должен жить в URL).
+     Порядок важен: приглашение ставится в очередь ПОСЛЕ негативных проверок —
+     иначе проверочный сокет съест флаш доставки. */
   const {createRequire} = require('node:module');
   const req2 = createRequire(path.join(ROOT, 'server', 'package.json'));
   const WebSocket = req2('ws');
-  const got = await new Promise((resolve, reject) => {
+  /* ticket без токена не выдаётся */
+  const anonTicket = await fetch(BASE + '/api/ws/ticket', {method: 'POST', body: '{}', headers: {'content-type': 'application/json'}});
+  assert.equal(anonTicket.status, 401, 'ticket без Bearer — 401');
+  /* token в query больше не пускает в ws */
+  const отвергнут = await new Promise((resolve) => {
     const ws = new WebSocket(BASE.replace('http', 'ws') + '/ws?token=' + encodeURIComponent(в.token));
-    const таймер = setTimeout(() => { ws.close(); reject(new Error('WS не доставил приглашение')); }, 4000);
-    ws.on('message', raw => {
-      const m = JSON.parse(String(raw));
-      if (m.type === 'sing_invite') { clearTimeout(таймер); ws.close(); resolve(m); }
-    });
-    ws.on('error', reject);
+    ws.on('open', () => { ws.close(); resolve(false); });
+    ws.on('error', () => resolve(true));           /* сокет разрушен сервером */
+    ws.on('unexpected-response', () => resolve(true));
+    setTimeout(() => resolve(true), 2000);
+  });
+  assert.ok(отвергнут, 'ws?token= закрыт сервером навсегда');
+  /* ticket выдаётся под Bearer и пускает в ws */
+  const tr = await api(в.token, 'POST', '/api/ws/ticket', {});
+  assert.equal(tr.status, 200, 'ticket выдаётся под Bearer');
+  assert.ok(tr.data.ticket && tr.data.ttlMs <= 60000, 'ticket короткоживущий');
+  /* одноразовость: повторное использование того же ticket — отказ */
+  const базаWs = BASE.replace('http', 'ws');
+  const одинРаз = await new Promise((resolve) => {
+    const ws = new WebSocket(базаWs + '/ws?ticket=' + encodeURIComponent(tr.data.ticket));
+    ws.on('open', () => { ws.close(); resolve(true); });   /* закрыл сразу — не держу флаш приглашений */
+    ws.on('error', () => resolve(false));
+    ws.on('unexpected-response', () => resolve(false));
+    setTimeout(() => resolve(false), 2000);
+  });
+  assert.ok(одинРаз, 'свежий ticket пускает в ws');
+  const повторОтвергнут = await new Promise((resolve) => {
+    const ws = new WebSocket(базаWs + '/ws?ticket=' + encodeURIComponent(tr.data.ticket));
+    ws.on('open', () => { ws.close(); resolve(false); });
+    ws.on('error', () => resolve(true));
+    ws.on('unexpected-response', () => resolve(true));
+    setTimeout(() => resolve(true), 2000);
+  });
+  assert.ok(повторОтвергнут, 'тот же ticket второй раз НЕ пускает (одноразовость)');
+  const r = await api(б.token, 'POST', '/api/sessions', {invitees: [в.user.id], hallCode: 'k4p2m', song: 'Когда теряем'});
+  assert.equal(r.status, 201);
+  assert.equal(r.data.hallCode, 'K4P2M', 'код нормализован к алфавиту залов');
+  const got = await new Promise((resolve, reject) => {
+    api(в.token, 'POST', '/api/ws/ticket', {}).then(t2 => {
+      const ws = new WebSocket(базаWs + '/ws?ticket=' + encodeURIComponent(t2.data.ticket));
+      const таймер = setTimeout(() => { ws.close(); reject(new Error('WS не доставил приглашение')); }, 4000);
+      ws.on('message', raw => {
+        const m = JSON.parse(String(raw));
+        if (m.type === 'sing_invite') { clearTimeout(таймер); ws.close(); resolve(m); }
+      });
+      ws.on('error', reject);
+    }).catch(reject);
   });
   assert.equal(got.hallCode, 'K4P2M');
   assert.equal(got.from.name, 'Бабушка3');

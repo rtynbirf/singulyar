@@ -19,6 +19,7 @@ const TTL_TEMP_MS = Number(process.env.TTL_TEMP_MS || 604800000);   /* 7 дне�
 const MAX_FINAL_MB = Number(process.env.MAX_FINAL_MB || 60);
 const MAX_PART_MB = Number(process.env.MAX_PART_MB || 20);
 const TOKEN_TTL_MS = Number(process.env.TOKEN_TTL_MS || 43200000);  /* 12 ч */
+const TICKET_TTL_MS = Number(process.env.TICKET_TTL_MS || 30000);   /* 30 с: одноразовый билет на ws */
 const CHALLENGE_TTL_MS = 300000;                          /* 5 мин */
 const STATIC_EXT = {".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".webmanifest":"application/manifest+json",".png":"image/png",".jpg":"image/jpeg",".svg":"image/svg+xml",".md":"text/markdown; charset=utf-8",".json":"application/json"};
 const BOOT = Date.now();
@@ -37,6 +38,7 @@ const save = (f, x) => { const p = path.join(DATA, f), t = p + ".tmp"; fs.writeF
 const sessions = new Map();     /* sessionId → {id,host,hallCode,song,participants:Set,startedAt,savePolicy} */
 const sockets = new Map();      /* uid → Set<ws> */
 const tokens = new Map();       /* token → {uid,exp} */
+const tickets = new Map();      /* ticket → {uid,exp} — одноразовый вход в ws (v1.25.1: токен больше не ездит в query) */
 const challenges = new Map();   /* uid → {c,exp} */
 const inbox = new Map();        /* uid → [{m,exp}] — живые события ждут, пока человек появится (косяк прототипа: сообщение в пустоту) */
 const INVITE_TTL_MS = 86400000; /* приглашение живёт сутки — дальше зал неактуален */
@@ -106,6 +108,7 @@ function gc() {
     }
   }
   for (const [t, a] of tokens) if (a.exp < now()) tokens.delete(t);
+  for (const [t, a] of tickets) if (a.exp < now()) tickets.delete(t);
   for (const [uid, ch] of challenges) if (ch.exp < now()) challenges.delete(uid);
   if (удалено) save("recordings.json", recs);
   return удалено;
@@ -168,6 +171,15 @@ async function route(req, res) {
 
   const me = auth(req);
   if (!me) return json(res, 401, {error: "unauthorized"});
+
+  /* v1.25.1 (ревью S1): короткоживущий одноразовый билет на ws-рукопожатие.
+     Долгий токен больше не ездит в URL (логи/прокси/истории браузера его копили);
+     ticket живёт 30 с, гасится при первом использовании, проверяется и в gc(). */
+  if (req.method === "POST" && u.pathname === "/api/ws/ticket") {
+    const t = crypto.randomBytes(32).toString("base64url");
+    tickets.set(t, {uid: me, exp: now() + TICKET_TTL_MS});
+    return json(res, 200, {ticket: t, ttlMs: TICKET_TTL_MS});
+  }
 
   if (req.method === "GET" && u.pathname === "/api/me") {
     const входящие = rel.filter(r => r.state === "pending" && r.b === me).map(r => users[r.a]).filter(Boolean).map(pub);
@@ -344,8 +356,12 @@ const server = http.createServer((req, res) => route(req, res).catch(e => {
 const wss = new WebSocketServer({noServer: true});
 server.on("upgrade", (req, socket, head) => {
   const u = new URL(req.url, `http://${req.headers.host}`);
-  const a = tokens.get(u.searchParams.get("token") || "");
-  if (u.pathname !== "/ws" || !a) return socket.destroy();
+  /* v1.25.1 (ревью S1): только одноразовый ticket — путь /ws?token= закрыт НАВСЕГДА */
+  const tk = u.searchParams.get("ticket") || "";
+  const a = tickets.get(tk);
+  if (u.pathname !== "/ws" || !a) { if (tk) tickets.delete(tk); return socket.destroy(); }
+  if (a.exp < now()) { tickets.delete(tk); return socket.destroy(); }
+  tickets.delete(tk);   /* одноразовость: второй раз тот же ticket не впустит */
   wss.handleUpgrade(req, socket, head, ws => {
     const uid = a.uid;
     let set = sockets.get(uid);

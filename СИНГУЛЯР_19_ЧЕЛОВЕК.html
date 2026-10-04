@@ -157,6 +157,11 @@ footer{margin-top:46px;border-top:1px solid var(--line);padding-top:16px;color:v
    4. МОИ ЛЮДИ + INVITE: связь принимается человеком; «позвать спеть» → зал ·18 (?зал=КОД / ?хост=КОД). */
 
 const $ = function (s, r) { return (r || document).querySelector(s); };
+/* v1.25.1: тихие ошибки перестают быть безмолвными — reportError (браузерный)
+   показывает их в консоли с координатами; горячие пути молчат СОЗНАННО. */
+function сообщиОбОшибке(е) {
+  try { if (typeof reportError === 'function') reportError(е); else console.error(е); } catch (х) { /* консоль недоступна — тишина честнее падения */ }
+}
 function эл(тег, атр, дети) {
   const n = document.createElement(тег);
   if (атр) for (const k in атр) {
@@ -192,7 +197,9 @@ const АДАПТАЦИЯ = (function () {
       уведомления: ('Notification' in window),
       синтезРечи: ('speechSynthesis' in window),
       сниженноеДвижение: !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches),
-      подсказкаЭкранчик: /NVDA|JAWS|VoiceOver|TalkBack/i.test(navigator.userAgent || ''),
+      /* v1.25.1 (ревью): UA-сниффинг экранных читалок УБРАН — догадка по User-Agent
+         была и ненадёжной, и лишней телеметрией. АТ-каналы (aria-live) работают всегда;
+         решение человека включить/выключить каналы уже живёт в предпочтениях. */
       микрофон: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
     };
   }
@@ -336,11 +343,31 @@ const СЕРВЕР = (function () {
   function соединить(приём) {
     if (!url || !токен) return;
     if (ws) { try { ws.onclose = null; ws.close(); } catch (e) {} }
-    const u = url.replace(/^http/, 'ws') + '/ws?token=' + encodeURIComponent(токен);
-    try { ws = new WebSocket(u); } catch (e) { return; }
-    ws.onopen = function () { wsЖив = true; if (приём) приём({ type: 'ws', online: true }); };
-    ws.onmessage = function (e) { let м = null; try { м = JSON.parse(e.data); } catch (о) { return; } if (приём) приём(м); };
-    ws.onclose = function () { wsЖив = false; if (приём) приём({ type: 'ws', online: false }); clearTimeout(перепод); перепод = setTimeout(function () { соединить(приём); }, 2500); };
+    /* S1-ИНВАРИАНТ (v1.25.1, ревью): страница говорит с сервером ТОЛЬКО по wss.
+       ws:// разрешён только для localhost/127.0.0.1/[::1] (отладка). http:// к
+       нелокальному серверу = честный отказ, не тихое падение в mixed content.
+       Токен в query больше НЕ ездит: он попадал в логи и прокси. Вместо него —
+       одноразовый короткоживущий ticket (30 с), полученный в заголовке Bearer. */
+    let база = null;
+    try { база = new URL(url); } catch (e) { return; }
+    const лок = база.hostname === 'localhost' || база.hostname === '127.0.0.1' || база.hostname === '[::1]';
+    const wsХост = база.protocol === 'https:' ? 'wss://' + база.host
+      : база.protocol === 'http:' ? (лок ? 'ws://' + база.host : null) : null;
+    if (!wsХост) {
+      сообщиОбОшибке(new Error('S1-инвариант: ws:// разрешён только для localhost — серверу ' + url + ' нужна HTTPS-адресация'));
+      if (приём) приём({ type: 'ws', online: false, error: 'insecure_ws_refused' });
+      return;
+    }
+    api('/api/ws/ticket', { method: 'POST', body: {} }).then(function (о) {
+      if (!о || !о.ticket) throw new Error('ticket не выдан');
+      try { ws = new WebSocket(wsХост + '/ws?ticket=' + encodeURIComponent(о.ticket)); } catch (e) { return; }
+      ws.onopen = function () { wsЖив = true; if (приём) приём({ type: 'ws', online: true }); };
+      ws.onmessage = function (e) { let м = null; try { м = JSON.parse(e.data); } catch (о) { return; } if (приём) приём(м); };
+      ws.onclose = function () { wsЖив = false; if (приём) приём({ type: 'ws', online: false }); clearTimeout(перепод); перепод = setTimeout(function () { соединить(приём); }, 2500); };
+    }).catch(function (е) {
+      сообщиОбОшибке(е);
+      if (приём) приём({ type: 'ws', online: false, error: 'ticket: ' + ((е && е.message) || е) });
+    });
   }
   return {
     задать: задать, адрес: адрес, есть: есть, api: api, здоров: здоров, вход: вход, registered: registered,
@@ -366,7 +393,8 @@ import('./БИБЛИОТЕКИ/кристалл/bridges.mjs').then(function (м)
 }).then(function () {
   МОСТ.готов = !!(МОСТ.б && МОСТ.б.готов);
   if (С.личность) мостВнеси(С.личность, СЕРВЕР.кто ? !!СЕРВЕР.кто() : false);
-}).catch(function () {
+}).catch(function (е) {
+  сообщиОбОшибке(е);
   МОСТ.готов = false; МОСТ.б = null;
 });
 function мостВнеси(л, подписана) {
@@ -393,7 +421,7 @@ function отрисоватьВозможности() {
   const строки = [
     ['клавиатура', кап.клавиатура], ['касание', кап.касание], ['вибрация', кап.вибрация],
     ['уведомления', кап.уведомления], ['синтез речи', кап.синтезРечи],
-    ['движение меньше', кап.сниженноеДвижение], ['экранчик?', кап.подсказкаЭкранчик], ['микрофон', кап.микрофон]
+    ['движение меньше', кап.сниженноеДвижение], ['микрофон', кап.микрофон]
   ];
   строки.forEach(function (п) {
     г.appendChild(эл('div', {}, [эл('b', { text: п[1] ? 'да' : '—' }), document.createTextNode(п[0])]));
