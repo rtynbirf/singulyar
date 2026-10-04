@@ -1269,7 +1269,7 @@ function micToggle(){
     src.connect(an);
     MIC15 = { on:true, stream:stream, ctx:ctx, gain:gain, wet:wet, an:an, data:new Float32Array(an.fftSize) };
     btn.textContent = '🎤 микрофон: ВКЛ';
-    alog('микрофон включён: монитор + реверб (генерируется импульс 1.6 с)');
+    alog('микрофон включён: монитор + реверб (генерируется импульс 1,6 с)');
     micMeter();
   }).catch(function(e){
     pError(e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED' : 'S15_MIC_FAIL',
@@ -1811,7 +1811,7 @@ function toggleBlind(){
   P15.blind = !P15.blind;
   $('#chBlind').textContent = P15.blind ? '● не смотреть: ВКЛ' : 'не смотреть';
   toast(P15.blind ? 'режим «не смотреть»: строки анонсируются голосом экранного доступа' : 'режим «не смотреть» выключен');
-  srSay(P15.blind ? 'Режим не смотреть включён. Пробел — играть пауза, стрелки — строки.' : '');
+  srSay(P15.blind ? 'Режим не смотреть включён. Пробел — играть/пауза, стрелки — строки.' : '');
 }
 
 /* ── старт ── */
