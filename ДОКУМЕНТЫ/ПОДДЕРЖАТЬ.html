@@ -67,6 +67,15 @@ ul{padding-left:1.2rem}
   <h2>Принцип</h2>
   <p class="lead">PERSON CHOOSES → SYSTEM ADAPTS.</p>
   <p><a class="btn primary" href="https://github.com/rtynbirf/singulyar">Репозиторий</a></p>
+
+  <h2 id="уголок-фонда">Скромный уголок: прямая дверь фонду</h2>
+  <p class="muted">Не на лобное место — скромненько в уголочке. СИНГУЛЯР деньги не принимает и между человеком и фондом не встаёт: ни процента, ни кассы, ни чужих дядь за проценты. Если хочется помочь именно так — вот две прямые двери официального фонда имени Хелен Келлер (проверены живьём 2026-10-04). Кто дал — дал, кто не дал — не дал: вход в СИНГУЛЯР не по билету, всё полноценное и бесплатное для каждого — нищие дети, старики и незрячие пользуются в полной мере.</p>
+  <p>
+    <a class="btn" href="https://www.hki.org/donate" rel="noopener noreferrer">Прямая дверь 1 · Helen Keller International — hki.org/donate ↗</a>
+    <a class="btn" href="https://helenkellerfoundation.org/donate-now" rel="noopener noreferrer">Прямая дверь 2 · Helen Keller Eye Research Foundation — donate-now ↗</a>
+  </p>
+  <p><small class="muted" id="уголок-статус">Двери сверяются с ДОКУМЕНТЫ/SUSTAINABILITY/funding.json (поле fund_corner, allowlist-паттерн в schema.json — чужая касса в уголок физически не пролезет) тестом слоя ЖИЗНЬ.</small></p>
+  <p><small>Своих платёжных рельсов у СИНГУЛЯРА нет и не планируется без явного слова владельца: rails {} навсегда при прототипе — машина следит (if/then схемы).</small></p>
   <p><small>PROTOTYPE · рельсы не подключены · машина-проверяемая версия данных — ДОКУМЕНТЫ/SUSTAINABILITY/funding.json (schema.json + тест слоя). Перед публикацией реальных рельсов проверяются юридический статус, налоговый режим и провайдер.</small></p>
 </main>
 
@@ -88,7 +97,15 @@ const FUNDING_MIRROR = {
   "goals": [
     ["accessibility-test-pack","Accessibility Test Pack",300,["keyboard-only audit","screen-reader regression scenarios","mobile accessibility checks","published result report"]],
     ["relay-lab","Communication Relay Lab",500,["WebRTC relay test matrix","connection fallback measurements","documented infrastructure cost"]]
-  ]
+  ],
+  "fund_corner": {
+    "id": "helen-keller-direct",
+    "title": "Прямая дверь фонду имени Хелен Келлер — без посредников и процентов",
+    "doors": [
+      ["https://www.hki.org/donate","Helen Keller International — hki.org/donate","2026-10-04"],
+      ["https://helenkellerfoundation.org/donate-now","Helen Keller Eye Research Foundation — donate-now","2026-10-04"]
+    ]
+  }
 };
 const railsNote = '<p class="muted">○ рельсы не подключены · активация — решение владельца</p>';
 document.querySelector("#tiers").innerHTML = FUNDING_MIRROR.tiers.map(t =>

@@ -12,11 +12,46 @@
     "public_claims_require_evidence"
   ],
   "tiers": [
-    { "id": "friend", "kind": "monthly", "amount": 3, "currency": "EUR", "title": "FRIEND", "description": "Помочь проекту продолжать жить." },
-    { "id": "supporter", "kind": "monthly", "amount": 10, "currency": "EUR", "title": "SUPPORTER", "description": "Поддержать maintenance, документацию и тесты." },
-    { "id": "accessibility", "kind": "monthly", "amount": 25, "currency": "EUR", "title": "ACCESSIBILITY", "description": "Поддержать accessibility regression testing." },
-    { "id": "infrastructure", "kind": "monthly", "amount": 100, "currency": "EUR", "title": "INFRASTRUCTURE", "description": "Поддержать тестовую и сетевую инфраструктуру." },
-    { "id": "partner", "kind": "one_time", "amount": 500, "currency": "EUR", "title": "PARTNER", "description": "Профинансировать измеримый инженерный результат." }
+    {
+      "id": "friend",
+      "kind": "monthly",
+      "amount": 3,
+      "currency": "EUR",
+      "title": "FRIEND",
+      "description": "Помочь проекту продолжать жить."
+    },
+    {
+      "id": "supporter",
+      "kind": "monthly",
+      "amount": 10,
+      "currency": "EUR",
+      "title": "SUPPORTER",
+      "description": "Поддержать maintenance, документацию и тесты."
+    },
+    {
+      "id": "accessibility",
+      "kind": "monthly",
+      "amount": 25,
+      "currency": "EUR",
+      "title": "ACCESSIBILITY",
+      "description": "Поддержать accessibility regression testing."
+    },
+    {
+      "id": "infrastructure",
+      "kind": "monthly",
+      "amount": 100,
+      "currency": "EUR",
+      "title": "INFRASTRUCTURE",
+      "description": "Поддержать тестовую и сетевую инфраструктуру."
+    },
+    {
+      "id": "partner",
+      "kind": "one_time",
+      "amount": 500,
+      "currency": "EUR",
+      "title": "PARTNER",
+      "description": "Профинансировать измеримый инженерный результат."
+    }
   ],
   "goals": [
     {
@@ -45,5 +80,22 @@
       ]
     }
   ],
-  "last_verified": "2026-10-04"
+  "last_verified": "2026-10-04",
+  "fund_corner": {
+    "id": "helen-keller-direct",
+    "title": "Прямая дверь фонду имени Хелен Келлер — без посредников и процентов",
+    "note": "СИНГУЛЯР между человеком и фондом не встаёт: ни процента, ни кассы. Кто дал — дал, кто не дал — не дал; вход не по билету, продукт полный и свободный для каждого.",
+    "doors": [
+      {
+        "url": "https://www.hki.org/donate",
+        "label": "Helen Keller International — hki.org/donate",
+        "verified": "2026-10-04"
+      },
+      {
+        "url": "https://helenkellerfoundation.org/donate-now",
+        "label": "Helen Keller Eye Research Foundation — donate-now",
+        "verified": "2026-10-04"
+      }
+    ]
+  }
 }
