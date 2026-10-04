@@ -110,16 +110,27 @@ test('ПОДДЕРЖАТЬ.html: честный статус — не платё
   assert.match(СТРАНИЦА, /рельсы не подключены/i);
 });
 
-test('ПОДДЕРЖАТЬ.html: НИ ОДНОЙ рельсы — ни кнопки оплаты, ни адреса, ни ключа', () => {
+test('ПОДДЕРЖАТЬ.html: НИ ОДНОЙ рельсы — ни кнопки оплаты, ни адреса, ни ключа (УГОЛОК: allowlist фонда)', () => {
+  /* v1.26.5 «ЛАДОНЬ · УГОЛОК»: прямые двери официальному фонду имени Хелен Келлер —
+     единственное честное исключение (мимо чужих дядь за проценты). Всё остальное — запрещено. */
+  const ДОПУСТИМО = /^https:\/\/(www\.)?(hki\.org|helenkellerfoundation\.org)\//;
   const запрещённое = [
     /sponsors\//i, /paypal/i, /stripe/i, /patreon/i, /opencollective/i,
     /webmoney/i, /yoomoney/i, /lnbc/i, /lightning:/i,
-    /\bbc1[a-z0-9]{8,}/i, /\b0x[a-f0-9]{20,}/i, /checkout/i, /donate\.|\/donate/i
+    /\bbc1[a-z0-9]{8,}/i, /\b0x[a-f0-9]{20,}/i, /checkout/i
   ];
   for (const р of запрещённое) assert.equal(р.test(СТРАНИЦА), false, 'запрещённый след на странице: ' + р);
   for (const р of запрещённое) assert.equal(р.test(JSON.stringify(FUNDING)), false, 'запрещённый след в funding.json: ' + р);
-  assert.equal(/<a [^>]*href="https?:\/\/(?!github\.com\/rtynbirf\/singulyar)/.test(СТРАНИЦА), false,
-    'внешняя ссылка допустима только на репозиторий');
+  const внешние = СТРАНИЦА.match(/href="https?:\/\/([^"]+)/g) || [];
+  for (const ссылка of внешние) {
+    const у = ссылка.slice(6);
+    const ок = у.startsWith('https://github.com/rtynbirf/singulyar') || ДОПУСТИМО.test(у);
+    assert.ok(ок, 'внешняя ссылка вне allowlist: ' + у);
+  }
+  /* /donate-след допустим ТОЛЬКО внутри допустимых доменов фонда */
+  for (const м of СТРАНИЦА.match(/https?:\/\/[^"'\s<>]*donate[^"'\s<>]*/g) || []) {
+    assert.ok(ДОПУСТИМО.test(м), 'donate-ссылка вне доменов фонда: ' + м);
+  }
 });
 
 test('ПОДДЕРЖАТЬ.html: зеркало данных == funding.json (уровни, суммы, цели)', () => {
@@ -188,4 +199,32 @@ test('страница и слой: governance-пять на странице (�
   const ожидания = ['Accessibility не является PRO-функцией', 'Спонсор не получает права менять roadmap',
     'Данные пользователей не продаются', 'должны иметь evidence', 'новая запись, а не тихое редактирование'];
   for (const о of ожидания) assert.ok(СТРАНИЦА.includes(о), 'на странице: ' + о);
+});
+
+test('УГОЛОК 17: allowlist ВСЕХ https-строк funding.json — чужая касса в слой не пролезет (v1.26.5)', () => {
+  const ДОПУСТИМО = /^https:\/\/(www\.)?(hki\.org|helenkellerfoundation\.org)\//;
+  const строки = JSON.stringify(FUNDING).match(/https:\/\/[^"\\]+/g) || [];
+  assert.ok(строки.length >= 2, 'двери фонда в funding.json объявлены');
+  for (const у of строки) assert.ok(ДОПУСТИМО.test(у), 'https-строка вне allowlist фонда: ' + у);
+  /* рельсы при этом обязаны остаться пустыми (if/then) */
+  if (FUNDING.status === 'PROTOTYPE_NO_RAILS') assert.deepEqual(FUNDING.rails, {});
+});
+
+test('УГОЛОК 18: скромненько в уголочке — зеркало↔funding.json, обе двери, не по билету (v1.26.5)', () => {
+  assert.ok(FUNDING.fund_corner, 'fund_corner в funding.json');
+  const м = СТРАНИЦА.match(/const FUNDING_MIRROR = (\{[\s\S]*?\n\});/);
+  const зеркало = JSON.parse(м[1]);
+  assert.equal(зеркало.fund_corner.id, FUNDING.fund_corner.id, 'зеркало уголка: id совпадает');
+  assert.deepEqual(зеркало.fund_corner.doors.map(d => d[0]), FUNDING.fund_corner.doors.map(d => d.url),
+    'зеркало уголка: обе двери совпадают с funding.json');
+  /* обе двери — буквальными ссылками на странице (работают офлайн-навигацией и без JS) */
+  for (const д of FUNDING.fund_corner.doors) assert.ok(СТРАНИЦА.includes('href="' + д.url + '"'), 'дверь на странице: ' + д.url);
+  /* честные слова владельца */
+  assert.match(СТРАНИЦА, /не по билету/);
+  assert.match(СТРАНИЦА, /ни процента/);
+  assert.match(СТРАНИЦА, /Кто дал — дал, кто не дал — не дал/);
+  /* скромное положение: уголок ПОСЛЕ главных разделов, не лобное место */
+  const уголок = СТРАНИЦА.indexOf('уголок-фонда');
+  const оглав = СТРАНИЦА.indexOf('<h2>Поддержка</h2>');
+  assert.ok(уголок > оглав > 0 && уголок > СТРАНИЦА.indexOf('Governance'), 'уголок стоит скромно, после основного');
 });
