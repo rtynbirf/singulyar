@@ -243,7 +243,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <ol>
       <li>Открой сайт именно в <b>Safari</b> (не в Chrome — iOS разрешает установку только через Safari).</li>
       <li>Кнопка <b>«Поделиться»</b> (квадрат со стрелкой вверх).</li>
-      <li>Прокрути и выбери <b>«На экран «Домой»»</b> → <b>«Добавить»</b>.</li>
+      <li>Прокрути и выбери <b>«На экран „Домой“»</b> → <b>«Добавить»</b>.</li>
     </ol>
     <p class="пимечт">Иконка появится рядом с приложениями. Свайп по центру снизу — домой к СИНГУЛЯРУ.</p>
   </details>
@@ -1489,7 +1489,7 @@ function попробуйУстановить(){
   if (!отложенныйПромпт) {
     /* нет промпта: iOS или уже установлено — честно ведём к инструкции */
     const иос = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    тост(иос ? 'В Safari: «Поделиться» → «На экран «Домой»»' : 'Твой браузер предложит установку в меню — см. подсказки ниже');
+    тост(иос ? 'В Safari: «Поделиться» → «На экран „Домой“»' : 'Твой браузер предложит установку в меню — см. подсказки ниже');
     откройВкладку('me');
     return;
   }
@@ -1500,7 +1500,7 @@ $('btnInstall').addEventListener('click', попробуйУстановить);
 $('btnInstall2').addEventListener('click', попробуйУстановить);
 window.addEventListener('appinstalled', function(){ тост('🎤 СИНГУЛЯР установлен — открой с рабочего стола'); });
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
-  navigator.serviceWorker.register('sw15.js').catch(function(){ /* офлайн-кеш появится при следующем визите */ });
+  navigator.serviceWorker.register('sw15.js').catch(function(){ /* офлайн-кэш появится при следующем визите */ });
 }
 
 /* ───────────── 16 · ИНИЦИАЛИЗАЦИЯ ───────────── */

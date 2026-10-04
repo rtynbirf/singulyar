@@ -162,7 +162,7 @@
     var gear = el('button', {
         id: 'sux-gear',
         type: 'button',
-        'aria-label': 'Настройки и навигация Сингуляр. Перетащите в удобное место — позиция запомнится. Клавиша S.',
+        'aria-label': 'Настройки и навигация СИНГУЛЯР. Перетащите в удобное место — позиция запомнится. Клавиша S.',
         'aria-expanded': 'false',
         'aria-haspopup': 'dialog',
         title: 'Настройки (S) · потяните, чтобы передвинуть'
@@ -205,7 +205,7 @@
     }
 
     // ── 6. Панель (role=dialog, ловушка фокуса, возврат фокуса) ──
-    var panel = el('div', { id: 'sux-panel', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Быстрые настройки Сингуляр' });
+    var panel = el('div', { id: 'sux-panel', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Быстрые настройки СИНГУЛЯР' });
 
     var head = el('h2');
     var headIcon = el('span', null, '⚙');
