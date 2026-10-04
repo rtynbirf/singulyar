@@ -1,0 +1,49 @@
+{
+  "schema": "singulyar-funding/v0.1",
+  "status": "PROTOTYPE_NO_RAILS",
+  "activation": "деньги включаются только явным решением владельца проекта; эта константа и поле rails меняются одним тактом с публичным отчётом",
+  "currency_display": "EUR",
+  "rails": {},
+  "principles": [
+    "accessibility_is_not_premium",
+    "person_chooses_system_adapts",
+    "no_user_data_sales",
+    "sponsor_does_not_own_roadmap",
+    "public_claims_require_evidence"
+  ],
+  "tiers": [
+    { "id": "friend", "kind": "monthly", "amount": 3, "currency": "EUR", "title": "FRIEND", "description": "Помочь проекту продолжать жить." },
+    { "id": "supporter", "kind": "monthly", "amount": 10, "currency": "EUR", "title": "SUPPORTER", "description": "Поддержать maintenance, документацию и тесты." },
+    { "id": "accessibility", "kind": "monthly", "amount": 25, "currency": "EUR", "title": "ACCESSIBILITY", "description": "Поддержать accessibility regression testing." },
+    { "id": "infrastructure", "kind": "monthly", "amount": 100, "currency": "EUR", "title": "INFRASTRUCTURE", "description": "Поддержать тестовую и сетевую инфраструктуру." },
+    { "id": "partner", "kind": "one_time", "amount": 500, "currency": "EUR", "title": "PARTNER", "description": "Профинансировать измеримый инженерный результат." }
+  ],
+  "goals": [
+    {
+      "id": "accessibility-test-pack",
+      "title": "Accessibility Test Pack",
+      "target": 300,
+      "currency": "EUR",
+      "status": "PLANNED",
+      "deliverables": [
+        "keyboard-only audit",
+        "screen-reader regression scenarios",
+        "mobile accessibility checks",
+        "published result report"
+      ]
+    },
+    {
+      "id": "relay-lab",
+      "title": "Communication Relay Lab",
+      "target": 500,
+      "currency": "EUR",
+      "status": "PLANNED",
+      "deliverables": [
+        "WebRTC relay test matrix",
+        "connection fallback measurements",
+        "documented infrastructure cost"
+      ]
+    }
+  ],
+  "last_verified": "2026-10-04"
+}
