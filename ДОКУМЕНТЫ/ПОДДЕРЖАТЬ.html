@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Поддержать СИНГУЛЯР — свободный human-first проект. Страница-прототип без платёжных рельсов.">
+<title>Поддержать СИНГУЛЯР · слой ЖИЗНЬ</title>
+<style>
+:root{color-scheme:light dark;--bg:#0b1020;--fg:#f5f7fb;--muted:#aeb7ca;--card:#141b2e;--line:#2b3652;--accent:#9fe870;--warn:#e8b35c}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.55 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+main{max-width:980px;margin:auto;padding:32px 18px 70px}
+h1{font-size:clamp(2rem,5vw,4rem);line-height:1.02}
+h2{margin-top:2.2rem}
+.lead{font-size:1.2rem;color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.amount{font-size:1.7rem;font-weight:800}
+.tag{display:inline-block;padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.82rem}
+a,button{font:inherit}
+.btn{display:inline-block;margin:5px 5px 5px 0;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none;font-weight:700}
+.btn.primary{background:var(--accent);color:#10150d;border-color:var(--accent)}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+small,.muted{color:var(--muted)}
+.warning{border-left:4px solid var(--warn);padding:12px 16px;background:#171a22}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:7px 18px}
+.bar{height:12px;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent)}
+ul{padding-left:1.2rem}
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">ЖИЗНЬ · SUSTAINABILITY v1.26 · ПРОТОТИП БЕЗ РЕЛЬСОВ</span>
+  <h1>Поддержать СИНГУЛЯР</h1>
+  <p class="lead"><b>СИНГУЛЯР не продаёт свободу человека.</b> Поддержка помогает оплачивать разработку, accessibility-тестирование, инфраструктуру и документацию.</p>
+
+  <div class="warning" role="note">
+    <strong>Честный статус:</strong> эта страница не является платёжным процессором и не принимает деньги. Платёжные рельсы не подключены. <strong>Не вводите платёжные данные в эту страницу</strong> — их некуда вводить, и это сделано сознанно. Активация поддержки — отдельное решение владельца проекта.
+  </div>
+
+  <h2>Поддержка</h2>
+  <p class="muted">Уровни ниже — конфигурация будущего, а не работающая касса. Когда рельсы появятся, у каждого уровня будет честная кнопка и честный провайдер.</p>
+  <div class="grid" id="tiers" aria-live="polite"></div>
+
+  <h2>Финансируем результат</h2>
+  <p class="muted">Финансирование считается выполненным не по факту платежа, а по факту публикации результата.</p>
+  <div class="grid" id="goals" aria-live="polite"></div>
+
+  <h2>Куда идут деньги</h2>
+  <div class="grid">
+    <div class="card"><b>Разработка</b><p class="muted">core, adapters, tests, maintenance.</p></div>
+    <div class="card"><b>Accessibility</b><p class="muted">screen readers, keyboard, mobile, real-user tests.</p></div>
+    <div class="card"><b>Инфраструктура</b><p class="muted">hosting, relay/testing, build infrastructure.</p></div>
+    <div class="card"><b>Документация</b><p class="muted">evidence, reproducibility, grant readiness.</p></div>
+  </div>
+
+  <h2>Governance</h2>
+  <ul>
+    <li>Accessibility не является PRO-функцией.</li>
+    <li>Спонсор не получает права менять roadmap.</li>
+    <li>Данные пользователей не продаются.</li>
+    <li>Существенные финансовые факты должны иметь evidence.</li>
+    <li>Исправление ledger — новая запись, а не тихое редактирование.</li>
+  </ul>
+
+  <h2>Принцип</h2>
+  <p class="lead">PERSON CHOOSES → SYSTEM ADAPTS.</p>
+  <p><a class="btn primary" href="https://github.com/rtynbirf/singulyar">Репозиторий</a></p>
+  <p><small>PROTOTYPE · рельсы не подключены · машина-проверяемая версия данных — ДОКУМЕНТЫ/SUSTAINABILITY/funding.json (schema.json + тест слоя). Перед публикацией реальных рельсов проверяются юридический статус, налоговый режим и провайдер.</small></p>
+</main>
+
+<script>
+/* Зеркало ДОКУМЕНТЫ/SUSTAINABILITY/funding.json — сверяется тестом слоя.
+   Носитель данных в 2026-м — funding.json; страница автономна и живёт без сети. */
+const FUNDING_MIRROR = {
+  "schema": "singulyar-funding/v0.1",
+  "status": "PROTOTYPE_NO_RAILS",
+  "currency_display": "EUR",
+  "rails": {},
+  "tiers": [
+    ["friend","monthly",3,"FRIEND","Помочь проекту продолжать жить."],
+    ["supporter","monthly",10,"SUPPORTER","Поддержать maintenance, документацию и тесты."],
+    ["accessibility","monthly",25,"ACCESSIBILITY","Поддержать accessibility regression testing."],
+    ["infrastructure","monthly",100,"INFRASTRUCTURE","Поддержать тестовую и сетевую инфраструктуру."],
+    ["partner","one_time",500,"PARTNER","Профинансировать измеримый инженерный результат."]
+  ],
+  "goals": [
+    ["accessibility-test-pack","Accessibility Test Pack",300,["keyboard-only audit","screen-reader regression scenarios","mobile accessibility checks","published result report"]],
+    ["relay-lab","Communication Relay Lab",500,["WebRTC relay test matrix","connection fallback measurements","documented infrastructure cost"]]
+  ]
+};
+const railsNote = '<p class="muted">○ рельсы не подключены · активация — решение владельца</p>';
+document.querySelector("#tiers").innerHTML = FUNDING_MIRROR.tiers.map(t =>
+  '<article class="card"><span class="tag">' + t[3] + '</span><div class="amount">€' + t[2] + '</div><p class="muted">' + t[4] + '</p>' + railsNote + '</article>'
+).join("");
+document.querySelector("#goals").innerHTML = FUNDING_MIRROR.goals.map(g =>
+  '<article class="card"><span class="tag">GOAL</span><h3>' + g[1] + '</h3><div class="amount">€' + g[2] + '</div><div class="bar"><div class="fill"></div></div><ul>' + g[3].map(y => '<li>' + y + '</li>').join("") + '</ul></article>'
+).join("");
+</script>
+</body>
+</html>

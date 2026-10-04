@@ -1,0 +1,20 @@
+{
+  "schema": "singulyar-ledger/v0.1",
+  "status": "DEMO",
+  "warning": "THIS IS NOT REAL FINANCIAL DATA.",
+  "entries": [
+    {
+      "id": "demo-0001",
+      "date": "2026-10-04",
+      "type": "contribution",
+      "amount": 0,
+      "currency": "EUR",
+      "category": "community",
+      "status": "demo",
+      "public_note": "Template entry only.",
+      "evidence": { "level": "DEMO", "ref": "" },
+      "prev_hash": "GENESIS",
+      "hash": "DEMO"
+    }
+  ]
+}
