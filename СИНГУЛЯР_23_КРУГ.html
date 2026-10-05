@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР ·23 — КРУГ · люди, румы, звонки</title>
 <meta name="description" content="СИНГУЛЯР ·23 «КРУГ» — живой круг людей вселенной RUVSON: 16 людей с весёлыми эмодзи, румы (ПАПА-ДОМ — чат всегда сохраняется), аудио- и видеозвонки P2P, автоответчики, голосовые сообщения. Устанавливается как приложение на телефон, планшет, ноутбук и ПК.">
-<meta name="theme-color" content="#0a0f15">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
 <style>
 :root{
-  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
-  --teal:#D4AF37;--teal2:#F0D78C;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#C8CCD2;
+  --bg:#0A0A0C;--panel:#1A1D23;--panel2:#121418;--line:#2E3033;--tx:#E8E8E8;--dim:#8A9099;
+  --teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#f87171;--green:#2FA36B;--violet:#C8CCD2;
   --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
   --r:14px;
 }
@@ -30,19 +30,19 @@ a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input,textarea{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 input:focus,textarea:focus{outline:2px solid var(--teal2);outline-offset:1px}
-::placeholder{color:#5d7180}
+::placeholder{color:#6B7178}
 
 /* ── шапка ── */
 header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
 .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
 .hd b{font-size:16px;display:block;line-height:1.2}
 .hd span{color:var(--dim);font-size:12px;display:block}
 .я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
-.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#16191E;font-size:16px;flex:none}
 .я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
-.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
 
 /* ── табы ── */
 nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
@@ -65,7 +65,7 @@ h2.сек:first-child{margin-top:4px}
 /* ── список рум ── */
 .list{display:flex;flex-direction:column;gap:8px}
 .room{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
-.room:hover{border-color:#2e4155;text-decoration:none}
+.room:hover{border-color:#3F4247;text-decoration:none}
 .room .ав{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:26px;background:var(--panel2);flex:none}
 .room .тело{flex:1;min-width:0}
 .room .имя{font-weight:700;display:flex;gap:8px;align-items:center}
@@ -74,20 +74,20 @@ h2.сек:first-child{margin-top:4px}
 .room .превью b{color:var(--tx);font-weight:600}
 .room .мета{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
 .room .время{color:var(--dim);font-size:11.5px;font-family:var(--mono)}
-.room .бейдж{background:var(--teal);color:#04121c;font-weight:800;border-radius:999px;font-size:11.5px;padding:1px 7px}
+.room .бейдж{background:var(--teal);color:#0A0A0C;font-weight:800;border-radius:999px;font-size:11.5px;padding:1px 7px}
 .room .онлайн{width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;box-shadow:0 0 6px var(--green)}
 
 /* ── люди ── */
 .people{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
 .person{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px 12px;text-align:center;cursor:pointer}
-.person:hover{border-color:#2e4155}
+.person:hover{border-color:#3F4247}
 .person .ав{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:var(--panel2)}
 .person b{font-size:14px}
 .person small{color:var(--dim);font-size:11px;line-height:1.3}
 .person .ряд{display:flex;gap:6px;margin-top:6px}
 .person .ряд button{width:38px;height:34px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);font-size:16px}
 .person .ряд button:hover{border-color:var(--teal)}
-.точка{width:9px;height:9px;border-radius:50%;background:#4a5a68;display:inline-block;margin-left:6px}
+.точка{width:9px;height:9px;border-radius:50%;background:#52555A;display:inline-block;margin-left:6px}
 .точка.on{background:var(--green);box-shadow:0 0 6px var(--green)}
 
 /* ── чат ── */
@@ -107,7 +107,7 @@ h2.сек:first-child{margin-top:4px}
 .composer{position:sticky;bottom:66px;display:flex;gap:8px;background:var(--bg);padding:8px 0}
 .composer input{flex:1;border-radius:999px;padding:11px 16px}
 .composer button{width:46px;height:46px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:19px;flex:none}
-.composer button.послать{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;border:none;font-weight:800}
+.composer button.послать{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;border:none;font-weight:800}
 .rec-бар{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
 .rec-точка{width:11px;height:11px;border-radius:50%;background:var(--red);animation:пульс 1s infinite}
 @keyframes пульс{50%{opacity:.25}}
@@ -116,7 +116,7 @@ h2.сек:first-child{margin-top:4px}
 /* ── звонки ── */
 .звон-настройки{margin-top:14px}
 .перекл{display:flex;align-items:center;gap:10px;padding:8px 0}
-.перекл .гальо{width:44px;height:26px;border-radius:999px;background:#33404c;position:relative;flex:none;transition:background .2s}
+.перекл .гальо{width:44px;height:26px;border-radius:999px;background:#3F4247;position:relative;flex:none;transition:background .2s}
 .перекл .гальо::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
 .перекл .гальо[aria-checked="true"]{background:var(--green)}
 .перекл .гальо[aria-checked="true"]::after{left:21px}
@@ -138,7 +138,7 @@ h2.сек:first-child{margin-top:4px}
 .идент-карт[aria-pressed="true"]{border-color:var(--teal);background:#0f2620}
 
 /* звонковый оверлей */
-.звон-овер{position:fixed;inset:0;z-index:70;background:#050b10;display:none;flex-direction:column}
+.звон-овер{position:fixed;inset:0;z-index:70;background:#0A0A0C;display:none;flex-direction:column}
 .звон-овер.on{display:flex}
 .звон-овер .верх{padding:max(20px,env(safe-area-inset-top)) 18px 8px;text-align:center}
 .звон-овер .ав{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:52px;background:var(--panel);margin:18px auto 10px;border:2px solid var(--line)}
@@ -152,8 +152,8 @@ h2.сек:first-child{margin-top:4px}
 .видео-зона video.моё-вид{position:absolute;right:14px;bottom:14px;width:110px;height:150px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
 .звон-кнопки{display:flex;justify-content:center;gap:18px;padding:18px 12px calc(20px + env(safe-area-inset-bottom))}
 .звон-кнопки button{width:64px;height:64px;border-radius:50%;font-size:26px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel)}
-.звон-кнопки .принять{background:var(--green);color:#04121c;border:none}
-.звон-кнопки .отклонить{background:var(--red);color:#04121c;border:none}
+.звон-кнопки .принять{background:var(--green);color:#0A0A0C;border:none}
+.звон-кнопки .отклонить{background:var(--red);color:#0A0A0C;border:none}
 .звон-кнопки button.выкл{opacity:.45}
 .звон-кнопки small{display:block;font-size:9.5px;margin-top:2px;font-family:var(--mono)}
 
@@ -171,7 +171,7 @@ details.уст .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
 .сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
 footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
 .toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
-.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast{background:#16191E;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 @media (max-width:640px){
   .wrap{padding:0 10px}
   .people{grid-template-columns:repeat(auto-fill,minmax(124px,1fr))}
@@ -319,7 +319,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <input id="идентВвод" placeholder="например: ГОСТЬ МАША или КАПИТАН ДИМА" style="margin-top:6px">
     <div class="status" id="идентСтатус" role="status"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:12px">войти в круг →</button>
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:800;border-radius:12px;padding:12px">войти в круг →</button>
     </div>
   </div>
 </div>

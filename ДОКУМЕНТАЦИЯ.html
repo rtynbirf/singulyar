@@ -10,13 +10,13 @@
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <style>
-:root{--bg:#0A0A0C;--panel:rgba(255,255,255,.035);--line:rgba(212,175,55,.18);--tx:#ece9e2;--dim:#9a958c;--gold:#D4AF37;--gold2:#F0D78C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+:root{--bg:#0A0A0C;--panel:rgba(255,255,255,.035);--line:rgba(240,240,248,.14);--tx:#C0C8D0;--dim:#8A9099;--gold:#D4AF37;--gold2:#F0D78C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
 .wrap{max-width:900px;margin:0 auto;padding:0 18px}
-header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(212,175,55,.05),transparent)}
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .hd{display:flex;align-items:center;gap:14px;padding:16px 0}
-.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
 .hd b{font-size:17px;display:block}.hd span{color:var(--dim);font-size:12.5px;display:block}
 h1{font-size:clamp(24px,4.5vw,36px);line-height:1.15;margin:30px 0 10px}
 h1 em{font-style:normal;color:var(--gold)}
@@ -49,6 +49,7 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
 <header><div class="wrap hd">
   <div class="logo">S·</div>
   <div><b>ДОКУМЕНТАЦИЯ ДОМА</b><span>открытый код · открытые знания: бери, читай, проверяй — здесь каждый сам хозяин</span></div>
+  <div class="badge">открытый код · офлайн</div>
 </div></header>
 
 <main class="wrap">
@@ -165,5 +166,13 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
 <a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> ·
 <a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" title="Установить дом как приложение">установка</a> ·
 github.com/rtynbirf/singulyar</div></footer>
-<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+<script defer src="./singulyar-ux-engine-v9.js"></script><script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+</body>
 </html>

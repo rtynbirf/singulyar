@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ПРОТОКОЛ ВЫВОДА НА ЭКРАН · СИНГУЛЯР</title>
 <style>
-:root{--bg:#07080d;--bg2:#0d0f17;--card:#12141f;--line:#232739;--tx:#e8eaf2;--dim:#9aa1b5;--ac:#D4AF37;--ac2:#fbbf24;--bad:#f87171;--mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
+:root{--bg:#0A0A0C;--bg2:#121418;--card:rgba(26,29,35,.55);--line:rgba(240,240,248,.14);--tx:#C0C8D0;--dim:#8A9099;--ac:#D4AF37;--ac2:#F5A623;--bad:#f87171;--mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--tx);font:16px/1.65 -apple-system,'Segoe UI',Roboto,sans-serif;padding:32px 16px 80px}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 -apple-system,'Segoe UI',Roboto,sans-serif;padding:0 16px 80px}
 .wrap{max-width:920px;margin:0 auto}
 h1{font-size:26px;letter-spacing:.04em;margin-bottom:6px}
 h1 .dot{color:var(--ac)}
@@ -27,7 +27,7 @@ ol,ul{margin:10px 0 10px 22px}
 li{margin:6px 0}
 .gates li{list-style:none;margin:8px 0;padding-left:26px;position:relative}
 .gates li::before{content:"[ ]";position:absolute;left:0;color:var(--ac2);font-family:var(--mono)}
-.flow{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.6 var(--mono);color:#a5f3fc;overflow-x:auto;white-space:pre}
+.flow{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:16px;font:13px/1.6 var(--mono);color:#F0D78C;overflow-x:auto;white-space:pre}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
 .chan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .chan b{color:var(--ac);display:block;margin-bottom:6px;letter-spacing:.04em}
@@ -37,12 +37,24 @@ li{margin:6px 0}
 .note{color:var(--dim);font-size:13.5px;margin-top:8px}
 a{color:var(--ac)}
 strong{color:#fff}
+
+  header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle,1px solid rgba(240,240,248,.14));background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+  .hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:var(--mono,ui-monospace,Consolas,monospace);flex:none}
+  .hd b{font-size:16px;display:block;line-height:1.2;color:#E8E8E8}
+  .hd span{color:var(--dim,#8A9099);font-size:12px;display:block}
+  .badge{margin-left:auto;font-family:var(--mono,ui-monospace,Consolas,monospace);font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
 <body>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
-<div class="wrap">
+<header><div class="wrap hd">
+  <div class="logo">S·</div>
+  <div><b>ПРОТОКОЛ ВЫВОДА НА ЭКРАН</b><span>доставка файла из среды ИИ во внешнюю ссылку — для любой LLM</span></div>
+  <div class="badge">v1.1 · ЯДРО VERIFIED</div>
+</div></header>
+<div class="wrap" style="padding-top:24px">
 <h1>ПРОТОКОЛ ВЫВОДА НА ЭКРАН<span class="dot"> · </span>СИНГУЛЯР</h1>
 <div class="sub">Версия 1.1 · Экспорт файла из внутренней среды ИИ во внешнюю ссылку · Для любой LLM / ИИ-агента · <span class="tag">ЯДРО VERIFIED</span><span class="tag warn">v1.0…v1.12 этим каналом</span></div>
 
@@ -259,5 +271,14 @@ curl -sL "https://filebin.net/$BIN/ФАЙЛ"                                    
 </div>
 <p class="note" style="margin-top:26px">Вся документация дома: <a href="ДОКУМЕНТАЦИЯ.html" title="Открытый код и открытые знания — бери, читай, проверяй">ДОКУМЕНТАЦИЯ.html</a></p>
 <script defer src="./singulyar-ux-engine-v9.js"></script>
+<script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-modules.js"></script>
 </body>
 </html>

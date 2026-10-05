@@ -45,12 +45,24 @@
   .зел{color:var(--зол2);font-weight:700}
   footer{margin-top:50px;text-align:center;color:var(--тускло);font-size:15px}
   @media print{body{background:#fff;color:#111}}
+
+  header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle,1px solid rgba(240,240,248,.14));background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+  .hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:var(--mono,ui-monospace,Consolas,monospace);flex:none}
+  .hd b{font-size:16px;display:block;line-height:1.2;color:#E8E8E8}
+  .hd span{color:var(--dim,#8A9099);font-size:12px;display:block}
+  .badge{margin-left:auto;font-family:var(--mono,ui-monospace,Consolas,monospace);font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
 <body>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
-<div class="лист">
+<header><div class="wrap hd">
+  <div class="logo">S·</div>
+  <div><b>ИНСТРУКЦИЯ ДОМА</b><span>читать сверху вниз · делать по шагам · думать не надо</span></div>
+  <div class="badge">единый канон · офлайн</div>
+</div></header>
+<main class="лист">
 
 <h1>ИНСТРУКЦИЯ ДОМА</h1>
 <div class="подчерк" aria-hidden="true"><i></i></div>
@@ -177,6 +189,15 @@
 
 <footer>СИНГУЛЯР · один смысл — разные представления · здесь каждый сам хозяин<br>Эта страница — часть дома: живёт на сайте, работает офлайн после установки.<br>Вся документация — <a href="ДОКУМЕНТАЦИЯ.html" title="Открытый код и открытые знания: бери, читай, проверяй">документация дома</a></footer>
 
-</div>
-<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+</main>
+<script defer src="./singulyar-ux-engine-v9.js"></script><script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-modules.js"></script>
+</body>
 </html>
