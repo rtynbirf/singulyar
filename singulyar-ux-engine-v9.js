@@ -1,7 +1,12 @@
 /*!
- * SINGULYAR UX ENGINE v9.1 «СВОБОДА ВЫБОРА» · такт v1.32.1
+ * SINGULYAR UX ENGINE v9.2 «ХОЗЯИН=ГОСТЬ» · такт v1.33.0
  * Наследник v9.0 «ПОД КАПОТ» (тот — наследник v8.0-final).
- * Главное изменение по слову владельца:
+ * Главное изменение такта v1.33.0 (слово владельца):
+ *   «НА ГЛАВНОЙ ДОЛЖНО СТОЯТЬ ТОЛЬКО ЭТО!!! … НА КАЖДОЙ ВНУТРЕННЕЙ
+ *    СТРАНИЦЕ ВСЁ ПРИВЕСТИ ТОЛЬКО К ТАКОМУ СТИЛЮ … ПОЛНОСТЮ ПРОВЕРИТЬ
+ *    НАВИГАЦИЮ ТАМ БАРДАК … УБРАЛ ВСЁ ЧТО СВЯЗАНО С ЭГО. ТУТ НЕТ
+ *    ХОЗЯИН=ГОСТЬ. КАЖДЫЙ САМ ХОЗЯИН»
+ * Изменение предыдущего такта по слову владельца:
  *   «А ГДЕ ТОГДА СИСТЕМНЫЕ? … МАЛО ЛИ ЧТО У НЕГО В ПКМ — СКОПИРОВАТЬ,
  *    ОТПРАВИТЬ, ПОДЕЛИТЬСЯ… ТЫ ЖЕ О ЛЮДЯХ ДУМАТЬ ДОЛЖЕН ВСЕГДА В ПЕРВУЮ
  *    ОЧЕРЕДЬ. ПЕРЕДЕЛАЙ БУДЬ ЛАСКА.»
@@ -42,7 +47,7 @@
 
     // ── 0. Защита от повторного подключения ──
     if (window.__SINGULYAR_UX_ENGINE__) return;
-    window.__SINGULYAR_UX_ENGINE__ = 'v9.1-свобода';
+    window.__SINGULYAR_UX_ENGINE__ = 'v9.2-хозяин-гость';
 
     // ── 1. Безопасное хранилище (file:// и приватные режимы могут кидать) ──
     var STORE_KEY = 'SINGULYAR_UX_V8';      // ключ прежний — настройки людей не теряются
@@ -130,6 +135,14 @@
         '#sux-handle:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:3px}',
         '#sux-handle:active{transform:scale(.94)}',
         '#crystalButton{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}',
+        '#sux-home{position:fixed;right:14px;bottom:62px;z-index:2147483000;width:40px;height:40px;margin:0;padding:0;',
+          'border-radius:50%;display:flex;align-items:center;justify-content:center;font:16px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
+          'color:var(--sux-fg,#C0C8D0);background:var(--sux-panel,rgba(10,12,16,.82));border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:pointer;',
+          'box-shadow:0 10px 28px rgba(0,0,0,.45),inset 0 1px 0 rgba(240,240,248,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);',
+          'opacity:.62;transition:opacity .2s ease,border-color .2s ease,color .2s ease,transform .12s ease}',
+        '#sux-home:hover,#sux-home:focus-visible{opacity:1;border-color:rgba(212,175,55,.55);color:var(--sux-hi,#F0D78C)}',
+        '#sux-home:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:3px}',
+        '#sux-home:active{transform:scale(.94)}',
         '@media print{#sux-menu,#sux-handle{display:none!important}}'
     ].join('');
 
@@ -191,6 +204,7 @@
     function поНити() {
         var нить = document.getElementById('модули');
         if (нить) {
+            if (нить.hidden) нить.hidden = false;   /* капот открыт — дверь появилась */
             if (!нить.open) нить.open = true;
             нить.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
             сказать('Нить натянута. Двери дома — ниже.');
@@ -238,7 +252,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'index.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'index.html';
     });
-    item('·', 'сборка v1.32.1 · СВОБОДА ВЫБОРА', function () {}, { мертв: true });
+    item('·', 'сборка v1.33.0 · ХОЗЯИН=ГОСТЬ', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);
@@ -397,7 +411,7 @@
     window.addEventListener('click', function (e) {
         if (!гаситьКлик) return;
         var т = e.target;
-        if (!(т && т.closest && т.closest('#crystalButton, #sux-handle'))) return;
+        if (!(т && т.closest && т.closest('#crystalButton, #sux-handle, #sux-home'))) return;
         гаситьКлик = false;
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -439,7 +453,23 @@
 
     /* тихая ручка ⌇ для комнат (на лице её нет — там сам кристалл — дверь) */
     (function () {
-        if (document.getElementById('crystalButton')) return;
+        var наХабе = !!document.getElementById('crystalButton');
+        if (!наХабе) {
+            /* путь домой — видимый и тихий, один стиль с ручкой ⌇ (юзабилити такта v1.33.0) */
+            var домой = el('button', {
+                id: 'sux-home', type: 'button',
+                'aria-label': 'Домой — хаб ·00',
+                title: 'ДОМ · хаб ·00'
+            }, '⌂');
+            домой.addEventListener('click', function () {
+                if (гаситьКлик) return;
+                сказать('Веду к хабу.');
+                try { window.__SUX_NAVIGATING__ = { to: 'index.html', at: Date.now() }; } catch (e) {}
+                window.location.href = 'index.html';
+            });
+            document.body.appendChild(домой);
+        }
+        if (наХабе) return;
         var ручка = el('button', {
             id: 'sux-handle', type: 'button',
             'aria-label': 'Меню дома СИНГУЛЯР',
@@ -665,7 +695,7 @@
 
     // ── 14. Публичный API ──
     window.SingulyarUX = {
-        version: '9.1-свобода',
+        version: '9.2-хозяин-гость',
         open: function () { openMenu(window.innerWidth - 356, 64); },
         openAt: openMenu,
         close: function () { closeMenu(true); },
@@ -681,6 +711,8 @@
         _test: { видимые: видимые, place: place, menu: menu }
     };
 
+    try { var сш = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+          if (сш === 'модули') setTimeout(function () { try { поНити(); } catch (e) {} }, 350); } catch (е0) {}
     подписи();
-    console.log('SINGULYAR UX Engine v9.1 «СВОБОДА ВЫБОРА»: системное ПКМ свободно везде; меню дома — ПКМ по кристаллу/ручке ⌇ или клавиша S. C — кристалл, N — нить, Esc — закрыть/домой.');
+    console.log('SINGULYAR UX Engine v9.2 «ХОЗЯИН=ГОСТЬ»: системное ПКМ свободно везде; меню дома — ПКМ по кристаллу/ручке ⌇ или клавиша S; ⌂ — домой на каждой комнате. C — кристалл, N — нить, Esc — закрыть/домой.');
 })();
