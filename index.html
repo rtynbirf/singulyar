@@ -20,11 +20,11 @@
 body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:80px}
 a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0d1420,#0a0e14)}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#12151c,#0A0B0E)}
 .hd{display:flex;align-items:center;gap:14px;padding:18px 0}
-.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#5eead4,#38bdf8,#5eead4);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:19px;font-family:var(--mono)}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#FF5E62,#4FACFE,#FF5E62);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:19px;font-family:var(--mono)}
 .hd b{font-size:18px} .hd span{color:var(--dim);font-size:13px;display:block}
-.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#0b1f1d}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:#FFB4AB;border:1px solid rgba(255,94,98,.45);border-radius:999px;padding:5px 12px;background:rgba(255,94,98,.08)}
 h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
 h1 em{font-style:normal;color:var(--teal)}
 .lead{color:var(--dim);max-width:760px;font-size:17px}
@@ -40,8 +40,8 @@ h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px
 .card .t{font-weight:700;font-size:16.5px}
 .card .d{color:var(--dim);font-size:13.5px;flex:1}
 .card .m{font-family:var(--mono);font-size:11px;color:#5b6a72}
-.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:var(--teal);color:#04121c;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
-.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:linear-gradient(135deg,#FF5E62 0%,#FF9966 100%);color:#fff;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:none;color:#FF5E62;border:1px solid rgba(255,94,98,.5)}
 .step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
 .step .k{font-family:var(--mono);color:var(--teal);font-size:13px;min-width:64px;padding-top:2px}
 .step p{color:#c9d7e2;font-size:14.5px}
@@ -56,15 +56,44 @@ h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px
 footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:var(--mono)}
 kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
 </style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
 <body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<script>/* AURA: применяем выбор человека до отрисовки */try{var _aura=localStorage.getItem("singulyar-aura");if(_aura)document.body.setAttribute("data-aura-mode",_aura)}catch(e){}</script>
 <header><div class="wrap hd">
   <div class="logo">S·15</div>
   <div><b>СИНГУЛЯР RUVSON</b><span>офлайн-вселенная караоке · читай отчёт — начинай действовать</span></div>
-  <div class="badge">v1.26.7 · PWA · офлайн</div>
+  <div class="badge">v1.27.0 · PWA · офлайн</div>
 </div></header>
 
 <main class="wrap">
+  <section class="glass-panel" id="auraPanel" aria-label="AURA — адаптация под человека" style="margin:26px 0 0">
+    <b style="font-size:15px">AURA · Human-First</b>
+    <p style="color:var(--dim);font-size:13.5px;margin:6px 0 12px">Смысл один — представления разные. Выбор человека выше автоматики: включи, как тебе удобно. Настройка живёт на твоём устройстве.</p>
+    <button id="auraHC" class="btn ghost" aria-pressed="false" style="margin-right:8px">◐ Высокий контраст</button>
+    <button id="auraLT" class="btn ghost" aria-pressed="false">⤢ Крупные элементы</button>
+  </section>
+  <script>
+  /* AURA-панель: состояние — в localStorage singulyar-aura */
+  (function(){
+    var KEY='singulyar-aura';
+    var b1=document.getElementById('auraHC'), b2=document.getElementById('auraLT');
+    function cur(){return document.body.getAttribute('data-aura-mode')||''}
+    function paint(){
+      if(b1)b1.setAttribute('aria-pressed', String(cur()==='high-contrast'));
+      if(b2)b2.setAttribute('aria-pressed', String(cur()==='large-touch'));
+    }
+    function tog(m){
+      if(cur()===m){ document.body.removeAttribute('data-aura-mode'); try{localStorage.removeItem(KEY)}catch(e){} }
+      else{ document.body.setAttribute('data-aura-mode', m); try{localStorage.setItem(KEY,m)}catch(e){} }
+      paint();
+    }
+    if(b1)b1.addEventListener('click',function(){tog('high-contrast')});
+    if(b2)b2.addEventListener('click',function(){tog('large-touch')});
+    paint();
+  })();
+  </script>
   <h1>61 песня. <em>158 языков.</em> Один файл. Ноль интернета.</h1>
   <p class="lead">Это не плеер — это организм: каталог → тексты → переводы → караоке → хор.
   Всё вычисляется из данных, ничего не «заявлено». Ниже — что готово прямо сейчас, что проверено
@@ -88,6 +117,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
 
   <h2>Запуск <em>выбери и кликни</em></h2>
   <div class="cards">
+    <div class="card"><div class="t">ФУНДАМЕНТ ·27 ★ NEW</div><div class="d">Визуальный канон v3.0 «Ambient OS» от владельца: 15 страниц — Титул, Кристалл шести фасетов, RESONANCE, AURA, LOCAL BRAIN, MESH, VAULT, Spatial Glass, ЖИЗНЬ, Синтез.</div><div class="m">15 визуалов · WebP · 1,3 МБ</div><a class="btn" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">▶ смотреть</a></div>
     <div class="card"><div class="t">ОС v1.9 — всё сразу</div><div class="d">20 модулей: Платформа, Фабрика, Оркестратор, СУФЛЁР ·16, ЗАЛ ·17, СОБЫТИЕ ·18, ЧЕЛОВЕК ·19, ФОНЕТИКА ·20, ОБЩЕНИЕ ·21, СВЯЗЬ ·22… Консоль команд и горячие клавиши. Скачивается как файл — открой двойным кликом.</div><div class="m">≈45 МБ · release-файл</div><a class="btn" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">⬇ скачать</a></div>
     <div class="card"><div class="t">ОРКЕСТРАТОР ·15</div><div class="d">Реестр 62×13, хор с слово-подсветкой, темп/тональность, микрофон+реверб, аудит, импорт/экспорт LRC/VTT.</div><div class="m">0.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
     <div class="card"><div class="t">Флагман ×157 голосов</div><div class="d">«Когда теряем» (OutShadow feat RUVSON): реальные тайминги, 157 переводов YouTube, минусовка ДНК.</div><div class="m">15 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">▶ открыть</a></div>
@@ -108,20 +138,20 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
   </div>
 
   <h2>Каталог вселенной <em>всё разложено по полкам</em></h2>
-  <p class="lead">11 классов, 657 файлов — каждый учтён ровно один раз, числа вычислены из файлов, не зашиты. Полный канонический каталог — <a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</a>, синтез с внешним прототипом — <a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ_HUMAN_RUNTIME.md</a>.</p>
+  <p class="lead">11 классов, 674 файла — каждый учтён ровно один раз, числа вычислены из файлов, не зашиты. Полный канонический каталог — <a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</a>, синтез с внешним прототипом — <a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ_HUMAN_RUNTIME.md</a>.</p>
   <div class="cols">
     <div class="box"><h3>КЛАССЫ 0–4 · каркас</h3><ul>
-      <li><b>К0 ИНФРАСТРУКТУРА (8)</b> — index, SW v33, manifest, UX-движок, README, ГОТОВНОСТЬ.manifest.json</li>
+      <li><b>К0 ИНФРАСТРУКТУРА (9)</b> — index, SW v35, manifest, UX-движок, singulyar-design-v3.css (мост v3.0), README, ГОТОВНОСТЬ.manifest.json</li>
       <li><b>К1 СЦЕНА (4)</b> — Флагман ×157 · РЕЗОНАНС · ФАБРИКА · ОРГАНИЗМ</li>
-      <li><b>К2 ДОМ (12 комнат)</b> — ·15 ОРКЕСТРАТОР … ·26 ЛИНИЯ, каждая автономна</li>
+      <li><b>К2 ДОМ (13 комнат)</b> — ·15 ОРКЕСТРАТОР … ·26 ЛИНИЯ, ·27 ФУНДАМЕНТ, каждая автономна</li>
       <li><b>К3 КРИСТАЛЛ (7)</b> — протокол: ядро + схема нормативны (+ отпечаток SHA-256), мосты и КРИПТА — честные надстройки; v1.22: ротация эпох КРИПТЫ, верификация ·19 (hall.join), объявления ротации (hall.epoch); v1.23: звонок как факт (call.signal); v1.24: межустройственный транспорт звонка — публичные релеи Nostr + WebRTC/STUN; v1.25: межустройственный запечатанный текст — своё пространство релеев; v1.25.1: щит — kid из растяжки PBKDF2 600k (оракул фразы устранён), kdf-параметры в печати, читаемость старых печатей, модель угроз THREAT_MODEL_КРИПТА_22.md</li>
       <li><b>К4 МОЗГ (30)</b> — adapter-os v1.9 (20 модулей) · wllama (WASM-LLM) · singulyar-llm (правила ДОМ+ТАКТ+ВМЕСТИЛИЩЕ, словарь v0.6)</li>
     </ul></div>
     <div class="box"><h3>КЛАССЫ 5–9 · тело и доказательства</h3><ul>
       <li><b>К5 ТРАНСПОРТ (7)</b> — trystero (WebRTC/Nostr) · any-ascii (романизация) · опциональный сервер связей (5 файлов)</li>
-      <li><b>К6 ДАННЫЕ (384)</b> — 322 файла корпусов (61 песня, 157 переводов) + 62 минусовки (61 + дубль флагмана ★)</li>
-      <li><b>К7 ТЕСТЫ/ИНСТРУМЕНТЫ (59)</b> — 36 тестов + 23 инструмента (Grabber, УСТАНОВЩИК, харнесс); v1.25.1: сниф websocket-фреймов релея в межустройственном тесте — открытый текст не ездит, SDP/ICE не читаются, kid ≠ быстрый хэш фразы; v1.26: тест слоя ЖИЗНЬ — 16 инвариантов (схема funding, зеркало страница↔funding.json, отсутствие рельсов, governance-граница)</li>
-      <li><b>К8 ДОКУМЕНТЫ (19)</b> — отчёты, мастер-план, THREAT MODEL крипты, инструкции, протокол вывода, синтез; v1.26: слой ЖИЗНЬ — SUSTAINABILITY (governance/funding policy/transparency/grant + funding.json со schema) и честная страница ПОДДЕРЖАТЬ.html без платёжных рельсов</li>
+      <li><b>К6 ДАННЫЕ (399)</b> — 322 файла корпусов (61 песня, 157 переводов) + 62 минусовки (61 + дубль флагмана ★) + 15 визуалов ФУНДАМЕНТА (WebP)</li>
+      <li><b>К7 ТЕСТЫ/ИНСТРУМЕНТЫ (62)</b> — 37 тестов + 25 инструментов (Grabber, УСТАНОВЩИК, харнесс); v1.25.1: сниф websocket-фреймов релея в межустройственном тесте — открытый текст не ездит, SDP/ICE не читаются, kid ≠ быстрый хэш фразы; v1.26: тест слоя ЖИЗНЬ — 16 инвариантов (схема funding, зеркало страница↔funding.json, отсутствие рельсов, governance-граница)</li>
+      <li><b>К8 ДОКУМЕНТЫ (20)</b> — отчёты, мастер-план, THREAT MODEL крипты, инструкции, протокол вывода, синтез; v1.26: слой ЖИЗНЬ — SUSTAINABILITY (governance/funding policy/transparency/grant + funding.json со schema) и честная страница ПОДДЕРЖАТЬ.html без платёжных рельсов</li>
       <li><b>К9 АРХИВ/ДОКАЗАТЕЛЬСТВА (123)</b> — АРХИВ_V3 (40) + СКРИНШОТЫ 13 папок (83)</li>
     </ul></div>
   </div>
@@ -182,7 +212,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
       <li><a href="СКРИНШОТЫ/РЕЗОНАНС_02/СИНГУЛЯР_02_резонанс.png">Превью РЕЗОНАНС</a> — резонанс, колесо, ORGANISM_hero, генплан</li>
       <li><a href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md">RUVSON Grabber</a> — userscript вытягивания с YouTube</li>
       <li><a href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md">Установщик Windows</a> (bat/ps1)</li>
-      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.26.3</a> — канонический каталог: 11 классов, 657 файлов, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
+      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.27.0</a> — канонический каталог: 11 классов, 674 файла, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
       <li><a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">ПОДДЕРЖАТЬ СИНГУЛЯР (слой ЖИЗНЬ)</a> — честная страница устойчивости: прототип без платёжных рельсов, активация — решение человека; GOVERNANCE защищает проект от захвата деньгами</li>
       <li><a href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md">SUSTAINABILITY-слой</a> — правила денег: GOVERNANCE (S01–S10), FUNDING_POLICY, TRANSPARENCY (evidence-уровни), GRANT_READINESS, funding.json + schema</li>
       <li><a href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md">THREAT MODEL крипты ·22</a> — модель угроз из кода (v1.25.1): активы, противники, честные границы</li>
@@ -203,8 +233,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     </ul></div>
   </div>
 
-  <footer>СИНГУЛЯР · RUVSON · сборка v1.26.7 «ГРАМОТА» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
-  ⚙ шестерёнка на всех 15 страницах следит машина (check_gear.py) · язык выверен тактом «ГРАМОТА»: 39 правок, названия песен и код — нетронуты</footer>
+  <footer>СИНГУЛЯР · RUVSON · сборка v1.27.0 «РЕБРЕНДИНГ+ФУНДАМЕНТ» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
+  ⚙ шестерёнка на всех 16 страницах следит машина (check_gear.py) · облик вживлён из дизайн-пакета владельца: дизайн-система v3.0, кинетический холст, AURA, ФУНДАМЕНТ ·27 · язык выверен тактом «ГРАМОТА»: 39 правок</footer>
 </main>
 <script>
 /* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
