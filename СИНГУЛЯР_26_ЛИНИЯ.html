@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР ·26 — ЛИНИЯ · свой номер, SMS и OTP</title>
 <meta name="description" content="СИНГУЛЯР ·26 «ЛИНИЯ» — у каждого из круга свой внутренний номер: SMS ходят P2P между устройствами без операторов, свои одноразовые коды подтверждения (OTP) внутри экосистемы, честные рецепты своего внешнего номера без «добрых дядей»: своя SIM + шлюз-форвардер, свой CPaaS-аккаунт с ключом локально, свой GSM-шлюз.">
-<meta name="theme-color" content="#0a0f15">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
 <style>
 :root{
-  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
-  --teal:#D4AF37;--teal2:#F0D78C;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#C8CCD2;
+  --bg:#0A0A0C;--panel:#1A1D23;--panel2:#121418;--line:#2E3033;--tx:#E8E8E8;--dim:#8A9099;
+  --teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#f87171;--green:#2FA36B;--violet:#C8CCD2;
   --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
   --r:14px;
 }
@@ -30,17 +30,17 @@ a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input,textarea{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 input:focus,textarea:focus{outline:2px solid var(--teal2);outline-offset:1px}
-::placeholder{color:#5d7180}
+::placeholder{color:#6B7178}
 header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
 .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0D78C,#C8CCD2,#F0D78C);display:grid;place-items:center;color:#0b1024;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0D78C,#C8CCD2,#F0D78C);display:grid;place-items:center;color:#121418;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
 .hd b{font-size:16px;display:block;line-height:1.2}
 .hd span{color:var(--dim);font-size:12px;display:block}
 .я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
-.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#16191E;font-size:16px;flex:none}
 .я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
-.btn-install{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+.btn-install{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#121418;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
 nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
 nav.tabs button{padding:10px 4px 12px;text-align:center;color:var(--dim);font-size:11.5px}
 nav.tabs button .и{font-size:21px;display:block;line-height:1.15}
@@ -55,36 +55,36 @@ h2.сек:first-child{margin-top:4px}
 .note{color:var(--dim);font-size:13.5px}
 .status{font-family:var(--mono);font-size:12.5px;color:var(--dim);min-height:1.4em}
 .status.ok{color:var(--green)} .status.warn{color:var(--amber)} .status.err{color:var(--red)}
-.мой-номер{background:linear-gradient(160deg,#12213a,#0d1626);border:1px solid #2b4257;border-radius:20px;padding:22px;text-align:center;margin-bottom:14px}
+.мой-номер{background:linear-gradient(160deg,#16191E,#121418);border:1px solid #35373B;border-radius:20px;padding:22px;text-align:center;margin-bottom:14px}
 .мой-номер .номер{font-family:var(--mono);font-size:42px;font-weight:800;color:var(--teal2);line-height:1.1;letter-spacing:.06em}
 .мой-номер .подпись{color:var(--dim);font-size:13px;margin-top:6px}
 .люди{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .person{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px 12px;text-align:center}
 .person .ав{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:27px;background:var(--panel2)}
 .person b{font-size:13.5px}
-.person .номер-чип{font-family:var(--mono);font-size:11px;color:var(--teal);background:#0d1f2c;border:1px solid #1f3b4a;border-radius:6px;padding:1px 7px}
+.person .номер-чип{font-family:var(--mono);font-size:11px;color:var(--teal);background:#121418;border:1px solid #2A2B2D;border-radius:6px;padding:1px 7px}
 .person .ряд{display:flex;gap:6px;margin-top:6px}
 .person .ряд button{border-radius:9px;background:var(--panel2);border:1px solid var(--line);font-size:14px;padding:6px 9px}
 .person .ряд button:hover{border-color:var(--teal2)}
 .диалоги{display:flex;flex-direction:column;gap:8px}
 .диалог{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
-.диалог:hover{border-color:#2e4155}
+.диалог:hover{border-color:#3F4247}
 .диалог .ав{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:23px;background:var(--panel2);flex:none}
 .диалог .тело{flex:1;min-width:0}
 .диалог b{display:block}
 .диалог .превью{color:var(--dim);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.диалог .бейдж{background:var(--teal2);color:#0b1024;font-weight:800;border-radius:999px;font-size:11px;padding:1px 7px}
+.диалог .бейдж{background:var(--teal2);color:#121418;font-weight:800;border-radius:999px;font-size:11px;padding:1px 7px}
 .chat-шапка{display:flex;align-items:center;gap:10px;padding:10px 0}
 .msg-лента{display:flex;flex-direction:column;gap:6px;padding:10px 0 14px;min-height:36vh}
 .msg{max-width:84%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:8px 12px;align-self:flex-start}
-.msg.моё{align-self:flex-end;background:#14263c;border-color:#22405e}
+.msg.моё{align-self:flex-end;background:#16191E;border-color:#33353A}
 .msg .текст{white-space:pre-wrap;word-break:break-word;font-size:15px}
 .msg .время{font-size:10.5px;color:var(--dim);font-family:var(--mono);text-align:right;margin-top:2px}
 .composer{display:flex;gap:8px;padding:8px 0}
 .composer input{flex:1;border-radius:999px;padding:11px 16px}
 .composer button{width:46px;height:46px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:19px;flex:none}
-.composer button.послать{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;border:none;font-weight:800}
-.код-карта{background:#0d1f2c;border:1px solid #1f3b4a;border-radius:16px;padding:16px;text-align:center;margin-top:10px}
+.composer button.послать{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#121418;border:none;font-weight:800}
+.код-карта{background:#121418;border:1px solid #2A2B2D;border-radius:16px;padding:16px;text-align:center;margin-top:10px}
 .код-карта .цифры{font-family:var(--mono);font-size:36px;letter-spacing:.35em;color:var(--teal);font-weight:800}
 .овер{position:fixed;inset:0;z-index:60;background:rgba(4,8,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
 .овер.on{display:flex}
@@ -94,7 +94,7 @@ h2.сек:first-child{margin-top:4px}
 .идент-карт{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
 .идент-карт .ав{font-size:26px}
 .идент-карт b{font-size:12px}
-.идент-карт[aria-pressed="true"]{border-color:var(--teal2);background:#101f30}
+.идент-карт[aria-pressed="true"]{border-color:var(--teal2);background:#16191E}
 details.рец{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
 details.рец summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
 details.рец summary::-webkit-details-marker{display:none}
@@ -107,13 +107,13 @@ details.рец .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
 .поле label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:4px;font-family:var(--mono)}
 .ряд-кнопок{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .кноп{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13.5px}
-.кноп.осн{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:800;border:none}
+.кноп.осн{background:linear-gradient(135deg,var(--teal2),var(--violet));color:#121418;font-weight:800;border:none}
 .кноп.опас{background:#2a1215;border-color:#5b2323;color:var(--red)}
 .сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
 footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
 .toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
-.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal2);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast{background:#16191E;border:1px solid var(--line);border-left:3px solid var(--teal2);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 @media (max-width:640px){
   .wrap{padding:0 10px}
   .люди{grid-template-columns:repeat(auto-fill,minmax(126px,1fr))}
@@ -293,7 +293,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <input id="идентВвод" placeholder="например: ГОСТЬ МАША" style="margin-top:6px">
     <div class="status" id="идентСтатус" role="status"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal2),var(--violet));color:#0b1024;font-weight:800;border-radius:12px;padding:12px">получить номер →</button>
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal2),var(--violet));color:#121418;font-weight:800;border-radius:12px;padding:12px">получить номер →</button>
     </div>
   </div>
 </div>

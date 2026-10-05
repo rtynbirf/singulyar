@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР ·24 — ПОЧТА · свой ящик у каждого</title>
 <meta name="description" content="СИНГУЛЯР ·24 «ПОЧТА» — свой почтовый ящик для каждого из круга: адрес имя@singulyar, письма ходят P2P между устройствами, ящики хранятся только на твоём устройстве, подпись и шифрование в покое, офлайн-исходящие, экспорт EML/JSON, рецепты настоящей своей почты (свой сервер, Delta Chat, алиасы).">
-<meta name="theme-color" content="#0a0f15">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
 <style>
 :root{
-  --bg:#0a0f15;--panel:#101a24;--panel2:#0d141d;--line:#22303e;--tx:#eaf3f8;--dim:#93a7b5;
-  --teal:#D4AF37;--teal2:#F0D78C;--amber:#ffc36e;--red:#f87171;--green:#34d399;--violet:#C8CCD2;
+  --bg:#0A0A0C;--panel:#1A1D23;--panel2:#121418;--line:#2E3033;--tx:#E8E8E8;--dim:#8A9099;
+  --teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#f87171;--green:#2FA36B;--violet:#C8CCD2;
   --mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace;
   --r:14px;
 }
@@ -30,19 +30,19 @@ a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input,textarea,select{font:inherit;color:var(--tx);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--teal2);outline-offset:1px}
-::placeholder{color:#5d7180}
+::placeholder{color:#6B7178}
 
 /* ── шапка ── */
 header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,15,21,.92);backdrop-filter:blur(8px)}
 .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:15px;font-family:var(--mono);flex:none}
 .hd b{font-size:16px;display:block;line-height:1.2}
 .hd span{color:var(--dim);font-size:12px;display:block}
 .я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
-.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#17222e;font-size:16px;flex:none}
+.я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#16191E;font-size:16px;flex:none}
 .я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
-.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
+.btn-install{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:700;border-radius:999px;padding:8px 14px;font-size:13px;white-space:nowrap}
 
 /* ── вкладки ── */
 nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:rgba(13,20,29,.96);backdrop-filter:blur(8px);padding-bottom:env(safe-area-inset-bottom)}
@@ -65,13 +65,13 @@ h2.сек:first-child{margin-top:4px}
 /* ── папки ── */
 .папки{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
 .папки button{flex:none;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--dim)}
-.папки button[aria-pressed="true"]{color:#04121c;background:linear-gradient(135deg,var(--teal),var(--teal2));border-color:transparent;font-weight:700}
+.папки button[aria-pressed="true"]{color:#0A0A0C;background:linear-gradient(135deg,var(--teal),var(--teal2));border-color:transparent;font-weight:700}
 .папки .счёт{font-family:var(--mono);font-size:11px;margin-left:4px}
 
 /* ── список писем ── */
 .list{display:flex;flex-direction:column;gap:8px}
 .письмо{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px}
-.письмо:hover{border-color:#2e4155}
+.письмо:hover{border-color:#3F4247}
 .письмо.не-прочитано{border-left:3px solid var(--teal)}
 .письмо .ав{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:24px;background:var(--panel2);flex:none}
 .письмо .тело{flex:1;min-width:0}
@@ -97,7 +97,7 @@ h2.сек:first-child{margin-top:4px}
 .вложения{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .вложения .вл{display:flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:12.5px}
 .ряд-кнопок{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.ряд-кнопок .осн{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:11px 18px}
+.ряд-кнопок .осн{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:800;border-radius:12px;padding:11px 18px}
 .ряд-кнопок .тих{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 16px}
 .ряд-кнопок .опас{background:#2a1215;border:1px solid #5b2323;color:var(--red);border-radius:12px;padding:11px 16px}
 
@@ -129,7 +129,7 @@ details.рец .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
 .сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
 footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
 .toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
-.toast{background:#152430;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast{background:#16191E;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 @media (max-width:640px){
   .wrap{padding:0 10px}
   .я-chip em{max-width:70px}
@@ -268,7 +268,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <input id="идентВвод" placeholder="например: ГОСТЬ МАША или КАПИТАН ДИМА" style="margin-top:6px">
     <div class="status" id="идентСтатус" role="status"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#04121c;font-weight:800;border-radius:12px;padding:12px">создать свой ящик →</button>
+      <button id="идентГотово" style="flex:1;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:800;border-radius:12px;padding:12px">создать свой ящик →</button>
     </div>
   </div>
 </div>
