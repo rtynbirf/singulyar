@@ -125,7 +125,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <header><div class="wrap hd">
   <div class="logo">S·26</div>
-  <div><b>ЛИНИЯ</b><span>свой номер · SMS P2P · свои OTP · вселенная RUVSON</span></div>
+  <div><b>ЛИНИЯ</b><span>свой номер · SMS P2P · свои OTP</span></div>
   <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
   <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипНомер">нет линии</small></span></button>
 </div></header>
@@ -134,7 +134,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
 <!-- ═════════ ЛИНИЯ ═════════ -->
 <section class="v on" id="v-line" role="tabpanel" aria-label="Линия">
-  <h2 class="сек">Мой номер</h2>
+  <h2 class="сек">Номер</h2>
   <div class="мой-номер">
     <div class="номер" id="мойНомерЭл">— — —</div>
     <div class="подпись" id="мойНомерПодпись">внутренняя линия СИНГУЛЯРА · работает P2P, без операторов</div>
@@ -180,19 +180,19 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <div class="поле"><label for="otpВвод">Код, который тебе прислали</label><input id="otpВвод" inputmode="numeric" maxlength="6" placeholder="000000" style="font-family:var(--mono);letter-spacing:.3em;text-align:center;font-size:20px"></div>
     <div class="ряд-кнопок" style="margin-top:0"><button class="кноп осн" id="otpПроверить">✓ подтвердить</button></div>
     <div class="status" id="otpСтатус" role="status"></div>
-    <p class="note" style="margin-top:8px">Код живёт 5 минут и одноразовый. Честно: это подтверждения ВНУТРИ круга (действия в СИНГУЛЯРЕ, встречи устройств). Внешние сайты просят коды на внешние номера — свои рельсы для этого во вкладке Я.</p>
+    <p class="note" style="margin-top:8px">Код живёт 5 минут и одноразовый. Честно: это подтверждения ВНУТРИ круга (действия в СИНГУЛЯРЕ, встречи устройств). Внешние сайты просят коды на внешние номера — свои рельсы для этого во вкладке ПРОФИЛЬ.</p>
   </div>
 
-  <h2 class="сек">Активные мои коды</h2>
+  <h2 class="сек">Активные коды</h2>
   <div class="диалоги" id="otpАктивные"></div>
 </section>
 
 <!-- ═════════ Я ═════════ -->
-<section class="v" id="v-me" role="tabpanel" aria-label="Я и свои рельсы">
-  <h2 class="сек">Кто я</h2>
+<section class="v" id="v-me" role="tabpanel" aria-label="Профиль и свои рельсы">
+  <h2 class="сек">Профиль</h2>
   <div class="panel" id="яКто"></div>
 
-  <h2 class="сек">МОЙ внешний номер — без добрых дядей · лучшие практики</h2>
+  <h2 class="сек">Внешний номер — без добрых дядей · лучшие практики</h2>
   <p class="note" style="margin-bottom:10px">Внутренняя линия выше работает уже сейчас. Для SMS/звонков с внешним миром номер должен принадлежать ТЕБЕ. Рабочие пути 2025–2026:</p>
   <details class="рец"><summary>📱 Путь 1 · своя SIM/eSIM + телефон как шлюз (приватнее всего)</summary>
     <ol>
@@ -227,7 +227,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   </details>
 
   <div class="panel" style="margin-top:10px">
-    <div class="поле"><label for="внешНомер">Мой внешний номер (просто запомнить здесь — локально на устройстве)</label><input id="внешНомер" placeholder="+7 900 000-00-00"></div>
+    <div class="поле"><label for="внешНомер">Внешний номер (просто запомнить здесь — локально на устройстве)</label><input id="внешНомер" placeholder="+7 900 000-00-00"></div>
     <div class="поле"><label for="внешWebhook">Мой webhook для приёма SMS (URL моего шлюза/сервера — тоже только локально)</label><input id="внешWebhook" placeholder="https://мой-сервер/sms-in"></div>
     <div class="ряд-кнопок" style="margin-top:0">
       <button class="кноп осн" id="btnСохранитьВнешнее">💾 запомнить локально</button>

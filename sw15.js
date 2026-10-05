@@ -3,7 +3,7 @@
    навигации без кэша отвечаем оболочкой index.html.
    На file:// не работает (так устроены браузеры) — модулю там и не нужен:
    пак данных вшит, внешних запросов нет. */
-var S15_CACHE = 's15-orkestrator-v41';
+var S15_CACHE = 's15-orkestrator-v42';
 var S15_CORE = [
   './',
   './index.html',
@@ -38,7 +38,7 @@ var S15_CORE = [
   './icons/icon-192-maskable.png',
   './icons/icon-512-maskable.png',
   './icons/icon-180.png',
-  './ИНСТРУКЦИЯ_УСТАНОВКИ.md',
+  './ИНСТРУКЦИЯ_УСТАНОВКИ.html',
   './БИБЛИОТЕКИ/trystero-nostr.bundle.mjs',
   './БИБЛИОТЕКИ/any-ascii.bundle.mjs',
   './БИБЛИОТЕКИ/кристалл/crystal-core.mjs',

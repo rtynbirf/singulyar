@@ -370,7 +370,7 @@ option:checked,option:hover{background-color:#1A1508;color:#D4AF37}
     </div>
     <div class="tblWrap"><table id="matrix"></table></div>
     <div class="legend">
-      <span><i style="background:#7de8b8"></i>verified (ASR владельца)</span>
+      <span><i style="background:#7de8b8"></i>verified (эталон ASR)</span>
       <span><i style="background:#ffcf6e"></i>machine-draft (конвейер LLM)</span>
       <span><i style="background:#8ecbff"></i>user-import</span>
       <span><i style="background:#ff8a80"></i>есть ошибки таймлайна</span>
@@ -1394,7 +1394,7 @@ function updatePulse(){
   }
   var vPct = c.pairs ? Math.round(100 * (c.valid) / c.pairs) : 0;
   g.textContent = '';
-  g.appendChild(stat('песен в каталоге', c.songs, 'из листа владельца', 100));
+  g.appendChild(stat('песен в каталоге', c.songs, 'каталог канала', 100));
   g.appendChild(stat('языковых дорожек', c.pairs, 'строк: '+c.lines.toLocaleString('ru'), vPct, c.bad ? 'bad' : ''));
   g.appendChild(stat('языков реально есть', c.langs, 'объединение по всем песням', 100));
   g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ⚠':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
@@ -1564,7 +1564,7 @@ function buildLin(){
   var nodes = [
     {n:'·10 → ·11 → ·12 СВЕДЕНИЕ', d:'организм обрёл память, каталог и сведение', x:'ядро ОС', ext:false},
     {n:'·13 ЛИБРЕТТО', d:'слова стали голосом (внешняя ветвь — уроки вшиты)', x:'внешняя ветвь', ext:true},
-    {n:'·14 ХОР', d:'матрица 61 × язык + пение (внешняя ветвь — ревизия принята)', x:'внешняя ветвь · ревизия от владельца', ext:true},
+    {n:'·14 ХОР', d:'матрица 61 × язык + пение (внешняя ветвь — ревизия принята)', x:'внешняя ветвь · ревизия от человека', ext:true},
     {n:'·15 ОРКЕСТРАТОР — ВЫ ЗДЕСЬ', d:'четыре ядра: CONTENT · TIMELINE · AUDIO · ACCESSIBILITY. Все числа вычисляются; каждая дорожка имеет происхождение; таймлайны валидируются; DOM безопасен', x:'ядро v1.0', ext:false, me:true}
   ];
   nodes.forEach(function(nd){
@@ -2622,7 +2622,7 @@ function ячейкаЯзык(строка, л){
   }
   var статус = TS15_СТАТУС_ПО_РАНГУ[tsРангЯчейки(я)];
   var cls = я.валид === 'bad' ? 'st-bad' : (я.статус === 'user' ? 'st-user' : (я.статус === 'machine' ? 'st-machine' : 'st-verified'));
-  var подпись = { 'verified': 'проверено владельцем (ASR)', 'machine': 'черновик конвейера (LLM)', 'user': 'импорт пользователя' }[я.статус] || я.статус;
+  var подпись = { 'verified': 'проверено эталоном (ASR)', 'machine': 'черновик конвейера (LLM)', 'user': 'импорт пользователя' }[я.статус] || я.статус;
   if (я.валид === 'bad') подпись += ' — ошибки таймлайна';
   return h('td', {}, [ h('button', {
     class: 'cellBtn ' + cls,
