@@ -13,6 +13,7 @@ const ТИПЫ = {
   '.html': 'text/html; charset=utf-8',
   '.mjs': 'text/javascript; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
+  '.css': 'text/css; charset=utf-8', /* v1.27.0: иначе chromium не парсит мост (урок такта — тест-среда обязана соврать с продом как можно меньше; на GitHub Pages MIME верный) */
   '.json': 'application/json; charset=utf-8',
   '.md': 'text/plain; charset=utf-8',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp',
