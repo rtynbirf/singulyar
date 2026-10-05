@@ -1,6 +1,9 @@
 /* ==========================================================================
-   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.3.0 · такт v1.33.0 «ХОЗЯИН=ГОСТЬ»
-   Слово владельца (такт v1.32.0): «Я ТЕБЕ КАЖДЫЙ ОБЬЕКТ ДАЛ!!!» — все объекты
+   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.4.0 · такт v1.34.0 «ФУНДАМЕНТ»
+   Слово владельца (такт v1.34.0): «ЭТА КАРТИНА = ФУНДАМЕНТ СТАРТОВОЙ ГЛАВНОЙ
+   СТРАНИЦЫ!!!!» — канонная картина (гранёный алмаз с золотым ядром, два
+   кольца, спутники, стеклянный пьедестал в дымке) нарисована кодом — 0
+   картинок, живой холст. Слово такта v1.32.0: «Я ТЕБЕ КАЖДЫЙ ОБЬЕКТ ДАЛ!!!» — все объекты
    SNG синтезируются в единую картину мира, а не голый разрозненный набор;
    кристалл рассыпается на осколки-двери: «КУДА ЧЕЛОВЕК ПОСТАВИЛ ТАМ И СТОИТ
    — ОН РЕШАЕТ». Слово такта v1.31.0: «НА ГЛАВНОЙ СТРАНИЦЕ ТОЛЬКО КРИСТАЛ…
@@ -272,12 +275,14 @@
   };
 
 
-  /* ── 4b. КРИСТАЛЛ-ШАР — титульный объект канона (canvas) ────────────── */
-  /* Незыблемый визуальный канон SINGULYAR · такт v1.33.0 «ХОЗЯИН=ГОСТЬ»:
-     живой эталон — шипастый хрустальный шар (стекло/серебро), золотое лучистое
-     ядро со вспышкой, два золотых кольца, россыпь бликов. Рисуется кодом по
-     векторному макету «КАК В КОРЕЛ ДРО» (МАКЕТ_КРИСТАЛЛ_v133.svg) — 0 картинок.
-     Comfort Guardrails: 2 кольца + ядро + 3 яруса шипов — не больше. */
+  /* ── 4b. КРИСТАЛЛ-ФУНДАМЕНТ — титульный объект канона (canvas) ────────── */
+  /* Незыблемый визуальный канон SINGULYAR · такт v1.34.0 «ФУНДАМЕНТ»:
+     эталон — канонная картина владельца (tYYAZ): гранёный хрустальный АЛМАЗ
+     (икосаэдр, стекло/серебро, фон виден насквозь), золотое лучистое ядро со
+     звездой-вспышкой внутри, два золотых орбитальных кольца с жемчужинами и
+     пылью, три спутника-кристаллика, а ПОД кристаллом — стеклянный ПЬЕДЕСТАЛ
+     (широкая гранёная пластина) в лёгкой дымке. Рисуется кодом — 0 картинок.
+     Comfort Guardrails: 2 кольца + ядро + 3 спутника — не больше. */
   SNG.кристалл = function (канвас, опции) {
     опции = опции || {};
     var ctx = канвас.getContext('2d');
@@ -287,6 +292,8 @@
     var движение = true;
     try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
     var фаза = (опции.фаза || 0);
+    /* доля центра ядра по высоте канваса — осколки рассыпаются вокруг КРИСТАЛЛА */
+    канвас.dataset.ядроУ = '0.375';
 
     function размер() {
       var r = канвас.getBoundingClientRect();
@@ -299,198 +306,366 @@
     if ('ResizeObserver' in window) new ResizeObserver(размер).observe(канвас);
     else window.addEventListener('resize', размер);
 
-    /* детерминированный генератор (тот же seed, что в векторном макете) */
+    /* детерминированный генератор (тот же seed — преемственность тактов) */
     var сем = 2718281828;
     function ранд() { сем = (сем * 1103515245 + 12345) & 0x7fffffff; return сем / 0x7fffffff; }
     function интер(a, b) { return a + (b - a) * ранд(); }
 
-    /* шипы: 3 яруса [кол-во, длина-мин, длина-макс, ширина-мин, ширина-макс] */
-    var ШИПЫ = [];
-    (function () {
-      var ярусы = [[80, 0.42, 0.72, 0.09, 0.13], [56, 0.28, 0.48, 0.07, 0.11], [34, 0.16, 0.28, 0.05, 0.08]];
-      ярусы.forEach(function (я) {
-        for (var i = 0; i < я[0]; i++) {
-          ШИПЫ.push({
-            a: Math.PI * 2 * (i / я[0]) + интер(-0.06, 0.06),
-            len: интер(я[1], я[2]), wd: интер(я[3], я[4]),
-            аль: я[0] === 80 ? 1 : (я[0] === 56 ? 0.9 : 0.8),
-            зол: ранд() < 0.12
-          });
-        }
-      });
-    })();
+    /* ══ ИКОСАЭДР: 12 вершин, 20 граней — честный алмаз «как в Корел ДРО» ══ */
+    var ФИ = (1 + Math.sqrt(5)) / 2;
+    var ВЕРШ = [
+      [-1, ФИ, 0], [1, ФИ, 0], [-1, -ФИ, 0], [1, -ФИ, 0],
+      [0, -1, ФИ], [0, 1, ФИ], [0, -1, -ФИ], [0, 1, -ФИ],
+      [ФИ, 0, -1], [ФИ, 0, 1], [-ФИ, 0, -1], [-ФИ, 0, 1]
+    ].map(function (в) {
+      var д = Math.sqrt(в[0] * в[0] + в[1] * в[1] + в[2] * в[2]);
+      return [в[0] / д, в[1] / д, в[2] / д];
+    });
+    var ГРАНИ = [
+      [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
+      [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
+      [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
+      [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]
+    ];
+    /* характер граней: у каждой своя «стеклянность» — живой, не машинный */
+    var ХАРАКТЕР = ГРАНИ.map(function (_, i) { return { блеск: ранд(), фаз: ранд() * 6.28 }; });
 
-    /* блики: россыпь точек-стекляшек (мерцают) */
-    var БЛИКИ = [];
+    /* кольца канона: [наклон, rx-доля R, ry-доля rx, толщина] */
+    var КОЛЬЦА = [[-0.22, 1.72, 0.335, 1.7], [0.14, 1.94, 0.300, 1.2]];
+    /* жемчужины на кольцах: [начальная фаза, скорость, размер] */
+    var ЖЕМЧУГ = [];
+    КОЛЬЦА.forEach(function (к, oi) {
+      var n = oi ? 4 : 5;
+      for (var i = 0; i < n; i++) {
+        ЖЕМЧУГ.push({ кольцо: oi, ф: Math.PI * 2 * i / n + интер(0, 1.2), скор: интер(0.05, 0.11) * (oi ? -1 : 1), s: интер(1.3, 2.2) });
+      }
+    });
+    /* спутники-кристаллики: [угол-позиция, радиус-доля, размер-доля, фаза] */
+    var СПУТНИКИ = [
+      { a: -2.62, r: 1.78, s: 0.155, фаз: 0.0,  зол: false },
+      { a: -0.42, r: 1.95, s: 0.115, фаз: 2.1,  зол: true  },
+      { a:  0.95, r: 1.62, s: 0.135, фаз: 4.2,  зол: false }
+    ];
+    /* пыль вокруг (мерцают) */
+    var ПЫЛЬ = [];
     (function () {
-      for (var i = 0; i < 46; i++) {
-        БЛИКИ.push({
-          a: ранд() * Math.PI * 2, r: 0.06 + Math.sqrt(ранд()) * 0.9,
-          s: интер(0.7, 1.9), зол: ранд() < 0.4, фаза: ранд() * Math.PI * 2, скор: интер(0.5, 1.4)
-        });
+      for (var i = 0; i < 26; i++) {
+        ПЫЛЬ.push({ a: ранд() * Math.PI * 2, r: 0.5 + ранд() * 1.55, s: интер(0.5, 1.5), зол: ранд() < 0.35, фаза: ранд() * 6.28, скор: интер(0.4, 1.3) });
       }
     })();
 
-    /* фацеты: три кольца вершин, триангуляция между ними */
-    var ФАЦЕТЫ = (function () {
-      var кольца = [];
-      [[6, 0.15, 0.30], [8, 0.55, 0.52], [12, 0.90, 0.74]].forEach(function (с) {
-        var pts = [];
-        for (var i = 0; i < с[0]; i++) pts.push([с[1] + Math.PI * 2 * i / с[0], с[2]]);
-        кольца.push(pts);
-      });
-      var тр = [];
-      for (var k = 0; k < кольца.length - 1; k++) {
-        var A = кольца[k], B = кольца[k + 1];
-        for (var i = 0; i < Math.max(A.length, B.length); i++) {
-          var p1 = A[i % A.length], p2 = A[(i + 1) % A.length];
-          var j1 = Math.floor(i * B.length / A.length) % B.length, j2 = (j1 + 1) % B.length;
-          тр.push(ранд() < 0.5 ? [p1, p2, B[j1]] : [p1, B[j1], B[j2]]);
-        }
-      }
-      return { кольца: кольца, тр: тр };
-    })();
+    function вращ(в, ax, ay) {
+      /* Y, затем X */
+      var x = в[0] * Math.cos(ay) + в[2] * Math.sin(ay);
+      var z = -в[0] * Math.sin(ay) + в[2] * Math.cos(ay);
+      var y = в[1] * Math.cos(ax) - z * Math.sin(ax);
+      z = в[1] * Math.sin(ax) + z * Math.cos(ax);
+      return [x, y, z];
+    }
 
-    /* кольца канона: [наклон, rx, ry, толщина] */
-    var КОЛЬЦА = [[-0.16, 1.20, 0.300, 2.6], [0.12, 1.32, 0.330, 1.8]];
+    function граньПуть(пт) {
+      ctx.beginPath();
+      ctx.moveTo(пт[0][0], пт[0][1]);
+      ctx.lineTo(пт[1][0], пт[1][1]);
+      ctx.lineTo(пт[2][0], пт[2][1]);
+      ctx.closePath();
+    }
+
+    /* ══ ПЬЕДЕСТАЛ — стеклянная гранёная пластина (фундамент картины) ══ */
+    function пьедестал(cx, cy, rx, ry, толщ, t) {
+      /* тень под пластиной */
+      var тень = ctx.createRadialGradient(cx, cy + толщ * 0.9, rx * 0.1, cx, cy + толщ * 0.9, rx * 1.06);
+      тень.addColorStop(0, 'rgba(0,0,0,.55)');
+      тень.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = тень;
+      ctx.save(); ctx.translate(cx, cy + толщ * 0.9); ctx.scale(1, ry / rx);
+      ctx.beginPath(); ctx.arc(0, 0, rx * 1.06, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+
+      /* боковая грань (толщина стекла): передняя половина контура */
+      var N = 32, i, a, px, py;
+      ctx.beginPath();
+      for (i = 0; i <= N; i++) {
+        a = Math.PI + (i / N) * Math.PI;
+        px = cx + Math.cos(a) * rx; py = cy + Math.sin(a) * ry;
+        i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+      }
+      for (i = N; i >= 0; i--) {
+        a = Math.PI + (i / N) * Math.PI;
+        px = cx + Math.cos(a) * rx; py = cy + Math.sin(a) * ry + толщ;
+        ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      var бок = ctx.createLinearGradient(0, cy, 0, cy + ry + толщ);
+      бок.addColorStop(0, 'rgba(206,220,242,.26)');
+      бок.addColorStop(0.5, 'rgba(130,152,184,.13)');
+      бок.addColorStop(1, 'rgba(44,56,76,.20)');
+      ctx.fillStyle = бок; ctx.fill();
+      ctx.strokeStyle = 'rgba(232,240,252,.30)'; ctx.lineWidth = 0.8; ctx.stroke();
+      /* вертикальные фацеты боковины */
+      for (i = 0; i < 9; i++) {
+        a = Math.PI + Math.PI * (i / 8) * 0.92 + Math.PI * 0.04;
+        px = cx + Math.cos(a) * rx; py = cy + Math.sin(a) * ry;
+        ctx.beginPath(); ctx.moveTo(px, py);
+        ctx.lineTo(cx + Math.cos(a) * rx * 0.985, py + толщ * 0.94);
+        ctx.strokeStyle = 'rgba(230,240,252,' + (i % 2 ? 0.10 : 0.18) + ')';
+        ctx.lineWidth = 0.8; ctx.stroke();
+      }
+
+      /* верхняя поверхность — восьмигранник со скруглением (гранёная пластина) */
+      ctx.beginPath();
+      var M = 16;
+      for (i = 0; i <= M; i++) {
+        a = -Math.PI / 2 + (i / M) * Math.PI * 2;
+        var сгл = (i % 2) ? 0.972 : 1;   /* лёгкая грань восьмиугольника */
+        px = cx + Math.cos(a) * rx * сгл; py = cy + Math.sin(a) * ry * сгл;
+        i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+      }
+      ctx.closePath();
+      var верх = ctx.createRadialGradient(cx, cy - ry * 0.2, rx * 0.05, cx, cy, rx);
+      верх.addColorStop(0, 'rgba(214,228,248,.20)');
+      верх.addColorStop(0.55, 'rgba(140,160,192,.10)');
+      верх.addColorStop(1, 'rgba(34,42,58,.22)');
+      ctx.fillStyle = верх; ctx.fill();
+      ctx.strokeStyle = 'rgba(238,244,252,.55)'; ctx.lineWidth = 1.2; ctx.stroke();
+      /* полированная кромка внутри */
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx * 0.86, ry * 0.86, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(240,248,255,.14)'; ctx.lineWidth = 0.9; ctx.stroke();
+      /* отражение золотого ядра на пластине */
+      var отр = ctx.createRadialGradient(cx, cy, 1, cx, cy, rx * 0.5);
+      отр.addColorStop(0, 'rgba(212,175,55,' + (0.13 + 0.05 * Math.sin(t * 1.2)) + ')');
+      отр.addColorStop(1, 'rgba(212,175,55,0)');
+      ctx.fillStyle = отр;
+      ctx.beginPath(); ctx.ellipse(cx, cy, rx * 0.5, ry * 0.62, 0, 0, Math.PI * 2); ctx.fill();
+      /* блик на передней кромке */
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx * 0.97, ry * 0.97, 0, Math.PI * 0.15, Math.PI * 0.85);
+      ctx.strokeStyle = 'rgba(255,252,240,.34)'; ctx.lineWidth = 1.6; ctx.stroke();
+    }
+
+    /* спутник: малый октаздр-кристаллик */
+    function спутник(x, y, s, t, фаз, золотой) {
+      var покач = движение ? Math.sin(t * 0.7 + фаз) * s * 0.18 : 0;
+      y += покач;
+      var наклон = Math.sin(фаз * 1.7) * 0.18;
+      var ht = s, hw = s * 0.62;
+      ctx.save();
+      ctx.translate(x, y); ctx.rotate(наклон);
+      /* верхняя пирамида светлее, нижняя темнее — стекло */
+      ctx.beginPath(); ctx.moveTo(0, -ht); ctx.lineTo(hw, 0); ctx.lineTo(0, ht * 0.18); ctx.lineTo(-hw, 0); ctx.closePath();
+      ctx.fillStyle = 'rgba(226,236,250,' + (золотой ? 0.30 : 0.24) + ')'; ctx.fill();
+      ctx.strokeStyle = 'rgba(244,250,255,.75)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-hw, 0); ctx.lineTo(0, ht); ctx.lineTo(hw, 0); ctx.closePath();
+      ctx.fillStyle = 'rgba(140,158,184,.16)'; ctx.fill(); ctx.stroke();
+      /* внутренняя искра */
+      ctx.fillStyle = золотой ? 'rgba(240,215,140,.9)' : 'rgba(255,255,255,.85)';
+      ctx.beginPath(); ctx.arc(0, 0, Math.max(0.8, s * 0.10), 0, Math.PI * 2); ctx.fill();
+      if (золотой) {
+        ctx.globalAlpha = 0.18;
+        ctx.beginPath(); ctx.arc(0, 0, s * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(212,175,55,.5)'; ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      ctx.restore();
+    }
 
     function кадр(ts, одиночный) {
       var t = движение ? (ts / 1000 + фаза) : фаза;
       if (одиночный) t = фаза;
       ctx.clearRect(0, 0, w, h);
-      var cx = w / 2, cy = h / 2;
-      var R = Math.min(w, h) * 0.34;
+      var cx = w / 2;
+      var cy = h * 0.375;
+      var R = Math.min(w * 0.235, h * 0.19);
 
-      /* хало ядра */
+      /* ═ геометрия сцены ═ */
+      var педCy = h * 0.815;
+      var педRx = Math.min(w * 0.40, R * 2.05);
+      var педRy = педRx * 0.215;
+      var педТолщ = Math.max(16, R * 0.34);
+
+      /* хало кристалла */
       var пульс = движение ? (0.86 + 0.14 * Math.sin(t * 1.5)) : 0.95;
-      var halo = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 0.72);
-      halo.addColorStop(0, 'rgba(212,175,55,' + (0.30 * пульс) + ')');
+      var halo = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 2.1);
+      halo.addColorStop(0, 'rgba(212,175,55,' + (0.16 * пульс) + ')');
+      halo.addColorStop(0.55, 'rgba(212,175,55,' + (0.05 * пульс) + ')');
       halo.addColorStop(1, 'rgba(212,175,55,0)');
       ctx.fillStyle = halo;
-      ctx.beginPath(); ctx.arc(cx, cy, R * 0.72, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx, cy, R * 2.1, 0, Math.PI * 2); ctx.fill();
 
-      /* задние дуги колец */
+      /* дымка у фундамента */
+      var дым1 = ctx.createRadialGradient(cx, педCy + педТолщ * 0.4, 4, cx, педCy + педТолщ * 0.4, педRx * 1.35);
+      дым1.addColorStop(0, 'rgba(205,218,238,.075)');
+      дым1.addColorStop(1, 'rgba(205,218,238,0)');
+      ctx.fillStyle = дым1;
+      ctx.beginPath(); ctx.ellipse(cx, педCy + педТолщ * 0.4, педRx * 1.35, педRy * 2.6, 0, 0, Math.PI * 2); ctx.fill();
+
+      /* ═ ЗАДНИЕ дуги колец (за кристаллом) ═ */
       КОЛЬЦА.forEach(function (к) {
         ctx.save();
         ctx.translate(cx, cy); ctx.rotate(к[0]);
-        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[2], 0, Math.PI, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(212,175,55,.30)'; ctx.lineWidth = к[3]; ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[1] * к[2], 0, Math.PI, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(212,175,55,.26)'; ctx.lineWidth = к[3]; ctx.stroke();
         ctx.restore();
       });
 
-      /* тело шара — тёмное стекло */
-      var стек = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.32, R * 0.1, cx, cy, R);
-      стек.addColorStop(0, 'rgba(238,242,250,.26)');
-      стек.addColorStop(0.55, 'rgba(34,40,54,.93)');
-      стек.addColorStop(1, 'rgba(10,12,18,.98)');
-      ctx.fillStyle = стек;
+      /* ═ ПЬЕДЕСТАЛ (фундамент — под кристаллом) ═ */
+      пьедестал(cx, педCy, педRx, педRy, педТолщ, t);
+
+      /* ═ КРИСТАЛЛ: painter-сортировка граней, стекло насквозь ═ */
+      var ax = 0.42 + (движение ? Math.sin(t * 0.10) * 0.08 : 0);
+      var ay = движение ? (t * 0.16) : 0.7;
+      var спро = ВЕРШ.map(function (в) { return вращ(в, ax, ay); });
+      var экр = спро.map(function (п) {
+        var пер = 1 / (1 - п[2] * 0.16);          /* лёгкая перспектива */
+        return [cx + п[0] * R * пер, cy + п[1] * R * пер, п[2]];
+      });
+      var свет = [ -0.42, -0.66, 0.62 ];
+      var слД = Math.sqrt(свет[0] * свет[0] + свет[1] * свет[1] + свет[2] * свет[2]);
+      свет = свет.map(function (с) { return с / слД; });
+
+      var слои = ГРАНИ.map(function (гр, i) {
+        var A = спро[гр[0]], B = спро[гр[1]], C = спро[гр[2]];
+        var u = [B[0] - A[0], B[1] - A[1], B[2] - A[2]];
+        var v = [C[0] - A[0], C[1] - A[1], C[2] - A[2]];
+        var n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+        var д = Math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]) || 1;
+        n = [n[0] / д, n[1] / д, n[2] / д];
+        var ц = [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3, (A[2] + B[2] + C[2]) / 3];
+        if (n[0] * ц[0] + n[1] * ц[1] + n[2] * ц[2] < 0) { n = [-n[0], -n[1], -n[2]]; }  /* наружу */
+        var инт = Math.max(0, n[0] * свет[0] + n[1] * свет[1] + n[2] * свет[2]);
+        return { i: i, z: ц[2], n: n, инт: инт,
+                 пт: [экр[гр[0]], экр[гр[1]], экр[гр[2]]] };
+      }).sort(function (p, q) { return p.z - q.z; });   /* дальние сначала */
+
+      /* внутренняя глубина (стекло имеет толщину) */
+      var глуб = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R);
+      глуб.addColorStop(0, 'rgba(16,20,30,.20)');
+      глуб.addColorStop(0.8, 'rgba(16,20,30,.08)');
+      глуб.addColorStop(1, 'rgba(16,20,30,0)');
+      ctx.fillStyle = глуб;
       ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = 'rgba(240,240,248,.38)'; ctx.lineWidth = 1.1; ctx.stroke();
 
-      /* фацеты — стекло с тонкой светлой рамкой */
-      var i, j, тр;
-      for (i = 0; i < ФАЦЕТЫ.тр.length; i++) {
-        тр = ФАЦЕТЫ.тр[i];
-        ctx.beginPath();
-        for (j = 0; j < 3; j++) {
-          var x = cx + Math.cos(тр[j][0]) * R * тр[j][1];
-          var y = cy + Math.sin(тр[j][0]) * R * тр[j][1];
-          j ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-        }
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(224,230,242,' + (0.05 + 0.06 * (i % 3)) + ')';
+      /* дальние грани — призрачные */
+      слои.forEach(function (г) {
+        if (г.n[2] > 0) return;                       /* видимые — позже */
+        граньПуть(г.пт);
+        ctx.fillStyle = 'rgba(150,165,190,.05)';
         ctx.fill();
-        ctx.strokeStyle = 'rgba(240,240,248,.22)'; ctx.lineWidth = 0.7; ctx.stroke();
-      }
-      /* внешняя кайма фацетов */
-      var посл = ФАЦЕТЫ.кольца[ФАЦЕТЫ.кольца.length - 1];
-      for (i = 0; i < посл.length; i++) {
-        var a1 = посл[i][0], a2 = посл[(i + 1) % посл.length][0];
-        if (a2 < a1) a2 += Math.PI * 2;
-        var am = (a1 + a2) / 2;
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(a1) * R * 0.74, cy + Math.sin(a1) * R * 0.74);
-        ctx.lineTo(cx + Math.cos(a2) * R * 0.985, cy + Math.sin(a2) * R * 0.985);
-        ctx.lineTo(cx + Math.cos(am) * R * 0.94, cy + Math.sin(am) * R * 0.94);
-        ctx.lineTo(cx + Math.cos(a1) * R * 0.985, cy + Math.sin(a1) * R * 0.985);
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(236,240,248,.07)'; ctx.fill();
-        ctx.strokeStyle = 'rgba(240,240,248,.18)'; ctx.lineWidth = 0.6; ctx.stroke();
-      }
+      });
 
-      /* блики мерцают */
-      for (i = 0; i < БЛИКИ.length; i++) {
-        var б = БЛИКИ[i];
-        var мерк = движение ? (0.45 + 0.55 * Math.sin(t * б.скор + б.фаза)) : 0.7;
-        ctx.globalAlpha = 0.25 + 0.55 * мерк;
-        ctx.fillStyle = б.зол ? '#F0D78C' : '#F0F0F8';
-        ctx.beginPath();
-        ctx.arc(cx + Math.cos(б.a) * R * б.r, cy + Math.sin(б.a) * R * б.r, б.s, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-
-      /* шипы — медленное вращение двух внешних ярусов */
-      var вращ = движение ? (t * 0.03) : 0;
-      for (i = 0; i < ШИПЫ.length; i++) {
-        var ш = ШИПЫ[i];
-        var a = ш.a + вращ * (ш.аль > 0.9 ? 1 : 0.55);
-        var баз = R * 0.985, вер = баз + R * ш.len, пол = ш.wd / 2;
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(a - пол) * баз, cy + Math.sin(a - пол) * баз);
-        ctx.lineTo(cx + Math.cos(a) * вер, cy + Math.sin(a) * вер);
-        ctx.lineTo(cx + Math.cos(a + пол) * баз, cy + Math.sin(a + пол) * баз);
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(236,240,248,' + (0.13 * ш.аль) + ')';
-        ctx.fill();
-        ctx.strokeStyle = ш.зол ? 'rgba(240,215,140,' + (0.5 * ш.аль) + ')' : 'rgba(240,240,248,' + (0.3 * ш.аль) + ')';
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-
-      /* золотое ядро + вспышка */
-      var ядр = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.3);
-      ядр.addColorStop(0, 'rgba(255,246,220,' + пульс + ')');
-      ядр.addColorStop(0.4, 'rgba(240,215,140,' + (0.9 * пульс) + ')');
-      ядр.addColorStop(0.75, 'rgba(212,175,55,' + (0.55 * пульс) + ')');
+      /* ЗОЛОТОЕ ЯДРО — светит сквозь стекло (между дальними и ближними) */
+      var ядрR = R * 0.30;
+      var ядр = ctx.createRadialGradient(cx, cy, 0, cx, cy, ядрR);
+      ядр.addColorStop(0, 'rgba(255,246,220,' + (0.95 * пульс) + ')');
+      ядр.addColorStop(0.4, 'rgba(240,215,140,' + (0.85 * пульс) + ')');
+      ядр.addColorStop(0.75, 'rgba(212,175,55,' + (0.45 * пульс) + ')');
       ядр.addColorStop(1, 'rgba(212,175,55,0)');
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
       ctx.fillStyle = ядр;
-      ctx.beginPath(); ctx.arc(cx, cy, R * 0.3, 0, Math.PI * 2); ctx.fill();
-      for (i = 0; i < 4; i++) {
-        var уг = i * Math.PI / 2 + (движение ? -t * 0.02 : 0);
-        var длина = R * (i % 2 ? 0.5 : 0.8);
+      ctx.beginPath(); ctx.arc(cx, cy, ядрR, 0, Math.PI * 2); ctx.fill();
+      /* звезда-вспышка ядра */
+      for (var i4 = 0; i4 < 4; i4++) {
+        var уг = i4 * Math.PI / 2 + (движение ? -t * 0.02 : 0);
+        var дл = R * (i4 % 2 ? 0.42 : 0.66) * пульс;
         ctx.save();
         ctx.translate(cx, cy); ctx.rotate(уг);
         ctx.beginPath();
-        ctx.moveTo(-длина, 0); ctx.lineTo(0, -R * 0.035); ctx.lineTo(длина, 0); ctx.lineTo(0, R * 0.035);
+        ctx.moveTo(-дл, 0); ctx.lineTo(0, -R * 0.028); ctx.lineTo(дл, 0); ctx.lineTo(0, R * 0.028);
         ctx.closePath();
-        ctx.fillStyle = i % 2 ? 'rgba(255,233,176,.40)' : 'rgba(255,233,176,.62)';
+        ctx.fillStyle = i4 % 2 ? 'rgba(255,233,176,.40)' : 'rgba(255,233,176,.62)';
         ctx.fill();
         ctx.restore();
       }
       ctx.fillStyle = '#FFE9B0';
-      ctx.beginPath(); ctx.arc(cx, cy, R * 0.085, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx, cy, R * 0.075, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
 
-      /* передние дуги колец + бегущие искры */
+      /* ближние (видимые) грани — прозрачное стекло + живое мерцание */
+      слои.forEach(function (г) {
+        if (г.n[2] <= 0) return;
+        var х = ХАРАКТЕР[г.i];
+        var жив = движение ? (0.90 + 0.10 * Math.sin(t * 0.5 + х.фаз)) : 1;
+        var альф = (0.17 + 0.40 * г.инт * г.инт + 0.16 * х.блеск * г.инт) * жив;
+        граньПуть(г.пт);
+        ctx.fillStyle = 'rgba(228,238,252,' + Math.min(0.55, альф).toFixed(3) + ')';
+        ctx.fill();
+        /* яркая кромка — сильнее на свету */
+        ctx.strokeStyle = 'rgba(240,248,255,' + (0.26 + 0.58 * г.инт).toFixed(3) + ')';
+        ctx.lineWidth = 1; ctx.stroke();
+      });
+      /* контур силуэта */
+      ctx.beginPath(); ctx.arc(cx, cy, R * 1.002, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(240,248,255,.30)'; ctx.lineWidth = 1; ctx.stroke();
+
+      /* звезда-глинт на верхней грани (как ловит свет алмаз) */
+      var глx = cx - R * 0.38, глy = cy - R * 0.46;
+      var гл = движение ? (0.55 + 0.45 * Math.sin(t * 0.9)) : 0.8;
+      ctx.save();
+      ctx.translate(глx, глy); ctx.rotate(движение ? -t * 0.05 : -0.4);
+      ctx.globalAlpha = гл;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.moveTo(-R * 0.16, 0); ctx.lineTo(0, -R * 0.016); ctx.lineTo(R * 0.16, 0); ctx.lineTo(0, R * 0.016);
+      ctx.closePath(); ctx.fill();
+      ctx.rotate(Math.PI / 2);
+      ctx.beginPath();
+      ctx.moveTo(-R * 0.10, 0); ctx.lineTo(0, -R * 0.014); ctx.lineTo(R * 0.10, 0); ctx.lineTo(0, R * 0.014);
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+
+      /* ═ ПЕРЕДНИЕ дуги колец + жемчуг с пыльным следом ═ */
       КОЛЬЦА.forEach(function (к, oi) {
         ctx.save();
         ctx.translate(cx, cy); ctx.rotate(к[0]);
-        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[2], 0, 0, Math.PI);
-        ctx.strokeStyle = 'rgba(212,175,55,.95)'; ctx.lineWidth = к[3]; ctx.stroke();
-        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[2] * 0.97, 0, Math.PI * 0.06, Math.PI * 0.94);
-        ctx.strokeStyle = 'rgba(255,244,214,.4)'; ctx.lineWidth = 0.9; ctx.stroke();
-        /* искра на кольце */
-        var фа = t * (0.30 + oi * 0.09) + oi * 2.1;
-        var sx = Math.cos(фа) * R * к[1], sy = Math.sin(фа) * R * к[2];
-        if (Math.sin(фа) >= 0) {
-          ctx.fillStyle = '#F0D78C';
-          ctx.beginPath(); ctx.arc(sx, sy, 2.1, 0, Math.PI * 2); ctx.fill();
-          ctx.globalAlpha = 0.25;
-          ctx.beginPath(); ctx.arc(sx, sy, 4.6, 0, Math.PI * 2); ctx.fill();
-          ctx.globalAlpha = 1;
-        }
+        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[1] * к[2], 0, 0, Math.PI);
+        ctx.strokeStyle = 'rgba(212,175,55,.92)'; ctx.lineWidth = к[3]; ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(0, 0, R * к[1], R * к[1] * к[2] * 0.97, 0, Math.PI * 0.06, Math.PI * 0.94);
+        ctx.strokeStyle = 'rgba(255,244,214,.35)'; ctx.lineWidth = 0.8; ctx.stroke();
         ctx.restore();
       });
+      ЖЕМЧУГ.forEach(function (ж) {
+        var к = КОЛЬЦА[ж.кольцо];
+        var ф = ж.ф + (движение ? t * ж.скор : 0);
+        ctx.save();
+        ctx.translate(cx, cy); ctx.rotate(к[0]);
+        for (var сл = 0; сл < 5; сл++) {
+          var фс = ф - сл * 0.055 * (ж.скор >= 0 ? 1 : -1);
+          var sx = Math.cos(фс) * R * к[1], sy = Math.sin(фс) * R * к[1] * к[2];
+          var наFront = Math.sin(фс) >= 0;
+          if (сл === 0) {
+            ctx.globalAlpha = наFront ? 1 : 0.45;
+            ctx.fillStyle = '#F0D78C';
+            ctx.beginPath(); ctx.arc(sx, sy, ж.s, 0, Math.PI * 2); ctx.fill();
+            ctx.globalAlpha = (наFront ? 0.30 : 0.12);
+            ctx.beginPath(); ctx.arc(sx, sy, ж.s * 2.4, 0, Math.PI * 2); ctx.fill();
+          } else {
+            ctx.globalAlpha = (наFront ? 0.34 : 0.12) / сл;
+            ctx.fillStyle = '#F0D78C';
+            ctx.beginPath(); ctx.arc(sx, sy, ж.s * 0.55, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+        ctx.globalAlpha = 1;
+        ctx.restore();
+      });
+
+      /* ═ СПУТНИКИ-КРИСТАЛЛИКИ ═ */
+      СПУТНИКИ.forEach(function (с) {
+        var уг = с.a + (движение ? t * 0.014 : 0);
+        спутник(cx + Math.cos(уг) * R * с.r, cy + Math.sin(уг) * R * с.r * 0.86,
+                R * с.s, t, с.фаз, с.зол);
+      });
+
+      /* пыль мерцает */
+      for (var пi = 0; пi < ПЫЛЬ.length; пi++) {
+        var п = ПЫЛЬ[пi];
+        var мерк = движение ? (0.35 + 0.65 * Math.sin(t * п.скор + п.фаза)) : 0.6;
+        ctx.globalAlpha = 0.14 + 0.5 * мерк;
+        ctx.fillStyle = п.зол ? '#F0D78C' : '#EDF2FA';
+        ctx.beginPath();
+        ctx.arc(cx + Math.cos(п.a) * R * п.r, cy + Math.sin(п.a) * R * п.r * 0.8, п.s, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
 
       if (движение && !одиночный) requestAnimationFrame(кадр);
     }
@@ -742,8 +917,9 @@
     function расставить(анимация) {
       var зона = слой.getBoundingClientRect();
       var кр = (опции.канвас || кнопка).getBoundingClientRect();
+      var доляЯдра = parseFloat(опции.канвас && опции.канвас.dataset.ядроУ) || 0.5;
       var цx = кр.left + кр.width / 2 - зона.left;
-      var цy = кр.top + кр.height / 2 - зона.top;
+      var цy = кр.top + кр.height * доляЯдра - зона.top;
       var R = Math.min(кр.width, кр.height) * 0.36;
       Object.keys(карта).forEach(function (ид) {
         var о = карта[ид];
