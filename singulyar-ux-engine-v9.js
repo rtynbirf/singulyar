@@ -1,42 +1,26 @@
 /*!
- * SINGULYAR UX ENGINE v9.2 «ХОЗЯИН=ГОСТЬ» · такт v1.33.0
- * Наследник v9.0 «ПОД КАПОТ» (тот — наследник v8.0-final).
- * Главное изменение такта v1.33.0 (слово владельца):
- *   «НА ГЛАВНОЙ ДОЛЖНО СТОЯТЬ ТОЛЬКО ЭТО!!! … НА КАЖДОЙ ВНУТРЕННЕЙ
- *    СТРАНИЦЕ ВСЁ ПРИВЕСТИ ТОЛЬКО К ТАКОМУ СТИЛЮ … ПОЛНОСТЮ ПРОВЕРИТЬ
- *    НАВИГАЦИЮ ТАМ БАРДАК … УБРАЛ ВСЁ ЧТО СВЯЗАНО С ЭГО. ТУТ НЕТ
- *    ХОЗЯИН=ГОСТЬ. КАЖДЫЙ САМ ХОЗЯИН»
- * Изменение предыдущего такта по слову владельца:
- *   «А ГДЕ ТОГДА СИСТЕМНЫЕ? … МАЛО ЛИ ЧТО У НЕГО В ПКМ — СКОПИРОВАТЬ,
- *    ОТПРАВИТЬ, ПОДЕЛИТЬСЯ… ТЫ ЖЕ О ЛЮДЯХ ДУМАТЬ ДОЛЖЕН ВСЕГДА В ПЕРВУЮ
- *    ОЧЕРЕДЬ. ПЕРЕДЕЛАЙ БУДЬ ЛАСКА.»
+ * SINGULYAR UX ENGINE v9.3 «ТАМ ГДЕ ПОСТАВИЛ» · такт v1.34.0 «ФУНДАМЕНТ»
+ * Наследник v9.2 «ХОЗЯИН=ГОСТЬ» (тот — наследник v9.0 «ПОД КАПОТ»).
+ * Главное изменение такта v1.34.0 (слово владельца):
+ *   «КНОПКА БЫВШАЯ ШЕСТЕРЁНКА СЕЙЧАС ТРИ ТОЧКИ НЕ ДОЛЖНА БЫТЬ ПРИВЯЗАНА
+ *    ЖЁСТКО — НАДО ЧТОБ КАК ШЕСТЕРЁНКА ТАСКАТЬ МОЖНО БЫЛО ТАМ ГДЕ
+ *    ПОЛЬЗОВАТЕЛЬ ХОЧЕТ, А НЕ ТЫ ЕГО ВЫНУЖДАЕШЬ!!! НИКАКОГО НАСИЛИЯ НАД
+ *    ДЕЙСТВИЯМИ — СИСТЕМА ДЛЯ ЧЕЛОВЕКА, А НЕ ЧЕЛОВЕК ПОДСТРАИВАЕТСЯ»
  *
- * ЧТО ИЗМЕНИЛОСЬ В v9.1:
- *  - нативное меню браузера ЖИВЁТ ВЕЗДЕ: копировать/отправить/поделиться/
- *    перевести не отнимаются ни на одной странице (глобальный перехват снят);
- *  - МЕНЮ ДОМА открывается только на НАШИХ объектах:
- *      ПКМ по кристаллу (лицо) · ПКМ по тихой ручке ⌇ (комнаты) ·
- *      долгое касание кристалла/ручки (экраны без ПКМ) · клавиша S;
- *  - ручка ⌇ — стекло и золото, глиф канона; живёт в правом нижнем углу
- *    комнат, на лице её нет — там дверью служит сам кристалл;
- *  - ложный клик после долгого касания гасится (кристалл не дёргается).
+ * ЧТО ИЗМЕНИЛОСЬ В v9.3:
+ *  - плавающие кнопки ⌂ (домой) и ⌇ (меню дома) ПЕРЕТАСКИВАЮТСЯ мышью и
+ *    пальцем на любой точке экрана — как прежняя шестерёнка; позиция
+ *    хранится в localStorage (SINGULYAR_UX_V8) и живёт до тех пор, пока
+ *    человек сам её не сменит: КУДА ЧЕЛОВЕК ПОСТАВИЛ — ТАМ И СТОИТ;
+ *  - клик/тап как работал, так и работает: перетаскивание отличается от
+ *    клика порогом 7 px; долгое касание (меню) и ПКМ не тронуты;
+ *  - позиции клампятся в экран при переносе, ресайзе и повороте.
  *
- * ПРЕДЫДУЩИЙ ПРИКАЗ (v9.0), ОСТАЮЩИЙСЯ В СИЛЕ:
- *   «ШЕСТЕРЁНКУ СДЕЛАТЬ ПОД КАПОТ: НА ГЛАВНОЙ СТРАНИЦЕ ПРЯМО ПКМ (ПРАВОЙ
- *   КНОПКОЙ МЫШИ) ПО … ВЫПАДАЮЩЕЕ МЕНЮ = СПИСОК, ВСЁ ПЕРЕДЕЛАТЬ ПОД
- *   КРИСТАЛЬНО ЕДИНЫЙ СТИЛЬ. НЕ НАДО ЛЕПИТЬ КОЛХОЗ!!!!»
- *
- * ЧТО ИЗМЕНИЛОСЬ ОТНОСИТЕЛЬНО v8:
- *  - висячая кнопка-шестерёнка УДАЛЕНА с лица всех комнат (была чужеродным
- *    телом на канонном лице: чёрный void, стекло, золото — и вдруг гайка);
- *  - [v9.0, отменено в v9.1] ПКМ в любом месте открывал меню — глобальный
- *    в кристальном стиле: тёмное матовое стекло, тонкая светлая рамка,
- *    золото — единственный акцент, моно-шрифт дома;
- *  - эмодзи выжжены из всех надписей движка (только глифы канона: ⬢ ⌇ ◈ ⤳ ¶):
- *    слово владельца «НЕ НАДО КОЛХОЗ ЦЫГАНЩИНУ ТАЩИТЬ ИЗ ИНТЕРНЕТА»;
- *  - клавиатурный путь сохранён: S — меню, Esc — закрыть, стрелки — по списку;
- *  - хранит прежний ключ настроек SINGULYAR_UX_V8 (без x/y шестерёнки);
- *  - звук касаний, голос (opt-in), геймпад, темы, диагностика — сохранены.
+ * ПРЕДЫДУЩИЕ ПРИКАЗЫ, ОСТАЮЩИЕСЯ В СИЛЕ:
+ *  - v9.1: нативное меню браузера ЖИВЁТ ВЕЗДЕ (копировать/отправить/
+ *    поделиться не отнимаются); МЕНЮ ДОМА — только на НАШИХ объектах;
+ *  - v9.2: ⌂ домой на каждой комнате; нить Ариадны поднимается из-под
+ *    капота; ТУТ НЕТ ХОЗЯИН=ГОСТЬ.
  *
  * Чистый vanilla JS · 0 зависимостей · офлайн · без innerHTML · без телеметрии
  * Интеграция: <script defer src="singulyar-ux-engine-v9.js"></script>
@@ -47,7 +31,7 @@
 
     // ── 0. Защита от повторного подключения ──
     if (window.__SINGULYAR_UX_ENGINE__) return;
-    window.__SINGULYAR_UX_ENGINE__ = 'v9.2-хозяин-гость';
+    window.__SINGULYAR_UX_ENGINE__ = 'v9.3-там-где-поставил';
 
     // ── 1. Безопасное хранилище (file:// и приватные режимы могут кидать) ──
     var STORE_KEY = 'SINGULYAR_UX_V8';      // ключ прежний — настройки людей не теряются
@@ -74,8 +58,15 @@
         audioOn: saved.audioOn !== false,          // клики — да
         volume: Math.min(0.5, Math.max(0.02, num(saved.volume, 0.25))),
         voiceOn: saved.voiceOn === true,           // микрофон — ВЫКЛ по умолчанию
-        theme: (saved.theme === 'light' || saved.theme === 'contrast') ? saved.theme : 'dark'
+        theme: (saved.theme === 'light' || saved.theme === 'contrast') ? saved.theme : 'dark',
+        /* v9.3: места, куда человек сам поставил плавающие кнопки */
+        posHome: точка(saved.posHome),
+        posHandle: точка(saved.posHandle)
     };
+    function точка(в) {
+        return (в && num(в.x, NaN) === в.x && num(в.y, NaN) === в.y &&
+                isFinite(в.x) && isFinite(в.y)) ? { x: в.x, y: в.y } : null;
+    }
     function persist() { storeSave(config); }
 
     // Уважение к «уменьшить движение»
@@ -127,17 +118,23 @@
           'border-radius:50%;display:flex;align-items:center;justify-content:center;',
           'font:17px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
           'color:var(--sux-accent,#D4AF37);background:var(--sux-panel,rgba(10,12,16,.82));',
-          'border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:pointer;',
+          'border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:grab;',
+          'touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;',
           'box-shadow:0 10px 28px rgba(0,0,0,.45),inset 0 1px 0 rgba(240,240,248,.08);',
           'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);',
           'opacity:.62;transition:opacity .2s ease,border-color .2s ease,transform .12s ease}',
         '#sux-handle:hover,#sux-handle:focus-visible{opacity:1;border-color:rgba(212,175,55,.55);color:var(--sux-hi,#F0D78C)}',
         '#sux-handle:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:3px}',
         '#sux-handle:active{transform:scale(.94)}',
+        '/* v9.3: кнопки таскаются — состояние перетаскивания */',
+        '#sux-handle.снг-тянет,#sux-home.снг-тянет{cursor:grabbing;opacity:1;transform:none;',
+          'border-color:rgba(212,175,55,.65);color:var(--sux-hi,#F0D78C);transition:none}',
+        '@media (prefers-reduced-motion: reduce){#sux-handle.снг-тянет,#sux-home.снг-тянет{transition:none}}',
         '#crystalButton{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}',
         '#sux-home{position:fixed;right:14px;bottom:62px;z-index:2147483000;width:40px;height:40px;margin:0;padding:0;',
           'border-radius:50%;display:flex;align-items:center;justify-content:center;font:16px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
-          'color:var(--sux-fg,#C0C8D0);background:var(--sux-panel,rgba(10,12,16,.82));border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:pointer;',
+          'color:var(--sux-fg,#C0C8D0);background:var(--sux-panel,rgba(10,12,16,.82));border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:grab;',
+          'touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;',
           'box-shadow:0 10px 28px rgba(0,0,0,.45),inset 0 1px 0 rgba(240,240,248,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);',
           'opacity:.62;transition:opacity .2s ease,border-color .2s ease,color .2s ease,transform .12s ease}',
         '#sux-home:hover,#sux-home:focus-visible{opacity:1;border-color:rgba(212,175,55,.55);color:var(--sux-hi,#F0D78C)}',
@@ -252,7 +249,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'index.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'index.html';
     });
-    item('·', 'сборка v1.33.0 · ХОЗЯИН=ГОСТЬ', function () {}, { мертв: true });
+    item('·', 'сборка v1.34.0 · ФУНДАМЕНТ', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);
@@ -425,7 +422,8 @@
             lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
             openMenu(e.clientX, e.clientY);
         });
-        /* долгое касание (экраны без ПКМ): 550 мс без движения — меню дома */
+        /* долгое касание (экраны без ПКМ): 550 мс без движения — меню дома.
+       Если кнопку в этот момент таскают — меню не выпрыгивает */
         var таймер = null, sx = 0, sy = 0;
         узел.addEventListener('pointerdown', function (e) {
             if (e.pointerType === 'mouse') return;
@@ -433,6 +431,7 @@
             if (таймер) clearTimeout(таймер);
             таймер = setTimeout(function () {
                 таймер = null;
+                if (узел.classList && узел.classList.contains('снг-тянет')) return;
                 гаситьКлик = true;
                 lastFocus = null;
                 openMenu(e.clientX, e.clientY);
@@ -451,6 +450,81 @@
 
     нашОбъект(document.getElementById('crystalButton'));
 
+    /* ── 8b. ПЕРЕТАСКИВАНИЕ ПЛАВАЮЩИХ КНОПОК (v9.3, слово владельца:
+       «ТАСКАТЬ МОЖНО БЫЛО ТАМ ГДЕ ПОЛЬЗОВАТЕЛЬ ХОЧЕТ… НИКАКОГО НАСИЛИЯ»).
+       Мышь и палец; порог 7 px отделяет перетаскивание от клика;
+       позиция — в localStorage: куда человек поставил, там и стоит. */
+    function перетаскивание(узел, ключ) {
+        if (!узел || узел.dataset.снгТаск) return;
+        узел.dataset.снгТаск = '1';
+        var тянем = false, сдвинули = false;
+        var sx = 0, sy = 0, ox = 0, oy = 0;
+
+        function сейчас() {
+            var пр = узел.getBoundingClientRect();
+            return { x: пр.left, y: пр.top };
+        }
+        function кламп(x, y) {
+            var пр = узел.getBoundingClientRect();
+            var ш = пр.width || 40, в = пр.height || 40;
+            x = Math.min(Math.max(6, x), Math.max(6, window.innerWidth - ш - 6));
+            y = Math.min(Math.max(6, y), Math.max(6, window.innerHeight - в - 6));
+            return { x: x, y: y };
+        }
+        function поставить(x, y) {
+            var к = кламп(x, y);
+            узел.style.left = к.x + 'px';
+            узел.style.top = к.y + 'px';
+            узел.style.right = 'auto';
+            узел.style.bottom = 'auto';
+        }
+        узел.addEventListener('pointerdown', function (e) {
+            if (e.button != null && e.button !== 0) return;   /* ПКМ — меню дома */
+            var м = сейчас();
+            sx = e.clientX; sy = e.clientY; ox = м.x; oy = м.y;
+            тянем = true; сдвинули = false;
+            try { узел.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        узел.addEventListener('pointermove', function (e) {
+            if (!тянем) return;
+            var dx = e.clientX - sx, dy = e.clientY - sy;
+            if (!сдвинули && Math.hypot(dx, dy) > 7) {
+                сдвинули = true;
+                узел.classList.add('снг-тянет');
+            }
+            if (сдвинули) поставить(ox + dx, oy + dy);
+        });
+        ['pointerup', 'pointercancel'].forEach(function (имя) {
+            узел.addEventListener(имя, function (e) {
+                if (!тянем) return;
+                тянем = false;
+                узел.classList.remove('снг-тянет');
+                if (!сдвинули) return;                     /* это был клик/тап */
+                var м = кламп(сейчас().x, сейчас().y);
+                поставить(м.x, м.y);
+                config['pos' + ключ] = { x: м.x, y: м.y };
+                persist();
+                гаситьКлик = true;                          /* не дёрнуться кликом */
+                if (e.cancelable) e.preventDefault();
+            });
+        });
+        /* возвращаем место человека (кламп на случай смены экрана) */
+        var сохран = config['pos' + ключ];
+        if (сохран) поставить(сохран.x, сохран.y);
+        /* ресайз/поворот: кнопка не теряется за краем */
+        window.addEventListener('resize', function () {
+            if (тянем || !узел.isConnected) return;
+            var пр = узел.getBoundingClientRect();
+            if (пр.width === 0 && пр.height === 0) return;
+            var к = кламп(пр.left, пр.top);
+            if (к.x !== пр.left || к.y !== пр.top) {
+                поставить(к.x, к.y);
+                config['pos' + ключ] = { x: к.x, y: к.y };
+                persist();
+            }
+        }, { passive: true });
+    }
+
     /* тихая ручка ⌇ для комнат (на лице её нет — там сам кристалл — дверь) */
     (function () {
         var наХабе = !!document.getElementById('crystalButton');
@@ -468,6 +542,7 @@
                 window.location.href = 'index.html';
             });
             document.body.appendChild(домой);
+            перетаскивание(домой, 'Home');
         }
         if (наХабе) return;
         var ручка = el('button', {
@@ -477,6 +552,7 @@
         }, '⌇');
         document.body.appendChild(ручка);
         нашОбъект(ручка);
+        перетаскивание(ручка, 'Handle');
         ручка.addEventListener('click', function () {
             if (гаситьКлик) return;
             lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
@@ -695,7 +771,7 @@
 
     // ── 14. Публичный API ──
     window.SingulyarUX = {
-        version: '9.2-хозяин-гость',
+        version: '9.3-там-где-поставил',
         open: function () { openMenu(window.innerWidth - 356, 64); },
         openAt: openMenu,
         close: function () { closeMenu(true); },
@@ -714,5 +790,5 @@
     try { var сш = decodeURIComponent((location.hash || '').replace(/^#/, ''));
           if (сш === 'модули') setTimeout(function () { try { поНити(); } catch (e) {} }, 350); } catch (е0) {}
     подписи();
-    console.log('SINGULYAR UX Engine v9.2 «ХОЗЯИН=ГОСТЬ»: системное ПКМ свободно везде; меню дома — ПКМ по кристаллу/ручке ⌇ или клавиша S; ⌂ — домой на каждой комнате. C — кристалл, N — нить, Esc — закрыть/домой.');
+    console.log('SINGULYAR UX Engine v9.3 «ТАМ ГДЕ ПОСТАВИЛ»: ⌂ и ⌇ таскаются мышью и пальцем — куда человек поставил, там и стоит; клик/тап, ПКМ и долгое касание как работали, так и работают; нативное ПКМ свободно везде. S — меню, N — нить, Esc — закрыть/домой.');
 })();
