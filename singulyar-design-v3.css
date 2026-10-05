@@ -1,146 +1,170 @@
 /* ==========================================================================
-   СИНГУЛЯР — дизайн-система v3.0 «Ambient OS» — МОСТ ПАКЕТА ВЛАДЕЛЬЦА
-   Источник истины: singulyar-tokens.json 3.0.0 + singulyar-design-system.css
-   3.0.0 из дизайн-пакета владельца (gdrive_2026-10-04).
-   Версия моста: 3.0.0 · такт v1.27.0 «РЕБРЕНДИНГ+ФУНДАМЕНТ».
+   СИНГУЛЯР — дизайн-система v3.1 «Ambient OS · СТЕКЛО·СЕРЕБРО·ЗОЛОТО» — МОСТ
+   Источник истины: ДОКУМЕНТАЦИЯ ВЛАДЕЛЬЦА (SONG.zip, 2026-10-05) —
+   SINGULYAR_v3_Layer_Decomposition_Report.pdf: разбор 15/15 макетов.
+   Палитры макетов (дословно из отчёта): фон #050508–#2D3436, тексты-серебро
+   #C0C0C8/#E8E8E8/#F0F0F8, акценты — ТОЛЬКО золото #D4AF37/#F5A623/#FFB366/
+   #D4A574/#FBBF24/#FFD700/#C8A05F/#F0D78C/#C8B896; материалы: стекло
+   (glassmorphism, тонкая светлая рамка), серебро (полированный металл), золото.
+   Слово владельца: «КАК В КОРЕЛ ДРО… МАКЕТАМИ СТЕКЛО СЕРЕБРО ЗОЛОТО».
+   Версия моста: 3.1.0 · такт v1.28.0 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО».
    --------------------------------------------------------------------------
    ЧЕСТНЫЕ АДАПТАЦИИ под законы дома (офлайн-принцип, accessibility-first):
-   1) БЕЗ внешних шрифтов — системный стек вместо Plus Jakarta Sans/Inter
-      (0 внешних сетевых запросов — принцип сайта);
+   1) БЕЗ внешних шрифтов — системный стек (0 внешних сетевых запросов);
    2) БЕЗ универсального ресета — у каждой комнаты свои сбросы, чужие не трогаем;
    3) семантический --red комнат НЕ перекрашен — ошибки остаются ошибками;
+      --green (успех/онлайн) переведён в спокойный изумруд без неона;
    4) тяжёлые аппы (·01, ·02 РЕЗОНАНС, ·02 ФАБРИКА) мост НЕ подключают —
-      только фирменный холст inline: их калиброванные сцены и темы
-      data-theme не тронуты;
+      их калиброванные сцены и темы data-theme не тронуты;
    5) имя СИНГУЛЯР и сущность дома не меняются — обновляются аватары,
-      бирки, ярлыки (слово владельца).
+      бирки, ярлыки (слово владельца «СУЩНОСТЬ НЕ МЕНЯЕТСЯ!!!»);
+   6) рекомендация №5 отчёта: нейтральный фон + ОДИН акцент — акцент = золото.
    ========================================================================== */
 
-/* 1. ТОКЕНЫ v3.0 (пакет владельца, дословно) */
+/* 1. ТОКЕНЫ v3.1 (документация владельца, дословно) */
 :root{
-  --bg-anthracite:#0A0B0E;
-  --bg-glass-dark:rgba(18,20,26,.65);
-  --bg-glass-card:rgba(26,29,38,.5);
-  --bg-glass-elevated:rgba(36,40,52,.75);
+  --bg-base:#0A0A0C;            /* тёмная матовая подложка — макеты 01/06 */
+  --bg-depth:#121418;           /* глубина градиента — макет 02 */
+  --glass-dark:rgba(18,20,24,.66);
+  --glass-card:rgba(26,29,35,.55);
+  --glass-elevated:rgba(36,40,48,.75);
 
-  --coral-primary:#FF5E62;
-  --coral-secondary:#FF9966;
-  --grad-coral:linear-gradient(135deg,#FF5E62 0%,#FF9966 100%);
+  --gold:#D4AF37;               /* классическое золото — макеты 06/12 */
+  --gold-hi:#F5A623;            /* тёплое золото — макет 02 */
+  --gold-soft:#D4A574;          /* золото-песок — макеты 04/11/13 */
+  --gold-pale:#F0D78C;          /* светлое золото — макет 09 */
+  --gold-deep:#C8A05F;          /* бронза — макет 10 */
+  --gold-champagne:#C8B896;     /* старое золото — макет 15 */
+  --grad-gold:linear-gradient(135deg,#D4AF37 0%,#F5A623 100%);
 
-  --cyan-primary:#00F2FE;
-  --cyan-secondary:#4FACFE;
-  --grad-cyan:linear-gradient(135deg,#00F2FE 0%,#4FACFE 100%);
+  --silver:#C8CCD2;             /* полированное серебро */
+  --silver-bright:#F0F0F0;      /* герой-серебро — макеты 03/15 */
+  --silver-dim:#8A9099;         /* киккеры макета 02 */
+  --grad-silver:linear-gradient(135deg,#F0F0F0 0%,#C8CCD2 100%);
 
-  --emerald-primary:#11998E;
-  --emerald-secondary:#38EF7D;
-  --grad-emerald:linear-gradient(135deg,#11998E 0%,#38EF7D 100%);
+  --facet-atlas:#F5A623;        /* шесть фасетов КРИСТАЛЛА — гамма золота */
+  --facet-flow:#D4AF37;
+  --facet-resonance:#C8A05F;
+  --facet-aura:#F0D78C;
+  --facet-mesh:#C8B896;
+  --facet-vault:#D4A574;
+  --facet-brain:#C8CCD2;        /* МОЗГ — серебро нейросети */
 
-  --amber-primary:#F7971E;
-  --amber-secondary:#FFD200;
-  --grad-amber:linear-gradient(135deg,#F7971E 0%,#FFD200 100%);
+  --text-primary:#C0C8D0;       /* серебро основного текста */
+  --text-hero:#E8E8E8;          /* серебро заголовков — макеты 04/14 */
+  --text-secondary:#9CA3AF;
+  --text-muted:#6B7178;
 
-  --facet-atlas:#4FACFE;
-  --facet-flow:#FF5E62;
-  --facet-resonance:#FF9966;
-  --facet-aura:#A855F7;
-  --facet-mesh:#38EF7D;
-  --facet-vault:#F59E0B;
-  --facet-brain:#00F2FE; /* LOCAL BRAIN — шестой фасет канона, циан нейросети */
-
-  --text-primary:#F8FAFC;
-  --text-secondary:#94A3B8;
-  --text-muted:#64748B;
-
-  --border-subtle:1px solid rgba(255,255,255,.08);
-  --border-active:1px solid rgba(255,255,255,.22);
-  --glow-coral:0 0 24px rgba(255,94,98,.35);
-  --glow-cyan:0 0 24px rgba(0,242,254,.35);
-  --glow-emerald:0 0 24px rgba(56,239,125,.35);
+  --border-subtle:1px solid rgba(240,240,248,.14);  /* тонкая светлая рамка стекла */
+  --border-active:1px solid rgba(240,240,248,.30);
+  --glow-gold:0 0 24px rgba(212,175,55,.22);
+  --glow-silver:0 0 18px rgba(200,204,210,.14);
 
   --blur-sm:blur(12px);
-  --blur-md:blur(24px);
-  --blur-lg:blur(40px);
+  --blur-md:blur(20px);
+  --blur-lg:blur(36px);
 
   --ease-spring:cubic-bezier(.16,1,.3,1);
   --dur-fast:150ms;
   --dur-fluid:400ms;
 
   /* МОСТ на переменные комнат: перекрашено ТОЛЬКО то, что жило на переменной */
-  --bg:#0A0B0E;          /* био-антрацит вместо #0a0f15 */
-  --panel:#12141A;       /* антрацит-возвышение вместо сине-стального */
-  --panel2:#0F1116;
-  --tx:#F8FAFC;          /* текст пакета */
-  --dim:#94A3B8;         /* вторичный текст пакета */
-  --teal:#FF5E62;        /* главный акцент → singular-coral */
-  --teal2:#4FACFE;       /* второй акцент → neural-cyan */
-  --amber:#F7971E;       /* voice-amber пакета */
-  --green:#38EF7D;       /* p2p-emerald пакета */
-  --violet:#A855F7;      /* facet-aura пакета */
+  --bg:#0A0A0C;          /* матовая подложка макетов */
+  --panel:#1A1D23;       /* панельный фон макетов 04/05/08 */
+  --panel2:#121418;
+  --tx:#C0C8D0;          /* серебро */
+  --dim:#8A9099;         /* серебро-dim макета 02 */
+  --teal:#D4AF37;        /* главный акцент → золото (ОДИН акцент, отчёт №5) */
+  --teal2:#F0D78C;       /* второй тон → светлое золото */
+  --amber:#F5A623;       /* золото-хай макета 02 */
+  --green:#2FA36B;       /* семантика успеха — спокойный, без неона */
+  --violet:#8A94B8;      /* холодная периферия лучей — макеты 04/14 */
 }
 
-/* 2. ФОН И КИНЕТИЧЕСКИЙ ХОЛСТ */
-body{background:var(--bg-anthracite);color:var(--text-primary)}
+/* 2. ФОН И КИНЕТИЧЕСКИЙ ХОЛСТ — стеклянные плоскости в перспективе
+      + тёплое золотое свечение платформы (титульный макет 01) */
+body{background:var(--bg-base);color:var(--text-primary)}
 .singulyar-canvas-bg{
-  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,94,98,.12) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(0,242,254,.12) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(56,239,125,.08) 0%, transparent 50%),
-    var(--bg-anthracite);
+    radial-gradient(ellipse 62% 34% at 50% 92%, rgba(212,175,55,.11) 0%, transparent 60%),
+    radial-gradient(circle 38% at 12% 6%, rgba(200,204,210,.05) 0%, transparent 70%),
+    radial-gradient(circle 30% at 88% 12%, rgba(200,204,210,.04) 0%, transparent 70%),
+    radial-gradient(circle 46% at 50% 40%, rgba(18,20,24,.0) 0%, transparent 100%),
+    linear-gradient(180deg,#0D0E11 0%,var(--bg-base) 58%,#070709 100%);
   animation:singulyarDrift 26s ease-in-out infinite alternate;
 }
+.singulyar-canvas-bg::before,
+.singulyar-canvas-bg::after{
+  content:"";position:absolute;pointer-events:none;
+  border:1px solid rgba(240,240,248,.055);
+  background:linear-gradient(165deg,rgba(240,240,248,.028),rgba(240,240,248,.006) 60%);
+  box-shadow:inset 0 1px 0 rgba(240,240,248,.04);
+}
+.singulyar-canvas-bg::before{
+  width:44vmax;height:30vmax;top:-14vmax;left:8vmax;transform:rotate(-14deg);
+  animation:singulyarPane 44s ease-in-out infinite alternate;
+}
+.singulyar-canvas-bg::after{
+  width:38vmax;height:24vmax;bottom:-10vmax;right:6vmax;transform:rotate(11deg);
+  animation:singulyarPane 52s ease-in-out infinite alternate-reverse;
+}
 @keyframes singulyarDrift{
-  0%{filter:hue-rotate(0deg) saturate(1)}
-  50%{filter:hue-rotate(14deg) saturate(1.08)}
-  100%{filter:hue-rotate(-10deg) saturate(.96)}
+  0%{filter:brightness(1)}
+  50%{filter:brightness(1.07)}
+  100%{filter:brightness(.97)}
+}
+@keyframes singulyarPane{
+  0%{transform:rotate(-14deg) translateY(0)}
+  100%{transform:rotate(-12.4deg) translateY(2.2vmax)}
 }
 @media (prefers-reduced-motion: reduce){
-  .singulyar-canvas-bg{animation:none}
+  .singulyar-canvas-bg,.singulyar-canvas-bg::before,.singulyar-canvas-bg::after{animation:none}
 }
 
-/* 3. СТЕКЛЯННЫЕ ПРИМИТИВЫ (пакет, без ресета) */
+/* 3. СТЕКЛЯННЫЕ ПРИМИТИВЫ (макеты: тонкая светлая рамка, матовое стекло) */
 .glass-panel{
-  background:var(--bg-glass-dark);
+  background:var(--glass-dark);
   backdrop-filter:var(--blur-md);
   -webkit-backdrop-filter:var(--blur-md);
   border:var(--border-subtle);
-  border-radius:24px;
+  border-radius:18px;
   padding:24px;
-  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  box-shadow:0 20px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(240,240,248,.05);
   transition:all var(--dur-fluid) var(--ease-spring);
 }
 .glass-card{
-  background:var(--bg-glass-card);
+  background:var(--glass-card);
   backdrop-filter:var(--blur-sm);
   -webkit-backdrop-filter:var(--blur-sm);
   border:var(--border-subtle);
-  border-radius:16px;
+  border-radius:14px;
   padding:20px;
   transition:transform var(--dur-fast) var(--ease-spring),border var(--dur-fast);
 }
 .glass-card:hover{transform:translateY(-4px);border:var(--border-active)}
 
-/* 4. ФАСЕТ-БЕЙДЖИ (шесть фасетов КРИСТАЛЛА + МОЗГ) */
+/* 4. ФАСЕТ-БЕЙДЖИ (шесть фасетов КРИСТАЛЛА + МОЗГ) — гамма золота и серебра */
 .facet-badge{
   display:inline-flex;align-items:center;gap:8px;
   padding:6px 14px;border-radius:20px;
   font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;
 }
-.facet-badge[data-facet="atlas"]    {background:rgba(79,172,254,.15); color:var(--facet-atlas);    border:1px solid var(--facet-atlas)}
-.facet-badge[data-facet="flow"]     {background:rgba(255,94,98,.15);  color:var(--facet-flow);     border:1px solid var(--facet-flow)}
-.facet-badge[data-facet="resonance"]{background:rgba(255,153,102,.15);color:var(--facet-resonance);border:1px solid var(--facet-resonance)}
-.facet-badge[data-facet="aura"]     {background:rgba(168,85,247,.15); color:var(--facet-aura);     border:1px solid var(--facet-aura)}
-.facet-badge[data-facet="mesh"]     {background:rgba(56,239,125,.15); color:var(--facet-mesh);     border:1px solid var(--facet-mesh)}
-.facet-badge[data-facet="vault"]    {background:rgba(245,158,11,.15); color:var(--facet-vault);    border:1px solid var(--facet-vault)}
-.facet-badge[data-facet="brain"]    {background:rgba(0,242,254,.10);  color:var(--facet-brain);    border:1px solid var(--facet-brain)}
+.facet-badge[data-facet="atlas"]    {background:rgba(245,166,35,.13);  color:var(--facet-atlas);    border:1px solid var(--facet-atlas)}
+.facet-badge[data-facet="flow"]     {background:rgba(212,175,55,.13);  color:var(--facet-flow);     border:1px solid var(--facet-flow)}
+.facet-badge[data-facet="resonance"]{background:rgba(200,160,95,.13);  color:var(--facet-resonance);border:1px solid var(--facet-resonance)}
+.facet-badge[data-facet="aura"]     {background:rgba(240,215,140,.12); color:var(--facet-aura);     border:1px solid var(--facet-aura)}
+.facet-badge[data-facet="mesh"]     {background:rgba(200,184,150,.12); color:var(--facet-mesh);     border:1px solid var(--facet-mesh)}
+.facet-badge[data-facet="vault"]    {background:rgba(212,165,116,.12); color:var(--facet-vault);    border:1px solid var(--facet-vault)}
+.facet-badge[data-facet="brain"]    {background:rgba(200,204,210,.10); color:var(--facet-brain);    border:1px solid var(--facet-brain)}
 
 /* 5. AURA — HUMAN-FIRST (выбор человека выше автоматики) */
 body[data-aura-mode="high-contrast"]{
-  --bg-anthracite:#000000;
+  --bg-base:#000000;
   --bg:#000000;
-  --bg-glass-dark:#111111;
-  --bg-glass-card:#111111;
-  --bg-glass-elevated:#1a1a1a;
+  --glass-dark:#111111;
+  --glass-card:#111111;
+  --glass-elevated:#1a1a1a;
   --border-subtle:2px solid #FFFFFF;
   --border-active:2px solid #FFFFFF;
   color:#FFFFFF;
