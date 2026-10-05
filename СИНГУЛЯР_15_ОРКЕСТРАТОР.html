@@ -330,7 +330,24 @@ option:checked,option:hover{background-color:#1A1508;color:#D4AF37}
 /*</SEL-FIX>*/
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
-</head>
+<style id="sng-канон-v135">
+/* ── канон дома v1.35.0 «СТАНДАРТ»: void + золото ── */
+:root{--bg:#0A0A0C;--cur:#d4af37;--hue:45}
+body{background:#0A0A0C !important}
+::selection{background:rgba(212,175,55,.32)}
+.sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
+  background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(212,175,55,.22);color:#b9b4aa;
+  font:12px/1.55 ui-monospace,Consolas,monospace}
+.sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;color:#d4af37;letter-spacing:.08em}
+.sng-подкапот>summary::-webkit-details-marker{display:none}
+.sng-подкапот>summary::before{content:'⌇ ';color:#8a6d1d}
+.sng-подкапот>summary:hover{background:rgba(212,175,55,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(212,175,55,.14)}
+.sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
+.sng-подкапот .тело b{color:#d4af37;font-weight:600}
+.sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
+</style></head>
 <body>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div id="banner" role="alert"></div>
@@ -399,14 +416,14 @@ option:checked,option:hover{background-color:#1A1508;color:#D4AF37}
     <div class="card" style="margin-top:14px">
       <h3>Экспорт / импорт</h3>
       <div class="btnRow" style="margin:10px 0">
-        <button class="btn" id="expLrc">⬇ LRC</button>
-        <button class="btn" id="expVtt">⬇ WebVTT</button>
-        <button class="btn" id="expJson">⬇ JSON</button>
+        <button class="btn" id="expLrc">LRC</button>
+        <button class="btn" id="expVtt">WebVTT</button>
+        <button class="btn" id="expJson">JSON</button>
       </div>
       <div class="mini" style="margin-bottom:6px">Импорт: LRC · SRT · VTT · чистый TXT (пропорционально, честно помечается). Импорт заменяет дорожку в сессии и поднимает версию.</div>
       <textarea id="impTxt" placeholder="вставь LRC/SRT/VTT/TXT сюда…" aria-label="текст импорта"></textarea>
       <div class="btnRow" style="margin-top:8px">
-        <button class="btn" id="impBtn">⬆ Импортировать в выбранную дорожку</button>
+        <button class="btn" id="impBtn">Импортировать в выбранную дорожку</button>
         <input type="file" id="impFile" accept=".lrc,.srt,.vtt,.txt" style="display:none">
         <button class="btn" id="impFileBtn">…или выбери файл</button>
       </div>
@@ -446,7 +463,7 @@ option:checked,option:hover{background-color:#1A1508;color:#D4AF37}
       <div class="mini" id="blockedCode"></div>
     </div>
     <div id="micBox">
-      <button class="btn" id="micBtn">🎤 микрофон: выкл</button>
+      <button class="btn" id="micBtn">микрофон: выкл</button>
       <span id="micVu" aria-hidden="true"><i></i></span>
       <span id="micHz">монитор голоса: тональность и уровень — без скоринга (в минусовке нет эталонной мелодии, оценивать нечестно)</span>
     </div>
@@ -616,7 +633,7 @@ function validateLines(lines, songDur){
     if (i>0 && isFinite(t) && isFinite(lines[i-1][0]) && t < lines[i-1][0]) mono++;
     if (i>0 && t === lines[i-1][0]) dup++;
     if (!txt) empty++;
-    else if (/^[♪\[\(]/.test(txt)) { /* маркеры пауз допустимы */ }
+    else if (/^[\[\(]/.test(txt)) { /* маркеры пауз допустимы */ }
     if (i>0 && isFinite(t) && isFinite(lines[i-1][0]) && t - lines[i-1][0] > 20) bigGap++;
     if (songDur && isFinite(t) && t > songDur + 5) beyond++;
   }
@@ -747,7 +764,7 @@ function applyImport(vid, lang, parsed){
    allSongs(): 61 песня канала + флагман (OutShadow feat RUVSON, вне листа —
    помечен звездой; его ×157 вычисляется из данных, не зашивается). */
 function flagRow(){
-  return { id: S15.pack.flag.id, t: S15.pack.flag.title + ' ★ ×157 · ' + S15.pack.flag.artist,
+  return { id: S15.pack.flag.id, t: S15.pack.flag.title + ' ×157 · ' + S15.pack.flag.artist,
            d: S15.pack.flag.dur || 0, n: 0, star: true };
 }
 function allSongs(){ return [flagRow()].concat(S15.pack.cat); }
@@ -834,7 +851,7 @@ function pState(s, code){
 }
 function pError(code, human){
   pState('error', code);
-  toast('⚠ ' + human);
+  toast('' + human);
   alog('ERROR ' + code + ' — ' + human);
   srSay('Ошибка: ' + human);
 }
@@ -1244,7 +1261,7 @@ function micToggle(){
     if (MIC15.stream) MIC15.stream.getTracks().forEach(function(t){ t.stop(); });
     if (MIC15.ctx) MIC15.ctx.close();
     MIC15 = { on:false, stream:null, ctx:null, gain:null, wet:null, an:null, data:null };
-    btn.textContent = '🎤 микрофон: выкл';
+    btn.textContent = 'микрофон: выкл';
     $('#micVu').firstChild.style.width = '0';
     alog('микрофон выключен, поток освобождён');
     return;
@@ -1270,7 +1287,7 @@ function micToggle(){
     var an = ctx.createAnalyser(); an.fftSize = 2048;
     src.connect(an);
     MIC15 = { on:true, stream:stream, ctx:ctx, gain:gain, wet:wet, an:an, data:new Float32Array(an.fftSize) };
-    btn.textContent = '🎤 микрофон: ВКЛ';
+    btn.textContent = 'микрофон: ВКЛ';
     alog('микрофон включён: монитор + реверб (генерируется импульс 1,6 с)');
     micMeter();
   }).catch(function(e){
@@ -1397,7 +1414,7 @@ function updatePulse(){
   g.appendChild(stat('песен в каталоге', c.songs, 'каталог канала', 100));
   g.appendChild(stat('языковых дорожек', c.pairs, 'строк: '+c.lines.toLocaleString('ru'), vPct, c.bad ? 'bad' : ''));
   g.appendChild(stat('языков реально есть', c.langs, 'объединение по всем песням', 100));
-  g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ⚠':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
+  g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
   g.appendChild(stat('происхождение', c.verified+' / '+c.machine+' / '+c.user, 'verified / machine / user', Math.round(100*c.verified/Math.max(1,c.pairs))));
   g.appendChild(stat('минусовок рядом', minusFoundCount() + ' / ' + c.songs, 'проб ./minus/<id>.mp3 — лениво, по 12', Math.round(100*minusFoundCount()/c.songs), 'warn'));
   var hs = $('#hudStats');
@@ -1496,10 +1513,10 @@ function tlRefresh(){
   }
   var v = validateLines(lines, songDur(vid));
   vd.appendChild(el('span', {class: v.status==='ok'?'v-ok':(v.status==='warn'?'v-warn':'v-bad'),
-    text: (v.status==='ok'?'✓ валиден':(v.status==='warn'?'⚠ валиден с предупреждениями':'✗ ошибки')) +
+    text: (v.status==='ok'?'валиден':(v.status==='warn'?'валиден с предупреждениями':'ошибки')) +
       ' · '+pr.source+' · '+pr.status+' · v'+trackVer(vid,lang) + (pr.note? ' · '+pr.note : '')}));
   v.checks.forEach(function(c){
-    box.appendChild(el('div', {class:'v-'+c.st, text: (c.st==='ok'?'✓ ':c.st==='warn'?'⚠ ':'✗ ') + c.label + (c.detail? ' — '+c.detail : '')}));
+    box.appendChild(el('div', {class:'v-'+c.st, text: (c.st==='ok'?'':c.st==='warn'?'':'') + c.label + (c.detail? ' — '+c.detail : '')}));
   });
   var tl = buildTimeline(lines, songDur(vid));
   tl.slice(0,3).forEach(function(L){
@@ -1546,11 +1563,11 @@ function rebuildAudit(){
       onclick: function(){ $('#chSong').value = s.id; refreshLangs(); $('#chLang').value = 'ru'; showTab('vChoir'); startSinging(); }},
       [el('div', {class:'t', text: ('0'+s.n).slice(-2)+' · '+s.t}),
        el('div', {class:'r'}, [
-         el('span', {class: v==='bad'?'a-bad':'a-ok', text: 'ru '+(v==='bad'?'✗':'✓')}),
-         el('span', {text: 'таймлайн '+(v==='ok'?'✓':v==='warn'?'⚠':'✗')}),
+         el('span', {class: v==='bad'?'a-bad':'a-ok', text: 'ru '+(v==='bad'?'':'')}),
+         el('span', {text: 'таймлайн '+(v==='ok'?'':v==='warn'?'':'')}),
          el('span', {text: 'языков '+mlCount+(extraLangCount(s.id)? '+'+extraLangCount(s.id):'')}),
          el('span', {class: mst==='found'?'a-ok':(mst==='no'?'a-na':'a-warn'),
-           text: 'минус '+(mst==='found'?'✓':mst==='no'?'—':'?')}),
+           text: 'минус '+(mst==='found'?'':mst==='no'?'—':'?')}),
          el('span', {text: fmtT(s.d)})
        ])]);
     card.addEventListener('keydown', function(e){ if (e.key==='Enter'||e.key===' '){ e.preventDefault(); card.click(); } });
@@ -1595,7 +1612,7 @@ function fillSongSelects(){
   ['#chSong', '#tlSong'].forEach(function(sid){
     var s = $(sid); s.textContent = '';
     allSongs().forEach(function(x){
-      s.appendChild(el('option', {value:x.id, text: (x.star ? '★' : ('0'+x.n).slice(-2)) + ' · ' + x.t}));
+      s.appendChild(el('option', {value:x.id, text: (x.star ? '' : ('0'+x.n).slice(-2)) + ' · ' + x.t}));
     });
   });
 }
@@ -1695,7 +1712,7 @@ function wire(){
     if (parsed.error){
       rep.appendChild(el('div', {class:'v-bad', text: parsed.error}));
       if (parsed.validation) parsed.validation.checks.forEach(function(c){
-        rep.appendChild(el('div', {class:'v-'+c.st, text:(c.st==='ok'?'✓ ':c.st==='warn'?'⚠ ':'✗ ')+c.label+(c.detail?' — '+c.detail:'')}));
+        rep.appendChild(el('div', {class:'v-'+c.st, text:(c.st==='ok'?'':c.st==='warn'?'':'')+c.label+(c.detail?' — '+c.detail:'')}));
       });
       return;
     }
@@ -1704,7 +1721,7 @@ function wire(){
       return;
     }
     parsed.validation.checks.forEach(function(c){
-      rep.appendChild(el('div', {class:'v-'+c.st, text:(c.st==='ok'?'✓ ':c.st==='warn'?'⚠ ':'✗ ')+c.label+(c.detail?' — '+c.detail:'')}));
+      rep.appendChild(el('div', {class:'v-'+c.st, text:(c.st==='ok'?'':c.st==='warn'?'':'')+c.label+(c.detail?' — '+c.detail:'')}));
     });
     if (!parsed.ok){
       rep.appendChild(el('div', {class:'v-bad', text:'импорт отклонён: таймлайн с ошибками — реестр не принимает мусор'}));
@@ -1775,7 +1792,7 @@ function wire(){
 
   /* свой файл + в память */
   var fileBtn = el('button', {class:'srcChip', text:'+ свой файл…', onclick: function(){ $('#userAudio').click(); }});
-  var idbBtn = el('button', {class:'srcChip', text:'⬤ текущий файл → в память', onclick: function(){
+  var idbBtn = el('button', {class:'srcChip', text:'текущий файл → в память', onclick: function(){
     var f = $('#userAudio').files[0];
     var vid = $('#chSong').value;
     if (f){ idbPut(vid, f, function(err){ toast(err? 'память недоступна: '+err.message : 'минус '+songTitle(vid)+' сохранён в память'); updateSrcRow(); }); }
@@ -1846,7 +1863,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 </script>
-<script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>ОРКЕСТРАТОР ·15</b> · хаб-рука дома: пульс, каталог комнат, транскрипции, батчи<br>ядро модулей SNG · офлайн-first · 0 внешних запросов · сервис-воркер s15-orkestrator · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:11px/1 ui-monospace,Consolas,monospace;color:#6e6862"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#8a6d1d;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#8a6d1d;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script>
 <script id="ts15-js">
 /* ═══ СИСТЕМА ТАБЛИЦ ·15 (v1): headless-ядро + видовой слой ═══ */
 /*<TS15:ЯДРО>*/
@@ -2399,7 +2416,7 @@ function чипыЭл(){
 /* ── меню: колонки / плотность / виды / сброс-undo ── */
 function менюЭл(){
   var det = h('details', { class: 'ts-menu' });
-  det.appendChild(h('summary', { class: 'ts-btn', 'aria-label': 'настройки таблицы: колонки, плотность, виды' }, [ h('span', { text: '☰ настроить' }) ]));
+  det.appendChild(h('summary', { class: 'ts-btn', 'aria-label': 'настройки таблицы: колонки, плотность, виды' }, [ h('span', { text: 'настроить' }) ]));
   var тело = h('div', { class: 'ts-menu-body' });
 
   /* колонки: видимость */
@@ -2514,7 +2531,7 @@ function undo(){
 function действияЭл(){
   var box = h('div', { class: 'ts-actions', role: 'group', 'aria-label': 'экспорт реестра' });
   [['csv', 'CSV'], ['tsv', 'TSV'], ['json', 'JSON']].forEach(function(ф){
-    box.appendChild(h('button', { class: 'ts-btn', text: '⬇ ' + ф[1], title: 'скачать видимые строки в формате ' + ф[1],
+    box.appendChild(h('button', { class: 'ts-btn', text: '' + ф[1], title: 'скачать видимые строки в формате ' + ф[1],
       onclick: function(){ экспорт(ф[0]); } }));
   });
   box.appendChild(h('button', { class: 'ts-btn', text: '⧉ копировать', title: 'копировать выбранные строки (или все видимые) в буфер обмена как TSV',
@@ -2592,13 +2609,13 @@ function ячейкаЗначение(строка, ключ){
   var td;
   switch (ключ){
     case 'num':
-      td = h('td', { class: 'num ts-num' }, [ h('span', { class: 'mini', text: ('0' + строка.номер).slice(-2) + (строка.звезда ? '★' : '') }) ]);
+      td = h('td', { class: 'num ts-num' }, [ h('span', { class: 'mini', text: ('0' + строка.номер).slice(-2) + (строка.звезда ? '' : '') }) ]);
       break;
     case 'title':
-      var чист = строка.звезда ? (строка.название.split(' ★')[0]) : строка.название;
+      var чист = строка.звезда ? (строка.название.split(' ')[0]) : строка.название;
       td = h('td', { class: 'rowhead' }, [
         h('span', { class: 'ts-title', text: чист }),
-        строка.звезда ? h('span', { class: 'ts-star', title: 'флагман: 157 переводов YouTube', text: ' ★×157' }) : null
+        строка.звезда ? h('span', { class: 'ts-star', title: 'флагман: 157 переводов YouTube', text: ' ×157' }) : null
       ]);
       td.title = строка.название + ' · ' + fmtT(строка.длительность) + ' · ' + строка.id;
       break;
@@ -2789,7 +2806,7 @@ function батчЭл(){
     h('b', { text: 'выбрано: ' + n })
   ]);
   [['csv', 'CSV'], ['tsv', 'TSV'], ['json', 'JSON']].forEach(function(ф){
-    бар.appendChild(h('button', { class: 'ts-btn2', text: '⬇ ' + ф[1], title: 'экспорт выбранных строк',
+    бар.appendChild(h('button', { class: 'ts-btn2', text: '' + ф[1], title: 'экспорт выбранных строк',
       onclick: function(){ экспорт(ф[0]); } }));
   });
   бар.appendChild(h('button', { class: 'ts-btn2', text: '⧉ копировать', onclick: function(){ копировать(); } }));

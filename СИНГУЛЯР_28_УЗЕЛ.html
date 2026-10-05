@@ -111,13 +111,13 @@ footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:va
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <header><div class="wrap hd">
   <div class="logo">S·28</div>
-  <div><b>СИНГУЛЯР · СУВЕРЕННЫЙ УЗЕЛ</b><span>математическая философия автономии · уровень ·28 над ФУНДАМЕНТОМ ·27</span></div>
-  <div class="badge">v1.29.0 · PWA · офлайн</div>
+  <div><b>СИНГУЛЯР · СУВЕРЕННЫЙ УЗЕЛ</b><span>философия дома: узел МОЖЕТ быть неуязвимым и творческим одновременно</span></div>
+  
 </div></header>
 
 <main class="wrap">
   <p class="kick" style="margin-top:26px">·28 · МОДУЛЬ ФИЛОСОФИИ ДОМА</p>
-  <h1>СУВЕРЕННЫЙ УЗЕЛ — <em>быть неуязвимым и творческим одновременно</em></h1>
+  <h1>СУВЕРЕННЫЙ УЗЕЛ — <em>МОЖЕТ быть неуязвимым и творческим одновременно</em></h1>
   <p class="lead">Документ, пересобранный в живой модуль: никаких картинок — всё, что дальше,
   рисуется на ваших глазах кодом. Свободный художник сам является источником. Три слоя философии —
   три работающих холста: потрогайте руками.</p>
@@ -177,7 +177,7 @@ footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:va
     а отсутствие трения. Ударьте бурей и проверьте: счётчик изменений сущности останется нулём.</p>
     <canvas id="cvIdentity" aria-label="Холст: волны бури летят слева направо сквозь неподвижный узел и выходят справа без искажений" role="img"></canvas>
     <div class="пульт">
-      <button class="кнопка" id="btnStorm" type="button">⚡ ударить бурей</button>
+      <button class="кнопка" id="btnStorm" type="button">ударить бурей</button>
       <button class="кнопка ghost" id="btnCalm" type="button">◻ тишина</button>
       <div class="метр" aria-live="polite"><span>Ŝ = <b>1</b></span><span>изменений сущности: <b id="idChanges">0</b></span></div>
     </div>
@@ -280,9 +280,7 @@ footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:va
   модуль не притворяется). Речь и распознавание не используются: узел молчит и слушает только жесты —
   это его дизайн, а не ограничение.</p>
 
-  <footer>СИНГУЛЯР ·28 СУВЕРЕННЫЙ УЗЕЛ · такт v1.29.0 «МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ» · источник — документы дома:
-  «СУВЕРЕННЫЙ УЗЕЛ — математическая философия автономии» (RU/EN, 2026-10-05) + инвариант-визуалы июня 2026<br>
-  Ŝ = 1<sub>H</sub> + λ(I⊗I†) · ноль изображений — всё живое · ядро модулей SNG v1.0 · шестерёнка дома на месте</footer>
+  <footer>СУВЕРЕННЫЙ УЗЕЛ ·28 · часть единого дома: <a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома">документация</a></footer>
 </main>
 
 <script>
@@ -759,5 +757,33 @@ try{
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>
-</body>
+<style id="sng-канон-v135">
+/* ── СИНГУЛЯР · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото ──
+   Палитра аппа переложена на канон дома (ember/радуга выжжены);
+   семантические цвета состояния (ok/bad) сохранены — это юзобилити. */
+:root{
+  --ember:#d4af37; --ember2:#8a6d1d; --coal2:#8a6d1d; --hot:#f2e7c4;
+  --glow:rgba(212,175,55,.5); --glow2:rgba(212,175,55,.14);
+  --spoke-glow:rgba(212,175,55,.5);
+  --bg:#0A0A0C; --surf:#101014; --surf2:#16161c;
+  --edge:#23232b; --edge2:#2e2e38;
+  --skin:#ece9e2; --ash:#9a958c;
+}
+body{background:#0A0A0C !important}
+::selection{background:rgba(212,175,55,.32)}
+/* ── ПОД КАПОТ: тех-информация живёт под футер, в нативном спойлере ── */
+.sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
+  background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(212,175,55,.22);color:#b9b4aa;
+  font:12px/1.55 ui-monospace,'SF Mono',Consolas,monospace}
+.sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;
+  color:#d4af37;letter-spacing:.08em}
+.sng-подкапот>summary::-webkit-details-marker{display:none}
+.sng-подкапот>summary::before{content:'⌇ ';color:#8a6d1d}
+.sng-подкапот>summary:hover{background:rgba(212,175,55,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(212,175,55,.14)}
+.sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
+.sng-подкапот .тело b{color:#d4af37;font-weight:600}
+.sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
+</style><details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СУВЕРЕННЫЙ УЗЕЛ ·28</b> · такт v1.29.0 «МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ»<br>источник — документы дома: «СУВЕРЕННЫЙ УЗЕЛ — математическая философия автономии» (RU/EN, 2026-10-05) · инвариант-визуалы июня 2026 · формула узла: Ŝ = 1<sub>H</sub> + λ(I⊗I†) · три слоя — ТОЖДЕСТВО, ПРОЕКТОР, ЛЯМБДА · ноль изображений — всё живое · ядро модулей SNG · канон дома v1.35.0 «СТАНДАРТ»</div></details></body>
 </html>
