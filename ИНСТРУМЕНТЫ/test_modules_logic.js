@@ -37,7 +37,7 @@ function ядро(pathname) {
 /* ── 1. формула и инвариант дома ── */
 test('ядро несёт формулу Ŝ = 1_H + λ(I⊗I†) и инвариант ⟨M(t), Σ(t)⟩ ≡ 0', () => {
   const SNG = ядро();
-  assert.equal(SNG.версия, '1.1.0');
+  assert.equal(SNG.версия, '1.1.1');
   assert.equal(SNG.формула, 'Ŝ = 1_H + λ(I⊗I†)');
   assert.equal(SNG.инвариант, '⟨M(t), Σ(t)⟩ ≡ 0');
 });
@@ -170,10 +170,10 @@ test('комната ·28: формула, инвариант, протокол 
   assert.ok(т.includes('sw15.js'), 'PWA-регистрация на месте');
 });
 
-/* ── 12. сборка: SW прекэширует ядро и ·28, версия кэша v38 ── */
-test('sw15.js v38: ядро модулей и УЗЕЛ ·28 в прекэше', () => {
+/* ── 12. сборка: SW прекэширует ядро и ·28, версия кэша v39 ── */
+test('sw15.js v39: ядро модулей и УЗЕЛ ·28 в прекэше', () => {
   const св = fs.readFileSync(path.join(ROOT, 'sw15.js'), 'utf8');
-  assert.ok(св.includes("s15-orkestrator-v38"), 'кэш v38');
+  assert.ok(св.includes("s15-orkestrator-v39"), 'кэш v39');
   assert.ok(св.includes("./singulyar-modules.js"), 'ядро в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_28_УЗЕЛ.html"), '·28 в прекэше');
 });
