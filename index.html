@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР RUVSON — вселенная караоке · ОРКЕСТРАТОР ·15</title>
-<meta name="description" content="Офлайн-вселенная караоке RUVSON: 61 песня × 158 языков · 26 модулей · ОРКЕСТРАТОР ·15 · КРУГ ·23 · ПОЧТА ·24 · КОШЕЛЁК ·25 · ЛИНИЯ ·26 · PWA. Отчёт и инструкция — читай и сразу действуй.">
+<meta name="description" content="Офлайн-вселенная караоке RUVSON: 61 песня × 158 языков · 17 модулей · 6 модальностей — смысл один, представления разные · ОРКЕСТРАТОР ·15 · КРУГ ·23 · ФУНДАМЕНТ ·27 · УЗЕЛ ·28 · PWA. Отчёт и инструкция — читай и сразу действуй.">
 <meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
@@ -64,7 +64,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
 <header><div class="wrap hd">
   <div class="logo">S·15</div>
   <div><b>СИНГУЛЯР RUVSON</b><span>офлайн-вселенная караоке · читай отчёт — начинай действовать</span></div>
-  <div class="badge">v1.28.0 · СТЕКЛО·СЕРЕБРО·ЗОЛОТО · PWA · офлайн</div>
+  <div class="badge">v1.29.0 · МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ · PWA · офлайн</div>
 </div></header>
 
 <main class="wrap">
@@ -99,6 +99,29 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
   Всё вычисляется из данных, ничего не «заявлено». Ниже — что готово прямо сейчас, что проверено
   тестами и как начать действовать за две минуты.</p>
 
+  <section class="glass-panel" id="prismPanel" aria-label="Архитектура: модули и мультимодальность" style="margin:26px 0 0">
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+      <div style="flex:1.1;min-width:290px">
+        <b style="font-size:16.5px;color:var(--teal2)">АРХИТЕКТУРА: МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ</b>
+        <p style="color:var(--dim);font-size:13.5px;margin:8px 0 12px">Отличитель дома: <b style="color:#F0D78C">смысл один — модальности разные</b>.
+        17 модулей говорят на шести каналах человека — СЛОВО · ГОЛОС · ЗВУК · ОБРАЗ · ТАКТ · ЖЕСТ.
+        Призма живая — рисуется кодом, ноль изображений: свободный художник сам является источником.
+        Инвариант дома: Ŝ = 1<sub>H</sub> + λ(I⊗I†).</p>
+        <a class="btn" href="СИНГУЛЯР_28_УЗЕЛ.html">⬢ УЗЕЛ ·28 — философия вживую</a>
+        <a class="btn ghost" href="#модули">карта модулей</a>
+      </div>
+      <canvas id="sngPrism" style="flex:1;min-width:270px;height:230px" aria-label="Живая призма: белый луч смысла входит, кристалл раскладывает его на шесть лучей модальностей" role="img"></canvas>
+    </div>
+  </section>
+  <script>
+  /* призма на главной рисуется ядром SNG — не картинка */
+  (function(){
+    function старт(){ try{ if(window.SNG&&window.SNG.призма){var c=document.getElementById('sngPrism'); if(c) window.SNG.призма(c,{фаза:0.2});} }catch(e){} }
+    if(window.SNG) старт();
+    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',старт); else document.addEventListener('DOMContentLoaded',старт); }
+  })();
+  </script>
+
   <div class="cards" style="margin:26px 0 0">
     <div class="card"><div class="t">🎤 СПЕТЬ ОДНОМУ</div><div class="d">СУФЛЁР ·16: подсветка слов, колбаски, счёт и рейтинг. Микрофон по желанию.</div><div class="m">·16 · 73 КБ</div><a class="btn" href="СИНГУЛЯР_16_СУФЛЁР.html">▶ петь</a></div>
     <div class="card"><div class="t">👨‍👩‍👧 СПЕТЬ ВМЕСТЕ</div><div class="d">СОБЫТИЕ ·18: зал по коду/QR — бабушка, мама, внучка со своих устройств. Голоса P2P, синхронный старт, общая запись.</div><div class="m">·18 · соц-ядро</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ создать зал</a></div>
@@ -117,7 +140,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
 
   <h2>Запуск <em>выбери и кликни</em></h2>
   <div class="cards">
-    <div class="card"><div class="t">ФУНДАМЕНТ ·27 ★ NEW</div><div class="d">Визуальный канон v3.0 «Ambient OS» от владельца: 15 страниц — Титул, Кристалл шести фасетов, RESONANCE, AURA, LOCAL BRAIN, MESH, VAULT, Spatial Glass, ЖИЗНЬ, Синтез.</div><div class="m">15 визуалов · WebP · 1,3 МБ</div><a class="btn" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">▶ смотреть</a></div>
+    <div class="card"><div class="t">УЗЕЛ ·28 ★ NEW</div><div class="d">СУВЕРЕННЫЙ УЗЕЛ — математическая философия автономии владельца вживую: Ŝ = 1_H + λ(I⊗I†). Три слоя — ТОЖДЕСТВО, ПРОЕКТОР, ЛЯМБДА — три работающих холста: буря проходит сквозь, решето фильтрует золото, λ наклоняет холм. Ноль изображений — всё живое.</div><div class="m">50 КБ · автономный файл · 4 модальности</div><a class="btn" href="СИНГУЛЯР_28_УЗЕЛ.html">⬢ открыть</a></div>
+    <div class="card"><div class="t">ФУНДАМЕНТ ·27</div><div class="d">Визуальный канон v3.0 «Ambient OS» от владельца: 15 страниц — Титул, Кристалл шести фасетов, RESONANCE, AURA, LOCAL BRAIN, MESH, VAULT, Spatial Glass, ЖИЗНЬ, Синтез.</div><div class="m">15 визуалов · WebP · 1,3 МБ</div><a class="btn" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">▶ смотреть</a></div>
     <div class="card"><div class="t">ОС v1.9 — всё сразу</div><div class="d">20 модулей: Платформа, Фабрика, Оркестратор, СУФЛЁР ·16, ЗАЛ ·17, СОБЫТИЕ ·18, ЧЕЛОВЕК ·19, ФОНЕТИКА ·20, ОБЩЕНИЕ ·21, СВЯЗЬ ·22… Консоль команд и горячие клавиши. Скачивается как файл — открой двойным кликом.</div><div class="m">≈45 МБ · release-файл</div><a class="btn" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">⬇ скачать</a></div>
     <div class="card"><div class="t">ОРКЕСТРАТОР ·15</div><div class="d">Реестр 62×13, хор с слово-подсветкой, темп/тональность, микрофон+реверб, аудит, импорт/экспорт LRC/VTT.</div><div class="m">0.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
     <div class="card"><div class="t">Флагман ×157 голосов</div><div class="d">«Когда теряем» (OutShadow feat RUVSON): реальные тайминги, 157 переводов YouTube, минусовка ДНК.</div><div class="m">15 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">▶ открыть</a></div>
@@ -137,21 +161,56 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
     <div class="card"><div class="t">ЛИНИЯ ·26 ★ NEW</div><div class="d">Свой номер у каждого (00–15, гостям — от устройства), SMS ходят P2P между устройствами без операторов, свои одноразовые коды подтверждения (OTP, TTL 5 минут), честные рецепты СВОЕГО внешнего номера без «добрых дядей»: своя SIM + шлюз-форвардер, свой CPaaS-аккаунт (ключ локально), свой GSM-шлюз.</div><div class="m">35 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_26_ЛИНИЯ.html">▶ открыть</a></div>
   </div>
 
+  <h2 id="модули">Архитектура модулей <em>кто на каком канале говорит</em></h2>
+  <p class="lead">Карта собирается ядром SNG из манифеста модулей — не зашита в разметку:
+  манифест — истина. Шесть модальностей — каналы, на которых человек принимает и отдаёт смысл;
+  каждый модуль честно перечисляет свои — по факту кода, не по обещаниям.</p>
+  <div class="cards" id="sngModCards"></div>
+  <script>
+  /* карта модулей строится ядром SNG (манифест — истина) */
+  (function(){
+    function построить(){
+      try{
+        var SNG=window.SNG; if(!SNG) return;
+        var бокс=document.getElementById('sngModCards'); if(!бокс) return;
+        SNG.карта().forEach(function(строка){
+          var мод=строка.модальность, мс=строка.модули;
+          var c=document.createElement('div'); c.className='card';
+          var t=document.createElement('div'); t.className='t';
+          t.style.color=мод.цвет; t.textContent=мод.глиф+' '+мод.имя+' · каналов: '+мс.length;
+          var d=document.createElement('div'); d.className='d'; d.textContent=мод.кратко;
+          var список=document.createElement('div'); список.style.cssText='display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px';
+          мс.forEach(function(m){
+            var a=document.createElement('a'); a.href=m.файл;
+            a.style.cssText='font-family:var(--mono);font-size:11.5px;color:#C0C8D0;white-space:nowrap';
+            a.textContent=m.номер+' '+m.имя;
+            список.appendChild(a);
+          });
+          c.appendChild(t); c.appendChild(d); c.appendChild(список);
+          бокс.appendChild(c);
+        });
+      }catch(e){}
+    }
+    if(window.SNG) построить();
+    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',построить); else document.addEventListener('DOMContentLoaded',построить); }
+  })();
+  </script>
+
   <h2>Каталог вселенной <em>всё разложено по полкам</em></h2>
-  <p class="lead">11 классов, 674 файла — каждый учтён ровно один раз, числа вычислены из файлов, не зашиты. Полный канонический каталог — <a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</a>, синтез с внешним прототипом — <a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ_HUMAN_RUNTIME.md</a>.</p>
+  <p class="lead">11 классов, 678 файлов — каждый учтён ровно один раз, числа вычислены из файлов, не зашиты. Полный канонический каталог — <a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</a>, синтез с внешним прототипом — <a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ_HUMAN_RUNTIME.md</a>.</p>
   <div class="cols">
     <div class="box"><h3>КЛАССЫ 0–4 · каркас</h3><ul>
-      <li><b>К0 ИНФРАСТРУКТУРА (9)</b> — index, SW v35, manifest, UX-движок, singulyar-design-v3.css (мост v3.0), README, ГОТОВНОСТЬ.manifest.json</li>
+      <li><b>К0 ИНФРАСТРУКТУРА (10)</b> — index, SW v37, manifest, UX-движок, singulyar-modules.js (ядро модулей: манифест 18 узлов, 6 модальностей, живая призма — такт v1.29.0), singulyar-design-v3.css (мост v3.1), README, ГОТОВНОСТЬ.manifest.json</li>
       <li><b>К1 СЦЕНА (4)</b> — Флагман ×157 · РЕЗОНАНС · ФАБРИКА · ОРГАНИЗМ</li>
-      <li><b>К2 ДОМ (13 комнат)</b> — ·15 ОРКЕСТРАТОР … ·26 ЛИНИЯ, ·27 ФУНДАМЕНТ, каждая автономна</li>
+      <li><b>К2 ДОМ (14 комнат)</b> — ·15 ОРКЕСТРАТОР … ·26 ЛИНИЯ, ·27 ФУНДАМЕНТ, ·28 УЗЕЛ, каждая автономна</li>
       <li><b>К3 КРИСТАЛЛ (7)</b> — протокол: ядро + схема нормативны (+ отпечаток SHA-256), мосты и КРИПТА — честные надстройки; v1.22: ротация эпох КРИПТЫ, верификация ·19 (hall.join), объявления ротации (hall.epoch); v1.23: звонок как факт (call.signal); v1.24: межустройственный транспорт звонка — публичные релеи Nostr + WebRTC/STUN; v1.25: межустройственный запечатанный текст — своё пространство релеев; v1.25.1: щит — kid из растяжки PBKDF2 600k (оракул фразы устранён), kdf-параметры в печати, читаемость старых печатей, модель угроз THREAT_MODEL_КРИПТА_22.md</li>
       <li><b>К4 МОЗГ (30)</b> — adapter-os v1.9 (20 модулей) · wllama (WASM-LLM) · singulyar-llm (правила ДОМ+ТАКТ+ВМЕСТИЛИЩЕ, словарь v0.6)</li>
     </ul></div>
     <div class="box"><h3>КЛАССЫ 5–9 · тело и доказательства</h3><ul>
       <li><b>К5 ТРАНСПОРТ (7)</b> — trystero (WebRTC/Nostr) · any-ascii (романизация) · опциональный сервер связей (5 файлов)</li>
       <li><b>К6 ДАННЫЕ (399)</b> — 322 файла корпусов (61 песня, 157 переводов) + 62 минусовки (61 + дубль флагмана ★) + 15 визуалов ФУНДАМЕНТА (WebP)</li>
-      <li><b>К7 ТЕСТЫ/ИНСТРУМЕНТЫ (62)</b> — 37 тестов + 25 инструментов (Grabber, УСТАНОВЩИК, харнесс); v1.25.1: сниф websocket-фреймов релея в межустройственном тесте — открытый текст не ездит, SDP/ICE не читаются, kid ≠ быстрый хэш фразы; v1.26: тест слоя ЖИЗНЬ — 16 инвариантов (схема funding, зеркало страница↔funding.json, отсутствие рельсов, governance-граница)</li>
-      <li><b>К8 ДОКУМЕНТЫ (20)</b> — отчёты, мастер-план, THREAT MODEL крипты, инструкции, протокол вывода, синтез; v1.26: слой ЖИЗНЬ — SUSTAINABILITY (governance/funding policy/transparency/grant + funding.json со schema) и честная страница ПОДДЕРЖАТЬ.html без платёжных рельсов</li>
+      <li><b>К7 ТЕСТЫ/ИНСТРУМЕНТЫ (63)</b> — 38 тестов + 25 инструментов (Grabber, УСТАНОВЩИК, харнесс); v1.29: тест ядра модулей — манифест, модальности, призма; v1.25.1: сниф websocket-фреймов релея в межустройственном тесте — открытый текст не ездит, SDP/ICE не читаются, kid ≠ быстрый хэш фразы; v1.26: тест слоя ЖИЗНЬ — 16 инвариантов (схема funding, зеркало страница↔funding.json, отсутствие рельсов, governance-граница)</li>
+      <li><b>К8 ДОКУМЕНТЫ (21)</b> — отчёты, мастер-план, THREAT MODEL крипты, инструкции, протокол вывода, синтез, АРХИТЕКТУРА_МОДУЛЕЙ (v1.29); v1.26: слой ЖИЗНЬ — SUSTAINABILITY (governance/funding policy/transparency/grant + funding.json со schema) и честная страница ПОДДЕРЖАТЬ.html без платёжных рельсов</li>
       <li><b>К9 АРХИВ/ДОКАЗАТЕЛЬСТВА (123)</b> — АРХИВ_V3 (40) + СКРИНШОТЫ 13 папок (83)</li>
     </ul></div>
   </div>
@@ -212,7 +271,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
       <li><a href="СКРИНШОТЫ/РЕЗОНАНС_02/СИНГУЛЯР_02_резонанс.png">Превью РЕЗОНАНС</a> — резонанс, колесо, ORGANISM_hero, генплан</li>
       <li><a href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md">RUVSON Grabber</a> — userscript вытягивания с YouTube</li>
       <li><a href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md">Установщик Windows</a> (bat/ps1)</li>
-      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.28.0</a> — канонический каталог: 11 классов, 674 файла, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
+      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.29.0</a> — канонический каталог: 11 классов, 678 файлов, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
+      <li><a href="ДОКУМЕНТЫ/АРХИТЕКТУРА_МОДУЛЕЙ.md">АРХИТЕКТУРА_МОДУЛЕЙ v1.0</a> — модель дома: модуль, 6 модальностей, манифест ядра SNG, мультимодальность как отличитель (такт v1.29.0)</li>
       <li><a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">ПОДДЕРЖАТЬ СИНГУЛЯР (слой ЖИЗНЬ)</a> — честная страница устойчивости: прототип без платёжных рельсов, активация — решение человека; GOVERNANCE защищает проект от захвата деньгами</li>
       <li><a href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md">SUSTAINABILITY-слой</a> — правила денег: GOVERNANCE (S01–S10), FUNDING_POLICY, TRANSPARENCY (evidence-уровни), GRANT_READINESS, funding.json + schema</li>
       <li><a href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md">THREAT MODEL крипты ·22</a> — модель угроз из кода (v1.25.1): активы, противники, честные границы</li>
@@ -233,8 +293,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
     </ul></div>
   </div>
 
-  <footer>СИНГУЛЯР · RUVSON · сборка v1.28.0 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
-  ⚙ шестерёнка на всех 16 страницах следит машина (check_gear.py) · облик строго по документации владельца (разбор 15/15 макетов): стекло · серебро · золото #D4AF37 на матовой подложке, кинетический холст = стеклянные плоскости + тёплое свечение, AURA, ФУНДАМЕНТ ·27 · язык выверен тактом «ГРАМОТА»: 39 правок</footer>
+  <footer>СИНГУЛЯР · RUVSON · сборка v1.29.0 «МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
+  ⬢ по слову владельца: «АРХИТЕКТУРА НАШЕГО САЙТА! ОТЛИЧАТЬСЯ БУДЕТ ОТ ВСЕХ МУЛЬТИМОДАЛЬНОСТЬЮ! ПЕРЕДЕЛЫВАЙ ВСЁ И ВСЯ НА МОДУЛИ!» — ядро модулей SNG (манифест 18 узлов · 6 модальностей · живая призма), модульная бирка на каждой странице, УЗЕЛ ·28 без единой картинки · ⚙ шестерёнка на всех 18 страницах следит машина (check_gear.py) · облик v1.28 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО» по документации владельца · AURA · ФУНДАМЕНТ ·27</footer>
 </main>
 <script>
 /* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
@@ -245,5 +305,6 @@ try{
   }
 }catch(e){}
 </script>
+<script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v8.js"></script></body>
 </html>

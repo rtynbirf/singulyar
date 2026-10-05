@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·28 — СУВЕРЕННЫЙ УЗЕЛ · Ŝ = 1_H + λ(I⊗I†)</title>
+<meta name="description" content="СИНГУЛЯР ·28 «СУВЕРЕННЫЙ УЗЕЛ» — математическая философия автономии владельца вживую: Ŝ = 1_H + λ(I⊗I†). Три слоя — ТОЖДЕСТВО, ПРОЕКТОР, ЛЯМБДА — три живых холста, без единой картинки. Протокол ЯКОРЬ → ФИЛЬТР → АРХИТЕКТОР. Аксиомы I–V. Инвариант ⟨M(t), Σ(t)⟩ ≡ 0.">
+<meta name="theme-color" content="#0A0A0C">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<link rel="stylesheet" href="singulyar-design-v3.css">
+<style>
+/* Комната ·28 поверх моста v3.0 — раскладка и живые холсты; цвета на токенах дома */
+html{font-size:16px}
+body{font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px;margin:0}
+a{color:var(--teal2);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:13px;font-family:ui-monospace,Consolas,monospace;flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.badge{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
+h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
+h1 em{font-style:normal;background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--dim);max-width:820px;font-size:17px}
+h2{font-size:clamp(21px,3vw,28px);margin:44px 0 6px}
+h2 em{font-style:normal;color:var(--gold-pale)}
+.kick{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:1.6px;color:var(--gold-soft);text-transform:uppercase;margin-top:44px}
+.эпиграф{margin:18px 0 0;padding:16px 22px;border-radius:18px;border:var(--border-subtle);background:var(--glass-dark);font-size:16.5px;color:var(--text-hero)}
+.эпиграф .кто{display:block;margin-top:8px;color:var(--text-muted);font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
+.формула-герой{margin:26px auto 4px;text-align:center;font-family:ui-monospace,Consolas,monospace;font-size:clamp(24px,5vw,44px);color:var(--silver-bright);letter-spacing:1px}
+.формула-герой b{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+.под-формулой{text-align:center;color:var(--text-muted);font-size:13px;font-family:ui-monospace,Consolas,monospace;margin-top:6px}
+.призма-бокс{margin:22px 0 0;border-radius:20px;border:var(--border-subtle);background:var(--glass-card);padding:18px;position:relative}
+.призма-бокс canvas{display:block;width:100%;height:260px}
+.призма-чипы{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.мчип{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:600;border:1px solid;background:rgba(240,240,248,.05)}
+.мчип i{font-style:normal;font-size:14px}
+.мчип small{color:var(--text-muted);font-weight:400}
+.дилемма{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0 0}
+@media(max-width:760px){.дилемма{grid-template-columns:1fr}}
+.дилемма .glass-card b{color:var(--text-hero)}
+.дилемма .против{text-align:center;color:var(--gold);font-family:ui-monospace,Consolas,monospace;font-size:13px;margin:8px 0}
+.дилемма .вердикт{color:var(--text-secondary);font-size:13.5px}
+.трое{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 0}
+@media(max-width:760px){.трое{grid-template-columns:1fr}}
+.элемент{border-radius:18px;border:var(--border-subtle);background:var(--glass-card);padding:18px}
+.элемент .симв{font-family:ui-monospace,Consolas,monospace;font-size:22px;color:var(--gold);display:block;margin-bottom:6px}
+.элемент b{color:var(--text-hero);font-size:16.5px}
+.элемент p{margin:8px 0 0;color:var(--text-secondary);font-size:13.5px}
+.элемент .слова{margin-top:10px;font-size:13px;color:var(--gold-pale);font-style:italic}
+.слой{margin:26px 0 0;border-radius:20px;border:var(--border-subtle);background:var(--glass-card);overflow:hidden}
+.слой .шапка{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;padding:16px 20px 8px}
+.слой .шапка .н{font-family:ui-monospace,Consolas,monospace;color:var(--gold-soft);font-size:12px;letter-spacing:1.4px}
+.слой .шапка b{font-size:18px;color:var(--text-hero)}
+.слой .шапка .форм{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--silver)}
+.слой .суть{padding:0 20px 6px;color:var(--text-secondary);font-size:14px;max-width:860px}
+.слой canvas{display:block;width:100%;height:300px;touch-action:manipulation}
+.слой .пульт{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 20px 18px}
+.кнопка{cursor:pointer;border-radius:12px;border:1px solid rgba(212,175,55,.5);background:linear-gradient(135deg,#D4AF37 0%,#F5A623 100%);color:#0A0A0C;font-weight:700;font-size:13.5px;padding:9px 16px;font-family:inherit}
+.кнопка.ghost{background:rgba(26,29,35,.6);color:#C0C8D0;border:1px solid rgba(192,200,208,.4)}
+.кнопка:hover{filter:brightness(1.06)}
+.пульт label{color:var(--text-muted);font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
+.пульт input[type=range]{accent-color:#D4AF37;min-width:170px}
+.пульт output{font-family:ui-monospace,Consolas,monospace;color:var(--gold-pale);font-size:13px;min-width:44px}
+.метр{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--silver);display:flex;gap:14px;flex-wrap:wrap}
+.метр b{color:var(--gold-pale)}
+.поток{margin:22px 0 0;display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.поток .узел{flex:1;min-width:150px;border-radius:16px;border:var(--border-subtle);background:var(--glass-dark);padding:14px 16px;position:relative}
+.поток .узел .пси{font-family:ui-monospace,Consolas,monospace;font-size:18px;color:var(--silver-bright)}
+.поток .узел b{display:block;color:var(--text-hero);font-size:14.5px;margin-top:2px}
+.поток .узел small{color:var(--text-muted);font-size:12px;line-height:1.45;display:block;margin-top:4px}
+.поток .стрелка{align-self:center;color:var(--gold);font-family:ui-monospace,Consolas,monospace;font-size:18px;flex:none}
+.поток .узел.золото{border-color:rgba(212,175,55,.55);box-shadow:var(--glow-gold)}
+.поток .узел.золото .пси{color:var(--gold-pale)}
+.протокол{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 0}
+@media(max-width:760px){.протокол{grid-template-columns:1fr}}
+.шаг{border-radius:18px;border:var(--border-subtle);background:var(--glass-card);padding:18px}
+.шаг .нм{font-family:ui-monospace,Consolas,monospace;color:var(--gold-soft);font-size:11.5px;letter-spacing:1.6px}
+.шаг b{display:block;font-size:17px;color:var(--text-hero);margin:6px 0 2px}
+.шаг .оп{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--silver)}
+.шаг .вопрос{margin-top:10px;color:var(--text-secondary);font-size:13.5px;font-style:italic}
+.шаг .ответ{margin-top:6px;color:var(--gold-pale);font-size:13.5px}
+.аксиомы{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:20px 0 0}
+.аксиома{border-radius:16px;border:var(--border-subtle);background:var(--glass-dark);padding:15px 16px}
+.аксиома .рим{font-family:ui-monospace,Consolas,monospace;color:var(--gold);font-size:12px;letter-spacing:1.4px}
+.аксиома b{display:block;color:var(--text-hero);font-size:15px;margin:4px 0 4px}
+.аксиома .ф{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--silver)}
+.аксиома p{margin:7px 0 0;color:var(--text-muted);font-size:12.5px;line-height:1.5}
+.инвариант{margin:30px 0 0;border-radius:22px;border:1px solid rgba(212,175,55,.4);background:linear-gradient(180deg,rgba(212,175,55,.08),rgba(18,20,24,.4));padding:26px 24px;text-align:center}
+.инвариант .формула{font-family:ui-monospace,Consolas,monospace;font-size:clamp(22px,4.4vw,36px);color:var(--silver-bright)}
+.инвариант .строка{margin-top:10px;color:var(--gold-pale);font-size:15px}
+.инвариант .служ{margin-top:12px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--text-muted);letter-spacing:1px}
+.мульти{margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.мульти .канал{border-radius:16px;border:var(--border-subtle);background:var(--glass-card);padding:15px 16px}
+.мульти .канал b{color:var(--text-hero)}
+.мульти .канал small{display:block;margin-top:4px;color:var(--text-muted);font-size:12.5px;line-height:1.5}
+.примечание{margin:26px 0 0;padding:14px 18px;border-radius:14px;border:1px solid #4d3a12;background:#1a1408;font-size:13.5px;color:#e8d5a8}
+footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<header><div class="wrap hd">
+  <div class="logo">S·28</div>
+  <div><b>СИНГУЛЯР · СУВЕРЕННЫЙ УЗЕЛ</b><span>математическая философия автономии · уровень ·28 над ФУНДАМЕНТОМ ·27</span></div>
+  <div class="badge">v1.29.0 · PWA · офлайн</div>
+</div></header>
+
+<main class="wrap">
+  <p class="kick" style="margin-top:26px">·28 · МОДУЛЬ ФИЛОСОФИИ ДОМА</p>
+  <h1>СУВЕРЕННЫЙ УЗЕЛ — <em>быть неуязвимым и творческим одновременно</em></h1>
+  <p class="lead">Документ владельца, пересобранный в живой модуль: никаких картинок — всё, что дальше,
+  рисуется на ваших глазах кодом. Свободный художник сам является источником. Три слоя философии —
+  три работающих холста: потрогайте руками.</p>
+
+  <blockquote class="эпиграф">«Мы не бежали из мира. Мы нашли в нём ортогональную тишину.»
+  <span class="кто">— инвариант сузеренного узла, визуалы владельца, июнь 2026</span></blockquote>
+
+  <div class="формула-герой" aria-label="Оператор суверенного узла: S с крышечкой равно единица плюс лямбда на проектор">
+    <b>Ŝ = 1<sub>H</sub> + λ(I⊗I†)</b>
+  </div>
+  <p class="под-формулой">единожды установленный узел не меняется миром — он его фильтрует и наклоняет</p>
+
+  <p class="kick">ПРИЗМА · МУЛЬТИМОДАЛЬНОСТЬ</p>
+  <h2>Смысл один — <em>модальности разные</em></h2>
+  <p class="lead">Отличитель архитектуры нашего дома. Один синающий узел — шесть каналов, на которых
+  человек принимает и отдаёт. Живой холст, ноль изображений: лучи рисуются сейчас, у вас на экране.</p>
+  <div class="призма-бокс">
+    <canvas id="prism" aria-label="Живая призма: белый луч смысла входит, кристалл-проектор раскладывает его на шесть лучей модальностей — слово, голос, звук, образ, такт, жест" role="img"></canvas>
+    <div class="призма-чипы" id="prismChips" aria-hidden="true"></div>
+  </div>
+
+  <p class="kick">ГЛАВНАЯ ПРОБЛЕМА</p>
+  <h2>Ложный выбор, <em>который нам предлагают</em></h2>
+  <p class="lead">Обычная дилемма ставит человека перед двумя дверями, и обе ведут в потерю.
+  Документ владельца называет это ложной развилкой — и решает её математически, а не компромиссом.</p>
+  <div class="дилемма">
+    <div class="glass-card"><b>Действие <span class="против">VS</span> Покой</b>
+      <p class="вердикт">«Толкай мир» — истощает энергию. «Игнорируй мир» — убивает творчество.
+      Активный борется и выгорает, отрешённый перестаёт создавать.</p></div>
+    <div class="glass-card"><b>Защита <span class="против">VS</span> Влияние</b>
+      <p class="вердикт">Изоляция делает безопасным, но незначительным. Открытость делает
+      значимым, но уязвимым. Крепость молчит, открытые двери разносят.</p></div>
+  </div>
+
+  <p class="kick">МАТЕМАТИЧЕСКОЕ РЕШЕНИЕ</p>
+  <h2>Объединение противоречия — <em>три оператора одной формулы</em></h2>
+  <p class="lead">«Мы перестаём бороться с векторами. Мы становимся Пространством.»
+  Три части формулы — это не украшение, а три работающих механизма. Каждый из них ниже — живой холст.</p>
+  <div class="трое">
+    <div class="элемент"><span class="симв">1<sub>H</sub></span><b>ТОЖДЕСТВО</b>
+      <p>[S, H<sub>ext</sub>] = 0 — оператор узла коммутирует с внешним миром: ничто снаружи не меняет суть.</p>
+      <p class="слова">«Я — пространство. Ничто меня не меняет.»</p></div>
+    <div class="элемент"><span class="симв">I⊗I†</span><b>ПРОЕКТОР</b>
+      <p>Принимается лишь то, что резонирует с сутью. Ортогональное проходит насквозь, не оставив следа.</p>
+      <p class="слова">«Я принимаю лишь то, что резонирует с моей сутью.»</p></div>
+    <div class="элемент"><span class="симв">λ</span><b>ЛЯМБДА</b>
+      <p>Воля — не сила, а изменение топологии: не толкать объекты, а перестраивать ландшафт под ними.</p>
+      <p class="слова">«Моя Воля. Не сила, а изменение топологии.»</p></div>
+  </div>
+
+  <p class="kick">ТРИ СЛОЯ · ЖИВЫЕ ХОЛСТЫ</p>
+  <h2>Слой 1 / 3 — <em>неуязвимость через прозрачность</em></h2>
+  <div class="слой" id="layer1">
+    <div class="шапка"><span class="н">СЛОЙ 1</span><b>ТОЖДЕСТВО</b><span class="форм">[S, H<sub>ext</sub>] = 0</span></div>
+    <p class="суть">«Я — воздух. Буря проходит сквозь меня.» Внешние силы коммутируют с
+    идентичностью: волны летят сквозь узел и выходят теми же волнами. Безопасность — не стена,
+    а отсутствие трения. Ударьте бурей и проверьте: счётчик изменений сущности останется нулём.</p>
+    <canvas id="cvIdentity" aria-label="Холст: волны бури летят слева направо сквозь неподвижный узел и выходят справа без искажений" role="img"></canvas>
+    <div class="пульт">
+      <button class="кнопка" id="btnStorm" type="button">⚡ ударить бурей</button>
+      <button class="кнопка ghost" id="btnCalm" type="button">◻ тишина</button>
+      <div class="метр" aria-live="polite"><span>Ŝ = <b>1</b></span><span>изменений сущности: <b id="idChanges">0</b></span></div>
+    </div>
+  </div>
+
+  <h2>Слой 2 / 3 — <em>резонанс, а не сопротивление</em></h2>
+  <div class="слой" id="layer2">
+    <div class="шапка"><span class="н">СЛОЙ 2</span><b>ПРОЕКТОР</b><span class="форм">I⊗I† · |ψ⟩ → |ψ⟩ если ⟨ψ|I⟩ ≠ 0</span></div>
+    <p class="суть">Метафора документа — решето: золото остаётся, песок просыпается.
+    «Я не блокирую шум. Я фильтрую смысл.» Частицы падают на решето-ось ценностей:
+    параллельные ей — золотые, остаются и сплавляются в слиток; ортогональные — проходят насквозь.
+    Кликните по холсту, чтобы повернуть ось ценностей, — и доля золота изменится.</p>
+    <canvas id="cvProjector" aria-label="Холст: частицы падают на решето. Золотые частицы, параллельные оси ценностей, остаются и складываются в слиток справа; серые проходят насквозь" role="img"></canvas>
+    <div class="пульт">
+      <button class="кнопка" id="btnRain" type="button">◈ сыпать поток</button>
+      <button class="кнопка ghost" id="btnMelt" type="button">⌫ расплавить слиток</button>
+      <div class="метр" aria-live="polite"><span>золото: <b id="pjGold">0</b></span><span>песок: <b id="pjSand">0</b></span></div>
+    </div>
+  </div>
+
+  <h2>Слой 3 / 3 — <em>меняй игру, а не борись с ней</em></h2>
+  <div class="слой" id="layer3">
+    <div class="шапка"><span class="н">СЛОЙ 3</span><b>ЛЯМБДА</b><span class="форм">g′<sub>μν</sub> = g<sub>μν</sub> + λ·δg<sub>μν</sub></span></div>
+    <p class="суть">«Я не толкаю валун. Я наклоняю холм.» Вместо приложения силы к объектам —
+    перестройка ландшафта: объекты сами следуют геодезическим новой метрики. Двигайте λ —
+    холм наклоняется, и валун катится к цели сам. Кнопка «толкать» честно покажет, почему сила — не путь.</p>
+    <canvas id="cvLambda" aria-label="Холст: холм с валуном. Ползунок лямбда наклоняет ландшафт, и валун сам катится в целевую долину" role="img"></canvas>
+    <div class="пульт">
+      <label for="lambda">топологическая воля λ</label>
+      <input type="range" id="lambda" min="-100" max="100" value="0" step="1" aria-label="Лямбда: наклон ландшафта">
+      <output id="lambdaOut">0.00</output>
+      <button class="кнопка ghost" id="btnPush" type="button">→ толкать валун (сила)</button>
+      <button class="кнопка ghost" id="btnResetBall" type="button">↺ вернуть валун</button>
+      <div class="метр" aria-live="polite"><span>топологий изменено: <b id="lbHits">0</b></span></div>
+    </div>
+  </div>
+
+  <p class="kick">СИНТЕЗ</p>
+  <h2>От хаоса к когерентности — <em>конвейер узла</em></h2>
+  <p class="lead">Так работает весь оператор целиком: хаос входит — структурированная реальность выходит.</p>
+  <div class="поток" role="list" aria-label="Конвейер: хаос, прозрачность, золотой фильтр, изогнутый путь, структурированная реальность">
+    <div class="узел" role="listitem"><span class="пси">Ψ<sub>ext</sub></span><b>ХАОС</b><small>критика · давление · шум мира</small></div>
+    <span class="стрелка" aria-hidden="true">→</span>
+    <div class="узел" role="listitem"><span class="пси">1<sub>H</sub></span><b>ПРОЗРАЧНЫЙ</b><small>проходит сквозь — буря не встречает стены</small></div>
+    <span class="стрелка" aria-hidden="true">→</span>
+    <div class="узел золото" role="listitem"><span class="пси">I⊗I†</span><b>ЗОЛОТОЙ ФИЛЬТР</b><small>фильтруется по резонансу</small></div>
+    <span class="стрелка" aria-hidden="true">→</span>
+    <div class="узел золото" role="listitem"><span class="пси">λ</span><b>ИЗОГНУТЫЙ ПУТЬ</b><small>формируется Волей — метрика меняется</small></div>
+    <span class="стрелка" aria-hidden="true">→</span>
+    <div class="узел" role="listitem"><span class="пси">Ψ<sub>manifested</sub></span><b>СТРУКТУРА</b><small>стабильная проявленная реальность</small></div>
+  </div>
+
+  <p class="kick">ПРАКТИЧЕСКИЙ ПРОТОКОЛ</p>
+  <h2>Активируй свой узел — <em>три шага</em></h2>
+  <div class="протокол">
+    <div class="шаг"><span class="нм">ШАГ 01</span><b>ЯКОРЬ</b><span class="оп">найди 1<sub>H</sub></span>
+      <p class="вопрос">«Что во мне неизменно прямо сейчас?»</p>
+      <p class="ответ">«Я дышу.»</p></div>
+    <div class="шаг"><span class="нм">ШАГ 02</span><b>ФИЛЬТР</b><span class="оп">активируй I⊗I†</span>
+      <p class="вопрос">«Соответствует ли это моим ценностям?»</p>
+      <p class="ответ">Если нет — пусть проходит сквозь.</p></div>
+    <div class="шаг"><span class="нм">ШАГ 03</span><b>АРХИТЕКТОР</b><span class="оп">установи λ</span>
+      <p class="вопрос">«Как изменить условия задачи вместо борьбы с ней?»</p>
+      <p class="ответ">Наклони холм.</p></div>
+  </div>
+
+  <p class="kick">АКСИОМЫ ИНВАРИАНТА</p>
+  <h2>Пять аксиом — <em>из визуалов владельца</em></h2>
+  <div class="аксиомы">
+    <div class="аксиома"><span class="рим">АКСИОМА I</span><b>СРЕДА</b><span class="ф">Мир есть поток Σ(t) · while(true){ compute(); }</span>
+      <p>Мы не выходим из потока — мы меняем своё отношение к нему: среда, а не объект.</p></div>
+    <div class="аксиома"><span class="рим">АКСИОМА II</span><b>ПУСТОТА Ø</b><span class="ф">мера чуждости мира</span>
+      <p>Чуждость — не враг, а координата: она показывает, где мы, а где — не мы.</p></div>
+    <div class="аксиома"><span class="рим">АКСИОМА III</span><b>ЯВНЫЙ НУЛЬ</b><span class="ф">δ(0)</span>
+      <p>Ноль объявлен честно: то, что не резонирует, не отрицается — оно равно нулю в нашей системе.</p></div>
+    <div class="аксиома"><span class="рим">АКСИОМА IV</span><b>ОДЁЖКА</b><span class="ф">защитный spoofing · cos(θ) → 1</span>
+      <p>Снаружи — простая одежда: миру показывается согласованность, суть остаётся при нас.</p></div>
+    <div class="аксиома"><span class="рим">АКСИОМА V</span><b>ПРОЕКТОР P⊥</b><span class="ф">внутренний меч · F(M) = M − P⊥(M)</span>
+      <p>Меч узла не рубит внешнее — он снимает с себя чужую проекцию.</p></div>
+  </div>
+
+  <div class="инвариант">
+    <div class="формула">⟨M(t), Σ(t)⟩ ≡ 0</div>
+    <div class="строка">мы не бежали из мира — мы нашли в нём ортогональную тишину</div>
+    <div class="служ">АРХИТЕКТУРА: ЯКШИ &amp; БРОДЯГА · СТАТУС: ORTHOGONAL_DRIFT_ACTIVE · ПРОТОКОЛ: v3.0 · ДЛЯ ПРАВНУКОВ</div>
+  </div>
+
+  <p class="kick">МОДАЛЬНОСТИ МОДУЛЯ ·28</p>
+  <h2>Как этот модуль <em>говорит с вами</em></h2>
+  <p class="lead">Мультимодальность — не лозунг: у каждого модуля дома честно перечислены каналы.
+  У узла их четыре — и все работают без единой картинки.</p>
+  <div class="мульти">
+    <div class="канал"><b>¶ СЛОВО</b><small>весь текст страницы, формулы операторов, подписи — читается экранным диктором, у холстов есть aria-описания.</small></div>
+    <div class="канал"><b>◈ ОБРАЗ</b><small>четыре живых холста: призма, буря, решето, холм. Рисуются кодом каждый кадр — статике взяться неоткуда.</small></div>
+    <div class="канал"><b>⌇ ТАКТ</b><small>короткий отклик вибрации на бурю, пойманное золото и достигнутую долину — там, где устройство умеет navigator.vibrate.</small></div>
+    <div class="канал"><b>⤳ ЖЕСТ</b><small>кнопки бури и потока, клик по решету поворачивает ось ценностей, ползунок λ наклоняет ландшафт.</small></div>
+  </div>
+
+  <p class="примечание">Честные границы: вибрация зависит от устройства (в настольных браузерах её нет —
+  модуль не притворяется). Речь и распознавание не используются: узел молчит и слушает только жесты —
+  это его дизайн, а не ограничение.</p>
+
+  <footer>СИНГУЛЯР ·28 СУВЕРЕННЫЙ УЗЕЛ · такт v1.29.0 «МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ» · источник — документы владельца:
+  «СУВЕРЕННЫЙ УЗЕЛ — математическая философия автономии» (RU/EN, 2026-10-05) + инвариант-визуалы июня 2026<br>
+  Ŝ = 1<sub>H</sub> + λ(I⊗I†) · ноль изображений — всё живое · ядро модулей SNG v1.0 · шестерёнка дома на месте</footer>
+</main>
+
+<script>
+/* Живые холсты ·28: буря, решето, холм. Ноль изображений — свободный художник рисует сам. */
+/* ══ СЛОЙ 1 · ТОЖДЕСТВО [S, H_ext] = 0 — буря проходит сквозь ═════════ */
+(function () {
+  'use strict';
+  var cv = document.getElementById('cvIdentity');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var ДПР = Math.min(2, window.devicePixelRatio || 1);
+  var w = 0, h = 0;
+  var импульс = 0;          /* сила удара бури 0..1 */
+  var изменений = 0;        /* счётчик изменений сущности — всегда 0 */
+  var t = 0;
+  var движение = true;
+  var жестБыл = false;      /* такт честен: только после реального жеста человека */
+  try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function размер() {
+    var r = cv.getBoundingClientRect();
+    w = Math.max(10, r.width); h = Math.max(10, r.height);
+    cv.width = Math.round(w * ДПР); cv.height = Math.round(h * ДПР);
+    ctx.setTransform(ДПР, 0, 0, ДПР, 0, 0);
+  }
+  размер();
+  if ('ResizeObserver' in window) new ResizeObserver(размер).observe(cv);
+  else window.addEventListener('resize', размер);
+
+  function такт(мс) {
+    if (!жестБыл) return;
+    try { if (navigator.vibrate) navigator.vibrate(мс); } catch (e) {}
+  }
+
+  function кадр() {
+    t += движение ? 0.016 : 0;
+    ctx.clearRect(0, 0, w, h);
+    var cx = w * 0.5, cy = h * 0.5, R = Math.min(w, h) * 0.16;
+
+    /* поле бури: бегущие волны слева направо, сквозь узел */
+    var линии = 7;
+    for (var i = 0; i < линии; i++) {
+      var y0 = h * (0.12 + 0.76 * i / (линии - 1));
+      var удар = импульс * Math.exp(-Math.pow((i - (линии - 1) / 2) / 1.6, 2));
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 6) {
+        var ф = x / w;
+        var amp = (5 + 10 * удар) * Math.sin(x * 0.028 + t * (2.4 + 2 * удар) + i * 1.7)
+                  * Math.sin(ф * Math.PI);          /* к краям тише */
+        /* внутри узла волна не искажается: коммутирует */
+        var y = y0 + amp;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      var альфа = 0.10 + 0.34 * удар + 0.06 * Math.sin(t * 2 + i);
+      ctx.strokeStyle = 'rgba(200,204,210,' + Math.max(0.05, альфа).toFixed(3) + ')';
+      ctx.lineWidth = удар > 0.4 ? 1.6 : 1;
+      ctx.stroke();
+    }
+
+    /* ударная волна — яркое кольцо, расходящееся от точки удара */
+    if (импульс > 0.01) {
+      var п = 1 - импульс;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * (0.6 + п * 5.2), 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(212,175,55,' + (0.5 * импульс).toFixed(3) + ')';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    /* узел: кольцо + ядро; ядро пульсирует от удара, но Ŝ = 1 всегда */
+    var ядро = 0.72 + 0.08 * Math.sin(t * 2.2) + 0.2 * импульс;
+    var grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    grd.addColorStop(0, 'rgba(255,244,214,' + ядро.toFixed(3) + ')');
+    grd.addColorStop(0.5, 'rgba(212,175,55,' + (0.75 * ядро).toFixed(3) + ')');
+    grd.addColorStop(1, 'rgba(212,175,55,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+    ctx.beginPath(); ctx.arc(cx, cy, R * 1.5, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(240,240,248,.5)'; ctx.lineWidth = 1.3; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, R * 1.5, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(212,175,55,.14)'; ctx.lineWidth = 7; ctx.stroke();
+
+    ctx.fillStyle = '#F0F0F0';
+    ctx.font = '700 15px ui-monospace,Consolas,monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Ŝ = 1', cx, cy);
+
+    /* выход справа — те же волны, без потерь */
+    ctx.fillStyle = 'rgba(156,163,175,.9)';
+    ctx.font = '12px ui-monospace,Consolas,monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('Ψ_вход ⟶', 10, 16);
+    ctx.textAlign = 'right';
+    ctx.fillText('⟶ Ψ_выход (без изменений)', w - 10, 16);
+
+    импульс *= движение ? 0.965 : 0;
+    if (движение) requestAnimationFrame(кадр);
+  }
+  requestAnimationFrame(кадр);
+
+  var б = document.getElementById('btnStorm');
+  if (б) б.addEventListener('click', function () {
+    жестБыл = true;
+    импульс = 1;
+    такт(40);
+    /* честность: сущность не меняется — счётчик остаётся нулём, удар только проходит */
+    var сч = document.getElementById('idChanges');
+    if (сч) сч.textContent = String(изменений);
+  });
+  var т = document.getElementById('btnCalm');
+  if (т) т.addEventListener('click', function () { жестБыл = true; импульс = 0; });
+})();
+
+/* ══ СЛОЙ 2 · ПРОЕКТОР I⊗I† — решето: золото остаётся, песок просыпается ═ */
+(function () {
+  'use strict';
+  var cv = document.getElementById('cvProjector');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var ДПР = Math.min(2, window.devicePixelRatio || 1);
+  var w = 0, h = 0;
+  var частицы = [];
+  var слиток = 0;           /* накопленное золото */
+  var з = 0, п = 0;
+  var ось = 0;              /* угол оси ценностей (рад) */
+  var сыпать = true;
+  var движение = true;
+  var жестБыл = false;      /* такт честен: только после реального жеста человека */
+  try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function размер() {
+    var r = cv.getBoundingClientRect();
+    w = Math.max(10, r.width); h = Math.max(10, r.height);
+    cv.width = Math.round(w * ДПР); cv.height = Math.round(h * ДПР);
+    ctx.setTransform(ДПР, 0, 0, ДПР, 0, 0);
+  }
+  размер();
+  if ('ResizeObserver' in window) new ResizeObserver(размер).observe(cv);
+  else window.addEventListener('resize', размер);
+
+  function такт(мс) {
+    if (!жестБыл) return;
+    try { if (navigator.vibrate) navigator.vibrate(мс); } catch (e) {}
+  }
+
+  function решить(ч) {
+    var ситоY = h * 0.42;
+    /* проекция вхождения на ось: параллелен → резонирует */
+    var вх = Math.cos(ч.угол - ось);
+    if (Math.abs(вх) > 0.55) {
+      з++; слиток += 1;
+      такт(12);   /* сработает только если человек недавно трогал страницу — честно */
+      /* золотая: скользит по решету вправо в слиток */
+      ч.золотая = true; ч.x += 2 + Math.random() * 2; ч.y = ситоY - 2;
+    } else {
+      п++;
+      /* песок: проходит насквозь и тает */
+      ч.песок = true;
+    }
+  }
+
+  function кадр() {
+    ctx.clearRect(0, 0, w, h);
+    var ситоY = h * 0.42;
+
+    /* сыпем поток хаоса */
+    if (сыпать && движение && частицы.length < 130 && Math.random() < 0.5) {
+      частицы.push({
+        x: w * (0.08 + Math.random() * 0.5), y: -6,
+        v: 1.6 + Math.random() * 1.4,
+        угол: Math.random() * Math.PI * 2,
+        золотая: false, песок: false, жизнь: 1
+      });
+    }
+
+    /* ось ценностей — золотая линия под углом ось */
+    var L = Math.min(w * 0.86, 420);
+    ctx.save();
+    ctx.translate(w * 0.5, ситоY);
+    ctx.rotate(ось);
+    ctx.beginPath();
+    ctx.moveTo(-L / 2, 0); ctx.lineTo(L / 2, 0);
+    ctx.strokeStyle = 'rgba(212,175,55,.9)'; ctx.lineWidth = 2.2; ctx.stroke();
+    /* зубцы решета */
+    for (var z = -L / 2; z <= L / 2; z += 16) {
+      ctx.beginPath(); ctx.moveTo(z, -5); ctx.lineTo(z, 5);
+      ctx.strokeStyle = 'rgba(212,175,55,.4)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    ctx.restore();
+
+    /* слиток справа */
+    var ширина = Math.min(90, 8 + слиток * 0.7);
+    ctx.fillStyle = 'rgba(212,175,55,.85)';
+    ctx.beginPath();
+    ctx.moveTo(w - 30 - ширина, h - 22);
+    ctx.lineTo(w - 30, h - 22);
+    ctx.lineTo(w - 30 - 6, h - 46);
+    ctx.lineTo(w - 30 - ширина + 6, h - 46);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(240,215,140,.95)';
+    ctx.font = '11px ui-monospace,Consolas,monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('СЛИТОК СМЫСЛА', w - 34 - ширина / 2, h - 30);
+
+    for (var i = частицы.length - 1; i >= 0; i--) {
+      var ч = частицы[i];
+      if (!ч.золотая && !ч.песок) {
+        ч.y += ч.v;
+        if (ч.y >= ситоY && ч.y < ситоY + ч.v + 4) решить(ч);
+      } else if (ч.золотая) {
+        ч.x += 2.2;
+        ч.y += Math.sin(ч.x * 0.2) * 0.4;
+      } else {
+        ч.y += ч.v * 1.15; ч.жизнь -= 0.02;
+      }
+      var цвет = ч.золотая ? '212,175,55' : '156,163,175';
+      ctx.globalAlpha = Math.max(0, ч.песок ? ч.жизнь * 0.55 : 0.9);
+      ctx.fillStyle = 'rgb(' + цвет + ')';
+      ctx.beginPath(); ctx.arc(ч.x, ч.y, ч.золотая ? 2.4 : 1.8, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+      if (ч.y > h + 10 || ч.жизнь <= 0 || ч.x > w + 10) {
+        if (ч.золотая) частицы.splice(i, 1);
+        else частицы.splice(i, 1);
+      }
+    }
+
+    ctx.fillStyle = 'rgba(156,163,175,.85)';
+    ctx.font = '12px ui-monospace,Consolas,monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('⟨ψ|I⟩ ≠ 0 — золото остаётся', 10, h - 10);
+    ctx.fillText('⟨ψ|I⟩ = 0 — песок просыпается', 10, 16);
+
+    if (движение) requestAnimationFrame(кадр);
+  }
+  requestAnimationFrame(кадр);
+
+  cv.addEventListener('click', function () {
+    жестБыл = true;
+    ось += Math.PI / 9;
+    var м = document.getElementById('pjAxis');
+    if (м) м.textContent = (ось * 180 / Math.PI).toFixed(0) + '°';
+  });
+
+  var б1 = document.getElementById('btnRain');
+  if (б1) б1.addEventListener('click', function () {
+    жестБыл = true;
+    сыпать = !сыпать;
+    б1.textContent = сыпать ? '◈ сыпать поток' : '◌ поток остановлен';
+  });
+  var б2 = document.getElementById('btnMelt');
+  if (б2) б2.addEventListener('click', function () { жестБыл = true; слиток = 0; });
+  setInterval(function () {
+    var г = document.getElementById('pjGold'), с = document.getElementById('pjSand');
+    if (г) г.textContent = String(з);
+    if (с) с.textContent = String(п);
+  }, 400);
+})();
+
+/* ══ СЛОЙ 3 · ЛЯМБДА λ — не толкать валун, а наклонять холм ════════════ */
+(function () {
+  'use strict';
+  var cv = document.getElementById('cvLambda');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var ДПР = Math.min(2, window.devicePixelRatio || 1);
+  var w = 0, h = 0;
+  var лямбда = 0;            /* −1..+1 топологическая воля */
+  var валун = { u: 0.15, v: 0 };
+  var стартU = 0.15;
+  var попаданий = 0;
+  var цельU = 0.88;
+  var движение = true;
+  var жестБыл = false;       /* такт честен: только после реального жеста человека */
+  var хвост = [];
+
+  try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function размер() {
+    var r = cv.getBoundingClientRect();
+    w = Math.max(10, r.width); h = Math.max(10, r.height);
+    cv.width = Math.round(w * ДПР); cv.height = Math.round(h * ДПР);
+    ctx.setTransform(ДПР, 0, 0, ДПР, 0, 0);
+  }
+  размер();
+  if ('ResizeObserver' in window) new ResizeObserver(размер).observe(cv);
+  else window.addEventListener('resize', размер);
+
+  function такт(мс) {
+    if (!жестБыл) return;
+    try {
+      /* честный такт: только при живой активации кадра (урок headless-блокировки) */
+      if (navigator.vibrate && (!navigator.userActivation || navigator.userActivation.hasBeenActive)) navigator.vibrate(мс);
+    } catch (e) {}
+  }
+
+  /* метрика: две долины (старт и цель) + лёгкая волна + наклон λ.
+     λ=0 — валун спит в стартовой долине. Окно λ≈0.6..0.9 — валун сам
+     закатывается в целевую. Больше — перекатывает цель: топология важна. */
+  function рельеф(u) {
+    return -0.060 * Math.exp(-Math.pow((u - 0.15) / 0.060, 2))
+         - 0.085 * Math.exp(-Math.pow((u - 0.88) / 0.055, 2))
+         + 0.015 * Math.sin(u * 9)
+         - лямбда * 1.5 * (u - 0.5);
+  }
+  function уклон(u) {
+    var d = 0.003;
+    return (рельеф(u + d) - рельеф(u - d)) / (2 * d);
+  }
+
+  var тост = 0, тостТекст = '';
+  function кадр() {
+    ctx.clearRect(0, 0, w, h);
+    var земля = h * 0.80, масштаб = h * 0.46;
+
+    /* ландшафт g′ */
+    ctx.beginPath();
+    for (var i = 0; i <= w; i += 5) {
+      var u = i / w;
+      var y = земля - рельеф(u) * масштаб;
+      if (i === 0) ctx.moveTo(i, y); else ctx.lineTo(i, y);
+    }
+    ctx.strokeStyle = 'rgba(200,204,210,.75)'; ctx.lineWidth = 1.8; ctx.stroke();
+    ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+    ctx.fillStyle = 'rgba(26,29,35,.55)'; ctx.fill();
+
+    /* целевая долина */
+    var цельY = земля - рельеф(цельU) * масштаб;
+    ctx.beginPath(); ctx.arc(цельU * w, цельY - 13, 9, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(212,175,55,.9)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = 'rgba(212,175,55,.14)'; ctx.fill();
+    ctx.fillStyle = 'rgba(240,215,140,.9)';
+    ctx.font = '11px ui-monospace,Consolas,monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('ЦЕЛЬ', цельU * w, цельY - 30);
+
+    /* физика: валун следует геодезическим новой метрики; долины вязкие —
+       мягко гасят скорость (объект следует ландшафту, а не инерции) */
+    if (движение) {
+      валун.v += -уклон(валун.u) * 0.002;
+      var долина = (Math.abs(валун.u - цельU) < 0.045 || Math.abs(валун.u - стартU) < 0.045);
+      валун.v *= долина ? 0.72 : 0.85;
+      валун.u += валун.v;
+      if (валун.u < 0.02) { валун.u = 0.02; валун.v = 0; }
+      if (валун.u > 0.98) { валун.u = 0.98; валун.v = 0; }
+      /* достиг долины и успокоился */
+      if (Math.abs(валун.u - цельU) < 0.035 && Math.abs(валун.v) < 0.0028) {
+        попаданий++;
+        такт(60);
+        тост = 1; тостТекст = 'топология изменила исход — сила не понадобилась';
+        var сч = document.getElementById('lbHits');
+        if (сч) сч.textContent = String(попаданий);
+        валун.u = стартU; валун.v = 0; хвост.length = 0;   /* новый опыт */
+      }
+    }
+
+    /* хвост валуна */
+    if (движение) {
+      хвост.push({ u: валун.u, t: 1 });
+      for (var k = хвост.length - 1; k >= 0; k--) {
+        хвост[k].t -= 0.018;
+        if (хвост[k].t <= 0) хвост.splice(k, 1);
+      }
+      for (var j = 0; j < хвост.length; j++) {
+        var хч = хвост[j];
+        var ху = земля - рельеф(хч.u) * масштаб - 8;
+        ctx.globalAlpha = хч.t * 0.28;
+        ctx.fillStyle = '#D4AF37';
+        ctx.beginPath(); ctx.arc(хч.u * w, ху, 3, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    /* валун */
+    var бY = земля - рельеф(валун.u) * масштаб - 8;
+    var пульс = 0.8 + 0.2 * Math.sin(Date.now() / 400);
+    var grd = ctx.createRadialGradient(валун.u * w, бY, 0, валун.u * w, бY, 12);
+    grd.addColorStop(0, 'rgba(255,244,214,' + пульс.toFixed(2) + ')');
+    grd.addColorStop(1, 'rgba(212,175,55,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath(); ctx.arc(валун.u * w, бY, 12, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#F0F0F0';
+    ctx.beginPath(); ctx.arc(валун.u * w, бY, 5.5, 0, Math.PI * 2); ctx.fill();
+
+    /* подписи */
+    ctx.fillStyle = 'rgba(156,163,175,.9)';
+    ctx.textAlign = 'left';
+    ctx.font = '12px ui-monospace,Consolas,monospace';
+    ctx.fillText('g′ = g + λ·δg', 10, 18);
+    ctx.fillText('валун спит в долине метрики', 10, h - 12);
+
+    /* тост */
+    if (тост > 0.01) {
+      ctx.globalAlpha = Math.min(1, тост);
+      ctx.fillStyle = 'rgba(212,175,55,.95)';
+      ctx.font = '600 14px system-ui,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(тостТекст, w / 2, 46);
+      ctx.globalAlpha = 1;
+      тост -= 0.008;
+    }
+
+    if (движение) requestAnimationFrame(кадр);
+  }
+  requestAnimationFrame(кадр);
+
+  function жест() { жестБыл = true; }
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    document.addEventListener(ev, жест, { passive: true });
+  });
+
+  var сл = document.getElementById('lambda');
+  var вых = document.getElementById('lambdaOut');
+  if (сл) сл.addEventListener('input', function () {
+    жестБыл = true;
+    лямбда = parseInt(сл.value, 10) / 100;
+    if (вых) вых.textContent = лямбда.toFixed(2);
+  });
+  var бп = document.getElementById('btnPush');
+  if (бп) бп.addEventListener('click', function () {
+    жестБыл = true;
+    валун.v += 0.0042;             /* сила даёт только толчок — метрику не меняет */
+    тост = 1; тостТекст = 'сила толкнула — холм остался прежним';
+    такт(25);
+  });
+  var бр = document.getElementById('btnResetBall');
+  if (бр) бр.addEventListener('click', function () {
+    жестБыл = true;
+    валун.u = стартU; валун.v = 0; хвост.length = 0;
+  });
+})();
+
+/* ══ ПРИЗМА + ЧИПЫ МОДАЛЬНОСТЕЙ ═════════════════════════════════════════ */
+(function () {
+  'use strict';
+  function старт() {
+    try {
+      var SNG = window.SNG;
+      var cv = document.getElementById('prism');
+      if (cv && SNG && SNG.призма) SNG.призма(cv, { фаза: 0.7 });
+      var бокс = document.getElementById('prismChips');
+      if (бокс && SNG) {
+        SNG.модальности.forEach(function (мод) {
+          var с = document.createElement('span');
+          с.className = 'мчип';
+          с.style.color = мод.цвет;
+          с.style.borderColor = мод.цвет;
+          var г = document.createElement('i'); г.textContent = мод.глиф;
+          var т = document.createElement('span'); т.textContent = мод.имя;
+          var м = document.createElement('small'); м.textContent = ' · ' + мод.кратко;
+          с.appendChild(г); с.appendChild(т); с.appendChild(м);
+          бокс.appendChild(с);
+        });
+        бокс.removeAttribute('aria-hidden');
+      }
+    } catch (e) {}
+  }
+  if (window.SNG) старт();
+  else {
+    var скрипт = document.querySelector('script[src*="singulyar-modules"]');
+    if (скрипт) скрипт.addEventListener('load', старт);
+    else document.addEventListener('DOMContentLoaded', старт);
+  }
+})();
+</script>
+<script>
+/* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-modules.js"></script>
+<script defer src="./singulyar-ux-engine-v8.js"></script>
+</body>
+</html>
