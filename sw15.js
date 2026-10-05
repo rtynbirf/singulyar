@@ -3,14 +3,16 @@
    навигации без кэша отвечаем оболочкой index.html.
    На file:// не работает (так устроены браузеры) — модулю там и не нужен:
    пак данных вшит, внешних запросов нет. */
-var S15_CACHE = 's15-orkestrator-v36';
+var S15_CACHE = 's15-orkestrator-v37';
 var S15_CORE = [
   './',
   './index.html',
   './manifest.webmanifest',
   './singulyar-ux-engine-v8.js',
+  './singulyar-modules.js',
   './singulyar-design-v3.css',
   './СИНГУЛЯР_27_ФУНДАМЕНТ.html',
+  './СИНГУЛЯР_28_УЗЕЛ.html',
   './БИБЛИОТЕКИ/adapter-os/src/core.mjs',
   './БИБЛИОТЕКИ/adapter-os/src/store.mjs',
   './БИБЛИОТЕКИ/adapter-os/adapters/basic.mjs',
