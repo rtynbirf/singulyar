@@ -87,8 +87,8 @@ ul{padding-left:1.2rem}
   <h2 id="уголок-фонда">Скромный уголок: прямая дверь фонду</h2>
   <p class="muted">Не на лобное место — скромненько в уголочке. СИНГУЛЯР деньги не принимает и между человеком и фондом не встаёт: ни процента, ни кассы, ни чужих дядь за проценты. Если хочется помочь именно так — вот две прямые двери официального фонда имени Хелен Келлер (проверены живьём 2026-10-04). Кто дал — дал, кто не дал — не дал: вход в СИНГУЛЯР не по билету, всё полноценное и бесплатное для каждого — нищие дети, старики и незрячие пользуются в полной мере.</p>
   <p>
-    <a class="btn" href="https://www.hki.org/donate" rel="noopener noreferrer">Прямая дверь 1 · Helen Keller International — hki.org/donate ↗</a>
-    <a class="btn" href="https://helenkellerfoundation.org/donate-now" rel="noopener noreferrer">Прямая дверь 2 · Helen Keller Eye Research Foundation — donate-now ↗</a>
+    <a class="btn" href="https://www.hki.org/donate" rel="noopener noreferrer">Прямая дверь 1 · Helen Keller International — hki.org/donate </a>
+    <a class="btn" href="https://helenkellerfoundation.org/donate-now" rel="noopener noreferrer">Прямая дверь 2 · Helen Keller Eye Research Foundation — donate-now </a>
   </p>
   <p><small class="muted" id="уголок-статус">Двери сверяются с ДОКУМЕНТЫ/SUSTAINABILITY/funding.json (поле fund_corner, allowlist-паттерн в schema.json — чужая касса в уголок физически не пролезет) тестом слоя ЖИЗНЬ.</small></p>
   <p><small>Своих платёжных рельсов у СИНГУЛЯРА нет и не планируется без явного слова держателя дома: rails {} навсегда при прототипе — машина следит (if/then схемы).</small></p>
@@ -131,5 +131,6 @@ document.querySelector("#goals").innerHTML = FUNDING_MIRROR.goals.map(g =>
   '<article class="card"><span class="tag">GOAL</span><h3>' + g[1] + '</h3><div class="amount">€' + g[2] + '</div><div class="bar"><div class="fill"></div></div><ul>' + g[3].map(y => '<li>' + y + '</li>').join("") + '</ul></article>'
 ).join("");
 </script>
+<p style="text-align:center;margin:18px 0"><a href="../ДОКУМЕНТАЦИЯ.html" title="Вся документация дома: открытый код и открытые знания" style="color:#D4AF37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.4)">документация дома</a></p>
 <script defer src="../singulyar-ux-engine-v9.js"></script></body>
 </html>

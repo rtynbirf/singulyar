@@ -84,7 +84,35 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
 /*</SEL-FIX>*/
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
-</head>
+<style id="sng-канон-v135">
+/* ── канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото, нативные спойлеры ── */
+body{background:#0A0A0C !important}
+::selection{background:rgba(212,175,55,.32)}
+details.sng-доки,details.sng-спойлер{background:rgba(255,255,255,.03);
+  border:1px solid rgba(212,175,55,.16);border-radius:12px;padding:10px 14px;margin:10px 0}
+details.sng-доки>summary,details.sng-спойлер>summary{cursor:pointer;list-style:none;
+  color:#d4af37;font-weight:600;letter-spacing:.02em}
+details.sng-доки>summary::-webkit-details-marker,details.sng-спойлер>summary::-webkit-details-marker{display:none}
+details.sng-доки>summary::before,details.sng-спойлер>summary::before{content:'▸ ';color:#8a6d1d}
+details.sng-доки[open]>summary::before,details.sng-спойлер[open]>summary::before{content:'▾ '}
+details.sng-доки>summary small,details.sng-спойлер>summary small{color:#8a8580;font-weight:400}
+details.sng-спойлер[open]>summary{border-bottom:1px solid rgba(212,175,55,.12);padding-bottom:6px;margin-bottom:8px}
+details.sng-спойлер{padding-bottom:0}
+details.sng-спойлер[open]{padding-bottom:12px}
+.sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
+  background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(212,175,55,.22);color:#b9b4aa;
+  font:12px/1.55 ui-monospace,'SF Mono',Consolas,monospace}
+.sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;color:#d4af37;letter-spacing:.08em}
+.sng-подкапот>summary::-webkit-details-marker{display:none}
+.sng-подкапот>summary::before{content:'⌇ ';color:#8a6d1d}
+.sng-подкапот>summary:hover{background:rgba(212,175,55,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(212,175,55,.14)}
+.sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
+.sng-подкапот .тело b{color:#d4af37;font-weight:600}
+.sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
+footer{padding-bottom:30px}
+</style></head>
 <body>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div id="ariaLive" aria-live="polite"></div>
@@ -93,8 +121,13 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
 <main>
 <header>
   <h1>СИНГУЛЯР ·22 «СВЯЗЬ»</h1>
+  <p class="hint">Смысл один — каналов много. Выбрать канал — дело твоё; автоматика только предлагает и объясняет.</p>
+  <details class="sng-доки" title="Подробности о приватности связи — кому надо, тот знакомится">
+    <summary>о приватности связи — подробнее</summary>
+
   <p class="hint">Смысл один — каналов много. Цель связи: донести мысль. Канал — средство, не условие участия. Что выбрать — решает человек; автоматика только предлагает и объясняет.</p>
   <p class="hint"><b>Что сказано в зале — остаётся в зале:</b> по проводу едет только шифровка, ключ живёт в памяти вкладки, история — только на устройствах. Европа видит шум. С v1.25.1 даже отпечаток ключа (kid) не выдаёт фразу словарной атаке — он спрятан внутри той же растяжки PBKDF2 (600 000 итераций), а сигналинг звонка шифруется паролем зала.</p>
+    </details>
   <p class="state" id="statCaps">возможности устройства: определяются…</p>
 </header>
 
@@ -109,14 +142,14 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
   <p class="state" id="stКрипта" aria-live="polite">КРИПТА: выкл — тексты ходят и лежат открыто.</p>
   <div class="row" style="margin-top:8px">
     <input id="inEpo" type="password" class="grow" maxlength="200" aria-label="Фраза новой эпохи (необязательно)" placeholder="фраза новой эпохи — пусто = та же фраза">
-    <button id="btnEpo" disabled>🔄 новая эпоха</button>
-    <button id="btnWipe" disabled>✂ стереть прошлое</button>
+    <button id="btnEpo" disabled>новая эпоха</button>
+    <button id="btnWipe" disabled>стереть прошлое</button>
   </div>
   <p class="state" id="stEpo" aria-live="polite">ЭПОХИ: ротация доступна, когда крипта включена.</p>
   <p class="hint">Фраза зала (v1.19) запечатывает тексты ДО провода и ДО журнала: AES-GCM, ключ выводится из фразы и не ходит по проводу вообще — ни кодом, ни сообщением. Говорите её голосом в комнате, как и код зала. Ключ живёт только в памяти вкладки: перезагрузили — введите снова. У кого фразы нет — видит честное «запечатано», а не пустоту.</p>
-  <p class="hint">Ротация (v1.22): «🔄 новая эпоха» выводит новый ключ эпохи — с новой фразой это честный rekey (старая фраза новое не открывает вообще), с той же фразой — разнос ключей по эпохам. «✂ стереть прошлое» выбрасывает ключи старых эпох из памяти вкладки: прошлое этой вкладки навсегда «запечатано». Честная граница: у носителя фразы старые ключи всё ещё выводимы — это стирание на устройстве, а не форвард-секретность. Объявление эпохи (без ключа) уходит в журнал кристалла как открытое событие hall.epoch.</p>
+  <p class="hint">Ротация (v1.22): «новая эпоха» выводит новый ключ эпохи — с новой фразой это честный rekey (старая фраза новое не открывает вообще), с той же фразой — разнос ключей по эпохам. «стереть прошлое» выбрасывает ключи старых эпох из памяти вкладки: прошлое этой вкладки навсегда «запечатано». Честная граница: у носителя фразы старые ключи всё ещё выводимы — это стирание на устройстве, а не форвард-секретность. Объявление эпохи (без ключа) уходит в журнал кристалла как открытое событие hall.epoch.</p>
   <p class="state" id="stZal">Канал — это зал по коду, как в ·18: без аккаунтов, почт и паролей. Один код связывает окна этого браузера, а звонок — и другие устройства (v1.24, публичные релеи Nostr). Ссылка ниже открывает зал ·18 с этим же кодом.</p>
-  <p class="state" id="stRelay" aria-live="polite">🛰 межустройство: зал закрыт.</p>
+  <p class="state" id="stRelay" aria-live="polite">межустройство: зал закрыт.</p>
   <div class="row" style="margin-top:8px">
     <button id="btnLinkZal" disabled>ссылка на зал ·18 с этим кодом</button>
     <input id="inLink" class="mono grow" readonly aria-label="Ссылка на зал" placeholder="ссылка появится здесь">
@@ -125,6 +158,9 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
 
 <section class="card" id="scHuman">
   <h2>2 · ЧЕЛОВЕК</h2>
+  <summary>ЧЕЛОВЕК · кто ты в этой связи <small>· имя берётся с твоего устройства; ключ не покидает его</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <div class="row">
     <input id="inName" class="grow" maxlength="80" aria-label="Имя в связи" placeholder="имя">
   </div>
@@ -132,18 +168,26 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
   <p class="state" id="stVer" aria-live="polite">ВЕРИФИКАЦИЯ: ждём подписанного приветствия собеседника.</p>
   <p class="hint">Верификация (v1.22): если на устройстве есть личность из <a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>, при открытии канала уходит ПОДПИСАННОЕ приветствие — ECDSA-подпись факта (зал+эпоха+имя+публичный ключ) над каноническими байтами. Собеседник проверяет подпись и видит честный вердикт: имя подтверждено ключом с устройства или имя не подтверждено. Приватный ключ не покидает устройство; по проводу едет только публичный JWK и подпись.</p>
   <p class="hint">Если на этом устройстве есть личность из <a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>, имя берётся из неё — ключ остаётся на устройстве и не покидает его. Личность не создаётся здесь и не редактируется здесь: это не аккаунт.</p>
+  </details>
 </section>
 
 <section class="card" id="scChan">
   <h2>3 · КАНАЛ</h2>
+  <summary>КАНАЛЫ · чем соединяемся <small>· текст, голос, видео, экран — выбор твой</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <p class="hint">Девять способов донести мысль. Недоступный канал затемнён с причиной — он не выбрасывает человека из связи, а передаёт ход ближайшему доступному каналу.</p>
   <div class="chan-grid" id="chanGrid"></div>
   <p class="state" id="stChan" style="margin-top:10px">Канал не выбран. Решение за человеком.</p>
+  </details>
 </section>
 
 <div class="grid">
   <section class="card" id="scJournal">
     <h2>4 · ЖУРНАЛ СВЯЗИ</h2>
+  <summary>ЖУРНАЛ · история зала <small>· история живёт только на устройствах участников</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
     <div id="journal" class="journal" aria-live="polite"></div>
     <div class="row" style="margin-top:10px">
       <input id="inMsg" class="grow" maxlength="2000" aria-label="Текст сообщения" placeholder="сказать текстом…">
@@ -162,10 +206,14 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
     <p class="state" id="stSTT"></p>
     <p class="hint">Честная граница v1.25.1: «речь → текст» — служба браузера, а не СИНГУЛЯРА: в Chromium аудио для распознавания уходит в облако Google. Для приватных залов — печатайте (текст запечатан) или говорите голосом в звонке (медиа — прямой WebRTC между устройствами).</p>
     <p class="state" id="stCrystal" aria-live="polite">КРИСТАЛЛ: протокольный слой загружается…</p>
-  </section>
+    </details>
+</section>
 
   <section class="card" id="scSub">
     <h2>5 · СУБТИТРЫ</h2>
+  <summary>СУБТИТРЫ · слова поверх связи <small>· что сказано — можно читать</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
     <div class="subtitle" id="subNow" aria-live="polite">Здесь крупно появится последнее текстовое сообщение.</div>
     <p class="hint">Субтитры — это показ входящих текстов крупным шрифтом. Он работает всегда, без микрофона и сети.</p>
     <h3>Озвучка входящих</h3>
@@ -175,19 +223,27 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
       <button id="btnShut">стоп</button>
     </div>
     <p class="state" id="stTTS"></p>
-  </section>
+    </details>
+</section>
 </div>
 
 <section class="card" id="scMost">
   <h2>МОСТ ·21 «ОБЩЕНИЕ»</h2>
+  <summary>МОСТ · перенос связи между устройствами <small>· перенеси зал с телефона на ноутбук</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <p class="state" id="stMost">ищу ·21 ОБЩЕНИЕ в соседней вкладке…</p>
   <div id="mostLog" class="journal"></div>
   <p class="hint">Живой мост между открытыми вкладками ·22 и ·21 одного браузера: входящие тексты зала уходят в ·21 — там получателю строятся представления (текст, речь, Брайль, вибросигнал). Журнал моста живёт, пока открыты вкладки; в память зала он не пишется.</p>
+  </details>
 </section>
 
 <div class="grid">
   <section class="card" id="scCam">
     <h2>6 · КАМЕРА И МИКРОФОН</h2>
+  <summary>КАМЕРА · живое видео <small>· включается только твоим касанием</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
     <video id="vidCam" autoplay muted playsinline></video>
     <div class="row" style="margin-top:8px">
       <button id="btnCamOn">включить</button>
@@ -195,10 +251,14 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
     </div>
     <p class="state" id="stCam">Камера и микрофон выключены.</p>
     <p class="hint">Изображение и звук с этого устройства в ·22 — предпросмотр и подготовка. Транспорт между устройствами выполняет зал ·18: голоса участников идут через WebRTC mesh там.</p>
-  </section>
+    </details>
+</section>
 
   <section class="card" id="scScreen">
     <h2>7 · ЭКРАН</h2>
+  <summary>ЭКРАН · показать свой экран <small>· показать собеседнику окно или весь экран</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
     <video id="vidScr" autoplay muted playsinline></video>
     <div class="row" style="margin-top:8px">
       <button id="btnShare">выбрать окно или экран</button>
@@ -206,11 +266,15 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
     </div>
     <p class="state" id="stScr">Экран не показывается.</p>
     <p class="hint">Источник выбирает человек в диалоге браузера: ничего не показывается без явного разрешения.</p>
-  </section>
+    </details>
+</section>
 </div>
 
 <section class="card" id="scCall">
   <h2>ЗВОНОК · СОБЫТИЯ КРИСТАЛЛА</h2>
+  <summary>ЗВОНОК · прямой разговор <small>· голос и видео напрямую между устройствами</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <p class="state" id="stCall" aria-live="polite">ЗВОНОК: свободен. Участники зала появятся ниже, когда пришлют подписанное приветствие.</p>
   <div id="callList" class="call-grid"></div>
   <div class="row" style="margin-top:8px" id="callActions" hidden>
@@ -221,10 +285,14 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
   </div>
   <video id="vidRem" autoplay playsinline></video>
   <p class="hint">Звонок (v1.23) — это события КРИСТАЛЛА: «звоню · принял · отклонил · отменил · завершён» — каждый акт отдельное неизменяемое событие в durable журнале (call.signal, дедуп по акту, TTL звонка). Где есть личность ·19, факт звонка подписан ECDSA — подстава видна честным вердиктом. Рукопожатие WebRTC (SDP/ICE) — транспорт, в журнал не пишется: СМЫСЛ ≠ ТРАНСПОРТ. Голос и видео идут напрямую (v1.24): между окнами этого браузера и между устройствами — рукопожатие едет через публичные релеи Nostr (тот же транспорт, что у зала ·18), медиа — прямое WebRTC с публичным STUN. За симметричным NAT напрямую может не пробиться (TURN — надстройка ·18). Текст между устройствами (v1.25) едет через СВОЁ пространство релеев и только запечатанным; голос/файл между устройствами — следующий такт. Занятый звонок входящий отклоняет честно: «занят». Таймаут ответа — 30 секунд.</p>
+  </details>
 </section>
 
 <section class="card" id="scProfile">
   <h2>8 · ПРОФИЛЬ СПОСОБА ОБЩЕНИЯ</h2>
+  <summary>ПРОФИЛЬ · как тебя видеть <small>· имя и тональность — локально</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <p class="hint">Предпочтения хранятся на устройстве. Явный выбор человека имеет приоритет над автоматикой — это правило платформы СИНГУЛЯР.</p>
   <label class="chk"><input type="checkbox" id="pText" checked> предпочитаю текст</label>
   <label class="chk"><input type="checkbox" id="pSound"> предпочитаю звук</label>
@@ -241,16 +309,24 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
   <h3>Что уже решено в ·19 ЧЕЛОВЕК</h3>
   <p class="state" id="stAdapt">читаю адаптацию ·19…</p>
   <p class="hint">Если решение в ·19 есть, СВЯЗЬ его уважает; твой выбор здесь — выше автоматики, но не выше твоего же решения в ·19.</p>
+  </details>
 </section>
 
 <section class="card" id="scFall">
   <h2>9 · ЕСЛИ КАНАЛ НЕДОСТУПЕН</h2>
+  <summary>ЕСЛИ ВСЁ УПАЛО <small>· связь живёт без серверов — и падает без них же</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <p class="hint">Пути рассчитаны для этого устройства из его реальных возможностей. Текст — базовый канал: он доступен без всяких устройств, поэтому ни один путь не кончается тупиком.</p>
   <table class="fall" id="tblFall"></table>
+  </details>
 </section>
 
 <section class="card" id="scContract">
   <h2>10 · КОНТРАКТ</h2>
+  <summary>ДОГОВОР · правила связи <small>· что может и чего не делает этот модуль</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
 <pre class="contract">ЧЕЛОВЕК ·19  →  СОБЫТИЕ ·18  →  СВЯЗЬ ·22  →  ПАМЯТЬ
      │              │                │             │
   личность      зал по коду      каналы        журнал
@@ -269,10 +345,14 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
   сервер ≠ хозяин речи   — транспорт удобство, не власть
   недоступность ≠ исключение — fallback ведёт к базовому каналу
   выбор человека ≥ автоматика — override всегда выигрывает</pre>
+  </details>
 </section>
 
 <section class="card" id="scBounds">
   <h2>ЧЕСТНЫЕ ГРАНИЦЫ</h2>
+  <summary>ГРАНИЦЫ · чего связь не делает <small>· честные границы — без сказок</small></summary>
+  <details class="sng-спойлер"><summary>открыть панель</summary>
+
   <ul class="bounds">
     <li>Локальный канал связывает окна одного браузера (BroadcastChannel). Звонок (v1.24) и запечатанный текст (v1.25) ходят и между устройствами: сигналинг, приветствия и шифровка текста — публичные релеи Nostr, у звонка и текста свои пространства имён; медиа — прямое WebRTC с публичным STUN; за симметричным NAT напрямую может не пробиться (TURN — надстройка ·18). Открытый текст между устройствами НЕ ездит (релеи публичные) — включи фразу зала.</li>
     <li>Мост ·21 связывает открытые вкладки ·22 и ·21 одного браузера: представление входящего строит ·21 у получателя. Пока вкладка ·21 закрыта, мост молчит — это не поломка, зал продолжает работать.</li>
@@ -282,9 +362,10 @@ option:checked,option:hover{background-color:#103a30;color:#9df0dc}
     <li>Журнал и записи хранятся только на устройстве. Экспорт выгружает текст и метаданные; звук и файлы остаются локально.</li>
     <li>Здесь нет регистрации, телефона, почты, CAPTCHA, обязательной MFA, биометрии, рекламы и телеметрии. Сервер связей ·19 — опция человека, не условие связи.</li>
   </ul>
+  </details>
 </section>
 
-<footer>СИНГУЛЯР ·22 «СВЯЗЬ» v1.25.1 · ядро S22 1.5.0 · слой над ·18 СОБЫТИЕ, ·19 ЧЕЛОВЕК и ·21 ОБЩЕНИЕ · ядро не зависит от сети</footer>
+<footer>СВЯЗЬ ·22 · часть единого дома: <a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания">документация</a> · <a href="ДОКУМЕНТЫ/АРХИТЕКТУРА_22_СВЯЗЬ.html" title="Архитектура связи — для тех, кто знакомится с доками">архитектура связи</a></footer>
 </main>
 <script>
 /* ════════════════════════════════════════════════════════════════════════
@@ -886,16 +967,16 @@ const S22 = (function () {
   function релейСтатус(фаза) {
     const с = $('stRelay');
     if (!с) return;
-    if (!транс && !трансТекст) { с.textContent = '🛰 межустройство: зал закрыт.'; return; }
-    if (фаза === 'подключаюсь…') { с.textContent = '🛰 межустройство: подключаюсь к публичным релеям Nostr…'; return; }
+    if (!транс && !трансТекст) { с.textContent = 'межустройство: зал закрыт.'; return; }
+    if (фаза === 'подключаюсь…') { с.textContent = 'межустройство: подключаюсь к публичным релеям Nostr…'; return; }
     /* каждая машина честно называет своё состояние: поднята — сколько пиров,
        не поднята — почему (v1.25: машин две — звонок и текст; v1.25.1:
        «поднята» ≠ «релеи подтвердили» — честно называем и то и то) */
     const счёт = function (т) { return (т && т.готов) ? String(т.пиры.size) + ' пир(ов)' : 'машина не поднялась'; };
     const г = (транс && транс.готов), т = (трансТекст && трансТекст.готов);
-    if (!г && !т) { с.textContent = '🛰 межустройство: недоступно (' + ((транс && транс.причина) || (трансТекст && трансТекст.причина) || 'релеи не ответили') + ') — зал между окнами этого браузера работает.'; return; }
-    if (фаза === 'ошибка входа') { с.textContent = '🛰 межустройство: ' + ((транс && транс.причина) || (трансТекст && трансТекст.причина) || 'зал не принят релеями') + ' — локальный канал живёт, попробуй ещё раз.'; return; }
-    с.textContent = '🛰 межустройство: машины подняты (релеи отвечают подпиской, пиры приходят с задержкой) · устройств в зале звонка: ' + счёт(транс) + ' · в зале текста: ' + счёт(трансТекст) + ' · между устройствами идут звонок и запечатанный текст; открытый текст остаётся локальным.';
+    if (!г && !т) { с.textContent = 'межустройство: недоступно (' + ((транс && транс.причина) || (трансТекст && трансТекст.причина) || 'релеи не ответили') + ') — зал между окнами этого браузера работает.'; return; }
+    if (фаза === 'ошибка входа') { с.textContent = 'межустройство: ' + ((транс && транс.причина) || (трансТекст && трансТекст.причина) || 'зал не принят релеями') + ' — локальный канал живёт, попробуй ещё раз.'; return; }
+    с.textContent = 'межустройство: машины подняты (релеи отвечают подпиской, пиры приходят с задержкой) · устройств в зале звонка: ' + счёт(транс) + ' · в зале текста: ' + счёт(трансТекст) + ' · между устройствами идут звонок и запечатанный текст; открытый текст остаётся локальным.';
   }
   function открытьКанал(фиксКод) {
     закрытьКанал(true);
@@ -1466,7 +1547,7 @@ const S22 = (function () {
         ? [{ kind: 'sealed', alg: м.шф.alg, iv: м.шф.iv, ct: м.шф.ct, kid: м.шф.kid, v: м.шф.v, ep: м.шф.ep, kdf: м.шф.kdf || null }]
         : ((вид === 'текст') ? [] : [{ kind: вид, name: String(м.имяФайла || (вид === 'голос' ? 'голосовое' : 'файл')), size: м.размер | 0, содержимое: 'журнал UI · blobs' }]);
       const событие = КРИСТ.ядро.message({
-        from: м.от, conversation: 'зал-' + код, text: (м.шф ? '🔒 запечатано · AES-GCM' : String(м.текст || '')),
+        from: м.от, conversation: 'зал-' + код, text: (м.шф ? 'запечатано · AES-GCM' : String(м.текст || '')),
         attachments: соб,
         retention: временное ? 'temporary' : 'persistent',
         ttl: временное ? 7 * 24 * 3600 * 1000 : null,
@@ -1634,9 +1715,9 @@ const S22 = (function () {
            конверта, отпечаток из растяжки PBKDF2, стёртые эпохи не выводятся
            снова. Кэш экономит растяжку на повторных сообщениях эпохи. */
         try { текст = await КРИСТ.крипта.вскрытьПечать(м.шф, КРИПТА22.фраза, код, { кэш: КРИПТА22.вскрышКэш, запрещены: КРИПТА22.стёртые }); }
-        catch (е) { текст = '🔒 запечатано (' + String((е && е.message) || 'ключ не подошёл').replace(/^КРИПТА: /, '') + ')'; }
+        catch (е) { текст = 'запечатано (' + String((е && е.message) || 'ключ не подошёл').replace(/^КРИПТА: /, '') + ')'; }
       } else {
-        текст = '🔒 запечатано (нужна фраза зала)';
+        текст = 'запечатано (нужна фраза зала)';
       }
     }
     const м2 = { v: м.v, t: м.t || Date.now(), от: экранироватьИмя(м.от), вид: вид, текст: текст.slice(0, 2000), имяФайла: String(м.имяФайла || '').slice(0, 200), размер: м.размер | 0, длительность: м.длительность | 0 };
@@ -2053,5 +2134,5 @@ try {
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>
-</body>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СВЯЗЬ ·22 v1.25.1</b> · ядро S22 1.5.0 · слой над ·18 СОБЫТИЕ, ·19 ЧЕЛОВЕК и ·21 ОБЩЕНИЕ<br>шифрование: AES-GCM-256, ключ живёт в памяти вкладки · растяжка ключа PBKDF2-SHA-256, 600 000 итераций · отпечаток ключа (kid) спрятан внутри растяжки — не выдаёт фразу словарной атаке · сигналинг звонка шифруется паролем зала · сигналинг чата — публичные Nostr-релеи (виден только шум) · голос/видео — напрямую между устройствами (P2P) · история — только на устройствах · <b>ядро не зависит от сети</b> · верификация: ECDSA-подпись приветствия · канон дома v1.35.0 «СТАНДАРТ»</div></details></body>
 </html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР — Документация дома · открытый код · открытые знания</title>
+<meta name="description" content="Вся документация СИНГУЛЯРА в одном месте: инструкции, архитектура, протоколы, отчёты, открытый код с комментариями, тесты, данные на 157 языках. Здесь каждый сам хозяин — бери, читай, проверяй.">
+<meta name="theme-color" content="#0A0A0C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+:root{--bg:#0A0A0C;--panel:rgba(255,255,255,.035);--line:rgba(212,175,55,.18);--tx:#ece9e2;--dim:#9a958c;--gold:#D4AF37;--gold2:#F0D78C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(212,175,55,.05),transparent)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}.hd span{color:var(--dim);font-size:12.5px;display:block}
+h1{font-size:clamp(24px,4.5vw,36px);line-height:1.15;margin:30px 0 10px}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{color:var(--dim);font-size:16.5px}
+.lead b{color:var(--tx)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--gold);font-family:var(--mono);font-size:12px;margin-left:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+details summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:baseline;font-size:16px;flex-wrap:wrap}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:'▸';color:var(--gold);font-family:var(--mono)}
+details[open] summary::before{content:'▾'}
+details summary small{color:var(--dim);font-weight:400;font-size:13px}
+details .тело{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,175,55,.3)}
+a:hover{border-bottom-color:var(--gold)}
+.строка{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border:1px solid transparent;border-radius:10px}
+.строка:hover{border-color:var(--line);background:rgba(212,175,55,.05)}
+.строка b{color:var(--gold2);font-size:15px;font-weight:600;font-family:var(--mono)}
+.строка span{color:var(--dim);font-size:13.5px}
+.код{font-family:var(--mono);background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--gold2);word-break:break-all}
+.ok-блок{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;margin:16px 0;color:var(--dim)}
+.ok-блок b{color:var(--gold)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;color:var(--dim);font-size:12.5px}
+</style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
+</head>
+<body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<header><div class="wrap hd">
+  <div class="logo">S·</div>
+  <div><b>ДОКУМЕНТАЦИЯ ДОМА</b><span>открытый код · открытые знания: бери, читай, проверяй — здесь каждый сам хозяин</span></div>
+</div></header>
+
+<main class="wrap">
+  <h1>Знания дома — <em>открыты</em>. Всё лежит в паблике.</h1>
+  <p class="lead">Сайт открыт: <b>код, документы, тесты, данные</b> — всё лежит в публичном репозитории
+  и на этих страницах. Документы написаны простыми словами; код снабжён подробными комментариями.
+  Тексты флагманской песни открыты на <b>157 языках</b> — что казах, что чечен, что суахили:
+  знания может брать любой. Это закон дома.</p>
+  <div class="код">репозиторий: github.com/rtynbirf/singulyar · сайт: rtynbirf.github.io/singulyar</div>
+
+  <h2>Начало <em>первый шаг</em></h2>
+  <details open><summary>Установка и старт <small>как поставить дом на своё устройство</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" title="Штатная установка как приложения: Android, iPhone, Windows, macOS, Linux"><b>ИНСТРУКЦИЯ_УСТАНОВКИ.html</b><span>поставить как приложение на телефон, планшет, ноутбук, ПК — шаги по платформам</span></a>
+      <a class="строка" href="ИНСТРУКЦИЯ_ДОМА.html" title="Как устроен дом и как им пользоваться: комнаты, осколки, меню"><b>ИНСТРУКЦИЯ_ДОМА.html</b><span>как устроен дом: комнаты, кристалл, осколки, меню дома, горячие клавиши</span></a>
+      <a class="строка" href="ИНСТРУКЦИЯ_СТАРТ.md" title="Стартовая инструкция: с чего начать знакомство со вселенной"><b>ИНСТРУКЦИЯ_СТАРТ.md</b><span>с чего начать: первый вход, первые шаги по комнатам</span></a>
+      <a class="строка" href="README.md" title="Главный файл репозитория: что такое СИНГУЛЯР, как устроен, как собирается"><b>README.md</b><span>лицо репозитория: что это, зачем, как собирается</span></a>
+    </div>
+  </details>
+
+  <h2>Архитектура и модули <em>как устроено внутри</em></h2>
+  <details><summary>Документы об устройстве дома <small>14 документов — от модулей до угроз</small></summary>
+    <div class="тело">
+      <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_МОДУЛЕЙ.md" title="Архитектура модулей: как комнаты связаны и на чём держатся"><b>АРХИТЕКТУРА_МОДУЛЕЙ.md</b><span>карта модулей: кто на ком стоит, где границы</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md" title="Систематизация вселенной: полный реестр сущностей и связей"><b>СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</b><span>полный реестр вселенной: сущности и связи</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_22_СВЯЗЬ.md" title="Архитектура связи ·22: шифрование, каналы, звонки"><b>АРХИТЕКТУРА_22_СВЯЗЬ.md</b><span>связь ·22: каналы, шифры, звонки</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md" title="Модель угроз крипты ·22: что защищаем и от кого"><b>THREAT_MODEL_КРИПТА_22.md</b><span>модель угроз крипты ·22: что защищаем и от кого</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md" title="Синтез Human Runtime: человек в центре исполнения"><b>СИНТЕЗ_HUMAN_RUNTIME.md</b><span>Human Runtime: человек — центр исполнения</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ADAPTER_OS.md" title="Adapter OS: адаптер операционной системы дома"><b>ADAPTER_OS.md</b><span>Adapter OS: адаптер ОС дома</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md" title="Событие ·18: семантические события и их повороты"><b>СОБЫТИЕ_18_TURN.md</b><span>событие ·18: семантические события</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СВОЙ_БАНК_НА_ЛАДОНИ.md" title="Свой банк на ладони ·25: устройство кошелька"><b>СВОЙ_БАНК_НА_ЛАДОНИ.md</b><span>банк на ладони ·25: устройство кошелька</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md" title="Мастер-план: путь к 157 языкам"><b>МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md</b><span>мастер-план: путь к 157 языкам</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md" title="Стратегия v1: видение дома"><b>СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md</b><span>стратегия v1: видение дома</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md" title="Полный отчёт о проделанной работе по всем тактам"><b>ОТЧЁТ_ПОЛНЫЙ.md</b><span>полный отчёт: все такты и итоги</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md" title="Отчёт по связи, ревизия 15"><b>ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md</b><span>отчёт по связи ·22, ревизия 15</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md" title="Отчёт по оркестратору ·15, ревизия 14"><b>ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md</b><span>отчёт по оркестратору ·15, ревизия 14</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md" title="Устойчивость дома: финансирование, управление, прозрачность"><b>SUSTAINABILITY/</b><span>устойчивость: политика финансирования, управление, прозрачность, готовность к грантам</span></a>
+    </div>
+  </details>
+
+  <h2>Протоколы и стандарты <em>промышленные образцы</em></h2>
+  <details><summary>Протокол вывода на экран <small>как дом рисует себя на любом устройстве</small></summary>
+    <div class="тело">
+      <a class="строка" href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html" title="Протокол вывода на экран — живая страница"><b>ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html</b><span>стандарт вывода: живой холст, темы, доступность — в виде страницы</span></a>
+      <a class="строка" href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.md" title="Протокол вывода на экран — исходник"><b>ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.md</b><span>исходник протокола для чтения и правки</span></a>
+    </div>
+  </details>
+
+  <h2>Открытый код <em>читай, проверяй, улучшай</em></h2>
+  <details><summary>Ядро дома <small>5 файлов — весь движок вселенной</small></summary>
+    <div class="тело">
+      <a class="строка" href="index.html" title="Лицо дома: кристалл на пьедестале — живой холст, ноль картинок"><b>index.html</b><span>лицо дома: кристалл ·00, осколки, нить Ариадны</span></a>
+      <a class="строка" href="singulyar-modules.js" title="Ядро модулей: кристалл, осколки, карта дверей — с подробными комментариями"><b>singulyar-modules.js</b><span>ядро SNG: кристалл, осколки, карта 17 дверей</span></a>
+      <a class="строка" href="singulyar-ux-engine-v9.js" title="UX-движок: подсказки везде, меню дома, перетаскивание, доступность"><b>singulyar-ux-engine-v9.js</b><span>движок v9: подсказки везде, меню дома, таскающиеся кнопки</span></a>
+      <a class="строка" href="singulyar-design-v3.css" title="Дизайн-система: void + стекло + золото, темы, доступность"><b>singulyar-design-v3.css</b><span>дизайн-система дома: void, стекло, золото</span></a>
+      <a class="строка" href="sw15.js" title="Сервис-воркер: офлайн-кеш дома — cache-first"><b>sw15.js</b><span>сервис-воркер: дом живёт офлайн</span></a>
+      <a class="строка" href="manifest.webmanifest" title="Манифест PWA: имя, иконки, цвета"><b>manifest.webmanifest</b><span>манифест приложения</span></a>
+      <a class="строка" href="server/README.md" title="Серверная часть: что делает и чего не делает"><b>server/README.md</b><span>сервер: что делает и чего не делает</span></a>
+    </div>
+  </details>
+  <details><summary>Тесты <small>17 наборов — запускается командой node файл</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_modules_logic.js" title="Тест логики ядра модулей"><b>test_modules_logic.js</b><span>логика ядра модулей</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_bridge_logic.js" title="Тест логики моста"><b>test_bridge_logic.js</b><span>логика моста</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_logic.js" title="Тест логики СУФЛЁРА ·16"><b>test_s16_logic.js</b><span>логика ·16 СУФЛЁР</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_golden_voice.js" title="Тест золотого голоса ·16"><b>test_s16_golden_voice.js</b><span>золотой голос ·16</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s17_fusion.js" title="Тест сборки ·17 ЗАЛ"><b>test_s17_fusion.js</b><span>фьюжн ·17 ЗАЛ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s18_logic.js" title="Тест логики СОБЫТИЯ ·18"><b>test_s18_logic.js</b><span>логика ·18 СОБЫТИЕ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s19_human.js" title="Тест ЧЕЛОВЕКА ·19"><b>test_s19_human.js</b><span>логика ·19 ЧЕЛОВЕК</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s20_logic.js" title="Тест ФОНЕТИКИ ·20"><b>test_s20_logic.js</b><span>логика ·20 ФОНЕТИКА</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s21_logic.js" title="Тест ОБЩЕНИЯ ·21"><b>test_s21_logic.js</b><span>логика ·21 ОБЩЕНИЕ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s22_logic.js" title="Тест СВЯЗИ ·22 — самый крупный набор"><b>test_s22_logic.js</b><span>логика ·22 СВЯЗЬ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s24_logic.js" title="Тест ПОЧТЫ ·24"><b>test_s24_logic.js</b><span>логика ·24 ПОЧТА</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s25_logic.js" title="Тест КОШЕЛЬКА ·25"><b>test_s25_logic.js</b><span>логика ·25 КОШЕЛЁК</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s26_logic.js" title="Тест ЛИНИИ ·26"><b>test_s26_logic.js</b><span>логика ·26 ЛИНИЯ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/singulyar-stress-harness-v2.js" title="Стресс-стенд: гонки, нагрузки, дедлоки"><b>singulyar-stress-harness-v2.js</b><span>стресс-стенд: гонки и нагрузки</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/check_page_scripts.js" title="Проверка скриптов страниц"><b>check_page_scripts.js</b><span>проверка скриптов страниц</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/check_s16_syntax.js" title="Проверка синтаксиса ·16"><b>check_s16_syntax.js</b><span>синтаксис ·16</span></a>
+    </div>
+  </details>
+
+  <h2>Данные и языки <em>157 голосов — что казах, что суахили</em></h2>
+  <details><summary>Мультиязычный корпус <small>тексты флагмана на 157 языках — открыто</small></summary>
+    <div class="тело">
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/INDEX.md" title="Индекс корпуса: 157 языков, где какой файл"><b>флагман_157_языков/INDEX.md</b><span>индекс корпуса: все 157 языков с путями</span></a>
+      <a class="строка" href="ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md" title="Как устроен мультиязык в доме"><b>ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md</b><span>устройство мультиязыка: как читать и добавлять языки</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/kk_Kazakh.txt" title="Пример: текст на казахском"><b>…/kk_Kazakh.txt</b><span>пример: казахский</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/sw_Swahili.txt" title="Пример: текст на суахили"><b>…/sw_Swahili.txt</b><span>пример: суахили</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/ru-orig_Russian_Original.txt" title="Оригинал: русский исходник, с которого пошли все переводы"><b>…/ru-orig_Russian_Original.txt</b><span>оригинал: русский исходник всех 157 переводов</span></a>
+    </div>
+  </details>
+
+  <h2>Инструменты <em>установщик и граббер</em></h2>
+  <details><summary>Инструменты дома <small>как юзать — по шагам</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md" title="Установщик: как разворачивать инструменты по профилям"><b>КАК_ЮЗАТЬ_УСТАНОВЩИК.md</b><span>установщик: профили и шаги</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/ЕДИНЫЙ_КАТАЛОГ_2444_ИНСТРУМЕНТОВ.md" title="Каталог 2444 инструментов с описаниями"><b>ЕДИНЫЙ_КАТАЛОГ_2444_ИНСТРУМЕНТОВ.md</b><span>каталог 2444 инструментов</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md" title="Граббер: как собирать контент по шагам"><b>КАК_ЮЗАТЬ_GRABBER.md</b><span>граббер: пошагово</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/АЛГОРИТМ_RUVSON_GRABBER.md" title="Алгоритм граббера изнутри"><b>АЛГОРИТМ_RUVSON_GRABBER.md</b><span>алгоритм граббера изнутри</span></a>
+      <a class="строка" href="БИБЛИОТЕКИ/кристалл/README.md" title="Библиотека кристалл: ядро, мосты, крипта, журнал"><b>БИБЛИОТЕКИ/кристалл/</b><span>библиотека «кристалл»: ядро, мосты, крипта</span></a>
+      <a class="строка" href="БИБЛИОТЕКИ/adapter-os/README.md" title="Adapter OS: установка и интеграция"><b>БИБЛИОТЕКИ/adapter-os/</b><span>Adapter OS: интеграция и контракты</span></a>
+    </div>
+  </details>
+
+  <div class="ok-блок">
+    <b>Честно о языках:</b> документы дома написаны по-русски простыми словами, код снабжён
+    подробными комментариями по-русски. Тексты флагманской песни открыты на 157 языках — от казахского
+    до суахили. Перевод документации на другие языки — открытая работа: возьми любой документ,
+    переведи, прими — дом примет твой труд. Здесь каждый сам хозяин.
+  </div>
+</main>
+
+<footer><div class="wrap">СИНГУЛЯР · документация дома · открытый код, открытые знания ·
+<a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> ·
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" title="Установить дом как приложение">установка</a> ·
+github.com/rtynbirf/singulyar</div></footer>
+<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+</html>
