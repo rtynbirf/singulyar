@@ -7,7 +7,7 @@
 <title>СИНГУЛЯР·15 ОРКЕСТРАТОР — четыре ядра</title>
 <style>
 :root{
-  --hue:168; --hue2:288;
+  --hue:45;
   --bg:#05070a; --panel:rgba(255,255,255,.035); --panel2:rgba(255,255,255,.06);
   --line:rgba(255,255,255,.09); --tx:#e9f1f4; --dim:#93a3ad;
   --ok:#7de8b8; --warn:#ffcf6e; --bad:#ff8a80; --cur:hsl(var(--hue) 90% 62%);
@@ -149,7 +149,7 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 #micBox{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
 #micHz{font-family:var(--mono);font-size:12px;color:var(--dim)}
 #micVu{width:120px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;display:inline-block;overflow:hidden;vertical-align:middle;margin:0 10px}
-#micVu i{display:block;height:100%;width:0;background:hsl(var(--hue2) 90% 65%);transition:width .1s}
+#micVu i{display:block;height:100%;width:0;background:linear-gradient(90deg,#C8CCD2,#F0D78C);transition:width .1s}
 
 /* ── аудит ── */
 #auditSummary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
@@ -195,14 +195,14 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 
 /* поиск */
 .ts-search{flex:1;min-width:200px;max-width:340px;background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:10px;color:var(--tx,#e8f0f6);padding:8px 12px;font:inherit}
-.ts-search:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-search:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:1px}
 
 /* фасеты */
 .ts-facets{display:flex;flex-wrap:wrap;gap:6px}
 .ts-facet{display:inline-flex;align-items:center;gap:6px;background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:999px;padding:5px 11px;color:#c9d7e2;font:inherit;font-size:13px;cursor:pointer;transition:border-color .15s}
-.ts-facet:hover{border-color:rgba(94,234,212,.5)}
-.ts-facet:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
-.ts-facet.акт{border-color:var(--teal,#5eead4);background:#0b1f1d;color:var(--teal,#5eead4)}
+.ts-facet:hover{border-color:rgba(212,175,55,.5)}
+.ts-facet:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:1px}
+.ts-facet.акт{border-color:var(--teal,#D4AF37);background:#1A1508;color:var(--teal,#D4AF37)}
 .ts-facet.ноль{opacity:.45}
 .ts-facet b{font-family:var(--mono,ui-monospace,monospace);font-weight:600}
 .ts-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
@@ -213,26 +213,26 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 .ts-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
 .ts-chip{display:inline-flex;align-items:center;gap:7px;background:#132030;border:1px dashed #2c4258;border-radius:9px;color:#c9d7e2;font-size:12.5px;padding:4px 9px;cursor:pointer}
 .ts-chip:hover{border-color:#ff8a80;color:#ffd9d5}
-.ts-chip:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-chip:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:1px}
 .ts-x{opacity:.7;font-weight:700}
 
 /* кнопки/меню */
 .ts-btn,.ts-btn2{background:#0d1420;border:1px solid var(--line,#1f2b3a);border-radius:10px;color:#c9d7e2;padding:7px 11px;font:inherit;font-size:13px;cursor:pointer}
-.ts-btn:hover,.ts-btn2:hover{border-color:rgba(94,234,212,.5);color:var(--teal,#5eead4)}
-.ts-btn:focus-visible,.ts-btn2:focus-visible,.ts-link:focus-visible,.ts-segb:focus-visible,.ts-x2:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
+.ts-btn:hover,.ts-btn2:hover{border-color:rgba(212,175,55,.5);color:var(--teal,#D4AF37)}
+.ts-btn:focus-visible,.ts-btn2:focus-visible,.ts-link:focus-visible,.ts-segb:focus-visible,.ts-x2:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:1px}
 .ts-btn[disabled]{opacity:.4;cursor:default}
 .ts-menu{position:relative}
 .ts-menu summary{list-style:none}
 .ts-menu summary::-webkit-details-marker{display:none}
 .ts-menu-body{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:300px;max-width:min(92vw,430px);max-height:min(70vh,520px);overflow:auto;background:#101823;border:1px solid #24364c;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
-.ts-mh{font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5eead4;margin:10px 0 4px}
+.ts-mh{font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#D4AF37;margin:10px 0 4px}
 .ts-mh:first-child{margin-top:0}
 .ts-mrow{display:flex;align-items:center;gap:9px;padding:4px 0;font-size:13.5px;color:#c9d7e2;cursor:pointer}
-.ts-mrow input[type=checkbox]{accent-color:#5eead4;width:15px;height:15px}
+.ts-mrow input[type=checkbox]{accent-color:#D4AF37;width:15px;height:15px}
 .ts-mrow input[type=text]{flex:1}
 .ts-seg{display:inline-flex;border:1px solid var(--line,#1f2b3a);border-radius:9px;overflow:hidden}
 .ts-segb{background:transparent;border:0;color:#8fa3b3;padding:6px 12px;font:inherit;font-size:12.5px;cursor:pointer}
-.ts-segb.акт{background:#0b1f1d;color:var(--teal,#5eead4)}
+.ts-segb.акт{background:#1A1508;color:var(--teal,#D4AF37)}
 .ts-view{justify-content:space-between}
 .ts-link{background:none;border:0;color:#8ecbff;font:inherit;font-size:13px;cursor:pointer;padding:2px 0;text-align:left}
 .ts-link:hover{text-decoration:underline}
@@ -247,20 +247,20 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 .ts-wrap th{position:sticky;top:0;z-index:5;background:#101823;border-bottom:2px solid #24364c;padding:0;text-align:left;white-space:nowrap}
 .ts-wrap th .ts-sort,.ts-wrap th .ts-th{display:inline-flex;align-items:center;gap:5px;width:100%;padding:9px 10px;font:inherit;font-size:12.5px;color:#8fa3b3}
 .ts-sort{background:none;border:0;cursor:pointer;font-weight:600}
-.ts-sort:hover{color:var(--teal,#5eead4)}
-.ts-sort:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:-2px}
+.ts-sort:hover{color:var(--teal,#D4AF37)}
+.ts-sort:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:-2px}
 .ts-arr{font-size:10px;opacity:.55}
-.ts-arr.акт{opacity:1;color:var(--teal,#5eead4)}
+.ts-arr.акт{opacity:1;color:var(--teal,#D4AF37)}
 .ts-prio{color:#ffc36e;font-size:9.5px;margin-left:1px}
 .ts-jmp{background:none;border:0;color:#5b6a72;cursor:pointer;font-size:11px;padding:2px 4px}
 .ts-jmp:hover{color:#8ecbff}
-.ts-jmp:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:-2px}
+.ts-jmp:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:-2px}
 .ts-c-sel,.ts-c-exp{width:34px;min-width:34px;text-align:center}
 .ts-wrap th.ts-c-sel,.ts-wrap th.ts-c-exp{padding:9px 4px}
 
 /* ячейки */
 .ts-wrap td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px;white-space:nowrap}
-.ts-wrap tbody tr:hover td{background:rgba(94,234,212,.045)}
+.ts-wrap tbody tr:hover td{background:rgba(212,175,55,.045)}
 .ts-wrap tbody tr.выбр td{background:rgba(142,203,255,.09)}
 .ts-wrap tbody tr.раскрыт td{background:rgba(255,255,255,.03)}
 .ts-num{font-family:var(--mono,ui-monospace,monospace);color:#a8bccb}
@@ -268,11 +268,11 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 .ts-star{color:#ffc36e;font-size:11.5px}
 .ts-none{text-align:center}
 .ts-emptyCell{opacity:.35}
-.ts-c-sel input,.ts-c-exp input{accent-color:#5eead4}
+.ts-c-sel input,.ts-c-exp input{accent-color:#D4AF37}
 .ts-exp{background:none;border:0;color:#8fa3b3;cursor:pointer;font-size:12px;padding:3px 6px;border-radius:6px}
-.ts-exp:hover{color:#5eead4;background:rgba(94,234,212,.1)}
-.ts-exp:focus-visible{outline:2px solid var(--teal,#5eead4);outline-offset:1px}
-.ts-exp.акт{color:#5eead4}
+.ts-exp:hover{color:#D4AF37;background:rgba(212,175,55,.1)}
+.ts-exp:focus-visible{outline:2px solid var(--teal,#D4AF37);outline-offset:1px}
+.ts-exp.акт{color:#D4AF37}
 
 /* ячейка-кнопка языка — унаследованные статусы ·15 */
 .cellBtn{min-width:42px;padding:4px 8px;border-radius:8px;border:1px solid transparent;font-family:var(--mono,ui-monospace,monospace);font-size:12px;cursor:pointer}
@@ -326,7 +326,7 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 :root{color-scheme:dark}
 select{color-scheme:dark}
 option,optgroup{background-color:#0e141b;color:#e9f1f4}
-option:checked,option:hover{background-color:#10312c;color:#8df0dc}
+option:checked,option:hover{background-color:#1A1508;color:#D4AF37}
 /*</SEL-FIX>*/
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">

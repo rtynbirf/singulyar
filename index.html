@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР RUVSON — вселенная караоке · ОРКЕСТРАТОР ·15</title>
 <meta name="description" content="Офлайн-вселенная караоке RUVSON: 61 песня × 158 языков · 26 модулей · ОРКЕСТРАТОР ·15 · КРУГ ·23 · ПОЧТА ·24 · КОШЕЛЁК ·25 · ЛИНИЯ ·26 · PWA. Отчёт и инструкция — читай и сразу действуй.">
-<meta name="theme-color" content="#0a0e14">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -15,16 +15,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
 <style>
-:root{--bg:#0a0e14;--panel:#101823;--line:#1f2b3a;--tx:#e8f0f6;--dim:#8fa3b3;--teal:#5eead4;--teal2:#38bdf8;--amber:#ffc36e;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+:root{--bg:#0A0A0C;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:80px}
 a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#12151c,#0A0B0E)}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14171C,#0A0A0C)}
 .hd{display:flex;align-items:center;gap:14px;padding:18px 0}
-.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#FF5E62,#4FACFE,#FF5E62);display:grid;place-items:center;color:#04121c;font-weight:800;font-size:19px;font-family:var(--mono)}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:19px;font-family:var(--mono)}
 .hd b{font-size:18px} .hd span{color:var(--dim);font-size:13px;display:block}
-.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:#FFB4AB;border:1px solid rgba(255,94,98,.45);border-radius:999px;padding:5px 12px;background:rgba(255,94,98,.08)}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08)}
 h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
 h1 em{font-style:normal;color:var(--teal)}
 .lead{color:var(--dim);max-width:760px;font-size:17px}
@@ -36,12 +36,12 @@ h2{font-size:21px;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid 
 h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px;vertical-align:middle;margin-left:8px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
-.card:hover{border-color:rgba(94,234,212,.5)}
+.card:hover{border-color:rgba(212,175,55,.5)}
 .card .t{font-weight:700;font-size:16.5px}
 .card .d{color:var(--dim);font-size:13.5px;flex:1}
-.card .m{font-family:var(--mono);font-size:11px;color:#5b6a72}
-.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:linear-gradient(135deg,#FF5E62 0%,#FF9966 100%);color:#fff;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
-.btn.ghost{background:none;color:#FF5E62;border:1px solid rgba(255,94,98,.5)}
+.card .m{font-family:var(--mono);font-size:11px;color:#6B7178}
+.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:linear-gradient(135deg,#D4AF37 0%,#F5A623 100%);color:#0A0A0C;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:rgba(26,29,35,.6);color:#C0C8D0;border:1px solid rgba(192,200,208,.4)}
 .step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
 .step .k{font-family:var(--mono);color:var(--teal);font-size:13px;min-width:64px;padding-top:2px}
 .step p{color:#c9d7e2;font-size:14.5px}
@@ -54,7 +54,7 @@ h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px
 .ok{color:var(--teal)} .no{color:var(--amber)}
 .warn{border:1px solid #4d3a12;background:#1a1408;border-radius:14px;padding:14px 18px;font-size:13.5px;color:#e8d5a8;margin-top:26px}
 footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:var(--mono)}
-kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
+kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
@@ -64,7 +64,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
 <header><div class="wrap hd">
   <div class="logo">S·15</div>
   <div><b>СИНГУЛЯР RUVSON</b><span>офлайн-вселенная караоке · читай отчёт — начинай действовать</span></div>
-  <div class="badge">v1.27.0 · PWA · офлайн</div>
+  <div class="badge">v1.28.0 · СТЕКЛО·СЕРЕБРО·ЗОЛОТО · PWA · офлайн</div>
 </div></header>
 
 <main class="wrap">
@@ -212,7 +212,7 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
       <li><a href="СКРИНШОТЫ/РЕЗОНАНС_02/СИНГУЛЯР_02_резонанс.png">Превью РЕЗОНАНС</a> — резонанс, колесо, ORGANISM_hero, генплан</li>
       <li><a href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md">RUVSON Grabber</a> — userscript вытягивания с YouTube</li>
       <li><a href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md">Установщик Windows</a> (bat/ps1)</li>
-      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.27.0</a> — канонический каталог: 11 классов, 674 файла, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
+      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.28.0</a> — канонический каталог: 11 классов, 674 файла, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
       <li><a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">ПОДДЕРЖАТЬ СИНГУЛЯР (слой ЖИЗНЬ)</a> — честная страница устойчивости: прототип без платёжных рельсов, активация — решение человека; GOVERNANCE защищает проект от захвата деньгами</li>
       <li><a href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md">SUSTAINABILITY-слой</a> — правила денег: GOVERNANCE (S01–S10), FUNDING_POLICY, TRANSPARENCY (evidence-уровни), GRANT_READINESS, funding.json + schema</li>
       <li><a href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md">THREAT MODEL крипты ·22</a> — модель угроз из кода (v1.25.1): активы, противники, честные границы</li>
@@ -233,8 +233,8 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16202e;border:1px solid
     </ul></div>
   </div>
 
-  <footer>СИНГУЛЯР · RUVSON · сборка v1.27.0 «РЕБРЕНДИНГ+ФУНДАМЕНТ» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
-  ⚙ шестерёнка на всех 16 страницах следит машина (check_gear.py) · облик вживлён из дизайн-пакета владельца: дизайн-система v3.0, кинетический холст, AURA, ФУНДАМЕНТ ·27 · язык выверен тактом «ГРАМОТА»: 39 правок</footer>
+  <footer>СИНГУЛЯР · RUVSON · сборка v1.28.0 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
+  ⚙ шестерёнка на всех 16 страницах следит машина (check_gear.py) · облик строго по документации владельца (разбор 15/15 макетов): стекло · серебро · золото #D4AF37 на матовой подложке, кинетический холст = стеклянные плоскости + тёплое свечение, AURA, ФУНДАМЕНТ ·27 · язык выверен тактом «ГРАМОТА»: 39 правок</footer>
 </main>
 <script>
 /* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
