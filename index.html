@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>SINGULYAR — Ambient Intent Organism</title>
-<meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар; нить Ариадны ведёт в дом 17 дверей. Один файл · ноль интернета · 100% суверенитет.">
+<meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар рассыпается на 17 дверей-осколков — куда человек поставил, там и стоит. Один файл · ноль интернета · 100% суверенитет.">
 <meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
@@ -63,10 +63,14 @@ footer{margin:0 0 30px;border-top:1px solid var(--line);padding-top:16px;color:v
 <body>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div class="sng-beam" aria-hidden="true"></div>
-<script>/* AURA: применяем выбор человека до отрисовки */try{var _aura=localStorage.getItem("singulyar-aura");if(_aura)document.body.setAttribute("data-aura-mode",_aura)}catch(e){}</script>
 <main>
   <section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
-    <canvas id="crystalHero" aria-label="Кристалл-Шар: золотое ядро, стеклянные осколки, орбиты — живой холст, ноль изображений" role="img"></canvas>
+    <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="false"
+            aria-controls="осколкиСлой"
+            aria-label="Кристалл SINGULYAR — рассыпать на двери дома">
+      <canvas id="crystalHero" aria-hidden="true"></canvas>
+    </button>
+    <div id="осколкиСлой" class="осколки-слой" hidden></div>
     <h2 class="sng-crystal-title">SINGULYAR</h2>
     <p class="aio-sub">Ambient Intent Organism</p>
     <p class="motto">Смысл один. Представление — твоё.</p>
@@ -75,11 +79,28 @@ footer{margin:0 0 30px;border-top:1px solid var(--line);padding-top:16px;color:v
       <a class="obj-chip" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">Ноль интернета.</a>
       <a class="obj-chip" href="СИНГУЛЯР_28_УЗЕЛ.html">100% суверенитет.</a>
     </div>
+    <p class="тихо-подсказка" aria-hidden="true">кристалл — касание&nbsp;· осколок — туда, где оставишь&nbsp;· ПКМ — меню дома</p>
   </section>
   <script>
-  /* ТИТУЛЬНЫЙ КРИСТАЛЛ-ШАР — рисует ядро SNG (канон: ноль изображений) */
+  /* ТИТУЛЬНЫЙ КРИСТАЛЛ-ШАР — рисует ядро SNG (канон: ноль изображений).
+     ОСКОЛКИ (такт v1.32.0): кристалл — кнопка; касание рассыпает его на
+     17 дверей-осколков на кольцах дома; осколок перетаскивается и остаётся
+     там, где человек его поставил (ОН РЕШАЕТ); позиция — в localStorage. */
   (function(){
-    function старт(){ try{ if(window.SNG&&window.SNG.кристалл){var c=document.getElementById('crystalHero'); if(c) window.SNG.кристалл(c,{});} }catch(e){} }
+    function старт(){
+      try{
+        if(!(window.SNG&&window.SNG.кристалл)) return;
+        var c=document.getElementById('crystalHero');
+        if(c) window.SNG.кристалл(c,{});
+        if(window.SNG.осколки){
+          var кн=document.getElementById('crystalButton');
+          var слой=document.getElementById('осколкиСлой');
+          if(кн&&слой) window.SNG.осколкиДвижок=window.SNG.осколки({
+            кнопка:кн, слой:слой, канвас:c
+          });
+        }
+      }catch(e){}
+    }
     if(window.SNG) старт();
     else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',старт); else document.addEventListener('DOMContentLoaded',старт); }
   })();
@@ -123,7 +144,7 @@ footer{margin:0 0 30px;border-top:1px solid var(--line);padding-top:16px;color:v
   })();
   </script>
 
-  <footer>SINGULYAR · RUVSON · сборка v1.31.0 «НИТЬ АРИАДНЫ» от 2026-10-05 · офлайн-first · титул по канону ФУНДАМЕНТА: только Кристалл, пустое поле, 0 изображений · нить ведёт в дом — путь человек находит сам</footer>
+  <footer>SINGULYAR · RUVSON · сборка v1.32.0 «ОСКОЛКИ» от 2026-10-05 · офлайн-first · кристалл рассыпается на 17 дверей — куда человек поставил, там и стоит · шестерёнка под капотом: ПКМ открывает меню дома · 0 изображений</footer>
 </main>
 <script>
 /* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
@@ -135,5 +156,5 @@ try{
 }catch(e){}
 </script>
 <script defer src="./singulyar-modules.js"></script>
-<script defer src="./singulyar-ux-engine-v8.js"></script></body>
+<script defer src="./singulyar-ux-engine-v9.js"></script></body>
 </html>

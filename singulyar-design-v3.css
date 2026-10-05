@@ -1,14 +1,14 @@
 /* ==========================================================================
    СИНГУЛЯР — дизайн-система v3.1 «Ambient OS · СТЕКЛО·СЕРЕБРО·ЗОЛОТО» — МОСТ
-   Источник истины: ДОКУМЕНТАЦИЯ ВЛАДЕЛЬЦА (SONG.zip, 2026-10-05) —
-   SINGULYAR_v3_Layer_Decomposition_Report.pdf: разбор 15/15 макетов.
-   Палитры макетов (дословно из отчёта): фон #050508–#2D3436, тексты-серебро
+   Источник истины: ФУНДАМЕНТ владельца (SINGULYAR_MASTER_SPEC, 2026-10-05) —
+   канон лица: чёрный void, серебряный кристалл, тёплое золотое ядро, спокойный
+   UI вокруг. Палитры макетов: фон #050508–#2D3436, тексты-серебро
    #C0C0C8/#E8E8E8/#F0F0F8, акценты — ТОЛЬКО золото #D4AF37/#F5A623/#FFB366/
    #D4A574/#FBBF24/#FFD700/#C8A05F/#F0D78C/#C8B896; материалы: стекло
    (glassmorphism, тонкая светлая рамка), серебро (полированный металл), золото.
    Слово владельца: «КАК В КОРЕЛ ДРО… МАКЕТАМИ СТЕКЛО СЕРЕБРО ЗОЛОТО».
-   Версия моста: 3.2.0 · такт v1.30.0 «КРИСТАЛЛ · РЕБРЕНДИНГ»
-   (база v3.1 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО»; добавки — в конце файла).
+   Версия моста: 3.3.0 · такт v1.32.0 «ОСКОЛКИ»
+   (база v3.1 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО»; изменения — в конце файла).
    --------------------------------------------------------------------------
    ЧЕСТНЫЕ АДАПТАЦИИ под законы дома (офлайн-принцип, accessibility-first):
    1) БЕЗ внешних шрифтов — системный стек (0 внешних сетевых запросов);
@@ -20,6 +20,11 @@
    5) имя СИНГУЛЯР и сущность дома не меняются — обновляются аватары,
       бирки, ярлыки (слово владельца «СУЩНОСТЬ НЕ МЕНЯЕТСЯ!!!»);
    6) рекомендация №5 отчёта: нейтральный фон + ОДИН акцент — акцент = золото.
+   ИЗМЕНЕНИЕ v3.3.0 (слово владельца такта v1.32.0): блок «AURA — HUMAN-FIRST»
+   (режимные атрибуты подложки, ◐ Высокий контраст / ⤢ Крупные элементы)
+   ВЫЖЖЕН — владелец назвал его бессмысленным; accessibility остаётся встроенным
+   свойством (ФУНДАМЕНТ: keyboard, focus, reduced-motion, контраст тем — без
+   отдельных «режимов для особых людей» и без видимых переключателей на лице).
    ========================================================================== */
 
 /* 1. ТОКЕНЫ v3.1 (документация владельца, дословно) */
@@ -159,23 +164,33 @@ body{background:var(--bg-base);color:var(--text-primary)}
 .facet-badge[data-facet="vault"]    {background:rgba(212,165,116,.12); color:var(--facet-vault);    border:1px solid var(--facet-vault)}
 .facet-badge[data-facet="brain"]    {background:rgba(200,204,210,.10); color:var(--facet-brain);    border:1px solid var(--facet-brain)}
 
-/* 5. AURA — HUMAN-FIRST (выбор человека выше автоматики) */
-body[data-aura-mode="high-contrast"]{
-  --bg-base:#000000;
-  --bg:#000000;
-  --glass-dark:#111111;
-  --glass-card:#111111;
-  --glass-elevated:#1a1a1a;
-  --border-subtle:2px solid #FFFFFF;
-  --border-active:2px solid #FFFFFF;
-  color:#FFFFFF;
-}
-body[data-aura-mode="large-touch"] .glass-card,
-body[data-aura-mode="large-touch"] button,
-body[data-aura-mode="large-touch"] .btn,
-body[data-aura-mode="large-touch"] a.btn{
-  min-height:64px;
-  font-size:20px;
+/* 5. (вымещено) AURA — HUMAN-FIRST — выжжено словом владельца такта v1.32.0:
+      отдельный видимый «режим для особых людей» противоречит канону.
+      Accessibility встроена: клавиатура, фокус, reduced-motion, контраст. */
+
+
+/* ==========================================================================
+   ОСКОЛКИ — добавки v3.3.0 (такт v1.32.0). Канон незыблем:
+   золото #D4AF37 — единственный акцент, стекло с тонкой светлой рамкой,
+   void обязателен. Кристалл — кнопка; осколки-двери — настоящий DOM.
+   ========================================================================== */
+/* Кристалл-кнопка: появление — чистое, без рамок; говорит фокус и курсор */
+#crystalTitle{position:relative}
+.кристалл-кнопка{appearance:none;border:0;padding:0;background:none;cursor:pointer;
+  display:block;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.кристалл-кнопка canvas{display:block;transition:filter .55s ease,transform .55s var(--ease-spring)}
+.кристалл-кнопка:hover canvas{filter:drop-shadow(0 0 18px rgba(212,175,55,.22))}
+.кристалл-кнопка:focus-visible{outline:2px solid #F5D58F;outline-offset:10px;border-radius:50%}
+/* рассыпанное ядро: стекло уходит в тень — свет несут осколки */
+.кристалл-кнопка.рассыпан canvas{filter:brightness(.5) saturate(.65);
+  transform:scale(.92)}
+.кристалл-кнопка.рассыпан:hover canvas{filter:brightness(.58) saturate(.7)}
+/* Тихая подсказка лица — воздух канона: мелко, тускло, по делу */
+.тихо-подсказка{margin:16px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:#5A6068}
+@media (max-width:640px){.тихо-подсказка{letter-spacing:.1em;font-size:10px}}
+@media (prefers-reduced-motion: reduce){
+  .кристалл-кнопка canvas{transition:none}
 }
 
 

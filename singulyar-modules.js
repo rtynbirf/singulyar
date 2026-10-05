@@ -1,9 +1,10 @@
 /* ==========================================================================
-   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.1.1 · такт v1.31.0 «НИТЬ АРИАДНЫ»
-   Слово владельца: «НА ГЛАВНОЙ СТРАНИЦЕ ТОЛЬКО КРИСТАЛ А НЕ ПРОСТЫНИ НА ВЕСЬ
-   ЭКРАН… МИНИМАЛИЗМ ПРИ НАЧАЛЬНОМ ВЫБОРЕ А ДАЛЬШЕ ОН САМ ПУТЬ НАЙДЁТ
-   НИТЬ АРИАДНЫ ВЫВЕДЕТ ЕГО ИЗ ЛАБИРИНТА МИНОТАВРА=)» (такт v1.31.0;
-   предыстория ядра — такты v1.29/v1.30, история — git)
+   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.2.0 · такт v1.32.0 «ОСКОЛКИ»
+   Слово владельца (такт v1.32.0): «Я ТЕБЕ КАЖДЫЙ ОБЬЕКТ ДАЛ!!!» — все объекты
+   SNG синтезируются в единую картину мира, а не голый разрозненный набор;
+   кристалл рассыпается на осколки-двери: «КУДА ЧЕЛОВЕК ПОСТАВИЛ ТАМ И СТОИТ
+   — ОН РЕШАЕТ». Слово такта v1.31.0: «НА ГЛАВНОЙ СТРАНИЦЕ ТОЛЬКО КРИСТАЛ…
+   НИТЬ АРИАДНЫ ВЫВЕДЕТ ЕГО ИЗ ЛАБИРИНТА МИНОТАВРА=)». История — git.
    --------------------------------------------------------------------------
    Модель дома:
    • МОДУЛЬ — автономная комната вселенной (файл). У каждого есть номер (·NN),
@@ -23,7 +24,7 @@
 (function () {
   'use strict';
   if (window.__SINGULYAR_MODULES__) return;
-  window.__SINGULYAR_MODULES__ = 'v1.1.1';
+  window.__SINGULYAR_MODULES__ = 'v1.2.0';
 
   /* ── 1. МОДАЛЬНОСТИ — каналы человека ──────────────────────────────── */
   var МОДАЛЬНОСТИ = [
@@ -120,7 +121,7 @@
 
   /* ── 3. API ─────────────────────────────────────────────────────────── */
   var SNG = {
-    версия: '1.1.1',
+    версия: '1.2.0',
     формула: 'Ŝ = 1_H + λ(I⊗I†)',
     инвариант: '⟨M(t), Σ(t)⟩ ≡ 0',
     модальности: МОДАЛЬНОСТИ,
@@ -473,4 +474,329 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { стили(); бирка(); });
   } else { стили(); бирка(); }
+
+  /* ── 6. ОСКОЛКИ — кристалл рассыпается на двери дома (такт v1.32.0) ── */
+  /* Слово владельца: «Я ТЕБЕ КАЖДЫЙ ОБЬЕКТ ДАЛ!!!» — все объекты SNG в одной
+     картине мира: ядро (смысл) → орбиты (кольца дома) → осколки (17 дверей,
+     у каждого фасет и модальности). И закон человека: «КУДА ЧЕЛОВЕК ПОСТАВИЛ
+     ТАМ И СТОИТ — ОН РЕШАЕТ»: осколок можно перетащить, позиция запоминается.
+     0 картинок: осколки — настоящий DOM (TZ: реальные контролы, не рисунок). */
+  var ОСКОЛКИ_КЛЮЧ = 'singulyar-осколки-v1';
+  /* рассеяние осколков — как на канонном зерне владельца (canonical-crystal):
+     малые кристаллы органично вокруг ядра, без строгих колец.
+     Золотой угол 2.399963 рад гарантирует: соседи не слипаются никогда. */
+  var ЗОЛОТОЙ_УГОЛ = 2.399963;
+  var ФАСЕТ_ИМЕНИ = { atlas: 'ATLAS', flow: 'FLOW', resonance: 'RESONANCE',
+    aura: 'AURA', mesh: 'MESH', vault: 'VAULT', brain: 'МОЗГ' };
+
+  function осколкиСклад() {
+    try {
+      var сырой = localStorage.getItem(ОСКОЛКИ_КЛЮЧ);
+      if (!сырой) return { состояние: 'собран', позиции: {} };
+      var в = JSON.parse(сырой);
+      if (!в || typeof в !== 'object') return { состояние: 'собран', позиции: {} };
+      return { состояние: в.состояние === 'рассыпан' ? 'рассыпан' : 'собран',
+               позиции: (в.позиции && typeof в.позиции === 'object') ? в.позиции : {} };
+    } catch (e) { return { состояние: 'собран', позиции: {} }; }
+  }
+  function осколкиПомнить(склад) {
+    try { localStorage.setItem(ОСКОЛКИ_КЛЮЧ, JSON.stringify(склад)); } catch (e) {}
+  }
+
+  /* стили осколков — стекло канона: тонкая светлая кромка, золото — единственный акцент */
+  var CSS_ОСКОЛКОВ = [
+    '.осколки-слой{position:absolute;inset:0;pointer-events:none;z-index:3}',
+    '.осколок{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;pointer-events:auto;z-index:1;',
+      'display:block;appearance:none;border:0;padding:0;background:none;cursor:grab;',
+      'touch-action:none;-webkit-tap-highlight-color:transparent;text-decoration:none}',
+    '.осколок:active{cursor:grabbing;z-index:70}',
+    '.осколок:hover,.осколок:focus-visible{z-index:60}',
+    '.осколок .остриё{position:absolute;inset:0;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);',
+      'transform:rotate(var(--поворот,0deg));',
+      'background:linear-gradient(160deg,rgba(240,240,248,.26),rgba(240,240,248,.06) 52%,rgba(212,175,55,.20));',
+      'transition:transform var(--dur-fast) var(--ease-spring),filter var(--dur-fast)}',
+    '.осколок .остриё::after{content:"";position:absolute;inset:5px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);',
+      'background:linear-gradient(200deg,rgba(10,10,12,.10),rgba(240,240,248,.16))}',
+    '.осколок .номер{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;',
+      'font:600 8.5px/1 var(--mono,Cascadia Mono,ui-monospace,Consolas,monospace);',
+      'color:rgba(240,240,248,.78);letter-spacing:.04em;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.8)}',
+    '.осколок[data-класс="К1"] .остриё{background:linear-gradient(160deg,rgba(212,175,55,.55),rgba(245,166,35,.16) 55%,rgba(212,175,55,.42));',
+      'filter:drop-shadow(0 0 7px rgba(212,175,55,.38))}',
+    '.осколок[data-класс="К1"] .номер{color:#FFD98A}',
+    '.осколок:hover .остриё,.осколок:focus-visible .остриё{transform:scale(1.22) rotate(var(--поворот,0deg));',
+      'filter:drop-shadow(0 0 10px rgba(212,175,55,.55))}',
+    '.осколок:focus-visible{outline:none}',
+    '.осколок:focus-visible .остриё{outline:2px solid #F5D58F;outline-offset:4px}',
+    /* бирка осколка — синтез объектов: номер · имя · фасет · модальности */
+    '.осколок .бирка{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);',
+      'min-width:150px;max-width:230px;padding:8px 11px;pointer-events:none;opacity:0;',
+      'background:rgba(10,12,16,.90);border:1px solid rgba(212,175,55,.38);border-radius:10px;',
+      'box-shadow:0 12px 30px rgba(0,0,0,.55),inset 0 1px 0 rgba(240,240,248,.08);',
+      'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
+      'transition:opacity var(--dur-fast) ease,transform var(--dur-fast) var(--ease-spring);text-align:left}',
+    '.осколок:hover .бирка,.осколок:focus-visible .бирка{opacity:1;transform:translateX(-50%) translateY(0)}',
+    '.осколок .бирка b{display:block;font:700 11.5px/1.3 var(--mono,Cascadia Mono,ui-monospace,Consolas,monospace);',
+      'color:#F0D78C;letter-spacing:.06em;white-space:nowrap}',
+    '.осколок .бирка i{display:block;font-style:normal;font:11px/1.4 var(--mono,Cascadia Mono,ui-monospace,Consolas,monospace);',
+      'color:#9CA3AF;margin-top:3px}',
+    '.осколок .бирка .фасет{display:inline-block;margin-top:5px;font:600 9px/1 var(--mono,Cascadia Mono,ui-monospace,Consolas,monospace);',
+      'letter-spacing:.14em;color:#C8B896;border:1px solid rgba(200,184,150,.45);border-radius:999px;padding:2.5px 7px}',
+    '.осколок .бирка .моды{display:inline-block;margin-left:5px;font:12px/1 var(--mono,Cascadia Mono,ui-monospace,Consolas,monospace);',
+      'color:#C8CCD2;letter-spacing:.18em;vertical-align:middle}',
+    '@media (max-width:640px){.осколок{width:24px;height:24px;margin:-12px 0 0 -12px}',
+      '.осколок .бирка{display:none}}',
+    '@media (prefers-reduced-motion: reduce){.осколок .остриё,.осколок .бирка{transition:none!important}}'
+  ].join('\n');
+
+  function осколкиСтили() {
+    try {
+      if (document.getElementById('sng-осколки-стиль')) return;
+      var s = document.createElement('style');
+      s.id = 'sng-осколки-стиль';
+      s.textContent = CSS_ОСКОЛКОВ;
+      document.head.appendChild(s);
+    } catch (e) {}
+  }
+
+  /* рассеяние по золотому углу: точка вокруг ядра (в px от центра кристалла) */
+  function точкаРассеяния(i, R) {
+    var фи = i * ЗОЛОТОЙ_УГОЛ + 0.35;
+    var ρ = R * (1.04 + 0.30 * ((i * 0.618034) % 1));   /* пояс 1.04–1.34 R */
+    return { x: Math.cos(фи) * ρ, y: Math.sin(фи) * ρ * 0.62, поворот: Math.round((фи * 57.2958) % 60) };
+  }
+
+  /* публичный конструктор: SNG.осколки({ кнопка, слой, канвас, статус }) */
+  SNG.осколки = function (опции) {
+    опции = опции || {};
+    var кнопка = опции.кнопка, слой = опции.слой;
+    if (!кнопка || !слой || слой.dataset.осколки) return null;
+    слой.dataset.осколки = '1';
+    осколкиСтили();
+
+    var склад = осколкиСклад();
+    var карта = {};                       /* id → { a, узел, кольцо, индекс } */
+    var сокращено = false;
+    try { сокращено = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    /* глифы модальностей — для бирки (синтез объектов в одном месте) */
+    var глиф = {};
+    МОДАЛЬНОСТИ.forEach(function (м) { глиф[м.id] = м.глиф; });
+
+    /* строим 17 осколков-дверей (нулевой innerHTML — закон репозитория) */
+    var ПОРЯДОК = ['s01', 's02r', 's02f', 's15', 's16', 's17', 's18', 's19', 's20',
+                   's21', 's22', 's23', 's24', 's25', 's26', 's27', 's28'];
+    ПОРЯДОК.forEach(function (ид, i) {
+      var м = SNG.поId(ид);
+      if (!м || карта[ид]) return;
+      var a = document.createElement('a');
+      a.className = 'осколок';
+      a.href = м.файл;
+      a.setAttribute('data-класс', м.класс);
+      a.setAttribute('aria-label', м.номер + ' ' + м.имя + ' — ' + (ФАСЕТ_ИМЕНИ[м.фасет] || '') +
+        '. Дверь дома. Перетащите — встанет туда, где оставите.');
+      a.dataset.id = ид;
+
+        var остриё = document.createElement('span');
+        остриё.className = 'остриё';
+        остриё.setAttribute('aria-hidden', 'true');
+        var номер = document.createElement('span');
+        номер.className = 'номер';
+        номер.setAttribute('aria-hidden', 'true');
+        номер.textContent = м.номер;
+
+        var бирка = document.createElement('span');
+        бирка.className = 'бирка';
+        бирка.setAttribute('aria-hidden', 'true');
+        var бИмя = document.createElement('b'); бИмя.textContent = м.номер + ' ' + м.имя;
+        var бКратко = document.createElement('i'); бКратко.textContent = м.кратко;
+        var бФасет = document.createElement('span'); бФасет.className = 'фасет';
+        бФасет.textContent = ФАСЕТ_ИМЕНИ[м.фасет] || 'ГРАНЬ';
+        var бМоды = document.createElement('span'); бМоды.className = 'моды';
+        бМоды.textContent = м.модальности.map(function (x) { return глиф[x] || ''; }).join('');
+        бирка.appendChild(бИмя); бирка.appendChild(бКратко);
+        бирка.appendChild(бФасет); бирка.appendChild(бМоды);
+
+        a.appendChild(остриё); a.appendChild(номер); a.appendChild(бирка);
+        a.style.setProperty('--поворот', точкаРассеяния(i, 100).поворот + 'deg');
+        слой.appendChild(a);
+        карта[ид] = { узел: a, порядок: i };
+    });
+
+    function состояние() { return склад.состояние; }
+
+    /* орбитальные координаты в процентах секции титула — осколки сидят ровно
+       на нарисованных кольцах; перетащенные — где оставил человек */
+    function расставить(анимация) {
+      var зона = слой.getBoundingClientRect();
+      var кр = (опции.канвас || кнопка).getBoundingClientRect();
+      var цx = кр.left + кр.width / 2 - зона.left;
+      var цy = кр.top + кр.height / 2 - зона.top;
+      var R = Math.min(кр.width, кр.height) * 0.36;
+      Object.keys(карта).forEach(function (ид) {
+        var о = карта[ид];
+        var сохр = склад.позиции[ид];
+        var x, y;
+        if (сохр && isFinite(сохр[0]) && isFinite(сохр[1])) {
+          x = зона.width * сохр[0]; y = зона.height * сохр[1];
+        } else {
+          var п = точкаРассеяния(о.порядок, R);
+          x = цx + п.x; y = цy + п.y;
+        }
+        /* кламп в границы секции — осколок не уходит с лица */
+        x = Math.min(Math.max(20, x), Math.max(20, зона.width - 20));
+        y = Math.min(Math.max(20, y), Math.max(20, зона.height - 20));
+        о.узел.style.left = x + 'px';
+        о.узел.style.top = y + 'px';
+        if (анимация && !сокращено) {
+          о.узел.style.transition = 'none';
+          о.узел.style.transform = 'translate(0,0) scale(.2) rotate(-90deg)';
+          о.узел.style.opacity = '0';
+          /* принудительный reflow — затем полёт на орбиту со сдвигом фазы */
+          void о.узел.offsetWidth;
+          о.узел.style.transition = 'transform .55s cubic-bezier(.16,1,.3,1) ' + (о.порядок * 26) + 'ms, opacity .4s ease ' + (о.порядок * 26) + 'ms';
+          о.узел.style.transform = 'translate(0,0) scale(1) rotate(0deg)';
+          о.узел.style.opacity = '1';
+          setTimeout(function () { о.узел.style.transition = ''; }, 700 + о.порядок * 26);
+        }
+      });
+    }
+
+    function очиститьПолёт() {
+      Object.keys(карта).forEach(function (ид) {
+        карта[ид].узел.style.transition = '';
+        карта[ид].узел.style.transform = '';
+        карта[ид].узел.style.opacity = '';
+      });
+    }
+
+    function рассыпать() {
+      склад.состояние = 'рассыпан';
+      осколкиПомнить(склад);
+      слой.hidden = false;
+      расставить(true);
+      кнопка.classList.add('рассыпан');
+      кнопка.setAttribute('aria-expanded', 'true');
+      кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — собрать осколки обратно');
+      if (опции.статус && опции.статус.textContent != null)
+        опции.статус.textContent = 'Кристалл рассыпался на 17 дверей. Перетащите осколок — он останется там, где вы его оставите. Касание ядра — собрать.';
+    }
+
+    function собрать() {
+      склад.состояние = 'собран';
+      осколкиПомнить(склад);
+      кнопка.classList.remove('рассыпан');
+      кнопка.setAttribute('aria-expanded', 'false');
+      кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — рассыпать на двери дома');
+      Object.keys(карта).forEach(function (ид) {
+        var о = карта[ид];
+        /* позиции человека НЕ стираем: «куда поставил — там и стоит»;
+           вернуть на орбиты можно только явным «Сбросить осколки» */
+        if (сокращено) { о.узел.style.opacity = '0'; return; }
+        о.узел.style.transition = 'transform .45s cubic-bezier(.16,1,.3,1), opacity .38s ease';
+        о.узел.style.transform = 'scale(.2) rotate(90deg)';
+        о.узел.style.opacity = '0';
+      });
+      осколкиПомнить(склад);
+      setTimeout(function () {
+        if (склад.состояние === 'собран') слой.hidden = true;
+        очиститьПолёт();
+      }, сокращено ? 0 : 470);
+      if (опции.статус && опции.статус.textContent != null)
+        опции.статус.textContent = 'Осколки собраны. Кристалл — цел. Касание — рассыпать на двери.';
+    }
+
+    function переключить() { склад.состояние === 'рассыпан' ? собрать() : рассыпать(); }
+
+    function сброс() {
+      склад.позиции = {};
+      осколкиПомнить(склад);
+      if (склад.состояние === 'рассыпан') расставить(false);
+      if (опции.статус && опции.статус.textContent != null)
+        опции.статус.textContent = 'Осколки вернулись на орбиты дома.';
+    }
+
+    /* ПЕРЕТАСКИВАНИЕ — «куда человек поставил, там и стоит» */
+    Object.keys(карта).forEach(function (ид) {
+      var узел = карта[ид].узел;
+      var тян = { активно: false, сдвинули: false, sx: 0, sy: 0, ox: 0, oy: 0 };
+      узел.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0 && e.pointerType === 'mouse') return;
+        тян.активно = true; тян.сдвинули = false;
+        тян.sx = e.clientX; тян.sy = e.clientY;
+        тян.ox = parseFloat(узел.style.left) || 0;
+        тян.oy = parseFloat(узел.style.top) || 0;
+        try { узел.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+      узел.addEventListener('pointermove', function (e) {
+        if (!тян.активно) return;
+        var dx = e.clientX - тян.sx, dy = e.clientY - тян.sy;
+        if (!тян.сдвинули && Math.hypot(dx, dy) > 6) тян.сдвинули = true;
+        if (!тян.сдвинули) return;
+        var зона = слой.getBoundingClientRect();
+        var x = Math.min(Math.max(20, тян.ox + dx), зона.width - 20);
+        var y = Math.min(Math.max(20, тян.oy + dy), зона.height - 20);
+        узел.style.left = x + 'px';
+        узел.style.top = y + 'px';
+      });
+      function конец(e) {
+        if (!тян.активно) return;
+        тян.активно = false;
+        try { if (e && e.pointerId != null) узел.releasePointerCapture(e.pointerId); } catch (err) {}
+        if (тян.сдвинули) {
+          var зона = слой.getBoundingClientRect();
+          склад.позиции[ид] = [
+            +(parseFloat(узел.style.left) / зона.width).toFixed(4),
+            +(parseFloat(узел.style.top) / зона.height).toFixed(4)
+          ];
+          осколкиПомнить(склад);
+          if (navigator.vibrate) try { navigator.vibrate(12); } catch (err) {}
+          узел.setAttribute('data-поставлен', '1');
+        }
+      }
+      узел.addEventListener('pointerup', конец);
+      узел.addEventListener('pointercancel', конец);
+      /* клик после перетаскивания — не переход */
+      узел.addEventListener('click', function (e) {
+        if (тян.сдвинули) { тян.сдвинули = false; e.preventDefault(); }
+      });
+    });
+
+    /* клавиатура: Enter/Space на кнопке-кристалле даёт рассыпать/собрать (кнопка сама),
+       Esc на лице — собрать, если меню не открыто */
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (склад.состояние !== 'рассыпан') return;
+      if (document.querySelector('.sux-menu')) return;      /* меню важнее */
+      var тег = document.activeElement && document.activeElement.tagName;
+      if (тег === 'INPUT' || тег === 'TEXTAREA' || тег === 'SELECT') return;
+      собрать();
+    });
+
+    /* пересборка при resize: орбитальные пересчитываются, поставленные — в % */
+    var таймер;
+    window.addEventListener('resize', function () {
+      clearTimeout(таймер);
+      таймер = setTimeout(function () { if (склад.состояние === 'рассыпан') расставить(false); }, 160);
+    }, { passive: true });
+
+    кнопка.addEventListener('click', переключить);
+    кнопка.setAttribute('aria-controls', слой.id || 'осколкиСлой');
+
+    /* восстановление состояния человека (он решает): рассыпанное остаётся рассыпанным */
+    if (склад.состояние === 'рассыпан') {
+      слой.hidden = false;
+      расставить(false);
+      кнопка.classList.add('рассыпан');
+      кнопка.setAttribute('aria-expanded', 'true');
+      кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — собрать осколки обратно');
+    } else {
+      слой.hidden = true;
+    }
+
+    return {
+      рассыпать: рассыпать, собрать: собрать, переключить: переключить, сброс: сброс,
+      состояние: состояние, пересчитать: function () { if (состояние() === 'рассыпан') расставить(false); }
+    };
+  };
 })();
