@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SINGULYAR — Ambient Intent Organism · караоке-вселенная RUVSON · 17 модулей · 6 модальностей</title>
-<meta name="description" content="SINGULYAR — Ambient Intent Organism. Смысл один. Представление — твоё. Офлайн-вселенная караоке RUVSON: 61 песня × 158 языков · 17 модулей · 6 модальностей — смысл один, представления разные · ОРКЕСТРАТОР ·15 · КРУГ ·23 · ФУНДАМЕНТ ·27 · УЗЕЛ ·28 · PWA. Отчёт и инструкция — читай и сразу действуй.">
+<title>SINGULYAR — Ambient Intent Organism</title>
+<meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар; нить Ариадны ведёт в дом 17 дверей. Один файл · ноль интернета · 100% суверенитет.">
 <meta name="theme-color" content="#0A0A0C">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
@@ -17,46 +17,46 @@
 <style>
 :root{--bg:#0A0A0C;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:80px}
-a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
-.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14171C,#0A0A0C)}
-.hd{display:flex;align-items:center;gap:14px;padding:18px 0}
-.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:19px;font-family:var(--mono)}
-.hd b{font-size:18px} .hd span{color:var(--dim);font-size:13px;display:block}
-.badge{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08)}
-h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
-h1 em{font-style:normal;color:var(--teal)}
-.lead{color:var(--dim);max-width:760px;font-size:17px}
-.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 8px}
-.nums .n{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.nums b{display:block;font-size:24px;font-family:var(--mono);color:var(--teal)}
-.nums i{font-style:normal;color:var(--dim);font-size:12.5px}
-h2{font-size:21px;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:13px;vertical-align:middle;margin-left:8px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
-.card:hover{border-color:rgba(212,175,55,.5)}
-.card .t{font-weight:700;font-size:16.5px}
-.card .d{color:var(--dim);font-size:13.5px;flex:1}
-.card .m{font-family:var(--mono);font-size:11px;color:#6B7178}
-.btn{display:inline-block;font-family:var(--mono);font-size:13.5px;background:linear-gradient(135deg,#D4AF37 0%,#F5A623 100%);color:#0A0A0C;border-radius:11px;padding:10px 16px;font-weight:700;border:0;cursor:pointer}
-.btn.ghost{background:rgba(26,29,35,.6);color:#C0C8D0;border:1px solid rgba(192,200,208,.4)}
-.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
-.step .k{font-family:var(--mono);color:var(--teal);font-size:13px;min-width:64px;padding-top:2px}
-.step p{color:#c9d7e2;font-size:14.5px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:820px){.cols{grid-template-columns:1fr}}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
-.box h3{font-size:15px;margin-bottom:10px;color:var(--teal2);font-family:var(--mono)}
-.box ul{list-style:none}
-.box li{padding:5px 0;font-size:14px;color:#c9d7e2;border-bottom:1px dashed rgba(255,255,255,.05)}
-.ok{color:var(--teal)} .no{color:var(--amber)}
-.warn{border:1px solid #4d3a12;background:#1a1408;border-radius:14px;padding:14px 18px;font-size:13.5px;color:#e8d5a8;margin-top:26px}
-footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:var(--mono)}
-kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
-.obj-chip{font-family:var(--mono);font-size:13px;color:#E8E8E8;border:1px solid rgba(240,240,248,.24);border-radius:999px;padding:9px 18px;background:rgba(240,240,248,.04);box-shadow:inset 0 1px 0 rgba(240,240,248,.12);text-decoration:none;transition:border-color .2s,color .2s}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:none}
+main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margin:0 auto;padding:0 20px}
+/* ── ТИТУЛ: пустое spatial-поле, Кристалл-Шар по центру (канон ФУНДАМЕНТА) ── */
+#crystalTitle{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(28px,5vh,56px) 16px 8px;border:0;background:none}
+#crystalTitle canvas{width:min(330px,74vw);height:min(330px,74vw)}
+.sng-crystal-title{margin:18px 0 4px;font-size:clamp(30px,6vw,52px);border:0;line-height:1.1}
+.aio-sub{color:var(--dim);letter-spacing:.24em;text-transform:uppercase;font-size:clamp(11px,1.5vw,14px)}
+.motto{margin:14px 0 0;font-size:clamp(15px,2vw,18px);color:#E8E8E8}
+.obj-chip{font-family:var(--mono);font-size:13px;color:#E8E8E8;border:1px solid rgba(240,240,248,.24);border-radius:999px;padding:9px 18px;background:rgba(240,240,248,.04);box-shadow:inset 0 1px 0 rgba(240,240,248,.12);transition:border-color .2s,color .2s;display:inline-block}
 .obj-chip:hover{border-color:rgba(212,175,55,.55);color:#F0D78C}
+.obj-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
+/* ── НИТЬ АРИАДНЫ: минимальный выбор, капот закрыт ─────────────────────── */
+.нить{margin-top:auto}
+.нить summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 0 40px;-webkit-tap-highlight-color:transparent}
+.нить summary::-webkit-details-marker{display:none}
+.нить-линия{width:1px;height:110px;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.85) 30%,rgba(212,175,55,.85) 70%,rgba(240,215,140,0));box-shadow:0 0 12px rgba(212,175,55,.35);animation:нить-пульс 3.2s ease-in-out infinite}
+.нить-слово{font-family:var(--mono);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#B9A468}
+.нить summary:hover .нить-линия,.нить summary:focus-visible .нить-линия{box-shadow:0 0 18px rgba(212,175,55,.6)}
+.нить summary:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:6px;border-radius:8px}
+.нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.45))}
+.нить[open] .нить-слово{color:var(--dim)}
+@keyframes нить-пульс{0%,100%{opacity:.55;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
+/* ── ДОМ под капотом: 17 дверей, путь человек находит сам ──────────────── */
+#дом{padding:6px 0 26px;text-align:center;animation:дом-явь .5s ease both}
+@keyframes дом-явь{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#дом h2{font-size:19px;margin:0 0 8px;border:0}
+#дом h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12.5px;vertical-align:middle;margin-left:8px}
+.дом-тихо{color:var(--dim);font-size:13.5px;margin:0 0 20px}
+.двери{display:flex;flex-wrap:wrap;gap:9px 12px;justify-content:center;max-width:860px;margin:0 auto}
+.дверь{font-family:var(--mono);font-size:12.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-block}
+.дверь i{font-style:normal;color:var(--teal);margin-right:7px}
+.дверь:hover{border-color:rgba(212,175,55,.55);color:#F0D78C}
+footer{margin:0 0 30px;border-top:1px solid var(--line);padding-top:16px;color:var(--dim);font-size:12px;font-family:var(--mono);text-align:center}
+@media (prefers-reduced-motion: reduce){
+  .нить-линия{animation:none}
+  .нить[open] #дом{animation:none}
+  html{scroll-behavior:auto}
+}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
@@ -64,44 +64,13 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div class="sng-beam" aria-hidden="true"></div>
 <script>/* AURA: применяем выбор человека до отрисовки */try{var _aura=localStorage.getItem("singulyar-aura");if(_aura)document.body.setAttribute("data-aura-mode",_aura)}catch(e){}</script>
-<header><div class="wrap hd">
-  <div class="logo">S·15</div>
-  <div><b>СИНГУЛЯР RUVSON</b><span>Ambient Intent Organism · отчёт — сразу действие</span></div>
-</div></header>
-
-<main class="wrap">
-  <section class="glass-panel" id="auraPanel" aria-label="AURA — адаптация под человека" style="margin:26px 0 0">
-    <b style="font-size:15px">AURA · Human-First</b>
-    <p style="color:var(--dim);font-size:13.5px;margin:6px 0 12px">Смысл один — представления разные. Выбор человека выше автоматики: канал строится под возможности и предпочтения человека. Настройка живёт на устройстве.</p>
-    <button id="auraHC" class="btn ghost" aria-pressed="false" style="margin-right:8px">◐ Высокий контраст</button>
-    <button id="auraLT" class="btn ghost" aria-pressed="false">⤢ Крупные элементы</button>
-  </section>
-  <script>
-  /* AURA-панель: состояние — в localStorage singulyar-aura */
-  (function(){
-    var KEY='singulyar-aura';
-    var b1=document.getElementById('auraHC'), b2=document.getElementById('auraLT');
-    function cur(){return document.body.getAttribute('data-aura-mode')||''}
-    function paint(){
-      if(b1)b1.setAttribute('aria-pressed', String(cur()==='high-contrast'));
-      if(b2)b2.setAttribute('aria-pressed', String(cur()==='large-touch'));
-    }
-    function tog(m){
-      if(cur()===m){ document.body.removeAttribute('data-aura-mode'); try{localStorage.removeItem(KEY)}catch(e){} }
-      else{ document.body.setAttribute('data-aura-mode', m); try{localStorage.setItem(KEY,m)}catch(e){} }
-      paint();
-    }
-    if(b1)b1.addEventListener('click',function(){tog('high-contrast')});
-    if(b2)b2.addEventListener('click',function(){tog('large-touch')});
-    paint();
-  })();
-  </script>
-  <section class="glass-panel" id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism" style="margin:26px 0 0;text-align:center;padding:clamp(30px,5vw,58px) 16px 36px">
-    <canvas id="crystalHero" style="width:min(330px,74vw);height:min(330px,74vw)" aria-label="Кристалл-Шар: золотое ядро, стеклянные осколки, орбиты — живой холст, ноль изображений" role="img"></canvas>
-    <h2 class="sng-crystal-title" style="margin:16px 0 4px;font-size:clamp(30px,6vw,52px);border:0">SINGULYAR</h2>
-    <p style="color:var(--dim);letter-spacing:.24em;text-transform:uppercase;font-size:clamp(11px,1.5vw,14px)">Ambient Intent Organism</p>
-    <p style="margin:14px 0 0;font-size:clamp(15px,2vw,18px);color:#E8E8E8">Смысл один. Представление — твоё.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px">
+<main>
+  <section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
+    <canvas id="crystalHero" aria-label="Кристалл-Шар: золотое ядро, стеклянные осколки, орбиты — живой холст, ноль изображений" role="img"></canvas>
+    <h2 class="sng-crystal-title">SINGULYAR</h2>
+    <p class="aio-sub">Ambient Intent Organism</p>
+    <p class="motto">Смысл один. Представление — твоё.</p>
+    <div class="obj-row">
       <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
       <a class="obj-chip" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">Ноль интернета.</a>
       <a class="obj-chip" href="СИНГУЛЯР_28_УЗЕЛ.html">100% суверенитет.</a>
@@ -116,207 +85,45 @@ kbd{font-family:var(--mono);font-size:11.5px;background:#16181C;border:1px solid
   })();
   </script>
 
-  <h1>61 песня. <em>158 языков.</em> Один файл. Ноль интернета.</h1>
-  <p class="lead">Это не плеер — это организм: каталог → тексты → переводы → караоке → хор.
-  Всё вычисляется из данных, ничего не «заявлено». Ниже — что готово прямо сейчас, что проверено
-  тестами и путь действия — две минуты.</p>
-
-  <section class="glass-panel" id="prismPanel" aria-label="Архитектура: модули и мультимодальность" style="margin:26px 0 0">
-    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
-      <div style="flex:1.1;min-width:290px">
-        <b style="font-size:16.5px;color:var(--teal2)">АРХИТЕКТУРА: МОДУЛИ · МУЛЬТИМОДАЛЬНОСТЬ</b>
-        <p style="color:var(--dim);font-size:13.5px;margin:8px 0 12px">Отличитель дома: <b style="color:#F0D78C">смысл один — модальности разные</b>.
-        17 модулей говорят на шести каналах человека — СЛОВО · ГОЛОС · ЗВУК · ОБРАЗ · ТАКТ · ЖЕСТ.
-        Призма живая — рисуется кодом, ноль изображений: свободный художник сам является источником.
-        Инвариант дома: Ŝ = 1<sub>H</sub> + λ(I⊗I†).</p>
-        <a class="btn" href="СИНГУЛЯР_28_УЗЕЛ.html">⬢ УЗЕЛ ·28 — философия вживую</a>
-        <a class="btn ghost" href="#модули">карта модулей</a>
-      </div>
-      <canvas id="sngPrism" style="flex:1;min-width:270px;height:230px" aria-label="Живая призма: белый луч смысла входит, кристалл раскладывает его на шесть лучей модальностей" role="img"></canvas>
+  <details id="модули" class="нить">
+    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 17 дверей">
+      <span class="нить-линия" aria-hidden="true"></span>
+      <span class="нить-слово">⌇ нить Ариадны</span>
+    </summary>
+    <div id="дом">
+      <h2>Дом <em>17 дверей · каждая автономна</em></h2>
+      <p class="дом-тихо">Возможность предоставлена — путь человек находит сам. Дверь открывается по нити, не по указанию.</p>
+      <nav id="двери" class="двери" aria-label="Двери дома СИНГУЛЯР"></nav>
     </div>
-  </section>
+  </details>
   <script>
-  /* призма на главной рисуется ядром SNG — не картинка */
+  /* ДВЕРИ строит ядро SNG из манифеста (манифест — истина; ноль innerHTML):
+     хаб ·00 — эта страница, остальные 17 узлов — двери лабиринта. */
   (function(){
-    function старт(){ try{ if(window.SNG&&window.SNG.призма){var c=document.getElementById('sngPrism'); if(c) window.SNG.призма(c,{фаза:0.2});} }catch(e){} }
-    if(window.SNG) старт();
-    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',старт); else document.addEventListener('DOMContentLoaded',старт); }
-  })();
-  </script>
-
-  <div class="cards" style="margin:26px 0 0">
-    <div class="card"><div class="t">🎤 СПЕТЬ ОДНОМУ</div><div class="d">СУФЛЁР ·16: подсветка слов, колбаски, счёт и рейтинг. Микрофон по желанию.</div><div class="m">·16 · 73 КБ</div><a class="btn" href="СИНГУЛЯР_16_СУФЛЁР.html">▶ петь</a></div>
-    <div class="card"><div class="t">👨‍👩‍👧 СПЕТЬ ВМЕСТЕ</div><div class="d">СОБЫТИЕ ·18: зал по коду/QR — бабушка, мама, внучка со своих устройств. Голоса P2P, синхронный старт, общая запись.</div><div class="m">·18 · соц-ядро</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ создать зал</a></div>
-    <div class="card"><div class="t">❤️ МОИ ВОСПОМИНАНИЯ</div><div class="d">Живут в браузере: TEMPORARY 7 дней → ❤️ навсегда. Фото, подпись, экспорт webm.</div><div class="m">·18 · IndexedDB</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html#memList">▶ открыть</a></div>
-    <div class="card"><div class="t">🎵 ПЕСНИ И КАТАЛОГ</div><div class="d">Оркестратор ·15: реестр 62×13 с полной системой таблиц (поиск, фасеты, мульти-сорт, выбор+батч, сохранённые виды, экспорт CSV/TSV/JSON, закрепление, плотность, undo/URL-состояние), хор, темп/тональность, импорт/экспорт.</div><div class="m">·15 · 0.8 МБ</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
-  </div>
-
-  <div class="nums">
-    <div class="n"><b>61</b><i>песня канала + флагман ★</i></div>
-    <div class="n"><b>158</b><i>языков (157 YouTube у флагмана)</i></div>
-    <div class="n"><b>24 759</b><i>языковых пар в реестре</i></div>
-    <div class="n"><b>20</b><i>модулей в ОС v1.9</i></div>
-    <div class="n"><b>53/53</b><i>тесты ·15 · ОС 44/44</i></div>
-    <div class="n"><b>0</b><i>внешних сетевых запросов</i></div>
-  </div>
-
-  <h2>Запуск <em>выбери и кликни</em></h2>
-  <div class="cards">
-    <div class="card"><div class="t">УЗЕЛ ·28 ★ NEW</div><div class="d">СУВЕРЕННЫЙ УЗЕЛ — математическая философия автономии владельца вживую: Ŝ = 1_H + λ(I⊗I†). Три слоя — ТОЖДЕСТВО, ПРОЕКТОР, ЛЯМБДА — три работающих холста: буря проходит сквозь, решето фильтрует золото, λ наклоняет холм. Ноль изображений — всё живое.</div><div class="m">50 КБ · автономный файл · 4 модальности</div><a class="btn" href="СИНГУЛЯР_28_УЗЕЛ.html">⬢ открыть</a></div>
-    <div class="card"><div class="t">ФУНДАМЕНТ ·27</div><div class="d">Визуальный канон v3.0 «Ambient OS» от владельца: 15 страниц — Титул, Кристалл шести фасетов, RESONANCE, AURA, LOCAL BRAIN, MESH, VAULT, Spatial Glass, ЖИЗНЬ, Синтез.</div><div class="m">15 визуалов · WebP · 1,3 МБ</div><a class="btn" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">▶ смотреть</a></div>
-    <div class="card"><div class="t">ОС v1.9 — всё сразу</div><div class="d">20 модулей: Платформа, Фабрика, Оркестратор, СУФЛЁР ·16, ЗАЛ ·17, СОБЫТИЕ ·18, ЧЕЛОВЕК ·19, ФОНЕТИКА ·20, ОБЩЕНИЕ ·21, СВЯЗЬ ·22… Консоль команд и горячие клавиши. Скачивается как файл — открой двойным кликом.</div><div class="m">≈45 МБ · release-файл</div><a class="btn" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">⬇ скачать</a></div>
-    <div class="card"><div class="t">ОРКЕСТРАТОР ·15</div><div class="d">Реестр 62×13, хор с слово-подсветкой, темп/тональность, микрофон+реверб, аудит, импорт/экспорт LRC/VTT.</div><div class="m">0.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">▶ открыть</a></div>
-    <div class="card"><div class="t">Флагман ×157 голосов</div><div class="d">«Когда теряем» (OutShadow feat RUVSON): реальные тайминги, 157 переводов YouTube, минусовка ДНК.</div><div class="m">15 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ФАБРИКА ·02</div><div class="d">Генерация песен, конвейер, галактика эмерджентности, слушалка с караоке.</div><div class="m">7.7 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">▶ открыть</a></div>
-    <div class="card"><div class="t">РЕЗОНАНС ·02 ★</div><div class="d">«Когда теряем» ×157 голосов: ДНК 9/9, колесо 157 узлов / 5 колец, аудио 230,9 с, резонанс 6 голосов на t≈25,5 с, караоке стирает слова.</div><div class="m">13.6 МБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ОРГАНИЗМ v0.9</div><div class="d">Живой прототип-эскиз: манифест организма, из которого выросла вся платформа.</div><div class="m">34 КБ · автономный файл</div><a class="btn" href="organism-living-prototype.html">▶ открыть</a></div>
-    <div class="card"><div class="t">СУФЛЁР ·16 ★ NEW</div><div class="d">Оценка вокала UltraStar-стиля: McLeod MPM в AudioWorklet, ноты-«колбаски» с анимацией, HUD Score/Combo/Rating, автогенерация нотной карты из минусовки, Fusion-автосборщик UltraStar .txt (слова ASR × ноты DSP, мелизмы ~), трансляция в зал ·17.</div><div class="m">73 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_16_СУФЛЁР.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ЗАЛ ·17</div><div class="d">P2P двойной экран без сервера: зал показывает слова/колбаски/счёт из ·16 СУФЛЁР, пульт рулит плеером. Плюс air-gapped WebRTC: телефон-микрофон и пульт по QR-коду (свой QR-энкодер, DataChannel, ноль серверов). BroadcastChannel + localStorage-фолбэк.</div><div class="m">60 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_17_ЗАЛ.html">▶ открыть</a></div>
-    <div class="card"><div class="t">СОБЫТИЕ ·18 ★ NEW</div><div class="d">SOCIAL CORE: зал для совместного пения — комната по коду/QR без аккаунтов, голоса WebRTC mesh (Nostr-сигналинг между устройствами / BroadcastChannel для окон одного браузера), синхронный старт по clock-offset, запись микса у каждого, TEMPORARY 7 дней → ❤️ ПАМЯТЬ + GC. v1.13: свой TURN-релей (coturn) за симметричный NAT + честный статус связи (P2P/релей) + политика >5 (бюджет соединений, щадящее кодирование >8).</div><div class="m">105 КБ + библиотека</div><a class="btn" href="СИНГУЛЯР_18_СОБЫТИЕ.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ЧЕЛОВЕК ·19</div><div class="d">Human-First слой: событие одно — каналы разные. Адаптация по возможностям и предпочтениям (без «режимов для типа человека», автоматика отменяется), личность ECDSA P-256 non-exportable на устройстве, мои люди и «позвать спеть» в зал ·18. Сервер связей опционален. Adapter OS v0.2: предпочтения человека питают capability-модель моста.</div><div class="m">40 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ФОНЕТИКА ·20</div><div class="d">Фонетический подсказчик и вокальный гид по ТЗ KARAOKE_TREND: офлайн-романизация любой письменности в латиницу (any-ascii ISC — кириллица, хань, кана, хангыль, деванагари, арабский, иврит, греческий, тайский…), слог-чипы — тап и слушаешь, локальный TTS с медленным темпом для разучивания, мост ·16 СУФЛЁР: текущее и следующие слова песни сами получают подсказку произношения.</div><div class="m">32 КБ + библиотека</div><a class="btn" href="СИНГУЛЯР_20_ФОНЕТИКА.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ОБЩЕНИЕ ·21</div><div class="d">Смысл один — представления разные: человек задаёт, как удобно принимать, система строит канал — текст, Брайль, речь, вибросигнал. Никаких режимов «для слепого/глухого/немого» — только возможности и предпочтения. Голос — личная настройка получателя: конкретный голос устройства, язык, темп, высота, громкость, профили звучания. Живой мост со СВЯЗЬЮ ·22 — представления строятся там, где их принимает человек. Adapter OS v0.2: представления строит реестр адаптеров (6 каналов), ядро — исполнитель и фолбэк; каждый маршрут оставляет конверт смысла в шине. МОЗГ: голосовое управление — команды словаря исполняет правило-слой без модели; свободную речь отвечает локальная модель Qwen2.5-0.5B из соседней репы singulyar-llm (веса качаются один раз по кнопке, живут в кэше браузера; распознавание голоса — Web Speech API, в Chrome звук распознавания уходит на серверы Google — сказано прямо).</div><div class="m">59 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">▶ открыть</a></div>
-    <div class="card"><div class="t">СВЯЗЬ ·22 ★ NEW</div><div class="d">Девять каналов связи поверх зала ·18, личности ·19 и представлений ·21: текст, файл, субтитры, голосовое, озвучка, аудио- и видеозвонок, экран, совместное пение. Недоступный канал не выбрасывает человека — fallback ведёт к базовому «Тексту», выбор человека — выше автоматики. Живой мост ·21⇄·22: входящие тексты зала уходят в ОБЩЕНИЕ на представление, ответ приходит в журнал связи. Звонок (v1.24) ходит и МЕЖДУ УСТРОЙСТВАМИ: факты — события КРИСТАЛЛА, рукопожатие — публичные релеи Nostr, голос/видео — прямой WebRTC со STUN; запечатанный текст (v1.25) — тоже между устройствами, через СВОЁ пространство релеев: по ним едет только шифровка AES-GCM, открытый текст по публичным релеям не ездит; журнал и секреты — только на устройстве. Adapter OS v0.2: транспорт зала — адаптер-канал; смысл зала уходит в шину конвертом, представление строит получатель.</div><div class="m">74 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_22_СВЯЗЬ.html">▶ открыть</a></div>
-    <div class="card"><div class="t">КРУГ ·23 ★ NEW</div><div class="d">Живой круг людей вселенной: 16 людей с весёлыми эмодзи и домашними алиасами, румы (🏠 ПАПА-ДОМ — чат сохраняется ВСЕГДА), личные чаты, аудио- и видеозвонки P2P между устройствами (Nostr-сигналинг + STUN), автоответчики, голосовые сообщения. Короткие имена круга защищены: гости пишут нейтральное слово ПЕРЕД именем («ГОСТЬ МАША»). Ставится как приложение на телефон, планшет, ноутбук и ПК.</div><div class="m">100 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_23_КРУГ.html">▶ открыть</a> <a class="btn ghost" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">⬇ установить</a></div>
-    <div class="card"><div class="t">ПОЧТА ·24 ★ NEW</div><div class="d">Свой ящик у каждого из круга: адрес имя@singulyar, письма P2P между устройствами, подпись ECDSA и шифрование в покое, ящики (входящие/исходящие/черновики/архив/корзина), офлайн-исходящие с автоотправкой, вложения, экспорт EML/JSON, рецепты настоящей своей почты (Stalwart, Mail-in-a-Box, Delta Chat, алиасы) — без вендорской клетки.</div><div class="m">40 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_24_ПОЧТА.html">▶ открыть</a></div>
-    <div class="card"><div class="t">КОШЕЛЁК ·25 ★ NEW</div><div class="d">Тихие переводы без вопросов и уведомлений: бабушка перечислила внучке на пирожок — и никто ни о чём не спрашивал. Append-only журнал с подписью, баланс считается из фактов, ХОТЕЛКИ с молчаливым финансированием, семейные бумажки-токены с подписью эмитента, PIN-замок, честные рецепты своих рельс (Cashu, Fedimint, Lightning, свой банк).</div><div class="m">35 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_25_КОШЕЛЁК.html">▶ открыть</a></div>
-    <div class="card"><div class="t">ЛИНИЯ ·26 ★ NEW</div><div class="d">Свой номер у каждого (00–15, гостям — от устройства), SMS ходят P2P между устройствами без операторов, свои одноразовые коды подтверждения (OTP, TTL 5 минут), честные рецепты СВОЕГО внешнего номера без «добрых дядей»: своя SIM + шлюз-форвардер, свой CPaaS-аккаунт (ключ локально), свой GSM-шлюз.</div><div class="m">35 КБ · автономный файл</div><a class="btn" href="СИНГУЛЯР_26_ЛИНИЯ.html">▶ открыть</a></div>
-  </div>
-
-  <h2 id="модули">Архитектура модулей <em>кто на каком канале говорит</em></h2>
-  <p class="lead">Карта собирается ядром SNG из манифеста модулей — не зашита в разметку:
-  манифест — истина. Шесть модальностей — каналы, на которых человек принимает и отдаёт смысл;
-  каждый модуль честно перечисляет свои — по факту кода, не по обещаниям.</p>
-  <div class="cards bento" id="sngModCards"></div>
-  <script>
-  /* карта модулей строится ядром SNG (манифест — истина) */
-  (function(){
-    function построить(){
+    function двери(){
       try{
-        var SNG=window.SNG; if(!SNG) return;
-        var бокс=document.getElementById('sngModCards'); if(!бокс) return;
+        var SNG=window.SNG; if(!SNG||!SNG.карта) return;
+        var бокс=document.getElementById('двери'); if(!бокс) return;
+        var увидено={};
         SNG.карта().forEach(function(строка){
-          var мод=строка.модальность, мс=строка.модули;
-          var c=document.createElement('div'); c.className='card';
-          var t=document.createElement('div'); t.className='t';
-          t.style.color=мод.цвет; t.textContent=мод.глиф+' '+мод.имя+' · каналов: '+мс.length;
-          var d=document.createElement('div'); d.className='d'; d.textContent=мод.кратко;
-          var список=document.createElement('div'); список.style.cssText='display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px';
-          мс.forEach(function(m){
-            var a=document.createElement('a'); a.href=m.файл;
-            a.style.cssText='font-family:var(--mono);font-size:11.5px;color:#C0C8D0;white-space:nowrap';
-            a.textContent=m.номер+' '+m.имя;
-            список.appendChild(a);
+          строка.модули.forEach(function(m){
+            if(m.файл==='index.html'||увидено[m.файл]) return;
+            увидено[m.файл]=1;
+            var a=document.createElement('a'); a.className='дверь'; a.href=m.файл;
+            var n=document.createElement('i'); n.textContent=m.номер;
+            var s=document.createElement('span'); s.textContent=m.имя;
+            a.appendChild(n); a.appendChild(s);
+            бокс.appendChild(a);
           });
-          c.appendChild(t); c.appendChild(d); c.appendChild(список);
-          бокс.appendChild(c);
         });
       }catch(e){}
     }
-    if(window.SNG) построить();
-    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',построить); else document.addEventListener('DOMContentLoaded',построить); }
+    if(window.SNG) двери();
+    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',двери); else document.addEventListener('DOMContentLoaded',двери); }
   })();
   </script>
 
-  <h2>Каталог вселенной <em>всё разложено по полкам</em></h2>
-  <p class="lead">11 классов, 678 файлов — каждый учтён ровно один раз, числа вычислены из файлов, не зашиты. Полный канонический каталог — <a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</a>, синтез с внешним прототипом — <a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ_HUMAN_RUNTIME.md</a>.</p>
-  <div class="cols">
-    <div class="box"><h3>КЛАССЫ 0–4 · каркас</h3><ul>
-      <li><b>К0 ИНФРАСТРУКТУРА (10)</b> — index, SW v37, manifest, UX-движок, singulyar-modules.js (ядро модулей: манифест 18 узлов, 6 модальностей, живая призма и Кристалл-Шар — такты v1.29–v1.30), singulyar-design-v3.css (мост v3.1), README, ГОТОВНОСТЬ.manifest.json</li>
-      <li><b>К1 СЦЕНА (4)</b> — Флагман ×157 · РЕЗОНАНС · ФАБРИКА · ОРГАНИЗМ</li>
-      <li><b>К2 ДОМ (14 комнат)</b> — ·15 ОРКЕСТРАТОР … ·26 ЛИНИЯ, ·27 ФУНДАМЕНТ, ·28 УЗЕЛ, каждая автономна</li>
-      <li><b>К3 КРИСТАЛЛ (7)</b> — протокол: ядро + схема нормативны (+ отпечаток SHA-256), мосты и КРИПТА — честные надстройки; v1.22: ротация эпох КРИПТЫ, верификация ·19 (hall.join), объявления ротации (hall.epoch); v1.23: звонок как факт (call.signal); v1.24: межустройственный транспорт звонка — публичные релеи Nostr + WebRTC/STUN; v1.25: межустройственный запечатанный текст — своё пространство релеев; v1.25.1: щит — kid из растяжки PBKDF2 600k (оракул фразы устранён), kdf-параметры в печати, читаемость старых печатей, модель угроз THREAT_MODEL_КРИПТА_22.md</li>
-      <li><b>К4 МОЗГ (30)</b> — adapter-os v1.9 (20 модулей) · wllama (WASM-LLM) · singulyar-llm (правила ДОМ+ТАКТ+ВМЕСТИЛИЩЕ, словарь v0.6)</li>
-    </ul></div>
-    <div class="box"><h3>КЛАССЫ 5–9 · тело и доказательства</h3><ul>
-      <li><b>К5 ТРАНСПОРТ (7)</b> — trystero (WebRTC/Nostr) · any-ascii (романизация) · опциональный сервер связей (5 файлов)</li>
-      <li><b>К6 ДАННЫЕ (399)</b> — 322 файла корпусов (61 песня, 157 переводов) + 62 минусовки (61 + дубль флагмана ★) + 15 визуалов ФУНДАМЕНТА (WebP)</li>
-      <li><b>К7 ТЕСТЫ/ИНСТРУМЕНТЫ (63)</b> — 38 тестов + 25 инструментов (Grabber, УСТАНОВЩИК, харнесс); v1.29: тест ядра модулей — манифест, модальности, призма; v1.25.1: сниф websocket-фреймов релея в межустройственном тесте — открытый текст не ездит, SDP/ICE не читаются, kid ≠ быстрый хэш фразы; v1.26: тест слоя ЖИЗНЬ — 16 инвариантов (схема funding, зеркало страница↔funding.json, отсутствие рельсов, governance-граница)</li>
-      <li><b>К8 ДОКУМЕНТЫ (21)</b> — отчёты, мастер-план, THREAT MODEL крипты, инструкции, протокол вывода, синтез, АРХИТЕКТУРА_МОДУЛЕЙ (v1.29); v1.26: слой ЖИЗНЬ — SUSTAINABILITY (governance/funding policy/transparency/grant + funding.json со schema) и честная страница ПОДДЕРЖАТЬ.html без платёжных рельсов</li>
-      <li><b>К9 АРХИВ/ДОКАЗАТЕЛЬСТВА (123)</b> — АРХИВ_V3 (40) + СКРИНШОТЫ 13 папок (83)</li>
-    </ul></div>
-  </div>
-  <div class="box" style="margin-top:20px"><h3>ДЕНЬГИ ·25 — честный статус ВЕБ МАНИ</h3><ul>
-    <li><span class="ok">✓</span> на устройстве сейчас: подписанный append-only журнал, баланс из фактов, тихие переводы, ХОТЕЛКИ, бумажки-токены с подписью эмитента, PIN-замок</li>
-    <li><span class="no">○</span> внешние рельсы (WebMoney, карты, Lightning) — НЕ подключены: в модуле честные рецепты (Cashu, Fedimint, Lightning, свой банк), проводов в коде нет</li>
-    <li><span class="no">○</span> принцип непоколебим: платёжные секреты в репу не входят никогда; статичный GitHub Pages чужие деньги не держит — внешние рельсы только своими ключами на своём хосте</li>
-  </ul></div>
-
-  <h2>Действие <em>две минуты</em></h2>
-  <div class="step"><div class="k">Шаг 1</div><p>Открыть <b>ОРКЕСТРАТОР ·15</b> — откроется ПУЛЬС с честными числами: 61 песня · 447 дорожек · 158 языков · 24 620 строк. Всё посчитано из данных, не зашито.</p></div>
-  <div class="step"><div class="k">Шаг 2</div><p>Вкладка <b>РЕЕСТР</b>: матрица 62×13. Клик по языку в строке песни → караоке. Пустая ячейка «·» — перевода нет, система не притворяется.</p></div>
-  <div class="step"><div class="k">Шаг 3</div><p>Вкладка <b>ХОР</b>: источник — <code>./minus/&lt;videoId&gt;.mp3</code>, свой файл, память браузера, синтез по генам или репетиция. ▶ — пуск. <kbd>Пробел</kbd> — пауза, <kbd>↑/↓</kbd> — строки, <kbd>N</kbd> — режим «не смотреть».</p></div>
-  <div class="step"><div class="k">Шаг 4</div><p>Голос — подстройка: <b>темп ×0.5–1.5</b> и <b>тональность ±6 пт</b> (синтез-режим), включи <b>🎤 микрофон</b> с ревербом. Скоринга нет — эталона в минусовке нет, оценивать нечестно.</p></div>
-  <div class="step"><div class="k">Шаг 5</div><p>Установка как приложения: адресная строка → значок «установить» → значок на рабочем столе. Работает офлайн — сервис-воркер <code>sw15.js</code> уже в комплекте.</p></div>
-  <div class="step"><div class="k">Шаг 6</div><p>Семья в зале: открыть <b>СОБЫТИЕ ·18</b>, создать зал — участникам — QR или код. Голоса идут напрямую между устройствами, запись события остаётся у каждого: 7 дней на решение — ❤️ оставить или забыть.</p></div>
-  <div class="step"><div class="k">Шаг 7</div><p>Настройка: открыть <b>ЧЕЛОВЕК ·19</b> — крупные кнопки, вибрация, уведомления, меньше движения. Всё выключаемо. Там же личность (один раз назвался — ключ остаётся на устройстве) и «мои люди»: позвал спеть — без кодов и QR, если есть сервер связей.</p></div>
-  <div class="step"><div class="k">Шаг 8</div><p>Незнакомый язык: открыть <b>ФОНЕТИКА ·20</b> — строка вставляется, романизация по слогам готова; тап по чипу озвучивает произношение (🐢 медленно — для разучивания). Включи «📡 трансляцию» в ·16 СУФЛЁР — подсказка сама подхватывает слова песни.</p></div>
-  <div class="step"><div class="k">Шаг 9</div><p>Общение без барьеров: открой <b>ОБЩЕНИЕ ·21</b> — одно сообщение дойдёт текстом, шрифтом Брайля, речью или вибросигналом. Голос, которым читают твои сообщения, выбор остаётся за человеком: конкретный голос устройства, язык, темп, высота, громкость — настройка остаётся за человеком, а не за системой.</p></div>
-  <div class="step"><div class="k">Шаг 10</div><p>Держи связь: открой <b>СВЯЗЬ ·22</b> — один код связывает окна, а ссылка ведёт в зал ·18 с тем же кодом. Выбери канал (текст, голосовое, звонок, экран), если канал недоступен — система честно предложит путь вниз до «Текста», не выбрасывая никого из связи. Под связью работает протокольное ядро <b>КРИСТАЛЛ</b>: смысл отделён от представления, канала, транспорта и хранения; доставка подтверждается (ACK), повторная доставка отбрасывается, «временные» сообщения исчезают через 7 дней. <b>КРИПТА v2</b>: фраза зала — и тёрки запечатаны <b>AES-GCM</b> ДО провода и ДО журнала: ключ не покидает память вкладки, у кого фразы нет — видит честное «запечатано». Фраза зала произносится голосом в комнате, как и код зала. <b>Ротация</b>: «🔄 новая эпоха» выводит новый ключ (с новой фразой — честный rekey), «✂ стереть прошлое» выбрасывает старые ключи из памяти вкладки — прошлое для неё навсегда запечатано (честно: это стирание, а не форвард-секретность). <b>Верификация</b>: если на устройстве есть личность из ·19, приветствие подписывается ECDSA — собеседник проверяет подпись и видит честный вердикт, имя подтверждено ключом с устройства или нет. Журнал и записи остаются на устройстве.</p></div>
-  <div class="step"><div class="k">Шаг 11</div><p>КРУГ: открыть <b>КРУГ ·23</b> — один раз выбрано «кто есть кто» (16 людей с эмодзи) — и румы, личные чаты, аудио- и видеозвонки и автоответчики. 🏠 ПАПА-ДОМ — чат, который сохраняется всегда. Приложение ставится штатно на Android, iPhone/iPad, Windows, macOS и Linux — <a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">инструкция установки</a>.</p></div>
-  <div class="step"><div class="k">Шаг 12</div><p>Ящик у каждого: открыть <b>ПОЧТА ·24</b> — адрес <code>имя@singulyar</code> создаётся одним выбором. Письма ходят P2P, ящики только на устройстве, офлайн-письма уйдут сами при встрече устройств. Нужна почта для всего мира — в модуле рецепты своего сервера и алиасов.</p></div>
-  <div class="step"><div class="k">Шаг 13</div><p>Тихий перевод: открыть <b>КОШЕЛЁК ·25</b> — человек, сумма — и всё. Никаких подтверждений и уведомлений: бабушка перечислила внучке на пирожок — и никто ни о чём не спросил. ХОТЕЛКИ закрываются тихо, бумажки-токены передаются как настоящие купюры.</p></div>
-  <div class="step"><div class="k">Шаг 14</div><p>Свои линия и коды: открой <b>ЛИНИЯ ·26</b> — у каждого свой номер, SMS ходят P2P без операторов, свои одноразовые OTP. Для внешнего мира — рецепты своего номера без «добрых дядей»: своя SIM со шлюзом, свой CPaaS-аккаунт, свой GSM-шлюз.</p></div>
-  <p style="margin-top:14px"><a class="btn ghost" href="ИНСТРУКЦИЯ_СТАРТ.md">Полная инструкция →</a> <a class="btn ghost" href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md">Полный отчёт →</a></p>
-
-  <div class="cols" style="margin-top:36px">
-    <div class="box"><h3>ПРОВЕРЕНО (CLAIM → EVIDENCE)</h3><ul>
-      <li><span class="ok">✓</span> проб минусовок батчами по 12 (не «все 61 залпом»)</li>
-      <li><span class="ok">✓</span> «×157» вычисляется: Object.keys(flag.yt).length</li>
-      <li><span class="ok">✓</span> счётчики 62×13/24 759/158 — из данных</li>
-      <li><span class="ok">✓</span> сбой пака → «РЕЕСТР НЕ ЗАГРУЖЕН» + стоп (не тихий пустой UI)</li>
-      <li><span class="ok">✓</span> ноль innerHTML → DOM-XSS исключён (assert сборки)</li>
-      <li><span class="ok">✓</span> нет fetch/XHR/WebSocket/sendBeacon — офлайн доказан</li>
-      <li><span class="ok">✓</span> валидатор таймлайна бракует мусор ДО сортировки</li>
-      <li><span class="ok">✓</span> таблица ·15: ядро 51/51 Node + 43/43 браузер (сорт/фасеты/выбор/экспорт)</li>
-      <li><span class="ok">✓</span> ·18 TURN: инъекция ICE проверена, зал ведущий+гость жив (4/4)</li>
-    </ul></div>
-    <div class="box"><h3>ЧЕСТНО НЕ СДЕЛАНО</h3><ul>
-      <li><span class="no">○</span> стемы (Demucs в браузере) — заменят репетицию</li>
-      <li><span class="no">○</span> forced alignment — пословные тайминги помечены interp</li>
-      <li><span class="no">○</span> тональность для файлов — нужен AudioWorklet (синтез уже умеет)</li>
-      <li><span class="no">○</span> скоринг пения — только после появления эталона</li>
-      <li><span class="no">○</span> переводы LLM: 228/793 — демон добивает восточные</li>
-      <li><span class="no">○</span> SFU для залов >8 — план готов (Galène), нужен сервер с Go; сейчас честно: предупреждение + щадящее кодирование</li>
-      <li><span class="no">○</span> реальный звонок через поднятый coturn — нужен внешний хост (инструкция готова)</li>
-      <li><span class="no">○</span> LRCv2 / Background Fetch / MSE — горизонт v1.2+</li>
-    </ul></div>
-  </div>
-
-  <div class="cols" style="margin-top:20px">
-    <div class="box"><h3>ДАННЫЕ И ИНСТРУМЕНТЫ</h3><ul>
-      <li><a href="ДАННЫЕ/RUVSON_каталог_канала_2026-09-30.xlsx">Каталог канала (xlsx)</a> — 61 видео, 10.18 млн просмотров</li>
-      <li><a href="ДАННЫЕ/RUVSON_ТЕКСТЫ_61_песен_srt_lrc_txt.zip">Тексты 61 песни</a> (srt/lrc/txt)</li>
-      <li><a href="ДАННЫЕ/RUVSON_МНОГОЯЗЫЧНЫЙ_КОРПУС_LRC.zip">Многоязычный корпус LRC</a> + <a href="ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md">индекс</a></li>
-      <li><a href="ДАННЫЕ/флагман_157_языков/INDEX.md">157 переводов флагмана</a> (srt/txt)</li>
-      <li><a href="АРХИВ_V3/README.txt">АРХИВ_V3</a> — полная система сборки: исходник ·01, деливераблы, parts/, data/ (AUDIO_B64), скрипты, варианты ·03–·07, worklog</li>
-      <li><a href="СКРИНШОТЫ/РЕЗОНАНС_02/СИНГУЛЯР_02_резонанс.png">Превью РЕЗОНАНС</a> — резонанс, колесо, ORGANISM_hero, генплан</li>
-      <li><a href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md">RUVSON Grabber</a> — userscript вытягивания с YouTube</li>
-      <li><a href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md">Установщик Windows</a> (bat/ps1)</li>
-      <li><a href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md">СИСТЕМАТИЗАЦИЯ ВСЕЛЕННОЙ v1.30.0</a> — канонический каталог: 11 классов, 678 файлов, каждый учтён один раз; паутина ссылок проверяется машиной (ИНСТРУМЕНТЫ/check_links.py)</li>
-      <li><a href="ДОКУМЕНТЫ/АРХИТЕКТУРА_МОДУЛЕЙ.md">АРХИТЕКТУРА_МОДУЛЕЙ v1.0</a> — модель дома: модуль, 6 модальностей, манифест ядра SNG, мультимодальность как отличитель (такт v1.29.0)</li>
-      <li><a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">ПОДДЕРЖАТЬ СИНГУЛЯР (слой ЖИЗНЬ)</a> — честная страница устойчивости: прототип без платёжных рельсов, активация — решение человека; GOVERNANCE защищает проект от захвата деньгами</li>
-      <li><a href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md">SUSTAINABILITY-слой</a> — правила денег: GOVERNANCE (S01–S10), FUNDING_POLICY, TRANSPARENCY (evidence-уровни), GRANT_READINESS, funding.json + schema</li>
-      <li><a href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md">THREAT MODEL крипты ·22</a> — модель угроз из кода (v1.25.1): активы, противники, честные границы</li>
-      <li><a href="ДОКУМЕНТЫ/СВОЙ_БАНК_НА_ЛАДОНИ.md">СВОЙ БАНК НА ЛАДОНИ (ЛАДОНЬ · чертёж)</a> — банк у каждого, не у дядь: 12 вееров сети, 8 рабочих практик, 5 слоёв, план v1.27; деньги не включены — активация решает человек</li>
-      <li><a href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md">СИНТЕЗ HUMAN_RUNTIME</a> — разбор внешнего прототипа: что взяли (след, memory.decide, провенанс), что уважили, что не взяли и почему</li>
-      <li><a href="ГОТОВНОСТЬ.manifest.json">ГОТОВНОСТЬ.manifest.json</a> — машиночитаемый честный статус: что production, что prototype, что честно не сделано</li>
-    </ul></div>
-    <div class="box"><h3>ДОКУМЕНТЫ</h3><ul>
-      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md">ОТЧЁТ_ПОЛНЫЙ — вся хронология, инвентарь, доказательства</a></li>
-      <li><a href="ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md">·18 TURN и большие залы: coturn одной командой, политика >5, честный SFU-план</a></li>
-      <li><a href="server/README.md">SINGULAR SERVER v1 — сервер связей: личность, люди, приглашения, записи 7 дней, GC</a></li>
-      <li><a href="ИНСТРУКЦИЯ_СТАРТ.md">ИНСТРУКЦИЯ_СТАРТ — начал действовать за 2 минуты</a></li>
-      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md">Трассировка: ревизия ·14 → код → тесты</a></li>
-      <li><a href="ДОКУМЕНТЫ/ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md">Ответ ·15 на ревизию (v1.0)</a></li>
-      <li><a href="ДОКУМЕНТЫ/МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md">Мастер-план 157 языков</a></li>
-      <li><a href="ДОКУМЕНТЫ/СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md">Стратегия v1</a></li>
-      <li><a href="СКРИНШОТЫ/ОРКЕСТРАТОР_15/s15_04_choir.png">Скриншоты-доказательства</a> (3 папки)</li>
-    </ul></div>
-  </div>
-
-  <footer>SINGULYAR · RUVSON · сборка v1.30.0 «КРИСТАЛЛ · РЕБРЕНДИНГ» от 2026-10-05 · офлайн-first, accessibility-first, provenance-first<br>
-  ⬢ модульная мультимодальная архитектура: ядро SNG (манифест 18 узлов · 6 модальностей · живая призма и Кристалл-Шар), модульная бирка на каждой странице, УЗЕЛ ·28 без единой картинки · титул по канону ФУНДАМЕНТА: Spatial Glass, золотое ядро, орбиты · ⚙ шестерёнка на всех 18 страницах следит машина (check_gear.py) · облик v1.30 «КРИСТАЛЛ» на базе v1.28 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО» · AURA · ФУНДАМЕНТ ·27</footer>
+  <footer>SINGULYAR · RUVSON · сборка v1.31.0 «НИТЬ АРИАДНЫ» от 2026-10-05 · офлайн-first · титул по канону ФУНДАМЕНТА: только Кристалл, пустое поле, 0 изображений · нить ведёт в дом — путь человек находит сам</footer>
 </main>
 <script>
 /* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
