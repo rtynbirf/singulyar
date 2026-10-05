@@ -1,6 +1,22 @@
 /*!
- * SINGULYAR UX ENGINE v9.0 «ПОД КАПОТ» · такт v1.32.0 «ОСКОЛКИ»
- * Наследник v8.0-final. Главное изменение по слову владельца:
+ * SINGULYAR UX ENGINE v9.1 «СВОБОДА ВЫБОРА» · такт v1.32.1
+ * Наследник v9.0 «ПОД КАПОТ» (тот — наследник v8.0-final).
+ * Главное изменение по слову владельца:
+ *   «А ГДЕ ТОГДА СИСТЕМНЫЕ? … МАЛО ЛИ ЧТО У НЕГО В ПКМ — СКОПИРОВАТЬ,
+ *    ОТПРАВИТЬ, ПОДЕЛИТЬСЯ… ТЫ ЖЕ О ЛЮДЯХ ДУМАТЬ ДОЛЖЕН ВСЕГДА В ПЕРВУЮ
+ *    ОЧЕРЕДЬ. ПЕРЕДЕЛАЙ БУДЬ ЛАСКА.»
+ *
+ * ЧТО ИЗМЕНИЛОСЬ В v9.1:
+ *  - нативное меню браузера ЖИВЁТ ВЕЗДЕ: копировать/отправить/поделиться/
+ *    перевести не отнимаются ни на одной странице (глобальный перехват снят);
+ *  - МЕНЮ ДОМА открывается только на НАШИХ объектах:
+ *      ПКМ по кристаллу (лицо) · ПКМ по тихой ручке ⌇ (комнаты) ·
+ *      долгое касание кристалла/ручки (экраны без ПКМ) · клавиша S;
+ *  - ручка ⌇ — стекло и золото, глиф канона; живёт в правом нижнем углу
+ *    комнат, на лице её нет — там дверью служит сам кристалл;
+ *  - ложный клик после долгого касания гасится (кристалл не дёргается).
+ *
+ * ПРЕДЫДУЩИЙ ПРИКАЗ (v9.0), ОСТАЮЩИЙСЯ В СИЛЕ:
  *   «ШЕСТЕРЁНКУ СДЕЛАТЬ ПОД КАПОТ: НА ГЛАВНОЙ СТРАНИЦЕ ПРЯМО ПКМ (ПРАВОЙ
  *   КНОПКОЙ МЫШИ) ПО … ВЫПАДАЮЩЕЕ МЕНЮ = СПИСОК, ВСЁ ПЕРЕДЕЛАТЬ ПОД
  *   КРИСТАЛЬНО ЕДИНЫЙ СТИЛЬ. НЕ НАДО ЛЕПИТЬ КОЛХОЗ!!!!»
@@ -8,7 +24,7 @@
  * ЧТО ИЗМЕНИЛОСЬ ОТНОСИТЕЛЬНО v8:
  *  - висячая кнопка-шестерёнка УДАЛЕНА с лица всех комнат (была чужеродным
  *    телом на канонном лице: чёрный void, стекло, золото — и вдруг гайка);
- *  - ПКМ (contextmenu) в любом месте комнаты открывает МЕНЮ ДОМА — список
+ *  - [v9.0, отменено в v9.1] ПКМ в любом месте открывал меню — глобальный
  *    в кристальном стиле: тёмное матовое стекло, тонкая светлая рамка,
  *    золото — единственный акцент, моно-шрифт дома;
  *  - эмодзи выжжены из всех надписей движка (только глифы канона: ⬢ ⌇ ◈ ⤳ ¶):
@@ -26,7 +42,7 @@
 
     // ── 0. Защита от повторного подключения ──
     if (window.__SINGULYAR_UX_ENGINE__) return;
-    window.__SINGULYAR_UX_ENGINE__ = 'v9.0-капот';
+    window.__SINGULYAR_UX_ENGINE__ = 'v9.1-свобода';
 
     // ── 1. Безопасное хранилище (file:// и приватные режимы могут кидать) ──
     var STORE_KEY = 'SINGULYAR_UX_V8';      // ключ прежний — настройки людей не теряются
@@ -99,8 +115,22 @@
           'white-space:pre-line;display:none;color:var(--sux-hi,#F0D78C);',
           'background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.22)}',
         '#sux-status.err{color:#ff6b83;background:rgba(255,59,92,.10);border-color:rgba(255,59,92,.30)}',
-        '@media (prefers-reduced-motion: reduce){#sux-menu{transition:none!important;animation:none!important}}',
-        '@media print{#sux-menu{display:none!important}}'
+        '@media (prefers-reduced-motion: reduce){#sux-menu,#sux-handle{transition:none!important;animation:none!important}}',
+
+        // ручка ⌇ — тихая дверь меню дома для комнат (на лице её нет — там кристалл)
+        '#sux-handle{position:fixed;right:14px;bottom:14px;z-index:2147483000;width:40px;height:40px;margin:0;padding:0;',
+          'border-radius:50%;display:flex;align-items:center;justify-content:center;',
+          'font:17px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
+          'color:var(--sux-accent,#D4AF37);background:var(--sux-panel,rgba(10,12,16,.82));',
+          'border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:pointer;',
+          'box-shadow:0 10px 28px rgba(0,0,0,.45),inset 0 1px 0 rgba(240,240,248,.08);',
+          'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);',
+          'opacity:.62;transition:opacity .2s ease,border-color .2s ease,transform .12s ease}',
+        '#sux-handle:hover,#sux-handle:focus-visible{opacity:1;border-color:rgba(212,175,55,.55);color:var(--sux-hi,#F0D78C)}',
+        '#sux-handle:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:3px}',
+        '#sux-handle:active{transform:scale(.94)}',
+        '#crystalButton{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}',
+        '@media print{#sux-menu,#sux-handle{display:none!important}}'
     ].join('');
 
     var styleEl = document.createElement('style');
@@ -208,7 +238,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'index.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'index.html';
     });
-    item('·', 'сборка v1.32.0 · ОСКОЛКИ', function () {}, { мертв: true });
+    item('·', 'сборка v1.32.1 · СВОБОДА ВЫБОРА', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);
@@ -351,14 +381,78 @@
 
     var lastFocus = null;
 
-    // ── 8. ПКМ = МЕНЮ ДОМА. Нигде не лезем в чужие выделения/поля — список один на комнату ──
-    document.addEventListener('contextmenu', function (e) {
-        var тег = e.target && e.target.tagName;
-        if (тег === 'INPUT' || тег === 'TEXTAREA' || e.target.isContentEditable) return; // правка текста не отнимать
+    // ── 8. ПКМ: СВОБОДА ВЫБОРА (слово владельца: «ТЫ ЖЕ О ЛЮДЯХ ДУМАТЬ ДОЛЖЕН
+    //        ВСЕГДА В ПЕРВУЮ ОЧЕРЕДЬ»). Нативное меню браузера живёт ВЕЗДЕ —
+    //        копировать, отправить, поделиться, перевести не отнимаем ни у кого.
+    //        МЕНЮ ДОМА открывается только на НАШИХ объектах:
+    //          · ПКМ по кристаллу (лицо) или по тихой ручке ⌇ (комнаты);
+    //          · долгое касание кристалла/ручки — путь экранов без ПКМ;
+    //          · клавиша S — прежний путь, никуда не делся.
+
+    var гаситьКлик = false;
+    /* флаг живёт ровно один жест: любое новое касание/клавиша сбрасывает его —
+       застревать после Esc или между жестами он не имеет права */
+    window.addEventListener('pointerdown', function () { гаситьКлик = false; }, true);
+    window.addEventListener('keydown', function () { гаситьКлик = false; }, true);
+    window.addEventListener('click', function (e) {
+        if (!гаситьКлик) return;
+        var т = e.target;
+        if (!(т && т.closest && т.closest('#crystalButton, #sux-handle'))) return;
+        гаситьКлик = false;
         e.preventDefault();
-        lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
-        openMenu(e.clientX, e.clientY);
-    });
+        e.stopImmediatePropagation();
+    }, true);
+
+    function нашОбъект(узел) {
+        if (!узел) return;
+        узел.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            гаситьКлик = true;
+            lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
+            openMenu(e.clientX, e.clientY);
+        });
+        /* долгое касание (экраны без ПКМ): 550 мс без движения — меню дома */
+        var таймер = null, sx = 0, sy = 0;
+        узел.addEventListener('pointerdown', function (e) {
+            if (e.pointerType === 'mouse') return;
+            sx = e.clientX; sy = e.clientY;
+            if (таймер) clearTimeout(таймер);
+            таймер = setTimeout(function () {
+                таймер = null;
+                гаситьКлик = true;
+                lastFocus = null;
+                openMenu(e.clientX, e.clientY);
+            }, 550);
+        });
+        узел.addEventListener('pointermove', function (e) {
+            if (!таймер) return;
+            if (Math.hypot(e.clientX - sx, e.clientY - sy) > 12) { clearTimeout(таймер); таймер = null; }
+        });
+        ['pointerup', 'pointercancel'].forEach(function (имя) {
+            узел.addEventListener(имя, function () {
+                if (таймер) { clearTimeout(таймер); таймер = null; }
+            });
+        });
+    }
+
+    нашОбъект(document.getElementById('crystalButton'));
+
+    /* тихая ручка ⌇ для комнат (на лице её нет — там сам кристалл — дверь) */
+    (function () {
+        if (document.getElementById('crystalButton')) return;
+        var ручка = el('button', {
+            id: 'sux-handle', type: 'button',
+            'aria-label': 'Меню дома СИНГУЛЯР',
+            title: 'МЕНЮ ДОМА · ПКМ здесь, долгое касание или клавиша S'
+        }, '⌇');
+        document.body.appendChild(ручка);
+        нашОбъект(ручка);
+        ручка.addEventListener('click', function () {
+            if (гаситьКлик) return;
+            lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
+            toggleMenu(null, null);
+        });
+    })();
 
     // Клик мимо — закрыть (ожидаемое поведение списков)
     document.addEventListener('pointerdown', function (e) {
@@ -571,7 +665,7 @@
 
     // ── 14. Публичный API ──
     window.SingulyarUX = {
-        version: '9.0-капот',
+        version: '9.1-свобода',
         open: function () { openMenu(window.innerWidth - 356, 64); },
         openAt: openMenu,
         close: function () { closeMenu(true); },
@@ -588,5 +682,5 @@
     };
 
     подписи();
-    console.log('SINGULYAR UX Engine v9.0 «ПОД КАПОТ»: шестерёнки нет — ПКМ открывает меню дома. S — меню, C — кристалл, N — нить, Esc — закрыть/домой.');
+    console.log('SINGULYAR UX Engine v9.1 «СВОБОДА ВЫБОРА»: системное ПКМ свободно везде; меню дома — ПКМ по кристаллу/ручке ⌇ или клавиша S. C — кристалл, N — нить, Esc — закрыть/домой.');
 })();
