@@ -26,8 +26,9 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
    стеклянном пьедестале, титул, подчёрк, девиз, три тезиса — живой холст ── */
 #crystalTitle{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(18px,3.5vh,40px) 16px clamp(16px,3vh,32px);border:0;background:none}
 #crystalTitle img{width:min(500px,88vw);height:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
-/* защитный сброс: картина висит в void без подложки кнопки — даже если css дома не дошёл */
-#crystalButton{appearance:none;background:none;border:0;padding:0;border-radius:0;display:block}
+/* защитный сброс: картина висит в void без подложки кнопки — даже если css дома не дошёл;
+   position:relative — якорь живой канвы разлёта (осколки летят и за край кнопки) */
+#crystalButton{appearance:none;background:none;border:0;padding:0;border-radius:0;display:block;position:relative;overflow:visible}
 .sng-crystal-title{margin:14px 0 6px;font-family:Georgia,'Times New Roman','PT Serif',serif;font-weight:400;font-size:clamp(34px,7vw,58px);border:0;line-height:1.08;letter-spacing:.10em;background:linear-gradient(180deg,#F8FAFE 0%,#CDD3DE 52%,#8E97A6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
 .aio-sub{color:#B9C0CC;letter-spacing:.30em;text-transform:uppercase;font-family:Georgia,'Times New Roman',serif;font-size:clamp(12px,1.7vw,16px)}
 /* подчёрк хозяина: золотая нить с алмазом — подпись дома (как в макете) */
@@ -79,6 +80,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
             aria-label="Кристалл SINGULYAR — рассыпать на двери дома">
       <img id="crystalHero" src="./КРИСТАЛЛ.png" alt="" aria-hidden="true">
     </button>
+    <p class="тихо-подсказка" id="статусОсколков" aria-live="polite">коснись кристалла — рассыплется на двери дома</p>
     <div id="осколкиСлой" class="осколки-слой" hidden></div>
     <h2 class="sng-crystal-title" style="margin-top:6px">SINGULYAR</h2>
     <p class="aio-sub">Ambient Intent Organism</p>
@@ -108,7 +110,10 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   </details>
   <script>
   /* ДВЕРИ строит ядро SNG из манифеста (манифест — истина; ноль innerHTML).
-     Нить под капотом: на лице её нет — движок дома открывает по нити. */
+     Нить под капотом: на лице её нет — движок дома открывает по нити.
+     ЖИВОЙ КРИСТАЛЛ: здесь же подключается движок осколков — клик по шару,
+     шар разлетается, двери дома встают на орбиты («ОСКОЛКИ РАЗЛЕТАТСЯ,
+     ФУНКЦИИ ПОЯВЛЯТСЯ»). Без движка лицо остаётся целой картиной. */
   (function(){
     function двери(){
       try{
@@ -128,8 +133,23 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
         });
       }catch(e){}
     }
-    if(window.SNG) двери();
-    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',двери); else document.addEventListener('DOMContentLoaded',двери); }
+    function осколки(){
+      try{
+        var SNG=window.SNG; if(!SNG||!SNG.осколки||SNG.осколкиДвижок) return;
+        var кнопка=document.getElementById('crystalButton');
+        var слой=document.getElementById('осколкиСлой');
+        if(!кнопка||!слой||слой.dataset.осколки) return;
+        SNG.осколкиДвижок=SNG.осколки({
+          кнопка: кнопка,
+          слой: слой,
+          канвас: document.getElementById('crystalHero'),
+          статус: document.getElementById('статусОсколков')
+        });
+      }catch(e){}
+    }
+    function обе(){ двери(); осколки(); }
+    if(window.SNG) обе();
+    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',обе); else document.addEventListener('DOMContentLoaded',обе); }
   })();
   </script>
 </main>
