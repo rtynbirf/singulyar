@@ -6,7 +6,7 @@
 <title>SINGULYAR — Ambient Intent Organism</title>
 <meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар рассыпается на 18 дверей-осколков — куда человек поставил, там и стоит. Один файл · ноль интернета · 100% суверенитет.">
 <meta name="theme-color" content="#0A0A0C">
-<meta name="sng-build" content="v1.38.0 · СВОБОДА · 2026-10-06">
+<meta name="sng-build" content="v1.39.0 · ЖИВАЯ НИТЬ · 2026-10-06">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -62,6 +62,9 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .дверь{font-family:var(--mono);font-size:12.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-block}
 .дверь i{font-style:normal;color:var(--teal);margin-right:7px}
 .дверь:hover{border-color:rgba(212,175,55,.55);color:#F0D78C}
+/* ЖИВАЯ НИТЬ: пройденная дверь светится золотом — память пути, не замок (Human-First) */
+.дверь.пройдена{border-color:rgba(212,175,55,.50);color:#F0D78C;background:rgba(212,175,55,.05)}
+.дверь.пройдена i{color:#F0D78C}
 @media (prefers-reduced-motion: reduce){
   .нить-линия{animation:none}
   .нить[open] #дом{animation:none}
@@ -111,26 +114,34 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   <script>
   /* ДВЕРИ строит ядро SNG из манифеста (манифест — истина; ноль innerHTML).
      Нить под капотом: на лице её нет — движок дома открывает по нити.
-     ЖИВОЙ КРИСТАЛЛ: здесь же подключается движок осколков — клик по шару,
-     шар разлетается, двери дома встают на орбиты («ОСКОЛКИ РАЗЛЕТАТСЯ,
-     ФУНКЦИИ ПОЯВЛЯТСЯ»). Без движка лицо остаётся целой картиной. */
+     ЖИВАЯ НИТЬ (v1.39.0): пройденные двери светятся золотом, счёт пути —
+     в шапке дома. Визиты пишет само ядро при загрузке каждой комнаты. */
   (function(){
     function двери(){
       try{
         var SNG=window.SNG; if(!SNG||!SNG.карта) return;
         var бокс=document.getElementById('двери'); if(!бокс) return;
         var увидено={};
+        var визиты=SNG.визиты?SNG.визиты():{};
         SNG.карта().forEach(function(строка){
           строка.модули.forEach(function(m){
             if(m.файл==='index.html'||увидено[m.файл]) return;
             увидено[m.файл]=1;
             var a=document.createElement('a'); a.className='дверь'; a.href=m.файл;
+            if(визиты[m.id]) a.classList.add('пройдена');
             var n=document.createElement('i'); n.textContent=m.номер;
             var s=document.createElement('span'); s.textContent=m.имя;
             a.appendChild(n); a.appendChild(s);
             бокс.appendChild(a);
           });
         });
+        /* живой счёт: сколько дверей человек уже касался (хаб — лицо, не дверь) */
+        var пройдено=0;
+        SNG.модуль.forEach(function(m){ if(m.id!=='хаб'&&визиты[m.id]) пройдено++; });
+        if(пройдено>0){
+          var em=бокс.parentNode&&бокс.parentNode.querySelector('h2 em');
+          if(em) em.textContent='18 дверей · каждая автономна · пройдено '+пройдено;
+        }
       }catch(e){}
     }
     function осколки(){

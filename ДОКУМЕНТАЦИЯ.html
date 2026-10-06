@@ -71,10 +71,13 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
   </details>
 
   <h2>Архитектура и модули <em>как устроено внутри</em></h2>
-  <details><summary>Документы об устройстве дома <small>14 документов — от модулей до угроз</small></summary>
+  <details><summary>Документы об устройстве дома <small>17 документов — от модулей до угроз</small></summary>
     <div class="тело">
       <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_МОДУЛЕЙ.md" title="Архитектура модулей: как комнаты связаны и на чём держатся"><b>АРХИТЕКТУРА_МОДУЛЕЙ.md</b><span>карта модулей: кто на ком стоит, где границы</span></a>
       <a class="строка" href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md" title="Систематизация вселенной: полный реестр сущностей и связей"><b>СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</b><span>полный реестр вселенной: сущности и связи</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СВОД_ЗАКОНОВ.md" title="Свод законов дома I-01..I-10: закон живёт в коде и доказывается тестом (машиночитаемая копия — рядом .json)"><b>СВОД_ЗАКОНОВ.md</b><span>свод законов дома: инварианты I-01..I-10, каждый доказан тестом</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME_v2.md" title="Синтез Human Runtime v2: 39 пунктов ТЗ старших товарищей — разобраны и сворены с кодом"><b>СИНТЕЗ_HUMAN_RUNTIME_v2.md</b><span>синтез v2: 39/39 пунктов внешнего ТЗ — что взято, что честно отклонено</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ЖИВАЯ_НИТЬ.md" title="Живая нить: связи дверей и память пути — идея внешней ИИ, воплощённая в каноне дома"><b>ЖИВАЯ_НИТЬ.md</b><span>нить как маршрут: связи дверей в манифесте, линии между осколками, визиты</span></a>
       <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_22_СВЯЗЬ.md" title="Архитектура связи ·22: шифрование, каналы, звонки"><b>АРХИТЕКТУРА_22_СВЯЗЬ.md</b><span>связь ·22: каналы, шифры, звонки</span></a>
       <a class="строка" href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md" title="Модель угроз крипты ·22: что защищаем и от кого"><b>THREAT_MODEL_КРИПТА_22.md</b><span>модель угроз крипты ·22: что защищаем и от кого</span></a>
       <a class="строка" href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md" title="Синтез Human Runtime: человек в центре исполнения"><b>СИНТЕЗ_HUMAN_RUNTIME.md</b><span>Human Runtime: человек — центр исполнения</span></a>
@@ -102,7 +105,7 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
   <details><summary>Ядро дома <small>5 файлов — весь движок вселенной</small></summary>
     <div class="тело">
       <a class="строка" href="index.html" title="Лицо дома: кристалл на пьедестале — живой холст, ноль картинок"><b>index.html</b><span>лицо дома: кристалл ·00, осколки, нить Ариадны</span></a>
-      <a class="строка" href="singulyar-modules.js" title="Ядро модулей: кристалл, осколки, карта дверей — с подробными комментариями"><b>singulyar-modules.js</b><span>ядро SNG: кристалл, осколки, карта 17 дверей</span></a>
+      <a class="строка" href="singulyar-modules.js" title="Ядро модулей: кристалл, осколки, связи дверей, карта — с подробными комментариями"><b>singulyar-modules.js</b><span>ядро SNG: кристалл, осколки, живая нить, карта 18 дверей</span></a>
       <a class="строка" href="singulyar-ux-engine-v9.js" title="UX-движок: подсказки везде, меню дома, перетаскивание, доступность"><b>singulyar-ux-engine-v9.js</b><span>движок v9: подсказки везде, меню дома, таскающиеся кнопки</span></a>
       <a class="строка" href="singulyar-design-v3.css" title="Дизайн-система: void + стекло + золото, темы, доступность"><b>singulyar-design-v3.css</b><span>дизайн-система дома: void, стекло, золото</span></a>
       <a class="строка" href="sw15.js" title="Сервис-воркер: офлайн-кеш дома — cache-first"><b>sw15.js</b><span>сервис-воркер: дом живёт офлайн</span></a>
@@ -113,6 +116,7 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
   <details><summary>Тесты <small>17 наборов — запускается командой node файл</small></summary>
     <div class="тело">
       <a class="строка" href="ИНСТРУМЕНТЫ/test_modules_logic.js" title="Тест логики ядра модулей"><b>test_modules_logic.js</b><span>логика ядра модулей</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_svyazi_niti.js" title="Тест ЖИВОЙ НИТИ: связи дверей, память пути"><b>test_svyazi_niti.js</b><span>живая нить: связи, визиты, путь</span></a>
       <a class="строка" href="ИНСТРУМЕНТЫ/test_bridge_logic.js" title="Тест логики моста"><b>test_bridge_logic.js</b><span>логика моста</span></a>
       <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_logic.js" title="Тест логики СУФЛЁРА ·16"><b>test_s16_logic.js</b><span>логика ·16 СУФЛЁР</span></a>
       <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_golden_voice.js" title="Тест золотого голоса ·16"><b>test_s16_golden_voice.js</b><span>золотой голос ·16</span></a>
