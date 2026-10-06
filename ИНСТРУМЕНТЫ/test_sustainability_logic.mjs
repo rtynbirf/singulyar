@@ -149,9 +149,11 @@ test('ПОДДЕРЖАТЬ.html: зеркало данных == funding.json (у
 });
 
 test('ПОДДЕРЖАТЬ.html: автономна офлайн — без внешних ресурсов и сети', () => {
-  assert.equal(/<script[^>]+src=/i.test(СТРАНИЦА), false, 'внешних скриптов нет');
+  /* v1.37.0: локальный скрипт движка (шестерёнка — закон дома) разрешён;
+     запрещены только ВНЕШНИЕ ресурсы и сетевые вызовы */
+  assert.equal(/<script[^>]+src=["']https?:/i.test(СТРАНИЦА), false, 'внешних скриптов нет');
   assert.equal(/<link[^>]+href="https?:/i.test(СТРАНИЦА), false, 'внешних стилей нет');
-  assert.equal(/<(img|iframe|source|embed)[^>]+src=/i.test(СТРАНИЦА), false, 'внешних медиа нет');
+  assert.equal(/<(img|iframe|source|embed)[^>]+src=["']https?:/i.test(СТРАНИЦА), false, 'внешних медиа нет');
   assert.equal(/fetch\(|XMLHttpRequest|import\(/.test(СТРАНИЦА), false, 'сетевых вызовов нет');
   assert.match(СТРАНИЦА, /person_chooses|PERSON CHOOSES/i, 'принцип на странице');
 });
