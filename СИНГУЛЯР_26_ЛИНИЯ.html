@@ -127,7 +127,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <div class="logo">S·26</div>
   <div><b>ЛИНИЯ</b><span>свой номер · SMS P2P · свои OTP</span></div>
   <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
-  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипНомер">нет линии</small></span></button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">⬡</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипНомер">нет линии</small></span></button>
 </div></header>
 
 <main class="wrap">
@@ -142,7 +142,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <h2 class="сек">Номера круга · 16</h2>
   <div class="люди" id="людскаяСетка"></div>
   <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
-  <p class="note" style="margin-top:10px">📞 ведёт в КРУГ ·23 — там живут аудио- и видеозвонки P2P с автоответчиками. SMS и OTP живут здесь. Гостям номер выдаётся от устройства — короткие номера круга защищены.</p>
+  <p class="note" style="margin-top:10px">⌇ ведёт в КРУГ ·23 — там живут аудио- и видеозвонки P2P с автоответчиками. SMS и OTP живут здесь. Гостям номер выдаётся от устройства — короткие номера круга защищены.</p>
 </section>
 
 <!-- ═════════ SMS ═════════ -->
@@ -150,7 +150,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <h2 class="сек">Диалоги</h2>
   <div class="диалоги" id="диалогиСписок"></div>
   <div class="ряд-кнопок">
-    <button class="кноп осн" id="btnНовыйСмс">✏️ новое SMS</button>
+    <button class="кноп осн" id="btnНовыйСмс">¶ новое SMS</button>
     <button class="кноп" id="btnСмсОбновить">↻ добрать историю</button>
   </div>
   <p class="note" style="margin-top:10px">Внутренние SMS идут напрямую между устройствами (P2P, шифрование транспорта) — без операторов, без серверов, без очередей «добрых дядей». Внешние SMS — свои рельсы, см. вкладку Я.</p>
@@ -163,14 +163,14 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <div class="поле"><label for="otpКому">Кому выдаёшь (имя круга или номер)</label><input id="otpКому" placeholder="ЖЕНЯ или 04"></div>
     <div class="поле"><label for="otpЗачем">Зачем (записка, увидит получатель)</label><input id="otpЗачем" placeholder="подтверди перевод"></div>
     <div class="ряд-кнопок" style="margin-top:0">
-      <button class="кноп осн" id="otpВыдать">🔑 выдать код</button>
+      <button class="кноп осн" id="otpВыдать">§ выдать код</button>
     </div>
     <div class="код-карта" id="otpКодКарта" hidden>
       <div class="цифры" id="otpКодЭл">——</div>
       <p class="note" id="otpКодЗаметка"></p>
       <div class="ряд-кнопок" style="justify-content:center">
-        <button class="кноп" id="otpОтправитьСмс">✉️ послать по SMS</button>
-        <button class="кноп" id="otpСкопировать">📋 скопировать</button>
+        <button class="кноп" id="otpОтправитьСмс">⬆ послать по SMS</button>
+        <button class="кноп" id="otpСкопировать">¶ скопировать</button>
       </div>
     </div>
   </div>
@@ -194,7 +194,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
   <h2 class="сек">Внешний номер — без добрых дядей · лучшие практики</h2>
   <p class="note" style="margin-bottom:10px">Внутренняя линия выше работает уже сейчас. Для SMS/звонков с внешним миром номер должен принадлежать ТЕБЕ. Рабочие пути 2025–2026:</p>
-  <details class="рец"><summary>📱 Путь 1 · своя SIM/eSIM + телефон как шлюз (приватнее всего)</summary>
+  <details class="рец"><summary>⤳ Путь 1 · своя SIM/eSIM + телефон как шлюз (приватнее всего)</summary>
     <ol>
       <li>Свой номер на своей SIM (или eSIM — второй «пустой» тариф под подтверждения).</li>
       <li>На Android — приложение-форвардер (например, «SMS Forwarder» из Play Market): пришедшее SMS уходит <b>webhook'ом на ТВОЙ адрес</b> (твой сервер, свой endpoint, или в СИНГУЛЯР через мост).</li>
@@ -202,7 +202,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     </ol>
     <p class="пимечт">Номер твой, SMS приходят тебе, провайдер-«дядя» исключён из чтения твоих сообщений (кроме самого оператора связи — от этого защищает только e2e-мессенджер).</p>
   </details>
-  <details class="рец"><summary>🏢 Путь 2 · свой CPaaS-аккаунт (виртуальный номер по API)</summary>
+  <details class="рец"><summary>⬣ Путь 2 · свой CPaaS-аккаунт (виртуальный номер по API)</summary>
     <ol>
       <li>Регистрируешь СВОЙ аккаунт у провайдера: <b>Telnyx</b> (дешевле: SMS ~$0.003–0.0085/шт), <b>Twilio</b> (экосистема богаче, ~$0.05/шт US), <b>Vonage</b>, <b>46elks</b> (ЕС).</li>
       <li>Покупаешь виртуальный номер на СВОЙ аккаунт — он твой, номер портабелен.</li>
@@ -211,7 +211,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     </ol>
     <p class="пимечт">Ключ — твой, номер — твой, счёт — твой. Никаких «общих сервисов приёма SMS», где твой номер видят незнакомцы.</p>
   </details>
-  <details class="рец"><summary>🛰 Путь 3 · свой GSM-шлюз (полная автономия)</summary>
+  <details class="рец"><summary>⌇ Путь 3 · свой GSM-шлюз (полная автономия)</summary>
     <ol>
       <li>Raspberry Pi / любой мини-ПК + GSM-модем (SIM800/SIM7600) + своя SIM.</li>
       <li><b>Gammu</b>/<b>SMSTools</b> — приём/отправка SMS, экспорт в файл/HTTP — твой собственный SMS-центр.</li>
@@ -219,7 +219,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     </ol>
     <p class="пимечт">Разово ~2–4 тыс ₽ на железо — и ни одна SMS не проходит через чужие руки. Лучший вариант для семьи.</p>
   </details>
-  <details class="рец"><summary>🧪 Путь 4 · свои OTP вместо чужих SMS</summary>
+  <details class="рец"><summary>◇ Путь 4 · свои OTP вместо чужих SMS</summary>
     <ol>
       <li>Внутри СИНГУЛЯРА подтверждения уже ходят по внутренней линии (вкладка OTP) — без внешних номеров вообще.</li>
       <li>Для внешних регистраций — почтовые алиасы (ПОЧТА ·24, Путь 3) вместо телефона там, где сервис позволяет.</li>
@@ -230,8 +230,8 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <div class="поле"><label for="внешНомер">Внешний номер (просто запомнить здесь — локально на устройстве)</label><input id="внешНомер" placeholder="+7 900 000-00-00"></div>
     <div class="поле"><label for="внешWebhook">Мой webhook для приёма SMS (URL моего шлюза/сервера — тоже только локально)</label><input id="внешWebhook" placeholder="https://мой-сервер/sms-in"></div>
     <div class="ряд-кнопок" style="margin-top:0">
-      <button class="кноп осн" id="btnСохранитьВнешнее">💾 запомнить локально</button>
-      <button class="кноп опас" id="btnСтеретьВнешнее">✖ стереть</button>
+      <button class="кноп осн" id="btnСохранитьВнешнее">⬇ запомнить локально</button>
+      <button class="кноп опас" id="btnСтеретьВнешнее">✕ стереть</button>
     </div>
     <p class="note" style="margin-top:8px" id="внешнееСтатус">Честно: связь со своим шлюзом из этой страницы заработает, когда твой webhook будет доступен и разрешит CORS — это твоя инфраструктура, подключается без нас.</p>
   </div>
@@ -240,7 +240,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <div class="panel">
     <div class="ряд-кнопок">
       <button class="кноп" id="btnЭкспортJSON">⬇ экспорт SMS/OTP (JSON)</button>
-      <button class="кноп опас" id="btnСтеретьВсё">🗑 стереть все SMS и коды</button>
+      <button class="кноп опас" id="btnСтеретьВсё">✕ стереть все SMS и коды</button>
     </div>
   </div>
 
@@ -252,10 +252,10 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
 <!-- ═════════ ВКЛАДКИ ═════════ -->
 <nav class="tabs" role="tablist" aria-label="Разделы ЛИНИИ">
-  <button id="tab-line" aria-selected="true" aria-controls="v-line"><span class="и">☎️</span>ЛИНИЯ</button>
-  <button id="tab-sms" aria-selected="false" aria-controls="v-sms"><span class="и">💬</span>SMS<span class="bdg" id="бейджСмс" hidden>0</span></button>
-  <button id="tab-otp" aria-selected="false" aria-controls="v-otp"><span class="и">🔑</span>OTP</button>
-  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🛰</span>Я</button>
+  <button id="tab-line" aria-selected="true" aria-controls="v-line"><span class="и">⌇</span>ЛИНИЯ</button>
+  <button id="tab-sms" aria-selected="false" aria-controls="v-sms"><span class="и">¶</span>SMS<span class="bdg" id="бейджСмс" hidden>0</span></button>
+  <button id="tab-otp" aria-selected="false" aria-controls="v-otp"><span class="и">§</span>OTP</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">⌇</span>Я</button>
 </nav>
 
 <!-- ═════════ SMS-ЧАТ ═════════ -->
@@ -263,7 +263,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <div class="карта чат-карта">
     <div class="chat-шапка">
       <button id="смсНазад" aria-label="Назад" style="font-size:22px;padding:4px 8px">←</button>
-      <span class="ав" id="смсАв">👤</span>
+      <span class="ав" id="смсАв">⬡</span>
       <div style="flex:1;min-width:0"><b id="смсИмя">…</b><small id="смсПодзаг" class="note" style="display:block">…</small></div>
     </div>
     <div class="msg-лента" id="смсЛента" aria-live="polite"></div>
@@ -304,6 +304,16 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   СИНГУЛЯР ·26 «ЛИНИЯ» v1.0 · свой номер у каждого · SMS P2P без операторов · свои одноразовые OTP · рецепты своих внешних рельс (своя SIM + шлюз, свой CPaaS, GSM-модем) · данные только на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
 </div></footer>
 <script>
+
+/* ЛЕГЕНДА ГЛИФОВ (такт v1.41.0 «ТКАНЬ»): Атари-пиктограммы выкурены —
+   профили, сохранённые до такта, читаются по этой карте, и эмодзи больше
+   не возвращается на сайт (слово владельца: «ЭТО НЕ АТАРИ С ПИКТОГРАММАМИ»). */
+const ЛЕГЕНДА_ГЛИФОВ = {'🎩':'◇','🌸':'◈','⚡':'⌇','🦊':'∿','🎧':'◉','🐣':'✦','🌻':'⬡','🌙':'◐','🚀':'⤳','🍓':'∞','🐺':'⬣','🎨':'○','🐻':'¶','🦋':'§','🐰':'⌂','🤖':'⬢','👵':'◇','👩':'◈','👧':'✦','🧑':'⬡','🧓':'◉','👨':'⬣','👦':'⤳','🙂':'⬡','👤':'⬡','👥':'○','🏠':'⌂','🎤':'◉','☕':'○','📣':'¶','💬':'¶','📮':'◇','👛':'◇','☎':'⌇','📞':'⌇','🎥':'◈','📷':'◈','🎙':'◉','🎵':'♪','📡':'⌇','📱':'⤳','📋':'¶','✏':'¶','📎':'◈','📤':'⬆','🗑':'✕','🔒':'§','🧪':'◇','🗒':'¶','🔥':'✕','✅':'✓','⭐':'◇','🔶':'◈'};
+function канонГлиф(г, запасной) {
+  if (г && ЛЕГЕНДА_ГЛИФОВ[г]) return ЛЕГЕНДА_ГЛИФОВ[г];
+  if (typeof г === 'string' && г.length === 1) return г;   /* глиф канона — пропустить */
+  return запасной !== undefined ? запасной : '◇';
+}
 /* ═══════════════════════════════════════════════════════════════════
    СИНГУЛЯР ·26 «ЛИНИЯ» v1.0 — номера, SMS P2P, свои OTP.
    Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
@@ -316,22 +326,22 @@ const VERSION = '1.0.0';
 
 /* ── 1 · РЕЕСТР КРУГА (как в ·23) ── */
 const РЕЕСТР = [
-  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'] },
-  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'] },
-  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
-  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
-  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
-  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
-  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[] },
-  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[] },
-  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[] },
-  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[] },
-  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[] },
-  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[] },
-  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[] },
-  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[] },
-  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[] },
-  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[] }
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'⬢', алиасы:['РУВСОН'] },
+  { id:'pasha',   имя:'ПАША',   эмодзи:'◇', алиасы:['Я','ПАПА','ДЕД'] },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'◈', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⌇', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'∿', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'◉', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
+  { id:'masha1',  имя:'МАША',   эмодзи:'✦', алиасы:[] },
+  { id:'natasha', имя:'НАТАША', эмодзи:'⬡', алиасы:[] },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'◐', алиасы:[] },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'⤳', алиасы:[] },
+  { id:'masha2',  имя:'МАША',   эмодзи:'∞', алиасы:[] },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'⬣', алиасы:[] },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'○', алиасы:[] },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'¶', алиасы:[] },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'§', алиасы:[] },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'⌂', алиасы:[] }
 ];
 /* номер = двузначный индекс реестра (00–15) */
 const НОМЕРА = {};
@@ -553,12 +563,12 @@ function рендерЛиния(){
     const н = НОМЕРА[ч.id];
     const это_я = Я && номер === н;
     const ряд = эл('div', { class:'person' }, [
-      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('span', { class:'ав', text:канонГлиф(ч.эмодзи, '◇') }),
       эл('b', { text:ч.имя + (это_я ? ' (ты)' : '') }),
       эл('span', { class:'номер-чип', text:красивыйНомер(н) }),
       эл('div', { class:'ряд' }, [
-        эл('button', { title:'SMS', onclick:function(){ открытьСмсДиалог(н); } }, [ т('💬') ]),
-        эл('a', { href:'СИНГУЛЯР_23_КРУГ.html', title:'звонки — в КРУГЕ ·23' }, [ т('📞') ])
+        эл('button', { title:'SMS', onclick:function(){ открытьСмсДиалог(н); } }, [ т('¶') ]),
+        эл('a', { href:'СИНГУЛЯР_23_КРУГ.html', title:'звонки — в КРУГЕ ·23' }, [ т('⌇') ])
       ])
     ]);
     холд.appendChild(ряд);
@@ -578,7 +588,7 @@ function рендерДиалоги(){
     const ч = человекПоНомеру(д.номер);
     const непрочит = СМС.filter(function(с){ return с.кому === номер && с.от === д.номер && !с.прочитано; }).length;
     const карточка = эл('button', { class:'диалог', onclick:function(){ открытьСмсДиалог(д.номер); } }, [
-      эл('span', { class:'ав', text:ч ? ч.эмодзи : '👤' }),
+      эл('span', { class:'ав', text:канонГлиф(ч && ч.эмодзи, '⬡') }),
       эл('div', { class:'тело' }, [
         эл('b', { text:(ч ? ч.имя + ' ' : '') + красивыйНомер(д.номер) }),
         эл('span', { class:'превью', text:(д.последнее.от === номер ? 'ты: ' : '') + д.последнее.текст.slice(0, 60) })
@@ -603,12 +613,12 @@ function рендерОТП(){
   активные.forEach(function(в){
     const осталось = Math.ceil((в.ts + ОТП_TTL - Date.now()) / 60000);
     холд.appendChild(эл('div', { class:'диалог' }, [
-      эл('span', { class:'ав', text:'🔑' }),
+      эл('span', { class:'ав', text:'§' }),
       эл('div', { class:'тело' }, [
         эл('b', { style:'font-family:var(--mono);letter-spacing:.2em', text:в.код }),
         эл('small', { class:'note', text:'кому: ' + в.кому + (в.зачем ? ' · ' + в.зачем : '') + ' · истекает через ' + осталось + ' мин' })
       ]),
-      эл('button', { class:'кноп опас', text:'✖', 'aria-label':'отозвать код', onclick:function(){
+      эл('button', { class:'кноп опас', text:'✕', 'aria-label':'отозвать код', onclick:function(){
         ОТП_ВЫДАННЫЕ = ОТП_ВЫДАННЫЕ.filter(function(x){ return x !== в; }); сохраниОТП(); рендерОТП();
       } })
     ]));
@@ -618,11 +628,11 @@ function рендерЯЧип(){
   const номер = мойНомер(Я);
   if (Я) {
     const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
-    $('яЧипАв').textContent = ч ? ч.эмодзи : '👤';
+    $('яЧипАв').textContent = канонГлиф(ч && ч.эмодзи, '⬡');
     $('яЧипИмя').textContent = Я.имя;
     $('яЧипНомер').textContent = номер ? красивыйНомер(номер) : '';
   } else {
-    $('яЧипАв').textContent = '👤';
+    $('яЧипАв').textContent = '⬡';
     $('яЧипИмя').textContent = 'кто ты?';
     $('яЧипНомер').textContent = 'нет линии';
   }
@@ -637,13 +647,13 @@ function рендерЯ(){
   const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
   const внешнее = лсЧитай('singular.line.v1.external', null);
   холд.appendChild(эл('div', {}, [
-    эл('b', { text:(ч ? ч.эмодзи : '👤') + ' ' + Я.имя }),
+    эл('b', { text:канонГлиф(ч && ч.эмодзи, '⬡') + ' ' + Я.имя }),
     эл('div', { class:'note', text:'номер линии: ' + красивыйНомер(мойНомер(Я)) }),
     эл('small', { class:'note', style:'display:block', text:'внешний номер: ' + (внешнее && внешнее.номер ? внешнее.номер : 'не задан (свои рельсы — рецепты ниже)') }),
     эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId })
   ]));
   const м = $('модулиСсылки'); м.textContent = '';
-  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_23_КРУГ.html','👥 КРУГ ·23 (звонки)'],['СИНГУЛЯР_24_ПОЧТА.html','📮 ПОЧТА ·24'],['СИНГУЛЯР_25_КОШЕЛЁК.html','👛 КОШЕЛЁК ·25'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+  [['index.html','⌂ Главная ·00'],['СИНГУЛЯР_23_КРУГ.html','○ КРУГ ·23 (звонки)'],['СИНГУЛЯР_24_ПОЧТА.html','◇ ПОЧТА ·24'],['СИНГУЛЯР_25_КОШЕЛЁК.html','◇ КОШЕЛЁК ·25'],['СИНГУЛЯР_22_СВЯЗЬ.html','⌇ СВЯЗЬ ·22'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','⤳ Установка PWA']].forEach(function(п){
     м.appendChild(эл('a', { href:п[0], text:п[1] }));
   });
   if (внешнее) {
@@ -664,7 +674,7 @@ function открытьСмсДиалог(номер){
   if (!Я) { открытьИдентОвер(); return; }
   открытыйНомер = номер;
   const ч = человекПоНомеру(номер);
-  $('смсАв').textContent = ч ? ч.эмодзи : '👤';
+  $('смсАв').textContent = канонГлиф(ч && ч.эмодзи, '⬡');
   $('смсИмя').textContent = красивыйНомер(номер);
   $('смсПодзаг').textContent = ч ? 'внутренняя линия · P2P' : 'гостевая линия · P2P';
   рендерЛенту();
@@ -751,7 +761,7 @@ $('otpСкопировать').addEventListener('click', function(){
 $('otpПроверить').addEventListener('click', function(){
   const рез = проверьКод(ОТП_ВЫДАННЫЕ, $('otpВвод').value, Date.now());
   const ст = $('otpСтатус');
-  if (!рез.ok) { ст.textContent = '✖ ' + рез.причина; ст.className = 'status err'; return; }
+  if (!рез.ok) { ст.textContent = '✕ ' + рез.причина; ст.className = 'status err'; return; }
   ОТП_ВЫДАННЫЕ[рез.инд].использован = true;
   сохраниОТП();
   $('otpВвод').value = '';
@@ -793,7 +803,7 @@ function принялПакет(д){
       const с = д.с;
       if (!валидныйСмс(с).ok) return;
       if (Я && с.кому !== мойНомер(Я)) return; /* чужие SMS не беру */
-      if (добавитьСмс(с)) тост('💬 SMS от ' + красивыйНомер(с.от));
+      if (добавитьСмс(с)) тост('¶ SMS от ' + красивыйНомер(с.от));
       break;
     }
     case 'hist-req': сетьРазошли('hist', { мс:СМС.slice(-200) }); break;
@@ -847,7 +857,7 @@ function открытьИдентОвер(){
       this.setAttribute('aria-pressed','true');
       $('идентВвод').value = '';
       $('идентСтатус').textContent = '';
-    } }, [эл('span', { class:'ав', text:ч.эмодзи }), эл('b', { text:ч.имя })]));
+    } }, [эл('span', { class:'ав', text:канонГлиф(ч.эмодзи, '◇') }), эл('b', { text:ч.имя })]));
   });
   $('идентОвер').classList.add('on');
 }
@@ -855,7 +865,7 @@ $('идентГотово').addEventListener('click', function(){
   const выбр = $('идентСетка').getAttribute('data-выбор');
   const ч = выбр ? РЕЕСТР.find(function(x){ return x.имя === выбр; }) : null;
   if (ч) {
-    сохраниЛичность({ имя:ч.имя, эмодзи:ч.эмодзи, тип:'свой', deviceId: deviceIdМой() });
+    сохраниЛичность({ имя:ч.имя, эмодзи:канонГлиф(ч.эмодзи, '◇'), тип:'свой', deviceId: deviceIdМой() });
     $('идентОвер').classList.remove('on');
     тост('линия выдана: ' + красивыйНомер(мойНомер(Я)));
     сетьЗапусти(); рендерВсё();
@@ -868,7 +878,7 @@ $('идентГотово').addEventListener('click', function(){
     if (слова.length >= 2) рез = собериСПрефиксом(слова[0], слова.slice(1).join(' '));
   }
   if (!рез.ok) { $('идентСтатус').textContent = рез.причина + ' · попробуй: «ГОСТЬ ' + норм(ввод) + '»'; $('идентСтатус').className = 'status err'; return; }
-  сохраниЛичность({ имя:рез.имя, эмодзи:'👤', тип:'гость', deviceId: deviceIdМой() });
+  сохраниЛичность({ имя:рез.имя, эмодзи:'⬡', тип:'гость', deviceId: deviceIdМой() });
   $('идентОвер').classList.remove('on');
   тост('линия выдана: ' + красивыйНомер(мойНомер(Я)));
   сетьЗапусти(); рендерВсё();

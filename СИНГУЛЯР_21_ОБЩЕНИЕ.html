@@ -822,7 +822,7 @@ try {
     const сказать = б('button', { id: 'мозг-сказать', class: 'btn', type: 'button', text: 'сказать', onclick: function () { обработать(ввод.value); ввод.value = ''; } });
     ввод.addEventListener('keydown', function (e) { if (e.key === 'Enter') { обработать(ввод.value); ввод.value = ''; } });
     const загрузить = б('button', { id: 'мозг-загрузить', class: 'btn gray', type: 'button', text: 'загрузить модель (≈469 МБ, один раз)', onclick: function () { начатьЗагрузку(); } });
-    const микрофон = б('button', { id: 'мозг-микрофон', class: 'btn gray', type: 'button', text: '🎙 голос', onclick: function () {
+    const микрофон = б('button', { id: 'мозг-микрофон', class: 'btn gray', type: 'button', text: '◉ голос', onclick: function () {
       логМозг('микрофон', 'слушаю…');
       речь.listen({ onResult: function (т) { ввод.value = т; обработать(т); }, onError: function (о) { логМозг('микрофон', String(о)); } });
     } });

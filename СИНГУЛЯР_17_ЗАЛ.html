@@ -84,7 +84,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
 
 <main class="wrap">
   <h1>Открой <em>два окна</em> — зал увидит песню</h1>
-  <p class="lead">Это окно — большой экран зала. В ·16 «СУФЛЁР» включи галочку «📡 в зал» — слова, колбаски
+  <p class="lead">Это окно — большой экран зала. В ·16 «СУФЛЁР» включи галочку «⌇ в зал» — слова, колбаски
   и счёт полетят сюда без единого сервера (BroadcastChannel, фолбэк — localStorage). Из этого окна можно
   рулить плеером СУФЛЁРА кнопками пульта. Телевизор с браузером = экран зала; ноутбук/телефон = сцена.</p>
 
@@ -119,17 +119,17 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
   <h2>Демо <em>проверка зала без СУФЛЁРА</em></h2>
   <div class="panelbox">
     <div class="row">
-      <button class="btn ghost" id="btnDemo">🎬 тест-демо (синтетический источник)</button>
+      <button class="btn ghost" id="btnDemo">◇ тест-демо (синтетический источник)</button>
       <button class="btn gray" id="btnDemoOff" disabled>⏹ выключить демо</button>
     </div>
     <p class="hint">Демо имитирует источник: поток STATE с нотами, счётом и словами. Так проверяют зал на одном
     устройстве — второе окно с «ЗАЛом» должно оживить в ту же секунду.</p>
   </div>
 
-  <h2>📱 Телефон = микрофон и пульт <em>air-gapped WebRTC · SQ1-SQ2 · по ТЗ KARAOKE_TREND</em></h2>
+  <h2>⤳ Телефон = микрофон и пульт <em>air-gapped WebRTC · SQ1-SQ2 · по ТЗ KARAOKE_TREND</em></h2>
   <div class="panelbox">
     <div class="row">
-      <button class="btn" id="btnP2pHost">⚡ создать пару с телефоном</button>
+      <button class="btn" id="btnP2pHost">⌇ создать пару с телефоном</button>
       <span class="p2p-state wait" id="p2pState">канал: —</span>
     </div>
     <div id="p2pHostBox" style="display:none">
@@ -139,15 +139,15 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
           <p class="hint">1) Наведи камеру телефона на QR — откроется эта же страница ·17 в режиме микрофона
           (нужен https-сайт или один Wi-Fi). 2) Телефон покажет <b>код-ответ</b> — вставь его ниже или отсканируй камерой ПК.</p>
           <textarea class="code" id="p2pOfferOut" readonly aria-label="код-оффер"></textarea>
-          <button class="btn gray" id="btnP2pCopy">📋 скопировать оффер</button>
+          <button class="btn gray" id="btnP2pCopy">¶ скопировать оффер</button>
         </div>
       </div>
       <div class="row">
         <textarea class="code" id="p2pAnswerIn" placeholder="вставь сюда код-ответ с телефона (SQ1.…)" aria-label="код-ответ"></textarea>
       </div>
       <div class="row">
-        <button class="btn" id="btnP2pAccept">🔗 соединить по ответу</button>
-        <button class="btn ghost" id="btnP2pScan">📷 сканировать ответ камерой ПК</button>
+        <button class="btn" id="btnP2pAccept">⌇ соединить по ответу</button>
+        <button class="btn ghost" id="btnP2pScan">◈ сканировать ответ камерой ПК</button>
         <video id="p2pScanVideo" playsinline muted style="display:none;max-width:240px;border-radius:10px"></video>
       </div>
     </div>
@@ -158,7 +158,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
 
   <div class="status" id="hallStatus" role="status" aria-live="polite">
     <b>Как соединить:</b> 1) открой этот файл/страницу во втором окне или на ТВ;
-    2) в ·16 СУФЛЁР включи «📡 в зал»; 3) этот экран оживёт. На сайте (https) работает всегда;
+    2) в ·16 СУФЛЁР включи «⌇ в зал»; 3) этот экран оживёт. На сайте (https) работает всегда;
     на file:// — Chrome обычно да, Firefox/Safari изолируют file-вкладки (тогда запускай локальный
     сервер: <code>python -m http.server</code>).
   </div>
@@ -173,7 +173,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
 </main>
 
 <div id="phonePanel" role="dialog" aria-label="Телефон-микрофон">
-  <h2>📱 Телефон зала <em id="phStatus">соединение…</em></h2>
+  <h2>⤳ Телефон зала <em id="phStatus">соединение…</em></h2>
   <div id="phSong" style="font-family:var(--mono);color:var(--teal2);text-align:center;font-size:13px">—</div>
   <div class="pw" id="phWord">…</div>
   <div class="pnext" id="phRating"></div>
@@ -184,13 +184,13 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
   </div>
   <div class="plevel"><div id="phLevel"></div></div>
   <div class="row" style="margin-top:8px">
-    <button class="btn" id="phMic">🎤 микрофон</button>
+    <button class="btn" id="phMic">◉ микрофон</button>
     <button class="btn gray" id="phMicOff" disabled>стоп</button>
   </div>
   <div id="phAnswerBox" style="display:none;margin-top:12px">
     <p class="hint"><b>Шаг 2.</b> Скопируй код-ответ на экран зала (вставь в поле «соединить по ответу»):</p>
     <textarea class="code" id="phAnswerOut" readonly aria-label="код-ответ"></textarea>
-    <div class="row"><button class="btn gray" id="phAnswerCopy">📋 скопировать код-ответ</button></div>
+    <div class="row"><button class="btn gray" id="phAnswerCopy">¶ скопировать код-ответ</button></div>
   </div>
   <h2>Пульт <em>команды на экран зала</em></h2>
   <div class="premote">
@@ -628,7 +628,7 @@ class HallRenderer {
         this.el.stConn.className = s.live() ? 'live' : 'waiting';
         this.el.stScore.textContent = String(s.score).padStart(6, '0');
         this.el.stCombo.textContent = '×' + s.combo;
-        this.el.stMic.textContent = s.pitch && s.pitch.midi ? (s.pitch.src === 'p2p' ? '📱 нота ' + s.pitch.midi : 'нота ' + s.pitch.midi) : (s.live() ? 'тихо' : '—');
+        this.el.stMic.textContent = s.pitch && s.pitch.midi ? (s.pitch.src === 'p2p' ? '⤳ нота ' + s.pitch.midi : 'нота ' + s.pitch.midi) : (s.live() ? 'тихо' : '—');
         this.el.stMsgs.textContent = String(this.msgCount);
         this.el.songtitle.textContent = 'песня: ' + (s.song || '—') + (s.live() ? (s.playing ? ' · ▶ играет' : ' · ⏸ пауза') : ' · ожидание');
         /* слова */
@@ -750,7 +750,7 @@ class HallApp {
         const setSt = (txt, cls) => { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); };
         this.p2p = new HallP2P({
             onOpen: () => {
-                setSt('канал: 🟢 телефон подключён', 'open');
+                setSt('канал: ● телефон подключён', 'open');
                 document.getElementById('phStatus').textContent = 'связь есть';
                 /* хост шлёт компактный STATE телефону 4 Гц */
                 this.p2pTimer = setInterval(() => {
@@ -833,7 +833,7 @@ class HallApp {
             tick();
         } catch (e) {
             v.style.display = 'none';
-            this.setP2pHint('📷 ' + e.message);
+            this.setP2pHint('◈ ' + e.message);
         }
     }
     setP2pHint(msg) {
@@ -905,7 +905,7 @@ class HallApp {
             };
             src.connect(this.node);   /* НЕ в destination — фидбэка нет */
             micBtn.disabled = true; document.getElementById('phMicOff').disabled = false;
-            st.textContent = '🎤 поёшь — ноты летят в зал';
+            st.textContent = '◉ поёшь — ноты летят в зал';
         } catch (e) {
             const code = e && e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED' : e && e.name === 'NotFoundError' ? 'S15_DEVICE_MISSING' : 'S15_MIC_ERROR';
             st.textContent = '[' + code + '] ' + e.message;

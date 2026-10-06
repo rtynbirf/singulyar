@@ -144,7 +144,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   <div class="logo">S·24</div>
   <div><b>ПОЧТА</b><span>свой ящик у каждого · письма P2P</span></div>
   <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
-  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">👤</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипАдрес">нет ящика</small></span></button>
+  <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">⬡</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипАдрес">нет ящика</small></span></button>
 </div></header>
 
 <main class="wrap">
@@ -158,7 +158,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
   <h2 class="сек">Быстрое действие</h2>
   <div class="ряд-кнопок" style="margin-top:0">
-    <button class="осн" id="btnНаписать">✏️ написать</button>
+    <button class="осн" id="btnНаписать">¶ написать</button>
     <button class="тих" id="btnОбновить">↻ добрать историю</button>
     <button class="тих" id="btnВсеПрочитано">✓ всё прочитано</button>
   </div>
@@ -184,9 +184,9 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <div class="вложения" id="вложения"></div>
     <div class="ряд-кнопок">
       <button class="осн" id="btnОтправить">➤ отправить</button>
-      <button class="тих" id="btnЧерновик">📝 в черновики</button>
-      <button class="тих" id="btnВложение">📎 вложение</button>
-      <button class="тих" id="btnОчистить">✖ очистить</button>
+      <button class="тих" id="btnЧерновик">¶ в черновики</button>
+      <button class="тих" id="btnВложение">◈ вложение</button>
+      <button class="тих" id="btnОчистить">✕ очистить</button>
     </div>
     <input type="file" id="файлВложение" hidden>
     <p class="note" style="margin-top:10px">Письмо подписывается твоим ключом и уходит P2P — напрямую адресату, без почтовых серверов. Пока адресат офлайн, письмо ждёт в «Исходящих» и уйдёт при встрече устройств. Вложение — до 512 КБ.</p>
@@ -200,7 +200,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
   <h2 class="сек">СВОЯ почта настоящая — лучшие практики · без вендорской клетки</h2>
   <p class="note" style="margin-bottom:10px">Ящик выше живёт в сети СИНГУЛЯРА (P2P). Если нужна почта для всего остального мира — она тоже должна быть ТВОЯ: свой домен, свой сервер или свой существующий ящик с шифрованием. Ниже — рабочие пути 2025–2026, выбирай по силам.</p>
-  <details class="рец"><summary>🏠 Путь 1 · свой почтовый сервер (полная автономия)</summary>
+  <details class="рец"><summary>⌂ Путь 1 · свой почтовый сервер (полная автономия)</summary>
     <ol>
       <li><b>Stalwart</b> (Rust, всё-в-одном: SMTP+IMAP+JMAP, веб-админка) — самый современный, лёгкий: <a href="https://stalw.art" rel="noopener" target="_blank">stalw.art</a></li>
       <li><b>Mail-in-a-Box</b> — «нажал и работает» на Ubuntu: DNS, SPF, DKIM, webmail: <a href="https://mailinabox.email" rel="noopener" target="_blank">mailinabox.email</a></li>
@@ -208,21 +208,21 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     </ol>
     <p class="пимечт">Нужен: свой домен (~200–900 ₽/год), VPS с портом 25 открытым и чистым IP. DNS-записи (MX, SPF, DKIM, DMARC) сервер настроит и подскажет сам. После подъёма — у каждого из круга может быть свой ящик на ТВОЁМ домене: pasha@твой-домен, anya@твой-домен…</p>
   </details>
-  <details class="рец"><summary>🔒 Путь 2 · свой существующий ящик + шифрование (без сервера)</summary>
+  <details class="рец"><summary>§ Путь 2 · свой существующий ящик + шифрование (без сервера)</summary>
     <ol>
       <li><b>Delta Chat</b> — мессенджер поверх обычной почты: подключает ТВОЙ существующий ящик (любого провайдера), письма шифруются Autocrypt/OpenPGP, выглядит как чат: <a href="https://delta.chat" rel="noopener" target="_blank">delta.chat</a></li>
       <li>Thunderbird + OpenPGP — классика на ноутбук/ПК.</li>
     </ol>
     <p class="пимечт">Никакого своего сервера: IMAP/SMTP делает твой почтовый провайдер, ключи — только у тебя. Это путь «свой ящик сегодня вечером».</p>
   </details>
-  <details class="рец"><summary>🎭 Путь 3 · алиасы вместо настоящего адреса (приватность)</summary>
+  <details class="рец"><summary>◐ Путь 3 · алиасы вместо настоящего адреса (приватность)</summary>
     <ol>
       <li><b>addy.io</b> (ex-AnonAddy) и <b>SimpleLogin</b> (Proton) — генераторы алиасов: письма на алиас падают в твой настоящий ящик, продавец алиаса не знает настоящий адрес.</li>
       <li>Свой домен + catch-all — алиасы без лимитов: купил домен, всё что угодно@твой-домен — уже твой.</li>
     </ol>
     <p class="пимечт">Правило гигиены: каждому сервису — свой алиас; спам? отключил алиас — и его больше нет.</p>
   </details>
-  <details class="рец"><summary>🧾 Путь 4 · мост СИНГУЛЯР ⇄ настоящая почта (честный статус)</summary>
+  <details class="рец"><summary>¶ Путь 4 · мост СИНГУЛЯР ⇄ настоящая почта (честный статус)</summary>
     <ol>
       <li>Браузер не умеет SMTP/IMAP — порты закрыты везде и всеми, это не «наша» граница, а закон браузеров.</li>
       <li>Мост работает так: поднимаешь Путь 1 или ставишь Delta Chat (Путь 2) — и передаёшь письма через <b>экспорт EML</b> (кнопка ниже в письме) / импорт.</li>
@@ -236,7 +236,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <p class="note" id="границаТекст">Ящики хранятся только на устройстве (IndexedDB, шифрование в покое твоим ключом). Серверу СИНГУЛЯРА не достаётся ни письма, ни адресной книги — его и нет. Экспорт — право человека.</p>
     <div class="ряд-кнопок">
       <button class="тих" id="btnЭкспортJSON">⬇ экспорт всего (JSON)</button>
-      <button class="опас" id="btnСтеретьВсё">🗑 стереть все письма</button>
+      <button class="опас" id="btnСтеретьВсё">✕ стереть все письма</button>
     </div>
   </div>
 
@@ -248,9 +248,9 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
 <!-- ═════════ ВКЛАДКИ ═════════ -->
 <nav class="tabs" role="tablist" aria-label="Разделы ПОЧТЫ">
-  <button id="tab-mail" aria-selected="true" aria-controls="v-mail"><span class="и">📮</span>ЯЩИК<span class="bdg" id="бейджВсего" hidden>0</span></button>
-  <button id="tab-compose" aria-selected="false" aria-controls="v-compose"><span class="и">✏️</span>НАПИСАТЬ</button>
-  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">🔑</span>ЯЩИК-Я</button>
+  <button id="tab-mail" aria-selected="true" aria-controls="v-mail"><span class="и">◇</span>ЯЩИК<span class="bdg" id="бейджВсего" hidden>0</span></button>
+  <button id="tab-compose" aria-selected="false" aria-controls="v-compose"><span class="и">¶</span>НАПИСАТЬ</button>
+  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">§</span>ЯЩИК-Я</button>
 </nav>
 
 <!-- ═════════ ЧТЕНИЕ ПИСЬМА ═════════ -->
@@ -279,6 +279,16 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   СИНГУЛЯР ·24 «ПОЧТА» v1.0 · свой ящик у каждого · подпись ECDSA + шифрование в покое · P2P-доставка (Nostr-сигналинг) + мост вкладок одного браузера · офлайн-исходящие · экспорт EML/JSON · данные только на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
 </div></footer>
 <script>
+
+/* ЛЕГЕНДА ГЛИФОВ (такт v1.41.0 «ТКАНЬ»): Атари-пиктограммы выкурены —
+   профили, сохранённые до такта, читаются по этой карте, и эмодзи больше
+   не возвращается на сайт (слово владельца: «ЭТО НЕ АТАРИ С ПИКТОГРАММАМИ»). */
+const ЛЕГЕНДА_ГЛИФОВ = {'🎩':'◇','🌸':'◈','⚡':'⌇','🦊':'∿','🎧':'◉','🐣':'✦','🌻':'⬡','🌙':'◐','🚀':'⤳','🍓':'∞','🐺':'⬣','🎨':'○','🐻':'¶','🦋':'§','🐰':'⌂','🤖':'⬢','👵':'◇','👩':'◈','👧':'✦','🧑':'⬡','🧓':'◉','👨':'⬣','👦':'⤳','🙂':'⬡','👤':'⬡','👥':'○','🏠':'⌂','🎤':'◉','☕':'○','📣':'¶','💬':'¶','📮':'◇','👛':'◇','☎':'⌇','📞':'⌇','🎥':'◈','📷':'◈','🎙':'◉','🎵':'♪','📡':'⌇','📱':'⤳','📋':'¶','✏':'¶','📎':'◈','📤':'⬆','🗑':'✕','🔒':'§','🧪':'◇','🗒':'¶','🔥':'✕','✅':'✓','⭐':'◇','🔶':'◈'};
+function канонГлиф(г, запасной) {
+  if (г && ЛЕГЕНДА_ГЛИФОВ[г]) return ЛЕГЕНДА_ГЛИФОВ[г];
+  if (typeof г === 'string' && г.length === 1) return г;   /* глиф канона — пропустить */
+  return запасной !== undefined ? запасной : '◇';
+}
 /* ═══════════════════════════════════════════════════════════════════
    СИНГУЛЯР ·24 «ПОЧТА» v1.0 — свой ящик у каждого.
    Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
@@ -293,22 +303,22 @@ const ФОРДЕРЫ = ['входящие','исходящие','отправл�
 
 /* ── 1 · РЕЕСТР КРУГА (как в ·23) ── */
 const РЕЕСТР = [
-  { id:'pasha',   имя:'ПАША',   эмодзи:'🎩', алиасы:['Я','ПАПА','ДЕД'] },
-  { id:'anya',    имя:'АНЯ',    эмодзи:'🌸', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
-  { id:'ivan',    имя:'ИВАН',   эмодзи:'⚡', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
-  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'🦊', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
-  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'🎧', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
-  { id:'masha1',  имя:'МАША',   эмодзи:'🐣', алиасы:[] },
-  { id:'natasha', имя:'НАТАША', эмодзи:'🌻', алиасы:[] },
-  { id:'yana',    имя:'ЯНА',    эмодзи:'🌙', алиасы:[] },
-  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'🚀', алиасы:[] },
-  { id:'masha2',  имя:'МАША',   эмодзи:'🍓', алиасы:[] },
-  { id:'nikita',  имя:'НИКИТА', эмодзи:'🐺', алиасы:[] },
-  { id:'olya',    имя:'ОЛЯ',    эмодзи:'🎨', алиасы:[] },
-  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'🐻', алиасы:[] },
-  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'🦋', алиасы:[] },
-  { id:'lera',    имя:'ЛЕРА',   эмодзи:'🐰', алиасы:[] },
-  { id:'ruvson',  имя:'RUVSON', эмодзи:'🤖', алиасы:['РУВСОН'] }
+  { id:'pasha',   имя:'ПАША',   эмодзи:'◇', алиасы:['Я','ПАПА','ДЕД'] },
+  { id:'anya',    имя:'АНЯ',    эмодзи:'◈', алиасы:['ЖЕНА','МАМА','БАБУШКА','БАБА'] },
+  { id:'ivan',    имя:'ИВАН',   эмодзи:'⌇', алиасы:['СЫН','ВАНЯ','ВАНЁК'] },
+  { id:'zhenya',  имя:'ЖЕНЯ',   эмодзи:'∿', алиасы:['ДОЧЬ','ЕВГЕНИЯ','ПУШИСТИК'] },
+  { id:'andrey',  имя:'АНДРЕЙ', эмодзи:'◉', алиасы:['СЫН','АНДРЮША','СЫНОК'] },
+  { id:'masha1',  имя:'МАША',   эмодзи:'✦', алиасы:[] },
+  { id:'natasha', имя:'НАТАША', эмодзи:'⬡', алиасы:[] },
+  { id:'yana',    имя:'ЯНА',    эмодзи:'◐', алиасы:[] },
+  { id:'vitya',   имя:'ВИТЯ',   эмодзи:'⤳', алиасы:[] },
+  { id:'masha2',  имя:'МАША',   эмодзи:'∞', алиасы:[] },
+  { id:'nikita',  имя:'НИКИТА', эмодзи:'⬣', алиасы:[] },
+  { id:'olya',    имя:'ОЛЯ',    эмодзи:'○', алиасы:[] },
+  { id:'volodya', имя:'ВОЛОДЯ', эмодзи:'¶', алиасы:[] },
+  { id:'yulya',   имя:'ЮЛЯ',    эмодзи:'§', алиасы:[] },
+  { id:'lera',    имя:'ЛЕРА',   эмодзи:'⌂', алиасы:[] },
+  { id:'ruvson',  имя:'RUVSON', эмодзи:'⬢', алиасы:['РУВСОН'] }
 ];
 
 /* ── 2 · АДРЕСА ── */
@@ -668,14 +678,14 @@ function рендерСписок(){
 function узелПисьма(п){
   const моё = Я && п.от.адрес === мойАдрес(Я);
   const ч = человекПоАдресу(моё ? (п.кому[0] || '') : п.от.адрес);
-  const ав = ч ? ч.эмодзи : (моё ? '📤' : '👤');
+  const ав = канонГлиф(ч && ч.эмодзи, моё ? '⬆' : '⬡');
   const тема = п.тема || '(без темы)';
   const карточка = эл('div', { class:'письмо' + (п.папка === 'входящие' && !п.прочитано ? ' не-прочитано' : ''), role:'button', tabindex:'0' });
   const открыть = function(){ открытьПисьмо(п.id); };
   карточка.addEventListener('click', открыть);
   карточка.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.repeat) открыть(); });
   const мета = эл('div', { class:'мета' }, [эл('span', { class:'время', text:деньК(п.ts) })]);
-  if (п.вложения && п.вложения.length) мета.appendChild(эл('span', { class:'скрепка', text:'📎 ' + п.вложения.length }));
+  if (п.вложения && п.вложения.length) мета.appendChild(эл('span', { class:'скрепка', text:'◈ ' + п.вложения.length }));
   if (п.папка === 'исходящие') мета.appendChild(эл('span', { class:'папка-мета', text:'ждёт встречи' }));
   if (п.папка === 'отправленные' && п.доставлено) мета.appendChild(эл('span', { class:'папка-мета', text:'доставлено' }));
   const тело = эл('div', { class:'тело' }, [
@@ -715,25 +725,25 @@ function рендерЯ(){
   }
   const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
   холд.appendChild(эл('div', {}, [
-    эл('b', { text:(ч ? ч.эмодзи : '👤') + ' ' + Я.имя }),
+    эл('b', { text:канонГлиф(ч && ч.эмодзи, '⬡') + ' ' + Я.имя }),
     эл('div', { class:'note', text:'адрес: ' + (мойАдрес(Я) || '—') }),
     эл('small', { class:'note', style:'display:block;font-family:var(--mono);font-size:11px', text:'устройство: ' + Я.deviceId }),
     эл('small', { class:'note', style:'display:block', text:'ключ подписи: ECDSA P-256, non-exportable, живёт в этом браузере' })
   ]));
   /* модули */
   const м = $('модулиСсылки'); м.textContent = '';
-  [['index.html','🏠 Главная ·15'],['СИНГУЛЯР_23_КРУГ.html','👥 КРУГ ·23'],['СИНГУЛЯР_25_КОШЕЛЁК.html','👛 КОШЕЛЁК ·25'],['СИНГУЛЯР_26_ЛИНИЯ.html','☎️ ЛИНИЯ ·26'],['СИНГУЛЯР_22_СВЯЗЬ.html','📡 СВЯЗЬ ·22'],['СИНГУЛЯР_21_ОБЩЕНИЕ.html','🗣 ОБЩЕНИЕ ·21'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','📲 Установка PWA']].forEach(function(п){
+  [['index.html','⌂ Главная ·00'],['СИНГУЛЯР_23_КРУГ.html','○ КРУГ ·23'],['СИНГУЛЯР_25_КОШЕЛЁК.html','◇ КОШЕЛЁК ·25'],['СИНГУЛЯР_26_ЛИНИЯ.html','⌇ ЛИНИЯ ·26'],['СИНГУЛЯР_22_СВЯЗЬ.html','⌇ СВЯЗЬ ·22'],['СИНГУЛЯР_21_ОБЩЕНИЕ.html','◉ ОБЩЕНИЕ ·21'],['ИНСТРУКЦИЯ_УСТАНОВКИ.html','⤳ Установка PWA']].forEach(function(п){
     м.appendChild(эл('a', { href:п[0], text:п[1] }));
   });
 }
 function рендерЯЧип(){
   if (Я) {
     const ч = РЕЕСТР.find(function(x){ return x.имя === Я.имя; });
-    $('яЧипАв').textContent = ч ? ч.эмодзи : '👤';
+    $('яЧипАв').textContent = канонГлиф(ч && ч.эмодзи, '⬡');
     $('яЧипИмя').textContent = Я.имя;
     $('яЧипАдрес').textContent = мойАдрес(Я) || '';
   } else {
-    $('яЧипАв').textContent = '👤';
+    $('яЧипАв').textContent = '⬡';
     $('яЧипИмя').textContent = 'кто ты?';
     $('яЧипАдрес').textContent = 'нет ящика';
   }
@@ -765,7 +775,7 @@ function открытьПисьмо(ид){
       карта.appendChild(шапка);
       карта.appendChild(эл('div', { class:'текст', text:п.текст || '' }));
       (п.вложения || []).forEach(function(в){
-        const строка = эл('div', { class:'вл-строка' }, [эл('span', { text:'📎 ' + в.имя + ' · ' + Math.ceil((в.размер || 0) / 1024) + ' КБ' })]);
+        const строка = эл('div', { class:'вл-строка' }, [эл('span', { text:'◈ ' + в.имя + ' · ' + Math.ceil((в.размер || 0) / 1024) + ' КБ' })]);
         const кнопка = эл('button', { class:'note', text:'⬇ скачать', onclick:function(){
           ХРАН.возьмиBlob(в.ид).then(function(блоб){
             if (!блоб) { тост('вложение не нашлось на этом устройстве'); return; }
@@ -788,7 +798,7 @@ function открытьПисьмо(ид){
           $('полеТекст').value = '';
           $('полеТекст').focus();
         } }));
-        ряд.appendChild(эл('button', { class:'тих', text:'🗂 в архив', onclick:function(){ ХРАН.движПисьмо(п.id, 'архив').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); }); } }));
+        ряд.appendChild(эл('button', { class:'тих', text:'⬇ в архив', onclick:function(){ ХРАН.движПисьмо(п.id, 'архив').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); }); } }));
       }
       if (п.папка === 'исходящие') {
         ряд.appendChild(эл('button', { class:'тих', text:'↻ послать сейчас', onclick:function(){ $('чтоОвер').classList.remove('on'); сетьРазошлиПисьмо(п); } }));
@@ -796,9 +806,9 @@ function открытьПисьмо(ид){
       ряд.appendChild(эл('button', { class:'тих', text:'⬇ EML', onclick:function(){
         скачайФайл(экспортEML(п), (п.тема || 'письмо').slice(0, 24).replace(/[\\/:*?"<>|]/g,'') + '.eml', 'message/rfc822');
       } }));
-      ряд.appendChild(эл('button', { class:'опас', text:'🗑 в корзину', onclick:function(){ ХРАН.движПисьмо(п.id, 'корзина').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); тост('в корзине'); }); } }));
+      ряд.appendChild(эл('button', { class:'опас', text:'✕ в корзину', onclick:function(){ ХРАН.движПисьмо(п.id, 'корзина').then(function(){ $('чтоОвер').classList.remove('on'); обновиВсё(); тост('в корзине'); }); } }));
       карта.appendChild(ряд);
-      карта.appendChild(эл('button', { class:'тих', text:'✖ закрыть', style:'margin-top:10px;width:100%', onclick:function(){ $('чтоОвер').classList.remove('on'); } }));
+      карта.appendChild(эл('button', { class:'тих', text:'✕ закрыть', style:'margin-top:10px;width:100%', onclick:function(){ $('чтоОвер').classList.remove('on'); } }));
       $('чтоОвер').classList.add('on');
     });
   });
@@ -818,8 +828,8 @@ function перерисуйВложения(){
   const холд = $('вложения'); холд.textContent = '';
   вложенияКомпозера.forEach(function(в, и){
     холд.appendChild(эл('span', { class:'вл' }, [
-      эл('span', { text:'📎 ' + в.имя + ' (' + Math.ceil(в.размер / 1024) + ' КБ)' }),
-      эл('button', { class:'note', text:'✖', 'aria-label':'убрать вложение', onclick:function(){ вложенияКомпозера.splice(и, 1); перерисуйВложения(); } })
+      эл('span', { text:'◈ ' + в.имя + ' (' + Math.ceil(в.размер / 1024) + ' КБ)' }),
+      эл('button', { class:'note', text:'✕', 'aria-label':'убрать вложение', onclick:function(){ вложенияКомпозера.splice(и, 1); перерисуйВложения(); } })
     ]));
   });
 }
@@ -911,7 +921,7 @@ function принялПисьмо(п){
   if (!дляМеня) return; /* не моё — не беру (ящики личные) */
   /* проверка подписи автора, если она приложена */
   const сохран = function(){ return ХРАН.положиПисьмо(Object.assign({}, п, { папка:'входящие', прочитано:false }), []).then(function(){
-    return обновиВсё().then(function(){ тост('📮 письмо от ' + (п.от.имя || п.от.адрес)); });
+    return обновиВсё().then(function(){ тост('◇ письмо от ' + (п.от.имя || п.от.адрес)); });
   }); };
   if (п.sig && п.pub) {
     криптоПроверка(п.pub, строкаПодписи(п), п.sig).then(function(жива){
@@ -1025,7 +1035,7 @@ $('идентГотово').addEventListener('click', function(){
     if (слова.length >= 2) рез = собериСПрефиксом(слова[0], слова.slice(1).join(' '));
   }
   if (!рез.ok) { $('идентСтатус').textContent = рез.причина + ' · попробуй нейтральное слово ПЕРЕД именем: «ГОСТЬ ' + норм(ввод) + '»'; $('идентСтатус').className = 'status err'; return; }
-  сохраниЛичность({ имя:рез.имя, эмодзи:'👤', тип:'гость', deviceId: deviceIdМой() });
+  сохраниЛичность({ имя:рез.имя, эмодзи:'⬡', тип:'гость', deviceId: deviceIdМой() });
   $('идентОвер').classList.remove('on');
   тост('ящик ' + мойАдрес(Я) + ' готов');
   сетьЗапусти(); обновиВсё();

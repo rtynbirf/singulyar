@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>СИНГУЛЯР ·18 — СОБЫТИЕ · совместное пение · память</title>
-<meta name="description" content="СИНГУЛЯР ·18 «СОБЫТИЕ»: зал для совместного пения — комната по коду/QR, участники без аккаунтов, голоса WebRTC mesh, синхронный старт минусовки, общая запись, TEMPORARY 7 дней → ❤️ ПАМЯТЬ. Локальное ядро работает офлайн, соц-ядро включается по желанию.">
+<meta name="description" content="СИНГУЛЯР ·18 «СОБЫТИЕ»: зал для совместного пения — комната по коду/QR, участники без аккаунтов, голоса WebRTC mesh, синхронный старт минусовки, общая запись, TEMPORARY 7 дней → ◈ ПАМЯТЬ. Локальное ядро работает офлайн, соц-ядро включается по желанию.">
 <link rel="icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#0A0A0C;--panel:#1A1D23;--line:#2A2B2D;--tx:#E8E8E8;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#ef4444;--green:#2FA36B;--pink:#f9a8d4;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
@@ -104,7 +104,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <header><div class="wrap hd">
   <div class="logo" aria-hidden="true">·18</div>
-  <div><b>СИНГУЛЯР ·18 «СОБЫТИЕ» — совместное пение и память</b><span>комната по коду · голоса P2P · запись события · TEMPORARY 7 дней → ❤️ ПАМЯТЬ</span></div>
+  <div><b>СИНГУЛЯР ·18 «СОБЫТИЕ» — совместное пение и память</b><span>комната по коду · голоса P2P · запись события · TEMPORARY 7 дней → ◈ ПАМЯТЬ</span></div>
   <div class="badge">SOCIAL CORE · без аккаунтов</div>
 </div></header>
 
@@ -124,19 +124,19 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
       <div class="emoji-pick" id="hostEmoji" role="radiogroup" aria-label="эмодзи ведущего"></div>
     </div>
     <fieldset><legend>правило сохранения памяти</legend>
-      <label class="chk"><input type="radio" name="savePolicy" value="any" checked> достаточно одного ❤️ (запись у каждого своя — каждый решает сам)</label>
-      <label class="chk"><input type="radio" name="savePolicy" value="all"> памятью станет то, что ♥-нут все участники (помета в манифесте события)</label>
+      <label class="chk"><input type="radio" name="savePolicy" value="any" checked> достаточно одного ◈ (запись у каждого своя — каждый решает сам)</label>
+      <label class="chk"><input type="radio" name="savePolicy" value="all"> памятью станет то, что отмечено ◈ всеми участниками (помета в манифесте события)</label>
     </fieldset>
     <div class="row">
       <label class="chk">транспорт:
         <select id="transportHost" aria-label="транспорт зала">
-          <option value="relay">📡 между устройствами (Nostr-сигналинг, нужен интернет)</option>
-          <option value="channel">🖥 этот браузер — два окна (BroadcastChannel, без сети)</option>
+          <option value="relay">⌇ между устройствами (Nostr-сигналинг, нужен интернет)</option>
+          <option value="channel">⬣ этот браузер — два окна (BroadcastChannel, без сети)</option>
         </select>
       </label>
     </div>
     <div class="row">
-      <button class="btn big" id="btnCreate">🎉 создать зал</button>
+      <button class="btn big" id="btnCreate">✦ создать зал</button>
     </div>
     <p class="hint">Зал живёт, пока открыта вкладка ведущего. Сервера нет: между устройствами — публичные
     Nostr-ретрансляторы только для «рукопожатия» (WebRTC-сигналинг), голос и команды летят напрямую P2P.</p>
@@ -152,8 +152,8 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
     <div class="row">
       <label class="chk">транспорт:
         <select id="transportGuest" aria-label="транспорт зала">
-          <option value="relay">📡 между устройствами (Nostr-сигналинг, нужен интернет)</option>
-          <option value="channel">🖥 этот браузер — два окна (BroadcastChannel, без сети)</option>
+          <option value="relay">⌇ между устройствами (Nostr-сигналинг, нужен интернет)</option>
+          <option value="channel">⬣ этот браузер — два окна (BroadcastChannel, без сети)</option>
         </select>
       </label>
     </div>
@@ -165,7 +165,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
 
   <h2>МОИ ВОСПОМИНАНИЯ <em>живут в этом браузере</em></h2>
   <div class="row">
-    <button class="btn ghost" id="btnGcNow">🧹 удалить просроченные сейчас</button>
+    <button class="btn ghost" id="btnGcNow">✕ удалить просроченные сейчас</button>
     <span class="hint" id="gcInfo">временные записи удаляются сами: 7 дней после события</span>
   </div>
   <div class="mem-grid" id="memList" aria-live="polite"></div>
@@ -174,7 +174,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
     <b>Как это работает:</b> 1) ведущий создаёт зал и выбирает песню из каталога 62 минусовок;
     2) участники входят по коду/QR — голос каждого идёт всем по WebRTC (mesh, до ~4–5 участников);
     3) ведущий жмёт «начать» — обратный отсчёт синхронный, минусовка стартует у всех одновременно;
-    4) после песни — общая запись (микс голосов + минусовка) у каждого участника: послушать, сохранить ❤️
+    4) после песни — общая запись (микс голосов + минусовка) у каждого участника: послушать, сохранить ◈
     или забыть — через 7 дней временная запись стирается навсегда.
   </div>
 </section>
@@ -193,7 +193,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
         <div>код зала: <b class="roomcode" id="roomCodeSmall" style="font-size:22px"></b></div>
         <textarea class="hint" id="joinUrl" readonly rows="2" style="font-family:var(--mono)" aria-label="ссылка для входа"></textarea>
         <div class="row">
-          <button class="btn gray" id="btnCopyLink">📋 скопировать ссылку</button>
+          <button class="btn gray" id="btnCopyLink">¶ скопировать ссылку</button>
         </div>
         <p class="hint" id="qrHint">QR открывает эту страницу с кодом зала: участнику остаётся ввести имя.</p>
       </div>
@@ -209,8 +209,8 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
       <span class="hint" id="songHint">выбор у ведущего; гости могут предложить песню — ведущий увидит ★ у названия</span>
     </div>
     <div class="row" id="roomActions">
-      <button class="btn big" id="btnReady">✋ я готов</button>
-      <button class="btn big" id="btnStart" disabled>🎤 НАЧАТЬ</button>
+      <button class="btn big" id="btnReady">⤳ я готов</button>
+      <button class="btn big" id="btnStart" disabled>◉ НАЧАТЬ</button>
       <button class="btn gray" id="btnLeaveRoom">выйти из зала</button>
     </div>
     <p class="hint" id="startHint"></p>
@@ -227,7 +227,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
   <audio id="minusAudio" preload="auto" class="hidden"></audio>
   <div class="row">
     <button class="btn red" id="btnEnd">⏹ завершить песню</button>
-    <button class="btn ghost hidden" id="btnSingSelf">🔊 слышать себя</button>
+    <button class="btn ghost hidden" id="btnSingSelf">∿ слышать себя</button>
   </div>
   <p class="hint">Голоса идут напрямую между устройствами (P2P). В наушниках — идеально: эхо выключено
   само (echoCancellation). Если у кого-то колонки рядом с микрофоном — браузер приглушит обратную связь.</p>
@@ -235,33 +235,33 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
 
 <!-- ═══════════ ЭКРАН ОБЗОР (после песни) ═══════════ -->
 <section id="scReview">
-  <h1>🎉 ГОТОВО!</h1>
+  <h1>✦ ГОТОВО!</h1>
   <p class="lead" id="reviewWho"></p>
   <div class="panelbox">
     <div class="row"><b id="reviewSong" style="font-size:17px"></b></div>
     <div class="row"><span class="hint" id="reviewMeta"></span></div>
     <audio class="rec" id="reviewPlayer" controls></audio>
     <div class="row">
-      <button class="btn pink big" id="btnSaveMem">❤️ СОХРАНИТЬ ПАМЯТЬ</button>
+      <button class="btn pink big" id="btnSaveMem">◈ СОХРАНИТЬ ПАМЯТЬ</button>
       <button class="btn gray" id="btnDownload">↗ скачать запись</button>
-      <button class="btn ghost" id="btnAgain">🔁 спеть ещё раз</button>
+      <button class="btn ghost" id="btnAgain">↻ спеть ещё раз</button>
     </div>
     <p class="hint" id="reviewExpire"></p>
     <fieldset><legend>украсить воспоминание</legend>
       <div class="row">
-        <label class="btn ghost" style="cursor:pointer">📷 фотография<input type="file" id="memPhoto" accept="image/*" class="hidden"></label>
+        <label class="btn ghost" style="cursor:pointer">◈ фотография<input type="file" id="memPhoto" accept="image/*" class="hidden"></label>
         <span class="hint" id="photoInfo">фото хранится только в этом браузере</span>
       </div>
-      <input type="text" id="memNote" maxlength="120" placeholder="💬 подпись к воспоминанию (напр. День рождения бабушки!)" style="width:100%">
+      <input type="text" id="memNote" maxlength="120" placeholder="¶ подпись к воспоминанию (напр. День рождения бабушки!)" style="width:100%">
     </fieldset>
   </div>
 </section>
 
 <!-- ═══════════ ЭКРАН ВОСПОМИНАНИЯ ═══════════ -->
 <section id="scMemory">
-  <h1>❤️ МОИ ВОСПОМИНАНИЯ</h1>
+  <h1>◈ МОИ ВОСПОМИНАНИЯ</h1>
   <p class="lead">Память живёт в этом браузере (IndexedDB). Временные записи исчезают через 7 дней,
-  сохранённые ❤️ — остаются, пока ты сам не решишь иначе. Экспорт — кнопкой ⬇ (webm-файл события).</p>
+  сохранённые ◈ — остаются, пока ты сам не решишь иначе. Экспорт — кнопкой ⬇ (webm-файл события).</p>
   <div class="row"><button class="btn ghost" id="btnBackMenu">← в меню</button></div>
   <div class="mem-grid" id="memListFull" aria-live="polite"></div>
 </section>
@@ -278,12 +278,22 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
 <footer>
   СИНГУЛЯР ·18 «СОБЫТИЕ» — SOCIAL CORE поверх локального ядра: ROOM (LOBBY→READY→COUNTDOWN→SINGING→FINISH→REVIEW),
   голоса WebRTC mesh (MediaTransport: Nostr-ретрансляторы для сигналинга между устройствами / BroadcastChannel для окон одного браузера),
-  запись микса локально у каждого участника, TEMPORARY → ❤️ MEMORY, GC 7 дней.<br>
+  запись микса локально у каждого участника, TEMPORARY → ◈ MEMORY, GC 7 дней.<br>
   Серверной части нет: аудитории, лент и слежки тоже нет. Запись никогда не покидает устройства участников.<br>
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar
 </footer>
 
 <script>
+
+/* ЛЕГЕНДА ГЛИФОВ (такт v1.41.0 «ТКАНЬ»): Атари-пиктограммы выкурены —
+   профили, сохранённые до такта, читаются по этой карте, и эмодзи больше
+   не возвращается на сайт (слово владельца: «ЭТО НЕ АТАРИ С ПИКТОГРАММАМИ»). */
+const ЛЕГЕНДА_ГЛИФОВ = {'🎩':'◇','🌸':'◈','⚡':'⌇','🦊':'∿','🎧':'◉','🐣':'✦','🌻':'⬡','🌙':'◐','🚀':'⤳','🍓':'∞','🐺':'⬣','🎨':'○','🐻':'¶','🦋':'§','🐰':'⌂','🤖':'⬢','👵':'◇','👩':'◈','👧':'✦','🧑':'⬡','🧓':'◉','👨':'⬣','👦':'⤳','🙂':'⬡','👤':'⬡','👥':'○','🏠':'⌂','🎤':'◉','☕':'○','📣':'¶','💬':'¶','📮':'◇','👛':'◇','☎':'⌇','📞':'⌇','🎥':'◈','📷':'◈','🎙':'◉','🎵':'♪','📡':'⌇','📱':'⤳','📋':'¶','✏':'¶','📎':'◈','📤':'⬆','🗑':'✕','🔒':'§','🧪':'◇','🗒':'¶','🔥':'✕','✅':'✓','⭐':'◇','🔶':'◈'};
+function канонГлиф(г, запасной) {
+  if (г && ЛЕГЕНДА_ГЛИФОВ[г]) return ЛЕГЕНДА_ГЛИФОВ[г];
+  if (typeof г === 'string' && г.length === 1) return г;   /* глиф канона — пропустить */
+  return запасной !== undefined ? запасной : '◇';
+}
 /* ── 0. QR-ЭНКОДЕР: byte mode, ECC L, версии 1–40, автопробег масок ───────
    0 зависимостей; таблицы сверены матрица-в-матрицу с эталонной реализацией
    (python-qrcode) по всем 8 маскам: v1/v3/v10/v16/v17. */
@@ -511,7 +521,7 @@ class SingulyarQR {
    4. КОМНАТА — реплицируемое состояние, хост-авторитет, миграция хоста.
    5. ГОЛОС — getUserMedia + WebAudio-граф (никто не слышит сам себя,
       все слышат всех), ЗАПИСЬ — MediaRecorder микса у каждого участника.
-   6. ПАМЯТЬ — TEMPORARY 7 дней → ❤️ MEMORY; фото/заметка; экспорт webm.
+   6. ПАМЯТЬ — TEMPORARY 7 дней → ◈ MEMORY; фото/заметка; экспорт webm.
    0 innerHTML. Внешняя сеть — только Nostr-сигналинг зала, по твоему жесту.
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -858,7 +868,7 @@ function КОМНАТА(опции) {
       case 'HI': {   /* гость представился */
         if (!этохост()) return;
         let p = найтиП(от);
-        if (!p) { p = { id: от, name: нормИмя(d.name), emoji: d.emoji || '👤', micReady: !!d.mic, ready: false, finished: false, listener: !d.mic }; ст.participants.push(p); }
+        if (!p) { p = { id: от, name: нормИмя(d.name), emoji: канонГлиф(d.emoji, '⬡'), micReady: !!d.mic, ready: false, finished: false, listener: !d.mic }; ст.participants.push(p); }
         else { p.name = нормИмя(d.name); p.emoji = d.emoji || p.emoji; p.micReady = !!d.mic; p.listener = !d.mic; }
         опции.onЛог && опции.onЛог(p.emoji + ' ' + p.name + ' в зале', 'ok');
         бродить();
@@ -1117,14 +1127,14 @@ function эл(тег, атр, дети) {
 }
 const $ = function (id) { return document.getElementById(id); };
 
-const КАТАЛОГ = [["1BZs_wUPn1s", "Я сам себе судья"], ["2g5n6B0bc2Q", "Не вам жить мою жизнь"], ["6woWDYcu1QY", "Разгадка в небесах"], ["8RRRYysSIHg", "Суть проста"], ["8zG2LBAn1AI", "Не играй в любовь"], ["9ys_TVEtda8", "Просто люби"], ["EFaMUciH3Do", "Цени моменты"], ["G7L2d0Z5xfY", "Вера остаётся"], ["GB31hcDi3lo", "Гордость нас убивает"], ["HupAWAt7CmQ", "А время капает"], ["JRTUNak53nU", "Компас на Дом"], ["KFnJwNv008s", "Свет в темноте"], ["KfKHWdiX3S4", "Смысл жизни прост"], ["KvzORszfsg8", "Крик в тишине"], ["LCADfnI8F-s", "Действуй сейчас"], ["LqMrrKqK3AE", "Одиночество среди людей"], ["M9o3ZIlhHrU", "Люди в Масках"], ["MSqK5ig-alE", "Не Угасай — трек который цепляет"], ["OHaRQj9PLUY", "Дорога мой Учитель"], ["PIyWwF0t4wQ", "Остаться человеком ·t4wQ"], ["POiQQ21I5n0", "Оставайся молодым"], ["Qb8xb0vUYDg", "Сборник Музыки со Смыслом 🎶 песни, в кот"], ["QpeYJU83XiQ", "Жизнь не прощает"], ["R0SOJreGbhM", "Цени моменты - трек который заставляет з"], ["TRcxZ7jfPsA", "Когда Теряем - трек о настоящих ценностя"], ["TkmSZp1dfBE", "Меня не сломать — Песня о свободе духа в"], ["TobJGYOPlnw", "Остаться человеком ·Plnw"], ["V-IaCbDUKao", "Твоё плавание не вечно"], ["VfnGUIhaK2Y", "А что если да"], ["VwoK5U0qOys", "Сердце в Огне"], ["WIrhIrDQvwY", "Страх не слабость"], ["WMU46n--Z-s", "Не теряй шанс — Трек о упущенных момента"], ["X90mDPOhvKc", "Когда погаснут огни"], ["X_-M_cjCFVg", "Когда ты удобен"], ["Y7Wy_JBkz7A", "Живи как умеешь"], ["YaY-ZJVXFjI", "Время как вода"], ["_E91VEQ-8lM", "Тишина спасает"], ["_KwlGQNmC1Q", "Ты одна дала"], ["_PCJ6fMfeRM", "Всё начинается с тебя"], ["_gNbMCINv1Y", "О чём мечтаешь ты"], ["ahmGGM-P0CA", "Начать сначала"], ["b_36rlzEIKk", "Ты Главный игрок"], ["cFHsQ-LP3ns", "Не тех мы ценим"], ["d2b72nYLiT8", "Не жди завтра"], ["eA-fyeSkavI", "Вне зоны доступа"], ["eOMrrezWEZM", "Код перемен"], ["fJwb931iJVg", "Живи сейчас"], ["gMASVVNFr_A", "Время покажет"], ["kziwaat2nu4", "Ангел без крыльев"], ["lkXLeITEtGA", "Тень ушедших"], ["n5IFJ-g1Rtc", "В чём смысл"], ["pP3Kk2_FHbE", "Цени время — трек который заставляет зад"], ["pervLR9m-vk", "Не спеши осуждать"], ["pv3GAlLG9Lk", "Нас учат потери — Трек о том, что делает"], ["q57MLk0Uf9c", "Неудача — не конец"], ["rWpYxmFjm9g", "Когда теряем (флагман ★)"], ["shs0TiOwx-M", "Где настоящее"], ["t9h3cCPCKoo", "А что если ДА"], ["ugjp6iaNplo", "Бой с собой - RUVSON"], ["vUb40twffCI", "Там где ты"], ["yK2aPehxmK8", "Пленники прошлого"], ["z3RcsfHajP8", "Я сам себе враг"]];
+const КАТАЛОГ = [["1BZs_wUPn1s", "Я сам себе судья"], ["2g5n6B0bc2Q", "Не вам жить мою жизнь"], ["6woWDYcu1QY", "Разгадка в небесах"], ["8RRRYysSIHg", "Суть проста"], ["8zG2LBAn1AI", "Не играй в любовь"], ["9ys_TVEtda8", "Просто люби"], ["EFaMUciH3Do", "Цени моменты"], ["G7L2d0Z5xfY", "Вера остаётся"], ["GB31hcDi3lo", "Гордость нас убивает"], ["HupAWAt7CmQ", "А время капает"], ["JRTUNak53nU", "Компас на Дом"], ["KFnJwNv008s", "Свет в темноте"], ["KfKHWdiX3S4", "Смысл жизни прост"], ["KvzORszfsg8", "Крик в тишине"], ["LCADfnI8F-s", "Действуй сейчас"], ["LqMrrKqK3AE", "Одиночество среди людей"], ["M9o3ZIlhHrU", "Люди в Масках"], ["MSqK5ig-alE", "Не Угасай — трек который цепляет"], ["OHaRQj9PLUY", "Дорога мой Учитель"], ["PIyWwF0t4wQ", "Остаться человеком ·t4wQ"], ["POiQQ21I5n0", "Оставайся молодым"], ["Qb8xb0vUYDg", "Сборник Музыки со Смыслом ♪ песни, в кот"], ["QpeYJU83XiQ", "Жизнь не прощает"], ["R0SOJreGbhM", "Цени моменты - трек который заставляет з"], ["TRcxZ7jfPsA", "Когда Теряем - трек о настоящих ценностя"], ["TkmSZp1dfBE", "Меня не сломать — Песня о свободе духа в"], ["TobJGYOPlnw", "Остаться человеком ·Plnw"], ["V-IaCbDUKao", "Твоё плавание не вечно"], ["VfnGUIhaK2Y", "А что если да"], ["VwoK5U0qOys", "Сердце в Огне"], ["WIrhIrDQvwY", "Страх не слабость"], ["WMU46n--Z-s", "Не теряй шанс — Трек о упущенных момента"], ["X90mDPOhvKc", "Когда погаснут огни"], ["X_-M_cjCFVg", "Когда ты удобен"], ["Y7Wy_JBkz7A", "Живи как умеешь"], ["YaY-ZJVXFjI", "Время как вода"], ["_E91VEQ-8lM", "Тишина спасает"], ["_KwlGQNmC1Q", "Ты одна дала"], ["_PCJ6fMfeRM", "Всё начинается с тебя"], ["_gNbMCINv1Y", "О чём мечтаешь ты"], ["ahmGGM-P0CA", "Начать сначала"], ["b_36rlzEIKk", "Ты Главный игрок"], ["cFHsQ-LP3ns", "Не тех мы ценим"], ["d2b72nYLiT8", "Не жди завтра"], ["eA-fyeSkavI", "Вне зоны доступа"], ["eOMrrezWEZM", "Код перемен"], ["fJwb931iJVg", "Живи сейчас"], ["gMASVVNFr_A", "Время покажет"], ["kziwaat2nu4", "Ангел без крыльев"], ["lkXLeITEtGA", "Тень ушедших"], ["n5IFJ-g1Rtc", "В чём смысл"], ["pP3Kk2_FHbE", "Цени время — трек который заставляет зад"], ["pervLR9m-vk", "Не спеши осуждать"], ["pv3GAlLG9Lk", "Нас учат потери — Трек о том, что делает"], ["q57MLk0Uf9c", "Неудача — не конец"], ["rWpYxmFjm9g", "Когда теряем (флагман ★)"], ["shs0TiOwx-M", "Где настоящее"], ["t9h3cCPCKoo", "А что если ДА"], ["ugjp6iaNplo", "Бой с собой - RUVSON"], ["vUb40twffCI", "Там где ты"], ["yK2aPehxmK8", "Пленники прошлого"], ["z3RcsfHajP8", "Я сам себе враг"]];
 
-const ЭМОДЗИ = ['👵', '👩', '👧', '🧑', '🧓', '👨', '👦', '👩‍🦳'];
+const ГЛИФЫ = ['◇', '◈', '⬡', '⬣', '◉', '∿', '⌇', '¶'];
 const ПРИЛОЖЕНИЕ = { комната: null, голос: null, транспорт: null, запись: null, роль: null, транспортВид: null, таймерРисования: null, таймерОтсчёта: null, локальноеУрл: null, кристСессия: null };
 
 /* ── КРИСТАЛЛ: мост shared.activity (v1.18) ──
    ·18 → протокольный слой: «в зале пели вместе». Сессия — temporary
-   (TTL зеркалит СРОК_ВРЕМЕННОЙ_MS), память ❤️ — persistent и ссылается
+   (TTL зеркалит СРОК_ВРЕМЕННОЙ_MS), память ◈ — persistent и ссылается
    на сессию через replyTo. Падение импорта/журнала = зал работает как
    раньше (честный fallback). Аудио и фото в событии НЕ переносятся. */
 const МОСТ18 = { б: null, модуль: null, готов: false, последняя: null };
@@ -1154,7 +1164,7 @@ function мостПамять(запись) {
   }).catch(function () {});
 }
 /* Решение человека о памяти (v1.22, синтез «TTL ≠ MEMORY»):
-   помню ❤️ / забыть 🔥 — отдельные НЕИЗМЕНЯЕМЫЕ события журнала,
+   помню ◈ / забыть ✕ — отдельные НЕИЗМЕНЯЕМЫЕ события журнала,
    ссылаются на память/сессию через replyTo. Каждое нажатие — новый акт
    (акт = момент решения): передумать можно, но новым событием, а не
    переписыванием истории. Файл аудио при этом не трогается: решение
@@ -1167,7 +1177,7 @@ function мостРешение(решение, запись) {
     цельСобытиеId: ПРИЛОЖЕНИЕ.кристСессия
   });
   МОСТ18.б.опубликуй(п.event).then(function (р) {
-    if (р.ok) лог('решение записано в журнал: ' + (решение === 'remember' ? '❤️ помнить' : '🔥 забыть') + ' (неизменяемое событие)');
+    if (р.ok) лог('решение записано в журнал: ' + (решение === 'remember' ? '◈ помнить' : '✕ забыть') + ' (неизменяемое событие)');
     else if (р.reason !== 'DUPLICATE') лог('решение не записалось (' + р.reason + ') — зал работает без него');
   }).catch(function () {});
 }
@@ -1185,7 +1195,7 @@ function лог(текст, тип) {
 /* ── эмодзи-пикеры ── */
 function пикер(контейнер, стартовый, onSelect) {
   let выбранный = стартовый;
-  ЭМОДЗИ.forEach(function (e, i) {
+  ГЛИФЫ.forEach(function (e, i) {
     const b = эл('button', { type: 'button', text: e, 'aria-pressed': e === стартовый ? 'true' : 'false', 'aria-label': 'эмодзи ' + i });
     b.addEventListener('click', function () {
       выбранный = e;
@@ -1197,8 +1207,8 @@ function пикер(контейнер, стартовый, onSelect) {
   });
   return function () { return выбранный; };
 }
-const получитьЭмодзиХоста = пикер($('hostEmoji'), '👵', function () {});
-const получитьЭмодзиГостя = пикер($('guestEmoji'), '👩', function () {});
+const получитьЭмодзиХоста = пикер($('hostEmoji'), '◇', function () {});
+const получитьЭмодзиГостя = пикер($('guestEmoji'), '◈', function () {});
 
 /* ── каталог песен ── */
 function песняПoId(id) { const r = КАТАЛОГ.filter(function (p) { return p[0] === id; })[0]; return r ? { id: r[0], title: r[1] } : null; }
@@ -1228,20 +1238,20 @@ function карточкаПамяти(rec, полный) {
   const м = rec.manifest || {};
   const кто = (м.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
   const тег = rec.state === 'MEMORY'
-    ? эл('span', { class: 'mem-tag', text: '❤️ память' })
-    : эл('span', { class: 'temp-tag', text: '⏳ временная · ' + фДней((rec.expiresAt || 0) - Date.now()) });
+    ? эл('span', { class: 'mem-tag', text: '◈ память' })
+    : эл('span', { class: 'temp-tag', text: '△ временная · ' + фДней((rec.expiresAt || 0) - Date.now()) });
   const ауд = эл('audio', { controls: '', preload: 'none', class: 'rec' });
   try { ауд.src = URL.createObjectURL(rec.audio); } catch (e) {}
   const acts = эл('div', { class: 'acts' });
-  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '❤️ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { мостРешение('remember', rec); мостПамять(rec); перерисоватьПамять(); }); } }));
+  if (rec.state === 'TEMPORARY') acts.appendChild(эл('button', { class: 'btn pink', text: '◈ сохранить', onclick: function () { rec.state = 'MEMORY'; rec.savedAt = Date.now(); ХРАНИЛИЩЕ.put(rec).then(function () { мостРешение('remember', rec); мостПамять(rec); перерисоватьПамять(); }); } }));
   acts.appendChild(эл('button', { class: 'btn gray', text: '⬇ webm', onclick: function () { скачать(rec); } }));
-  acts.appendChild(эл('button', { class: 'btn red', text: '🔥 удалить', onclick: function () { мостРешение('expire', rec); ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
+  acts.appendChild(эл('button', { class: 'btn red', text: '✕ удалить', onclick: function () { мостРешение('expire', rec); ХРАНИЛИЩЕ.del(rec.id).then(перерисоватьПамять); } }));
   const card = эл('div', { class: 'mem-card' }, [
     эл('div', { class: 'date', text: датаКратко(м.startedAt || rec.createdAt) }),
-    м.song ? эл('div', { class: 'ttl', text: '🎵 ' + м.song.title }) : эл('div', { class: 'ttl', text: '🎵 событие' }),
+    м.song ? эл('div', { class: 'ttl', text: '♪ ' + м.song.title }) : эл('div', { class: 'ttl', text: '♪ событие' }),
     кто ? эл('div', { class: 'who', text: кто }) : null,
     rec.photo ? эл('img', { class: 'mem-photo', src: rec.photo, alt: 'фотография воспоминания' }) : null,
-    rec.note ? эл('div', { class: 'who', text: '💬 ' + rec.note }) : null,
+    rec.note ? эл('div', { class: 'who', text: '¶ ' + rec.note }) : null,
     эл('div', { class: 'row', style: 'margin:4px 0 0' }, [тег]),
     ауд, acts
   ]);
@@ -1302,7 +1312,7 @@ function чипыУчастников(ст) {
       title: (p.id === ст.host ? 'ведущий · ' : '') + (p.listener ? 'слушатель' : 'микрофон')
     }, [
       точка,
-      эл('span', { text: (p.emoji || '👤') + ' ' + p.name + (p.id === ст.host ? ' · ведущий' : '') + (p.listener ? ' 🎧' : ' 🎤') }),
+      эл('span', { text: канонГлиф(p.emoji, '⬡') + ' ' + p.name + (p.id === ст.host ? ' · ведущий' : '') + (p.listener ? ' ∿' : ' ◉') }),
       lv
     ]);
     ч.dataset.pid = p.id || '';
@@ -1317,8 +1327,8 @@ function обновитьКнопкиКомнаты(ст) {
   const яХост = ПРИЛОЖЕНИЕ.комната && ПРИЛОЖЕНИЕ.комната.этохост();
   const мой = ПРИЛОЖЕНИЕ.комната && ПРИЛОЖЕНИЕ.комната.сам;
   $('btnStart').disabled = !(яХост && ст.song);
-  $('btnStart').textContent = '🎤 НАЧАТЬ' + (ст.song ? '' : ' (выбери песню)');
-  $('btnReady').textContent = готовЛи(ст, мой && мой.id) ? '✋ я готов ✓' : '✋ я готов';
+  $('btnStart').textContent = '◉ НАЧАТЬ' + (ст.song ? '' : ' (выбери песню)');
+  $('btnReady').textContent = готовЛи(ст, мой && мой.id) ? '⤳ я готов ✓' : '⤳ я готов';
   $('songSel').disabled = !яХост;
   $('songHint').textContent = яХост
     ? 'ты ведущий: выбери песню и жми НАЧАТЬ, когда все на связи'
@@ -1346,7 +1356,7 @@ function наСостояние(ст) {
 function заполнитьОтсчёт(ст2, startAt, смещ) {
   const localStart = startAt - смещ;   /* L = H − offset (offset = H − L) */
   const over = $('countOverlay'), num = $('countNum');
-  $('countSong').textContent = '🎵 ' + (ст2.song ? ст2.song.title : '') + ' · ' + (ст2.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
+  $('countSong').textContent = '♪ ' + (ст2.song ? ст2.song.title : '') + ' · ' + (ст2.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
   over.classList.add('on');
   clearInterval(ПРИЛОЖЕНИЕ.таймерОтсчёта);
   ПРИЛОЖЕНИЕ.таймерОтсчёта = setInterval(function () {
@@ -1358,8 +1368,8 @@ function заполнитьОтсчёт(ст2, startAt, смещ) {
       return;
     }
     const сек = Math.ceil(ост / 1000);
-    num.textContent = сек >= 3 ? '3' : сек === 2 ? '2' : сек === 1 ? '1' : '🎵';
-    if (ост <= 900) num.textContent = '🎵';
+    num.textContent = сек >= 3 ? '3' : сек === 2 ? '2' : сек === 1 ? '1' : '♪';
+    if (ост <= 900) num.textContent = '♪';
   }, 80);
 }
 function стартПения() {
@@ -1373,7 +1383,7 @@ function наФаза(фаза, пред) {
     if (ст.startAt) заполнитьОтсчёт(ст, ст.startAt, ПРИЛОЖЕНИЕ.комната.смещение);
   } else if (фаза === 'SINGING') {
     показ('scSing');
-    $('singTitle').textContent = '🎵 ' + (ст.song ? ст.song.title : 'Поём вместе');
+    $('singTitle').textContent = '♪ ' + (ст.song ? ст.song.title : 'Поём вместе');
     $('singStateHint').textContent = 'запись идёт у каждого участника локально';
     начЗаписьИТаймер(ст);
   } else if (фаза === 'FINISH') {
@@ -1406,8 +1416,8 @@ function начЗаписьИТаймер(ст) {
   const бокс = $('micBig'); while (бокс.firstChild) бокс.removeChild(бокс.firstChild);
   (ст.participants || []).forEach(function (p) {
     бокс.appendChild(эл('div', { 'data-pid': p.id || 'Я' }, [
-      эл('div', { class: 'em', text: p.emoji || '👤' }),
-      эл('b', { text: p.name + (p.listener ? ' 🎧' : '') }),
+      эл('div', { class: 'em', text: канонГлиф(p.emoji, '⬡') }),
+      эл('b', { text: p.name + (p.listener ? ' ∿' : '') }),
       эл('div', { class: 'lv' }, [эл('i', {})])
     ]));
   });
@@ -1432,16 +1442,16 @@ function финалЗаписиИОбзор() {
     if (blob) ХРАНИЛИЩЕ.put(rec).then(перерисоватьПамять);
     /* экран обзора */
     $('reviewWho').textContent = 'Вы спели вместе: ' + (манифест.participants || []).map(function (p) { return p.emoji + ' ' + p.name; }).join(' · ');
-    $('reviewSong').textContent = '🎵 ' + (манифест.song ? манифест.song.title : '—');
+    $('reviewSong').textContent = '♪ ' + (манифест.song ? манифест.song.title : '—');
     $('reviewMeta').textContent = 'длительность ' + фмс(манифест.durationMs || 0) + ' · код зала ' + манифест.room +
-      ' · политика памяти: ' + (манифест.savePolicy === 'all' ? 'все должны ❤️' : 'достаточно одного ❤️');
+      ' · политика памяти: ' + (манифест.savePolicy === 'all' ? 'все должны ◈' : 'достаточно одного ◈');
     const пл = $('reviewPlayer');
     if (ПРИЛОЖЕНИЕ.локальноеУрл) { try { URL.revokeObjectURL(ПРИЛОЖЕНИЕ.локальноеУрл); } catch (e) {} }
     ПРИЛОЖЕНИЕ.локальноеУрл = URL.createObjectURL(rec.audio);
     пл.src = ПРИЛОЖЕНИЕ.локальноеУрл;
     $('reviewExpire').textContent = blob
-      ? '⏳ это временная запись: через 7 дней она удалится навсегда — нажми ❤️, чтобы оставить память'
-      : '⚠ запись не получена (браузер без MediaRecorder), но событие зафиксировано в манифесте';
+      ? '△ это временная запись: через 7 дней она удалится навсегда — нажми ◈, чтобы оставить память'
+      : '△ запись не получена (браузер без MediaRecorder), но событие зафиксировано в манифесте';
     ПРИЛОЖЕНИЕ.комната.локальнаяФаза('REVIEW');
     показ('scReview');   /* локальнаяФаза молчит — экран переключаем прямо здесь */
   });
@@ -1485,7 +1495,7 @@ function создатьЗал(фиксКод) {
   const политика = (document.querySelector('input[name=savePolicy]:checked') || {}).value || 'any';
   let т;
   try { т = сделатьТранспорт(вид, код); }
-  catch (e) { лог('⚠ ' + (e.message || e), 'err'); return; }
+  catch (e) { лог('△ ' + (e.message || e), 'err'); return; }
   ПРИЛОЖЕНИЕ.транспорт = т; ПРИЛОЖЕНИЕ.транспортВид = вид; ПРИЛОЖЕНИЕ.роль = 'хост';
   лог('создаём зал ' + код + (вид === 'relay' ? ' · сигналинг через публичные реле…' : ' · локальный режим этого браузера'));
   показатьКомнату({ code: код });
@@ -1503,19 +1513,19 @@ function создатьЗал(фиксКод) {
     return комната.старт().then(function () {
       лог(естьМикрофон
         ? 'зал готов · код ' + код + ' · микрофон включён · жди участников и выбирай песню'
-        : 'зал готов · код ' + код + ' · ⚠ микрофон не дал браузер — ты ведущий-слушатель 🎧', 'ok');
+        : 'зал готов · код ' + код + ' · △ микрофон не дал браузер — ты ведущий-слушатель ◉', 'ok');
       unlockЗвука();
     });
-  }).catch(function (e) { лог('⚠ зал не поднялся: ' + (e && e.message || e), 'err'); });
+  }).catch(function (e) { лог('△ зал не поднялся: ' + (e && e.message || e), 'err'); });
 }
 function войтиВЗал() {
   const код = String($('joinCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-  if (код.length !== 5) { лог('⚠ код зала — 5 символов', 'err'); return; }
+  if (код.length !== 5) { лог('△ код зала — 5 символов', 'err'); return; }
   const вид = $('transportGuest').value;
   const имя = нормИмя($('guestName').value || 'Участник');
   let т;
   try { т = сделатьТранспорт(вид, код); }
-  catch (e) { лог('⚠ ' + (e.message || e), 'err'); return; }
+  catch (e) { лог('△ ' + (e.message || e), 'err'); return; }
   ПРИЛОЖЕНИЕ.транспорт = т; ПРИЛОЖЕНИЕ.транспортВид = вид; ПРИЛОЖЕНИЕ.роль = 'гость';
   лог('входим в зал ' + код + (вид === 'relay' ? ' · ищем через публичные реле (до ~15 с)…' : ' · локальный режим этого браузера'));
   показатьКомнату({ code: код });
@@ -1537,10 +1547,10 @@ function войтиВЗал() {
           лог('хост не отвечает: проверь код и что зал открыт, либо ведущий офлайн', 'warn');
         }
       }, 15000);
-      лог(естьМикрофон ? 'в зале · ждём ведущего…' : 'в зале · ⚠ микрофон не дал браузер — ты слушатель 🎧', 'ok');
+      лог(естьМикрофон ? 'в зале · ждём ведущего…' : 'в зале · △ микрофон не дал браузер — ты слушатель ◉', 'ok');
       unlockЗвука();
     });
-  }).catch(function (e) { лог('⚠ вход не удался: ' + (e && e.message || e), 'err'); });
+  }).catch(function (e) { лог('△ вход не удался: ' + (e && e.message || e), 'err'); });
 }
 /* разлочка звука: короткий play/pause по жесту пользователя */
 function unlockЗвука() {
@@ -1556,7 +1566,7 @@ $('btnSaveMem').addEventListener('click', function () {
   ХРАНИЛИЩЕ.put(rec).then(function () {
     мостРешение('remember', rec);
     мостПамять(rec);
-    $('reviewExpire').textContent = '❤️ сохранено как память — теперь не исчезнет (удалить можно в списке воспоминаний)';
+    $('reviewExpire').textContent = '◈ сохранено как память — теперь не исчезнет (удалить можно в списке воспоминаний)';
     перерисоватьПамять();
   });
 });
@@ -1574,7 +1584,7 @@ $('memPhoto').addEventListener('change', function (ev) {
       const урл = cv.toDataURL('image/jpeg', 0.82);
       const rec = ПРИЛОЖЕНИЕ.запись;
       if (rec) { rec.photo = урл; ХРАНИЛИЩЕ.put(rec).then(function () { перерисоватьПамять(); }); }
-      $('photoInfo').textContent = '📷 фото прикреплено (' + cv.width + '×' + cv.height + ')';
+      $('photoInfo').textContent = '◈ фото прикреплено (' + cv.width + '×' + cv.height + ')';
     };
     img.src = fr.result;
   };
@@ -1595,7 +1605,7 @@ $('btnEnd').addEventListener('click', function () { if (ПРИЛОЖЕНИЕ.к�
 $('btnSingSelf').addEventListener('click', function () {
   const гз = ПРИЛОЖЕНИЕ.голос; if (!гз) return;
   гз.слышатьСебя(!гз.слышуСебя);
-  this.textContent = гз.слышуСебя ? '🔇 не слышать себя' : '🔊 слышать себя';
+  this.textContent = гз.слышуСебя ? '∿ не слышать себя' : '∿ слышать себя';
 });
 $('btnReady').addEventListener('click', function () {
   const ком = ПРИЛОЖЕНИЕ.комната; if (!ком) return;
@@ -1615,7 +1625,7 @@ $('songSel').addEventListener('change', function () {
 });
 $('btnCopyLink').addEventListener('click', function () {
   const тa = $('joinUrl'); тa.select();
-  try { document.execCommand('copy'); this.textContent = '📋 скопировано ✓'; setTimeout(function (b) { return function () { b.textContent = '📋 скопировать ссылку'; }; }(this), 1600); } catch (e) {}
+  try { document.execCommand('copy'); this.textContent = '¶ скопировано ✓'; setTimeout(function (b) { return function () { b.textContent = '¶ скопировать ссылку'; }; }(this), 1600); } catch (e) {}
 });
 $('btnLeaveRoom').addEventListener('click', function () {
   if (ПРИЛОЖЕНИЕ.комната) ПРИЛОЖЕНИЕ.комната.покинуть();
@@ -1839,7 +1849,7 @@ function панельTURN(дляГостей){
   hint = эл('p', { class: 'hint', text: 'TURN нужен только за симметричным NAT. Реквизиты остаются на устройстве (localStorage) и никуда не отправляются. Бесплатных TURN мы не встраиваем: это твой сервер — твой контроль.' });
 
   var det = эл('details', { class: 's18turn' }, []);
-  det.appendChild(эл('summary', { text: дляГостей ? '🛰 TURN-релей (для гостей: те же реквизиты)' : '🛰 TURN-релей (свой сервер, необязательно)' }));
+  det.appendChild(эл('summary', { text: дляГостей ? '⌇ TURN-релей (для гостей: те же реквизиты)' : '⌇ TURN-релей (свой сервер, необязательно)' }));
   var body = эл('div', {}, [
     эл('label', { class: 'chk' }, [ чб, эл('span', { text: ' использовать TURN (если задан)' }) ]),
     эл('div', { class: 'row', style: { marginTop: '6px' } }, [ urls ]),
