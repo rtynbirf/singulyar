@@ -235,3 +235,14 @@ body{background:var(--bg-base);color:var(--text-primary)}
 @media(max-width:560px){.bento{grid-template-columns:1fr}}
 /* Void-ритм секций (Guardrails): воздух прежде плотности */
 main.glass-void>section{margin-top:var(--void-md)}
+
+/* ═══ Такт v1.38.0 «СВОБОДА» — добавки в конец (комнаты не переписываются) ═══
+   Мировая практика 2026 (View Transitions, MPA): двери дома переходят плавно,
+   нативно, без фреймворка; браузер без поддержки просто открывает дверь. */
+@view-transition{navigation:auto}
+
+/* prefers-reduced-transparency (тренд доступности 2026): стекло уплотняется,
+   читаемость прежде прозрачности — урок канона «контраст прежде стекла». */
+@media (prefers-reduced-transparency: reduce){
+  .glass-panel,.glass-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:#14171C}
+}

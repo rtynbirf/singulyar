@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·29 — СВОБОДА · композиция среды из многообразия</title>
+<meta name="description" content="СИНГУЛЯР ·29 «СВОБОДА» — живой интерфейс над Composition Engine: человек произносит намерение, машина предлагает среды из примитивов, жить средой решает человек. Свобода выбора из имеющегося многообразия. Эмерджентность: новое слово — новый режим человека без правки ядра.">
+<meta name="theme-color" content="#0A0A0C">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<link rel="stylesheet" href="singulyar-design-v3.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   КОМНАТА ·29 «СВОБОДА» поверх моста v3.0 — только раскладка.
+   Канон Spatial Glass: void #0A0A0C, стекло, золото #D4AF37 —
+   единственный акцент; 0 картинок — живой холст DOM-примитивов.
+   WCAG 2.2: цели ≥24px, фокус виден и не перекрыт, семантика
+   нативная, движение уважает prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════ */
+html{font-size:16px}
+body{font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px;margin:0;background:var(--bg,#0A0A0C);color:var(--text-primary,#E8E8E8)}
+a{color:var(--teal2,#C8CCD2);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:ui-monospace,Consolas,monospace;flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.badge{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
+h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
+h1 em{font-style:normal;background:var(--grad-gold,#D4AF37);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-size:clamp(19px,2.6vw,24px);margin:38px 0 10px}
+h2 em{font-style:normal;color:var(--dim);font-size:.62em;font-family:ui-monospace,Consolas,monospace;letter-spacing:.08em}
+h3{font-size:16px;margin:18px 0 8px}
+.lead{color:var(--dim);max-width:820px;font-size:17px}
+.essence{margin:22px 0 0;padding:16px 20px;border-radius:16px;border:var(--border-subtle);background:var(--glass-dark);font-size:14.5px;color:var(--text-secondary)}
+.essence b{color:var(--text-primary)}
+/* ── ШАГ 1: НАМЕРЕНИЕ — нативные радиокнопки, цели ≥44px ── */
+fieldset{border:var(--border-subtle);border-radius:16px;padding:14px 16px;margin:16px 0 0;background:var(--glass-dark)}
+legend{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E8D5A8;padding:0 8px}
+.слова{display:flex;flex-wrap:wrap;gap:10px}
+.слово{position:relative;display:inline-block}
+.слово input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.слово label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:9px 18px;border-radius:999px;border:1px solid rgba(240,240,248,.18);background:rgba(240,240,248,.03);color:#C0C8D0;cursor:pointer;transition:border-color .2s,color .2s;user-select:none}
+.слово label::before{content:"";width:7px;height:7px;border-radius:50%;background:rgba(240,240,248,.25);transition:background .2s,box-shadow .2s}
+.слово input:checked + label{border-color:rgba(212,175,55,.60);color:#F0D78C}
+.слово input:checked + label::before{background:#D4AF37;box-shadow:0 0 10px rgba(212,175,55,.55)}
+.слово input:focus-visible + label{outline:2px solid rgba(212,175,55,.75);outline-offset:3px}
+.слово:hover label{border-color:rgba(212,175,55,.45);color:#F0D78C}
+.слово.плюс label{border-style:dashed}
+.слово.плюс input:checked + label{border-color:rgba(212,175,55,.85)}
+/* ── ШАГ 2: МНОГООБРАЗИЕ — реестр примитивов ── */
+.возможности{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
+.возможность{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid rgba(240,240,248,.16);background:rgba(240,240,248,.03);color:#C0C8D0;cursor:pointer;transition:border-color .2s}
+.возможность input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
+.возможность input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.возможность:hover{border-color:rgba(212,175,55,.45)}
+.возможность[data-статична]{cursor:default;opacity:.72}
+.реестр{display:grid;grid-template-columns:1fr;gap:12px;margin:16px 0 0}
+@media(min-width:760px){.реестр{grid-template-columns:1fr 1fr}}
+.примитив{border:var(--border-subtle);border-radius:16px;background:var(--glass-card);padding:14px 16px;transition:border-color .2s,transform var(--dur-fast,.16s) var(--ease-spring,ease)}
+.примитив:hover{border-color:rgba(212,175,55,.35)}
+.примитив.выбран{border-color:rgba(212,175,55,.55);box-shadow:0 0 0 1px rgba(212,175,55,.25),0 6px 22px rgba(0,0,0,.4)}
+.примитив .верх{display:flex;align-items:center;gap:10px}
+.примитив .верх b{font-size:15.5px}
+.примитив .верх input{width:19px;height:19px;accent-color:#D4AF37;cursor:pointer;flex:none}
+.примитив .верх input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.примитив .верх .запрет{margin-left:auto;display:inline-flex;align-items:center;gap:6px;min-height:26px;font-size:11.5px;color:#C0C8D0;cursor:pointer;font-family:ui-monospace,Consolas,monospace}
+.примитив .верх .запрет input{width:15px;height:15px;accent-color:#B24C4C;cursor:pointer}
+.примитив .верх .запрет input:focus-visible{outline:2px solid rgba(178,76,76,.8);outline-offset:2px}
+.примитив p{margin:7px 0 0;color:var(--text-secondary);font-size:13.5px;line-height:1.5}
+.примитив .мета{margin:9px 0 0;display:flex;flex-wrap:wrap;gap:6px;font-family:ui-monospace,Consolas,monospace;font-size:11px}
+.примитив .мета span{border:1px solid rgba(240,240,248,.14);border-radius:999px;padding:3px 9px;color:#AEB6BF;background:rgba(240,240,248,.03)}
+.примитив .мета .даст{border-color:rgba(212,175,55,.4);color:#E8D5A8}
+.примитив .недостаток{margin:9px 0 0;font-size:12.5px;color:#D8A0A0;display:none}
+.примитив.урезан .недостаток{display:block}
+.примитив.урезан{opacity:.68}
+/* ── ШАГ 3: ПРЕДЛОЖЕНО + СЦЕНА ── */
+.живой-узел{display:grid;grid-template-columns:1fr;gap:22px;margin:16px 0 0}
+@media(min-width:900px){.живой-узел{grid-template-columns:minmax(0,1fr) 340px}}
+.предложения{display:grid;gap:14px}
+.манифест-карта{border:var(--border-subtle);border-radius:18px;background:var(--glass-card);padding:16px 18px}
+.манифест-карта.жива{border-color:rgba(212,175,55,.6);box-shadow:0 0 0 1px rgba(212,175,55,.28),0 10px 34px rgba(0,0,0,.5)}
+.манифест-карта .статус{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:4px 12px;background:rgba(212,175,55,.08)}
+.манифест-карта.жива .статус{background:rgba(212,175,55,.18);color:#F0D78C}
+.манифест-карта h3{margin:12px 0 4px;font-size:17px}
+.манифест-карта .строка{color:var(--text-secondary);font-size:13.5px;margin:4px 0}
+.манифест-карта .строка b{color:var(--text-primary);font-weight:600}
+.манифест-карта .чипсы{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.манифест-карта .чипсы span{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;border:1px solid rgba(212,175,55,.35);border-radius:999px;padding:4px 11px;color:#E8D5A8;background:rgba(212,175,55,.06)}
+.манифест-карта .чипсы span.чужой{border-color:rgba(240,240,248,.16);color:#AEB6BF;background:rgba(240,240,248,.03)}
+.манифест-карта .чипсы span.добавка{border-style:dashed;border-color:rgba(212,175,55,.55);color:#F0D78C}
+.предупреждение{margin:12px 0 0;padding:10px 14px;border-radius:12px;border:1px solid rgba(178,76,76,.45);background:rgba(178,76,76,.08);color:#D8A0A0;font-size:13px;display:none}
+.предупреждение.видно{display:block}
+.расширение-строка{display:flex;align-items:center;gap:10px;margin:12px 0 0;padding:10px 14px;border:1px dashed rgba(212,175,55,.45);border-radius:12px;font-size:13.5px;color:#F0D78C;min-height:44px}
+.расширение-строка input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
+.расширение-строка input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.решение{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;align-items:center}
+button.действие{min-height:44px;padding:11px 22px;border-radius:12px;border:1px solid rgba(212,175,55,.55);background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.10));color:#F0D78C;font-size:14.5px;font-weight:600;cursor:pointer;transition:filter .2s,transform var(--dur-fast,.16s) var(--ease-spring,ease)}
+button.действие:hover{filter:brightness(1.15)}
+button.действие:active{transform:translateY(1px)}
+button.действие:focus-visible{outline:2px solid rgba(212,175,55,.85);outline-offset:3px}
+button.действие[disabled]{opacity:.42;cursor:not-allowed}
+button.тихое{min-height:44px;padding:10px 18px;border-radius:12px;border:1px solid rgba(240,240,248,.2);background:rgba(240,240,248,.04);color:#C0C8D0;font-size:13.5px;cursor:pointer}
+button.тихое:hover{border-color:rgba(212,175,55,.45);color:#F0D78C}
+button.тихое:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:3px}
+.память-выбор{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid rgba(240,240,248,.16);background:rgba(240,240,248,.03);color:#C0C8D0;font-size:13.5px;cursor:pointer}
+.память-выбор input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
+.память-выбор input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+/* СЦЕНА — векторные стеклянные плоскости на орбитах (0 картинок) */
+.сцена{border:var(--border-subtle);border-radius:20px;background:radial-gradient(120% 90% at 50% 8%,rgba(212,175,55,.07),rgba(10,10,12,0) 55%),var(--glass-dark);min-height:340px;position:relative;overflow:hidden;display:grid;place-items:center;padding:18px}
+.сцена .ядро{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#F5D98A,#D4AF37 55%,#8C6D1F);box-shadow:0 0 44px rgba(212,175,55,.5),inset 0 2px 8px rgba(255,255,255,.35);display:grid;place-items:center;color:#0A0A0C;font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.1em;text-align:center;position:relative;z-index:2}
+.орбита{position:absolute;left:50%;top:50%;border:1px solid rgba(240,240,248,.10);border-radius:50%;translate:-50% -50%}
+.орбита.o1{width:200px;height:200px}.орбита.o2{width:296px;height:296px}.орбита.o3{width:392px;height:392px}
+.планета{position:absolute;left:50%;top:50%;transform-origin:0 0;animation:вращение var(--период,26s) linear infinite}
+.планета i{display:block;transform:translate(-50%,-50%);border:1px solid rgba(240,240,248,.22);background:linear-gradient(160deg,rgba(240,240,248,.22),rgba(240,240,248,.05) 52%,rgba(212,175,55,.18));border-radius:10px;color:#E8E8E8;font-style:normal;font-family:ui-monospace,Consolas,monospace;font-size:10.5px;padding:6px 10px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.45);animation:вращение var(--период,26s) linear infinite reverse}
+.планета.золотая i{border-color:rgba(212,175,55,.55);color:#F0D78C;filter:drop-shadow(0 0 8px rgba(212,175,55,.35))}
+@keyframes вращение{from{rotate:0deg}to{rotate:360deg}}
+@media (prefers-reduced-motion: reduce){.планета,.планета i{animation:none}}
+@media (prefers-reduced-transparency: reduce){.сцена,.манифест-карта,.примитив{background:#14171C}}
+.сцена-пусто{color:var(--dim);font-size:13.5px;text-align:center;max-width:250px;position:relative;z-index:2}
+.сцена-подпись{position:absolute;left:14px;bottom:10px;font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:var(--dim);z-index:2}
+/* ── ЭМЕРДЖЕНТНОСТЬ: новое слово ── */
+.новое-слово{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 0}
+.новое-слово label{font-size:13.5px;color:var(--dim)}
+.новое-слово input[type=text]{min-height:44px;padding:10px 16px;border-radius:12px;border:1px solid rgba(240,240,248,.2);background:rgba(240,240,248,.04);color:#E8E8E8;font-size:15px;width:min(260px,60vw)}
+.новое-слово input[type=text]:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px;border-color:rgba(212,175,55,.5)}
+.просвет-строка{margin:14px 0 0;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--dim)}
+.просвет-строка b{color:#E8D5A8;font-weight:600}
+/* ── ПОД КАПОТ ── */
+details.капот{border:var(--border-subtle);border-radius:16px;background:var(--glass-dark);margin:26px 0 0;padding:0}
+details.капот summary{cursor:pointer;list-style:none;padding:15px 20px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8D5A8;display:flex;align-items:center;gap:10px;min-height:44px}
+details.капот summary::-webkit-details-marker{display:none}
+details.капот summary::before{content:"▸";transition:rotate .2s;color:#D4AF37}
+details.капот[open] summary::before{rotate:90deg}
+details.капот summary:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:-4px;border-radius:16px}
+details.капот .внутри{padding:4px 20px 20px;font-size:14px;color:var(--text-secondary)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid rgba(240,240,248,.12);padding:8px 10px;text-align:left;vertical-align:top}
+th{color:#E8D5A8;font-weight:600;background:rgba(212,175,55,.06);font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.06em}
+td code{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#F0D78C;background:rgba(212,175,55,.07);border-radius:6px;padding:1px 6px}
+pre{background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.12);border-radius:12px;padding:14px 16px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#C8CCD2}
+footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
+.журнал{margin:12px 0 0;padding:10px 14px;border-radius:12px;border:1px dashed rgba(240,240,248,.2);font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--dim);display:none}
+.журнал.видно{display:block}
+.журнал b{color:#E8D5A8}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="logo" aria-hidden="true">S</div>
+    <div><b>СВОБОДА</b><span>·29 · К2 · живой интерфейс над Composition Engine</span></div>
+    <span class="badge">·29 · СОСТОЯНИЕ: ПРЕДЛОЖЕНО</span>
+  </div>
+</header>
+<main class="wrap">
+  <h1>Свобода <em>выбора из многообразия</em></h1>
+  <p class="lead">Человек произносит намерение словом. Машина не приказывает — машина собирает
+  варианты среды из примитивов и честно показывает, где среда урезана, где чего не хватает,
+  и что многообразие подсказывает сверх словаря. Жить средой или не жить — решает человек.</p>
+  <div class="essence">
+    <b>Закон комнаты.</b> Каждое состояние машины — «предложено» (СВОД I-01).
+    Недоступный примитив — не тихая подмена, а отметка с причиной (I-04).
+    Память вечной становится только явным выбором человека (I-06).
+    Неизвестное слово — честный отказ, без выдумок (I-09).
+    Новое слово — новый режим человека без правки ядра (закон №13, EMERGENCE).
+  </div>
+
+  <h2>Шаг 1 · <em>НАМЕРЕНИЕ</em></h2>
+  <fieldset>
+    <legend>Человек произносит слово деятельности</legend>
+    <div class="слова" id="слова" role="radiogroup" aria-label="Намерение человека"></div>
+  </fieldset>
+
+  <h2>Шаг 2 · <em>МНОГООБРАЗИЕ</em> — что среда умеет и из чего строит</h2>
+  <h3>Способности этой среды <span title="Машина не прячет возможности: выключенное = отсутствует, и варианты честно урезаются (I-04)">— включай честно</span></h3>
+  <div class="возможности" id="возможности"></div>
+  <h3>Реестр примитивов <span title="Примитив — строительный блок среды, а не модуль дома">— кирпичи сред</span></h3>
+  <div class="реестр" id="реестр"></div>
+
+  <h2>Шаг 3 · <em>ПРЕДЛОЖЕНО</em> — машина собрала, человек смотрит</h2>
+  <div class="живой-узел">
+    <div>
+      <div class="предложения" id="предложения" aria-live="polite"></div>
+      <div class="решение">
+        <button class="действие" id="кнЖить" title="Поднять среду на сцене: машина не против, человек за" disabled>Жить этой средой</button>
+        <label class="память-выбор" title="I-06: память вечная — только явный выбор человека; машина сама вечного не ставит">
+          <input type="checkbox" id="вечное"> память вечная
+        </label>
+        <button class="тихое" id="кнСохранить" title="Явное решение: записать собранную среду в память устройства" disabled>Сохранить среду</button>
+        <button class="тихое" id="кнСтереть" title="Явное решение: стереть сохранённую среду с устройства">Стереть сохранённое</button>
+      </div>
+      <div class="журнал" id="журнал" aria-live="polite"></div>
+    </div>
+    <div class="сцена" id="сцена" aria-hidden="true">
+      <div class="орбита o1"></div><div class="орбита o2"></div><div class="орбита o3"></div>
+      <div class="ядро" id="ядроСлова">слово</div>
+      <p class="сцена-пусто" id="сцена-пусто">Произнеси намерение — среда встанет на сцену</p>
+      <span class="сцена-подпись" id="сцена-подпись">сцена · 0 картинок — примитивы вживую</span>
+    </div>
+  </div>
+
+  <h2>Эмерджентность · <em>СВОЁ СЛОВО БЕЗ ПРАВКИ ЯДРА</em></h2>
+  <p class="lead" style="font-size:15px">Словарь комнаты расширяется честно: назови слово деятельности,
+  отметь примитивы — и у дома появится режим, которого не было. Ядро движка не тронуто.</p>
+  <form class="новое-слово" id="формаСлова">
+    <label for="полеСлова">Слово человека:</label>
+    <input type="text" id="полеСлова" name="слово" placeholder="например: помолчим" autocomplete="off" minlength="2" required>
+    <button class="действие" type="submit" title="объявиНамерение(): расширение словаря без правки ядра">Объявить слово</button>
+  </form>
+  <p class="просвет-строка" id="просвет" aria-live="polite"></p>
+
+  <details class="капот">
+    <summary>Под капот — законы, доступность, расширение</summary>
+    <div class="внутри">
+      <h3>СВОД ЗАКОНОВ ДОМА — как живёт эта комната</h3>
+      <table>
+        <tr><th>Закон</th><th>В комнате ·29</th></tr>
+        <tr><td><code>I-01 ЧЕЛОВЕК РЕШАЕТ</code></td><td>движок возвращает варианты со статусом «предложено»; кнопка «Жить этой средой» — единственный путь из предложения в жизнь; машина не имеет кнопки «включить сама».</td></tr>
+        <tr><td><code>I-04 FALLБЭК ВИДЕН</code></td><td>выключишь способность среды — примитив не исчезнет тихо: карта честно покраснеет и назовёт причину «среда урезана: что именно и чего не хватает».</td></tr>
+        <tr><td><code>I-06 ПАМЯТЬ — РЕШЕНИЕ</code></td><td>по умолчанию память temporary; «вечная» ставится только галочкой человека; сохранение и стирание — явные кнопки, машина ничего не пишет сама.</td></tr>
+        <tr><td><code>I-09 БЕЗ СКРЫТОЙ ВЛАСТИ</code></td><td>неизвестное слово не выдумывается: движок отвечает «НАМЕРЕНИЕ_НЕИЗВЕСТНО», и комната предлагает объявить слово честно.</td></tr>
+      </table>
+      <h3>Доступность — аудит по WCAG 2.2</h3>
+      <table>
+        <tr><th>Критерий 2.2</th><th>Как закрыт</th></tr>
+        <tr><td>2.4.7 Focus Visible / 2.4.11 Focus Not Obscured</td><td>фокус — золотая обводка с отступом на всех контролах; шапка не перекрывает фокус (sticky с прозрачным фоном, offset −4px только у капота внутри контейнера).</td></tr>
+        <tr><td>2.5.8 Target Size (минимум)</td><td>все интерактивные цели ≥ 24px, основные — 44px: слова-намерения, чекбоксы, кнопки.</td></tr>
+        <tr><td>2.5.7 Dragging Alternatives</td><td>перетаскивания нет вовсе: всё собирается выбором, не мышцей.</td></tr>
+        <tr><td>Нативная семантика</td><td>fieldset+legend для намерения, нативные чекбоксы, aria-live для предложений и журнала, сцена aria-hidden с текстовой альтернативой рядом.</td></tr>
+        <tr><td>2.3.3 Animation from Interactions</td><td>орбиты останавливаются при prefers-reduced-motion; стекло уплотняется при prefers-reduced-transparency.</td></tr>
+      </table>
+      <h3>Мировая практика 2026, взятая в дом</h3>
+      <p>View Transitions между дверями дома — нативные <code>@view-transition</code> правила в мосту
+      singulyar-design-v3.css (деградирует тихо: браузер без поддержки просто открывает дверь).
+      Speculation Rules сознательно не взят: сервис-воркер дома и так открывает двери из кэша мгновенно —
+      чужой механизм поверх собственного ядра не нужен.</p>
+      <h3>Расширение многообразия — для инженера</h3>
+      <pre>// примитив, который расширяет чужие слова (EMERGENCE, §37 ТЗ):
+объявиПримитив({
+  имя: 'проектор',
+  требует: ['экран'],
+  даёт: ['свет', 'сцена'],
+  представления: ['холст'],
+  транспорты: [],
+  расширяет: ['посмотрим']   // машина предложит его к этому слову
+});                          // ядро движка не тронуто — такт v1.37.0 доказал 12/12</pre>
+      <h3>Честные границы</h3>
+      <p>Комната — прототип слоя композиции (prototype_only по ГОТОВНОСТЬ.manifest): она собирает
+      манифесты сред и показывает их вживую, но не поднимает связь и звонки сама — это двери ·22 и ·23.
+      Мульти-устройство остаётся в known_nonproduction: среда одной личности живёт на устройстве человека.</p>
+    </div>
+  </details>
+
+  <footer>СИНГУЛЯР ·29 СВОБОДА · такт v1.38.0 · движок композиции v0.1 (БИБЛИОТЕКИ/кристалл/composition.mjs, открытый код)<br>
+  свобода выбора из имеющегося многообразия · человек решает · ноль картинок — примитивы вживую</footer>
+</main>
+<script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script type="module">
+/* ═══ КОМНАТА ·29 СВОБОДА — UI над Composition Engine v0.1 ═══
+   Закон репозитория: нулевая innerHTML — только createElement/textContent.
+   Машина предлагает (состояние «предложено») — человек решает (СВОД I-01). */
+import { COMPOSITION, compose, validate, реестр, намерения, объявиНамерение,
+         объявиПримитив, просвет } from './БИБЛИОТЕКИ/кристалл/composition.mjs';
+
+/* ── МНОГООБРАЗИЕ: примитивы этой среды (реестр объявляет среда, не ядро) ── */
+[
+  { имя:'присутствие', требует:[], даёт:['люди'], представления:['аура','список'], транспорты:[],
+    расширяет:['поговорить','созвонимся','посмотрим','споём','обменяемся'],
+    описание:'кто здесь — живое кольцо людей, не аккаунтов' },
+  { имя:'речь', требует:['микрофон'], даёт:['смысл'], представления:['текст','субтитры'], транспорты:[],
+    расширяет:['поговорить'], описание:'голос превращается в смысл на устройстве' },
+  { имя:'слово', требует:[], даёт:['смысл'], представления:['текст','брайль'], транспорты:[],
+    расширяет:['поговорить','посмотрим'], описание:'текст как самый честный канал' },
+  { имя:'голос', требует:['микрофон'], даёт:['аудио'], представления:['голос'], транспорты:[],
+    расширяет:['споём','созвонимся','поговорить'], описание:'живой голос без посредников' },
+  { имя:'минусовка', требует:[], даёт:['аудио'], представления:['звук'], транспорты:[],
+    расширяет:['споём'], описание:'плюс для пения, играет локально' },
+  { имя:'слова-караоке', требует:[], даёт:['слова'], представления:['текст','субтитры'], транспорты:[],
+    расширяет:['споём'], описание:'строки стираются по такту — UltraStar-путь дома' },
+  { имя:'запись', требует:['хранилище'], даёт:['запись','память'], представления:['файл'], транспорты:[],
+    расширяет:['споём','сохранить'], описание:'снять дубль на устройство, память по решению' },
+  { имя:'экран-кадр', требует:['экран'], даёт:['экран'], представления:['холст'], транспорты:[],
+    расширяет:['посмотрим'], описание:'общий холст для взгляда' },
+  { имя:'синхронизация', требует:['сеть'], даёт:['синхронизация'], представления:['такт'], транспорты:['p2p'],
+    расширяет:['споём','посмотрим','созвонимся'], описание:'общий такт: стреляем вместе' },
+  { имя:'файлы', требует:['хранилище'], даёт:['файлы'], представления:['файл'], транспорты:[],
+    расширяет:['обменяемся','сохранить'], описание:'бумажки и тяжёлые пакеты от руки к руке' },
+  { имя:'доставка', требует:['сеть'], даёт:['доставка'], представления:['факт'], транспорты:['p2p','релеи'],
+    расширяет:['поговорить','обменяемся','созвонимся'], описание:'факт доходит — дедуп и ACK как в ядре' },
+  { имя:'память-журнал', требует:['хранилище'], даёт:['память'], представления:['журнал'], транспорты:[],
+    расширяет:['сохранить'], описание:'append-only журнал фактов, стирается только человеком' },
+  { имя:'проектор', требует:['экран'], даёт:['свет','сцена'], представления:['холст'], транспорты:[],
+    расширяет:['посмотрим'],
+    описание:'расширение из теста эмерджентности: новый примитив — новый режим, ядро не тронуто' }
+].forEach(объявиПримитив);
+
+const ВОЗМОЖНОСТИ = [
+  { id:'офлайн-ядро', подпись:'офлайн-ядро', статично:true, подсказка:'фундамент дома: работает без интернета всегда' },
+  { id:'экран',      подпись:'экран',      вкл:true,  подсказка:'у устройства есть экран — выключи и смотри, как среда честно урезается (I-04)' },
+  { id:'хранилище',  подпись:'хранилище',  вкл:true,  подсказка:'место для памяти и файлов' },
+  { id:'микрофон',   подпись:'микрофон',   вкл:false, подсказка:'доступ к голосу: включается только тобой' },
+  { id:'сеть',       подпись:'сеть',       вкл:false, подсказка:'дом живёт офлайн; сеть — осознанный ускоритель, не база' }
+];
+const КЛЮЧ = 'singulyar-svoboda-v1';
+const КТО = 'человек-на-устройстве';
+const плюсСлова = new Set();
+
+const $ = (id) => document.getElementById(id);
+const состояние = { слово:null, включены:new Set(ВОЗМОЖНОСТИ.filter(в=>в.вкл).map(в=>в.id)),
+                    взяты:new Set(), запрещены:new Set(), вечное:false, манифест:null };
+
+/* ── ШАГ 1: слова-намерения (radiogroup из нативных радио) ── */
+function построитьСлова(плюсовые) {
+  const бокс = $('слова'); бокс.textContent = '';
+  намерения().forEach(function (слово) {
+    const об = document.createElement('span'); об.className = 'слово' + (плюсовые && плюсовые.has(слово) ? ' плюс' : '');
+    const ввод = document.createElement('input');
+    ввод.type = 'radio'; ввод.name = 'намерение'; ввод.id = 'слово-' + слово; ввод.value = слово;
+    ввод.checked = состояние.слово === слово;
+    ввод.addEventListener('change', function(){ состояние.слово = слово; собрать(); });
+    const мет = document.createElement('label'); мет.htmlFor = ввод.id;
+    мет.title = 'намерение: ' + слово + ' — машина соберёт примитивы, жить средой решаешь ты';
+    мет.textContent = слово;
+    об.appendChild(ввод); об.appendChild(мет); бокс.appendChild(об);
+  });
+}
+/* ── ШАГ 2а: способности среды ── */
+function построитьВозможности() {
+  const бокс = $('возможности'); бокс.textContent = '';
+  ВОЗМОЖНОСТИ.forEach(function (в) {
+    const мет = document.createElement('label'); мет.className = 'возможность';
+    if (в.статично) мет.dataset.статична = '1';
+    мет.title = в.подсказка || ('способность среды: ' + в.id);
+    const ввод = document.createElement('input');
+    if (в.статично) { ввод.type = 'checkbox'; ввод.checked = true; ввод.disabled = true; }
+    else {
+      ввод.type = 'checkbox'; ввод.checked = состояние.включены.has(в.id);
+      ввод.addEventListener('change', function(){
+        if (ввод.checked) состояние.включены.add(в.id); else состояние.включены.delete(в.id);
+        собрать();
+      });
+    }
+    const текст = document.createElement('span'); текст.textContent = (в.статично ? '⬢ ' : '') + в.подпись;
+    мет.appendChild(ввод); мет.appendChild(текст); бокс.appendChild(мет);
+  });
+}
+/* ── ШАГ 2б: реестр примитивов ── */
+function построитьРеестр() {
+  const бокс = $('реестр'); бокс.textContent = '';
+  реестр().forEach(function (пр) {
+    const кар = document.createElement('div'); кар.className = 'примитив'; кар.dataset.имя = пр.имя;
+    const верх = document.createElement('div'); верх.className = 'верх';
+    const ввод = document.createElement('input');
+    ввод.type = 'checkbox'; ввод.id = 'пр-' + пр.имя; ввод.checked = состояние.взяты.has(пр.имя);
+    ввод.setAttribute('aria-label', 'включить примитив ' + пр.имя + ' в явный выбор');
+    ввод.addEventListener('change', function(){
+      if (ввод.checked) { состояние.взяты.add(пр.имя); состояние.запрещены.delete(пр.имя); }
+      else состояние.взяты.delete(пр.имя);
+      собрать();
+    });
+    const имя = document.createElement('b'); имя.textContent = пр.имя;
+    const запрет = document.createElement('label'); запрет.className = 'запрет';
+    запрет.title = 'I-01/I-09: запрет явный — машина не соберёт этот примитив в среду';
+    const запретВвод = document.createElement('input'); запретВвод.type = 'checkbox';
+    запретВвод.checked = состояние.запрещены.has(пр.имя);
+    запретВвод.setAttribute('aria-label', 'запретить примитив ' + пр.имя);
+    запретВвод.addEventListener('change', function(){
+      if (запретВвод.checked) { состояние.запрещены.add(пр.имя); состояние.взяты.delete(пр.имя); ввод.checked = false; }
+      else состояние.запрещены.delete(пр.имя);
+      собрать();
+    });
+    запрет.appendChild(запретВвод);
+    запрет.appendChild(document.createTextNode('запретить'));
+    верх.appendChild(ввод); верх.appendChild(имя); верх.appendChild(запрет);
+    const опис = document.createElement('p'); опис.textContent = пр.описание || пр.даёт.join(', ');
+    const мета = document.createElement('div'); мета.className = 'мета';
+    (пр.даёт||[]).forEach(function(д){ const s=document.createElement('span'); s.className='даст'; s.title='примитив вносит в среду'; s.textContent='даёт: '+д; мета.appendChild(s); });
+    (пр.требует||[]).forEach(function(т){ const s=document.createElement('span'); s.title='требование среды: выключенная способность честно урежет вариант (I-04)'; s.textContent='требует: '+т; мета.appendChild(s); });
+    (пр.расширяет||[]).forEach(function(р){ const s=document.createElement('span'); s.title='слово, к которому многообразие подскажет этот примитив'; s.textContent='слово: '+р; мета.appendChild(s); });
+    const нед = document.createElement('p'); нед.className = 'недостаток';
+    кар.appendChild(верх); кар.appendChild(опис); кар.appendChild(мета); кар.appendChild(нед);
+    бокс.appendChild(кар);
+  });
+}
+/* ── ШАГ 3: СОБРАТЬ — машина предлагает, карточка честная ── */
+function очистить(узел) { while (узел.firstChild) узел.removeChild(узел.firstChild); }
+
+function собрать() {
+  const бокс = $('предложения'); очистить(бокс);
+  $('кнЖить').disabled = true; $('кнСохранить').disabled = true;
+  $('кнЖить').classList.remove('жива'); $('сцена').classList.remove('жива');
+  состояние.манифест = null;
+  document.querySelectorAll('.примитив').forEach(function(кар){
+    кар.classList.remove('урезан','выбран');
+    const нед = кар.querySelector('.недостаток'); if (нед) нед.textContent = '';
+  });
+  if (!состояние.слово) { сцена(); return; }
+
+  const ответ = compose({
+    кто: КТО,
+    намерение: состояние.слово,
+    контекст: { возможности: [...состояние.включены] },
+    выбор: { примитивы: состояние.взяты.size ? [...состояние.взяты] : null,
+             запретить: состояние.запрещены.size ? [...состояние.запрещены] : null,
+             память: состояние.вечное ? 'вечное' : '' }
+  });
+
+  if (!ответ.ок) {
+    const кар = document.createElement('div'); кар.className = 'манифест-карта';
+    const ст = document.createElement('span'); ст.className = 'статус'; ст.textContent = 'отказ честный · I-09';
+    const заг = document.createElement('h3'); заг.textContent = ответ.причина === 'НАМЕРЕНИЕ_НЕИЗВЕСТНО'
+      ? 'Слова «' + состояние.слово + '» нет в словаре'
+      : 'Среда не собрана: ' + ответ.причина;
+    const стр = document.createElement('p'); стр.className = 'строка';
+    стр.textContent = ответ.причина === 'НАМЕРЕНИЕ_НЕИЗВЕСТНО'
+      ? 'Машина не выдумывает: объяви слово в разделе «Эмерджентность» — и оно станет режимом без правки ядра.'
+      : 'Человек решает: измени выбор — или объяви недостающее как новый примитив.';
+    кар.appendChild(ст); кар.appendChild(заг); кар.appendChild(стр); бокс.appendChild(кар);
+    сцена(); обновитьПросвет(); return;
+  }
+
+  ответ.варианты.forEach(function (м) { бокс.appendChild(картаМанифеста(м)); });
+  сцена(ответ.варианты[0]);
+  обновитьПросвет();
+}
+
+function картаМанифеста(м) {
+  const верно = validate(м);
+  const кар = document.createElement('div'); кар.className = 'манифест-карта'; кар.dataset.id = м.id;
+  const ст = document.createElement('span'); ст.className = 'статус';
+  ст.title = 'машина только предлагает: жить средой — решение человека (I-01)';
+  ст.textContent = 'предложено · ' + (верно.ok ? 'манифест валиден' : 'проверка: ' + верно.причина);
+  кар.appendChild(ст);
+  const заг = document.createElement('h3');
+  заг.textContent = 'Среда по слову «' + м.intent + '»';
+  кар.appendChild(заг);
+  строкаВ(кар, 'участники: ', [м.участники.join(', ')]);
+  строкаВ(кар, 'представления: ', м.представления.length ? м.представления : ['— среда молчит в представлениях —']);
+  строкаВ(кар, 'транспорты: ', м.транспорты.length ? м.транспорты : ['без сети — всё локально']);
+  строкаВ(кар, 'память: ', [м.память.retention === 'persistent'
+      ? 'вечная — решением человека (I-06)'
+      : 'temporary: машина сама вечного не ставит (I-06)']);
+  const чипы = document.createElement('div'); чипы.className = 'чипсы';
+  м.примитивы.forEach(function (имя) {
+    const ч = document.createElement('span'); ч.textContent = имя; чипы.appendChild(ч);
+    const карЭл = документКарточка(имя); if (карЭл) карЭл.classList.add('выбран');
+  });
+  (м.расширения||[]).forEach(function (имя) {
+    const ч = document.createElement('span'); ч.className = 'добавка';
+    ч.title = 'многообразие подсказывает: примитив объявлен со словом «расширяет» — включить решает человек';
+    ч.textContent = 'многообразие подсказывает: ' + имя; чипы.appendChild(ч);
+  });
+  (м.недостающиеПримитивы||[]).forEach(function (имя) {
+    const ч = document.createElement('span'); ч.className = 'чужой';
+    ч.title = 'ТЗ §36: недостающий примитив назван честно — объявите его объявиПримитив()';
+    ч.textContent = 'нет в реестре: ' + имя; чипы.appendChild(ч);
+  });
+  кар.appendChild(чипы);
+  if (м.fallback && м.причина) {
+    const пред = document.createElement('p'); пред.className = 'предупреждение видно';
+    пред.textContent = 'честный fallback: ' + м.причина + ' (I-04 — подмена не спрятана)';
+    кар.appendChild(пред);
+    м.примитивы.concat((м.причина.replace('СРЕДА_УРЕЗАНА: ','').split(', ')||[])).forEach(function(имя){
+      const карЭл = документКарточка(имя.trim());
+      if (карЭл && м.причина.indexOf(имя.trim()) >= 0) карЭл.classList.add('урезан');
+    });
+  }
+  if (м.примитивы.length) {
+    $('кнЖить').disabled = false; $('кнСохранить').disabled = false;
+  }
+  состояние.манифест = м;
+  return кар;
+}
+function строкаВ(кар, заголовок, значения) {
+  const стр = document.createElement('p'); стр.className = 'строка';
+  const б = document.createElement('b'); б.textContent = заголовок;
+  стр.appendChild(б); стр.appendChild(document.createTextNode(значения.join(' · ')));
+  кар.appendChild(стр);
+}
+function документКарточка(имя) {
+  return document.querySelector('.примитив[data-имя="' + CSS.escape(имя) + '"]');
+}
+/* ── СЦЕНА: векторные плоскости на орбитах (0 картинок) ── */
+function сцена(м) {
+  ['.планета'].forEach(function(с){ document.querySelectorAll(с).forEach(function(эл){ эл.remove(); }); });
+  const пусто = $('сцена-пусто');
+  if (!м || !м.примитивы.length) { пусто.hidden = false; $('ядроСлова').textContent = 'слово'; return; }
+  пусто.hidden = true;
+  $('ядроСлова').textContent = м.intent;
+  const радиусы = [100, 148, 196];
+  м.примитивы.slice(0, 11).forEach(function (имя, i) {
+    const пл = document.createElement('div'); пл.className = 'планета' + (i % 3 === 0 ? ' золотая' : '');
+    пл.style.setProperty('--период', (20 + i * 7) + 's');
+    const угол = (360 / Math.max(6, м.примитивы.length)) * i;
+    const рад = радиусы[i % 3];
+    пл.style.transform = 'rotate(' + угол + 'deg) translateX(' + рад + 'px)';
+    const inner = document.createElement('i'); inner.textContent = имя;
+    пл.appendChild(inner); $('сцена').appendChild(пл);
+  });
+  $('сцена-подпись').textContent = 'сцена · «' + м.intent + '» · примитивов: ' + м.примитивы.length;
+}
+/* ── РЕШЕНИЯ ЧЕЛОВЕКА (I-01/I-06) ── */
+$('кнЖить').addEventListener('click', function () {
+  if (!состояние.манифест) return;
+  document.querySelectorAll('.манифест-карта').forEach(function(к){ к.classList.add('жива'); });
+  журнал('среда «' + состояние.манифест.intent + '» живёт: ' + состояние.манифест.примитивы.length +
+         ' примитивов · состояние: человек сказал «да» (I-01)');
+});
+$('вечное').addEventListener('change', function () {
+  состояние.вечное = $('вечное').checked; собрать();
+});
+$('кнСохранить').addEventListener('click', function () {
+  if (!состояние.манифест) return;
+  try {
+    localStorage.setItem(КЛЮЧ, JSON.stringify({
+      intent: состояние.манифест.intent, примитивы: [...состояние.манифест.примитивы],
+      вечное: состояние.вечное, такт: 'v1.38.0'
+    }));
+    журнал('сохранено на устройство по явному решению: среда «' + состояние.манифест.intent + '» (I-06)');
+  } catch (е) { журнал('хранилище недоступно: ' + е.message); }
+});
+$('кнСтереть').addEventListener('click', function () {
+  try { localStorage.removeItem(КЛЮЧ); журнал('сохранённая среда стёрта с устройства — тоже твоим решением'); }
+  catch (е) { журнал('хранилище недоступно: ' + е.message); }
+});
+function журнал(текст) {
+  const ж = $('журнал'); ж.classList.add('видно'); ж.textContent = '⬢ ' + текст;
+}
+/* ── ЭМЕРДЖЕНТНОСТЬ: своё слово без правки ядра ── */
+$('формаСлова').addEventListener('submit', function (событие) {
+  событие.preventDefault();
+  const слово = $('полеСлова').value.trim();
+  if (слово.length < 2) { журнал('честный отказ: слово короче двух букв — не режим'); return; }
+  if (!состояние.взяты.size) { журнал('отметь примитивы в реестре — слово собирается из многообразия, не из воздуха'); return; }
+  const ответ = объявиНамерение(слово, [...состояние.взяты]);
+  if (!ответ.ok) { журнал('движок отказал: ' + ответ.причина); return; }
+  журнал('слово «' + слово + '» принято в словарь этой комнаты: ' + ответ.слово +
+         ' = [' + [...состояние.взяты].join(', ') + '] — новый режим без правки ядра (§37)');
+  $('полеСлова').value = '';
+  плюсСлова.add(слово);
+  построитьСлова(плюсСлова);
+  состояние.слово = слово;
+  собрать();
+});
+function обновитьПросвет() {
+  const п = просвет();
+  $('просвет').textContent = '';
+  const б = document.createElement('b'); б.textContent = 'composition engine v' + п.движок;
+  $('просвет').appendChild(б);
+  $('просвет').appendChild(document.createTextNode(
+    ' · примитивов в реестре: ' + п.примитивов + ' · слов в словаре: ' + п.намерений +
+    ' · ядро кристалла не тронуто'));
+}
+/* ── ВОЗВРАТ СОХРАНЁННОГО: только то, что человек сам сохранил (I-06) ── */
+(function вернутьСохранённое() {
+  try {
+    const сыр = localStorage.getItem(КЛЮЧ); if (!сыр) return;
+    const среда = JSON.parse(сыр); if (!среда || !среда.intent) return;
+    (среда.примитивы||[]).forEach(function(имя){ if (реестр().some(function(п){return п.имя===имя;})) состояние.взяты.add(имя); });
+    состояние.вечное = !!среда.вечное; $('вечное').checked = состояние.вечное;
+    состояние.слово = среда.intent;
+    журнал('восстановлена сохранённая тобой среда «' + среда.intent + '» — стереть можно одной кнопкой');
+  } catch (е) {}
+})();
+построитьСлова(плюсСлова);
+построитьВозможности();
+построитьРеестр();
+обновитьПросвет();
+собрать();
+</script>
+<script defer src="./singulyar-modules.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+</html>
