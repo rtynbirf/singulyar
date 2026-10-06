@@ -25,7 +25,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 /* ── ТИТУЛ = КАРТИНА-ФУНДАМЕНТ (закон, такт v1.34.0): кристалл-алмаз на
    стеклянном пьедестале, титул, подчёрк, девиз, три тезиса — живой холст ── */
 #crystalTitle{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(18px,3.5vh,40px) 16px clamp(16px,3vh,32px);border:0;background:none}
-#crystalTitle canvas{width:min(430px,86vw);height:min(520px,58svh);min-height:400px}
+#crystalTitle img{width:min(500px,88vw);height:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
 /* защитный сброс: картина висит в void без подложки кнопки — даже если css дома не дошёл */
 #crystalButton{appearance:none;background:none;border:0;padding:0;border-radius:0;display:block}
 .sng-crystal-title{margin:14px 0 6px;font-family:Georgia,'Times New Roman','PT Serif',serif;font-weight:400;font-size:clamp(34px,7vw,58px);border:0;line-height:1.08;letter-spacing:.10em;background:linear-gradient(180deg,#F8FAFE 0%,#CDD3DE 52%,#8E97A6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
@@ -77,7 +77,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
     <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="false"
             aria-controls="осколкиСлой"
             aria-label="Кристалл SINGULYAR — рассыпать на двери дома">
-      <canvas id="crystalHero" aria-hidden="true"></canvas>
+      <img id="crystalHero" src="./КРИСТАЛЛ.png" alt="" aria-hidden="true">
     </button>
     <div id="осколкиСлой" class="осколки-слой" hidden></div>
     <h2 class="sng-crystal-title" style="margin-top:6px">SINGULYAR</h2>
@@ -91,31 +91,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
       <!-- pills по макету: границы тоньше, стекло, как на канонной картине -->
     </div>
   </section>
-  <script>
-  /* КРИСТАЛЛ-ФУНДАМЕНТ — живой холст по канонной картине владельца
-     (гранёный алмаз + золотое ядро + два кольца + спутники + пьедестал;
-     канон: ноль изображений). ОСКОЛКИ: касание рассыпает кристалл на
-     17 дверей-осколков; осколок остаётся там, где человек его поставил
-     (ОН РЕШАЕТ); позиция — в localStorage. */
-  (function(){
-    function старт(){
-      try{
-        if(!(window.SNG&&window.SNG.кристалл)) return;
-        var c=document.getElementById('crystalHero');
-        if(c) window.SNG.кристалл(c,{});
-        if(window.SNG.осколки){
-          var кн=document.getElementById('crystalButton');
-          var слой=document.getElementById('осколкиСлой');
-          if(кн&&слой) window.SNG.осколкиДвижок=window.SNG.осколки({
-            кнопка:кн, слой:слой, канвас:c
-          });
-        }
-      }catch(e){}
-    }
-    if(window.SNG) старт();
-    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',старт); else document.addEventListener('DOMContentLoaded',старт); }
-  })();
-  </script>
+  
 
   <details id="модули" class="нить" hidden>
     <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 17 дверей">
