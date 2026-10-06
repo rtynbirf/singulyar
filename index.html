@@ -691,7 +691,15 @@ try{
       }
       играть(состояние.n);
     }
-    function жать(кн,вкл){ try{ кн.setAttribute('aria-pressed',вкл?'true':'false'); }catch(е6){} }
+    function жать(кн,вкл){
+      try{
+        кн.setAttribute('aria-pressed',вкл?'true':'false');
+        /* справка переключателя живёт вместе с состоянием — обновляем
+           здесь же, внутри обработчика: без гонок с макрозадачами движка */
+        var т=кн.getAttribute('data-справка')||'';
+        if(т) кн.setAttribute('title', т+(вкл?' Сейчас: включено.':' Сейчас: выключено.'));
+      }catch(е6){}
+    }
     бПлей.addEventListener('click',function(){ try{ играть(состояние.n); }catch(е7){} });
     бПауза.addEventListener('click',function(){
       try{ if(аудио&&!аудио.paused) аудио.pause(); строка(состояние.n,false); }catch(е8){}
