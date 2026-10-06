@@ -246,3 +246,10 @@ main.glass-void>section{margin-top:var(--void-md)}
 @media (prefers-reduced-transparency: reduce){
   .glass-panel,.glass-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:#14171C}
 }
+
+/* ── VIEW TRANSITIONS (v1.44.0 «ПОЛИМАТ»): морф дверей без сети ──
+   Прогрессивное улучшение: браузер без поддержки просто игнорирует;
+   prefers-reduced-motion уважаем — движение только кто попросил. */
+@media (prefers-reduced-motion: no-preference){
+  @view-transition{navigation:auto}
+}
