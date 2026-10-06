@@ -833,6 +833,10 @@
       'color:#C8CCD2;letter-spacing:.18em;vertical-align:middle}',
     '@media (max-width:640px){.осколок{width:24px;height:24px;margin:-12px 0 0 -12px}',
       '.осколок .бирка{display:none}}',
+    /* живой шар: канва-сцена разлёта — крупнее кнопки, осколки улетают за её край */
+    '.шаро-осколки{position:absolute;left:-40%;top:-40%;width:180%;height:180%;',
+      'pointer-events:none;display:block;opacity:0;transition:opacity .12s linear}',
+    '.шаро-осколки.жив{opacity:1}',
     '@media (prefers-reduced-motion: reduce){.осколок .остриё,.осколок .бирка{transition:none!important}}'
   ].join('\n');
 
@@ -860,6 +864,177 @@
     if (!кнопка || !слой || слой.dataset.осколки) return null;
     слой.dataset.осколки = '1';
     осколкиСтили();
+
+    /* ── ЖИВОЙ ШАР (слово владельца: «ОСКОЛКИ РАЗЛЕТАТСЯ, ФУНКЦИИ ПОЯВЛЯТСЯ»):
+       сама картина кристалла разлетается на фрагменты-стёкла. Нарезка — полярная,
+       с дрожью углов и радиусов: органика, не сетка. Разлёт: радиальный импульс
+       + вихрь + вращение, вязкое затухание — и оседание в медленный дрейф вокруг
+       ядра: организм дышит, пока рассыпан. Сбор: каждый осколок встаёт на своё
+       место снаружи внутрь. Двери дома — настоящий DOM поверх канвы (закон:
+       реальные контролы, не рисунок). reduced-motion: шар не трогаем вовсе. */
+    var сц = null;
+    function шароСцена() {
+      var img = (опции.канвас && опции.канвас.tagName === 'IMG') ? опции.канвас : кнопка.querySelector('img');
+      if (!img || сокращено || !(window.requestAnimationFrame && window.performance && performance.now)) return null;
+      var кан = document.createElement('canvas');
+      кан.className = 'шаро-осколки';
+      кан.setAttribute('aria-hidden', 'true');
+      var ctx = кан.getContext('2d');
+      if (!ctx) return null;
+      var фрагменты = [], режим = 'цел', raf = 0, dpr = 1, W = 0, H = 0, DX = 0, DY = 0, t0 = 0;
+
+      function размер() {
+        var w = img.offsetWidth || img.naturalWidth || 500;
+        var h = img.offsetHeight || img.naturalHeight || 420;
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        W = Math.round(w * 1.8); H = Math.round(h * 1.8);
+        DX = w * 0.4; DY = h * 0.4;           /* канва шире кнопки на 40% с краёв */
+        кан.width = Math.round(W * dpr); кан.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function построить() {
+        фрагменты = [];
+        var w = img.offsetWidth || 500, h = img.offsetHeight || 420;
+        var cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2;
+        var мелко = w < 300;
+        var кольца = [0, .18, .38, .58, .78, 1.04];
+        for (var r = 0; r < кольца.length - 1; r++) {
+          var r0 = кольца[r] * R, r1 = кольца[r + 1] * R;
+          var сект = Math.max(6, Math.round((9 + r * 5) * (мелко ? .62 : 1)));
+          var сдв = Math.random() * 6.28318;
+          for (var s = 0; s < сект; s++) {
+            var a0 = сдв + (s / сект) * 6.28318 + (Math.random() - .5) * .11;
+            var a1 = сдв + ((s + 1) / сект) * 6.28318 + (Math.random() - .5) * .11;
+            var m0 = r0 * (.96 + Math.random() * .08), m1 = r1 * (.96 + Math.random() * .08);
+            var вер = [[m0, a0], [m1, a0], [m1, a1], [m0, a1]], п = [], sx = 0, sy = 0;
+            for (var k = 0; k < вер.length; k++)
+              п.push({ x: Math.cos(вер[k][1]) * вер[k][0], y: Math.sin(вер[k][1]) * вер[k][0] });
+            for (k = 0; k < п.length; k++) { sx += п[k].x; sy += п[k].y; }
+            sx /= п.length; sy /= п.length;
+            фрагменты.push({
+              п: п.map(function (p) { return { x: p.x - sx, y: p.y - sy }; }),
+              cx0: cx + sx, cy0: cy + sy,
+              x: 0, y: 0, vx: 0, vy: 0, rot: 0, vr: 0, а: 1,
+              sx2: 0, sy2: 0, sr2: 0, sa2: 1,
+              фи: Math.atan2(sy, sx), дист: Math.sqrt(sx * sx + sy * sy) / R
+            });
+          }
+        }
+      }
+
+      function кадр(время) {
+        raf = 0;
+        ctx.clearRect(0, 0, W, H);
+        var w = img.offsetWidth || 500, h = img.offsetHeight || 420;
+        var жив = true;
+        for (var i = 0; i < фрагменты.length; i++) {
+          var ф = фрагменты[i];
+          if (режим === 'сбор') {
+            var т = Math.min(1, (время - t0 - ф.дист * 260) / 620);
+            if (т < 0) т = 0;
+            var e = 1 - Math.pow(1 - т, 3);
+            ф.x = ф.sx2 * (1 - e); ф.y = ф.sy2 * (1 - e);
+            ф.rot = ф.sr2 * (1 - e); ф.а = ф.sa2 + (1 - ф.sa2) * e;
+            if (т < 1) жив = false;
+          } else {
+            if (режим === 'разлёт') {
+              ф.vx *= .958; ф.vy *= .958; ф.vr *= .985;
+              ф.а += (.55 - ф.а) * .03;
+              if (время - t0 > 900) режим = 'дрейф';
+            } else {                      /* дрейф: медленный вихрь вокруг ядра */
+              var px = ф.cx0 + ф.x - w / 2, py = ф.cy0 + ф.y - h / 2;
+              var rл = Math.sqrt(px * px + py * py) || 1;
+              var вл = .016 * (1.3 - ф.дист * .55);
+              ф.vx = ф.vx * .996 - (py / rл) * вл;
+              ф.vy = ф.vy * .996 + (px / rл) * вл;
+            }
+            ф.x += ф.vx; ф.y += ф.vy; ф.rot += ф.vr;
+          }
+          ctx.save();
+          ctx.translate(DX + ф.cx0 + ф.x, DY + ф.cy0 + ф.y);
+          ctx.rotate(ф.rot);
+          ф.а = Math.max(0, Math.min(1, ф.а));
+          ctx.globalAlpha = ф.а;
+          var пп = ф.п;
+          ctx.beginPath();
+          ctx.moveTo(пп[0].x, пп[0].y);
+          for (var j = 1; j < пп.length; j++) ctx.lineTo(пп[j].x, пп[j].y);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, -ф.cx0, -ф.cy0, w, h);
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = 'rgba(240,242,248,.13)';
+          ctx.stroke();
+          ctx.restore();
+        }
+        if (режим === 'сбор' && жив) {
+          режим = 'цел'; фрагменты = [];
+          кан.classList.remove('жив');
+          img.style.visibility = '';
+          return;
+        }
+        raf = requestAnimationFrame(кадр);
+      }
+
+      function пустить() { if (!raf) raf = requestAnimationFrame(кадр); }
+
+      function разлететься() {
+        if (!img.complete) { img.addEventListener('load', разлететься, { once: true }); return; }
+        размер(); построить();
+        режим = 'разлёт'; t0 = performance.now();
+        кан.classList.add('жив');
+        img.style.visibility = 'hidden';
+        for (var i = 0; i < фрагменты.length; i++) {
+          var ф = фрагменты[i];
+          var v = (1.7 + Math.random() * 2.4) * (.30 + .70 * ф.дист);
+          var ви = (Math.random() - .5) * 1.6;
+          ф.vx = Math.cos(ф.фи) * v - Math.sin(ф.фи) * ви;
+          ф.vy = Math.sin(ф.фи) * v + Math.cos(ф.фи) * ви;
+          ф.vr = (Math.random() - .5) * .055;
+          ф.а = 1;
+        }
+        пустить();
+      }
+
+      function собраться() {
+        if (режим === 'цел') return;
+        for (var i = 0; i < фрагменты.length; i++) {
+          var ф = фрагменты[i];
+          ф.sx2 = ф.x; ф.sy2 = ф.y; ф.sr2 = ф.rot; ф.sa2 = ф.а;
+        }
+        режим = 'сбор'; t0 = performance.now();
+        пустить();
+      }
+
+      /* восстановление рассыпанного после перезагрузки: пыль уже осела, без спектакля */
+      function мгновенно() {
+        if (!img.complete) { img.addEventListener('load', мгновенно, { once: true }); return; }
+        размер(); построить();
+        режим = 'дрейф'; t0 = performance.now();
+        кан.classList.add('жив');
+        img.style.visibility = 'hidden';
+        for (var i = 0; i < фрагменты.length; i++) {
+          var ф = фрагменты[i];
+          var v = (1.1 + Math.random() * 1.9) * (.30 + .70 * ф.дист);
+          ф.vx = Math.cos(ф.фи) * v; ф.vy = Math.sin(ф.фи) * v;
+          ф.vr = (Math.random() - .5) * .03; ф.а = .55;
+          for (var k = 0; k < 70; k++) { ф.vx *= .958; ф.vy *= .958; ф.x += ф.vx; ф.y += ф.vy; ф.rot += ф.vr; }
+        }
+        пустить();
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+        else if (режим !== 'цел') пустить();
+      });
+      window.addEventListener('resize', function () {
+        if (режим === 'дрейф' || режим === 'разлёт') мгновенно();
+      }, { passive: true });
+
+      кнопка.appendChild(кан);
+      return { разлететься: разлететься, собраться: собраться, мгновенно: мгновенно };
+    }
 
     var склад = осколкиСклад();
     var карта = {};                       /* id → { a, узел, кольцо, индекс } */
@@ -962,7 +1137,9 @@
       склад.состояние = 'рассыпан';
       осколкиПомнить(склад);
       слой.hidden = false;
-      расставить(true);
+      /* сначала шар разлетается — 150 мс тишины — затем встают двери дома */
+      if (сц) сц.разлететься();
+      setTimeout(function () { if (склад.состояние === 'рассыпан') расставить(true); }, сц ? 150 : 0);
       кнопка.classList.add('рассыпан');
       кнопка.setAttribute('aria-expanded', 'true');
       кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — собрать осколки обратно');
@@ -973,6 +1150,7 @@
     function собрать() {
       склад.состояние = 'собран';
       осколкиПомнить(склад);
+      if (сц) сц.собраться();
       кнопка.classList.remove('рассыпан');
       кнопка.setAttribute('aria-expanded', 'false');
       кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — рассыпать на двери дома');
@@ -989,7 +1167,7 @@
       setTimeout(function () {
         if (склад.состояние === 'собран') слой.hidden = true;
         очиститьПолёт();
-      }, сокращено ? 0 : 470);
+      }, сокращено ? 0 : (сц ? 1080 : 470));   /* осколки шара летят домой дольше дверей */
       if (опции.статус && опции.статус.textContent != null)
         опции.статус.textContent = 'Осколки собраны. Кристалл — цел. Касание — рассыпать на двери.';
     }
@@ -1069,6 +1247,7 @@
       таймер = setTimeout(function () { if (склад.состояние === 'рассыпан') расставить(false); }, 160);
     }, { passive: true });
 
+    сц = шароСцена();
     кнопка.addEventListener('click', переключить);
     кнопка.setAttribute('aria-controls', слой.id || 'осколкиСлой');
 
@@ -1076,6 +1255,7 @@
     if (склад.состояние === 'рассыпан') {
       слой.hidden = false;
       расставить(false);
+      if (сц) сц.мгновенно();
       кнопка.classList.add('рассыпан');
       кнопка.setAttribute('aria-expanded', 'true');
       кнопка.setAttribute('aria-label', 'Кристалл SINGULYAR — собрать осколки обратно');
