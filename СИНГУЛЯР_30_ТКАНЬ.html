@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·30 — ТКАНЬ · P2P Human Information Fabric</title>
+<meta name="description" content="СИНГУЛЯР ·30 «ТКАНЬ» — живая комната над ядром P2P Human Information Fabric: человек → отношение → объект → представление → провод → память. Смысл один — транспорт подстраивается. MEANING ≠ TRANSPORT. Манифест до байтов, SHA-256 как правда о байтах, принять/отказать решает человек.">
+<meta name="theme-color" content="#0A0A0C">
+<meta name="color-scheme" content="dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<link rel="stylesheet" href="singulyar-design-v3.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   КОМНАТА ·30 «ТКАНЬ» поверх моста v3.0 — только раскладка.
+   Канон Spatial Glass: void #0A0A0C, стекло, золото #D4AF37 —
+   единственный акцент; 0 картинок — живой холст DOM-примитивов.
+   WCAG 2.2: цели ≥24px (кнопки ≥44px), фокус виден и не перекрыт,
+   семантика нативная, движение уважает prefers-reduced-motion.
+   Эмодзи-пиктограмм нет: глифы канона ◇ ◈ ⬢ ⌇ ∿ ¶ ⤳ § — слова дома.
+   ═══════════════════════════════════════════════════════════════════ */
+html{font-size:16px}
+body{font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:86px;margin:0;background:var(--bg,#0A0A0C);color:var(--text-primary,#E8E8E8)}
+a{color:var(--teal2,#C8CCD2);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 14px}
+header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;gap:12px;padding:10px 0}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:ui-monospace,Consolas,monospace;flex:none}
+.hd b{font-size:16px;display:block;line-height:1.2}
+.hd span{color:var(--dim);font-size:12px;display:block}
+.badge{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
+h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
+h1 em{font-style:normal;background:var(--grad-gold,#D4AF37);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-size:clamp(19px,2.6vw,24px);margin:38px 0 10px}
+h2 em{font-style:normal;color:var(--dim);font-size:.62em;font-family:ui-monospace,Consolas,monospace;letter-spacing:.08em}
+h3{font-size:16px;margin:18px 0 8px}
+.lead{color:var(--dim);max-width:820px;font-size:17px}
+.essence{margin:22px 0 0;padding:16px 20px;border-radius:16px;border:var(--border-subtle);background:var(--glass-dark);font-size:14.5px;color:var(--text-secondary)}
+.essence b{color:var(--text-primary)}
+.путь{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 0;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:#C0C8D0}
+.путь i{font-style:normal;color:#D4AF37}
+.путь span{border:1px solid rgba(240,240,248,.16);border-radius:999px;padding:4px 12px;background:rgba(240,240,248,.03)}
+fieldset{border:var(--border-subtle);border-radius:16px;padding:14px 16px;margin:16px 0 0;background:var(--glass-dark)}
+legend{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E8D5A8;padding:0 8px}
+.field{margin:10px 0}
+.field label{display:block;font-size:13px;color:var(--dim);margin:0 0 4px}
+input[type=text],select,textarea{width:100%;box-sizing:border-box;font:inherit;color:#E8E8E8;background:rgba(240,240,248,.05);border:1px solid rgba(240,240,248,.18);border-radius:10px;padding:9px 12px}
+input[type=text]:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:1px}
+textarea{min-height:84px;resize:vertical}
+button{font:inherit;cursor:pointer;min-height:44px;padding:9px 16px;border-radius:11px;border:1px solid rgba(212,175,55,.5);background:linear-gradient(180deg,rgba(212,175,55,.16),rgba(212,175,55,.06));color:#F0D78C;transition:border-color .2s,color .2s,filter .2s}
+button:hover{border-color:rgba(212,175,55,.85);color:#F5E2A8}
+button:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.тих{border-color:rgba(240,240,248,.2);background:rgba(240,240,248,.04);color:#C0C8D0}
+button.опас{border-color:rgba(226,92,92,.45);background:rgba(226,92,92,.07);color:#F0B9B9}
+button.мини{min-height:32px;padding:4px 12px;font-size:13px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+.карточка{border:var(--border-subtle);border-radius:14px;background:rgba(240,240,248,.035);padding:12px 14px;margin:10px 0}
+.карточка.золото{border-color:rgba(212,175,55,.45)}
+.карточка dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;font-size:13.5px}
+.карточка dt{color:var(--dim)}
+.карточка dd{margin:0;font-family:ui-monospace,Consolas,monospace;color:#E8E8E8;word-break:break-all}
+.карточка dd.золото{color:#F0D78C}
+.маленькое{font-size:12.5px;color:var(--dim)}
+.моно{font-family:ui-monospace,Consolas,monospace}
+.список{list-style:none;margin:10px 0 0;padding:0}
+.список li{display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-top:1px solid rgba(240,240,248,.08);padding:9px 2px}
+.список li:first-child{border-top:0}
+.глиф{width:38px;height:38px;border-radius:10px;border:1px solid rgba(212,175,55,.4);background:rgba(212,175,55,.07);display:grid;place-items:center;font-size:17px;color:#F0D78C;flex:none;font-family:ui-monospace,Consolas,monospace}
+.глиф.тихий{border-color:rgba(240,240,248,.18);background:rgba(240,240,248,.04);color:#C0C8D0}
+.статус{font-size:13px;color:var(--dim);margin:8px 0 0}
+.статус.живой{color:#9FD8B4}
+.статус.плохо{color:#F0B9B9}
+.нить-прогресс{height:10px;border-radius:999px;border:1px solid rgba(212,175,55,.35);background:rgba(240,240,248,.04);overflow:hidden;margin:10px 0}
+.нить-прогресс i{display:block;height:100%;width:0;background:linear-gradient(90deg,rgba(212,175,55,.35),#D4AF37);transition:width .18s ease}
+details.док{border:var(--border-subtle);border-radius:14px;background:var(--glass-dark);padding:10px 16px;margin:14px 0}
+details.док summary{cursor:pointer;font-family:ui-monospace,Consolas,monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#E8D5A8;padding:6px 0}
+details.док summary:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+details.док pre{overflow:auto;background:rgba(0,0,0,.35);border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.5}
+table.капот{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+table.капот th,table.капот td{border-top:1px solid rgba(240,240,248,.1);padding:7px 9px;text-align:left;vertical-align:top}
+table.капот th{color:#E8D5A8;font-weight:600}
+table.капот td:first-child{font-family:ui-monospace,Consolas,monospace;color:#C0C8D0;white-space:nowrap}
+/* ── СЦЕНА: две орбиты, нить между ними, осколки-чанки летят (0 картинок) ── */
+.сцена{position:relative;height:220px;border:var(--border-subtle);border-radius:16px;background:var(--glass-dark);margin:18px 0 0;overflow:hidden}
+.узел{position:absolute;top:50%;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid rgba(212,175,55,.5);background:rgba(212,175,55,.08);display:grid;place-items:center;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#F0D78C}
+.узел.я{left:10%}
+.узел.ты{right:10%}
+.нить-линия{position:absolute;top:50%;left:calc(10% + 60px);right:calc(10% + 60px);height:1px;background:linear-gradient(90deg,rgba(212,175,55,.15),rgba(212,175,55,.7),rgba(212,175,55,.15))}
+.осколок{position:absolute;top:50%;width:9px;height:9px;margin-top:-5px;background:#D4AF37;transform:rotate(45deg);box-shadow:0 0 8px rgba(212,175,55,.65);animation:полёт var(--полёт,2.4s) linear forwards}
+@keyframes полёт{from{left:calc(10% + 60px);opacity:0}12%{opacity:1}88%{opacity:1}to{left:calc(96% - 60px);opacity:0}}
+.сцена-подпись{position:absolute;left:12px;bottom:8px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--dim)}
+.сцена-пусто{position:absolute;inset:0;display:grid;place-items:center;color:var(--dim);font-size:13.5px}
+@media (prefers-reduced-motion: reduce){
+  .осколок{animation:none;opacity:0}
+  .нить-прогресс i{transition:none}
+  html{scroll-behavior:auto}
+}
+footer{color:var(--dim);font-size:12.5px;margin:40px 0 18px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="logo" aria-hidden="true">⬢</div>
+    <div>
+      <b>СИНГУЛЯР ·30 — ТКАНЬ</b>
+      <span>P2P Human Information Fabric · смысл один — транспорт подстраивается</span>
+    </div>
+    <span class="badge">v1.41.0 · ТКАНЬ</span>
+  </div>
+</header>
+<main class="wrap">
+  <h1>Смысл один. <em>Транспорт подстраивается.</em></h1>
+  <p class="lead">Ткань — нижний слой дома: информация идёт от человека к человеку, а не от аккаунта к аккаунту. Манифест описывает передачу до первого байта, провод возит части, не заглядывая в них, SHA-256 доказывает, что байты доехали теми же байтами, а принять или отказать — решает человек.</p>
+  <div class="essence"><b>Закон ткани:</b> MEANING ≠ TRANSPORT · REPRESENTATION ≠ OBJECT · PERSON ≠ DEVICE. Сервер — не хозяин содержимого, провод — не читатель смысла, отношение — не логин: оно случается один раз и живёт локально.</div>
+  <div class="путь" aria-label="Путь объекта по слоям ткани">
+    <span>PERSON</span><i>→</i><span>ОТНОШЕНИЕ</span><i>→</i><span>ОБЪЕКТ</span><i>→</i><span>ПРЕДСТАВЛЕНИЕ</span><i>→</i><span>ПРОВОД</span><i>→</i><span>ПАМЯТЬ</span>
+  </div>
+
+  <div class="сцена" role="img" aria-label="Сцена: орбита «я» и орбита «ты», между ними золотая нить, по которой летят осколки-части объекта">
+    <div class="узел я" aria-hidden="true">я</div>
+    <div class="нить-линия" aria-hidden="true"></div>
+    <div class="узел ты" aria-hidden="true">ты</div>
+    <p class="сцена-пусто" id="сценаПусто">нить спит — объект ещё не летит</p>
+    <p class="сцена-подпись" id="сценаПодпись">сцена · ткань v1.0.0</p>
+  </div>
+
+  <h2>ШАГ 1 · КТО <em>отношение — событие, не логин</em></h2>
+  <fieldset>
+    <legend>Личность на устройстве</legend>
+    <div class="row">
+      <div class="field" style="flex:1;min-width:220px">
+        <label for="моёИмя">Имя, как тебе удобно</label>
+        <input type="text" id="моёИмя" maxlength="60" placeholder="например, ПАША">
+      </div>
+      <button id="кнКтоЯ">снять отпечаток</button>
+    </div>
+    <p class="статус" id="статусЯ">личности нет — отпечаток рождается от случайных байт и живёт на устройстве</p>
+  </fieldset>
+  <fieldset>
+    <legend>Мои люди · отношение принимается явным «да»</legend>
+    <div class="row">
+      <div class="field" style="flex:1;min-width:220px">
+        <label for="имяЧеловека">Добавить человека один раз</label>
+        <input type="text" id="имяЧеловека" maxlength="60" placeholder="например, АНЯ">
+      </div>
+      <button id="кнДобавитьЧеловека">создать отношение</button>
+    </div>
+    <ul class="список" id="списокОтношений"></ul>
+    <p class="маленькое">Отношение живёт локально и работает без аккаунта (R-01). Принять — явное действие человека (R-02). Блок закрывает доставку (R-03). Удаление не уничтожает историю (R-04). Всё журналируется без дублей (R-06, R-07).</p>
+  </fieldset>
+
+  <h2>ШАГ 2 · ЧТО <em>манифест — описание, не содержимое</em></h2>
+  <fieldset>
+    <legend>Информационный объект</legend>
+    <div class="row">
+      <div class="field" style="flex:1;min-width:200px">
+        <label for="имяОбъекта">Что передаём</label>
+        <input type="text" id="имяОбъекта" value="Фотография встречи" maxlength="120">
+      </div>
+      <div class="field" style="flex:1;min-width:180px">
+        <label for="видОбъекта">Вид объекта</label>
+        <select id="видОбъекта">
+          <option value="образ">образ</option>
+          <option value="текст">текст</option>
+          <option value="голос">голос</option>
+          <option value="звук">звук</option>
+          <option value="файл">файл</option>
+          <option value="документ">документ</option>
+          <option value="память">память</option>
+          <option value="другое">другое</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="текстОбъекта">Содержимое для честной демонстрации (текст уходит в байты)</label>
+      <textarea id="текстОбъекта">Мы здесь. Один объект — разные способы его принять.</textarea>
+    </div>
+    <div class="field">
+      <label for="файлОбъекта">…или взять байты из файла (до 8 МБ в этой комнате)</label>
+      <input type="file" id="файлОбъекта">
+    </div>
+    <div class="row">
+      <button id="кнМанифест">создать манифест</button>
+      <span class="статус" id="статусМанифеста"></span>
+    </div>
+    <div id="манифестКарта"></div>
+  </fieldset>
+
+  <h2>ШАГ 3 · КАК <em>провод не знает смысла</em></h2>
+  <fieldset>
+    <legend>Провод и передача</legend>
+    <div class="row">
+      <label style="display:inline-flex;gap:8px;align-items:center"><input type="radio" name="провод" value="локальный" checked> вкладки одного браузера (BroadcastChannel)</label>
+      <label style="display:inline-flex;gap:8px;align-items:center"><input type="radio" name="провод" value="webrtc"> между устройствами (WebRTC DataChannel)</label>
+    </div>
+    <div id="блокWebRTC" hidden>
+      <div class="row">
+        <button id="кнОффер" class="тих">создать WebRTC offer</button>
+        <button id="кнОтвет" class="тих">создать answer по оферу</button>
+        <button id="кнПринятьОтвет" class="тих">принять answer</button>
+      </div>
+      <div class="field">
+        <label for="сигнал">Сигналинг руками (offer/answer JSON — скопируй и передай собеседнику как угодно)</label>
+        <textarea id="сигнал" class="моно" style="min-height:110px" placeholder="здесь появится offer — а собеседников answer вставь сюда"></textarea>
+      </div>
+      <p class="статус" id="статусWebRTC">провод между устройствами спит: сигналинг не смешан с транспортом, plaintext по нему не ездит</p>
+    </div>
+    <div class="row">
+      <button id="кнПередать" disabled>передать объект</button>
+      <span class="статус" id="статусПровода">провод спит</span>
+    </div>
+    <div class="нить-прогресс" aria-hidden="true"><i id="нитьЗаполнение"></i></div>
+    <p class="статус" id="статуспередачи">порядок обмена: offer → accept/reject → chunk × N → complete → ack</p>
+  </fieldset>
+
+  <h2>ВХОДЯЩЕЕ <em>манифест прибыл — человек решает</em></h2>
+  <div id="входящееБокс"><p class="маленькое">пока тихо: входящий манифест появится здесь, и только твоё «да» впустит байты (СВОД I-01)</p></div>
+
+  <h2>ЖУРНАЛ <em>доказуемое состояние, append-only</em></h2>
+  <ul class="список" id="журнал"></ul>
+
+  <details class="док">
+    <summary>ПОД КАПОТ · слои ТЗ, инварианты, открытый код</summary>
+    <p class="маленькое">Ткань реализует ТЗ «P2P HUMAN INFORMATION FABRIC v1.0» своим путём дома: семь модулей без зависимостей в <span class="моно">БИБЛИОТЕКИ/ткань/</span>, тест ядра <span class="моно">node --test ИНСТРУМЕНТЫ/test_s30_tkan.mjs</span>. Слои 1/3/9/10/11 (личность, намерение, безопасность, память, происхождение) не дублируются — они уже живут в ·19 ЧЕЛОВЕК, ·29 СВОБОДА и Своде законов I-01..I-10.</p>
+    <table class="капот">
+      <tr><th>Слой ТЗ</th><th>Модуль</th><th>Железо</th></tr>
+      <tr><td>2 Relationship</td><td>отношения.mjs</td><td>R-01 без аккаунта · R-02 явное «да» · R-03 блок закрывает провод · R-04 история жива · R-05 склад локален · R-06 журнал · R-07 дедуп</td></tr>
+      <tr><td>4 Object</td><td>манифест.mjs</td><td>O-01 objectId вне транспорта · O-02 манифест без содержимого · O-03 чанков из размера · O-04 чужие байты не проходят · O-05 сначала манифест, потом решение · O-06 описание, не payload</td></tr>
+      <tr><td>5+6 Representation/Eligibility</td><td>представления.mjs</td><td>порядок ТЗ §6: явный выбор человека → жёсткие требования → политика → устройство → доступность → сеть → баллы; балл НИКОГДА не пробивает жёсткое требование; честные статусы выбрано/недоступно/неизвестно</td></tr>
+      <tr><td>7 Transport</td><td>транспорт.mjs</td><td>MEANING ≠ TRANSPORT: провод видит конверт, не смысл; BroadcastChannel без сети; WebRTC DataChannel между устройствами, сигналинг отделён</td></tr>
+      <tr><td>8 Integrity</td><td>целостность.mjs</td><td>SHA-256; одна шестнадцатеричная буква не та — байты чужие</td></tr>
+    </table>
+    <p class="маленькое">WCAG 2.2: цели ≥44px, фокус виден и не перекрыт, семантика нативная (fieldset/legend/radio/status), движение гасится prefers-reduced-motion; аудита меньше — потому что решения принимают нативные элементы. Офлайн-закон дома: 0 внешних запросов, 0 шрифтов, 0 картинок, 0 эмодзи-пиктограмм.</p>
+  </details>
+
+  <footer>СИНГУЛЯР ·30 ТКАНЬ · такт v1.41.0 · ядро ткани 1.0.0 (БИБЛИОТЕКИ/ткань/, открытый код) · принято/отказано/забыть — решает человек<br>Никакого насилия над действиями: провод предлагает — человек решает.</footer>
+</main>
+<script type="module">
+/* ═══ КОМНАТА ·30 ТКАНЬ — UI над ядром P2P Human Information Fabric v1.0 ═══
+   Закон репозитория: нулевая innerHTML — только createElement/textContent.
+   Машина готовит манифест и провод; принять/отказать/забыть решает человек
+   (СВОД I-01/I-06). 0 эмодзи-пиктограмм — глифы канона и слова. */
+import { ТКАНЬ, ВЕРСИЯ_ПРОТОКОЛА, ТИПЫ, проверитьСообщение, вBase64, изBase64, дайджест, верь, короткий, создатьМанифест, проверитьМанифест, резать, собрать, число_чанков, создатьСклад, выбрать, создатьЛокальныйТранспорт } from './БИБЛИОТЕКИ/ткань/ткань.mjs';
+
+const $ = function (ид) { return document.getElementById(ид); };
+const КЛЮЧ_Я = 'sng-ткань-я-v1';
+
+/* ── ЖУРНАЛ: append-only, DOM-сборка ── */
+function журнал(текст) {
+  const ж = $('журнал');
+  const ряд = document.createElement('li');
+  const гл = document.createElement('span'); гл.className = 'глиф тихий'; гл.textContent = '⌇';
+  гл.setAttribute('aria-hidden', 'true');
+  const т = document.createElement('span'); т.textContent = текст;
+  ряд.appendChild(гл); ряд.appendChild(т);
+  ж.insertBefore(ряд, ж.firstChild);
+}
+
+/* ── СКЛАД ОТНОШЕНИЙ: localStorage-адаптер (R-05: локален и без сети) ── */
+function складLocalStorage() {
+  return {
+    async получить(ключ) {
+      try { const с = localStorage.getItem(ключ); return с ? JSON.parse(с) : null; }
+      catch (е) { return null; }
+    },
+    async положить(ключ, значение) {
+      try { localStorage.setItem(ключ, JSON.stringify(значение)); } catch (е) { /* приватный режим */ }
+      return значение;
+    },
+    async список(префикс) {
+      const вых = [];
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const ключ = localStorage.key(i);
+          if (ключ && ключ.indexOf(префикс) === 0) {
+            try { вых.push(JSON.parse(localStorage.getItem(ключ))); } catch (е) { /* битое — не наше */ }
+          }
+        }
+      } catch (е) { /* хранилище закрыто */ }
+      return вых;
+    }
+  };
+}
+const склад = создатьСклад(складLocalStorage());
+
+/* ── ЛИЧНОСТЬ: отпечаток от случайных байт — не аккаунт (R-01) ── */
+const состояние = { я: null, манифест: null, байты: null, транспорт: null, канал: null, приём: {} };
+(function вернутьЯ() {
+  try {
+    const с = localStorage.getItem(КЛЮЧ_Я);
+    if (с) { состояние.я = JSON.parse(с); $('моёИмя').value = состояние.я.имя || ''; }
+  } catch (е) {}
+  отрисоватьЯ();
+})();
+
+function отрисоватьЯ() {
+  const статус = $('статусЯ');
+  статус.textContent = '';
+  статус.className = 'статус';
+  if (состояние.я) {
+    const б = document.createElement('b'); б.textContent = состояние.я.имя;
+    статус.appendChild(б);
+    статус.appendChild(document.createTextNode(' · отпечаток ' + короткий(состояние.я.отпечаток, 16) + '… (живёт на устройстве)'));
+    статус.className = 'статус живой';
+  } else {
+    статус.textContent = 'личности нет — отпечаток рождается от случайных байт и живёт на устройстве';
+  }
+}
+
+$('кнКтоЯ').addEventListener('click', async function () {
+  const имя = $('моёИмя').value.trim();
+  if (имя.length < 2) { $('статусЯ').textContent = 'честный отказ: имя короче двух букв — не личность'; return; }
+  const случайные = new Uint8Array(32);
+  crypto.getRandomValues(случайные);
+  const отпечаток = await дайджест(случайные);
+  состояние.я = { имя: имя, отпечаток: отпечаток, personId: 'person:' + короткий(отпечаток, 16) };
+  try { localStorage.setItem(КЛЮЧ_Я, JSON.stringify(состояние.я)); } catch (е) {}
+  await склад.добавитьЧеловека({ id: короткий(отпечаток, 16), имя: имя, отпечаток: отпечаток });
+  отрисоватьЯ();
+  журнал('личность на устройстве: ' + имя + ' · отпечаток ' + короткий(отпечаток, 12) + '… (R-01: не аккаунт)');
+});
+
+/* ── ОТНОШЕНИЯ: список, создание, явное «да», блок, удаление ── */
+async function отрисоватьОтношения() {
+  const список = $('списокОтношений');
+  список.textContent = '';
+  const люди = await склад.люди();
+  const отношения = await склад.отношения();
+  const имяЧеловека = function (ид) {
+    const п = люди.find(function (ч) { return ч.id === ид; });
+    return п ? п.имя : короткий(String(ид || '').replace('person:', ''), 10);
+  };
+  if (!отношения.length) {
+    const пусто = document.createElement('li');
+    пусто.appendChild(Object.assign(document.createElement('span'), { className: 'маленькое', textContent: 'отношений нет — добавь человека один раз; код и QR для каждого следующего сообщения не нужны' }));
+    список.appendChild(пусто);
+  }
+  for (const о of отношения) {
+    const ряд = document.createElement('li');
+    const гл = document.createElement('span');
+    гл.className = 'глиф' + (о.state === 'принято' ? '' : ' тихий');
+    гл.textContent = '◇';
+    гл.title = 'состояние: ' + о.state;
+    ряд.appendChild(гл);
+    const имя = document.createElement('b');
+    имя.textContent = имяЧеловека(о.peerPersonId) + ' ';
+    ряд.appendChild(имя);
+    const метка = document.createElement('span');
+    метка.className = 'маленькое';
+    метка.textContent = '· ' + о.state + ' · права: отправка ' + (о.права.отправка ? 'да' : 'нет') + ', приём ' + (о.права.приём ? 'да' : 'нет');
+    ряд.appendChild(метка);
+    if (о.state === 'предложено') {
+      const принять = document.createElement('button');
+      принять.className = 'мини'; принять.textContent = 'принять (моё «да»)';
+      принять.addEventListener('click', async function () {
+        const р = await склад.принятьОтношение(о.id);
+        журнал('отношение ' + имяЧеловека(о.peerPersonId) + ': ' + (р.ok ? 'принято явным действием человека (R-02)' : 'отказ: ' + р.причина));
+        await отрисоватьОтношения();
+      });
+      ряд.appendChild(принять);
+    }
+    if (о.state === 'принято') {
+      const блок = document.createElement('button');
+      блок.className = 'мини тих'; блок.textContent = 'блок';
+      блок.addEventListener('click', async function () {
+        await склад.блокироватьОтношение(о.id);
+        журнал('отношение ' + имяЧеловека(о.peerPersonId) + ': блок — доставка закрыта (R-03)');
+        await отрисоватьОтношения();
+      });
+      ряд.appendChild(блок);
+    }
+    if (о.state !== 'удалено') {
+      const удалить = document.createElement('button');
+      удалить.className = 'мини опас'; удалить.textContent = 'удалить';
+      удалить.addEventListener('click', async function () {
+        await склад.удалитьОтношение(о.id);
+        журнал('отношение ' + имяЧеловека(о.peerPersonId) + ': удалено, история и личность сохранены (R-04)');
+        await отрисоватьОтношения();
+      });
+      ряд.appendChild(удалить);
+    }
+    список.appendChild(ряд);
+  }
+}
+
+$('кнДобавитьЧеловека').addEventListener('click', async function () {
+  const имя = $('имяЧеловека').value.trim();
+  if (!состояние.я) { журнал('сначала личность: ШАГ 1 — снять отпечаток'); return; }
+  if (имя.length < 2) { журнал('честный отказ: имя человека короче двух букв — не отношение'); return; }
+  const человек = await склад.добавитьЧеловека({ id: 'ч' + Date.now().toString(36), имя: имя });
+  const отн = await склад.создатьОтношение(состояние.я.personId, человек.id);
+  $('имяЧеловека').value = '';
+  журнал('отношение с ' + имя + ' создано в состоянии «предложено» — принимает явным «да» (R-02)');
+  await отрисоватьОтношения();
+  return отн;
+});
+
+/* ── ОБЪЕКТ: манифест до байтов (O-02, O-06) ── */
+$('файлОбъекта').addEventListener('change', function () {
+  const ф = $('файлОбъекта').files[0];
+  if (!ф) return;
+  $('имяОбъекта').value = ф.name;
+  $('текстОбъекта').value = '';
+  $('статусМанифеста').textContent = 'файл выбран: ' + ф.name + ' · ' + ф.size + ' байт';
+});
+
+$('кнМанифест').addEventListener('click', async function () {
+  const файл = $('файлОбъекта').files[0];
+  let байтыДанные;
+  let медиаТип = 'text/plain; charset=utf-8';
+  if (файл) {
+    if (файл.size > 8 * 1024 * 1024) { $('статусМанифеста').textContent = 'честный отказ: файл больше 8 МБ — комната на демонстрацию ядра, не на тяжёлые грузы'; return; }
+    байтыДанные = new Uint8Array(await файл.arrayBuffer());
+    медиаТип = файл.type || 'application/octet-stream';
+  } else {
+    байтыДанные = $('текстОбъекта').value;
+  }
+  const манифест = await создатьМанифест({
+    имя: $('имяОбъекта').value.trim() || 'объект',
+    вид: $('видОбъекта').value,
+    медиаТип: медиаТип,
+    содержимое: байтыДанные,
+    от: состояние.я ? состояние.я.personId : null
+  });
+  состояние.манифест = манифест;
+  состояние.байты = байтыДанные;
+  отрисоватьМанифест(манифест);
+  $('кнПередать').disabled = false;
+  $('статусМанифеста').textContent = 'манифест готов: ' + манифест.чанков + ' чанков по ' + манифест.чанкРазмер + ' байт';
+  журнал('манифест создан: ' + короткий(манифест.objectId.replace('sgo:sha256:', ''), 12) + '… · ' + манифест.размер + ' байт · чанков ' + манифест.чанков);
+});
+
+function отрисоватьМанифест(м) {
+  const бокс = $('манифестКарта');
+  бокс.textContent = '';
+  const карта = document.createElement('div');
+  карта.className = 'карточка золото';
+  const дф = document.createDocumentFragment();
+  function строка(термин, значение, золотая) {
+    const dt = document.createElement('dt'); dt.textContent = термин;
+    const dd = document.createElement('dd');
+    dd.textContent = значение;
+    if (золотая) dd.className = 'золото';
+    дф.appendChild(dt); дф.appendChild(dd);
+  }
+  строка('objectId', м.objectId, true);
+  строка('имя', м.имя);
+  строка('вид', м.вид + ' · ' + м.представление.медиаТип);
+  строка('размер', м.размер + ' байт');
+  строка('части', м.чанков + ' по ' + м.чанкРазмер + ' байт');
+  строка('дайджест', м.целостность.дайджест);
+  строка('политика', 'переправка: ' + (м.политика.переправка ? 'да' : 'нет') + ' · память: ' + м.политика.память);
+  const dl = document.createElement('dl'); dl.appendChild(дф);
+  карта.appendChild(dl);
+  const док = document.createElement('details');
+  док.className = 'док';
+  const сам = document.createElement('summary'); сам.textContent = 'показать манифест целиком (SNG-P2P/1)';
+  const пр = document.createElement('pre'); пр.textContent = JSON.stringify(м, null, 2);
+  док.appendChild(сам); док.appendChild(пр);
+  карта.appendChild(док);
+  бокс.appendChild(карта);
+}
+
+/* ── ПРОВОД: локальный BroadcastChannel / WebRTC DataChannel ── */
+function выбранныйПровод() {
+  return document.querySelector('input[name="провод"]:checked').value;
+}
+document.querySelectorAll('input[name="провод"]').forEach(function (вход) {
+  вход.addEventListener('change', function () {
+    $('блокWebRTC').hidden = выбранныйПровод() !== 'webrtc';
+  });
+});
+
+function поднятьЛокальный() {
+  if (состояние.транспорт) return состояние.транспорт;
+  const транспорт = создатьЛокальныйТранспорт({ канал: 'singulyar-ткань-v1' });
+  if (!транспорт) { $('статусПровода').textContent = 'BroadcastChannel недоступен в этой среде'; return null; }
+  транспорт.наУправляющее(function (сообщение) {
+    try { проверитьСообщение(сообщение); } catch (е) { журнал('конверт не принят: ' + е.message); return; }
+    if (сообщение.тип === ТИПЫ.ОФФЕР) входящийОффер(сообщение.манифест);
+    else if (сообщение.тип === ТИПЫ.ПРИНЯТЬ) { журнал('собеседник принял объект — летят части'); отправитьЧанки(сообщение.objectId); }
+    else if (сообщение.тип === ТИПЫ.ОТКАЗ) журнал('собеседник отказал — байты не поехали (I-01 уважен проводом)');
+    else if (сообщение.тип === ТИПЫ.ОТПЕЧАТОК) журнал(сообщение.верено ? 'ack: у собеседника дайджест сошёлся — объект доехал самим собой' : 'ack: дайджест НЕ сошёлся — байты чужие, объект отвергнут');
+    else if (сообщение.тип === ТИПЫ.ЗАВЕРШИТЬ) журнал('все части доставлены — собеседник сверяет дайджест');
+  });
+  транспорт.наЧанк(function (сообщение) {
+    if (!состояние.приём[сообщение.objectId]) return;
+    const приём = состояние.приём[сообщение.objectId];
+    приём.куски[сообщение.индекс] = изBase64(сообщение.байты);
+    приём.дошло++;
+    заполнитьНить(приём.дошло / приём.изСкольких);
+    if (приём.дошло >= приём.изСкольких && приём.финиш) приём.финиш();
+  });
+  транспорт.подключить();
+  состояние.транспорт = транспорт;
+  $('статусПровода').textContent = 'провод живой: вкладки одного браузера слышат друг друга без сети';
+  $('статусПровода').className = 'статус живой';
+  return транспорт;
+}
+
+/* WebRTC руками: сигналинг отделён от транспорта (ТЗ §8) */
+let ртц = null;
+$('кнОффер').addEventListener('click', async function () {
+  try {
+    ртц = new RTCPeerConnection();
+    состояние.канал = ртц.createDataChannel('sng-ткань');
+    проводWebRTC(состояние.канал);
+    const оффер = await ртц.createOffer();
+    await ртц.setLocalDescription(оффер);
+    $('сигнал').value = JSON.stringify({ тип: 'offer', sdp: ртц.localDescription.sdp });
+    $('статусWebRTC').textContent = 'offer готов — скопируй и передай собеседнику; answer вставь в поле и нажми «принять answer»';
+  } catch (е) { $('статусWebRTC').textContent = 'честный отказ: ' + е.message; }
+});
+$('кнОтвет').addEventListener('click', async function () {
+  try {
+    const чужой = JSON.parse($('сигнал').value);
+    if (чужой.тип !== 'offer') { $('статусWebRTC').textContent = 'в поле не offer — сначала вставь офер собеседника'; return; }
+    ртц = new RTCPeerConnection();
+    ртц.ondatachannel = function (событие) { состояние.канал = событие.channel; проводWebRTC(состояние.канал); };
+    await ртц.setRemoteDescription({ type: 'offer', sdp: чужой.sdp });
+    const ответ = await ртц.createAnswer();
+    await ртц.setLocalDescription(ответ);
+    $('сигнал').value = JSON.stringify({ тип: 'answer', sdp: ртц.localDescription.sdp });
+    $('статусWebRTC').textContent = 'answer готов — верни его собеседнику';
+  } catch (е) { $('статусWebRTC').textContent = 'честный отказ: ' + е.message; }
+});
+$('кнПринятьОтвет').addEventListener('click', async function () {
+  try {
+    const чужой = JSON.parse($('сигнал').value);
+    if (чужой.тип !== 'answer') { $('статусWebRTC').textContent = 'в поле не answer'; return; }
+    await ртц.setRemoteDescription({ type: 'answer', sdp: чужой.sdp });
+    $('статусWebRTC').textContent = 'answer принят — канал откроется сам';
+  } catch (е) { $('статусWebRTC').textContent = 'честный отказ: ' + е.message; }
+});
+function проводWebRTC(канал) {
+  канал.onopen = function () {
+    состояние.транспорт = { вид: 'webrtc', подключён: true,
+      послатьУправляющее: function (м) { канал.send(JSON.stringify(м)); },
+      послатьЧанк: function (м) { канал.send(JSON.stringify(м)); },
+      состояние: function () { return 'живой'; } };
+    $('статусПровода').textContent = 'WebRTC DataChannel живой: устройство-устройство, без сервера в пути';
+    $('статусПровода').className = 'статус живой';
+    $('статусWebRTC').textContent = 'канал открыт';
+  };
+  канал.onmessage = function (событие) {
+    try {
+      const сообщение = JSON.parse(событие.data);
+      проверитьСообщение(сообщение);
+      if (сообщение.тип === ТИПЫ.ОФФЕР) входящийОффер(сообщение.манифест);
+      else if (сообщение.тип === ТИПЫ.ПРИНЯТЬ) журнал('собеседник принял — летят части');
+      else if (сообщение.тип === ТИПЫ.ОТКАЗ) журнал('собеседник отказал (I-01)');
+      else if (сообщение.тип === ТИПЫ.ЧАНК && состояние.приём[сообщение.objectId]) {
+        const приём = состояние.приём[сообщение.objectId];
+        приём.куски[сообщение.индекс] = изBase64(сообщение.байты);
+        приём.дошло++;
+        заполнитьНить(приём.дошло / приём.изСкольких);
+        if (приём.дошло >= приём.изСкольких && приём.финиш) приём.финиш();
+      } else if (сообщение.тип === ТИПЫ.ЗАВЕРШИТЬ) журнал('части все — сверяем дайджест');
+      else if (сообщение.тип === ТИПЫ.ОТПЕЧАТОК) журнал('ack: ' + (сообщение.верено ? 'дайджест сошёлся' : 'дайджест НЕ сошёлся'));
+    } catch (е) { журнал('конверт не принят: ' + е.message); }
+  };
+}
+
+function заполнитьНить(доля) {
+  $('нитьЗаполнение').style.width = Math.round(Math.max(0, Math.min(1, доля)) * 100) + '%';
+}
+
+/* ── ПЕРЕДАЧА: offer → accept → chunk × N → complete → ack ── */
+$('кнПередать').addEventListener('click', async function () {
+  if (!состояние.манифест) { журнал('нет объекта: ШАГ 2 — создай манифест'); return; }
+  const провод = выбранныйПровод() === 'локальный' ? поднятьЛокальный() : состояние.транспорт;
+  if (!провод || провод.состояние() !== 'живой') { журнал('провод спит: локальный поднимается сам, WebRTC — через offer/answer'); return; }
+  const куски = резать(состояние.байты, состояние.манифест.чанкРазмер);
+  журнал('offer ушёл: манифест ' + короткий(состояние.манифест.objectId.replace('sgo:sha256:', ''), 12) + '… · ждём явное решение человека на той стороне');
+  провод.послатьУправляющее({ тип: ТИПЫ.ОФФЕР, objectId: состояние.манифест.objectId, манифест: состояние.манифест });
+  заполнитьНить(0);
+  пускСцены();
+  /* приёмщик решает сам: части уйдут, когда вернётся явное ПРИНЯТЬ —
+     один слушатель провода (без дублей) диспатчит по objectId */
+});
+/* отправка чанков: только того объекта, чей objectId назвал приёмщик */
+async function отправитьЧанки(objectId) {
+  if (!состояние.манифест || состояние.манифест.objectId !== objectId) return;
+  const провод = состояние.транспорт;
+  if (!провод || провод.состояние() !== 'живой') return;
+  const куски = резать(состояние.байты, состояние.манифест.чанкРазмер);
+  for (let i = 0; i < куски.length; i++) {
+    провод.послатьЧанк({ тип: ТИПЫ.ЧАНК, objectId: objectId, индекс: i, изСкольких: куски.length, байты: вBase64(куски[i]) });
+    заполнитьНить((i + 1) / куски.length);
+  }
+  провод.послатьУправляющее({ тип: ТИПЫ.ЗАВЕРШИТЬ, objectId: objectId, дайджест: состояние.манифест.целостность.дайджест });
+  журнал('все ' + куски.length + ' частей ушли — у приёмщика слово (сверка дайджеста)');
+}
+
+/* ── ВХОДЯЩЕЕ: человек решает принять/отказать (I-01) ── */
+function входящийОффер(манифест) {
+  const вер = проверитьМанифест(манифест);
+  if (!вер.ok) { журнал('манифест не принят: ' + вер.причины.join('; ')); return; }
+  const бокс = $('входящееБокс');
+  бокс.textContent = '';
+  const карта = document.createElement('div');
+  карта.className = 'карточка золото';
+  const заголовок = document.createElement('h3');
+  заголовок.textContent = 'манифест прибыл: ' + манифест.имя;
+  карта.appendChild(заголовок);
+  const мелко = document.createElement('p');
+  мелко.className = 'маленькое';
+  мелко.textContent = манифест.вид + ' · ' + манифест.размер + ' байт · чанков ' + манифест.чанков + ' · objectId ' + короткий(манифест.objectId.replace('sgo:sha256:', ''), 16) + '… — содержимого в манифесте нет (O-02); решай по описанию';
+  карта.appendChild(мелко);
+  const ряд = document.createElement('div');
+  ряд.className = 'row';
+  const принять = document.createElement('button');
+  принять.textContent = 'принять';
+  const отказать = document.createElement('button');
+  отказать.className = 'опас';
+  отказать.textContent = 'отказать';
+  ряд.appendChild(принять); ряд.appendChild(отказать);
+  карта.appendChild(ряд);
+  const куда = document.createElement('p');
+  куда.className = 'статус';
+  карта.appendChild(куда);
+  бокс.appendChild(карта);
+  журнал('входящий манифест: ' + манифест.имя + ' — жду явного решения человека');
+
+  отказать.addEventListener('click', function () {
+    послатьУправляющему({ тип: ТИПЫ.ОТКАЗ, objectId: манифест.objectId });
+    куда.textContent = 'отказано тобой — байты не поедут (I-01)';
+    журнал('человек отказал: объект ' + манифест.имя + ' не принят, провод уведомлён');
+  });
+  принять.addEventListener('click', async function () {
+    куда.textContent = 'принято тобой — принимаю части…';
+    послатьУправляющему({ тип: ТИПЫ.ПРИНЯТЬ, objectId: манифест.objectId });
+    const приём = { манифест: манифест, куски: new Array(манифест.чанков), дошло: 0, изСкольких: манифест.чанков };
+    состояние.приём[манифест.objectId] = приём;
+    приём.финиш = async function () {
+      const собр = собрать(приём.куски);
+      const факт = await верь(собр, манифест.целостность.дайджест);
+      куда.textContent = факт.ок ? 'байты доехали теми же байтами — дайджест сошёлся' : 'ДАЙДЖЕСТ НЕ СОШЁЛСЯ: объект отвергнут, байты чужие';
+      куда.className = факт.ок ? 'статус живой' : 'статус плохо';
+      послатьУправляющему({ тип: ТИПЫ.ОТПЕЧАТОК, objectId: манифест.objectId, верено: факт.ок });
+      журнал(факт.ок ? 'получено: ' + манифест.имя + ' · SHA-256 сошёлся — целостность доказана (O-04)' : 'провал целостности: ' + манифест.имя + ' — отвергнуто честно');
+      if (факт.ок) показатьПамять(карта, манифест, собр);
+    };
+    журнал('человек принял: ' + манифест.имя + ' — части поедут сейчас');
+  });
+}
+
+function послатьУправляющему(сообщение) {
+  if (состояние.транспорт && состояние.транспорт.состояние && состояние.транспорт.состояние() === 'живой') {
+    состояние.транспорт.послатьУправляющее(сообщение);
+  }
+}
+
+function показатьПамять(карта, манифест, собранные) {
+  const ряд = document.createElement('div');
+  ряд.className = 'row';
+  const подпись = document.createElement('span');
+  подпись.className = 'маленькое';
+  подпись.textContent = 'память — по решению человека (I-06):';
+  const сохранить = document.createElement('button');
+  сохранить.textContent = 'сохранить на устройстве';
+  const забыть = document.createElement('button');
+  забыть.className = 'тих';
+  забыть.textContent = 'забыть';
+  ряд.appendChild(подпись); ряд.appendChild(сохранить); ряд.appendChild(забыть);
+  карта.appendChild(ряд);
+  сохранить.addEventListener('click', function () {
+    const текст = (манифест.представление.медиаТип || '').indexOf('text/') === 0
+      ? new TextDecoder().decode(собранные)
+      : '(байты получены — в этой комнате их не отдаём файлом: демонстрация честности, не хранилище)';
+    журнал('сохранено на устройстве по явному решению: ' + манифест.имя);
+    const строка = document.createElement('p');
+    строка.className = 'маленькое моно';
+    строка.textContent = текст.slice(0, 300);
+    карта.appendChild(строка);
+    сохранить.disabled = true; забыть.disabled = true;
+  });
+  забыть.addEventListener('click', function () {
+    состояние.приём[манифест.objectId] = null;
+    журнал('забыто тобой: байты не хранятся — память поддается решению (I-06)');
+    куда0();
+    function куда0() { ряд.remove(); }
+  });
+}
+
+/* ── СЦЕНА: осколки летят по нити (0 картинок, reduced-motion гасит) ── */
+function пускСцены() {
+  $('сценаПусто').hidden = true;
+  const сцена = document.querySelector('.сцена');
+  сцена.querySelectorAll('.осколок').forEach(function (о) { о.remove(); });
+  const манифест = состояние.манифест;
+  const всего = Math.min(манифест_безопасно(манифест), 9);
+  for (let i = 0; i < всего; i++) {
+    const оск = document.createElement('i');
+    оск.className = 'осколок';
+    оск.style.setProperty('--полёт', (1.6 + i * 0.22) + 's');
+    оск.style.animationDelay = (i * 0.28) + 's';
+    сцена.appendChild(оск);
+  }
+  $('сценаПодпись').textContent = 'сцена · объект «' + манифест.имя + '» · частей: ' + манифест.чанков + ' · ядро ткани ' + ТКАНЬ.version;
+}
+function манифест_безопасно(м) { return м && м.чанков ? м.чанков : 0; }
+
+/* ── СТАРТ ── */
+стартКомнаты();
+async function стартКомнаты() {
+  журнал('ткань проснулась: ядро ' + ТКАНЬ.version + ' · протокол ' + ВЕРСИЯ_ПРОТОКОЛА + ' · ' + ТКАНЬ.закон);
+  поднятьЛокальный();  /* приёмщик слышит офферы ещё до своего первого действия */
+  await отрисоватьОтношения();
+}
+</script>
+<script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<script defer src="./singulyar-modules.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script>
+</body>
+</html>

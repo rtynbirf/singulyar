@@ -10,21 +10,21 @@
 
 | # | Маршрут | Результат |
 |---|---------|-----------|
-| 1 | youtubegrab.com страница watch (с куками) | ✅ HTTP 200, 151 КБ — HTML не заблокирован |
-| 2 | youtubegrab.com `/api/v1/videos/*` | ❌ Cloudflare WAF: 403 «Attention Required!» — режет по IP-репутации |
-| 3 | youtubegrab API из браузера (Turnstile) | ❌ челлендж в headless не завершается |
-| 4 | youtube.com watch page | ❌ HTTP 429 |
-| 5 | Innertube player API (WEB/ANDROID/EMBED) | ❌ LOGIN_REQUIRED |
-| 6 | браузер → youtube.com | ❌ /sorry/ CAPTCHA |
-| 7 | yt-dlp (все клиенты) | ❌ бот-чек |
-| 8 | Invidious, 10 инстансов | ❌ мертвы / 403 |
-| 9 | Piped, 12 инстансов | ❌ мертвы |
-| 10 | **i.ytimg.com (CDN картинок)** | ✅ **НЕ ЗАБЛОКИРОВАН** — отдельный CDN, без бота-защиты |
-| 11 | invidious.f5.si через page_reader (Z.ai = JINA+Playwright, чужой выходной IP) | ✅ JSON видео получен (89 КБ): трек «Russian (auto-generated)» |
-| 12 | page_reader + query-параметры | ⚠️ отбрасывает параметры (проверено через httpbin) |
-| 13 | **короткая ссылка clck.ru → 301 → параметры переносятся** | ✅ обход №12 |
-| 14 | clck.ru → youtubegrab `captions?format=txt&lang=ru-orig` через JINA | ✅ **ПОЛНЫЙ ТРАНСКРИПТ** (WAF пропускает text/plain) |
-| 15 | то же для `format=srt` (x-subrip) | ❌ WAF блокирует srt даже через translate.goog; JINA отказывается отдавать «unexpected content type» |
+| 1 | youtubegrab.com страница watch (с куками) | ✓ HTTP 200, 151 КБ — HTML не заблокирован |
+| 2 | youtubegrab.com `/api/v1/videos/*` | ✕ Cloudflare WAF: 403 «Attention Required!» — режет по IP-репутации |
+| 3 | youtubegrab API из браузера (Turnstile) | ✕ челлендж в headless не завершается |
+| 4 | youtube.com watch page | ✕ HTTP 429 |
+| 5 | Innertube player API (WEB/ANDROID/EMBED) | ✕ LOGIN_REQUIRED |
+| 6 | браузер → youtube.com | ✕ /sorry/ CAPTCHA |
+| 7 | yt-dlp (все клиенты) | ✕ бот-чек |
+| 8 | Invidious, 10 инстансов | ✕ мертвы / 403 |
+| 9 | Piped, 12 инстансов | ✕ мертвы |
+| 10 | **i.ytimg.com (CDN картинок)** | ✓ **НЕ ЗАБЛОКИРОВАН** — отдельный CDN, без бота-защиты |
+| 11 | invidious.f5.si через page_reader (Z.ai = JINA+Playwright, чужой выходной IP) | ✓ JSON видео получен (89 КБ): трек «Russian (auto-generated)» |
+| 12 | page_reader + query-параметры | △️ отбрасывает параметры (проверено через httpbin) |
+| 13 | **короткая ссылка clck.ru → 301 → параметры переносятся** | ✓ обход №12 |
+| 14 | clck.ru → youtubegrab `captions?format=txt&lang=ru-orig` через JINA | ✓ **ПОЛНЫЙ ТРАНСКРИПТ** (WAF пропускает text/plain) |
+| 15 | то же для `format=srt` (x-subrip) | ✕ WAF блокирует srt даже через translate.goog; JINA отказывается отдавать «unexpected content type» |
 
 ## 2. Два рабочих маршрута (суть алгоритма)
 

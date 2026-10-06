@@ -90,7 +90,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
     <div class="row" style="margin-top:12px">
       <button class="btn" id="btnRoma" disabled>✦ ФОНЕТИКА</button>
       <button class="btn gray" id="btnSpeak" disabled>▶ ПРОИЗНЕСТИ ВСЁ</button>
-      <label class="chk"><input type="checkbox" id="chkSlow"> 🐢 медленно</label>
+      <label class="chk"><input type="checkbox" id="chkSlow"> ⌇ медленно</label>
       <label class="chk" style="gap:6px">язык TTS
         <select id="selLang" aria-label="Язык произношения"></select>
       </label>
@@ -104,13 +104,13 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
   <h2>2 · Мост «СУФЛЁР ·16» — фонетика поверх поющей песни</h2>
   <div class="panel">
     <p class="status" style="margin-top:0"><span class="dot wait" id="bwdot"></span><span id="bridgeStatus">жду трансляции ·16…</span></p>
-    <p class="hint">Открой <a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>, включи там «📡 трансляция в зал», открой песню — здесь появится текущее слово с романизацией и ближайшие слова. ·20 ничего не отправляет: только слушает канал <code>singulyar-hall</code> (BroadcastChannel + localStorage-фолбэк). Ядро ·16 не затронуто.</p>
+    <p class="hint">Открой <a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>, включи там «⌇ трансляция в зал», открой песню — здесь появится текущее слово с романизацией и ближайшие слова. ·20 ничего не отправляет: только слушает канал <code>singulyar-hall</code> (BroadcastChannel + localStorage-фолбэк). Ядро ·16 не затронуто.</p>
     <div class="bigword" id="bwBox" hidden>
       <div class="m" id="bwSong"></div>
       <div class="o" id="bwOrig"></div>
       <div class="r" id="bwRoma"></div>
       <div class="row" style="margin-top:10px">
-        <button class="btn" id="btnBwSpeak">🔊 слово</button>
+        <button class="btn" id="btnBwSpeak">∿ слово</button>
       </div>
     </div>
     <div class="chips" id="bwNext" hidden></div>
@@ -129,7 +129,7 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
     </table>
     <ul>
       <li>Чипы — кнопки: тап = произнести это слово выбранным темпом.</li>
-      <li>«🐢 медленно» — rate 0.55 вместо 0.95, для разучивания строк.</li>
+      <li>«⌇ медленно» — rate 0.55 вместо 0.95, для разучивания строк.</li>
       <li>Ничего не отправляется никуда: 0 fetch, 0 сети, 0 аккаунтов.</li>
     </ul>
   </div>
@@ -442,8 +442,8 @@ $('#selLang').addEventListener('change', сделать);
   function применить(m) {
     if (!S20.фильтрМоста(m)) return;
     const d = m.d;
-    if ($('#bwBox').hidden) { $('#bwBox').hidden = false; dot.className = 'dot live'; ст.textContent = 'живая трансляция ·16 — слово меняется, тапай 🔊 и чипы'; }
-    $('#bwSong').textContent = d.song ? ('🎵 ' + d.song) : '';
+    if ($('#bwBox').hidden) { $('#bwBox').hidden = false; dot.className = 'dot live'; ст.textContent = 'живая трансляция ·16 — слово меняется, тапай ∿ и чипы'; }
+    $('#bwSong').textContent = d.song ? ('♪ ' + d.song) : '';
     if (d.word !== послСлово) {
       послСлово = d.word;
       $('#bwOrig').textContent = d.word;

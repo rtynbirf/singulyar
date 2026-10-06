@@ -44,7 +44,7 @@ node --test ../ИНСТРУМЕНТЫ/test_s19_human.js   # инварианты
 | POST | `/api/recordings/:id/manifest` | `manifest.json` (участники, песня, тайминги) |
 | POST | `/api/recordings/:id/participants/:n` | голоса по-отдельности `pN.webm` (перемикширование) |
 | POST | `/api/recordings/:id/agree` | согласие на сохранение (политика «все») |
-| POST | `/api/recordings/:id/save` | человек решает: ❤️ → MEMORY (заметка/фото) |
+| POST | `/api/recordings/:id/save` | человек решает: ◈ → MEMORY (заметка/фото) |
 | GET | `/api/recordings/:id` | аудио сохранённого воспоминания |
 | GET | `/api/memories` | список воспоминаний владельца |
 | POST | `/api/ws/ticket` | одноразовый билет (30 с) на вход в ws — только под Bearer |
@@ -55,7 +55,7 @@ node --test ../ИНСТРУМЕНТЫ/test_s19_human.js   # инварианты
 ## Принципы (не нарушать)
 
 - **Временная запись ≠ вечная память.** `expiresAt = now + TTL_TEMP_MS` (7 дней по ТЗ).
-  Никто не нажал ❤️ → GC удаляет метаданные И блоб. Проверено тестом
+  Никто не нажал ◈ → GC удаляет метаданные И блоб. Проверено тестом
   `CREATE → TEMPORARY → EXPIRE → GC → absent + absent`.
 - **Сервер не решает за людей.** Память создаёт человек (политика `any` — владелец;
   политика `all` — согласие всех участников через `/agree`).

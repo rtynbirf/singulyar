@@ -32,7 +32,7 @@
        (приватный и публичный) остаются в ·19 — как E2EE в ·24;
      • idempotencyKey стабилен: повторная публикация = дедуп журнала,
        а не вторая копия факта;
-     • сессия зала — temporary (TTL зеркалит GC зала), память ❤️ —
+     • сессия зала — temporary (TTL зеркалит GC зала), память ◈ —
        persistent: «временное умирает, постоянное живёт»;
      • память ссылается на сессию через semantic.replyTo (не мутируя её);
      • падение журнала — честный {ok:false, reason}, модуль работает
@@ -219,7 +219,7 @@ export function callSignalEvent(надстройка = {}) {
    ttlMs зеркалит СРОК_ВРЕМЕННОЙ_MS зала: кристалл не умнее зала. */
 export function activitySessionEvent(манифест, надстройка = {}) {
   const м = манифест || {};
-  const имена = (м.participants || []).map(function (p) { return (p.emoji || '👤') + ' ' + p.name; });
+  const имена = (м.participants || []).map(function (p) { return (p.emoji || '⬡') + ' ' + p.name; });
   const вложение = {
     kind: 'hall.session',
     room: String(м.room || надстройка.зал || ''),
@@ -252,7 +252,7 @@ export function activitySessionEvent(манифест, надстройка = {}
   };
 }
 
-/* ── ·18: shared.activity — память ❤️ ──
+/* ── ·18: shared.activity — память ◈ ──
    Постоянный факт, ссылающийся на сессию (replyTo = id события сессии).
    Сессию при этом не трогаем: события неизменяемы. */
 export function activityMemoryEvent(запись, надстройка = {}) {
