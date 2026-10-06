@@ -19,8 +19,22 @@
    док ревизии «РЕВИЗИЯ_РУМ.md» в пре-кэше.
    Такт v1.41.0 «ТКАНЬ»: кэш v51 — дверь ·30 и ядро P2P Human Information
    Fabric (БИБЛИОТЕКИ/ткань/, 0 зависимостей) в пре-кэше; Атари-пиктограммы
-   (эмодзи) выкурены по всему живому UI дома — глифы канона и слова. */
-var S15_CACHE = 's15-orkestrator-v51';
+   (эмодзи) выкурены по всему живому UI дома — глифы канона и слова.
+   Такт v1.42.0 «ЗАКАЛКА» (приказ владельца: «ИСПРАВЛЯЙ КОСЯЧКИ БАГИ ПРИБИВАЙ,
+   ЧТОБ У ЧЕЛОВЕКА НЕ ВЫЛЕЗ СИНИЙ (СЕЙЧАС ЧЁРНЫЙ =)) ЭКРАН СМЕРТИ И УСТРОЙСТВО
+   НЕ СТАЛО КИРПИЧЁМ»): кэш v52 — ПРИБИТО:
+   · потолок кэша S15_MAX=140: раньше каждый GET навсегда ложился в кэш
+     (минусовки и всё подряд) — телефон забивался до квоты, дом превращался
+     в кирпич; теперь старейшие записи вытесняются, квоте некуда расти;
+   · каждый put — в catch: квота/приватный режим не роняют воркер;
+   · навигация без сети И без кэша (первый заход офлайн) отвечает честной
+     офлайн-оболочкой в каноне, а не пустотой браузера;
+   · нехватка ресурса (не-навигация) — честный 504, не подвешенный запрос;
+   · страховочный КОРД вшит в каждую страницу дома (error/unhandledrejection
+     → стекло+золото панель, журнал, тихий режим) — чёрный экран смерти снят
+     на уровне страниц, воркер доставляет страницы, а не тишину. */
+var S15_CACHE = 's15-orkestrator-v52';
+var S15_MAX = 140;   /* честный потолок кэша (ЗАКАЛКА): выше — вытесняем старейшие */
 var S15_CORE = [
   './',
   './index.html',
@@ -105,68 +119,102 @@ var S15_CORE = [
   './ДОКУМЕНТЫ/РЕВИЗИЯ_РУМ.md'
 ];
 
-self.addEventListener('install', function(e){
+/* положиВКэш: put с потолком и честной тишиной при квоте (ЗАКАЛКА).
+   Тело ответа передаётся уже клонированной копией — оригинал едет странице. */
+function положиВКэш(req, copy) {
+  return caches.open(S15_CACHE).then(function (c) {
+    c.keys().then(function (ключи) {
+      if (ключи.length >= S15_MAX) {
+        ключи.slice(0, ключи.length - S15_MAX).forEach(function (старый) {
+          c.delete(старый).catch(function () { });
+        });
+      }
+    }).catch(function () { });
+    return c.put(req, copy).catch(function () { /* квота — сеть всё равно жива */ });
+  }).catch(function () { });
+}
+
+/* офлайн-оболочка (ЗАКАЛКА): первый заход без сети больше не показывает
+   пустоту браузера — честная страница в каноне дома. */
+function оболочка() {
+  return new Response(
+    '<!doctype html><html lang="ru"><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>СИНГУЛЯР — офлайн</title>' +
+    '<style>body{background:#0A0A0C;color:#C0C8D0;font:16px/1.6 system-ui,-apple-system,sans-serif;' +
+    'display:grid;place-items:center;min-height:100svh;margin:0;text-align:center;padding:20px}a{color:#D4AF37}</style>' +
+    '<main><p style="color:#F0D78C;font:12px/1 ui-monospace,monospace;letter-spacing:.3em">◇ СИНГУЛЯР · ОФЛАЙН</p>' +
+    '<p style="margin:14px 0 6px">Сеть не дошла, а этой страницы ещё нет в кэше дома.</p>' +
+    '<p style="color:#8A9099;font-size:14px">Дом уже в кэше: <a href="./">открыть главную</a>.</p></main>',
+    { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+}
+
+self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open(S15_CACHE).then(function(c){
+    caches.open(S15_CACHE).then(function (c) {
       /* добавляем по одному: отсутствие файла не срывает установку */
-      return Promise.all(S15_CORE.map(function(u){
-        return c.add(new Request(u, {cache: 'reload'})).catch(function(){ return null; });
+      return Promise.all(S15_CORE.map(function (u) {
+        return c.add(new Request(u, { cache: 'reload' })).catch(function () { return null; });
       }));
-    }).then(function(){ return self.skipWaiting(); })
+    }).then(function () { return self.skipWaiting(); })
   );
 });
 
-self.addEventListener('activate', function(e){
+self.addEventListener('activate', function (e) {
   e.waitUntil(
-    caches.keys().then(function(keys){
-      return Promise.all(keys.map(function(k){
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.map(function (k) {
         return k === S15_CACHE ? null : caches.delete(k);
       }));
-    }).then(function(){ return self.clients.claim(); })
+    }).then(function () { return self.clients.claim(); })
   );
 });
 
-self.addEventListener('fetch', function(e){
+self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
   if (url.origin !== location.origin) return;      /* чужое — мимо кэша */
   /* минусовки: сеть-первая с кэш-фолбэком (файлы могут добавляться) */
   var isMinus = /\/minus\/.+\.mp3$/.test(url.pathname);
-  if (isMinus){
+  if (isMinus) {
     e.respondWith(
-      fetch(req).then(function(res){
-        var copy = res.clone();
-        caches.open(S15_CACHE).then(function(c){ c.put(req, copy); });
+      fetch(req).then(function (res) {
+        положиВКэш(req, res.clone());
         return res;
-      }).catch(function(){
+      }).catch(function () {
         return caches.match(req);
       })
     );
     return;
   }
-  /* навигация по страницам: сеть-первая, офлайн — оболочка */
-  if (req.mode === 'navigate'){
+  /* навигация по страницам: сеть-первая, офлайн — кэш, дальше — оболочка */
+  if (req.mode === 'navigate') {
     e.respondWith(
-      fetch(req).then(function(res){
-        var copy = res.clone();
-        caches.open(S15_CACHE).then(function(c){ c.put(req, copy); });
+      fetch(req).then(function (res) {
+        положиВКэш(req, res.clone());
         return res;
-      }).catch(function(){
-        return caches.match(req).then(function(hit){
-          return hit || caches.match('./index.html');
-        });
+      }).catch(function () {
+        return caches.match(req).then(function (hit) {
+          if (hit) return hit;
+          return caches.match('./index.html').then(function (дом) {
+            return дом || оболочка();
+          });
+        }).catch(function () { return оболочка(); });
       })
     );
     return;
   }
-  /* остальное: кэш-первая */
+  /* остальное: кэш-первая, мимо кэша — сеть, без сети — честный 504 */
   e.respondWith(
-    caches.match(req).then(function(hit){
-      return hit || fetch(req).then(function(res){
-        var copy = res.clone();
-        caches.open(S15_CACHE).then(function(c){ c.put(req, copy); });
+    caches.match(req).then(function (hit) {
+      if (hit) return hit;
+      return fetch(req).then(function (res) {
+        положиВКэш(req, res.clone());
         return res;
+      }).catch(function () {
+        return new Response('СИНГУЛЯР: офлайн, этого файла нет в кэше дома',
+          { status: 504, statusText: 'SNG offline', headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
       });
     })
   );

@@ -16,10 +16,11 @@ const check = (name, cond, extra) => {
 };
 
 /* 1. синтаксис всего скрипта модуля */
-const mScript = html.match(/<script>([\s\S]*?)<\/script>/);
-check('script block найден', !!mScript);
-if (!mScript) process.exit(1);
-const js = mScript[1];
+/* v1.42.0: КОРД вшит первым — синтаксису сдаём ВСЕ inline-скрипты страницы */
+const блоки = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(x => x[1]);
+check('script block найден', блоки.length > 0);
+if (!блоки.length) process.exit(1);
+const js = блоки.join('\n;\n');
 const tmp = path.join(require('os').tmpdir(), 's20_full_' + process.pid + '.js');
 fs.writeFileSync(tmp, js);
 try { execFileSync(process.execPath, ['--check', tmp]); check('синтаксис модуля', true); }
