@@ -18,8 +18,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 function jsOf(file) {
   const s = fs.readFileSync(path.join(ROOT, file), 'utf8');
-  const m = s.match(/<script>([\s\S]*?)<\/script>/);
-  return m ? m[1] : '';
+  /* v1.42.0: КОРД вшит первым скриптом в каждую страницу — берём ВСЕ inline-скрипты,
+     чтобы инварианты кода комнаты не зависели от порядка скриптов */
+  const все = [...s.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(x => x[1]);
+  return все.join('\n');
 }
 
 /* ── статические инварианты модулей (дёшево, честно) ── */

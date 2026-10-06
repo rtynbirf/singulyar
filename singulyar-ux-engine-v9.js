@@ -1,5 +1,5 @@
 /*!
- * SINGULYAR UX ENGINE v9.4 «ПОДСКАЗКИ ВЕЗДЕ» · метка сборки такта v1.41.0 «ТКАНЬ» (суть движка — v9.4)
+ * SINGULYAR UX ENGINE v9.4 «ПОДСКАЗКИ ВЕЗДЕ» · метка сборки такта v1.42.0 «ЗАКАЛКА» (суть движка — v9.4)
  * Наследник v9.3 «ТАМ ГДЕ ПОСТАВИЛ» (тот — наследник v9.2 «ХОЗЯИН=ГОСТЬ»).
  * Главное изменение такта v1.35.0 (слово владельца):
  *   «ПРИ НАВЕДЕНИИ КУРСОРА ВСЕГДА ВЕЗДЕ ВСПЛЫВАЮЩИЕ ПОДСКАЗКИ ВЕЗДЕ!!!
@@ -85,7 +85,7 @@
 
     // Уважение к «уменьшить движение»
     var reducedMotion = false;
-    try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!window.SNG_ТИХО; } catch (e) { reducedMotion = !!window.SNG_ТИХО; }
 
     // Режим хорошего соседа: хост-страница со своими хоткеями подключает
     // скрипт с data-hotkeys="off" — тогда S/Esc не перехватываются глобально.
@@ -268,7 +268,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'ДОКУМЕНТАЦИЯ.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'ДОКУМЕНТАЦИЯ.html';
     });
-    item('·', 'сборка v1.41.0 · ТКАНЬ', function () {}, { мертв: true });
+    item('·', 'сборка v1.42.0 · ЗАКАЛКА', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);

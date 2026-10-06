@@ -10,9 +10,11 @@ const vm = require('vm');
 const path = require('path');
 
 const HTML = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_18_СОБЫТИЕ.html'), 'utf8');
-const m = HTML.match(/<script>\n([\s\S]*?)\n<\/script>/);
-if (!m) { console.error('FAIL: script-блок не найден'); process.exit(1); }
-const src = m[1];
+/* v1.42.0: КОРД вшит первым скриптом каждой страницы — берём ВСЕ inline-скрипты,
+   чтобы инварианты кода комнаты не зависели от порядка скриптов */
+const блоки = [...HTML.matchAll(/<script>\n?([\s\S]*?)\n?<\/script>/g)].map(x => x[1]);
+if (!блоки.length) { console.error('FAIL: script-блоки не найдены'); process.exit(1); }
+const src = блоки.join('\n;\n');
 
 function slice(a, b) {
   const i = src.indexOf(a), j = src.indexOf(b);

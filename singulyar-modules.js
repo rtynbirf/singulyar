@@ -1,5 +1,5 @@
 /* ==========================================================================
-   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.6.0 · такт v1.41.0 «ТКАНЬ»
+   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.7.0 · такт v1.42.0 «ЗАКАЛКА»
    Слово такта v1.41.0 (приказ владельца): «МЫ НЕ МОЖЕМ ИГНОРИРОВАТЬ —
    МЫ ДОЛЖНЫ РЕАЛИЗОВАТЬ, ВЫБРАВ СВОЙ ПУТЬ. ЭМОДЗИ-ПИКТОГРАММАМ (свиток,
    дом, ключ) НЕ МЕСТО НА САЙТЕ — ЭТО НЕ АТАРИ С ПИКТОГРАММАМИ». Дверь
@@ -180,7 +180,7 @@
 
   /* ── 3. API ─────────────────────────────────────────────────────────── */
   var SNG = {
-    версия: '1.6.0',
+    версия: '1.7.0',
     формула: 'Ŝ = 1_H + λ(I⊗I†)',
     инвариант: '⟨M(t), Σ(t)⟩ ≡ 0',
     модальности: МОДАЛЬНОСТИ,
@@ -276,7 +276,7 @@
     var ДПР = Math.min(2, window.devicePixelRatio || 1);
     var w = 0, h = 0;
     var движение = true;
-    try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.SNG_ТИХО; } catch (e) { движение = !window.SNG_ТИХО; }
 
     function размер() {
       var r = канвас.getBoundingClientRect();
@@ -400,7 +400,7 @@
     var ДПР = Math.min(2, window.devicePixelRatio || 1);
     var w = 0, h = 0;
     var движение = true;
-    try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    try { движение = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !window.SNG_ТИХО; } catch (e) { движение = !window.SNG_ТИХО; }
     var фаза = (опции.фаза || 0);
     /* доля центра ядра по высоте канваса — осколки рассыпаются вокруг КРИСТАЛЛА */
     канвас.dataset.ядроУ = '0.375';
@@ -1180,7 +1180,7 @@
     var склад = осколкиСклад();
     var карта = {};                       /* id → { a, узел, кольцо, индекс } */
     var сокращено = false;
-    try { сокращено = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    try { сокращено = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!window.SNG_ТИХО; } catch (e) { сокращено = !!window.SNG_ТИХО; }
 
     /* глифы модальностей — для бирки (синтез объектов в одном месте) */
     var глиф = {};
