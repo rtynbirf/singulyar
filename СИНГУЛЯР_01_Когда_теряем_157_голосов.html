@@ -715,7 +715,7 @@ body{background:#0A0A0C !important}
       <div class="pl-sub" id="plSub">OutShadow feat RUVSON · 3:51 · тексты — ASR-черновики</div></div>
     <span class="grow"></span>
     <button class="langchip" id="btnLangs2" title="Все 157 голосов (G)"><span id="plLangCode">RU·ORIG</span><span id="plLangName">—</span> ◉</button>
-    <button class="iconb" id="btnFav" aria-label="В избранное (F)"></button>
+    <button class="iconb" id="btnFav" aria-label="В избранное (F)">◇</button>
   </div>
   <div class="scorebar" id="scorebar">
     <span>ТЭП</span><span class="sc" id="scScore">00000</span><span class="combo" id="scCombo">×1</span>
@@ -847,7 +847,7 @@ function traxLangLabel(code){
 function fillTraxLangSel(id,keep){
   const sel=$('#traxLangSel');if(!sel)return;
   const codes=['ru',...traxLangsOf(id).filter(c=>c!=='ru')];
-  sel.innerHTML=codes.map(c=>'<option value="'+esc(c)+'">'+esc(traxLangLabel(c))+'</option>').join('');
+  codes.forEach(c=>{const o=document.createElement('option'); o.value=c; o.textContent=traxLangLabel(c); sel.appendChild(o);});
   const saved=store.get('traxlang.'+id,'ru');
   traxLangCode=codes.includes(saved)?saved:'ru';
   sel.value=traxLangCode;
@@ -1072,7 +1072,7 @@ function renderLang(code){
   }
 }
 function buildStack(){
-  stack.innerHTML='';
+  stack.replaceChildren();
   const frag=document.createDocumentFragment();
   L.lines.forEach(l=>{
     const el=document.createElement('div');
@@ -1302,14 +1302,15 @@ function matterSrcFile(file){
 /* ═══ КОЛЕСО: 157 голосов, 5 кругов ═══ */
 const RINGS=[.26,.315,.37,.425,.48], RCOUNT=[31,32,32,31,31];
 function buildWheel(){
-  const rot=$('#rotator');rot.innerHTML='';let k=0;
+  const rot=$('#rotator');rot.replaceChildren();let k=0;
   RCOUNT.forEach((n,ri)=>{
     for(let i=0;i<n&&k<ORDER.length;i++,k++){
       const code=ORDER[k],ang=(i/n)*Math.PI*2-Math.PI/2;
       const px=50+Math.cos(ang)*RINGS[ri]*92, py=50+Math.sin(ang)*RINGS[ri]*92;
       const el=document.createElement('div');el.className='wn';el.tabIndex=0;el.dataset.c=code;
       el.style.left=px+'%';el.style.top=py+'%';
-      el.innerHTML='<i></i><span class="nm">'+esc(LANGS[code].n)+'</span>';
+      el.appendChild(document.createElement('i'));
+      const nm=document.createElement('span'); nm.className='nm'; nm.textContent=LANGS[code].n; el.appendChild(nm);
       el.setAttribute('role','button');
       el.setAttribute('aria-label',LANGS[code].n);
       el.addEventListener('click',()=>openPlayer(code));
@@ -1337,7 +1338,7 @@ function dlTask(it){
   dlBlob(new Blob([d.v],{type:d.m||'text/plain;charset=utf-8'}),d.f);
 }
 function buildTasks(){
-  const wrap=$('#taskScroll');wrap.innerHTML='';
+  const wrap=$('#taskScroll');wrap.replaceChildren();
   const q=($('#taskSearch').value||'').toLowerCase();
   let items=0,groups=0,dl=0;
   TASKFILES.groups.forEach(g=>{
@@ -1346,7 +1347,8 @@ function buildTasks(){
     groups++;items+=list.length;
     const sec=document.createElement('section');sec.className='tgroup';
     const h=document.createElement('h3');
-    h.innerHTML='<span>'+esc(g.t)+'</span><span class="gn">'+esc(g.c)+'</span>';
+    const hs1=document.createElement('span'); hs1.textContent=g.t; h.appendChild(hs1);
+    const hs2=document.createElement('span'); hs2.className='gn'; hs2.textContent=g.c; h.appendChild(hs2);
     sec.appendChild(h);
     list.forEach(it=>{
       const row=document.createElement('div');row.className='trow '+it.st;row.setAttribute('role','listitem');
@@ -1488,7 +1490,7 @@ function showView(name,opts){
   $('#mini').style.display=name==='player'?'none':'flex';
   if(name==='files')buildTasks();
   if(name==='matter')setMatterShape(MATTER.shape,false);
-  if(name==='langs'){$('#rotator').innerHTML='';buildWheel();buildLangGrid()}
+  if(name==='langs'){$('#rotator').replaceChildren();buildWheel();buildLangGrid()}
   if(name==='catalog')buildCatalog();
   if(name==='home')buildHome();
   const hash='v='+name+(name!=='player'&&name!=='langs'?'':'&lang='+encodeURIComponent(cur));
@@ -1552,22 +1554,32 @@ function closePlayer(){
 function resumeAt(t){
   const el=document.createElement('button');el.className='btn ghost';el.textContent='▶ продолжить с '+fmtT(t);
   const box=$('#resumeBox'); if(!box)return;
-  box.innerHTML=''; box.appendChild(el); box.style.display='flex';
+  box.replaceChildren(); box.appendChild(el); box.style.display='flex';
   el.addEventListener('click',()=>{audio.currentTime=t;kick();box.style.display='none'});
   setTimeout(()=>{box.style.display='none'},9000);
 }
 
 /* ═══ HOME ═══ */
-function cardHTML(c){
+/* v1.40.0 «РЕВИЗИЯ»: cardHTML (строка) → mkCard собирает DOM руками (закон дома: ноль innerHTML).
+   textContent экранирует сам — esc() для карточек больше не нужен. */
+function mkCard(c,cls){
+  const el=document.createElement('button');el.className='card '+cls;
   const live=c.id==='rWpYxmFjm9g';
   const trax=!!TRAX_BY[c.id];
-  const rank=c.rank?'<span class="rank">'+c.rank+'</span>':'';
-  const badge=live?'<span class="badge">157 голосов</span>':(trax?'<span class="badge btxt">текст </span>':'<span class="badge">'+esc(c.tag||'YouTube')+'</span>');
-  const glyph='▶';
-  const fav=live?'':'<button class="fav'+(c.fav?' on':'')+'" data-fav="'+c.id+'" aria-label="в избранное" title="в избранное">◈</button>';
-  return '<div class="thumb">'+rank+badge+'<span class="glyph">'+glyph+'</span></div>'+
-    '<div class="tt">'+esc(c.title)+'</div>'+
-    '<div class="meta"><span class="vw">'+esc(c.views)+'</span><span>·</span><span>'+esc(c.length)+'</span></div>'+fav;
+  const th=document.createElement('div');th.className='thumb';
+  if(c.rank){const rk=document.createElement('span');rk.className='rank';rk.textContent=c.rank;th.appendChild(rk);}
+  const bd=document.createElement('span');bd.className='badge'+(trax?' btxt':'');bd.textContent=live?'157 голосов':(trax?'текст ':(c.tag||'YouTube'));th.appendChild(bd);
+  const gl=document.createElement('span');gl.className='glyph';gl.textContent='▶';th.appendChild(gl);
+  el.appendChild(th);
+  const tt=document.createElement('div');tt.className='tt';tt.textContent=c.title;el.appendChild(tt);
+  const meta=document.createElement('div');meta.className='meta';
+  const vw=document.createElement('span');vw.className='vw';vw.textContent=c.views;meta.appendChild(vw);
+  const dt=document.createElement('span');dt.textContent='·';meta.appendChild(dt);
+  const ln=document.createElement('span');ln.textContent=c.length;meta.appendChild(ln);
+  el.appendChild(meta);
+  if(!live){const fv=document.createElement('button');fv.className='fav'+(c.fav?' on':'');fv.dataset.fav=c.id;
+    fv.setAttribute('aria-label','в избранное');fv.title='в избранное';fv.textContent=c.fav?'◈':'◇';el.appendChild(fv);}
+  wireCard(el,c); return el;
 }
 function wireCard(el,c){
   el.addEventListener('click',e=>{
@@ -1579,17 +1591,13 @@ function wireCard(el,c){
   const fb=el.querySelector('.fav');
   if(fb)fb.addEventListener('click',()=>{
     const on=toggleFavSong(c.id);
-    fb.classList.toggle('on',on); fb.textContent=on?'':'';
+    fb.classList.toggle('on',on); fb.textContent=on?'◈':'◇';
     toast(on?'в избранном: '+c.title:'убрано из избранного',1400);
   });
 }
-function mkCard(c,cls){
-  const el=document.createElement('button');el.className='card '+cls;el.innerHTML=cardHTML(c);
-  wireCard(el,c); return el;
-}
 function fillRail(id,list,liveFirst){
   const r=$(id); if(!r)return;
-  r.innerHTML='';
+  r.replaceChildren();
   list.forEach(c=>r.appendChild(mkCard(c,'')));
 }
 function buildHome(){
@@ -1598,15 +1606,19 @@ function buildHome(){
   /* продолжить */
   const hist=store.get('hist',[]);
   const cont=$('#rowCont');
-  cont.innerHTML='';
+  cont.replaceChildren();
   if(hist.length){
     cont.closest('.rowsec').style.display='';
     hist.slice(0,8).forEach(h=>{
       const lang=h.lang, d=LANGS[lang]; if(!d)return;
       const el=document.createElement('button');el.className='card';
-      el.innerHTML='<div class="thumb"><span class="badge">язык</span><span class="glyph"></span></div>'+
-        '<div class="tt">'+esc(d.n)+'</div>'+
-        '<div class="meta"><span class="vw">был на '+fmtT(h.t)+'</span></div>';
+      const thh=document.createElement('div');thh.className='thumb';
+      const bh=document.createElement('span');bh.className='badge';bh.textContent='язык';thh.appendChild(bh);
+      const gh=document.createElement('span');gh.className='glyph';thh.appendChild(gh);
+      el.appendChild(thh);
+      const tth=document.createElement('div');tth.className='tt';tth.textContent=d.n;el.appendChild(tth);
+      const mh=document.createElement('div');mh.className='meta';
+      const vh=document.createElement('span');vh.className='vw';vh.textContent='был на '+fmtT(h.t);mh.appendChild(vh);el.appendChild(mh);
       el.addEventListener('click',()=>{showView('player');$('#player').classList.add('open');
         renderLang(lang); audio.currentTime=h.t; kick()});
       cont.appendChild(el);
@@ -1623,12 +1635,21 @@ function buildHome(){
   if(favList.length){secF.style.display='';fillRail('#rowFav',favList)}
   else secF.style.display='none';
   /* конвейер = ближайшие к обработке (топ по просмотрам, без живого) — поются уже сейчас */
-  const q=$('#rowQueue'); q.innerHTML='';
+  const q=$('#rowQueue'); q.replaceChildren();
   const q9=[...cat].filter(c=>c.id!=='rWpYxmFjm9g').sort((a,b)=>b.vwN-a.vwN).slice(0,9);
   q9.forEach((c,i)=>{
     const el=document.createElement('button');el.className='card soon';
-    el.innerHTML='<div class="thumb"><span class="rank">'+(i+2)+'</span><span class="badge btxt">текст </span><span class="glyph"></span></div>'+
-      '<div class="tt">'+esc(c.title)+'</div><div class="meta"><span class="vw">'+esc(c.views)+'</span><span>·</span><span>караоке готово</span></div>';
+    const tq=document.createElement('div');tq.className='thumb';
+    const rq=document.createElement('span');rq.className='rank';rq.textContent=i+2;tq.appendChild(rq);
+    const bq=document.createElement('span');bq.className='badge btxt';bq.textContent='текст ';tq.appendChild(bq);
+    const gq=document.createElement('span');gq.className='glyph';tq.appendChild(gq);
+    el.appendChild(tq);
+    const ttq=document.createElement('div');ttq.className='tt';ttq.textContent=c.title;el.appendChild(ttq);
+    const mq=document.createElement('div');mq.className='meta';
+    const vq=document.createElement('span');vq.className='vw';vq.textContent=c.views;mq.appendChild(vq);
+    const dq=document.createElement('span');dq.textContent='·';mq.appendChild(dq);
+    const rrq=document.createElement('span');rrq.textContent='караоке готово';mq.appendChild(rrq);
+    el.appendChild(mq);
     el.addEventListener('click',()=>openTrax(c.id));
     q.appendChild(el);
   });
@@ -1647,20 +1668,21 @@ function buildCatalog(){
   if(S.catSort==='views')list.sort((a,b)=>b.vwN-a.vwN);
   else if(S.catSort==='title')list.sort((a,b)=>a.title.localeCompare(b.title,'ru'));
   /* else 'date' — исходный порядок (свежие сверху) */
-  const g=$('#catGrid'); g.innerHTML='';
+  const g=$('#catGrid'); g.replaceChildren();
   if(S.catFilter!=='fav'){
     const lc=mkCard(live,'live'); g.appendChild(lc);
   }
   if(!list.length&&!S.catQ){
     /* live уже добавлен */
   } else list.forEach(c=>g.appendChild(mkCard(c,'')));
-  if(!g.children.length)g.innerHTML='<div class="empty">ничего не нашлось<br>попробуй другой фильтр или запрос</div>';
+  if(!g.children.length){const empty=document.createElement('div'); empty.className='empty'; empty.textContent='ничего не нашлось';
+    empty.appendChild(document.createElement('br')); empty.appendChild(document.createTextNode('попробуй другой фильтр или запрос')); g.appendChild(empty);}
   $('#catCnt').textContent=(list.length+(S.catFilter!=='fav'?1:0))+' треков · тексты 61/61 · 1 живой · '+ (favs.length) + ' в избранном';
 }
 
 /* ═══ LANGS ═══ */
 function buildLangGrid(){
-  const g=$('#lgrid'); g.innerHTML='';
+  const g=$('#lgrid'); g.replaceChildren();
   const q=($('#langSearch').value||'').toLowerCase();
   let n=0;
   ORDER.forEach(code=>{
@@ -1669,7 +1691,8 @@ function buildLangGrid(){
     n++;
     const favs=store.get('fav.langs',[]);
     const el=document.createElement('button');el.className='gi'+(code===cur?' cur':'');el.dataset.c=code;
-    el.innerHTML='<b>'+esc(d.n)+(favs.includes(code)?' ◈':'')+'</b><span>'+code+' · '+d.lines+' строк</span>';
+    const bg=document.createElement('b'); bg.textContent=d.n+(favs.includes(code)?' ◈':''); el.appendChild(bg);
+    const sg=document.createElement('span'); sg.textContent=code+' · '+d.lines+' строк'; el.appendChild(sg);
     el.addEventListener('click',()=>openPlayer(code));
     el.addEventListener('contextmenu',e=>{e.preventDefault();
       const on=toggleFavLang(code); toast((on?'язык в избранном: ':'убран из избранных: ')+d.n,1400); buildLangGrid()});
@@ -1678,7 +1701,7 @@ function buildLangGrid(){
   $('#langFound').textContent=n+' / '+ORDER.length;
 }
 
-/* ═══ MODAL песни (каталог → заглушка) ═══ */
+/* ═══ MODAL песни (каталог → карточка трека) ═══ */
 function songModal(c){
   const d=$('#songModal');
   $('#smTitle').textContent=c.title;
@@ -1698,11 +1721,11 @@ function wirePlayer(){
   $('#btnFwd10').addEventListener('click',()=>{audio.currentTime=Math.min(audio.duration-1,audio.currentTime+10);kick()});
   $('#btnFav').addEventListener('click',e=>{
     const on=toggleFavSong('rWpYxmFjm9g');
-    e.currentTarget.classList.toggle('on',on);e.currentTarget.textContent=on?'':'';
+    e.currentTarget.classList.toggle('on',on);e.currentTarget.textContent=on?'◈':'◇';
     toast(on?'песня в избранном':'убрано из избранного',1400);
   });
   const favNow=favSongs().includes('rWpYxmFjm9g');
-  const bf=$('#btnFav'); bf.classList.toggle('on',favNow); bf.textContent=favNow?'':'';
+  const bf=$('#btnFav'); bf.classList.toggle('on',favNow); bf.textContent=favNow?'◈':'◇';
   /* tempo */
   const tp=$('#tempo'); tp.value=1;
   $('#tempoV').textContent='1.00×';

@@ -3,7 +3,109 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import {fileURLToPath} from "node:url";
-import {WebSocketServer} from "ws";
+import {EventEmitter} from "node:events";
+
+/* ═══ WEBSOCKET RFC 6455 СВОИМИ РУКАМИ (v1.40.0 «РЕВИЗИЯ») ═══
+   Было: import {WebSocketServer} from "ws" — внешний npm-пакет. Следствие: сервер не
+   поднимался без `npm install` в server/, и наследственные тесты s19 падали у КАЖДОГО,
+   кто склонировал дом (падают и без нас). Декларация вместо рабочего инструмента.
+   Стало: handshake + фрейминг по RFC 6455 встроен сюда (~130 строк) — склонировал дом,
+   запустил node server.mjs → живо, ноль внешних зависимостей, ноль вопросов у вечных.
+   Поддержано: текстовые фреймы (opcode 1), фрагментация (continuation), ping/pong,
+   close; защита: RSV≠0 → close (расширения не согласованы), payload > 16 МБ → close
+   (JSON-сообщениям сигналинга хватит с запасом), клиент обязан маскировать (RFC).
+   API-обёртка совместима с прежней (handleUpgrade/send/message/close/readyState),
+   поэтому остальной код сервера не изменился ни на строку. */
+const WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";   /* константа магии из RFC 6455 §1.3 */
+const WS_MAX_PAYLOAD = 16 * 1048576;
+
+class WSConn extends EventEmitter {
+  constructor(socket) {
+    super();
+    this.socket = socket;
+    this.readyState = 1;              /* 1 = OPEN — та же шкала, что у прежнего ws */
+    this._buf = Buffer.alloc(0);      /* недобранные байты текущего фрейма */
+    this._frags = [];                 /* накопитель continuation-фреймов */
+    this._fragOp = 0;                 /* opcode первого фрагмента (1 = текст) */
+    socket.setNoDelay(true);
+    socket.on("data", d => { this._buf = this._buf.length ? Buffer.concat([this._buf, d]) : d; this._drain(); });
+    socket.on("close", () => { if (this.readyState !== 3) { this.readyState = 3; this.emit("close"); } });
+    socket.on("error", () => { try { socket.destroy(); } catch {} });
+  }
+  _drain() {
+    /* разбираем все цельные фреймы, что уже лежат в буфере */
+    for (;;) {
+      const b = this._buf;
+      if (b.length < 2) return;
+      const fin = (b[0] & 0x80) !== 0, rsv = b[0] & 0x70, op = b[0] & 0x0f;
+      const маскирован = (b[1] & 0x80) !== 0;
+      let len = b[1] & 0x7f, off = 2;
+      if (len === 126) { if (b.length < 4) return; len = b.readUInt16BE(2); off = 4; }
+      else if (len === 127) { if (b.length < 10) return; const big = b.readBigUInt64BE(2); if (big > BigInt(WS_MAX_PAYLOAD)) return this.close(1009); len = Number(big); off = 10; }
+      if (len > WS_MAX_PAYLOAD) return this.close(1009);
+      const maskLen = маскирован ? 4 : 0;
+      if (b.length < off + maskLen + len) return;         /* фрейм ещё не доехал целиком */
+      let payload = b.subarray(off + maskLen, off + maskLen + len);
+      if (маскирован) {                                    /* клиент → сервер всегда с маской (RFC §5.3) */
+        const key = b.subarray(off, off + 4);
+        const копия = Buffer.allocUnsafe(len);
+        for (let i = 0; i < len; i++) копия[i] = payload[i] ^ key[i & 3];
+        payload = копия;
+      }
+      this._buf = b.subarray(off + maskLen + len);
+      if (rsv) return this.close(1002);                    /* переговоров о расширениях не было */
+      if (!маскирован && op !== 0x8) return this.close(1002);
+      if (op === 0x8) return this.close(1000);             /* встречное закрытие по-честному */
+      if (op === 0x9) { this._sendRaw(0xa, payload); continue; }          /* ping → pong */
+      if (op === 0xa) continue;                                          /* pong — жив, и ладно */
+      if (op === 0x1 || op === 0x2 || op === 0x0) {
+        if (fin && op !== 0x0 && !this._frags.length) { this.emit("message", payload.toString("utf8")); continue; }
+        if (op !== 0x0 && !this._frags.length) this._fragOp = op;
+        this._frags.push(payload);
+        if (fin) { const цель = Buffer.concat(this._frags); this._frags = []; this.emit("message", цель.toString("utf8")); }
+        continue;
+      }
+      return this.close(1002);                             /* неизвестный opcode — протокольная ошибка */
+    }
+  }
+  _sendRaw(op, payload) {
+    if (this.readyState !== 1) return;
+    const len = payload.length;
+    let head;
+    if (len < 126) { head = Buffer.from([0x80 | op, len]); }
+    else if (len < 65536) { head = Buffer.alloc(4); head[0] = 0x80 | op; head[1] = 126; head.writeUInt16BE(len, 2); }
+    else { head = Buffer.alloc(10); head[0] = 0x80 | op; head[1] = 127; head.writeBigUInt64BE(BigInt(len), 2); }
+    try { this.socket.write(Buffer.concat([head, payload])); } catch {}
+  }
+  send(str) { this._sendRaw(0x1, Buffer.from(String(str), "utf8")); }
+  close(code = 1000) {
+    if (this.readyState !== 1) return;
+    this.readyState = 2;
+    const p = Buffer.alloc(2); p.writeUInt16BE(code);
+    try { this.socket.write(Buffer.concat([Buffer.from([0x88, 2]), p])); } catch {}
+    try { this.socket.end(); setTimeout(() => { try { this.socket.destroy(); } catch {} }, 500); } catch { try { this.socket.destroy(); } catch {} }
+    this.readyState = 3; this.emit("close");
+  }
+}
+
+/* Аcceptor совместим с прежним WebSocketServer({noServer:true}): ровно один метод */
+class WSАкцептор {
+  handleUpgrade(req, socket, head, cb) {
+    const key = req.headers["sec-websocket-key"];
+    const хочет = String(req.headers.upgrade || "").toLowerCase() === "websocket";
+    if (!хочет || !key) { try { socket.destroy(); } catch {} return; }
+    const accept = crypto.createHash("sha1").update(key + WS_GUID).digest("base64");
+    socket.write(
+      "HTTP/1.1 101 Switching Protocols\r\n" +
+      "Upgrade: websocket\r\n" +
+      "Connection: Upgrade\r\n" +
+      "Sec-WebSocket-Accept: " + accept + "\r\n\r\n"
+    );
+    const conn = new WSConn(socket);
+    if (head && head.length) conn._onData(head);          /* редкие байты, приехавшие с handshake */
+    cb(conn);
+  }
+}
 
 /* ═══ SINGULAR SERVER v1 — сервер связей СИНГУЛЯРА (по ТЗ «СОБЫТИЕ / СОВМЕСТНОЕ ПЕНИЕ / ПАМЯТЬ»)
    Метаданные: JSON-файлы с атомарной записью (интерфейс хранилища один — замена на SQLite не переписывает сервер).
@@ -353,7 +455,7 @@ const server = http.createServer((req, res) => route(req, res).catch(e => {
   if (!res.headersSent) json(res, e.message === "too_large" ? 413 : 500, {error: e.message === "too_large" ? "too_large" : "server_error"});
 }));
 
-const wss = new WebSocketServer({noServer: true});
+const wss = new WSАкцептор();   /* v1.40.0: свой RFC 6455 — внешний пакет ws больше не нужен */
 server.on("upgrade", (req, socket, head) => {
   const u = new URL(req.url, `http://${req.headers.host}`);
   /* v1.25.1 (ревью S1): только одноразовый ticket — путь /ws?token= закрыт НАВСЕГДА */
