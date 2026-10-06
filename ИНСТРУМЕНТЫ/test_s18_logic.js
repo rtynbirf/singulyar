@@ -27,9 +27,17 @@ const iQ = src.indexOf('const QR_CAPL'), iЯ = src.indexOf('/*<ЯДРО>*/');
 if (iQ < 0 || iЯ < 0 || iЯ < iQ) throw new Error('QR-сегмент не найден');
 const QR = src.slice(iQ, iЯ);
 
+/* ЗАКАЛКА v1.43.0: канонГлиф и легенда живут ДО маркера /*<ЯДРО>*\/ — в живой
+   странице они в одном скрипт-блоке и видны всей комнате. Без них песочница
+   падает ReferenceError на профиле гостя (v1.41 рефактор ввёл канонГлиф,
+   регресс не перезапускали). Вшиваем легенду в прогон — как на лице. */
+const iЛ = src.indexOf('const ЛЕГЕНДА_ГЛИФОВ'), iЛк = src.indexOf('/* ── 0. QR-ЭНКОДЕР');
+if (iЛ < 0 || iЛк < 0 || iЛк < iЛ) throw new Error('легенда глифов не найдена');
+const ЛЕГЕНДА = src.slice(iЛ, iЛк);
+
 const песочница = { Math, Date, JSON, console, isFinite, parseInt, TextEncoder, TextDecoder, setTimeout, setInterval, clearInterval, clearTimeout, Promise };
 vm.createContext(песочница);
-vm.runInContext(ЯДРО + '\n' + QR + '\n' + КОМНАТА, песочница, { filename: 's18-core.js' });
+vm.runInContext(ЛЕГЕНДА + '\n' + ЯДРО + '\n' + QR + '\n' + КОМНАТА, песочница, { filename: 's18-core.js' });
 
 let passed = 0, failed = 0;
 function ок(name, cond) {
@@ -186,7 +194,16 @@ function сек(t) { console.log('— ' + t); }
     await ждать(() => комХост.state.participants.some(p => p.id === 'g-1'));
     let ст = комХост.state;
     ок('хост назначен', ст.host === 'h-1');
-    ок('гость в списке', ст.participants.some(p => p.id === 'g-1' && p.name === 'Мама' && p.emoji === '👩'));
+    /* ЗАКАЛКА v1.43.0: такт v1.41 «Атари-пиктограммы выкурены» — входящий
+       эмодзи профиля канонизируется глифом дома (канонГлиф: 👩→◈).
+       Охраняем НОВЫЙ канон: в состоянии комнаты эмодзи не живёт. */
+    ок('гость в списке', ст.participants.some(p => p.id === 'g-1' && p.name === 'Мама' && p.emoji === '◈'));
+    ок('эмодзи не возвращается на сайт (канонГлиф)', ст.participants.every(p => {
+      /* граница канона — рендер: всё, что рисуется, проходит через канонГлиф;
+         проверяем ВЫХОД границы для каждого эмодзи состояния */
+      const глиф = песочница.канонГлиф(p.emoji, '⬡');
+      return !/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(глиф || '');
+    }));
     ок('гость получил снимок', комГость.state.participants.length === 2);
 
     комГость.готов(true); await ждать(() => комХост.state.participants.find(p => p.id === 'g-1') && комХост.state.participants.find(p => p.id === 'g-1').ready === true);
