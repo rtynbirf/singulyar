@@ -280,7 +280,7 @@
 <title>SINGULYAR — Ambient Intent Organism</title>
 <meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар рассыпается на 20 дверей-осколков — куда человек поставил, там и стоит. Один файл · ноль интернета · 100% суверенитет.">
 <meta name="theme-color" content="#0A0A0C">
-<meta name="sng-build" content="v1.43.0 · СТАЛЬ · 2026-10-07">
+<meta name="sng-build" content="v1.45.0 · ХОЗЯИН · 2026-10-07">
 <meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -362,6 +362,25 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .намерение-ответ a span{display:block;color:#8A9099;font-size:13px;margin-top:3px}
 @media (prefers-reduced-motion: no-preference){.намерение-ответ a{transition:border-color .2s ease}}
 .намерение-ответ a:hover,.намерение-ответ a:focus-visible{border-color:#D4AF37}
+/* ── ПУЛЬТ ХОЗЯИНА (v1.45.0): музыка над шаром + сквозная навигация.
+     Временно — по приказу владельца. Канон: стекло + void, золото —
+     единственный акцент, ноль эмодзи. КОРД-канон: никаких innerHTML. ── */
+.пульт-хозяина{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 8px;
+  margin:0 auto 16px;padding:8px 12px;max-width:680px;
+  background:rgba(18,20,24,.55);border:1px solid rgba(240,240,248,.14);border-radius:14px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font:12.5px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#9CA3AF}
+.пульт-хозяина .пульт-группа{display:inline-flex;align-items:center;gap:4px}
+.пульт-хозяина .пульт-разделитель{width:1px;align-self:stretch;background:rgba(240,240,248,.14);margin:0 4px}
+.пульт-хозяина button,.пульт-хозяина .пульт-ссылка{font:inherit;color:#E8EAF0;background:rgba(240,240,248,.06);
+  border:1px solid rgba(240,240,248,.18);border-radius:9px;padding:5px 11px;cursor:pointer;
+  letter-spacing:.3px;text-decoration:none;white-space:nowrap}
+.пульт-хозяина button:hover,.пульт-хозяина .пульт-ссылка:hover{border-color:#D4AF37;color:#F0D78C}
+.пульт-хозяина button[aria-pressed="true"]{border-color:#D4AF37;color:#F0D78C;background:rgba(212,175,55,.12)}
+.пульт-хозяина button:focus-visible,.пульт-хозяина .пульт-ссылка:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+.пульт-хозяина .пульт-трек{flex:1 1 100%;text-align:center;color:#8A9099;font-size:12px;min-height:1.4em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (prefers-reduced-motion: no-preference){.пульт-хозяина button,.пульт-хозяина .пульт-ссылка{transition:border-color .2s ease,color .2s ease,background .2s ease}}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
@@ -370,6 +389,24 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 <div class="sng-beam" aria-hidden="true"></div>
 <main>
   <section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
+    <!-- ПУЛЬТ ХОЗЯИНА (v1.45.0 «ХОЗЯИН»): временно, для владельца — клавиши
+         музыки над шаром + сквозная навигация. Играет ЛОКАЛЬНЫЙ фонд дома
+         (папка minus/, 62 минусовки — те же, что у ·15/·16/·18). Ноль сети. -->
+    <div id="пультХозяина" class="пульт-хозяина" role="region" aria-label="Пульт хозяина: музыка и навигация">
+      <span class="пульт-группа" role="group" aria-label="Музыка: локальный фонд дома">
+        <button type="button" id="музПлей" data-справка="ПЛЕЙ: играет текущую песню локального фонда дома — 62 минусовки лежат в самом доме, сеть не нужна. После паузы продолжает с того же места.">ПЛЕЙ</button>
+        <button type="button" id="музПауза" data-справка="ПАУЗА: останавливает песню, запоминая место. ПЛЕЙ продолжит с этого же места.">ПАУЗА</button>
+        <button type="button" id="музСтоп" data-справка="СТОП: полная остановка — песня сбрасывается в начало. РЕПИТ и СЛУЧАЙНО остаются в своих режимах.">СТОП</button>
+        <button type="button" id="музРепит" aria-pressed="false" data-справка="РЕПИТ: текущая песня играет по кругу. Ещё нажатие — выключить.">РЕПИТ</button>
+        <button type="button" id="музСлучайно" aria-pressed="false" data-справка="СЛУЧАЙНО: после конца песни дом ставит случайную следующую, не повторяя текущую. Ещё нажатие — выключить, песни пойдут по порядку фонда.">СЛУЧАЙНО</button>
+      </span>
+      <span class="пульт-разделитель" aria-hidden="true"></span>
+      <span class="пульт-группа" role="group" aria-label="Сквозная навигация по дому">
+        <button type="button" id="пультНить" data-справка="Нить Ариадны: показать все двери дома одной страницей — сквозной путь через весь дом.">⌇ нить</button>
+        <a class="пульт-ссылка" href="ДОКУМЕНТАЦИЯ.html" data-справка="Документация дома: инварианты I-01…I-11 с тестами, открытый код, данные и языки.">¶ доки</a>
+      </span>
+      <span class="пульт-трек" id="музТрек" aria-live="polite">фонд дома: 62 песни · сеть не нужна</span>
+    </div>
     <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="false"
             aria-controls="осколкиСлой"
             aria-label="Кристалл SINGULYAR — рассыпать на двери дома">
@@ -432,6 +469,8 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
             увидено[m.файл]=1;
             var a=document.createElement('a'); a.className='дверь'; a.href=m.файл;
             if(визиты[m.id]) a.classList.add('пройдена');
+            /* справка — не эхо ярлыка (v1.45.0): что за дверь и что внутри */
+            a.title='Дверь '+m.номер+' '+m.имя+': '+(m.кратко||'автономная комната дома')+'. Открыть комнату.';
             var n=document.createElement('i'); n.textContent=m.номер;
             var s=document.createElement('span'); s.textContent=m.имя;
             a.appendChild(n); a.appendChild(s);
@@ -496,6 +535,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
           } else {
             нашёл.forEach(function(д){
               var a=document.createElement('a'); a.href=д.файл;
+              a.title='Дверь '+д.номер+' '+д.имя+': '+(д.кратко||'автономная комната дома')+'. Открыть комнату.';
               var i=document.createElement('i'); i.textContent=д.номер;
               var b=document.createElement('b'); b.textContent=д.имя;
               var sp=document.createElement('span'); sp.textContent=д.кратко||'';
@@ -526,6 +566,159 @@ try{
     navigator.serviceWorker.register('./sw15.js').catch(function(){});
   }
 }catch(e){}
+</script>
+<script>
+/* ПУЛЬТ ХОЗЯИНА (v1.45.0 «ХОЗЯИН», приказ владельца: «СДЕЛАЙ СВЕРХУ НАД
+   ШАРОМ ВРЕМЕННО ДЛЯ МЕНЯ КЛАВИШИ ДЛЯ МУЗЫКИ ПЛЕЙ ПАУЗА СТОП РЕПИТ
+   В СЛУЧАЙНОМ ПОРЯДКЕ»): музыкальные клавиши над кристаллом + сквозная
+   навигация. Играет ЛОКАЛЬНЫЙ фонд дома — 62 минусовки из папки minus/
+   (те же файлы, что у дверей ·15/·16/·18). Ноль сети, ноль innerHTML,
+   всё в try — пульт не имеет права уронить лицо дома. Номер песни и
+   режимы помнит localStorage (гард КОРДа). Список синхронен с
+   ИНСТРУМЕНТЫ/s18_catalog.json (вычищен от YouTube-хвостов, такт v1.45.0). */
+(function(){
+  try{
+    var ФОН=[
+      ["1BZs_wUPn1s","Я сам себе судья"],
+      ["2g5n6B0bc2Q","Не вам жить мою жизнь"],
+      ["6woWDYcu1QY","Разгадка в небесах"],
+      ["8RRRYysSIHg","Суть проста"],
+      ["8zG2LBAn1AI","Не играй в любовь"],
+      ["9ys_TVEtda8","Просто люби"],
+      ["EFaMUciH3Do","Цени моменты"],
+      ["G7L2d0Z5xfY","Вера остаётся"],
+      ["GB31hcDi3lo","Гордость нас убивает"],
+      ["HupAWAt7CmQ","А время капает"],
+      ["JRTUNak53nU","Компас на Дом"],
+      ["KFnJwNv008s","Свет в темноте"],
+      ["KfKHWdiX3S4","Смысл жизни прост"],
+      ["KvzORszfsg8","Крик в тишине"],
+      ["LCADfnI8F-s","Действуй сейчас"],
+      ["LqMrrKqK3AE","Одиночество среди людей"],
+      ["M9o3ZIlhHrU","Люди в Масках"],
+      ["MSqK5ig-alE","Не Угасай"],
+      ["OHaRQj9PLUY","Дорога мой Учитель"],
+      ["PIyWwF0t4wQ","Остаться человеком"],
+      ["POiQQ21I5n0","Оставайся молодым"],
+      ["Qb8xb0vUYDg","Сборник Музыки со Смыслом"],
+      ["QpeYJU83XiQ","Жизнь не прощает"],
+      ["R0SOJreGbhM","Цени моменты"],
+      ["TRcxZ7jfPsA","Когда Теряем"],
+      ["TkmSZp1dfBE","Меня не сломать"],
+      ["TobJGYOPlnw","Остаться человеком"],
+      ["V-IaCbDUKao","Твоё плавание не вечно"],
+      ["VfnGUIhaK2Y","А что если да"],
+      ["VwoK5U0qOys","Сердце в Огне"],
+      ["WIrhIrDQvwY","Страх не слабость"],
+      ["WMU46n--Z-s","Не теряй шанс"],
+      ["X90mDPOhvKc","Когда погаснут огни"],
+      ["X_-M_cjCFVg","Когда ты удобен"],
+      ["Y7Wy_JBkz7A","Живи как умеешь"],
+      ["YaY-ZJVXFjI","Время как вода"],
+      ["_E91VEQ-8lM","Тишина спасает"],
+      ["_KwlGQNmC1Q","Ты одна дала"],
+      ["_PCJ6fMfeRM","Всё начинается с тебя"],
+      ["_gNbMCINv1Y","О чём мечтаешь ты"],
+      ["ahmGGM-P0CA","Начать сначала"],
+      ["b_36rlzEIKk","Ты Главный игрок"],
+      ["cFHsQ-LP3ns","Не тех мы ценим"],
+      ["d2b72nYLiT8","Не жди завтра"],
+      ["eA-fyeSkavI","Вне зоны доступа"],
+      ["eOMrrezWEZM","Код перемен"],
+      ["fJwb931iJVg","Живи сейчас"],
+      ["gMASVVNFr_A","Время покажет"],
+      ["kziwaat2nu4","Ангел без крыльев"],
+      ["lkXLeITEtGA","Тень ушедших"],
+      ["n5IFJ-g1Rtc","В чём смысл"],
+      ["pP3Kk2_FHbE","Цени время"],
+      ["pervLR9m-vk","Не спеши осуждать"],
+      ["pv3GAlLG9Lk","Нас учат потери"],
+      ["q57MLk0Uf9c","Неудача — не конец"],
+      ["rWpYxmFjm9g","Когда теряем (флагман ★)"],
+      ["shs0TiOwx-M","Где настоящее"],
+      ["t9h3cCPCKoo","А что если ДА"],
+      ["ugjp6iaNplo","Бой с собой"],
+      ["vUb40twffCI","Там где ты"],
+      ["yK2aPehxmK8","Пленники прошлого"],
+      ["z3RcsfHajP8","Я сам себе враг"]
+    ];
+    var КЛЮЧ='sng-фонотека-v1';
+    var бПлей=document.getElementById('музПлей'), бПауза=document.getElementById('музПауза'),
+        бСтоп=document.getElementById('музСтоп'), бРепит=document.getElementById('музРепит'),
+        бСлучайно=document.getElementById('музСлучайно'), бНить=document.getElementById('пультНить'),
+        трек=document.getElementById('музТрек');
+    if(!бПлей||!бПауза||!бСтоп||!бРепит||!бСлучайно||!трек) return;
+
+    var состояние={n:0, репит:false, случайно:false};
+    try{
+      var сырой=JSON.parse(localStorage.getItem(КЛЮЧ)||'null');
+      if(сырой&&typeof сырой==='object'){
+        if(typeof сырой.n==='number'&&сырой.n>=0&&сырой.n<ФОН.length) состояние.n=сырой.n;
+        состояние.репит=!!сырой.репит; состояние.случайно=!!сырой.случайно;
+      }
+    }catch(е1){}
+
+    var аудио=null;
+    function игрок(){
+      if(аудио) return аудио;
+      аудио=new Audio();
+      аудио.preload='none';
+      аудио.addEventListener('ended',function(){ try{ if(!состояние.репит) дальше(); }catch(е2){} });
+      аудио.addEventListener('error',function(){
+        try{ трек.textContent='эта песня не читается — нажми ПЛЕЙ, дом возьмёт следующую'; }catch(е3){}
+      });
+      if(состояние.репит) аудио.loop=true;
+      return аудио;
+    }
+    function помнить(){ try{ localStorage.setItem(КЛЮЧ,JSON.stringify(состояние)); }catch(е4){} }
+    function строка(i,играя){
+      try{ трек.textContent='♪ '+ФОН[i][1]+' — '+(i+1)+'/'+ФОН.length+(играя?'':' · пауза'); }catch(е5){}
+    }
+    function играть(i){
+      var а=игрок();
+      if(!а.src||а.src.indexOf(ФОН[i][0])===-1) а.src='minus/'+ФОН[i][0]+'.mp3';
+      var p=а.play();
+      if(p&&p.catch) p.catch(function(){ трек.textContent='нажми ПЛЕЙ ещё раз — браузер ждёт касания'; });
+      строка(i,true); помнить();
+    }
+    function дальше(){
+      if(состояние.случайно&&ФОН.length>1){
+        var н=состояние.n;
+        while(н===состояние.n) н=Math.floor(Math.random()*ФОН.length);
+        состояние.n=н;
+      } else {
+        состояние.n=(состояние.n+1)%ФОН.length;
+      }
+      играть(состояние.n);
+    }
+    function жать(кн,вкл){ try{ кн.setAttribute('aria-pressed',вкл?'true':'false'); }catch(е6){} }
+    бПлей.addEventListener('click',function(){ try{ играть(состояние.n); }catch(е7){} });
+    бПауза.addEventListener('click',function(){
+      try{ if(аудио&&!аудио.paused) аудио.pause(); строка(состояние.n,false); }catch(е8){}
+    });
+    бСтоп.addEventListener('click',function(){
+      try{ if(аудио){ аудио.pause(); try{ аудио.currentTime=0; }catch(е9){} } строка(состояние.n,false); }catch(е10){}
+    });
+    бРепит.addEventListener('click',function(){
+      try{ состояние.репит=!состояние.репит; if(аудио) аудио.loop=состояние.репит;
+           жать(бРепит,состояние.репит); помнить(); }catch(е11){}
+    });
+    бСлучайно.addEventListener('click',function(){
+      try{ состояние.случайно=!состояние.случайно; жать(бСлучайно,состояние.случайно); помнить(); }catch(е12){}
+    });
+    if(бНить) бНить.addEventListener('click',function(){
+      try{
+        var дом=document.getElementById('модули');
+        if(дом){ дом.hidden=false; дом.open=true; }
+        var цель=document.getElementById('дом');
+        if(цель&&цель.scrollIntoView) цель.scrollIntoView({behavior:'smooth',block:'start'});
+        if(window.SNG&&SNG.событие) SNG.событие('пульт','нить');
+      }catch(е13){}
+    });
+    жать(бРепит,состояние.репит); жать(бСлучайно,состояние.случайно);
+    строка(состояние.n,false);
+  }catch(е0){}
+})();
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script></body>
