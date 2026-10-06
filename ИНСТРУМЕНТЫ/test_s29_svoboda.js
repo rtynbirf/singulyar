@@ -65,8 +65,8 @@ test('манифест дома: ·29 в реестре SNG, осколки и �
   assert.ok(ЯДРО.includes('манифест 19 узлов') === false, 'в ядре нет устаревших пинов');
 });
 
-test('SW v48 несёт дверь ·29 и СВОД-доки в офлайн', () => {
-  assert.ok(SW.includes("s15-orkestrator-v48"), 'кэш v48');
+test('SW v50 несёт дверь ·29 и СВОД-доки в офлайн', () => {
+  assert.ok(SW.includes("s15-orkestrator-v50"), 'кэш v50');
   assert.ok(SW.includes("'./СИНГУЛЯР_29_СВОБОДА.html'"), 'дверь ·29 в пре-кэше');
   assert.ok(SW.includes("'./БИБЛИОТЕКИ/кристалл/composition.mjs'"), 'движок композиции офлайн');
   assert.ok(SW.includes("'./ДОКУМЕНТЫ/СВОД_ЗАКОНОВ.md'"), 'свод законов офлайн');

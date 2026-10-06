@@ -207,9 +207,25 @@ test('приглашение спеть несёт код зала ·18', {timeo
      токен в query закрыт навсегда (долгий секрет не должен жить в URL).
      Порядок важен: приглашение ставится в очередь ПОСЛЕ негативных проверок —
      иначе проверочный сокет съест флаш доставки. */
-  const {createRequire} = require('node:module');
-  const req2 = createRequire(path.join(ROOT, 'server', 'package.json'));
-  const WebSocket = req2('ws');
+  /* v1.40.0 «РЕВИЗИЯ»: сервер больше не зависит от npm-пакета ws (RFC 6455 встроен в
+     server.mjs) — тест тоже не требует node_modules. Юзаем нативный WebSocket node (>=22)
+     в крошечной обёртке EventEmitter-стиля; на node 20–21 честный fallback на пакет ws,
+     если он установлен. «Склонировал → тесты живы» — рабочий инструмент, не декларация. */
+  const WebSocket = (() => {
+    const Нативный = globalThis.WebSocket;
+    if (Нативный) {
+      return class WS extends Нативный {
+        on(ev, fn) {
+          if (ev === 'message') this.addEventListener('message', e => fn(e.data));
+          else if (ev === 'unexpected-response') { /* нативный шлёт 'error' при отказе handshake — карта уже покрыта */ }
+          else this.addEventListener(ev, fn);
+        }
+        close() { try { super.close(); } catch {} }
+      };
+    }
+    const {createRequire} = require('node:module');
+    return createRequire(path.join(ROOT, 'server', 'package.json'))('ws');
+  })();
   /* ticket без токена не выдаётся */
   const anonTicket = await fetch(BASE + '/api/ws/ticket', {method: 'POST', body: '{}', headers: {'content-type': 'application/json'}});
   assert.equal(anonTicket.status, 401, 'ticket без Bearer — 401');
