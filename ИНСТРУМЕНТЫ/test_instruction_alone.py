@@ -127,7 +127,7 @@ print("— 7. КЛЮЧЕВЫЕ ЗАВИСИМОСТИ В РЕПО")
          "БИБЛИОТЕКИ/adapter-os/tests/run-tests.mjs", "ИНСТРУМЕНТЫ/serve_repo.mjs",
          "ИНСТРУМЕНТЫ/s18_catalog.json", "ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md",
          "СИНГУЛЯР_18_СОБЫТИЕ.html", "СИНГУЛЯР_21_ОБЩЕНИЕ.html", "СИНГУЛЯР_22_СВЯЗЬ.html",
-         "singulyar-ux-engine-v8.js", "minus"]
+         "singulyar-ux-engine-v9.js", "minus"]
 нет_в_репо = [п for п in нужны if not os.path.exists(os.path.join(РЕПО, п))]
 check("зависимости инструментов лежат в репо", not нет_в_репо, str(нет_в_репо))
 check("минусовки ·18 на месте (истина каталога)", os.path.isdir(os.path.join(РЕПО, "minus"))

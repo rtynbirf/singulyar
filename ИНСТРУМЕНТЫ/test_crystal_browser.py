@@ -84,6 +84,8 @@ try:
            А.evaluate('() => window.__КРИСТ22.ackКанал') == 'singular-crystal-v1-' + КОД)
 
         # ── 2. А отправляет текст → Б принимает → ACK ──
+        # панель отправки живёт под спойлером (канон: всё — под спойлер) — открываем
+        А.click('#scJournal details.sng-спойлер summary'); А.wait_for_timeout(200)
         А.fill('#inMsg', 'привет из протокола')
         А.click('#btnSend')
         Б.wait_for_timeout(700)
@@ -97,7 +99,7 @@ try:
            bool(б_события) and б_события[0]['policy']['retention'] == 'persistent')
         ок('Б: карточка UI на месте (совместимость)', Б.locator('#journal .jmsg').count() >= 1)
         ок('Б: стейтмент статуса показывает ядро 1.0.0',
-           '1.0.0' in (Б.locator('#stCrystal').inner_text() or ''))
+           '1.0.0' in Б.evaluate("() => (document.getElementById('stCrystal')||{textContent:''}).textContent"))
 
         ид = б_события[0]['idempotencyKey'] if б_события else ''
         Б.wait_for_function('(ид) => window.__КРИСТ22.доставка("кр-" + ид).then(з => !!з)', arg=ид, timeout=5000)
@@ -121,7 +123,7 @@ try:
         стало_в_журнале = Б.evaluate('() => window.__КРИСТ22.количество()')
         ок('Б: дубликат отброшен — журнал не вырос', было_в_журнале == стало_в_журнале)
         ок('Б: счётчик дубликатов = 1', Б.evaluate('() => window.__КРИСТ22.отброшено') == 1)
-        ок('Б: статус называет число дубликатов', 'отброшено 1' in (Б.locator('#stCrystal').inner_text() or ''))
+        ок('Б: статус называет число дубликатов', 'отброшено 1' in Б.evaluate("() => (document.getElementById('stCrystal')||{textContent:''}).textContent"))
 
         # ── 4. Временное сообщение: TTL и purge ──
         А.check('#inTtl')

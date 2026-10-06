@@ -40,9 +40,9 @@ check('fusion roundtrip count', back.length === 5, String(back.length));
 check('fusion roundtrip pitch', back[0].pitch === 60 && back[4].pitch === 67, back.map(n => n.pitch).join(','));
 check('fusion roundtrip melisma word', back[0].word !== '~' && (back[1].word === '~' || back[2].word === '~'), back.map(n => n.word).join('|'));
 
-/* без слов: все '♪' */
+/* без слов: непривязанные ноты — «» (канон v1.36: слова нет — пусто; продолжение — «~») */
 const r2 = asm.assemble([], dspNotes, {});
-check('fusion no words → ♪', r2.txt.split('\n').filter(l => l.startsWith(':')).every(l => l.split(' ').slice(4).join(' ') === '♪'));
+check('fusion no words → «»', r2.txt.split('\n').filter(l => l.startsWith(':')).every(l => l.split(' ').slice(4).join(' ') === ''));
 
 /* ── 2. SDP-пак/анпак: SQ1 (deflate-raw), SQ2, SQ0 ── */
 const s17 = fs.readFileSync(path.join(__dirname, '..', 'СИНГУЛЯР_17_ЗАЛ.html'), 'utf8');
