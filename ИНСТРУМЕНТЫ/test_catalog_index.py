@@ -111,8 +111,8 @@ try:
         ок('картина-фундамент на титуле: КРИСТАЛЛ.png (закон v1.34.0) и существует на диске',
            стр.evaluate("() => { const i = document.getElementById('crystalHero'); return !!i && i.tagName === 'IMG' && /КРИСТАЛЛ\.png$/.test(i.getAttribute('src')) }")
            and os.path.exists('КРИСТАЛЛ.png'))
-        ок('ядро модулей SNG живо (манифест 20 узлов, v1.7.0, осколки-движок на месте) — пин вылечен от дрейфа v1.39',
-           стр.evaluate('() => window.SNG && window.SNG.версия === \'1.7.0\' && typeof window.SNG.кристалл === \'function\' && typeof window.SNG.осколки === \'function\' && window.SNG.модуль.length === 20'))
+        ок('ядро модулей SNG живо (манифест 20 узлов, v1.8.0, осколки-движок на месте) — пин вылечен от дрейфа v1.39, этаж с v1.43',
+           стр.evaluate('() => window.SNG && window.SNG.версия === \'1.8.0\' && typeof window.SNG.кристалл === \'function\' && typeof window.SNG.осколки === \'function\' && window.SNG.модуль.length === 20'))
         ок('бирки на хабе нет (закон v1.33.0: лицо дома = ТОЛЬКО макет, бирка живёт в комнатах)',
            not стр.evaluate("() => !!document.querySelector('.sng-strip')"))
 
@@ -164,8 +164,8 @@ try:
         титул_текст = стр.inner_text('#crystalTitle')
         ок('версии на титуле нет (канон)', 'v1.4' not in титул_текст and 'v1.3' not in титул_текст)
         меню_текст = стр.evaluate("() => { const м = document.getElementById('sux-menu'); return м ? м.textContent : '' }")
-        ок('сборка v1.42.0 «ЗАКАЛКА» названа в меню дома; старая вытеснена',
-           'сборка v1.42.0 · ЗАКАЛКА' in меню_текст and 'v1.41.0' not in меню_текст)
+        ок('сборка v1.43.0 «СТАЛЬ» названа в меню дома; старая вытеснена',
+           'сборка v1.43.0 · СТАЛЬ' in меню_текст and 'v1.42.0' not in меню_текст)
 
         resp = стр.request.get(url + 'ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md')
         ок('СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md отвечает 200', resp.ok)
