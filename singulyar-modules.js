@@ -192,7 +192,7 @@
 
   /* ── 3. API ─────────────────────────────────────────────────────────── */
   var SNG = {
-    версия: '1.9.0',
+    версия: '1.10.0',
     формула: 'Ŝ = 1_H + λ(I⊗I†)',
     инвариант: '⟨M(t), Σ(t)⟩ ≡ 0',
     модальности: МОДАЛЬНОСТИ,
@@ -875,6 +875,9 @@
     'font-size:11px;font-weight:600;letter-spacing:.4px;border:1px solid;white-space:nowrap}',
     '.sng-strip .sng-map{margin-left:auto;color:#C8CCD2;text-decoration:none;border-bottom:1px dashed rgba(200,204,210,.4);white-space:nowrap}',
     '.sng-strip .sng-map:hover{color:#F0D78C;border-bottom-color:#F0D78C}',
+    '.sng-strip .sng-нав{display:inline-flex;align-items:center;gap:7px;margin-left:4px;white-space:nowrap}',
+    '.sng-strip .sng-нав a{color:#C8CCD2;text-decoration:none;border-bottom:1px dashed rgba(200,204,210,.4);padding:0 1px}',
+    '.sng-strip .sng-нав a:hover{color:#F0D78C;border-bottom-color:#F0D78C}',
     '.sng-strip .sng-f{font-size:11px;color:#6B7178;white-space:nowrap}',
     '@media (max-width:640px){.sng-strip .sng-map{margin-left:0}.sng-strip{font-size:11.5px}}',
     '@media (prefers-reduced-motion: reduce){.sng-strip *{transition:none!important;animation:none!important}}'
@@ -917,6 +920,39 @@
       факт.className = 'sng-f';
       факт.textContent = модуль.авто ? 'автономный файл' : 'часть ядра';
       полоса.appendChild(факт);
+
+      /* СКВОЗНАЯ НАВИГАЦИЯ (v1.45.0 «ХОЗЯИН», слово владельца:
+         «НАВИГАЦИИ СКВОЗНОЙ ДО СИХ ПОР НЕТ»): соседние двери + хаб + нить
+         в каждой комнате — дом проходится насквозь, не возвращаясь на лицо.
+         Справки ставятся на месте: ux-engine уже не перепишет чужой title. */
+      var списокДверей = [];
+      for (var iД = 0; iД < МОДУЛИ.length; iД++)
+        if (МОДУЛИ[iД].id !== 'хаб') списокДверей.push(МОДУЛИ[iД]);
+      var индДвери = списокДверей.indexOf(модуль);
+      if (индДвери !== -1) {
+        var нав = document.createElement('span');
+        нав.className = 'sng-нав';
+        нав.setAttribute('role', 'navigation');
+        нав.setAttribute('aria-label', 'Сквозная навигация: соседние двери дома');
+        var сс = function (файл, текст, справка) {
+          var a = document.createElement('a');
+          a.href = файл;
+          a.textContent = текст;
+          a.title = справка;
+          нав.appendChild(a);
+        };
+        var пред = списокДверей[(индДвери - 1 + списокДверей.length) % списокДверей.length];
+        var след = списокДверей[(индДвери + 1) % списокДверей.length];
+        сс('index.html', '⌂ хаб',
+           'Хаб дома ·00: кристалл, намерение «Что хотите сделать?», пульт хозяина, нить Ариадны. Вернуться на лицо дома.');
+        сс(пред.файл, '← ' + пред.номер,
+           'Предыдущая дверь ' + пред.номер + ' ' + пред.имя + ': ' + пред.кратко + '. Открыть комнату.');
+        сс(след.файл, след.номер + ' →',
+           'Следующая дверь ' + след.номер + ' ' + след.имя + ': ' + след.кратко + '. Открыть комнату.');
+        сс('index.html#модули', '⌇ нить',
+           'Нить Ариадны: все ' + списокДверей.length + ' дверей дома одной страницей — пройти дом насквозь.');
+        полоса.appendChild(нав);
+      }
 
       var карта = document.createElement('a');
       карта.className = 'sng-map';
