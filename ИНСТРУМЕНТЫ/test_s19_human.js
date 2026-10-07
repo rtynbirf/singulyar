@@ -148,7 +148,7 @@ test('личность: регистрация, подпись, отказ по�
   const r = await api(token, 'GET', '/api/me');
   assert.equal(r.status, 200);
   assert.equal(r.data.user.name, 'Бабушка');
-  /* длинное имя обрезается до 80 — сервер не принимает мусор */
+  /* длинное имя обрезается до 80 — сервер не принимает невалидные данные */
   const длинное = await jwkOf('И'.repeat(120));
   let rr = await fetch(BASE + '/api/register', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({name: длинное.имя, publicKey: длинное.jwk})});
   const dd = await rr.json();

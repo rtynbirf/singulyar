@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Браузерный тест ·20 ФОНЕТИКА: загрузка бандла, чипы-слоги по образцам,
 # ручной ввод, тап по чипу без голосов, мост ·16 (BroadcastChannel STATE →
-# большое слово + романизация + «далее»), фильтр мусора, 0 ошибок консоли.
+# большое слово + романизация + «далее»), фильтр невалидных данных, 0 ошибок консоли.
 # Запуск: python3 ИНСТРУМЕНТЫ/test_s20_browser.py   (пути считаются от файла — из любого клона репо)
 import subprocess, time, sys, os, json
 from playwright.sync_api import sync_playwright
@@ -110,12 +110,12 @@ with sync_playwright() as p:
     ок('романизация «kogda»', A.text_content('#bwRoma').strip() == 'kogda')
     ок('«далее» пусто → чипы скрыты', A.evaluate('document.getElementById("bwNext").hidden'))
 
-    print('— МОСТ: фильтр мусора')
+    print('— МОСТ: фильтр невалидных данных')
     было = A.text_content('#bwOrig').strip()
     A.evaluate('''() => {
         const bc = new BroadcastChannel('singulyar-hall');
         bc.postMessage({ver:1, t:'CMD', src:'stage-test1', seq:2, cmd:'seek', v:5});
-        bc.postMessage({ver:2, t:'STATE', src:'stage-test1', seq:3, d:{word:'МУСОР', next:[]}});
+        bc.postMessage({ver:2, t:'STATE', src:'stage-test1', seq:3, d:{word:'НЕСЛОВО', next:[]}});
         bc.postMessage({ver:1, t:'STATE', src:'stage-test1', seq:4, d:{song:'x', next:[]}});
         bc.close();
     }''')

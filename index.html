@@ -313,6 +313,8 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .motto{margin:14px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(16px,2.2vw,20px);color:#EDEFF4;letter-spacing:.02em}
 .obj-chip{font-family:Georgia,'Times New Roman',serif;font-size:14.5px;color:#EDEFF4;border:1px solid rgba(238,242,250,.32);border-radius:11px;padding:10px 24px;background:rgba(16,18,24,.42);box-shadow:0 6px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(240,240,248,.10);transition:border-color .2s,color .2s,box-shadow .2s;display:inline-block}
 .obj-chip:hover{border-color:rgba(212,175,55,.60);color:#F0D78C;box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 14px rgba(212,175,55,.12)}
+/* бирка хозяина (слово владельца v1.49.3): золото — единственный акцент, бирка одна, носит её Человек */
+.obj-chip-хозяин{border-color:rgba(212,175,55,.62);color:#F0D78C;background:rgba(212,175,55,.07)}
 .obj-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
 /* ── НИТЬ АРИАДНЫ: под капотом. Открывает движок (меню дома / N / #модули) ── */
 .нить[hidden]{display:none}
@@ -435,7 +437,8 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
     <div class="obj-row">
       <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
       <a class="obj-chip" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">Ноль интернета.</a>
-      <a class="obj-chip" href="СИНГУЛЯР_28_УЗЕЛ.html">100% суверенитет.</a>
+      <a class="obj-chip obj-chip-хозяин" href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">Хозяин проекта — человек.</a>
+      <a class="obj-chip" href="СИНГУЛЯР_28_УЗЕЛ.html">Зал суверенного узла.</a>
       <!-- pills по макету: границы тоньше, стекло, как на канонной картине -->
     </div>
 
