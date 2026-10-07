@@ -257,7 +257,7 @@ test('memory.decide: дедуп бережёт АКТ, не свободу пе�
   assert.notEqual(а.event.id, в.event.id);
 });
 
-test('memory.decide: мусорное решение — честный throw', () => {
+test('memory.decide: невалидное решение — честный throw', () => {
   assert.throws(() => Б.memoryDecisionEvent('незнаю'), /remember/);
   assert.throws(() => Б.memoryDecisionEvent(''), /remember/);
 });
@@ -396,10 +396,10 @@ test('call.signal: каждый акт — отдельное событие; д
   assert.equal(а.event.id, а2.event.id);
 });
 
-test('call.signal: канал нормализуется, мусорное действие — честный throw', () => {
+test('call.signal: канал нормализуется, невалидное действие — честный throw', () => {
   assert.equal(Б.callSignalEvent({ звонкаId: 'к', действие: 'ring', канал: 'video' }).вложение.канал, 'video');
-  assert.equal(Б.callSignalEvent({ звонкаId: 'к', действие: 'ring', канал: 'чушь' }).вложение.канал, 'audio');
-  assert.throws(() => Б.callSignalEvent({ звонкаId: 'к', действие: 'чушь' }), /ring/);
+  assert.equal(Б.callSignalEvent({ звонкаId: 'к', действие: 'ring', канал: 'невалидно' }).вложение.канал, 'audio');
+  assert.throws(() => Б.callSignalEvent({ звонкаId: 'к', действие: 'невалидно' }), /ring/);
   assert.throws(() => Б.callSignalEvent({ звонкаId: 'к', действие: '' }), /ring/);
 });
 
