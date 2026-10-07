@@ -326,6 +326,16 @@ details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--т
 .низ{text-align:center;margin:22px 0 8px}
 .низ a{color:var(--зол);text-decoration:none;border-bottom:1px solid rgba(212,175,55,.4)}
 @media (prefers-reduced-motion: reduce){.действие,.действие:hover{transition:none}}
+.сетка-слов{list-style:none;margin:14px 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 14px}
+.сетка-слов li{display:flex;align-items:baseline;gap:8px;background:rgba(240,240,248,.05);border:1px solid rgba(240,240,248,.14);border-radius:8px;padding:7px 10px;font-size:16px}
+.сетка-слов .номер{color:#8A9099;font-size:12px;min-width:22px;text-align:right}
+.сетка-слов .слово{color:#F0D78C;font-family:ui-monospace,monospace;letter-spacing:.02em}
+.вопросы-слов{display:grid;gap:10px;margin:12px 0}
+.вопросы-слов .вопрос-ряд{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.вопросы-слов label{color:#E8EAF0;min-width:110px}
+.вопросы-слов input{flex:1;min-width:180px;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.18);border-radius:8px;color:#F0F2F8;padding:9px 12px;font:inherit}
+.вопросы-слов input:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+#канваМастера{border-radius:10px;margin:8px 0}
 </style>
 </head>
 <body>
@@ -350,6 +360,7 @@ details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--т
     <div class="кнопки">
       <button type="button" class="действие действие-золото" id="кнРазведка" data-справка="Спросить открытые узлы цепи о балансе общака: браузер сам стучится в узел, сайт-хостинг не участвует. Только читает публичные числа, ничего не отправляет.">⌇ РАЗВЕДКА — спросить цепь</button>
       <button type="button" class="действие" id="кнКонфиг" data-справка="Перечитать ФОНД/ОБЩАК.json — источник правды конфига: адреса, порядок узлов, надписи. Полезно сразу после того, как держатель вшил адрес.">◇ перечитать конфиг</button>
+      <button type="button" class="действие" id="кнСоздатьКошелёк" data-справка="Для держателя дома: мастер создаёт счёт общака прямо на устройстве — 24 слова на бумагу, адрес для вшивки в конфиг. Ноль сети, ключи не покидают устройство и не сохраняются.">◇ СОЗДАТЬ КОШЕЛЁК</button>
     </div>
     <div class="строка-узла">
       <label for="выборУзла">узел:</label>
@@ -365,6 +376,44 @@ details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--т
       </table>
       <p class="счёт-под" id="поступленияПодпись"></p>
     </div>
+  </div>
+
+  <div class="панель" id="мастерКошелька" hidden>
+    <h3>Мастер счёта общака <em>одна кнопка — счёт твой</em></h3>
+    <p class="счёт-под" id="мастерСтатус" aria-live="polite"></p>
+    <section id="шагПредупреждение">
+      <div class="essence"><b>ЧЕЛОВЕК РЕШАЕТ.</b> Сейчас дом создаст счёт прямо на этом устройстве: ноль сети, ноль серверов, ноль свидетелей. Вся власть над счётом — 24 слова. Их не знает никто и никогда: ни дом, ни узлы цепи, ни кто-то ещё. Запиши слова на бумагу — и счёт твой навсегда, сколько бы устройств ни сменилось. Не запишешь — счёт потеряется без возврата. Скриншоты, облака и мессенджеры любят воры; бумага не взламывается.</div>
+      <div class="кнопки">
+        <button type="button" class="действие действие-золото" id="кнМастерТворю" data-справка="Создать счёт: 256 бит случайности с этого устройства, 24 слова, адрес bc1q. Ноль сети, ноль сохранений.">◇ ТВОРЮ СЧЁТ</button>
+        <button type="button" class="действие" id="кнМастерОтступить" data-справка="Закрыть мастер, ничего не создавая. ЧЕЛОВЕК РЕШАЕТ — в любую сторону.">ОТСТУПИТЬ</button>
+      </div>
+    </section>
+    <section id="шагСлова" hidden>
+      <p class="счёт-под">24 слова — вся власть. Запиши на бумагу по порядку, слово в слово, не доверяя памяти. Язык слов — мировой стандарт BIP39: этот счёт восстанавливается в любом кошельке планеты. Дом нигде их не сохраняет — ни в памяти устройства, ни в сети.</p>
+      <ol class="сетка-слов" id="сеткаСлов"></ol>
+      <div class="кнопки">
+        <button type="button" class="действие" id="кнМастерСкопироватьСлова" data-справка="Скопировать 24 слова в буфер — для переноса на бумагу. Слова остаются только на бумаге.">СКОПИРОВАТЬ 24 СЛОВА</button>
+        <button type="button" class="действие действие-золото" id="кнМастерЗаписал" data-справка="Дом спросит три случайных слова — проверка, что бумага живая, а не «я потом запишу».">Я ЗАПИСАЛ — СПРОСИ МЕНЯ</button>
+      </div>
+    </section>
+    <section id="шагПроверка" hidden>
+      <p class="счёт-под">Проверка бумаги: дом спрашивает три слова. Вводи точно как записал — регистр не важен, правописание важно.</p>
+      <div id="вопросыСлов" class="вопросы-слов"></div>
+      <div class="кнопки">
+        <button type="button" class="действие действие-золото" id="кнМастерПроверить" data-справка="Дом сверит три слова с созданной фразой. Верно — покажет адрес; неверно — вернёт к словам: бумага должна быть честной.">ПРОВЕРИТЬ</button>
+      </div>
+    </section>
+    <section id="шагСчёт" hidden>
+      <p class="счёт-под"><b>Счёт твой.</b> Власть — у твоей бумаги: дом помнит только публичный адрес и никогда не хранит слова. Пересоздать счёт можно только той же фразой.</p>
+      <p class="счёт" id="адресМастера" style="word-break:break-all">…</p>
+      <div class="строка-узла" style="display:flex;justify-content:center"><canvas id="канваМастера" role="img" aria-label="QR адреса общака"></canvas></div>
+      <p class="счёт-под">Адрес пока живёт только здесь и в твоём кошельке. Чтобы общак дома считал его — пришли адрес в чат дома, он будет вшит в ФОНД/ОБЩАК.json. Адрес публичен и не тайна; тайна — только твои 24 слова.</p>
+      <div class="кнопки">
+        <button type="button" class="действие" id="кнМастерСкопироватьАдрес" data-справка="Скопировать публичный адрес — его можно показывать не стесняясь.">¶ КОПИРОВАТЬ АДРЕС</button>
+        <button type="button" class="действие" id="кнМастерПисьмо" data-справка="Собрать готовое письмо для дома: адрес + путь деривации. Вставь его в чат дома — агент вшьёт адрес в конфиг общака.">¶ КОПИРОВАТЬ ПИСЬМО ДЛЯ ДОМА</button>
+        <button type="button" class="действие действие-золото" id="кнМастерСтереть" data-справка="Стереть слова с экрана и из памяти страницы: перезагрузка дома. На бумаге — осталось, на устройстве — ничто.">СЛОВА ЗАПИСАНЫ — СТЕРЕТЬ ВСЁ С ЭКРАНА</button>
+      </div>
+    </section>
   </div>
 
   <h2>Положить в общак <em>столько, сколько считаешь нужным</em></h2>
@@ -406,7 +455,7 @@ details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--т
       <li><b>Узел цепи видит твой IP, но не имя.</b> Полная тишина — это свой узел: впиши его адрес в поле узла, и разведка будет ходить только домой.</li>
       <li><b>Цепь публична навсегда — это и есть прозрачность общака.</b> Статичный адрес — сознательный выбор держателя: баланс и движения видны всем, что и требуется от общака. Донора это не называет: твой кошелёк сам раздаёт свежие адреса под каждый перевод.</li>
       <li><b>Обменники с KYC связывают адрес с личностью.</b> Хочешь тише — бери монеты так, чтобы между паспортом и общаком была дистанция, и узнай про coin control в своём кошельке. Дом не даёт советов «где взять» — это территория человека.</li>
-      <li><b>Анти-фишинг:</b> сверяй первые и последние символы адреса; QR рисуется на твоём устройстве и в сети не ходит; дом НИКОГДА не просит seed-фразу, приватный ключ или доступ к кошельку — кто просит, тот вор.</li>
+      <li><b>Анти-фишинг:</b> сверяй первые и последние символы адреса; QR рисуется на твоём устройстве и в сети не ходит; дом НИКОГДА не просит seed-фразу, приватный ключ или доступ к кошельку — кто просит, тот вор. Мастер дома создаёт фразу один раз на твоём устройстве: она живёт только на бумаге — дом её не хранит, не шлёт и не восстанавливает.</li>
       <li><b>Закон — кратко и без юрсовета.</b> В РФ крипта считается имуществом: доход от её продажи декларируется (НДФЛ); расчёты криптой за товары и услуги внутри РФ запрещены — пожертвование расчётом не является. Для серьёзных сумм решай с бухгалтером; дом — инженер, не юрист.</li>
     </ul>
   </div>
@@ -467,6 +516,368 @@ QR — домовой энкодер из ·17 ЗАЛ (byte mode, ECC L, вер�
 
   <p class="низ"><a href="./index.html" title="Домой — лицо дома: кристалл, намерение, нить Ариадны">⌂ дом · хаб ·00</a></p>
 </main>
+<script>
+/* СНГ:КОШЕЛЁК-ЯДРО — вшито тактом v1.49.0 «ОДНА КНОПКА».
+   Чистое ядро без DOM: счёт рождается на устройстве, ноль сети.
+   Список слов — официальный BIP39 (english, 2048): счёт восстанавливается
+   в любом кошельке мира. Глобальные имена каноничны, как window.S32_ЯДРО. */
+window.СЛОВА_БИП39 = ["abandon","ability","able","about","above","absent","absorb","abstract","absurd","abuse","access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act","action","actor","actress","actual","adapt","add","addict","address","adjust","admit","adult","advance","advice","aerobic","affair","afford","afraid","again","age","agent","agree","ahead","aim","air","airport","aisle","alarm","album","alcohol","alert","alien","all","alley","allow","almost","alone","alpha","already","also","alter","always","amateur","amazing","among","amount","amused","analyst","anchor","ancient","anger","angle","angry","animal","ankle","announce","annual","another","answer","antenna","antique","anxiety","any","apart","apology","appear","apple","approve","april","arch","arctic","area","arena","argue","arm","armed","armor","army","around","arrange","arrest","arrive","arrow","art","artefact","artist","artwork","ask","aspect","assault","asset","assist","assume","asthma","athlete","atom","attack","attend","attitude","attract","auction","audit","august","aunt","author","auto","autumn","average","avocado","avoid","awake","aware","away","awesome","awful","awkward","axis","baby","bachelor","bacon","badge","bag","balance","balcony","ball","bamboo","banana","banner","bar","barely","bargain","barrel","base","basic","basket","battle","beach","bean","beauty","because","become","beef","before","begin","behave","behind","believe","below","belt","bench","benefit","best","betray","better","between","beyond","bicycle","bid","bike","bind","biology","bird","birth","bitter","black","blade","blame","blanket","blast","bleak","bless","blind","blood","blossom","blouse","blue","blur","blush","board","boat","body","boil","bomb","bone","bonus","book","boost","border","boring","borrow","boss","bottom","bounce","box","boy","bracket","brain","brand","brass","brave","bread","breeze","brick","bridge","brief","bright","bring","brisk","broccoli","broken","bronze","broom","brother","brown","brush","bubble","buddy","budget","buffalo","build","bulb","bulk","bullet","bundle","bunker","burden","burger","burst","bus","business","busy","butter","buyer","buzz","cabbage","cabin","cable","cactus","cage","cake","call","calm","camera","camp","can","canal","cancel","candy","cannon","canoe","canvas","canyon","capable","capital","captain","car","carbon","card","cargo","carpet","carry","cart","case","cash","casino","castle","casual","cat","catalog","catch","category","cattle","caught","cause","caution","cave","ceiling","celery","cement","census","century","cereal","certain","chair","chalk","champion","change","chaos","chapter","charge","chase","chat","cheap","check","cheese","chef","cherry","chest","chicken","chief","child","chimney","choice","choose","chronic","chuckle","chunk","churn","cigar","cinnamon","circle","citizen","city","civil","claim","clap","clarify","claw","clay","clean","clerk","clever","click","client","cliff","climb","clinic","clip","clock","clog","close","cloth","cloud","clown","club","clump","cluster","clutch","coach","coast","coconut","code","coffee","coil","coin","collect","color","column","combine","come","comfort","comic","common","company","concert","conduct","confirm","congress","connect","consider","control","convince","cook","cool","copper","copy","coral","core","corn","correct","cost","cotton","couch","country","couple","course","cousin","cover","coyote","crack","cradle","craft","cram","crane","crash","crater","crawl","crazy","cream","credit","creek","crew","cricket","crime","crisp","critic","crop","cross","crouch","crowd","crucial","cruel","cruise","crumble","crunch","crush","cry","crystal","cube","culture","cup","cupboard","curious","current","curtain","curve","cushion","custom","cute","cycle","dad","damage","damp","dance","danger","daring","dash","daughter","dawn","day","deal","debate","debris","decade","december","decide","decline","decorate","decrease","deer","defense","define","defy","degree","delay","deliver","demand","demise","denial","dentist","deny","depart","depend","deposit","depth","deputy","derive","describe","desert","design","desk","despair","destroy","detail","detect","develop","device","devote","diagram","dial","diamond","diary","dice","diesel","diet","differ","digital","dignity","dilemma","dinner","dinosaur","direct","dirt","disagree","discover","disease","dish","dismiss","disorder","display","distance","divert","divide","divorce","dizzy","doctor","document","dog","doll","dolphin","domain","donate","donkey","donor","door","dose","double","dove","draft","dragon","drama","drastic","draw","dream","dress","drift","drill","drink","drip","drive","drop","drum","dry","duck","dumb","dune","during","dust","dutch","duty","dwarf","dynamic","eager","eagle","early","earn","earth","easily","east","easy","echo","ecology","economy","edge","edit","educate","effort","egg","eight","either","elbow","elder","electric","elegant","element","elephant","elevator","elite","else","embark","embody","embrace","emerge","emotion","employ","empower","empty","enable","enact","end","endless","endorse","enemy","energy","enforce","engage","engine","enhance","enjoy","enlist","enough","enrich","enroll","ensure","enter","entire","entry","envelope","episode","equal","equip","era","erase","erode","erosion","error","erupt","escape","essay","essence","estate","eternal","ethics","evidence","evil","evoke","evolve","exact","example","excess","exchange","excite","exclude","excuse","execute","exercise","exhaust","exhibit","exile","exist","exit","exotic","expand","expect","expire","explain","expose","express","extend","extra","eye","eyebrow","fabric","face","faculty","fade","faint","faith","fall","false","fame","family","famous","fan","fancy","fantasy","farm","fashion","fat","fatal","father","fatigue","fault","favorite","feature","february","federal","fee","feed","feel","female","fence","festival","fetch","fever","few","fiber","fiction","field","figure","file","film","filter","final","find","fine","finger","finish","fire","firm","first","fiscal","fish","fit","fitness","fix","flag","flame","flash","flat","flavor","flee","flight","flip","float","flock","floor","flower","fluid","flush","fly","foam","focus","fog","foil","fold","follow","food","foot","force","forest","forget","fork","fortune","forum","forward","fossil","foster","found","fox","fragile","frame","frequent","fresh","friend","fringe","frog","front","frost","frown","frozen","fruit","fuel","fun","funny","furnace","fury","future","gadget","gain","galaxy","gallery","game","gap","garage","garbage","garden","garlic","garment","gas","gasp","gate","gather","gauge","gaze","general","genius","genre","gentle","genuine","gesture","ghost","giant","gift","giggle","ginger","giraffe","girl","give","glad","glance","glare","glass","glide","glimpse","globe","gloom","glory","glove","glow","glue","goat","goddess","gold","good","goose","gorilla","gospel","gossip","govern","gown","grab","grace","grain","grant","grape","grass","gravity","great","green","grid","grief","grit","grocery","group","grow","grunt","guard","guess","guide","guilt","guitar","gun","gym","habit","hair","half","hammer","hamster","hand","happy","harbor","hard","harsh","harvest","hat","have","hawk","hazard","head","health","heart","heavy","hedgehog","height","hello","helmet","help","hen","hero","hidden","high","hill","hint","hip","hire","history","hobby","hockey","hold","hole","holiday","hollow","home","honey","hood","hope","horn","horror","horse","hospital","host","hotel","hour","hover","hub","huge","human","humble","humor","hundred","hungry","hunt","hurdle","hurry","hurt","husband","hybrid","ice","icon","idea","identify","idle","ignore","ill","illegal","illness","image","imitate","immense","immune","impact","impose","improve","impulse","inch","include","income","increase","index","indicate","indoor","industry","infant","inflict","inform","inhale","inherit","initial","inject","injury","inmate","inner","innocent","input","inquiry","insane","insect","inside","inspire","install","intact","interest","into","invest","invite","involve","iron","island","isolate","issue","item","ivory","jacket","jaguar","jar","jazz","jealous","jeans","jelly","jewel","job","join","joke","journey","joy","judge","juice","jump","jungle","junior","junk","just","kangaroo","keen","keep","ketchup","key","kick","kid","kidney","kind","kingdom","kiss","kit","kitchen","kite","kitten","kiwi","knee","knife","knock","know","lab","label","labor","ladder","lady","lake","lamp","language","laptop","large","later","latin","laugh","laundry","lava","law","lawn","lawsuit","layer","lazy","leader","leaf","learn","leave","lecture","left","leg","legal","legend","leisure","lemon","lend","length","lens","leopard","lesson","letter","level","liar","liberty","library","license","life","lift","light","like","limb","limit","link","lion","liquid","list","little","live","lizard","load","loan","lobster","local","lock","logic","lonely","long","loop","lottery","loud","lounge","love","loyal","lucky","luggage","lumber","lunar","lunch","luxury","lyrics","machine","mad","magic","magnet","maid","mail","main","major","make","mammal","man","manage","mandate","mango","mansion","manual","maple","marble","march","margin","marine","market","marriage","mask","mass","master","match","material","math","matrix","matter","maximum","maze","meadow","mean","measure","meat","mechanic","medal","media","melody","melt","member","memory","mention","menu","mercy","merge","merit","merry","mesh","message","metal","method","middle","midnight","milk","million","mimic","mind","minimum","minor","minute","miracle","mirror","misery","miss","mistake","mix","mixed","mixture","mobile","model","modify","mom","moment","monitor","monkey","monster","month","moon","moral","more","morning","mosquito","mother","motion","motor","mountain","mouse","move","movie","much","muffin","mule","multiply","muscle","museum","mushroom","music","must","mutual","myself","mystery","myth","naive","name","napkin","narrow","nasty","nation","nature","near","neck","need","negative","neglect","neither","nephew","nerve","nest","net","network","neutral","never","news","next","nice","night","noble","noise","nominee","noodle","normal","north","nose","notable","note","nothing","notice","novel","now","nuclear","number","nurse","nut","oak","obey","object","oblige","obscure","observe","obtain","obvious","occur","ocean","october","odor","off","offer","office","often","oil","okay","old","olive","olympic","omit","once","one","onion","online","only","open","opera","opinion","oppose","option","orange","orbit","orchard","order","ordinary","organ","orient","original","orphan","ostrich","other","outdoor","outer","output","outside","oval","oven","over","own","owner","oxygen","oyster","ozone","pact","paddle","page","pair","palace","palm","panda","panel","panic","panther","paper","parade","parent","park","parrot","party","pass","patch","path","patient","patrol","pattern","pause","pave","payment","peace","peanut","pear","peasant","pelican","pen","penalty","pencil","people","pepper","perfect","permit","person","pet","phone","photo","phrase","physical","piano","picnic","picture","piece","pig","pigeon","pill","pilot","pink","pioneer","pipe","pistol","pitch","pizza","place","planet","plastic","plate","play","please","pledge","pluck","plug","plunge","poem","poet","point","polar","pole","police","pond","pony","pool","popular","portion","position","possible","post","potato","pottery","poverty","powder","power","practice","praise","predict","prefer","prepare","present","pretty","prevent","price","pride","primary","print","priority","prison","private","prize","problem","process","produce","profit","program","project","promote","proof","property","prosper","protect","proud","provide","public","pudding","pull","pulp","pulse","pumpkin","punch","pupil","puppy","purchase","purity","purpose","purse","push","put","puzzle","pyramid","quality","quantum","quarter","question","quick","quit","quiz","quote","rabbit","raccoon","race","rack","radar","radio","rail","rain","raise","rally","ramp","ranch","random","range","rapid","rare","rate","rather","raven","raw","razor","ready","real","reason","rebel","rebuild","recall","receive","recipe","record","recycle","reduce","reflect","reform","refuse","region","regret","regular","reject","relax","release","relief","rely","remain","remember","remind","remove","render","renew","rent","reopen","repair","repeat","replace","report","require","rescue","resemble","resist","resource","response","result","retire","retreat","return","reunion","reveal","review","reward","rhythm","rib","ribbon","rice","rich","ride","ridge","rifle","right","rigid","ring","riot","ripple","risk","ritual","rival","river","road","roast","robot","robust","rocket","romance","roof","rookie","room","rose","rotate","rough","round","route","royal","rubber","rude","rug","rule","run","runway","rural","sad","saddle","sadness","safe","sail","salad","salmon","salon","salt","salute","same","sample","sand","satisfy","satoshi","sauce","sausage","save","say","scale","scan","scare","scatter","scene","scheme","school","science","scissors","scorpion","scout","scrap","screen","script","scrub","sea","search","season","seat","second","secret","section","security","seed","seek","segment","select","sell","seminar","senior","sense","sentence","series","service","session","settle","setup","seven","shadow","shaft","shallow","share","shed","shell","sheriff","shield","shift","shine","ship","shiver","shock","shoe","shoot","shop","short","shoulder","shove","shrimp","shrug","shuffle","shy","sibling","sick","side","siege","sight","sign","silent","silk","silly","silver","similar","simple","since","sing","siren","sister","situate","six","size","skate","sketch","ski","skill","skin","skirt","skull","slab","slam","sleep","slender","slice","slide","slight","slim","slogan","slot","slow","slush","small","smart","smile","smoke","smooth","snack","snake","snap","sniff","snow","soap","soccer","social","sock","soda","soft","solar","soldier","solid","solution","solve","someone","song","soon","sorry","sort","soul","sound","soup","source","south","space","spare","spatial","spawn","speak","special","speed","spell","spend","sphere","spice","spider","spike","spin","spirit","split","spoil","sponsor","spoon","sport","spot","spray","spread","spring","spy","square","squeeze","squirrel","stable","stadium","staff","stage","stairs","stamp","stand","start","state","stay","steak","steel","stem","step","stereo","stick","still","sting","stock","stomach","stone","stool","story","stove","strategy","street","strike","strong","struggle","student","stuff","stumble","style","subject","submit","subway","success","such","sudden","suffer","sugar","suggest","suit","summer","sun","sunny","sunset","super","supply","supreme","sure","surface","surge","surprise","surround","survey","suspect","sustain","swallow","swamp","swap","swarm","swear","sweet","swift","swim","swing","switch","sword","symbol","symptom","syrup","system","table","tackle","tag","tail","talent","talk","tank","tape","target","task","taste","tattoo","taxi","teach","team","tell","ten","tenant","tennis","tent","term","test","text","thank","that","theme","then","theory","there","they","thing","this","thought","three","thrive","throw","thumb","thunder","ticket","tide","tiger","tilt","timber","time","tiny","tip","tired","tissue","title","toast","tobacco","today","toddler","toe","together","toilet","token","tomato","tomorrow","tone","tongue","tonight","tool","tooth","top","topic","topple","torch","tornado","tortoise","toss","total","tourist","toward","tower","town","toy","track","trade","traffic","tragic","train","transfer","trap","trash","travel","tray","treat","tree","trend","trial","tribe","trick","trigger","trim","trip","trophy","trouble","truck","true","truly","trumpet","trust","truth","try","tube","tuition","tumble","tuna","tunnel","turkey","turn","turtle","twelve","twenty","twice","twin","twist","two","type","typical","ugly","umbrella","unable","unaware","uncle","uncover","under","undo","unfair","unfold","unhappy","uniform","unique","unit","universe","unknown","unlock","until","unusual","unveil","update","upgrade","uphold","upon","upper","upset","urban","urge","usage","use","used","useful","useless","usual","utility","vacant","vacuum","vague","valid","valley","valve","van","vanish","vapor","various","vast","vault","vehicle","velvet","vendor","venture","venue","verb","verify","version","very","vessel","veteran","viable","vibrant","vicious","victory","video","view","village","vintage","violin","virtual","virus","visa","visit","visual","vital","vivid","vocal","voice","void","volcano","volume","vote","voyage","wage","wagon","wait","walk","wall","walnut","want","warfare","warm","warrior","wash","wasp","waste","water","wave","way","wealth","weapon","wear","weasel","weather","web","wedding","weekend","weird","welcome","west","wet","whale","what","wheat","wheel","when","where","whip","whisper","wide","width","wife","wild","will","win","window","wine","wing","wink","winner","winter","wire","wisdom","wise","wish","witness","wolf","woman","wonder","wood","wool","word","work","world","worry","worth","wrap","wreck","wrestle","wrist","write","wrong","yard","year","yellow","you","young","youth","zebra","zero","zone","zoo"];
+/* ═══════════════════════════════════════════════════════════════════════════
+   КОШЕЛЁК ДОМА — ЯДРО v1.0.0 «ОДНА КНОПКА»
+   Такт v1.49.0. Слово владельца: «МЕХАНИЗМ ОДНОЙ КНОПКИ: ОН НАЖАЛ И СЧЁТ ЕГО,
+   И НИКТО КРОМЕ НЕГО НЕ МОЖЕТ ТАМ НИЧЕГО ДЕЛАТЬ».
+
+   Мир-standard внутри, человек снаружи:
+   - BIP39 (официальный список 2048 слов, 24 слова = 256 бит, чексумма SHA256)
+   - PBKDF2-HMAC-SHA512, 2048 итераций, соль "mnemonic"+пароль → seed 64 Б
+   - BIP32 деривация m/84'/0'/0'/0/0 (hardened 84', 0')
+   - secp256k1 сжатый pubkey (BigInt, чистый JS)
+   - hash160 = RIPEMD160(SHA256(pubkey)) → bech32 → адрес bc1q… (native segwit)
+
+   Канон дома:
+   - ноль сети (ни одного fetch; WebCrypto локален);
+   - ноль DOM (чистое ядро — страница рисует сама, createElement/textContent);
+   - ядро честно бросает текст ошибки — слой страницы решает, как говорить;
+   - пароль (25-е слово) не обязателен: "" — канон восстановления в любом
+     кошельке мира;
+   - ключи НИКУДА не пишутся: ядро возвращает значения, память держит страница.
+   Язык слов — официальный английский BIP39: фраза восстанавливается в любом
+   кошельке планеты. Понимание — родное: дом объясняет по-русски.
+   ═══════════════════════════════════════════════════════════════════════ */
+function КОШЕЛЁК_ЯДРО(конф) {
+  'use strict';
+  var СЛОВА = конф.слова;            // string[2048] — официальный список BIP39
+  var КР = конф.крипто;              // WebCrypto (window.crypto или crypto.webcrypto)
+  if (!СЛОВА || СЛОВА.length !== 2048) throw 'КОШЕЛЁК: список слов должен быть 2048';
+  if (!КР || !КР.subtle || !КР.getRandomValues) throw 'КОШЕЛЁК: нужен WebCrypto';
+
+  /* ── hex-помощники ─────────────────────────────────────────────────────── */
+  function hex(б) {
+    var с = '';
+    for (var i = 0; i < б.length; i++) с += б[i].toString(16).padStart(2, '0');
+    return с;
+  }
+  function байтыИзHex(с) {
+    var б = new Uint8Array(с.length / 2);
+    for (var i = 0; i < б.length; i++) б[i] = parseInt(с.substr(i * 2, 2), 16);
+    return б;
+  }
+
+  /* ── secp256k1 (якобиевы координаты) ───────────────────────────────────── */
+  var P = (1n << 256n) - 0x1000003D1n;               // 2^256 - 2^32 - 977
+  var N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141n;
+  var Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798n;
+  var Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8n;
+
+  function мод(а, м) { var р = а % м; return р < 0n ? р + м : р; }
+  function степень(осн, пок, м) {
+    var р = 1n, б = мод(осн, м);
+    while (пок > 0n) {
+      if (пок & 1n) р = мод(р * б, м);
+      б = мод(б * б, м);
+      пок >>= 1n;
+    }
+    return р;
+  }
+  function инверс(а, м) { return степень(мод(а, м), м - 2n, м); }   // p — простое
+
+  function удвой(т) {
+    if (т.z === 0n || т.y === 0n) return { x: 0n, y: 0n, z: 0n };
+    var ySq = мод(т.y * т.y, P);
+    var s = мод(4n * т.x * ySq, P);
+    var h = мод(3n * мод(т.x * т.x, P), P);
+    var newX = мод(h * h - 2n * s, P);
+    var newY = мод(h * (s - newX) - 8n * мод(ySq * ySq, P), P);
+    var newZ = мод(2n * т.y * т.z, P);
+    return { x: newX, y: newY, z: newZ };
+  }
+  function сложи(т, д) {
+    if (т.z === 0n) return д;
+    if (д.z === 0n) return т;
+    var z1z1 = мод(т.z * т.z, P), z2z2 = мод(д.z * д.z, P);
+    var u1 = мод(т.x * z2z2, P), u2 = мод(д.x * z1z1, P);
+    var s1 = мод(т.y * z2z2 * д.z, P), s2 = мод(д.y * z1z1 * т.z, P);
+    if (u1 === u2) {
+      if (s1 !== s2) return { x: 0n, y: 0n, z: 0n };
+      return удвой(т);
+    }
+    var h = мод(u2 - u1, P);
+    var i = мод(4n * мод(h * h, P), P);
+    var j = мод(h * i, P);
+    var r = мод(2n * (s2 - s1), P);
+    var v = мод(u1 * i, P);
+    var x3 = мод(r * r - j - 2n * v, P);
+    var y3 = мод(r * (v - x3) - 2n * s1 * j, P);
+    var z3 = мод(2n * т.z * д.z * h, P);
+    return { x: x3, y: y3, z: z3 };
+  }
+  function умножь(к, т) {
+    var рез = { x: 0n, y: 0n, z: 0n }, доб = т;
+    while (к > 0n) {
+      if (к & 1n) рез = сложи(рез, доб);
+      доб = удвой(доб);
+      к >>= 1n;
+    }
+    return рез;
+  }
+  function сжатыйПубличный(секрет) {                 // секрет: Uint8Array(32) → Uint8Array(33)
+    var кЗн = BigInt('0x' + hex(секрет));
+    if (кЗн === 0n || кЗн >= N) throw 'КОШЕЛЁК: приватный ключ вне кривой';
+    var т = умножь(кЗн, { x: Gx, y: Gy, z: 1n });
+    if (т.z === 0n) throw 'КОШЕЛЁК: нулевой публичный ключ';
+    var zInv = инверс(т.z, P);
+    var zInv2 = мод(zInv * zInv, P), zInv3 = мод(zInv2 * zInv, P);
+    var x = мод(т.x * zInv2, P), y = мод(т.y * zInv3, P);
+    var байты = new Uint8Array(33);
+    байты[0] = (y & 1n) === 0n ? 0x02 : 0x03;
+    var xHex = x.toString(16).padStart(64, '0');
+    for (var i = 0; i < 32; i++) байты[1 + i] = parseInt(xHex.substr(i * 2, 2), 16);
+    return байты;
+  }
+
+  /* ── хэши ──────────────────────────────────────────────────────────────── */
+  async function sha256(данные) {
+    return new Uint8Array(await КР.subtle.digest('SHA-256', данные));
+  }
+  async function hmac512(ключ, данные) {
+    var к = await КР.subtle.importKey('raw', ключ, { name: 'HMAC', hash: 'SHA-512' }, false, ['sign']);
+    return new Uint8Array(await КР.subtle.sign('HMAC', к, данные));
+  }
+  /* RIPEMD160 — по оригинальной спецификации (Dobbertin, Bosselaers, Preneel).
+     WebCrypto его не даёт; корректность доказывают векторы в тестах. */
+  var RL = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,7,4,13,1,10,6,15,3,12,0,9,5,2,14,11,8,3,10,14,4,9,15,8,1,2,7,0,6,13,11,5,12,1,9,11,10,0,8,12,4,13,3,7,15,14,5,6,2,4,0,5,9,7,12,2,10,14,1,3,8,11,6,15,13];
+  var RR = [5,14,7,0,9,2,11,4,13,6,15,8,1,10,3,12,6,11,3,7,0,13,5,10,14,15,8,12,4,9,1,2,15,5,1,3,7,14,6,9,11,8,12,2,10,0,4,13,8,6,4,1,3,11,15,0,5,12,2,13,9,7,10,14,12,15,10,4,1,5,8,7,6,2,13,14,0,3,9,11];
+  var SL = [11,14,15,12,5,8,7,9,11,13,14,15,6,7,9,8,7,6,8,13,11,9,7,15,7,12,15,9,11,7,13,12,11,13,6,7,14,9,13,15,14,8,13,6,5,12,7,5,11,12,14,15,14,15,9,8,9,14,5,6,8,6,5,12,9,15,5,11,6,8,13,12,5,12,13,14,11,8,5,6];
+  var SR = [8,9,9,11,13,15,15,5,7,7,8,11,14,14,12,6,9,13,15,7,12,8,9,11,7,7,12,7,6,15,13,11,9,7,15,11,8,6,6,14,12,13,5,14,13,13,7,5,15,5,8,11,14,14,6,14,6,9,12,9,12,5,15,8,8,5,12,9,12,5,14,6,8,13,6,5,15,13,11,11];
+  var KL = [0x00000000, 0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xa953fd4e];
+  var KR = [0x50a28be6, 0x5c4dd124, 0x6d703ef3, 0x7a6d76e9, 0x00000000];
+  function rotl(х, н) { return ((х << н) | (х >>> (32 - н))) >>> 0; }
+  function м32(х) { return х >>> 0; }
+  var ФРИП = [
+    function (x, y, z) { return (x ^ y ^ z) >>> 0; },
+    function (x, y, z) { return ((x & y) | (~x & z)) >>> 0; },
+    function (x, y, z) { return ((x | ~y) ^ z) >>> 0; },
+    function (x, y, z) { return ((x & z) | (y & ~z)) >>> 0; },
+    function (x, y, z) { return (x ^ (y | ~z)) >>> 0; }
+  ];
+  function ripemd160(вход) {
+    var длина = вход.length;
+    var сБит = (длина * 8) >>> 0;                    // канон адресов: < 2^32 байт
+    var слов = (((длина + 8) >> 6) + 1) * 16;
+    var слова = new Array(слов).fill(0);
+    for (var i = 0; i < длина; i++) слова[i >> 2] |= вход[i] << ((i % 4) * 8);
+    слова[длина >> 2] |= 0x80 << ((длина % 4) * 8);
+    слова[слов - 2] = сБит;
+    var h0 = 0x67452301, h1 = 0xefcdab89, h2 = 0x98badcfe, h3 = 0x10325476, h4 = 0xc3d2e1f0;
+    for (var бл = 0; бл < слов; бл += 16) {
+      var X = слова.slice(бл, бл + 16);
+      var al = h0, bl = h1, cl = h2, dl = h3, el = h4;
+      var ar = h0, br = h1, cr = h2, dr = h3, er = h4;
+      for (var j = 0; j < 80; j++) {
+        var к = j >> 4;
+        var tl = (rotl(м32(al + ФРИП[к](bl, cl, dl) + X[RL[j]] + KL[к]), SL[j]) + el) >>> 0;
+        al = el; el = dl; dl = rotl(cl, 10); cl = bl; bl = tl;
+        var tr = (rotl(м32(ar + ФРИП[4 - к](br, cr, dr) + X[RR[j]] + KR[к]), SR[j]) + er) >>> 0;
+        ar = er; er = dr; dr = rotl(cr, 10); cr = br; br = tr;
+      }
+      var t = м32(h1 + cl + dr);
+      h1 = м32(h2 + dl + er);
+      h2 = м32(h3 + el + ar);
+      h3 = м32(h4 + al + br);
+      h4 = м32(h0 + bl + cr);
+      h0 = t;
+    }
+    var р = new Uint8Array(20), сдв = [h0, h1, h2, h3, h4];
+    for (var с = 0; с < 5; с++)
+      for (var б = 0; б < 4; б++) р[с * 4 + б] = (сдв[с] >> (б * 8)) & 0xff;
+    return р;
+  }
+  async function hash160(байты) { return ripemd160(await sha256(байты)); }
+
+  /* ── bech32 (BIP173) ───────────────────────────────────────────────────── */
+  var BEC = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+  function бечПолимод(знач) {
+    var ГЕН = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3];
+    var ч = 1;
+    for (var i = 0; i < знач.length; i++) {
+      var б = ч >> 25;
+      ч = ((ч & 0x1ffffff) << 5) ^ знач[i];
+      for (var j = 0; j < 5; j++) if ((б >> j) & 1) ч ^= ГЕН[j];
+    }
+    return ч;
+  }
+  function бечХрп(хрп, расш) {
+    var знач = [];
+    for (var i = 0; i < хрп.length; i++) знач.push(хрп.charCodeAt(i) >> 5);
+    if (расш) {
+      знач.push(0);
+      for (i = 0; i < хрп.length; i++) знач.push(хрп.charCodeAt(i) & 31);
+    }
+    return знач;
+  }
+  function бечЧексумма(хрп, данные) {
+    var знач = бечХрп(хрп, true).concat(данные).concat([0, 0, 0, 0, 0, 0]);
+    var пол = бечПолимод(знач) ^ 1;
+    var рез = [];
+    for (var i = 0; i < 6; i++) рез.push((пол >> 5 * (5 - i)) & 31);
+    return рез;
+  }
+  function перебиты(байты, от, до, доб) {
+    var аккум = 0, бит = 0, рез = [], макс = (1 << до) - 1;
+    for (var i = 0; i < байты.length; i++) {
+      аккум = (аккум << от) | байты[i];
+      бит += от;
+      while (бит >= до) { бит -= до; рез.push((аккум >> бит) & макс); }
+    }
+    if (доб && бит) рез.push((аккум << (до - бит)) & макс);
+    return рез;
+  }
+  function адресBech32(хэш160) {                     // witness v0 + 20-байтная программа
+    var данные = [0].concat(перебиты(хэш160, 8, 5, true));
+    var всё = данные.concat(бечЧексумма('bc', данные));
+    var адрес = 'bc1';
+    for (var i = 0; i < всё.length; i++) адрес += BEC[всё[i]];
+    return адрес;
+  }
+
+  /* ── BIP32 ─────────────────────────────────────────────────────────────── */
+  function сер32(число) {
+    return new Uint8Array([(число >>> 24) & 0xff, (число >>> 16) & 0xff, (число >>> 8) & 0xff, число & 0xff]);
+  }
+  async function мастер(seed) {
+    var I = await hmac512(new TextEncoder().encode('Bitcoin seed'), seed);
+    var ключ = I.slice(0, 32), цепь = I.slice(32);
+    if (hex(ключ) === '00'.repeat(32) || BigInt('0x' + hex(ключ)) >= N)
+      throw 'КОШЕЛЁК: недопустимый мастер-ключ (вероятность ~2 в минус 127)';
+    return { ключ: ключ, цепь: цепь };
+  }
+  async function потомок(род, индекс) {              // CKDpriv
+    var данные;
+    if (индекс >= 0x80000000) {
+      данные = new Uint8Array(37);
+      данные[0] = 0;
+      данные.set(род.ключ, 1);
+      данные.set(сер32(индекс), 33);
+    } else {
+      var паб = сжатыйПубличный(род.ключ);
+      данные = new Uint8Array(37);
+      данные.set(паб, 0);
+      данные.set(сер32(индекс), 33);
+    }
+    var I = await hmac512(род.цепь, данные);
+    var IL = I.slice(0, 32), IR = I.slice(32);
+    var к = (BigInt('0x' + hex(IL)) + BigInt('0x' + hex(род.ключ))) % N;
+    if (к === 0n) throw 'КОШЕЛЁК: нулевой потомок';
+    return { ключ: байтыИзHex(к.toString(16).padStart(64, '0')), цепь: IR };
+  }
+  async function ключПоПути(seed, путь) {
+    var узел = await мастер(seed);
+    for (var i = 0; i < путь.length; i++) узел = await потомок(узел, путь[i]);
+    return узел;
+  }
+  var ПУТЬ_ДОМА = [84 + 0x80000000, 0 + 0x80000000, 0 + 0x80000000, 0, 0]; // m/84'/0'/0'/0/0
+
+  /* ── BIP39 ─────────────────────────────────────────────────────────────── */
+  async function мнемоникаИзЭнтропии(энтропия) {
+    if ([16, 20, 24, 28, 32].indexOf(энтропия.length) === -1)
+      throw 'КОШЕЛЁК: энтропия должна быть 16/20/24/28/32 байта';
+    var хэш = await sha256(энтропия);
+    var битыЧек = энтропия.length * 8 / 32;
+    var всеБиты = [];
+    for (var i = 0; i < энтропия.length; i++)
+      for (var б = 7; б >= 0; б--) всеБиты.push((энтропия[i] >> б) & 1);
+    for (i = 0; i < битыЧек; i++) всеБиты.push((хэш[(i / 8) | 0] >> (7 - (i % 8))) & 1);
+    var слова = [];
+    for (i = 0; i < всеБиты.length / 11; i++) {
+      var зн = 0;
+      for (б = 0; б < 11; б++) зн = (зн << 1) | всеБиты[i * 11 + б];
+      if (зн < 0 || зн > 2047) throw 'КОШЕЛЁК: индекс вне списка';
+      слова.push(СЛОВА[зн]);
+    }
+    return слова.join(' ');
+  }
+  function индексыИзФразы(фраза) {
+    var слова = String(фраза).normalize('NFKD').trim().split(/\s+/);
+    if ([12, 15, 18, 21, 24].indexOf(слова.length) === -1)
+      throw 'КОШЕЛЁК: должно быть 12/15/18/21/24 слов — а тут ' + слова.length;
+    var инд = [];
+    for (var i = 0; i < слова.length; i++) {
+      var с = слова[i].toLowerCase();
+      var н = СЛОВА.indexOf(с);
+      if (н === -1) throw 'КОШЕЛЁК: слово №' + (i + 1) + ' («' + с + '») не из списка';
+      инд.push(н);
+    }
+    return инд;
+  }
+  async function энтропияИзФразы(фраза) {            // с проверкой чексуммы
+    var инд = индексыИзФразы(фраза);
+    var длины = { 12: 16, 15: 20, 18: 24, 21: 28, 24: 32 };
+    var энтБайт = длины[инд.length];
+    var битыЧек = энтБайт * 8 / 32;
+    var всеБиты = [];
+    for (var i = 0; i < инд.length; i++)
+      for (var б = 10; б >= 0; б--) всеБиты.push((инд[i] >> б) & 1);
+    var энтропия = new Uint8Array(энтБайт);
+    for (i = 0; i < энтБайт; i++) {
+      var зн = 0;
+      for (б = 0; б < 8; б++) зн = (зн << 1) | всеБиты[i * 8 + б];
+      энтропия[i] = зн;
+    }
+    var хэш = await sha256(энтропия);
+    for (i = 0; i < битыЧек; i++) {
+      var бит = (хэш[(i / 8) | 0] >> (7 - (i % 8))) & 1;
+      if (бит !== всеБиты[энтБайт * 8 + i])
+        throw 'КОШЕЛЁК: чексумма фразы не сходится — ошибка записи';
+    }
+    return энтропия;
+  }
+  async function seedИзМнемоники(фраза, пароль) {
+    var норм = String(фраза).normalize('NFKD').trim().replace(/\s+/g, ' ');
+    var ключ = await КР.subtle.importKey('raw',
+      new TextEncoder().encode(норм), 'PBKDF2', false, ['deriveBits']);
+    var соль = new TextEncoder().encode('mnemonic' + String(пароль || '').normalize('NFKD'));
+    var биты = await КР.subtle.deriveBits(
+      { name: 'PBKDF2', hash: 'SHA-512', salt: соль, iterations: 2048 }, ключ, 512);
+    return new Uint8Array(биты);
+  }
+
+  /* ── публичное лицо ядра ───────────────────────────────────────────────── */
+  return {
+    путьДома: ПУТЬ_ДОМА,
+    создать: async function () {
+      var энтропия = new Uint8Array(32);
+      var чист = false;
+      while (!чист) {
+        КР.getRandomValues(энтропия);
+        чист = !(энтропия.every(function (б) { return б === 0; }) ||
+                 энтропия.every(function (б) { return б === 0xff; }));
+      }
+      var мнемоника = await мнемоникаИзЭнтропии(энтропия);
+      return { мнемоника: мнемоника };
+    },
+    адресИзМнемоники: async function (фраза, пароль) {
+      await энтропияИзФразы(фраза);                  // честная проверка чексуммы
+      var seed = await seedИзМнемоники(фраза, пароль);
+      var узел = await ключПоПути(seed, ПУТЬ_ДОМА);
+      return {
+        адрес: адресBech32(await hash160(сжатыйПубличный(узел.ключ))),
+        путь: "m/84'/0'/0'/0/0"
+      };
+    },
+    seedИзМнемоники: seedИзМнемоники,
+    мнемоникаИзЭнтропии: мнемоникаИзЭнтропии,
+    ключПоПути: ключПоПути,
+    сжатыйПубличный: сжатыйПубличный,
+    hash160: hash160,
+    адресBech32: адресBech32,
+    ripemd160: ripemd160,
+    ша256: sha256,
+    hex: hex
+  };
+}
+
+</script>
+
 <script>
 /* ═════════════════════════════════════════════════════════════════════════
    ФОНД ·33 — общак дома. Такт v1.47.0 «ФОНД».
@@ -1251,6 +1662,159 @@ class HallP2P {
       перечитатьКонфиг(false);
     } catch (е) { /* страница не роняет себя */ }
   }
+  /* ── МАСТЕР СЧЁТА ОБЩАКА «ОДНА КНОПКА» v1.49.0 ──────────────────────────
+     Слово владельца: «МЕХАНИЗМ ОДНОЙ КНОПКИ: ОН НАЖАЛ И СЧЁТ ЕГО, И НИКТО
+     КРОМЕ НЕГО НЕ МОЖЕТ ТАМ НИЧЕГО ДЕЛАТЬ». Ключи рождаются и умирают на
+     этом устройстве; слова нигде не хранятся: ни память, ни сеть. */
+  (function () {
+    try {
+      var кнСоздать = ид('кнСоздатьКошелёк');
+      var мастер = ид('мастерКошелька');
+      if (!кнСоздать || !мастер || !window.КОШЕЛЁК_ЯДРО || !window.СЛОВА_БИП39) return;
+      var шПред = ид('шагПредупреждение'), шСлова = ид('шагСлова'),
+          шПроверка = ид('шагПроверка'), шСчёт = ид('шагСчёт');
+      var сетка = ид('сеткаСлов'), вопросы = ид('вопросыСлов'),
+          стат = ид('мастерСтатус'), адресСтр = ид('адресМастера'),
+          канва = ид('канваМастера');
+      var фраза = null;                                  // живёт только пока мастер открыт
+      var позиции = null;                                // 3 позиции проверки бумаги
+      var созданоАдрес = '';
+
+      function показ(живой) {
+        [шПред, шСлова, шПроверка, шСчёт].forEach(function (ш) { if (ш) ш.hidden = (ш !== живой); });
+      }
+      function сказать(т) { if (стат) стат.textContent = т; }
+      function норм(т) { return String(т || '').trim().toLowerCase(); }
+
+      кнСоздать.addEventListener('click', function () {
+        try {
+          мастер.hidden = false;
+          показ(шПред);
+          сказать('мастер готов · ноль сети · слова уйдут только на бумагу');
+          if (мастер.scrollIntoView) try { мастер.scrollIntoView({ block: 'start' }); } catch (е0) { }
+        } catch (е1) { }
+      });
+      ид('кнМастерОтступить').addEventListener('click', function () {
+        try { сказать('отступили — ничего не создано; ЧЕЛОВЕК РЕШАЕТ'); мастер.hidden = true; } catch (е2) { }
+      });
+      ид('кнМастерТворю').addEventListener('click', function () {
+        try {
+          var кнопка = ид('кнМастерТворю');
+          кнопка.disabled = true;
+          сказать('рожаю 256 бит случайности…');
+          window.КОШЕЛЁК_ЯДРО({ слова: window.СЛОВА_БИП39, крипто: window.crypto })
+            .создать()
+            .then(function (р) {
+              фраза = р.мнемоника;
+              сетка.textContent = '';
+              фраза.split(' ').forEach(function (слово, н) {
+                var li = document.createElement('li');
+                var номер = document.createElement('span');
+                номер.className = 'номер';
+                номер.textContent = (н + 1) + '.';
+                var слово = document.createElement('span');
+                слово.className = 'слово';
+                слово.textContent = фраза.split(' ')[н];
+                li.appendChild(номер); li.appendChild(слово);
+                сетка.appendChild(li);
+              });
+              показ(шСлова);
+              сказать('24 слова на экране — и больше нигде во вселенной');
+            })
+            .catch(function (е3) {
+              сказать('сбой: ' + (е3 && е3.message || е3) + ' — устройство не дало случайности, попробуй ещё');
+            })
+            .finally(function () { кнопка.disabled = false; });
+        } catch (е4) { }
+      });
+      ид('кнМастерСкопироватьСлова').addEventListener('click', function () {
+        try {
+          if (!фраза) return;
+          navigator.clipboard.writeText(фраза).then(function () {
+            сказать('скопировано в буфер — переноси на бумагу');
+          }, function () {
+            сказать('копирование не даётся (браузер строг) — слова списывай с экрана, они тут');
+          });
+        } catch (е5) { сказать('копирование не даётся — слова списывай с экрана'); }
+      });
+      ид('кнМастерЗаписал').addEventListener('click', function () {
+        try {
+          if (!фраза) return;
+          var слова = фраза.split(' ');
+          позиции = [];
+          while (позиции.length < 3) {
+            var н = Math.floor(Math.random() * слова.length);
+            if (позиции.indexOf(н) === -1) позиции.push(н);
+          }
+          вопросы.textContent = '';
+          позиции.forEach(function (н) {
+            var ряд = document.createElement('div');
+            ряд.className = 'вопрос-ряд';
+            var метка = document.createElement('label');
+            метка.setAttribute('for', 'вопросСлова' + н);
+            метка.textContent = 'слово №' + (н + 1) + ':';
+            var ввод = document.createElement('input');
+            ввод.type = 'text'; ввод.id = 'вопросСлова' + н;
+            ввод.autocomplete = 'off'; ввод.spellcheck = false;
+            ряд.appendChild(метка); ряд.appendChild(ввод);
+            вопросы.appendChild(ряд);
+          });
+          показ(шПроверка);
+          сказать('проверка бумаги: три слова из двадцати четырёх');
+          var первый = вопросы.querySelector('input');
+          if (первый) первый.focus();
+        } catch (е6) { }
+      });
+      ид('кнМастерПроверить').addEventListener('click', function () {
+        try {
+          if (!фраза || !позиции) return;
+          var слова = фраза.split(' ');
+          var провал = false;
+          позиции.forEach(function (н) {
+            var ввод = ид('вопросСлова' + н);
+            if (!ввод || норм(ввод.value) !== слова[н]) провал = true;
+          });
+          if (провал) {
+            сказать('не сходится — бумага ещё не честная. Слова снова на шаге выше: сверяй запись и пробуй ещё');
+            показ(шСлова);
+          } else {
+            сказать('бумага честная — рождаю адрес…');
+            window.КОШЕЛЁК_ЯДРО({ слова: window.СЛОВА_БИП39, крипто: window.crypto })
+              .адресИзМнемоники(фраза, '')
+              .then(function (р) {
+                созданоАдрес = р.адрес;
+                адресСтр.textContent = р.адрес + '   ·   путь ' + р.путь;
+                try { new SingulyarQR().toCanvas(канва, р.адрес); } catch (е7) { }
+                показ(шСчёт);
+                сказать('счёт твой · власть на бумаге · дом помнит только адрес');
+              })
+              .catch(function (е8) { сказать('сбой адреса: ' + (е8 && е8.message || е8)); });
+          }
+        } catch (е9) { }
+      });
+      ид('кнМастерСкопироватьАдрес').addEventListener('click', function () {
+        try { копировать(созданоАдрес, ид('кнМастерСкопироватьАдрес')); } catch (е10) { }
+      });
+      ид('кнМастерПисьмо').addEventListener('click', function () {
+        try {
+          var письмо = 'Адрес общака дома (создан мастером «ОДНА КНОПКА» v1.49.0):\n'
+            + созданоАдрес + '\nПуть: m/84\'/0\'/0\'/0/0 (BIP84 native segwit)\n'
+            + 'Прошу вшить в ФОНД/ОБЩАК.json — дом пусть считает общак.\n'
+            + 'Слова фразы нигде не хранятся — только на бумаге держателя.';
+          копировать(письмо, ид('кнМастерПисьмо'));
+          сказать('письмо в буфере — вставь в чат дома');
+        } catch (е11) { }
+      });
+      ид('кнМастерСтереть').addEventListener('click', function () {
+        try {
+          фраза = null; позиции = null; созданоАдрес = '';
+          /* честное стирание: перезагрузка — память страницы уходит целиком */
+          location.reload();
+        } catch (е12) { }
+      });
+    } catch (е13) { /* мастер не имеет права ронять комнату */ }
+  })();
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', жива);
   else жива();
 })();
