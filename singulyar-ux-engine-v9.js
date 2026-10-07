@@ -271,7 +271,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'ДОКУМЕНТАЦИЯ.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'ДОКУМЕНТАЦИЯ.html';
     });
-    item('·', 'сборка v1.45.0 · ХОЗЯИН', function () {}, { мертв: true });
+    item('·', 'сборка v1.46.0 · СЦЕНА', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);
