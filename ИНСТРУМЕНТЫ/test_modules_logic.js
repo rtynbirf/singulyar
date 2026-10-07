@@ -185,15 +185,29 @@ test('комната ·28: формула, инвариант, протокол 
    Тест следует за тактом: версия кэша меняется вместе со сборкой — это норма.
    Важное неизменное: ядро, двери, движок и ОТКРЫТЫЕ ДОКИ дома обязаны жить в пре-кэше
    (офлайн-закон I-05) — а сам дом обязан собираться без внешних зависимостей. */
-test('sw15.js v59: ядро модулей, УЗЕЛ ·28, СВОБОДА ·29, ТКАНЬ ·30, КВАРТИРНИК ·31, СЦЕНА ·32, ФОНД ·33, ДОМ ФОНДА ·34 в прекэше', () => {
+test('sw15.js v60: ядро модулей, УЗЕЛ ·28, СВОБОДА ·29, ТКАНЬ ·30, КВАРТИРНИК ·31, СЦЕНА ·32, ФОНД ·33, ДОМ ФОНДА ·34 в прекэше', () => {
   const св = fs.readFileSync(path.join(ROOT, 'sw15.js'), 'utf8');
-  assert.ok(св.includes("s15-orkestrator-v59"), 'кэш v59');
+  assert.ok(св.includes("s15-orkestrator-v60"), 'кэш v60');
   assert.ok(св.includes('S15_CORE_SET'), 'ядро офлайна неприкасаемо при вытеснении (СТАЛЬ)');
   assert.ok(св.includes("./singulyar-modules.js"), 'ядро в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_28_УЗЕЛ.html"), '·28 в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_33_ФОНД.html"), '·33 в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_34_ДОМ_ФОНДА.html"), '·34 в прекэше');
   assert.ok(св.includes("./ФОНД/ОБЩАК.json"), 'конфиг общака в прекэше');
+
+test('ядро v1.14.0 «ДОМ ОБНОВИЛСЯ»: обновление видит человек, перезагружает человек (такт v1.49.1)', () => {
+  const я = fs.readFileSync(path.join(ROOT, 'singulyar-modules.js'), 'utf8');
+  assert.ok(я.includes('SNG.обновлениеДома'), 'модуль обновления в ядре');
+  assert.ok(я.includes("addEventListener('controllerchange'"), 'слушает смену контроллера');
+  assert.ok(я.includes('ДОМ ОБНОВИЛСЯ'), 'бирка говорит честно');
+  assert.ok(я.includes('ПЕРЕЗАПУСТИТЬ'), 'перезапуск — кнопка человека');
+  assert.ok(я.includes('window.location.reload()'), 'перезапуск только по кнопке');
+  assert.ok(я.includes("getElementById") === false || я.includes('createElement'), 'DOM-сборка createElement');
+  assert.ok(!/innerHTML\s*=/.test(я.split('ДОМ ОБНОВИЛСЯ (v1.49.1)')[1] || ''), 'бирка без innerHTML');
+  assert.ok(я.includes('visibilitychange') && я.includes('60000'), 'сверка тихая и не чаще раза в минуту');
+  assert.ok(я.includes("protocol === 'file:'"), 'file:// — честное молчание');
+  assert.match(я, /ЯДРО МОДУЛЕЙ v1\.14\.0/, 'версия ядра v1.14.0');
+});
   assert.ok(св.includes("./ФОНД/УСТАВ_ФОНДА.md"), 'устав фонда в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_29_СВОБОДА.html"), '·29 в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_30_ТКАНЬ.html"), '·30 в прекэше');

@@ -119,8 +119,8 @@ test('10. устав: 11 разделов, честный статус юрли�
   assert.match(УСТАВ, /helenkellerintl\.org/);
   assert.match(УСТАВ, /BTC, сеть mainnet/);
   assert.match(УСТАВ, /новой записью/);
-  /* SW v59 несёт дверь и устав офлайн (закон I-05) */
-  assert.match(SW, /s15-orkestrator-v59/);
+  /* SW v60 несёт дверь и устав офлайн (закон I-05) */
+  assert.match(SW, /s15-orkestrator-v60/);
   assert.match(SW, /'\.\/СИНГУЛЯР_34_ДОМ_ФОНДА\.html'/);
   assert.match(SW, /'\.\/ФОНД\/УСТАВ_ФОНДА\.md'/);
 });
