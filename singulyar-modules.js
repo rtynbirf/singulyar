@@ -1,5 +1,10 @@
 /* ==========================================================================
-   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.13.0 · такт v1.48.0 «ДОМ ФОНДА»
+   СИНГУЛЯР — ЯДРО МОДУЛЕЙ v1.14.0 · такт v1.49.1 «ДОМ ОБНОВИЛСЯ»
+   Слово такта v1.49.1 (урок владельца): его устройство держало старый дом в кэше — человек
+   видел 21 дверь из 23 и не знал, что дом уже новее. Мировая практика обновления PWA
+   (update flow web.dev) переработана домом по канону: дом не перезагружает ничего сам (I-01) —
+   дом честно говорит «здесь новее, чем на твоём экране», а перезапустить решает человек
+   одной кнопкой; проверка дома — при взгляде человека на дом (visibilitychange), тихо и не чаще раза в минуту.
    Слово такта v1.48.0 (приказ владельца): «У НАС НАШ ФОНД… ЭТОТ ФОНД РАСПОЛОЖЕН И ЕГО
    ДОМ НА НАШЕМ РЕСУРСЕ… ЗАВЕСТИ СТРАНИЦУ… ПО ЛУЧШИМ МИРОВЫМ ПРАКТИКАМ ФОНДОВ… И ВЫВЕСТИ
    СВОЁ ЭМЕРДЖЕНТНОЕ СИНГУЛЯРНОЕ СОГЛАСНО ВСЕХ КАНОНОВ ЧЕЛОВЕКА» — дверь ·34 ДОМ ФОНДА:
@@ -64,7 +69,7 @@
 (function () {
   'use strict';
   if (window.__SINGULYAR_MODULES__) return;
-  window.__SINGULYAR_MODULES__ = 'v1.13.0';
+  window.__SINGULYAR_MODULES__ = 'v1.14.0';
 
   /* ── 1. МОДАЛЬНОСТИ — каналы человека ──────────────────────────────── */
   var МОДАЛЬНОСТИ = [
@@ -231,7 +236,7 @@
 
   /* ── 3. API ─────────────────────────────────────────────────────────── */
   var SNG = {
-    версия: '1.13.0',
+    версия: '1.14.0',
     формула: 'Ŝ = 1_H + λ(I⊗I†)',
     инвариант: '⟨M(t), Σ(t)⟩ ≡ 0',
     модальности: МОДАЛЬНОСТИ,
@@ -1623,4 +1628,125 @@
       состояние: состояние, пересчитать: function () { if (состояние() === 'рассыпан') расставить(false); }
     };
   };
+})();
+
+/* ==========================================================================
+   ДОМ ОБНОВИЛСЯ (v1.49.1) — живое обновление дома, которое видит человек.
+   Урок владельца: его устройство держало старый дом (кэш сервис-воркера) —
+   человек видел 21 дверь из 23 и не знал, что дом уже новее.
+   Мировая практика (update flow web.dev, skipWaiting + clients.claim уже в sw15)
+   переработана каноном дома: НИЧЕГО не перезагружает само (I-01) — на стекле
+   появляется честная бирка «дом обновился», перезапуск — одной кнопкой человека.
+   Ноль innerHTML, ноль эмодзи, ноль сети сверх самого SW-канала дома. */
+window.SNG.обновлениеДома = (function () {
+  'use strict';
+  try {
+    if (!('serviceWorker' in navigator)) return null;
+    if (window.location && window.location.protocol === 'file:') return null;
+    if (!window.SNG) return null;   /* ядро ещё не собрано — обновление молчит */
+
+    var было = !!navigator.serviceWorker.controller;  /* дом уже держит этот экран? */
+    var показан = false;
+    var последняяПроверка = 0;
+
+    /* — стеклянная бирка: DOM-сборка, стиль дома (стекло + серебро + золото) — */
+    function бирка() {
+      /* повторное обновление: старую бирку снять, показать свежую */
+      var старая = document.querySelector('[data-дом-обновился]');
+      if (старая && старая.parentNode) старая.parentNode.removeChild(старая);
+      показан = true;
+      var шторка = document.createElement('div');
+      шторка.setAttribute('role', 'status');
+      шторка.setAttribute('aria-live', 'polite');
+      шторка.setAttribute('data-дом-обновился', '1');  /* dataset с кириллицей не конвертится — атрибут ставим честно */
+      шторка.style.cssText =
+        'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;' +
+        'display:flex;align-items:center;gap:14px;max-width:92vw;box-sizing:border-box;flex-wrap:wrap;' +
+        'background:rgba(10,10,12,.94);border:1px solid rgba(240,240,248,.16);border-radius:14px;' +
+        'padding:12px 16px;box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(10px);' +
+        '-webkit-backdrop-filter:blur(10px);font:13px/1.45 ui-sans-serif,system-ui,sans-serif;' +
+        'color:#C0C8D0;margin:0';
+
+      var знак = document.createElement('span');
+      знак.textContent = '◇';
+      знак.setAttribute('aria-hidden', 'true');
+      знак.style.cssText = 'color:#D4AF37;font-size:15px;flex:none';
+
+      var слова = document.createElement('span');
+      слова.style.cssText = 'display:flex;flex-direction:column;gap:2px;min-width:0';
+      var т1 = document.createElement('b');
+      т1.textContent = 'ДОМ ОБНОВИЛСЯ';
+      т1.style.cssText =
+        'color:#F0D78C;font:600 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;' +
+        'letter-spacing:.22em';
+      var т2 = document.createElement('span');
+      т2.textContent = 'на сайте дом новее, чем на этом экране — перезапуск откроет свежие двери';
+      т2.style.cssText = 'font-size:13px;color:#C0C8D0';
+      слова.appendChild(т1); слова.appendChild(т2);
+
+      var кноп = document.createElement('button');
+      кноп.type = 'button';
+      кноп.textContent = 'ПЕРЕЗАПУСТИТЬ';
+      кноп.style.cssText =
+        'flex:none;background:linear-gradient(135deg,#D4AF37,#F0D78C);color:#14161A;' +
+        'border:0;border-radius:10px;padding:10px 14px;cursor:pointer;' +
+        'font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em';
+      кноп.addEventListener('click', function () { window.location.reload(); });
+
+      var позже = document.createElement('button');
+      позже.type = 'button';
+      позже.textContent = 'позже';
+      позже.setAttribute('aria-label', 'Скрыть бирку обновления — перезапустить позже');
+      позже.style.cssText =
+        'flex:none;background:transparent;color:#8A9099;border:1px solid rgba(240,240,248,.14);' +
+        'border-radius:10px;padding:9px 12px;cursor:pointer;font:12px/1 ui-sans-serif,system-ui,sans-serif';
+      позже.addEventListener('click', function () {
+        if (шторка.parentNode) шторка.parentNode.removeChild(шторка);
+        показан = false;   /* «позже» — не «никогда»: новое обновление снова честно скажет */
+      });
+
+      шторка.appendChild(знак);
+      шторка.appendChild(слова);
+      шторка.appendChild(кноп);
+      шторка.appendChild(позже);
+      (document.body || document.documentElement).appendChild(шторка);
+      try { window.SNG.событие('дом', 'обновление: бирка показана'); } catch (e) {}
+    }
+
+    /* — тихая просьба к дому свериться с сайтом (не чаще раза в минуту) — */
+    function сверить() {
+      var сейчас = Date.now();
+      if (сейчас - последняяПроверка < 60000) return;
+      последняяПроверка = сейчас;
+      try {
+        navigator.serviceWorker.getRegistration().then(function (р) {
+          if (р && р.update) return р.update();
+        }).catch(function () {});
+      } catch (e) {}
+    }
+
+    /* — новый дом взял экран в руки — человек узнаёт честно (I-01) — */
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (было) бирка();
+      было = true;
+    });
+
+    /* — бирка могла родиться раньше слушателя: разок глянем на старте и при взгляде человека — */
+    navigator.serviceWorker.getRegistration().then(function (р) {
+      if (р && navigator.serviceWorker.controller && (р.waiting || р.installing)) бирка();
+    }).catch(function () {});
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) сверить();
+    });
+    window.addEventListener('focus', сверить, { passive: true });
+    setTimeout(сверить, 4000);
+
+    /* наружу — маленький честный API для сторожей и под капот */
+    return {
+      статус: function () { return { показан: показан, домБылЭкрана: было, слушает: true }; },
+      сверить: сверить,
+      показать: бирка
+    };
+  } catch (e) { /* обновление дома не имеет права ломать комнату */ return null; }
 })();
