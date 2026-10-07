@@ -10,9 +10,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#050608"/>
 <meta name="color-scheme" content="dark"/>
-<meta name="description" content="КВАРТИРНИК v9.6 · ПАСПОРТ ДОМА — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри."/>
+<meta name="description" content="КВАРТИРНИК v9.7 · ТОМОГРАФ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри."/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050608'/%3E%3Ccircle cx='32' cy='26' r='11' fill='none' stroke='%23DEA968' stroke-width='4'/%3E%3Cpath d='M32 40v10M22 54h20' stroke='%23F5A623' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"/>
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v9.6 · ПАСПОРТ ДОМА — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v9.7 · ТОМОГРАФ — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -591,7 +591,17 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
 <div id="light" aria-hidden="true"><div class="lay" id="layA"></div><div class="lay" id="layB"></div></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
 <div id="scanHint">Режим одной кнопки: Пробел — выбрать · Esc — выйти</div>
-<div id="live" role="status" aria-live="assertive"></div>
+<div id="live" role="status" aria-live="polite"></div>
+<div id="liveAlert" role="alert" aria-live="assertive"></div>
+<script>
+/* v9.7 «ТОМОГРАФ»: два канала — спокойные вежливо (#live), срочные сразу (#liveAlert) */
+window.__ALERT = function(t){
+  try{
+    var la = document.getElementById("liveAlert"); if(!la) return;
+    la.textContent = ""; setTimeout(function(){ la.textContent = t; }, 30);
+  }catch(e){}
+};
+</script>
 
 <!-- v8 АВТОР: штрих-код песни (QR с клипом RUVSON, офлайн, встроен в файл) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="qrsongSym" viewBox="0 0 37 37"><rect width="37" height="37" fill="#ffffff"/><path d="M4 4h7v1h-7zM12 4h3v1h-3zM16 4h1v1h-1zM23 4h1v1h-1zM26 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM16 5h1v1h-1zM20 5h2v1h-2zM23 5h2v1h-2zM26 5h1v1h-1zM32 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM14 6h2v1h-2zM17 6h1v1h-1zM19 6h3v1h-3zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h3v1h-3zM32 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM15 7h2v1h-2zM18 7h5v1h-5zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h3v1h-3zM32 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h7v1h-7zM20 8h1v1h-1zM22 8h2v1h-2zM26 8h1v1h-1zM28 8h3v1h-3zM32 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h2v1h-2zM16 9h4v1h-4zM23 9h1v1h-1zM26 9h1v1h-1zM32 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h7v1h-7zM12 11h1v1h-1zM15 11h2v1h-2zM18 11h1v1h-1zM21 11h4v1h-4zM4 12h1v1h-1zM8 12h1v1h-1zM10 12h4v1h-4zM15 12h1v1h-1zM17 12h5v1h-5zM25 12h5v1h-5zM32 12h1v1h-1zM4 13h1v1h-1zM7 13h2v1h-2zM11 13h1v1h-1zM13 13h2v1h-2zM16 13h1v1h-1zM23 13h1v1h-1zM25 13h8v1h-8zM4 14h1v1h-1zM8 14h4v1h-4zM14 14h2v1h-2zM17 14h3v1h-3zM21 14h2v1h-2zM24 14h1v1h-1zM26 14h2v1h-2zM32 14h1v1h-1zM4 15h3v1h-3zM9 15h1v1h-1zM11 15h3v1h-3zM15 15h3v1h-3zM19 15h3v1h-3zM23 15h1v1h-1zM26 15h1v1h-1zM29 15h1v1h-1zM31 15h2v1h-2zM5 16h2v1h-2zM8 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM27 16h1v1h-1zM31 16h1v1h-1zM4 17h3v1h-3zM8 17h2v1h-2zM13 17h3v1h-3zM17 17h2v1h-2zM20 17h1v1h-1zM22 17h1v1h-1zM26 17h7v1h-7zM4 18h1v1h-1zM8 18h3v1h-3zM12 18h5v1h-5zM20 18h3v1h-3zM24 18h1v1h-1zM29 18h2v1h-2zM32 18h1v1h-1zM7 19h2v1h-2zM11 19h2v1h-2zM14 19h3v1h-3zM18 19h1v1h-1zM21 19h1v1h-1zM25 19h1v1h-1zM31 19h2v1h-2zM4 20h2v1h-2zM8 20h1v1h-1zM10 20h4v1h-4zM15 20h1v1h-1zM17 20h5v1h-5zM25 20h1v1h-1zM27 20h1v1h-1zM31 20h1v1h-1zM4 21h1v1h-1zM7 21h1v1h-1zM15 21h2v1h-2zM22 21h1v1h-1zM26 21h4v1h-4zM31 21h2v1h-2zM6 22h2v1h-2zM10 22h1v1h-1zM13 22h2v1h-2zM16 22h4v1h-4zM21 22h1v1h-1zM24 22h3v1h-3zM28 22h1v1h-1zM30 22h1v1h-1zM32 22h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM14 23h1v1h-1zM16 23h2v1h-2zM19 23h4v1h-4zM25 23h1v1h-1zM28 23h1v1h-1zM31 23h2v1h-2zM4 24h2v1h-2zM7 24h1v1h-1zM9 24h5v1h-5zM15 24h1v1h-1zM17 24h1v1h-1zM21 24h2v1h-2zM24 24h6v1h-6zM32 24h1v1h-1zM12 25h3v1h-3zM17 25h2v1h-2zM20 25h2v1h-2zM24 25h1v1h-1zM28 25h1v1h-1zM32 25h1v1h-1zM4 26h7v1h-7zM12 26h2v1h-2zM16 26h1v1h-1zM20 26h2v1h-2zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h3v1h-3zM32 26h1v1h-1zM4 27h1v1h-1zM10 27h1v1h-1zM18 27h1v1h-1zM21 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM31 27h2v1h-2zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h2v1h-2zM17 28h4v1h-4zM22 28h8v1h-8zM31 28h2v1h-2zM4 29h1v1h-1zM6 29h3v1h-3zM10 29h1v1h-1zM15 29h3v1h-3zM21 29h2v1h-2zM25 29h1v1h-1zM31 29h1v1h-1zM4 30h1v1h-1zM6 30h3v1h-3zM10 30h1v1h-1zM13 30h4v1h-4zM18 30h2v1h-2zM22 30h4v1h-4zM29 30h4v1h-4zM4 31h1v1h-1zM10 31h1v1h-1zM14 31h1v1h-1zM16 31h5v1h-5zM24 31h1v1h-1zM26 31h1v1h-1zM29 31h1v1h-1zM31 31h2v1h-2zM4 32h7v1h-7zM12 32h1v1h-1zM14 32h3v1h-3zM23 32h3v1h-3zM31 32h1v1h-1z" fill="#050608"/></symbol></svg>
@@ -666,7 +676,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
 </main>
 
 <!-- v9 АВТОР: бирка-бродяжка — штрих-код песни скромно в углу; тянется куда удобно, место помнится -->
-<div id="authorTag" role="group" aria-label="Бирка автора: штрих-код песни RUVSON — камера телефона откроет клип; ниже — подписка на канал. Бирку можно перетащить за любое место, куда удобнее">
+<div id="authorTag" role="group" tabindex="0" aria-label="Бирка автора: штрих-код песни RUVSON — камера телефона откроет клип; ниже — подписка на канал. Бирку можно тащить, двигать стрелками с клавиатуры (Shift — крупный шаг, Home/End — углы, Enter — крестовина) или тапом открыть крестовину. Место помнится">
   <a class="qcard aclip" href="https://youtu.be/9ys_TVEtda8" target="_blank" rel="noopener" data-tip="Штрих-код песни: камера телефона откроет клип RUVSON «Просто люби»; клик — тоже откроет. Саму бирку можно тащить за любое место — угол запомнится"><svg xmlns:xlink="http://www.w3.org/1999/xlink" class="qrsimg" viewBox="0 0 37 37" role="img" aria-label="Штрих-код: открыть клип RUVSON «Просто люби» на YouTube"><use xlink:href="#qrsongSym" href="#qrsongSym"/></svg></a>
   <a class="achan" href="https://www.youtube.com/@ruvson_music" target="_blank" rel="noopener" data-tip="Канал автора RUVSON: подпишись и поддержи — так у песни будет будущее">RUVSON · подпишись</a>
 </div>
@@ -742,15 +752,15 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
 <dialog id="help" aria-labelledby="helpTitle">
   <button class="x" id="helpClose" aria-label="Закрыть справку (Esc)" data-tip="Закрыть справку (Esc)">✕</button>
   <h3 id="helpTitle">СПРАВКА</h3>
-  <div class="htabs" aria-label="разделы справки">
-    <button data-ht="start" class="on" aria-pressed="true">СТАРТ</button>
-    <button data-ht="screen" aria-pressed="false">КНОПКИ</button>
-    <button data-ht="keys" aria-pressed="false">КЛАВИШИ</button>
-    <button data-ht="voice" aria-pressed="false">ГОЛОС</button>
-    <button data-ht="who" aria-pressed="false">ЛЮДЯМ</button>
-    <button data-ht="faq" aria-pressed="false">ВОПРОСЫ</button>
+  <div class="htabs" role="tablist" aria-label="разделы справки">
+    <button role="tab" id="htab-start" data-ht="start" class="on" aria-selected="true" aria-controls="hpanel-start">СТАРТ</button>
+    <button role="tab" id="htab-screen" data-ht="screen" aria-selected="false" aria-controls="hpanel-screen" tabindex="-1">КНОПКИ</button>
+    <button role="tab" id="htab-keys" data-ht="keys" aria-selected="false" aria-controls="hpanel-keys" tabindex="-1">КЛАВИШИ</button>
+    <button role="tab" id="htab-voice" data-ht="voice" aria-selected="false" aria-controls="hpanel-voice" tabindex="-1">ГОЛОС</button>
+    <button role="tab" id="htab-who" data-ht="who" aria-selected="false" aria-controls="hpanel-who" tabindex="-1">ЛЮДЯМ</button>
+    <button role="tab" id="htab-faq" data-ht="faq" aria-selected="false" aria-controls="hpanel-faq" tabindex="-1">ВОПРОСЫ</button>
   </div>
-  <div class="htab on" data-htab="start">
+  <div class="htab on" role="tabpanel" id="hpanel-start" aria-labelledby="htab-start" tabindex="0" data-htab="start">
     <p>Одна песня на всех — «Просто люби» RUVSON, 3:54. Четыре шага — и вечер пошёл.</p>
     <div class="hsteps">
       <div><b>Выбери сцену</b> — ВЕЧЕРИНКА, ДЕТИ, РОМАНТИКА или ДЕНЬ. Сцена меняет палитру, свет, конфетти и сами подсказки.</div>
@@ -760,7 +770,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
     </div>
     <p>Микрофон не обязателен: игра «Держи ноту» — из дока. Строки передаются тапом, как микрофон по кругу. Хлопайте — экран считает.</p>
   </div>
-  <div class="htab" data-htab="screen">
+  <div class="htab" role="tabpanel" id="hpanel-screen" aria-labelledby="htab-screen" tabindex="0" data-htab="screen">
     <p>Что где живёт на экране:</p>
     <div class="who2">
       <div><b>▶ / ↻ / полоса времени</b> — пуск-пауза, заново, перемотка; цветные отрезки полосы — секции песни, клик по отрезку ведёт в неё.</div>
@@ -777,7 +787,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
       <div><b>ЗДОРОВЬЕ</b> — самопроверка всех частей, честно с галочками.</div>
     </div>
   </div>
-  <div class="htab" data-htab="keys">
+  <div class="htab" role="tabpanel" id="hpanel-keys" aria-labelledby="htab-keys" tabindex="0" data-htab="keys">
     <div class="keys">
       <kbd>Пробел</kbd><span>хлопок (в режиме одной кнопки — выбор)</span>
       <kbd>← →</kbd><span>перемотка ±5 секунд</span>
@@ -793,7 +803,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
       <kbd>Esc</kbd><span>закрыть окно / подсказку / выйти из лампы</span>
     </div>
   </div>
-  <div class="htab" data-htab="voice">
+  <div class="htab" role="tabpanel" id="hpanel-voice" aria-labelledby="htab-voice" tabindex="0" data-htab="voice">
     <p>Включи голосовые команды в «ЛЮДИ» — и говори без клавиатуры (Chrome/Edge, русский):</p>
     <div class="who2">
       <div><b>Управление:</b> «запусти», «стоп», «заново», «дальше», «назад»</div>
@@ -803,7 +813,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
     </div>
     <p>Микрофон не услышал — клавиатура и тапы работают всегда.</p>
   </div>
-  <div class="htab" data-htab="who">
+  <div class="htab" role="tabpanel" id="hpanel-who" aria-labelledby="htab-who" tabindex="0" data-htab="who">
     <p>Кому что подходит — включайте вместе, они дружат:</p>
     <div class="who2">
       <div><b>Поёт внутренним голосом (немой)</b> — текст-пульс: подсветка бежит по словам, слогам или буквам в такт; такт-монитор показывает долю; гласные держатся дольше — как в живом пении.</div>
@@ -817,7 +827,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
       <div><b>Стесняется петь</b> — ВСЕ ВМЕСТЕ, «тихий вечер», запись выключена, пока сам не захочешь.</div>
     </div>
   </div>
-  <div class="htab" data-htab="faq">
+  <div class="htab" role="tabpanel" id="hpanel-faq" aria-labelledby="htab-faq" tabindex="0" data-htab="faq">
     <div class="who2">
       <div><b>Нет интернета — будет работать?</b> Да. Песня, движок и настройки живут в одном файле; сеть не нужна.</div>
       <div><b>Как переслать другу?</b> Отправь сам файл HTML (или архив) — он откроется двойным кликом в любом браузере.</div>
@@ -1240,25 +1250,52 @@ function health(){
     { n:"секции: "+SECS.length, ok: SECS.length===7 },
     { n:"аудио webm встроено", ok: !!(window.TRACK_DATA&&String(window.TRACK_DATA).slice(0,22)==="data:audio/webm;base64") },
     { n:"длительность: "+fmt(audio.duration||0), ok: !!(audio.duration>230) },
-    { n:"синтез аплодисментов", ok: Applause.ok || !!(window.AudioContext||window.webkitAudioContext) },
+    { sec:"C", n:"синтез аплодисментов", ok: Applause.ok || !!(window.AudioContext||window.webkitAudioContext) },
     { n:"свет сцены: "+LIGHTS.length+" палитр", ok: LIGHTS.length===SECS.length },
     { n:"караоке-движок: "+lineEls.length+" строк", ok: lineEls.length===CUES.length },
-    { n:"микрофон: "+(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia?"готов к запросу":"недоступен"), ok: !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia) },
+    { sec:"C", n:"микрофон: "+(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia?"готов к запросу":"недоступен"), ok: !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia) },
     { n:"сцены: "+(window.__SCENE?window.__SCENE.list.length:0)+" облика", ok: !!(window.__SCENE&&window.__SCENE.list.length===4) },
     { n:"языки строк: "+(window.__LANGS?window.__LANGS.list.length:1), ok: !!(window.__LANGS&&window.__LANGS.list.length===4) },
-    { n:"голосовые команды: "+((window.SpeechRecognition||window.webkitSpeechRecognition)?"доступны":"нет в этом браузере"), ok: !!(window.SpeechRecognition||window.webkitSpeechRecognition) },
-    { n:"синтез речи (озвучка): "+("speechSynthesis" in window?"есть":"нет"), ok: ("speechSynthesis" in window) },
-    { n:"вибро-ритм: "+("vibrate" in navigator?"есть":"нет в этом устройстве"), ok: ("vibrate" in navigator) },
+    { sec:"C", n:"голосовые команды: "+((window.SpeechRecognition||window.webkitSpeechRecognition)?"доступны — но браузерное распознавание может просить сеть, офлайн-гарантии нет":"нет в этом браузере"), ok: !!(window.SpeechRecognition||window.webkitSpeechRecognition) },
+    { sec:"C", n:"синтез речи (озвучка): "+("speechSynthesis" in window?"есть":"нет"), ok: ("speechSynthesis" in window) },
+    { sec:"C", n:"вибро-ритм: "+("vibrate" in navigator?"есть":"нет в этом устройстве"), ok: ("vibrate" in navigator) },
     { n:"одна кнопка: сканер готов", ok: !!(window.__SCAN) },
     { n:"текст-пульс: строка·слово·слог·буква", ok: !!(window.__PULSE) },
-    { n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
+    { sec:"R", n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
   ].concat(window.__HEALTH2 ? window.__HEALTH2() : []).concat(window.__HEALTH3 ? window.__HEALTH3() : []).concat(window.__HEALTH4 ? window.__HEALTH4() : []).concat(window.__HEALTH5 ? window.__HEALTH5() : []).concat(window.__HEALTH6 ? window.__HEALTH6() : []).concat(window.__HEALTH7 ? window.__HEALTH7() : []);
   const good = r.filter(x=>x.ok).length;
   const chip = $("chipHealth");
   chip.textContent = "ЗДОРОВЬЕ "+good+"/"+r.length;
   chip.classList.toggle("is-bad", good<r.length);
-  chip.title = r.map(x=>(x.ok?"+ ":"x ")+x.n).join("\n");
+  /* v9.7 «ТОМОГРАФ»: ЗДОРОВЬЕ — диагностический инструмент, не зелёная лампочка:
+     слои ЦЕЛОСТНОСТЬ / ВОЗМОЖНОСТИ / ЖИВОЙ ЗАПУСК / СОСТОЯНИЕ ЧЕЛОВЕКА,
+     вердикт сверху, легенда снизу, UNKNOWN ≠ FAIL */
+  const SECH = [
+    ["I","ЦЕЛОСТНОСТЬ — файл и структуры"],
+    ["C","ВОЗМОЖНОСТИ — что умеет этот браузер"],
+    ["R","ЖИВОЙ ЗАПУСК — что реально работает сейчас"],
+    ["S","СОСТОЯНИЕ ЧЕЛОВЕКА — твои настройки"]
+  ];
+  const markOf = (x)=> x.ok ? (x.warn ? "? " : "+ ") : "x ";
+  const L2 = [];
+  const badN = r.length - good;
+  L2.push("ВЕРДИКТ: "+(badN===0 ? "ВСЁ ПОДТВЕРЖДЕНО — "+good+" из "+r.length : good+" из "+r.length+" подтверждено · "+badN+" требуют внимания"));
+  SECH.forEach(pr=>{
+    const arr = r.filter(x=>(x.sec||"I")===pr[0]);
+    if(!arr.length) return;
+    const g = arr.filter(x=>x.ok).length;
+    L2.push("");
+    L2.push(pr[1]+" — "+g+"/"+arr.length+(g===arr.length ? " · PASS" : ""));
+    arr.forEach(x=>L2.push("  "+markOf(x)+x.n));
+  });
+  L2.push("");
+  L2.push("Легенда: + подтверждено · ? неизвестно (UNKNOWN ≠ FAIL — не поломка) · x нет/деградация — остальное работает");
+  chip.title = L2.join("\n");
   window.__HEALTH = ()=>r;
+  if(window.__STORAGE_DEAD){
+    const la = $("liveAlert");
+    if(la){ la.textContent=""; setTimeout(()=>{ la.textContent = "Память настроек не пишет: приватный режим или переполнение. Вечер работает, но состояние не сохранится."; }, 30); }
+  }
   return r;
 }
 $("chipHealth").addEventListener("click", health);
@@ -1394,13 +1431,13 @@ async function startMic(){
   if(stream || micAc || running) return; /* v9.2: гард от двойного клика — второй старт не перетирает стрим */
   micGo.disabled = true; /* сразу, до await — окно ожидания не даёт второй клик */
   if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)){
-    micGo.disabled = false; setStat("микрофон недоступен в этом браузере"); return;
+    micGo.disabled = false; setStat("микрофон недоступен в этом браузере"); if(window.__ALERT) __ALERT("Микрофона в этом браузере нет. Игра «Держи ноту» отдыхает — всё остальное работает."); return;
   }
   try{
     stream = await navigator.mediaDevices.getUserMedia({
       audio:{ echoCancellation:false, noiseSuppression:false, autoGainControl:false }
     });
-  }catch(e){ micGo.disabled = false; setStat("нет доступа к микрофону — нужно разрешение"); return; }
+  }catch(e){ micGo.disabled = false; setStat("нет доступа к микрофону — нужно разрешение"); if(window.__ALERT) __ALERT("Нет доступа к микрофону — разрешение не дано. Игра «Держи ноту» ждёт, всё остальное работает."); return; }
   try{
     micAc = new (window.AudioContext||window.webkitAudioContext)();
     if(micAc.state==="suspended"){ const rp=micAc.resume(); if(rp&&rp.catch) rp.catch(()=>{}); }
@@ -2420,18 +2457,30 @@ function lampOff(){
 window.__LAMP = { get on(){ return lamp.classList.contains("on"); }, toggle(){ this.on ? lampOff() : lampOn(); } };
 lamp.addEventListener("click", lampOff);
 
-/* ── Wake Lock: экран не засыпает (W3C-практика для медиа) ── */
+/* ── Wake Lock: экран не засыпает (W3C-практика) · v9.7: живое состояние для ЗДОРОВЬЯ ──
+   REQUESTED → GRANTED → RELEASED → REACQUIRED — состояние честно докладывается */
 let wl = null;
+let wlState = ("wakeLock" in navigator) ? "пока не просили" : "нет в этом браузере";
 async function wlRequest(){
   try{
-    if(navigator.wakeLock && !wl){ wl = await navigator.wakeLock.request("screen"); }
-  }catch(e){}
+    if(navigator.wakeLock && !wl){
+      wl = await navigator.wakeLock.request("screen");
+      wlState = "держу экран";
+      try{
+        wl.addEventListener("release", ()=>{
+          wl = null;
+          if(wlState !== "не активен") wlState = "отпущен системой";
+        });
+      }catch(e){}
+    }
+  }catch(e){ wlState = "запрос отклонён: "+(e && e.name ? e.name : "неизвестно"); }
 }
 function wlRelease(silent){
   try{ if(wl){ wl.release(); } }catch(e){}
   wl = null;
+  if("wakeLock" in navigator) wlState = "не активен";
 }
-window.__WLOCK = { on: wlRequest, off: wlRelease, get active(){ return !!wl; } };
+window.__WLOCK = { on: wlRequest, off: wlRelease, get active(){ return !!wl; }, get state(){ return wlState; } };
 document.addEventListener("visibilitychange", ()=>{
   if(!document.hidden && KV.audio && !KV.audio.paused && !KV.audio.ended) wlRequest();
 });
@@ -2451,10 +2500,22 @@ try{
     navigator.mediaSession.setActionHandler("seekbackward", ()=>KV.seek(KV.audio.currentTime-10));
     navigator.mediaSession.setActionHandler("seekforward", ()=>KV.seek(KV.audio.currentTime+10));
     navigator.mediaSession.setActionHandler("stop", ()=>{ if(!KV.audio.paused) KV.togglePlay(); });
+    window.__MS_STATE = "обработчики поставлены";
   }
-}catch(e){}
+}catch(e){ window.__MS_STATE = "ошибка: "+(e && e.name ? e.name : "неизвестно"); }
 
-/* ── запись выступления: музыка + голос → файл (практика Smule) ── */
+/* ── запись выступления: музыка + голос → файл (практика Smule) ──
+   v9.7 «ТОМОГРАФ»: кодек выбирается через MediaRecorder.isTypeSupported,
+   Blob и имя файла получают ЧЕСТНЫЙ тип/расширение, а не захардкоженный webm */
+const REC_MIMES = ["audio/webm;codecs=opus","audio/webm","audio/mp4","audio/ogg;codecs=opus"];
+let recMime = pickRecMime();
+function pickRecMime(){
+  if(!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== "function") return "";
+  for(let i=0;i<REC_MIMES.length;i++){
+    try{ if(MediaRecorder.isTypeSupported(REC_MIMES[i])) return REC_MIMES[i]; }catch(e){}
+  }
+  return "";
+}
 let recOn=false, mediaRec=null, recChunks=[], recUrl=null, recDest=null, micStream=null, recT0=0;
 const grs = ()=>$("recStat"), grb = ()=>$("recBox");
 function recPaint(t){
@@ -2478,24 +2539,27 @@ async function recToggle(){
       const src = ac.createMediaStreamSource(micStream);
       const g = ac.createGain(); g.gain.value = 1.2;
       src.connect(g); g.connect(recDest); mic = true;
-    }catch(e){ mic = false; }
+      window.__MIC_STATE = "разрешён";
+    }catch(e){ mic = false; window.__MIC_STATE = "отказ: "+(e && e.name ? e.name : "неизвестно"); }
   }
   recChunks = [];
+  recMime = pickRecMime();
   try{
-    mediaRec = new MediaRecorder(recDest.stream);
-  }catch(e){ const rs=grs(); if(rs) rs.textContent = "Запись не запустилась: "+(e.message||"формат не поддержан"); return; }
+    mediaRec = new MediaRecorder(recDest.stream, recMime ? { mimeType: recMime } : undefined);
+  }catch(e){ const rs=grs(); if(rs) rs.textContent = "Запись не запустилась: "+(e.message||"формат не поддержан"); if(window.__ALERT) __ALERT("Запись не запустилась: браузер отказал рекордеру ("+(e && e.name ? e.name : "неизвестно")+"). Песня и свет работают — запись в этот раз нет."); return; }
+  try{ recMime = mediaRec.mimeType || recMime; }catch(e){}
   mediaRec.ondataavailable = (e)=>{ if(e.data && e.data.size) recChunks.push(e.data); };
   mediaRec.onstop = ()=>{
     recOn = false;
     if(micStream){ try{ micStream.getTracks().forEach(t=>t.stop()); }catch(e){} micStream=null; }
-    const blob = new Blob(recChunks, { type:"audio/webm" });
+    const blob = new Blob(recChunks, { type: recMime || "application/octet-stream" });
     if(recUrl){ try{ URL.revokeObjectURL(recUrl); }catch(e){} recUrl=null; }
     recUrl = URL.createObjectURL(blob);
     const rb = grb();
     if(rb){
       rb.classList.add("on"); rb.innerHTML = "";
       const au = document.createElement("audio"); au.controls = true; au.src = recUrl;
-      const a = document.createElement("a"); a.href = recUrl; a.download = "moy-kvartirnik.webm";
+      const a = document.createElement("a"); a.href = recUrl; a.download = "moy-kvartirnik."+(String(recMime).indexOf("mp4")>=0 ? "m4a" : (String(recMime).indexOf("ogg")>=0 ? "ogg" : "webm"));
       a.textContent = "скачать запись ("+(blob.size/1048576).toFixed(1)+" МБ)";
       rb.appendChild(au); rb.appendChild(a);
     }
@@ -2504,7 +2568,7 @@ async function recToggle(){
   mediaRec.start(250); recOn = true; recT0 = Date.now();
   recPaint(mic ? "Пишу: музыка + твой голос. Жми «остановить», когда споёте." : "Микрофона нет — пишу саму песню. Жми «остановить».");
 }
-window.__REC = { get on(){ return recOn; }, toggle: recToggle };
+window.__REC = { get on(){ return recOn; }, toggle: recToggle, get mime(){ return recMime; } };
 /* ── продолжение с места: помнить позицию песни ── */
 let posTimer = 0;
 window.__POS = {
@@ -2616,7 +2680,7 @@ function importPrefs(file){
       if(window.__PULT && window.__PULT.applyAll) window.__PULT.applyAll();
       if(window.__LAB && window.__LAB.applyAll) window.__LAB.applyAll();   /* v6: свои цвета и наборы вернулись */
       say("Настройки внесены — вечер стал твоим");
-    }catch(e){ say("Файл не похож на настройки КВАРТИРНИКа"); }
+    }catch(e){ say("Файл не похож на настройки КВАРТИРНИКа"); if(window.__ALERT) __ALERT("Импорт прерван: это не файл настроек КВАРТИРНИКа. Твои текущие настройки не тронуты."); }
   };
   rd.readAsText(file);
 }
@@ -2693,6 +2757,7 @@ document.body.insertAdjacentHTML("beforeend", `
   <b>v9.4</b> — «УНИСОН»: ручная юстировка свет↔звук по мировой практике — слайдер ±1,5 с шагом 10 мс (как universal offset в osu! и тег [offset] в LRC), кнопки ±10/±50 мс и клавиши «,»/«.» шагом 50 мс (как G/H в VLC); тап-юстировка «по звуку»: 8 тапов в моменты, когда строки заговаривают, — медиана даёт сквозную задержку до уха (практика Rock Band / Clone Hero), и свет сдвигается ровно на неё; живой бейдж «СДВИГ» у такт-монитора виден прямо во время песни. Задержка наушников (Bluetooth/TV) по-прежнему вычитается сама — ДНК СИНГУЛАРА (v9.1).
   <br><b>v9.5</b> — «ШИЛКА»: упреждение света по механике зенитной наводки. Зная траекторию и скорость цели, ШИЛКА бьёт в точку перехвата: снаряд и самолёт приходят туда одномоментно. Здесь цель — фонема, снаряд — звук (полёт = задержка вывода, вычитается сама — v9.1), трассер — свет буквы (конвейер кадра, 33 мс ≈ 2 кадра при 60 Гц). Буква выстреливает НАОПЕРЕЖЕ, и свет с звуком приходят к глазу и уху одновременно. Трассер регулируется (0–150 мс, клавиши «[»/«]»), на буквах в полёте горит живой прицел — на быстром темпе букв в нём больше: упреждение считает ритм, скорость огласовки и темп. Тяни УНИСОН в минус — трассер забегает вперёд, бейдж «УПРЕЖДЕНИЕ» покажет дальность.
   <br><b>v9.6</b> — «ПАСПОРТ ДОМА»: палитра пересверена с техническим разбором рендера дома (singulyar_render_spec.png; метод хозяина [изм.]: хэш + measure_render.py → одинаковые числа у любого). Насыщенные оттенки ТОЛЬКО 22–43° — янтарь #DEA968 и яркое золото #FEE29F: синий, бирюзовый, фиолетовый, зелёный изгнаны из всех тем, сцен, ролей и успеха; тревога пламенеет #FF8A3C — внутри той же полосы. В ПУЛЬТе открыт ПАСПОРТ УНИСОНА [изм.]: такт, полёт звука, трассер, упреждение, темп, буквы в полёте и хэш ядра сборки — живые числа вместо ощущений; тот же файл и те же настройки дают те же числа у любого.
+  <br><b>v9.7</b> — «ТОМОГРАФ»: ЗДОРОВЬЕ стал честным диагностическим томографом, а не зелёной лампочкой: четыре слоя — ЦЕЛОСТНОСТЬ (файл и структуры) · ВОЗМОЖНОСТИ (что умеет этот браузер) · ЖИВОЙ ЗАПУСК (что реально работает сейчас) · СОСТОЯНИЕ ЧЕЛОВЕКА (твои настройки), вердикт сверху, легенда снизу, «UNKNOWN ≠ FAIL». Память настроек проверяется настоящей записью→чтением→сверкой, а не «есть функция»; кодек записи выбирается через MediaRecorder.isTypeSupported (webm/opus → webm → mp4 → ogg), у файла записи честный тип и расширение; wake lock и медиасессия докладывают живое состояние («держу экран», «обработчики поставлены»); голосовые команды честно помечены: браузерное распознавание может просить сеть — офлайн-гарантии нет; вкладки пульта и справки получили полную ARIA-семантику (role=tab→tabpanel, aria-controls, стрелки+Home/End, roving tabindex); сообщения разошлись по каналам: спокойные — вежливо, срочные — сразу; бирка двигается тремя независимыми способами — перетаскивание, клавиатура (Shift — крупный шаг, Home/End — углы, Enter — крестовина), крестовина-джойстик по тапу (WCAG 2.2 · 2.5.7 «без перетаскивания»); тап-цели в ЗДОРОВЬЕ проверяются измерением, не глазомером.
   <p style="margin-top:10px"><b>Самодостаточность.</b> Всё живёт в этом одном файле: песня, движок, настройки в памяти браузера. Ничего не уходит в сеть. Файл переживёт своего родителя — и на другом устройстве настройки возвращаются из json.</p>
   <p style="margin-top:10px"><b>На экран телефона.</b> iPhone: «Поделиться» → «На экран „Домой“». Android/Chrome: меню ⋮ → «Установить приложение» / «Добавить на главный экран».</p>
 </dialog>
@@ -2779,21 +2844,62 @@ function bootPrefs(){
 bootPrefs();
 
 /* ── ЗДОРОВЬЕ v4 (добавка к движку) ── */
-window.__HEALTH2 = ()=>[
-  { n:"память вечера: настройки сохраняются", ok: !!prefs._booted },
-  { n:"продолжение с места: позиция помнится", ok: !!localStorage.getItem },
-  { n:"юстировка свет↔звук: слайдер ±1,5 с, шаг 5 мс + упреждение-трассер ШИЛКИ", ok: typeof window.__SYNC_NUDGE==="function" && typeof window.__SHILKA==="object" },
-  { n:"запись выступления: "+(window.MediaRecorder?"готова":"нет в этом браузере"), ok: !!window.MediaRecorder },
-  { n:"медиасессия: кнопки с экрана блокировки", ok: "mediaSession" in navigator },
-  { n:"экран не засыпает: "+(("wakeLock" in navigator)?"wake lock есть":"нет в этом браузере"), ok: "wakeLock" in navigator },
-  { n:"музыка тише под речью (ducking)", ok: typeof window.__DUCK==="function" },
-  { n:"тихий вечер: потолок громкости", ok: typeof window.__NIGHT==="object" },
-  { n:"лёгкое чтение (дислексия)", ok: typeof window.__PREFS==="object" },
-  { n:"световой бит: доля светится по краю", ok: typeof window.__BEATVIZ==="object" },
-  { n:"лампа вечера: телефон как светильник", ok: typeof window.__LAMP==="object" },
-  { n:"экспорт/импорт настроек в json", ok: typeof exportPrefs==="function" },
-  { n:"язык интерфейса: RU·EN·ES", ok: Object.keys(UI).length===3 },
-];
+/* v9.7 «ТОМОГРАФ»: пробы честные — WRITE→READ→COMPARE→CLEANUP→VERDICT.
+   Capability ≠ operation: «API есть» и «реально работает» — разные строки. */
+window.__HEALTH2 = function(){
+  /* 1) память: настоящая запись, а не «функция существует» */
+  let sp = false, spWhy = "";
+  try{
+    const k = "__kv_probe__", v = String(Date.now())+"-"+Math.floor(Math.random()*1000000);
+    localStorage.setItem(k, v);
+    const back = localStorage.getItem(k);
+    try{ localStorage.removeItem(k); }catch(e){}
+    sp = (back === v);
+  }catch(e){ spWhy = e && (e.name||e.message) ? String(e.name||e.message) : "ошибка"; }
+  window.__STORAGE_DEAD = !sp;
+  /* 2) кодек записи: что браузер РЕАЛЬНО подтвердил через isTypeSupported */
+  const recApi = !!window.MediaRecorder;
+  const recM = (window.__REC && window.__REC.mime) ? String(window.__REC.mime) : "";
+  /* 3) живые состояния модулей */
+  const msS = window.__MS_STATE || "";
+  const wlS = (window.__WLOCK && window.__WLOCK.state) ? String(window.__WLOCK.state) : "";
+  const micS = window.__MIC_STATE || "";
+  /* 4) тап-цели: измерение rect, не глазомер */
+  let tgt = null;
+  try{
+    let bad = 0, tot = 0;
+    document.querySelectorAll("button,[role=switch],[role=tab],a[href]").forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.width<5 || r.height<5) return;
+      if(el.closest && el.closest('[aria-hidden="true"]')) return;
+      tot++;
+      if(r.width<24 || r.height<24) bad++;
+    });
+    if(tot>=10) tgt = { tot:tot, bad:bad };
+  }catch(e){}
+  return [
+    { sec:"S", n:"память вечера: настройки загрузились при старте", ok: !!prefs._booted },
+    { sec:"R", n:"память настроек: запись→чтение→сверка"+(sp ? " — работает" : " — НЕ ПИШЕТ"+(spWhy ? " ("+spWhy+")" : " (приватный режим или переполнение)")), ok: sp },
+    { sec:"C", n:"юстировка свет↔звук: слайдер ±1,5 с, шаг 5 мс + упреждение-трассер ШИЛКИ", ok: typeof window.__SYNC_NUDGE==="function" && typeof window.__SHILKA==="object" },
+    { sec:"C", n:"запись выступления: "+(recApi ? "API есть" : "нет в этом браузере"), ok: recApi },
+    { sec:"R", n:"запись: кодек"+(recM ? " подтверждён браузером — "+recM : (recApi ? " не подтверждён (isTypeSupported молчит) — запишется «как получится»" : " — запись недоступна, см. ВОЗМОЖНОСТИ")), ok: recApi && !!recM, warn: recApi && !recM },
+    { sec:"C", n:"медиасессия: кнопки с экрана блокировки"+(("mediaSession" in navigator) ? "" : " — нет в этом браузере"), ok: "mediaSession" in navigator },
+    { sec:"R", n:"медиасессия: "+(msS || "не поднималась — вечер ещё не запускался"), ok: msS==="обработчики поставлены", warn: !msS },
+    { sec:"C", n:"экран не засыпает: "+(("wakeLock" in navigator) ? "wake lock есть" : "нет в этом браузере"), ok: "wakeLock" in navigator },
+    { sec:"R", n:"wake lock: "+(wlS || "пока не просили"), ok: (wlS==="держу экран" || wlS==="не активен" || wlS==="пока не просили" || wlS==="нет в этом браузере"), warn: (wlS==="отпущен системой") },
+    { sec:"R", n:"микрофон: разрешение — "+(micS || "не спрашивали"), ok: (micS.indexOf("отказ")<0), warn: !micS },
+    { sec:"C", n:"музыка тише под речью (ducking)", ok: typeof window.__DUCK==="function" },
+    { sec:"C", n:"тихий вечер: потолок громкости", ok: typeof window.__NIGHT==="object" },
+    { sec:"C", n:"лёгкое чтение (дислексия)", ok: typeof window.__PREFS==="object" },
+    { sec:"C", n:"световой бит: доля светится по краю", ok: typeof window.__BEATVIZ==="object" },
+    { sec:"C", n:"лампа вечера: телефон как светильник", ok: typeof window.__LAMP==="object" },
+    { sec:"C", n:"экспорт/импорт настроек в json", ok: typeof exportPrefs==="function" },
+    { sec:"I", n:"язык интерфейса: RU·EN·ES", ok: Object.keys(UI).length===3 },
+    { sec:"C", n:"вкладки пульта и справки: полная ARIA-семантика (tab→tabpanel, стрелки+Home/End)", ok: document.querySelectorAll('.p-tabs button[role=tab]').length>=6 && document.querySelectorAll('#pBody .ptab[role=tabpanel]').length>=6 && document.querySelectorAll('.htabs button[role=tab]').length===6 },
+    { sec:"C", n:"бирка: три независимых способа двигать — drag · клавиатура · крестовина", ok: !!(window.__AUTHOR && window.__AUTHOR.draggable && window.__AUTHOR.pad) },
+    { sec:"R", n:"тап-цели: "+(tgt ? ("измерено "+tgt.tot+", меньше 24×24 — "+tgt.bad) : "видимых целей мало — открой ПУЛЬТ и запусти ЗДОРОВЬЕ снова"), ok: (tgt ? tgt.bad===0 : true), warn: !tgt }
+  ];
+};
 })();
 </script>
 
@@ -2924,17 +3030,17 @@ body.insertAdjacentHTML("beforeend", `
     <input id="pSearch" class="p-search" type="search" placeholder="поиск по настройкам…" aria-label="поиск по настройкам">
     <button class="x" id="pulClose" data-tip="Закрыть пульт (Esc)">✕</button>
   </div>
-  <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button data-pt="look" class="on">ВИД</button>
-    <button data-pt="text">ТЕКСТ</button>
-    <button data-pt="sound">ЗВУК</button>
-    <button data-pt="fx">ЭФФЕКТЫ</button>
-    <button data-pt="people">ЛЮДИ</button>
-    <button data-pt="data">ДАННЫЕ</button>
+  <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button role="tab" id="ptab-look" data-pt="look" class="on" aria-selected="true" aria-controls="ppanel-look">ВИД</button>
+    <button role="tab" id="ptab-text" data-pt="text" aria-selected="false" aria-controls="ppanel-text" tabindex="-1">ТЕКСТ</button>
+    <button role="tab" id="ptab-sound" data-pt="sound" aria-selected="false" aria-controls="ppanel-sound" tabindex="-1">ЗВУК</button>
+    <button role="tab" id="ptab-fx" data-pt="fx" aria-selected="false" aria-controls="ppanel-fx" tabindex="-1">ЭФФЕКТЫ</button>
+    <button role="tab" id="ptab-people" data-pt="people" aria-selected="false" aria-controls="ppanel-people" tabindex="-1">ЛЮДИ</button>
+    <button role="tab" id="ptab-data" data-pt="data" aria-selected="false" aria-controls="ppanel-data" tabindex="-1">ДАННЫЕ</button>
   </div>
   <div class="p-body" id="pBody">
     <div class="pempty" id="pEmpty">Ничего не нашлось — попробуй другое слово.</div>
 
-    <div class="ptab on" data-ptab="look">
+    <div class="ptab on" role="tabpanel" id="ppanel-look" aria-labelledby="ptab-look" tabindex="0" data-ptab="look">
       <div class="prow2"><span class="plab2">ТЕМА ПОДАЧИ</span>
         <div class="seg" id="themeChips">
           <button data-theme-k="warm" class="on" data-tip="Тёплая ночь: янтарь и коралл — как было">ТЕПЛО</button>
@@ -2991,7 +3097,7 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
-    <div class="ptab" data-ptab="text">
+    <div class="ptab" role="tabpanel" id="ppanel-text" aria-labelledby="ptab-text" tabindex="0" data-ptab="text">
       <div class="prow2"><span class="plab2">ТОЧНОСТЬ ТЕКСТА-ПУЛЬСА</span>
         <div class="seg" id="granChips2">
           <button data-gk="line">СТРОКА</button>
@@ -3044,7 +3150,7 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
-    <div class="ptab" data-ptab="sound">
+    <div class="ptab" role="tabpanel" id="ppanel-sound" aria-labelledby="ptab-sound" tabindex="0" data-ptab="sound">
       <div class="prow2"><span class="plab2">ГРОМКОСТЬ ПЕСНИ</span>
         <div class="sldrow">
           <input type="range" id="volSlider" min="0" max="100" step="5" value="100" aria-label="громкость песни, проценты" data-tip="Своя громкость; «тихий вечер» держит свой потолок поверх">
@@ -3068,7 +3174,7 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
-    <div class="ptab" data-ptab="fx">
+    <div class="ptab" role="tabpanel" id="ppanel-fx" aria-labelledby="ptab-fx" tabindex="0" data-ptab="fx">
       <div class="prow2"><span class="plab2">СВЕТ СЦЕНЫ</span>
         <div class="swrow"><button class="sw" id="swLight" role="switch" aria-checked="true" data-tip="Палитры света меняются с секциями песни (L)"></button><span class="swlab">свет живёт с песней</span></div>
       </div>
@@ -3090,7 +3196,7 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
-    <div class="ptab" data-ptab="people">
+    <div class="ptab" role="tabpanel" id="ppanel-people" aria-labelledby="ptab-people" tabindex="0" data-ptab="people">
       <div class="prow2"><span class="plab2">ГОЛОСОВЫЕ КОМАНДЫ</span>
         <div class="seg"><button id="pulVc" data-tip="«запусти», «хлопок», «дети», «пульт», «тише», «буквы»… — управление голосом">включить голос</button></div>
       </div>
@@ -3118,7 +3224,7 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
-    <div class="ptab" data-ptab="data">
+    <div class="ptab" role="tabpanel" id="ppanel-data" aria-labelledby="ptab-data" tabindex="0" data-ptab="data">
       <div class="prow2"><span class="plab2">ПАМЯТЬ ВЕЧЕРА</span>
         <em class="pdesc">Сцена, язык, подача, громкость, синхрон и место песни помнятся сами. Продолжить с места — кнопка на старт-экране.</em>
         <div class="seg"><button id="pulForget" data-tip="Забыть, где остановились — начнём с начала">забыть место песни</button></div>
@@ -3382,28 +3488,43 @@ $("pSearch").addEventListener("input", applySearch);
 /* вкладки панели */
 document.querySelectorAll(".p-tabs button").forEach(b=>
   b.addEventListener("click",()=>{
-    document.querySelectorAll(".p-tabs button").forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b ? "true":"false"); });
+    document.querySelectorAll(".p-tabs button").forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b ? "true":"false"); x.setAttribute("tabindex", x===b ? "0":"-1"); });
     document.querySelectorAll("#pBody .ptab").forEach(t=>t.classList.toggle("on", t.dataset.ptab===b.dataset.pt));
     applySearch();
   }));
 /* v9.2: вкладки — стрелками, как в честных tablist */
 document.querySelector(".p-tabs").addEventListener("keydown",(e)=>{
-  if(e.key!=="ArrowLeft" && e.key!=="ArrowRight") return;
+  if(e.key!=="ArrowLeft" && e.key!=="ArrowRight" && e.key!=="Home" && e.key!=="End") return;
   const bs=[...document.querySelectorAll(".p-tabs button")];
   const i=bs.indexOf(document.activeElement); if(i<0) return;
-  const n=bs[(i+(e.key==="ArrowRight"?1:bs.length-1))%bs.length]; n.focus(); n.click(); e.preventDefault();
+  let n=null;
+  if(e.key==="Home") n=bs[0];
+  else if(e.key==="End") n=bs[bs.length-1];
+  else n=bs[(i+(e.key==="ArrowRight"?1:bs.length-1))%bs.length];
+  n.focus(); n.click(); e.preventDefault();
 });
 
 /* окно справки: вкладки (progressive disclosure) */
 function openHelpTab(k){
   document.querySelectorAll(".htabs button").forEach(b=>{
     const on = b.dataset.ht===k;
-    b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true":"false");
+    b.classList.toggle("on", on); b.setAttribute("aria-selected", on ? "true":"false"); b.setAttribute("tabindex", on ? "0":"-1");
   });
   document.querySelectorAll("#help .htab").forEach(t=>t.classList.toggle("on", t.dataset.htab===k));
 }
 document.querySelectorAll(".htabs button").forEach(b=>
   b.addEventListener("click",()=>openHelpTab(b.dataset.ht)));
+/* v9.7: вкладки справки — стрелками и Home/End, как честный tablist */
+document.querySelector(".htabs").addEventListener("keydown",(e)=>{
+  if(e.key!=="ArrowLeft" && e.key!=="ArrowRight" && e.key!=="Home" && e.key!=="End") return;
+  const bs=[...document.querySelectorAll(".htabs button")];
+  const i=bs.indexOf(document.activeElement); if(i<0) return;
+  let n=null;
+  if(e.key==="Home") n=bs[0];
+  else if(e.key==="End") n=bs[bs.length-1];
+  else n=bs[(i+(e.key==="ArrowRight"?1:bs.length-1))%bs.length];
+  n.focus(); n.click(); e.preventDefault();
+});
 
 /* ── окраска панели по факту (единый источник истины — каноничные элементы) ── */
 function paintSw(id, on){ const el=$(id); if(el) el.setAttribute("aria-checked", on ? "true":"false"); }
@@ -3775,15 +3896,15 @@ let labTabBtn = null;   /* чтобы голос «фото» мог откры�
 if(tabs && pBody){
   const tb = document.createElement("button");
   labTabBtn = tb;
-  tb.dataset.pt = "lab"; tb.textContent = "ЛАБ"; tb.setAttribute("aria-selected","false");
+  tb.dataset.pt = "lab"; tb.textContent = "ЛАБ"; tb.setAttribute("role","tab"); tb.id = "ptab-lab"; tb.setAttribute("aria-selected","false"); tb.setAttribute("aria-controls","ppanel-lab"); tb.setAttribute("tabindex","-1");
   tb.setAttribute("data-tip","Лаборатория свободы: свои цвета, джокер, слово→цвета, типографика, свои наборы — вариантов больше, чем атомов во Вселенной");
   tb.addEventListener("click",()=>{
-    document.querySelectorAll(".p-tabs button").forEach(x=>{ x.classList.toggle("on", x===tb); x.setAttribute("aria-selected", x===tb?"true":"false"); });
+    document.querySelectorAll(".p-tabs button").forEach(x=>{ x.classList.toggle("on", x===tb); x.setAttribute("aria-selected", x===tb?"true":"false"); x.setAttribute("tabindex", x===tb?"0":"-1"); });
     document.querySelectorAll("#pBody .ptab").forEach(t=>t.classList.toggle("on", t.dataset.ptab==="lab"));
   });
   tabs.appendChild(tb);
   pBody.insertAdjacentHTML("beforeend", `
-  <div class="ptab" data-ptab="lab">
+  <div class="ptab" role="tabpanel" id="ppanel-lab" aria-labelledby="ptab-lab" tabindex="0" data-ptab="lab">
     <div class="prow2"><span class="plab2">СВОБОДА В ЦИФРАХ</span>
       <em class="labcount" id="labCount"></em>
     </div>
@@ -4343,14 +4464,14 @@ document.querySelectorAll('[data-ptab="lab"] [data-tip]').forEach(el=>{
 window.__HEALTH4 = ()=>[
   { n:"ЛАБ: вкладка лаборатории в пульте", ok: !!document.querySelector('.p-tabs button[data-pt="lab"]') && !!document.querySelector('#pBody .ptab[data-ptab="lab"]') },
   { n:"пипетки цвета: "+document.querySelectorAll("#cgrid input[type=color]").length+" красок", ok: document.querySelectorAll("#cgrid input[type=color]").length>=21 },
-  { n:"свои цвета стоят выше тем и сцен", ok: (function(){ try{
+  { sec:"R", n:"свои цвета стоят выше тем и сцен", ok: (function(){ try{
       const old = body.style.getPropertyValue("--bg");
       body.style.setProperty("--bg","#010203");
       const v = getComputedStyle(body).getPropertyValue("--bg").trim();
       if(old) body.style.setProperty("--bg", old); else body.style.removeProperty("--bg");
       return v==="#010203"; }catch(e){ return false; } })() },
-  { n:"джокер: контраст текста "+(lastRatio?lastRatio.toFixed(1):"—")+":1 (гард 4,5:1)", ok: lastRatio>=4.5 },
-  { n:"слово → цвета: тому же слову — та же палитра", ok: (function(){ try{
+  { sec:"R", n:"джокер: контраст текста "+(lastRatio?lastRatio.toFixed(1):"—")+":1 (гард 4,5:1)", ok: lastRatio>=4.5 },
+  { sec:"R", n:"слово → цвета: тому же слову — та же палитра", ok: (function(){ try{
       const a = genPalette("soft", hashStr("проба")).c, b = genPalette("soft", hashStr("проба")).c;
       return Object.keys(a).every(k=>a[k]===b[k]); }catch(e){ return false; } })() },
   { n:"типографика: вес, межбуквенное, межстрочное", ok: !!$("wSlider")&&!!$("lsSlider")&&!!$("lhSlider") },
@@ -4374,9 +4495,9 @@ window.__HEALTH4 = ()=>[
 
 /* ── ЗДОРОВЬЕ v9 (нюансы) ── */
 window.__HEALTH6 = ()=>[
-  { n:"нюанс: ДНК СИНГУЛАРА — задержка вывода вычитается сама ("+Math.round((window.__OUTLAT||0)*1000)+" мс)", ok: typeof window.__OUTLAT==="number" && isFinite(window.__OUTLAT) && window.__OUTLAT>=0 },
+  { sec:"R", n:"нюанс: ДНК СИНГУЛАРА — задержка вывода вычитается сама ("+Math.round((window.__OUTLAT||0)*1000)+" мс)", ok: typeof window.__OUTLAT==="number" && isFinite(window.__OUTLAT) && window.__OUTLAT>=0 },
   { n:"нюанс: цвет подсветки у слова/слога/буквы отдельно", ok: !!(window.__HI && $("hiWPick") && $("hiSPick") && $("hiCPick")) },
-  { n:"нюанс: __HI переключает --hi со сменой гранулярности", ok: (function(){ try{
+  { sec:"R", n:"нюанс: __HI переключает --hi со сменой гранулярности", ok: (function(){ try{
       if(!window.__HI || !window.__PULSE) return false;
       const b0=__HI.base, p0=__HI.per, g0=window.__PULSE.gran;
       __HI.set("#F5C860",{char:"#010203"});
@@ -4410,7 +4531,7 @@ window.__HEALTH5 = function(){
     { n:"бирка автора: штрих-код песни в углу экрана", ok: !!document.querySelector("#authorTag use[href='#qrsongSym']") },
     { n:"штрих-код ведёт на клип RUVSON (youtu.be/9ys_TVEtda8)", ok: goodClip },
     { n:"подписка на канал RUVSON (@ruvson_music)", ok: goodChan },
-    { n:"бирку можно перетащить — место помнится", ok: !!(window.__AUTHOR && window.__AUTHOR.draggable) }
+    { sec:"C", n:"бирку можно перетащить — место помнится", ok: !!(window.__AUTHOR && window.__AUTHOR.draggable) }
   ];
 };
 </script>
@@ -4472,7 +4593,9 @@ function up(e){
 el.addEventListener("pointerup",up);
 el.addEventListener("pointercancel",()=>{ drag=null; el.classList.remove("dragging"); });
 el.addEventListener("click",(e)=>{
-  if(suppressClick){ e.preventDefault(); e.stopPropagation(); }
+  if(suppressClick){ e.preventDefault(); e.stopPropagation(); return; }
+  /* v9.7: тап по бирке (не по ссылкам) открывает крестовину — двигай без перетаскивания */
+  if(!(e.target && e.target.closest && e.target.closest("a"))) openPad();
 }, true);
 /* v9.2 «ДНК СИНГУЛАРА»: бирка дружит с клавиатурой — Tab на QR, стрелки двигают, место помнится */
 el.addEventListener("keydown",(e)=>{
@@ -4483,19 +4606,100 @@ el.addEventListener("keydown",(e)=>{
   else if(e.key==="ArrowRight") x += step;
   else if(e.key==="ArrowUp") y -= step;
   else if(e.key==="ArrowDown") y += step;
+  else if(e.key==="Home"){ x = 6; y = 6; }                                  /* v9.7: левый верх */
+  else if(e.key==="End"){ x = window.innerWidth - r.width - 6; y = window.innerHeight - r.height - 6; } /* v9.7: правый низ */
+  else if(e.key==="Enter" || e.key===" "){ e.preventDefault(); openPad(); return; } /* v9.7: крестовина */
   else return;
-  e.preventDefault();
+  e.preventDefault(); e.stopPropagation();
   const [cx,cy] = clampPos(x,y); place(cx,cy);
   prefs.atag = { x:Math.round(cx), y:Math.round(cy) }; savePrefs();
 });
 window.addEventListener("resize",()=>{ const p=prefs.atag; if(p){ const [x,y]=clampPos(p.x,p.y); place(x,y); } });
 restore();
+/* ── v9.7 «ТОМОГРАФ»: крестовина — двигать бирку БЕЗ перетаскивания (WCAG 2.2 · 2.5.7) ──
+   Тап по бирке (не по ссылкам) или Enter с клавиатуры открывает джойстик:
+   стрелки = шаг 32px, углы = точная посадка, крест/Esc = закрыть. Одна функция —
+   несколько независимых способов управления: drag · клавиатура · крестовина. */
+let pad = null;
+try{
+  const padCss = document.createElement("style");
+  padCss.textContent = [
+    "#authorTag:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px;border-radius:14px}",
+    "[role=tabpanel]:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px}",
+    "#tagPad{position:fixed;z-index:2147483000;display:grid;grid-template-columns:repeat(3,46px);gap:4px;padding:8px;border-radius:14px;background:rgba(8,9,12,.94);border:1px solid rgba(222,169,104,.45);box-shadow:0 10px 34px rgba(0,0,0,.55)}",
+    "#tagPad button{min-width:46px;min-height:46px;font:900 17px/1 Manrope,sans-serif;border-radius:10px;border:1px solid rgba(222,169,104,.35);background:rgba(255,255,255,.05);color:var(--text,#E8E4DA);cursor:pointer;padding:0}",
+    "#tagPad button:hover{border-color:var(--amber,#DEA968)}",
+    "#tagPad button:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px}",
+    "@media (prefers-reduced-motion: reduce){#tagPad{transition:none}}"
+  ].join("");
+  document.head.appendChild(padCss);
+}catch(e){}
+function tagCommit(x,y){
+  const [cx,cy] = clampPos(x,y); place(cx,cy);
+  prefs.atag = { x:Math.round(cx), y:Math.round(cy) }; savePrefs();
+}
+function padMove(dx,dy){
+  const r = el.getBoundingClientRect();
+  tagCommit(r.left+dx, r.top+dy);
+}
+function padDock(hx,vy){
+  const r = el.getBoundingClientRect(); const m = 6;
+  const x = (hx==="l") ? m : (window.innerWidth - r.width - m);
+  const y = (vy==="t") ? m : (window.innerHeight - r.height - m);
+  tagCommit(x,y);
+  say("Бирка в углу — место запомнено");
+}
+function closePad(){
+  if(!pad) return;
+  const hadFocus = !!(document.activeElement && pad.contains(document.activeElement));
+  pad.remove(); pad = null;
+  if(hadFocus){ try{ el.focus({preventScroll:true}); }catch(e){} }
+}
+function openPad(){
+  if(pad){ closePad(); return; }
+  try{
+    pad = document.createElement("div");
+    pad.id = "tagPad";
+    pad.setAttribute("role","dialog");
+    pad.setAttribute("aria-label","Позиция бирки: стрелки — шаг, углы — точная посадка, крест — закрыть");
+    const st = 32;
+    const mk = (txt, act, tip)=>{
+      const b = document.createElement("button");
+      b.type = "button"; b.textContent = txt; b.setAttribute("aria-label", tip);
+      b.addEventListener("click", act);
+      return b;
+    };
+    const cells = [
+      mk("↖", ()=>padDock("l","t"), "бирка: в левый верхний угол"),
+      mk("↑", ()=>padMove(0,-st), "бирка: шаг вверх"),
+      mk("↗", ()=>padDock("r","t"), "бирка: в правый верхний угол"),
+      mk("←", ()=>padMove(-st,0), "бирка: шаг влево"),
+      mk("✕", closePad, "закрыть крестовину (Esc)"),
+      mk("→", ()=>padMove(st,0), "бирка: шаг вправо"),
+      mk("↙", ()=>padDock("l","b"), "бирка: в левый нижний угол"),
+      mk("↓", ()=>padMove(0,st), "бирка: шаг вниз"),
+      mk("↘", ()=>padDock("r","b"), "бирка: в правый нижний угол")
+    ];
+    cells.forEach(b=>pad.appendChild(b));
+    pad.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); closePad(); } });
+    document.body.appendChild(pad);
+    const pr = el.getBoundingClientRect();
+    const pw = 164, ph = 164;
+    let px = pr.left, py = pr.bottom + 8;
+    if(px + pw > window.innerWidth - 6) px = window.innerWidth - pw - 6;
+    if(py + ph > window.innerHeight - 6) py = Math.max(6, pr.top - ph - 8);
+    pad.style.left = Math.max(6,px)+"px";
+    pad.style.top = Math.max(6,py)+"px";
+    try{ cells[1].focus({preventScroll:true}); }catch(e){}
+    say("Крестовина открыта: стрелки двигают, углы ставят точно");
+  }catch(e){}
+}
 window.__AUTHOR = {
   get on(){ return el.style.display !== "none"; },
   set(v, silent){ el.style.display = v ? "" : "none"; prefs.atagOn = !!v; savePrefs();
     if(!silent) say(v ? "Бирка автора на месте — тянись, когда захочешь" : "Бирка спрятана — вернётся из ПУЛЬТа → ВИД"); },
   toggle(silent){ this.set(!this.on, silent); return this.on; },
-  draggable:true, pos:()=>prefs.atag||null
+  draggable:true, pad:true, pos:()=>prefs.atag||null
 };
 })();
 
@@ -4571,12 +4775,12 @@ window.__HEALTH7 = ()=>[
         return cs.getPropertyValue("--gold").trim().toLowerCase()==="#fee29f"
           && cs.getPropertyValue("--mint").trim().toLowerCase()==="#fee29f"; }catch(e){ return false; } })() },
   { n:"ПАСПОРТ УНИСОНА [изм.]: живые числа (такт · полёт · трассер · упреждение · темп · хэш ядра "+(window.__BUILD_SHA?String(window.__BUILD_SHA).slice(0,8):"—")+")", ok: !!(document.getElementById("syncPassport") && document.getElementById("passportInfo") && window.__PASSPORT_INFO && window.__BUILD_SHA) },
-  { n:"подсказки вездесущие: "+(function(){ const c=(window.__TIPS&&window.__TIPS.count())||[0,0]; return c[0]+" из "+c[1]+" контролов"; })(), ok:(function(){
+  { sec:"R", n:"подсказки вездесущие: "+(function(){ const c=(window.__TIPS&&window.__TIPS.count())||[0,0]; return c[0]+" из "+c[1]+" контролов"; })(), ok:(function(){
       try{ const c=window.__TIPS.count(); return c[0]===c[1] && c[1]>40; }catch(e){ return false; } })() },
-  { n:"юстировка унисона: слайдер ±1,5 с шагом 10 мс + кнопки ±10/±50 мс (практика VLC/osu!/LRC)", ok: !!(window.__SYNC_SET && window.__SYNC_NUDGE && document.getElementById("pulSynSlider")) },
-  { n:"тап-юстировка по звуку: 8 тапов → медиана → свет в такт уху (Rock Band/Clone Hero)", ok: !!(window.__TAPCAL && window.__TAPCAL.start && window.__TAPCAL.tap && window.__TAPCAL.stop) },
-  { n:"ШИЛКА: упреждение — свет выстреливает раньше на время трассера (конвейер кадра "+Math.round((window.__VISLAT||0)*1000)+" мс)", ok: !!(window.__SHILKA && typeof window.__SHILKA.set==="function" && window.__VISLAT>0 && window.__VISLAT<=0.15) },
-  { n:"трассер: живой прицел на буквах в полёте — упреждение считает ритм, огласовку и темп", ok: !!(document.getElementById("pulVisSlider") && window.__PULSE && ("aimN" in window.__PULSE) && typeof window.__SHILKA_INFO==="function") },
+  { sec:"C", n:"юстировка унисона: слайдер ±1,5 с шагом 10 мс + кнопки ±10/±50 мс (практика VLC/osu!/LRC)", ok: !!(window.__SYNC_SET && window.__SYNC_NUDGE && document.getElementById("pulSynSlider")) },
+  { sec:"C", n:"тап-юстировка по звуку: 8 тапов → медиана → свет в такт уху (Rock Band/Clone Hero)", ok: !!(window.__TAPCAL && window.__TAPCAL.start && window.__TAPCAL.tap && window.__TAPCAL.stop) },
+  { sec:"R", n:"ШИЛКА: упреждение — свет выстреливает раньше на время трассера (конвейер кадра "+Math.round((window.__VISLAT||0)*1000)+" мс)", ok: !!(window.__SHILKA && typeof window.__SHILKA.set==="function" && window.__VISLAT>0 && window.__VISLAT<=0.15) },
+  { sec:"C", n:"трассер: живой прицел на буквах в полёте — упреждение считает ритм, огласовку и темп", ok: !!(document.getElementById("pulVisSlider") && window.__PULSE && ("aimN" in window.__PULSE) && typeof window.__SHILKA_INFO==="function") },
 ];
 </script>
 
