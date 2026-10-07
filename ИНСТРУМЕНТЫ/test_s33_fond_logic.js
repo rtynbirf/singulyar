@@ -99,6 +99,18 @@ test('ФОНД/ОБЩАК.json: схема честная, секретов не
   }
 });
 
+test('ОБЩАК ОТКРЫТ (v1.49.2): адрес вшит, валиден, секретов нет, статус честен', () => {
+  assert.equal(ОБЩАК.статус, 'АДРЕС_ОТКРЫТ');
+  assert.equal(ОБЩАК.адреса.length, 1, 'адрес ровно один');
+  const а = ОБЩАК.адреса[0];
+  assert.equal(а, 'bc1qm8mzhgffqdycq3ajur0az6rr9x6wgvhxa85hzr');
+  assert.match(а, /^bc1q[a-z0-9]{38}$/, 'форма P2WPKH (42 символа)');
+  assert.equal(ОБЩАК.uri, 'bitcoin:' + а, 'bip21 uri совпадает с адресом');
+  assert.match(ОБЩАК.кошелёк.путь, /m\/84/, 'путь BIP84');
+  assert.match(ОБЩАК.кошелёк.бумага, /бумаг/, 'слова — на бумаге держателя');
+  assert.doesNotMatch(JSON.stringify(ОБЩАК), /priv|wif|seed|мнемоник|xprv/i, 'ни следа секрета');
+});
+
 test('дверь ·33: КОРД стоит, referrer отрезан, ноль innerHTML/eval/документ-писанины, внешних дверей фонда нет', () => {
   assert.match(ДВЕРЬ, /СНГ:КОРД/);
   assert.match(ДВЕРЬ, /<meta name="referrer" content="no-referrer">/);
@@ -181,8 +193,8 @@ test('летопись: шаблон issue на месте с честной ш�
   assert.match(т, /добровольн/i);
 });
 
-test('SW v60: несёт ·33, ·34 и конфиг общака, конфиг ходит сетью-первой', () => {
-  assert.match(SW, /s15-orkestrator-v60/);
+test('SW v61: несёт ·33, ·34 и конфиг общака, конфиг ходит сетью-первой', () => {
+  assert.match(SW, /s15-orkestrator-v61/);
   assert.match(SW, /'\.\/СИНГУЛЯР_33_ФОНД\.html'/);
   assert.match(SW, /'\.\/СИНГУЛЯР_34_ДОМ_ФОНДА\.html'/);
   assert.match(SW, /'\.\/ФОНД\/УСТАВ_ФОНДА\.md'/);
