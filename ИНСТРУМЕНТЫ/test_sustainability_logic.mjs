@@ -110,10 +110,10 @@ test('ПОДДЕРЖАТЬ.html: честный статус — не платё
   assert.match(СТРАНИЦА, /рельсы не подключены/i);
 });
 
-test('ПОДДЕРЖАТЬ.html: НИ ОДНОЙ рельсы — ни кнопки оплаты, ни адреса, ни ключа (УГОЛОК: allowlist фонда)', () => {
-  /* v1.26.5 «ЛАДОНЬ · УГОЛОК»: прямые двери официальному фонду имени Хелен Келлер —
-     единственное честное исключение (мимо чужих дядь за проценты). Всё остальное — запрещено. */
-  const ДОПУСТИМО = /^https:\/\/(www\.)?(hki\.org|helenkellerfoundation\.org)\//;
+test('ПОДДЕРЖАТЬ.html: НИ ОДНОЙ рельсы — ни кнопки оплаты, ни адреса, ни ключа (УГОЛОК: только внутренние двери фонда)', () => {
+  /* v1.48.0 «ДОМ ФОНДА»: у дома СВОЙ фонд — Фонд Хелены Келлер живёт на ресурсе дома;
+     внешние двери «официальных фондов Келлер» убраны словом владельца: уголок ведёт
+     ТОЛЬКО внутрь дома. Всё остальное — запрещено. */
   const запрещённое = [
     /sponsors\//i, /paypal/i, /stripe/i, /patreon/i, /opencollective/i,
     /webmoney/i, /yoomoney/i, /lnbc/i, /lightning:/i,
@@ -124,13 +124,12 @@ test('ПОДДЕРЖАТЬ.html: НИ ОДНОЙ рельсы — ни кноп�
   const внешние = СТРАНИЦА.match(/href="https?:\/\/([^"]+)/g) || [];
   for (const ссылка of внешние) {
     const у = ссылка.slice(6);
-    const ок = у.startsWith('https://github.com/rtynbirf/singulyar') || ДОПУСТИМО.test(у);
-    assert.ok(ок, 'внешняя ссылка вне allowlist: ' + у);
+    const ок = у.startsWith('https://github.com/rtynbirf/singulyar');
+    assert.ok(ок, 'внешняя ссылка вне allowlist (остался только репозиторий дома): ' + у);
   }
-  /* /donate-след допустим ТОЛЬКО внутри допустимых доменов фонда */
-  for (const м of СТРАНИЦА.match(/https?:\/\/[^"'\s<>]*donate[^"'\s<>]*/g) || []) {
-    assert.ok(ДОПУСТИМО.test(м), 'donate-ссылка вне доменов фонда: ' + м);
-  }
+  /* donate-следы чужих касс запрещены вовсе: у фонда — свой общак в доме */
+  const донаты = СТРАНИЦА.match(/https?:\/\/[^"'\s<>]*donate[^"'\s<>]*/g) || [];
+  assert.deepEqual(донаты, [], 'внешних donate-дверей на странице нет: ' + донаты.join('; '));
 });
 
 test('ПОДДЕРЖАТЬ.html: зеркало данных == funding.json (уровни, суммы, цели)', () => {
@@ -203,24 +202,28 @@ test('страница и слой: governance-пять на странице (�
   for (const о of ожидания) assert.ok(СТРАНИЦА.includes(о), 'на странице: ' + о);
 });
 
-test('УГОЛОК 17: allowlist ВСЕХ https-строк funding.json — чужая касса в слой не пролезет (v1.26.5)', () => {
-  const ДОПУСТИМО = /^https:\/\/(www\.)?(hki\.org|helenkellerfoundation\.org)\//;
+test('УГОЛОК 17: НОЛЬ внешних https-дверей в funding.json — фонд наш, чужие кассы не пролезут (v1.48.0)', () => {
+  /* v1.26.5 было: две внешние двери hki.org — честное исключение.
+     v1.48.0 стало сильнее: Фонд Хелены Келлер живёт В ДОМЕ — внешних https-строк
+     в funding.json не осталось вовсе; уголок ведёт только внутрь дома. */
   const строки = JSON.stringify(FUNDING).match(/https:\/\/[^"\\]+/g) || [];
-  assert.ok(строки.length >= 2, 'двери фонда в funding.json объявлены');
-  for (const у of строки) assert.ok(ДОПУСТИМО.test(у), 'https-строка вне allowlist фонда: ' + у);
+  assert.equal(строки.length, 0, 'в funding.json внешних https-строк нет, вышло: ' + строки.join('; '));
   /* рельсы при этом обязаны остаться пустыми (if/then) */
   if (FUNDING.status === 'PROTOTYPE_NO_RAILS') assert.deepEqual(FUNDING.rails, {});
 });
 
-test('УГОЛОК 18: скромненько в уголочке — зеркало↔funding.json, обе двери, не по билету (v1.26.5)', () => {
+test('УГОЛОК 18: скромненько в уголочке — зеркало↔funding.json, обе двери внутрь дома, не по билету (v1.48.0)', () => {
   assert.ok(FUNDING.fund_corner, 'fund_corner в funding.json');
   const м = СТРАНИЦА.match(/const FUNDING_MIRROR = (\{[\s\S]*?\n\});/);
   const зеркало = JSON.parse(м[1]);
   assert.equal(зеркало.fund_corner.id, FUNDING.fund_corner.id, 'зеркало уголка: id совпадает');
   assert.deepEqual(зеркало.fund_corner.doors.map(d => d[0]), FUNDING.fund_corner.doors.map(d => d.url),
     'зеркало уголка: обе двери совпадают с funding.json');
-  /* обе двери — буквальными ссылками на странице (работают офлайн-навигацией и без JS) */
-  for (const д of FUNDING.fund_corner.doors) assert.ok(СТРАНИЦА.includes('href="' + д.url + '"'), 'дверь на странице: ' + д.url);
+  /* обе двери — внутренними ссылками на странице (работают офлайн-навигацией и без JS) */
+  for (const д of FUNDING.fund_corner.doors) {
+    assert.match(д.url, /^\.\.\//, 'дверь внутренняя: ' + д.url);
+    assert.ok(СТРАНИЦА.includes('href="' + д.url + '"'), 'дверь на странице: ' + д.url);
+  }
   /* честные слова владельца */
   assert.match(СТРАНИЦА, /не по билету/);
   assert.match(СТРАНИЦА, /ни процента/);
@@ -229,4 +232,22 @@ test('УГОЛОК 18: скромненько в уголочке — зерка
   const уголок = СТРАНИЦА.indexOf('уголок-фонда');
   const оглав = СТРАНИЦА.indexOf('<h2>Поддержка</h2>');
   assert.ok(уголок > оглав > 0 && уголок > СТРАНИЦА.indexOf('Governance'), 'уголок стоит скромно, после основного');
+});
+
+test('УГОЛОК 19: Фонд Хелены Келлер — НАШ: дом фонда в доме, независимость названа, чужих имён нет (v1.48.0)', () => {
+  /* слово владельца 2026-10-07: не путать с helenkellerfoundation.org / helenkellerintl.org */
+  const двери = FUNDING.fund_corner.doors.map(d => d.url);
+  assert.ok(двери.includes('../СИНГУЛЯР_34_ДОМ_ФОНДА.html'), 'дверь на хартию фонда ·34');
+  assert.ok(двери.includes('../СИНГУЛЯР_33_ФОНД.html'), 'дверь на общак ·33');
+  /* независимость прямо названа: и в данных, и на странице */
+  assert.match(FUNDING.fund_corner.note, /НЕ связан/);
+  assert.match(СТРАНИЦА, /НИКАК не связан/);
+  for (const чужой of ['helenkellerfoundation\.org', 'helenkellerintl\.org']) {
+    assert.ok(new RegExp(чужой).test(СТРАНИЦА), 'чужое имя названо, чтобы не путали: ' + чужой);
+    assert.equal(new RegExp('href="https?://[^"]*' + чужой).test(СТРАНИЦА), false, 'но ссылки на него нет: ' + чужой);
+  }
+  /* двери ·34/·33 обязаны существовать в карте дома — проверяется здесь по ядру */
+  const ядро = readFileSync(join(КОРЕНЬ, 'singulyar-modules.js'), 'utf-8');
+  assert.match(ядро, /id:\s*'s34'/, 'узел s34 в карте дома');
+  assert.match(ядро, /СИНГУЛЯР_34_ДОМ_ФОНДА\.html/, 'файл ·34 в карте дома');
 });

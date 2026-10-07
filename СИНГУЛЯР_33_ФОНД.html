@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><script>
+/* ═════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР·КОРД v1.42.0 «ЗАКАЛКА» — страховочный корд дома.
+   Приказ владельца: «ИСПРАВЛЯЙ КОСЯЧКИ БАГИ ПРИБИВАЙ, ЧТОБ У ЧЕЛОВЕКА НЕ ВЫЛЕЗ
+   СИНИЙ (СЕЙЧАС ЧЁРНЫЙ =)) ЭКРАН СМЕРТИ И УСТРОЙСТВО НЕ СТАЛО КИРПИЧЁМ».
+
+   Что прибито (по порядку опасности):
+   1. Глобальные ловцы (error + unhandledrejection) ставятся ПЕРВЫМИ — до
+      любого кода дома. Падение больше не чёрная тишина: стекло+золото
+      панель говорит честно ЧТО порвалось и ГДЕ, пишет журнал, даёт
+      «ПЕРЕЗАПУСТИТЬ», «ТИХИЙ РЕЖИМ» (без анимаций) и «ПОД КАПОТ».
+   2. Хранилище-гард: localStorage.setItem/removeItem больше НИКОГДА не
+      бросают (приватный режим Safari, квота на телефоне): своя зачистка
+      ключей дома → повтор → честная запись в журнал. Если сам объект
+      localStorage недоступен (старые приватные режимы) — прозрачная
+      заглушка в памяти.
+   3. JSON.parse-гард: битый текст → null + журнал, а не SyntaxError в бою.
+   4. BroadcastChannel-заглушка для старых браузеров: новый конструктор
+      комнат не умирает там, где канала нет.
+   5. ТИХИЙ РЕЖИМ: sessionStorage 'sng-тихий' → window.SNG_ТИХО + CSS-убийца
+      анимаций. Движки дома читают флаг (ЧЕЛОВЕК РЕШАЕТ — режим включается
+      только человеком из панели, сам себя он не включает).
+   6. Журнал сбоев (последние 6): window.SNG_КОРД_ЖУРНАЛ() — под капотом.
+
+   Канон: стекло + void, золото — единственный акцент, глифы, ноль эмодзи,
+   панель собирается createElement/textContent — присваиваний разметки нет.
+   Сам корд весь в try — он не имеет права уронить страницу.
+   ═════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  try {
+
+  /* ── 1. ЖУРНАЛ СБОЕВ (последние 6; пишем МИНУЯ патч setItem — без рекурсии) ── */
+  var КЛЮЧ_ЖУРНАЛА = 'sng-корд-журнал-v1';
+  var сыроеПоложить = null;
+  try { сыроеПоложить = Storage.prototype.setItem; } catch (е) { }
+  function читатьЖурнал() {
+    try {
+      var сырой = localStorage.getItem(КЛЮЧ_ЖУРНАЛА);
+      if (!сырой) return [];
+      var в = JSON.parse(сырой);
+      return (в && в.push && в) ? в : [];
+    } catch (е) { return []; }
+  }
+  function писатьЖурнал(запись) {
+    try {
+      var сп = читатьЖурнал();
+      сп.push(запись);
+      while (сп.length > 6) сп.shift();
+      var текст = JSON.stringify(сп);
+      if (сыроеПоложить) сыроеПоложить.call(localStorage, КЛЮЧ_ЖУРНАЛА, текст);
+      else localStorage.setItem(КЛЮЧ_ЖУРНАЛА, текст);
+    } catch (е) { /* хранилища нет/квота — журнал живёт только для панели этого такта */ }
+  }
+  function меткаВремени() {
+    var д = new Date();
+    function дв(н) { return (н < 10 ? '0' : '') + н; }
+    return дв(д.getHours()) + ':' + дв(д.getMinutes()) + ':' + дв(д.getSeconds());
+  }
+  window.SNG_КОРД_ЖУРНАЛ = function () { return читатьЖурнал(); };
+
+  /* ── 2. ХРАНИЛИЩЕ-ГАРД: setItem/removeItem не бросают никогда ────────── */
+  try {
+    window.localStorage.getItem('__снг_проба');
+    window.localStorage.removeItem('__снг_проба');
+  } catch (недоступно) {
+    try {
+      var память = {};
+      var заглушка = {
+        getItem: function (к) { return Object.prototype.hasOwnProperty.call(память, к) ? память[к] : null; },
+        setItem: function (к, з) { память[к] = String(з); },
+        removeItem: function (к) { delete память[к]; },
+        key: function (и) { var к = Object.keys(память); return к[и] || null; },
+        clear: function () { память = {}; },
+        get length() { return Object.keys(память).length; }
+      };
+      Object.defineProperty(window, 'localStorage', { value: заглушка, configurable: true });
+    } catch (е) { /* совсем экзотика — комнаты сами в памяти */ }
+  }
+  try {
+    var исхПоложи = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (ключ, значение) {
+      try { return исхПоложи.call(this, ключ, значение); }
+      catch (квота) {
+        try {
+          /* своя зачистка: самый старый ключ дома уходит, второй шанс */
+          for (var и = 0; и < this.length; и++) {
+            var чей = this.key(и);
+            if (чей && (/^sng|singulyar|снг/i).test(чей)) { this.removeItem(чей); break; }
+          }
+          return исхПоложи.call(this, ключ, значение);
+        } catch (е2) {
+          писатьЖурнал({ т: меткаВремени(), откуда: 'хранилище', что: 'квота: «' + ключ + '» не легла — держим в памяти' });
+        }
+      }
+    };
+    var исхСотри = Storage.prototype.removeItem;
+    Storage.prototype.removeItem = function (ключ) {
+      try { return исхСотри.call(this, ключ); } catch (е) { }
+    };
+  } catch (е) { }
+
+  /* ── 3. JSON-ГАРД: битый текст — это null + журнал, не смерть ────────── */
+  try {
+    var исхРазбор = JSON.parse;
+    JSON.parse = function (текст, оживитель) {
+      try { return исхРазбор.call(JSON, текст, оживитель); }
+      catch (битый) {
+        писатьЖурнал({ т: меткаВремени(), откуда: 'JSON', что: 'битый текст: ' + String(битый && битый.message || 'синтаксис') + ' · ' + String(текст).slice(0, 60) });
+        return null;
+      }
+    };
+  } catch (е) { }
+
+  /* ── 4. BROADCASTCHANNEL-ЗАГЛУШКА (старые браузеры, частная вкладка) ─── */
+  try {
+    if (typeof window.BroadcastChannel !== 'function') {
+      var ШинаЗаглушка = function (имя) { this.name = String(имя || ''); this.onmessage = null; };
+      ШинаЗаглушка.prototype.postMessage = function () { };
+      ШинаЗаглушка.prototype.close = function () { };
+      ШинаЗаглушка.prototype.addEventListener = function () { };
+      ШинаЗаглушка.prototype.removeEventListener = function () { };
+      window.BroadcastChannel = ШинаЗаглушка;
+    }
+  } catch (е) { }
+
+  /* ── 5. ТИХИЙ РЕЖИМ: флаг читают движки дома (ЧЕЛОВЕК РЕШАЕТ) ────────── */
+  var тихо = false;
+  try { тихо = sessionStorage.getItem('sng-тихий') === '1'; } catch (е) { }
+  window.SNG_ТИХО = тихо ? '1' : '';
+  if (тихо) {
+    try {
+      var ст = document.createElement('style');
+      ст.textContent = '*,*::before,*::after{animation-duration:0s!important;animation-iteration-count:1!important;transition-duration:0s!important}html{scroll-behavior:auto!important}';
+      (document.head || document.documentElement).appendChild(ст);
+    } catch (е) { }
+  }
+
+  /* ── 6. ПАНЕЛЬ «НИТЬ ПОРВАЛАСЬ — ДОМ ДЕРЖИТ» (ленивая, DOM-сборка) ───── */
+  var панельУзел = null, блокКапота = null, строкаСчёта = null, свёрнуто = false;
+  var сбоевВсего = 0, последнееПоказали = 0;
+
+  function сл(родитель, тег, класс, текст, стиль) {
+    var узел = document.createElement(тег);
+    if (класс) узел.className = класс;
+    if (текст != null) узел.textContent = текст;
+    if (стиль) узел.style.cssText = стиль;
+    родитель.appendChild(узел);
+    return узел;
+  }
+
+  function построитьПанель() {
+    if (панельУзел) return панельУзел;
+    var стекло = сл(document.body, 'div', null, null,
+      'position:fixed;left:10px;right:10px;bottom:10px;z-index:2147483647;max-width:620px;margin:0 auto;' +
+      'background:rgba(16,18,24,.94);border:1px solid rgba(212,175,55,.45);border-radius:14px;' +
+      'box-shadow:0 18px 50px rgba(0,0,0,.6),inset 0 1px 0 rgba(240,240,248,.08);padding:14px 16px;' +
+      'font:12.5px/1.55 ui-monospace,Consolas,monospace;color:#C0C8D0;backdrop-filter:blur(8px)');
+    стекло.setAttribute('role', 'alertdialog');
+    стекло.setAttribute('aria-label', 'Сбой дома: нить порвалась, дом держит');
+
+    /* шапка: золото-ромб + честное имя */
+    var шапка = сл(стекло, 'div', null, null, 'display:flex;align-items:center;gap:9px');
+    сл(шапка, 'span', null, '◇', 'color:#F0D78C;font-size:15px;text-shadow:0 0 10px rgba(240,215,140,.5)');
+    сл(шапка, 'b', null, 'НИТЬ ПОРВАЛАСЬ — ДОМ ДЕРЖИТ',
+      'color:#F0D78C;font-weight:600;letter-spacing:.14em;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis');
+
+    строкаСчёта = сл(стекло, 'div', null, null, 'color:#8A9099;font-size:11px;margin-top:7px');
+
+    /* сообщение о сбое */
+    var строкаЧто = сл(стекло, 'div', null, null, 'margin-top:6px;color:#EDEFF4;word-break:break-word');
+
+    /* кнопки — решения человека */
+    var ряд = сл(стекло, 'div', null, null, 'display:flex;flex-wrap:wrap;gap:8px;margin-top:11px');
+    function кнопка(имя, действие) {
+      var к = сл(ряд, 'button', null, имя,
+        'appearance:none;cursor:pointer;background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.22);' +
+        'border-radius:9px;color:#C0C8D0;font:11px/1 ui-monospace,monospace;letter-spacing:.08em;padding:8px 12px');
+      к.addEventListener('mouseenter', function () { к.style.borderColor = 'rgba(212,175,55,.6)'; к.style.color = '#F0D78C'; });
+      к.addEventListener('mouseleave', function () { к.style.borderColor = 'rgba(240,240,248,.22)'; к.style.color = '#C0C8D0'; });
+      к.addEventListener('click', действие);
+      return к;
+    }
+    кнопка('ПЕРЕЗАПУСТИТЬ', function () { try { location.reload(); } catch (е) { } });
+    кнопка('ТИХИЙ РЕЖИМ', function () {
+      try { sessionStorage.setItem('sng-тихий', '1'); } catch (е) { window.SNG_ТИХО = '1'; }
+      try { location.reload(); } catch (е) { }
+    });
+    var капотКн = кнопка('ПОД КАПОТ', function () {
+      свёрнуто = false;
+      блокКапота.hidden = !блокКапота.hidden;
+      капотКн.textContent = блокКапота.hidden ? 'ПОД КАПОТ' : 'ЗАКРЫТЬ КАПОТ';
+    });
+    кнопка('СВЕРНУТЬ', function () {
+      свёрнуто = true;
+      стекло.hidden = true;
+      показатьГлоток();
+    });
+
+    /* ПОД КАПОТ: стек + журнал */
+    блокКапота = сл(стекло, 'div', null, null, 'margin-top:10px');
+    блокКапота.hidden = true;
+    var капотТекст = сл(блокКапота, 'pre', null, null,
+      'margin:0;white-space:pre-wrap;word-break:break-word;color:#8A9099;font-size:11px;max-height:200px;overflow:auto');
+    стекло.__капотТекст = капотТекст;
+
+    панельУзел = стекло;
+    панельУзел.__строкаЧто = строкаЧто;
+    return стекло;
+  }
+
+  /* глоток-ромб после «СВЕРНУТЬ»: дверь обратно к панели, не пропадает */
+  function показатьГлоток() {
+    try {
+      if (document.getElementById('снг-корд-глоток')) return;
+      var гл = сл(document.body, 'button', null, '◇',
+        'appearance:none;position:fixed;right:12px;bottom:12px;z-index:2147483647;width:34px;height:34px;' +
+        'border-radius:50%;border:1px solid rgba(212,175,55,.55);background:rgba(16,18,24,.9);color:#F0D78C;' +
+        'font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.5)');
+      гл.id = 'снг-корд-глоток';
+      гл.setAttribute('aria-label', 'Сбои дома — открыть панель корда');
+      гл.addEventListener('click', function () {
+        гл.remove();
+        свёрнуто = false;
+        if (панельУзел) панельУзел.hidden = false;
+      });
+    } catch (е) { }
+  }
+
+  function показатьПанель(откуда, что, стек) {
+    сбоевВсего += 1;
+    писатьЖурнал({ т: меткаВремени(), откуда: откуда, что: String(что).slice(0, 300) });
+    var сейчас = Date.now();
+    if (свёрнуто || (сейчас - последнееПоказали) < 4000) { показатьГлоток(); return; }
+    последнееПоказали = сейчас;
+    try {
+      var стекло = построитьПанель();
+      if (свёрнуто || стекло.hidden) { показатьГлоток(); return; }
+      стекло.__строкаЧто.textContent = (откуда ? откуда + ': ' : '') + String(что).slice(0, 220);
+      if (строкаСчёта) строкаСчёта.textContent =
+        'сбоев в этом такте страницы: ' + сбоевВсего + ' · журнал дома хранит последние 6';
+      var капот = 'СТЕК:\n' + String(стек || '—').slice(0, 600) + '\n\nЖУРНАЛ ДОМА:\n';
+      var ж = читатьЖурнал();
+      if (!ж.length) капот += '(пуст)';
+      ж.forEach(function (з) { капот += '  ' + з.т + ' · ' + з.откуда + ' · ' + з.что + '\n'; });
+      стекло.__капотТекст.textContent = капот;
+      стекло.hidden = false;
+    } catch (е) { /* панель не смогла — тише тишины не бывает, но мы не уроним страницу */ }
+  }
+
+  /* ── 7. ГЛОБАЛЬНЫЕ ЛОВЦЫ (ставятся первыми — до всего кода дома) ─────── */
+  window.addEventListener('error', function (событие) {
+    try {
+      if (событие && событие.target && событие.target !== window) return; /* img/css — не JS */
+      var е = событие && событие.error;
+      var что = (е && е.message) || (событие && событие.message) || 'неизвестная ошибка JS';
+      var где = (событие && событие.filename ? String(событие.filename).split('/').pop() : '') +
+        (событие && событие.lineno ? ':' + событие.lineno + ':' + событие.colno : '');
+      показатьПанель('JS', что + (где ? ' — ' + где : ''), е && е.stack);
+    } catch (е) { }
+  });
+
+  window.addEventListener('unhandledrejection', function (событие) {
+    try {
+      var п = событие && событие.reason;
+      var что = (п && п.message) ? п.message : (п && п.stack ? String(п.stack).split('\n')[0] : String(п));
+      показатьПанель('обещание', что, п && п.stack);
+    } catch (е) { }
+  });
+
+  } catch (внешняя) { /* корд не имеет права уронить страницу — точка */ }
+})();
+</script><!--/СНГ:КОРД-->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="ФОНД ·33 — общак дома СИНГУЛЯР: счётчик открытой цепи онлайн, анонимное или записанное в летопись пожертвование, дом фонда — дверь ·34. Ноль аналитики, ноль касс, ноль процента.">
+<title>ФОНД ХЕЛЕНЫ КЕЛЛЕР ·33 · общак дома</title>
+<link rel="stylesheet" href="./singulyar-design-v3.css">
+<style>
+/* ФОНД ·33 — дверные стили (общий канон держит singulyar-design-v3.css;
+   здесь только то, чего в общем листе нет). Стекло + void, золото —
+   единственный акцент, глифы, ноль эмодзи, ноль картинок. */
+:root{color-scheme:dark;--фг:#E8E8E8;--туск:#8A9099;--карт:#14161C;--лин:rgba(240,240,248,.16);--зол:#D4AF37;--золт:#F0D78C;--наст:#e8b35c}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,sans-serif;background:#0A0A0C;color:var(--фг)}
+main{max-width:980px;margin:auto;padding:30px 18px 60px}
+h1{font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.05;margin:.2em 0}
+h1 em,h2 em,h3 em{color:var(--туск);font-style:normal;font-weight:400}
+h2{margin-top:2.1rem}
+a{color:var(--зол)}
+.цитата{color:var(--туск);font-style:italic;border-left:3px solid rgba(212,175,55,.45);padding:6px 14px;margin:14px 0}
+.панель{background:var(--карт);border:1px solid var(--лин);border-radius:18px;padding:18px 20px;margin:16px 0;overflow:hidden}
+.счёт{font-family:ui-monospace,Consolas,monospace;font-weight:700;font-size:clamp(1.8rem,6vw,3.1rem);line-height:1.12;color:var(--золт);letter-spacing:.02em;word-break:break-all;margin:8px 0}
+.счёт-под{color:var(--туск);font:12.5px/1.55 ui-monospace,Consolas,monospace;margin:6px 0}
+.адрес{font:14px/1.55 ui-monospace,Consolas,monospace;color:var(--золт);word-break:break-all;background:rgba(240,240,248,.03);border:1px dashed rgba(212,175,55,.4);border-radius:10px;padding:10px 12px;margin:10px 0}
+.кнопки{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.действие{appearance:none;cursor:pointer;background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.22);border-radius:10px;color:var(--фг);font:12.5px/1 ui-monospace,Consolas,monospace;letter-spacing:.06em;padding:11px 15px;transition:border-color .2s,color .2s;display:inline-block;text-decoration:none}
+.действие:hover{border-color:rgba(212,175,55,.6);color:var(--золт)}
+.действие:disabled{opacity:.5;cursor:wait}
+.действие:active{transform:translateY(1px)}
+.действие-золото{border-color:rgba(212,175,55,.55);color:var(--золт)}
+.действие:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--зол);outline-offset:2px}
+.строка-узла{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:10px 0}
+.строка-узла label{color:var(--туск);font:12.5px/1 ui-monospace,monospace}
+.строка-узла select,.строка-узла input{background:#0E1014;border:1px solid var(--лин);border-radius:9px;color:var(--фг);font:12.5px/1.2 ui-monospace,monospace;padding:9px 10px}
+.строка-узла input{flex:1;min-width:230px}
+.пути{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin:14px 0}
+.пути .панель{margin:0}
+.честно li{margin:9px 0}
+.честно ul{padding-left:1.25rem;margin:8px 0}
+.qrbox{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin:12px 0}
+.qrbox canvas{background:#fff;border-radius:10px;image-rendering:pixelated;max-width:224px;max-height:224px;width:auto;height:auto}
+.qrbox .кол{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+.таблица{width:100%;font:12.5px/1.5 ui-monospace,Consolas,monospace;border-collapse:collapse;margin:8px 0}
+.таблица td,.таблица th{border-bottom:1px solid var(--лин);padding:7px 8px;text-align:left;vertical-align:top}
+.таблица th{color:var(--туск);font-weight:600}
+.метка{display:inline-block;padding:4px 9px;border:1px solid var(--лин);border-radius:999px;color:var(--туск);font:11.5px/1 ui-monospace,monospace}
+.метка-золото{border-color:rgba(212,175,55,.5);color:var(--золт)}
+details.капот{border:1px solid var(--лин);border-radius:14px;padding:12px 16px;margin:18px 0;background:var(--карт)}
+details.капот summary{cursor:pointer;color:var(--золт);font:600 13px/1.4 ui-monospace,monospace;letter-spacing:.08em}
+details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--туск);font-size:12px}
+.низ{text-align:center;margin:22px 0 8px}
+.низ a{color:var(--зол);text-decoration:none;border-bottom:1px solid rgba(212,175,55,.4)}
+@media (prefers-reduced-motion: reduce){.действие,.действие:hover{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="logo" aria-hidden="true">S</div>
+    <div><b>ФОНД</b><span>·33 · К2 · общак дома: прозрачность цепи, приватность человека</span></div>
+    <span class="badge">·33 · СЛОВО ВЛАДЕЛЬЦА: 2026-10-07</span>
+  </div>
+</header>
+<main class="wrap">
+  <h1>Фонд Хелены Келлер <em>общак дома</em></h1>
+  <p class="lead">Дом живёт на честной монете: счётчик спрашивает открытую цепь и показывает, сколько в общаке прямо сейчас. Положить можно столько, сколько сам считаешь нужным — молча или записавшись в летопись. Никакой кассы, никакого процента, никаких чужих дядь: монета идёт из руки человека прямо в цепь, дом только держит свет и показывает числа.</p>
+  <div class="essence"><b>Закон комнаты.</b> Общак прозрачен: адрес, баланс и каждое движение видны всем и навсегда — так решил держатель дома («всё, что есть у человека, лежит в паблике, он прозрачен и ничего не скрывает»). Донор цел: сайт не просит ни почты, ни входа, ни имени, ни куки; запросы в цепь уходят только по явному клику человека. Кто просит seed-фразу — тот вор, дом её не спросит никогда. Вход в дом не по билету: кто дал — дал, кто не дал — не дал, всё полноценное и бесплатное для каждого.</div>
+  <p class="цитата">«В одиночку мы можем так мало; вместе мы можем так много» — Хелен Келлер.</p>
+
+  <h2>Счётчик <em>сколько в общаке</em></h2>
+  <div class="панель" id="панельСчёта">
+    <p class="счёт-под" id="статусКошелька">читаю конфиг общака…</p>
+    <div class="счёт" id="цифраСчёта" aria-live="polite">◇ ◇ ◇</div>
+    <p class="счёт-под" id="подписьСчёта">разведка ещё не ходила — когда сходишь, здесь останется последнее известное число (и оно будет показываться даже офлайн, честно помеченное).</p>
+    <div class="кнопки">
+      <button type="button" class="действие действие-золото" id="кнРазведка" data-справка="Спросить открытые узлы цепи о балансе общака: браузер сам стучится в узел, сайт-хостинг не участвует. Только читает публичные числа, ничего не отправляет.">⌇ РАЗВЕДКА — спросить цепь</button>
+      <button type="button" class="действие" id="кнКонфиг" data-справка="Перечитать ФОНД/ОБЩАК.json — источник правды конфига: адреса, порядок узлов, надписи. Полезно сразу после того, как держатель вшил адрес.">◇ перечитать конфиг</button>
+    </div>
+    <div class="строка-узла">
+      <label for="выборУзла">узел:</label>
+      <select id="выборУзла" aria-label="Какой узел цепи спросить"></select>
+      <input type="url" id="свойУзел" placeholder="свой узел (Esplora-совместимый), например https://мой-узел/api" spellcheck="false" autocomplete="off">
+    </div>
+    <p class="счёт-под" id="узелПодсказка">Запрос идёт из твоего браузера прямо в открытый узел — только когда ты сам нажал. Авто-запросов нет: открывая дверь офлайн, ты ничего никому не показываешь.</p>
+    <div id="цепьПомнит" hidden>
+      <h3>Цепь помнит <em>последние поступления</em></h3>
+      <table class="таблица" id="таблицаПоступлений">
+        <thead><tr><th scope="col">когда</th><th scope="col">сколько (сатоши)</th><th scope="col">состояние</th><th scope="col">след в цепи</th></tr></thead>
+        <tbody id="телоПоступлений"></tbody>
+      </table>
+      <p class="счёт-под" id="поступленияПодпись"></p>
+    </div>
+  </div>
+
+  <h2>Положить в общак <em>столько, сколько считаешь нужным</em></h2>
+  <div class="панель" id="панельКошелька"></div>
+
+  <h2>Два пути <em>чей выбор — тот и путь</em></h2>
+  <div class="пути">
+    <div class="панель">
+      <h3>Путь 1 · <em>АНОНИМНО</em></h3>
+      <p>Просто переведи — цепь не спрашивает имён, а сайт не собирает ничего: ни логов, ни формы, ни «оставь почту». Счётчик вверху растёт сам по себе, без связи с тем, кто ты. Так кладут большинство, и это самый тихий путь.</p>
+      <p class="счёт-под">Псевдонимность цепи честна: адрес не называет тебя, но обменники с паспортом могут связать твои монеты с личностью — приватность начинается до перевода, подробности в «Честном стекле».</p>
+    </div>
+    <div class="панель">
+      <h3>Путь 2 · <em>В ЛЕТОПИСЬ</em></h3>
+      <p>Хочешь, чтобы дом помнил имя — запиши вклад сам: строчка в публичной летописи дома «такой-то закинул на общак столько-то». Запись добровольная, публичная и навсегда; правда баланса всё равно лежит в цепи, летопись — память, не отчётность.</p>
+      <div class="кнопки">
+        <button type="button" class="действие действие-золото" id="кнЛетопись" data-справка="Открыть шаблон записи в летопись (issue дома на GitHub). Нужен аккаунт GitHub — это и есть «назваться»; без аккаунта путь 1 всё ещё твой.">¶ ЗАПИСАТЬ ВКЛАД В ЛЕТОПИСЬ</button>
+      </div>
+      <p class="счёт-под" id="летописьПодсказка">шаблон летописи живёт в репе дома — видно каждому.</p>
+    </div>
+  </div>
+
+  <h2>Наш фонд <em>дом фонда — здесь, в доме</em></h2>
+  <div class="панель">
+    <p>Фонд Хелены Келлер — не снаружи, а в самом доме: хартия, наследие и десять прав жертвователя живут на двери ·34, открытый устав — в репе. Фонд независим: ни к helenkellerfoundation.org, ни к helenkellerintl.org, ни к какой иной организации с похожим именем он отношения не имеет — общих денег, людей и слова нет (слово владельца, 2026-10-07). Внешние двери из дома убраны: ничего для чужих касс дом не собирает.</p>
+    <div class="кнопки">
+      <a class="действие действие-золото" href="./СИНГУЛЯР_34_ДОМ_ФОНДА.html" data-справка="ДОМ ФОНДА ·34: хартия фонда Хелены Келлер — наследие, миссия, правила дома, десять прав жертвователя, честное стекло независимости.">◇ ДОМ ФОНДА ·34 — хартия фонда</a>
+      <a class="действие" href="./ФОНД/УСТАВ_ФОНДА.md" data-справка="Открытый устав фонда: что принимает, на что тратит, как меняется. Машиночитаемый документ в репе дома.">¶ УСТАВ ФОНДА</a>
+    </div>
+  </div>
+
+  <h2>Честное стекло <em>что видно, а что нет</em></h2>
+  <div class="панель честно">
+    <ul>
+      <li><b>Сайт не собирает ничего.</b> Ни аналитики, ни куков, ни аккаунтов, ни форм: дверям дома нечего продавать и некому сливать. Открыв страницу, ты ничего не сообщил.</li>
+      <li><b>Запросы в цепь — только по твоему клику.</b> Разведка идёт из твоего браузера прямо в открытый узел цепи; сайт-хостинг в проводе не участвует; referrer отрезан (узел не узнаёт, что ты пришёл с дверей дома).</li>
+      <li><b>Хостинг видит запросы страниц.</b> Как у любого сайта в интернете: GitHub Pages знает, что кто-то с такого-то адреса открыл страницу. Это цена жизни в открытом паблике — её не скрывают, о ней говорят честно.</li>
+      <li><b>Твой провайдер видит домены</b>, куда ты ходишь (и узлы цепи — тоже). Закрыть это может Tor или VPN — инструменты человека, дом не решает за тебя.</li>
+      <li><b>Узел цепи видит твой IP, но не имя.</b> Полная тишина — это свой узел: впиши его адрес в поле узла, и разведка будет ходить только домой.</li>
+      <li><b>Цепь публична навсегда — это и есть прозрачность общака.</b> Статичный адрес — сознательный выбор держателя: баланс и движения видны всем, что и требуется от общака. Донора это не называет: твой кошелёк сам раздаёт свежие адреса под каждый перевод.</li>
+      <li><b>Обменники с KYC связывают адрес с личностью.</b> Хочешь тише — бери монеты так, чтобы между паспортом и общаком была дистанция, и узнай про coin control в своём кошельке. Дом не даёт советов «где взять» — это территория человека.</li>
+      <li><b>Анти-фишинг:</b> сверяй первые и последние символы адреса; QR рисуется на твоём устройстве и в сети не ходит; дом НИКОГДА не просит seed-фразу, приватный ключ или доступ к кошельку — кто просит, тот вор.</li>
+      <li><b>Закон — кратко и без юрсовета.</b> В РФ крипта считается имуществом: доход от её продажи декларируется (НДФЛ); расчёты криптой за товары и услуги внутри РФ запрещены — пожертвование расчётом не является. Для серьёзных сумм решай с бухгалтером; дом — инженер, не юрист.</li>
+    </ul>
+  </div>
+
+  <h2>Куда уходят <em>отчёт держателя — в летописи</em></h2>
+  <div class="пути">
+    <div class="панель"><b>Штаны дома</b><p class="счёт-под">инфраструктура и сервисы, без которых дому тесно; каждая трата — записью в летописи.</p></div>
+    <div class="панель"><b>Accessibility</b><p class="счёт-под">проверки живыми людьми и машинами: клавиатура, читалки, мобильные — accessibility не является PRO-функцией.</p></div>
+    <div class="панель"><b>Разработка</b><p class="счёт-под">ядро, адаптеры, тесты, упрямые баги — всё открытый код, форкай смело.</p></div>
+    <div class="панель"><b>Документация</b><p class="счёт-под">доказательства, воспроизводимость, открытые знания — что казах, что суахили, может читать любой.</p></div>
+  </div>
+  <p class="счёт-под">Расходы держатель публикует записями в летописи дома — прозрачность не на словах, а в том же публичном журнале, где и вклады.</p>
+
+  <details class="капот">
+    <summary>ПОД КАПОТ · как это устроено</summary>
+    <pre>
+Источник правды конфига — ФОНД/ОБЩАК.json (машиночитаемый, в репе).
+Эта страница несёт автономную копию: файл:// и офлайн работают без сети;
+при сети страница перечитывает JSON (SW v57 ходит за ним сетью-первой).
+
+Баланс адреса (Esplora-узлы): подтверждено = funded_txo_sum − spent_txo_sum
+(из chain_stats); в полёте = та же арифметика по mempool_stats.
+blockcypher: balance (подтверждено) + unconfirmed_balance.
+blockchain.info: final_balance (сатоши).
+Сатоши → BTC: ÷ 100 000 000. BIP-21 URI: bitcoin:&lt;адрес&gt; — сумму в URI не
+вшиваем: сколько положить, решает человек.
+
+Порядок разведки (АВТО): mempool.space → blockcypher → blockstream.info →
+blockchain.info; свой узел — всегда первым, если вписан. Таймаут 9 с на узел,
+честная надпись, если узел молчит или лимитирует (429 — норма жизни
+бесплатных узлов, дом просто стучится в следующий).
+
+«Цепь помнит» — /txs адреса на Esplora-узле: последние переводы, где выход
+адресован общаку (входящие). 50 свежих переводов, показываем до 8.
+
+QR — домовой энкодер из ·17 ЗАЛ (byte mode, ECC L, версии 1–40, сверен
+с python-qrcode по всем 8 маскам). Рисуется на твоём устройстве, в сети
+не ходит ни разу.
+
+Приватность: meta referrer no-referrer; fetch с referrerPolicy:'no-referrer'
+и cache:'no-store'; ноль аналитики; localStorage хранит только последнее
+известное число разведки (ключ снг-фонд-разведка-v1) — стереть можно в
+настройках браузера, дом не обидится.
+
+Нити: s25 КОШЕЛЁК (личная ладонь — приватный офлайн-банк) ⇄ s33 ФОНД (общак
+дома — публичная цепь), s28 УЗЕЛ и s34 ДОМ ФОНДА (хартия фонда): приватное,
+общее и право — разные двери одной экономики.
+Симметрию нитей сторожит test_svyazi_niti.js.
+
+Независимость (v1.48.0): фонд наш и живёт в доме — ·34 ДОМ ФОНДА;
+внешние двери «официальных фондов Келлер» из дома убраны словом
+владельца (дверь ·33, ПОДДЕРЖАТЬ, funding.json, schema.json, тест
+слоя ЖИЗНЬ — согласованы); устав — ФОНД/УСТАВ_ФОНДА.md.
+
+Тесты: node --test ИНСТРУМЕНТЫ/test_s33_fond_logic.js
+</pre>
+  </details>
+
+  <p class="низ"><a href="./index.html" title="Домой — лицо дома: кристалл, намерение, нить Ариадны">⌂ дом · хаб ·00</a></p>
+</main>
+<script>
+/* ═════════════════════════════════════════════════════════════════════════
+   ФОНД ·33 — общак дома. Такт v1.47.0 «ФОНД».
+   Слово владельца: «НА ПОДДЕРЖАНИЕ ШТАНОВ КИДАТЬ МОНЕТУ… СЧЁТЧИК КОШЕЛЬКА
+   ОНЛАЙН… ДВА СПОСОБА — ПРОСТО ПОЖЕРТВОВАТЬ И ОСТАТСЯ АНОНИМОМ… И В ЛОГАХ
+   ЧТО XXXX ЧЕЛОВЕК ЗАКИНУЛ НА ОБЩАК… ИЗУЧИ ВСЕ МИРОВЫЕ ЛУЧШИЕ ПРАКТИКИ
+   АКТУАЛЬНЫЕ РАБОЧИЕ И ОРГАНИЗУЙ ПО ВСЕМ МЕРАМ БЕЗОПАСНОСТИ ЭТУ ФУНКЦИЮ».
+
+   Канон: стекло + void, золото — единственный акцент, глифы, ноль эмодзи,
+   ноль картинок (QR рисуется кодом), ноль присваиваний разметки (только
+   createElement/textContent), ноль авто-запросов (сеть — только по клику
+   человека), referrer no-referrer. Страница не имеет права уронить себя
+   (КОРД уже стоит в голове, каждый блок — в try).
+   ═════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* ── 1. КОНФИГ ОБЩАКА: вшитая копия ФОНД/ОБЩАК.json (файл:// и офлайн) ──
+     Источник правды — ФОНД/ОБЩАК.json в репе; при сети страница его
+     перечитывает и свежая копия побеждает. Правится держателем дома. */
+  var ОБЩАК_ВШИТО = {
+  "schema": "singulyar-fond/obschak/v0.1",
+  "имя": "ФОНД ХЕЛЕНЫ КЕЛЛЕР — общак дома СИНГУЛЯР",
+  "статус": "ОЖИДАЕТ_АДРЕС",
+  "валюта": "BTC",
+  "сеть": "mainnet",
+  "адреса": [],
+  "uri": "bitcoin:",
+  "дом_фонда": "СИНГУЛЯР_34_ДОМ_ФОНДА.html",
+  "устав": "ФОНД/УСТАВ_ФОНДА.md",
+  "независимость": "фонд назван в честь Хелен Келлер (1880–1968) и живёт в доме СИНГУЛЯР; ни helenkellerfoundation.org, ни helenkellerintl.org, ни иные организации с похожим именем отношения к фонду не имеют: общих денег, людей, слова нет; внешний адрес общака — только в этом файле",
+  "узлы": [
+    { "имя": "mempool.space", "url": "https://mempool.space/api", "тип": "esplora" },
+    { "имя": "blockcypher", "url": "https://api.blockcypher.com/v1/btc/main", "тип": "blockcypher" },
+    { "имя": "blockstream.info", "url": "https://blockstream.info/api", "тип": "esplora" },
+    { "имя": "blockchain.info", "url": "https://blockchain.info", "тип": "blockchaininfo" }
+  ],
+  "летопись": {
+    "режим": "github-issue",
+    "репо": "rtynbirf/singulyar",
+    "шаблон": "фонд-летопись.md"
+  },
+  "обновлено": "2026-10-07",
+  "слово_владельца": "2026-10-07: фонд — наш, и его дом стоит в доме (дверь ·34 ДОМ ФОНДА): хартия, десять прав жертвователя по AFP, открытый устав. Ни helenkellerfoundation.org, ни helenkellerintl.org — не наши: общих денег, людей, слова нет, внешние двери из дома убраны. Общак прежний: счётчик онлайн, аноним или летопись; никакой кассы и процента — монета из руки в цепь. Пока адрес не вшит — дом честно показывает пустоту.",
+  "приватность": "адрес публичен; секретов здесь нет и быть не может — сторожится тестом (ключи живут офлайн у человека, дом их не видит и не хранит)"
+}
+;
+
+  /* ── 2. ЧИСТЫЕ ФУНКЦИИ (без DOM — их ловят тесты) ───────────────────── */
+  /*ТЕСТ:НАЧАЛО*/
+  var САТО_В_БТК = 100000000;
+
+  function валиденАдрес(а) {
+    if (typeof а !== 'string') return false;
+    return /^(bc1[a-z0-9]{20,71}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(а);
+  }
+
+  /* Esplora (mempool.space, blockstream.info, свой узел): /address/<а> */
+  function разборЭсплоры(дж) {
+    if (!дж || !дж.chain_stats || typeof дж.chain_stats.funded_txo_sum !== 'number') return null;
+    var подтверд = (дж.chain_stats.funded_txo_sum - дж.chain_stats.spent_txo_sum);
+    var вПолёте = 0;
+    if (дж.mempool_stats && typeof дж.mempool_stats.funded_txo_sum === 'number') {
+      вПолёте = (дж.mempool_stats.funded_txo_sum - дж.mempool_stats.spent_txo_sum);
+    }
+    return { подтверждено: подтверд, вПолёте: вПолёте };
+  }
+
+  /* blockcypher: /addrs/<а>/balance */
+  function разборБлоксайфера(дж) {
+    if (!дж || typeof дж.balance !== 'number' || typeof дж.final_balance !== 'number') return null;
+    return { подтверждено: дж.balance, вПолёте: (дж.final_balance - дж.balance) };
+  }
+
+  /* blockchain.info: /rawaddr/<а>?cors=true — отдаёт только общий баланс */
+  function разборЦепиИнфо(дж) {
+    if (!дж || typeof дж.final_balance !== 'number') return null;
+    return { подтверждено: дж.final_balance, вПолёте: null };
+  }
+
+  function сатоВБтк(сатоши) {
+    if (typeof сатоши !== 'number' || !isFinite(сатоши) || сатоши < 0) return '0';
+    var б = (сатоши / САТО_В_БТК).toFixed(8);
+    б = б.replace(/0+$/, '').replace(/\.$/, '.0');
+    return б;
+  }
+
+  function сатоГрупп(сатоши) {
+    if (typeof сатоши !== 'number' || !isFinite(сатоши) || сатоши < 0) return '0';
+    var с = String(Math.round(сатоши));
+    return с.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  function бип21(адрес) {
+    return 'bitcoin:' + адрес;
+  }
+
+  function нормУзел(строка) {
+    if (typeof строка !== 'string') return '';
+    var с = строка.replace(/\s+/g, '').replace(/\/+$/, '');
+    if (!с) return '';
+    if (/^https:\/\/.+/i.test(с)) return с;
+    if (/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/.*)?$/i.test(с)) return 'http://' + с;
+    return '';
+  }
+
+  /* Из /txs (Esplora, 50 свежих переводов) — входящие в адрес, до лимита. */
+  function извлечьПриходы(адрес, тхс, лимит) {
+    var приход = [];
+    if (!Array.isArray(тхс)) return приход;
+    for (var т = 0; т < тхс.length && приход.length < лимит; т++) {
+      var х = тхс[т];
+      if (!х || !Array.isArray(х.vout)) continue;
+      for (var в = 0; в < х.vout.length; в++) {
+        var о = х.vout[в];
+        if (о && о.scriptpubkey_address === адрес && typeof о.value === 'number' && о.value > 0) {
+          приход.push({
+            txid: (typeof х.txid === 'string') ? х.txid : '',
+            сатоши: о.value,
+            подтверждено: !!(х.status && х.status.confirmed),
+            время: (х.status && typeof х.status.block_time === 'number') ? х.status.block_time : null
+          });
+          break; /* один перевод — одна строка: берём первый выход в адрес */
+        }
+      }
+    }
+    return приход;
+  }
+  /*ТЕСТ:КОНЕЦ*/
+
+  /* ── 3. ДОМОВОЙ QR-ЭНКОДЕР — verbatim из ·17 ЗАЛ (ECC L, v1–40) ─────── */
+  /* ── 0. QR-ЭНКОДЕР: byte mode, ECC L, версии 1–40, автопробег масок ───────
+   0 зависимостей; таблицы сверены матрица-в-матрицу с эталонной реализацией
+   (python-qrcode) по всем 8 маскам: v1/v3/v10/v16/v17. */
+const QR_CAPL=[17,32,53,78,106,134,154,192,230,271,321,367,425,458,520,586,644,718,792,858,929,1003,1091,1171,1273,1367,1465,1528,1628,1732,1840,1952,2068,2188,2303,2431,2563,2699,2809,2953];
+const QR_ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+const QR_BLOCKS=[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]];
+class SingulyarQR {
+    constructor() { this._gf(); }
+    _gf() {
+        this.EXP = new Uint8Array(512); this.LOG = new Uint8Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) { this.EXP[i] = x; this.LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+        for (let i = 255; i < 512; i++) this.EXP[i] = this.EXP[i - 255];
+    }
+    gmul(a, b) { return (a === 0 || b === 0) ? 0 : this.EXP[this.LOG[a] + this.LOG[b]]; }
+    rsEcc(data, ecLen) {
+        const g = new Uint8Array(ecLen + 1); g[0] = 1;
+        for (let i = 0; i < ecLen; i++) {
+            const a = this.EXP[i];
+            for (let j = Math.min(i + 1, ecLen); j >= 1; j--) g[j] = g[j - 1] ^ this.gmul(g[j], a);
+            g[0] = this.gmul(g[0], a);
+        }
+        const gg = new Uint8Array(ecLen + 1);
+        for (let j = 0; j <= ecLen; j++) gg[j] = g[ecLen - j];
+        const buf = new Uint8Array(data.length + ecLen);
+        buf.set(data, 0);
+        for (let i = 0; i < data.length; i++) {
+            const f = buf[i];
+            if (f === 0) continue;
+            for (let j = 1; j <= ecLen; j++) buf[i + j] ^= this.gmul(gg[j], f);
+        }
+        return buf.slice(data.length);
+    }
+    pickVersion(len) {
+        for (let v = 1; v <= 40; v++) if (QR_CAPL[v - 1] >= len) return v;
+        throw new Error('QR: данные не влезают (' + len + ' Б)');
+    }
+    buildCodewords(bytes, v) {
+        const bits = [];
+        const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+        put(4, 4); put(bytes.length, v < 10 ? 8 : 16);
+        for (const b of bytes) put(b, 8);
+        const blocks = QR_BLOCKS[v - 1];
+        let dataTotal = 0;
+        for (let i = 0; i < blocks.length; i += 3) dataTotal += blocks[i] * blocks[i + 2];
+        for (let i = 0; i < Math.min(4, dataTotal * 8 - bits.length); i++) bits.push(0);
+        while (bits.length % 8) bits.push(0);
+        const out0 = [];
+        for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; out0.push(b); }
+        let pad = 0xEC;
+        while (out0.length < dataTotal) { out0.push(pad); pad = pad === 0xEC ? 0x11 : 0xEC; }
+        const specs = [];
+        for (let i = 0; i < blocks.length; i += 3) for (let k = 0; k < blocks[i]; k++) specs.push({ d: blocks[i + 2], e: blocks[i + 1] - blocks[i + 2] });
+        const dbs = [], ecs = [];
+        let pos = 0;
+        for (const s of specs) { const ch = out0.slice(pos, pos + s.d); pos += s.d; dbs.push(ch); ecs.push(this.rsEcc(ch, s.e)); }
+        const out = [];
+        const maxD = Math.max.apply(null, dbs.map(b => b.length));
+        for (let i = 0; i < maxD; i++) for (const b of dbs) if (i < b.length) out.push(b[i]);
+        const maxE = Math.max.apply(null, ecs.map(b => b.length));
+        for (let i = 0; i < maxE; i++) for (const b of ecs) if (i < b.length) out.push(b[i]);
+        return out;
+    }
+    makeMatrix(v) {
+        const size = 21 + (v - 1) * 4;
+        const m = [], fn = [];
+        for (let r = 0; r < size; r++) { m.push(new Uint8Array(size)); fn.push(new Uint8Array(size)); }
+        const setFn = (r, c) => { if (r >= 0 && r < size && c >= 0 && c < size) fn[r][c] = 1; };
+        const finder = (r0, c0) => {
+            for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+                const r = r0 + dr, c = c0 + dc;
+                if (r < 0 || r >= size || c < 0 || c >= size) continue;
+                const dark = (dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6) && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+                m[r][c] = dark ? 1 : 0; setFn(r, c);
+            }
+        };
+        finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+        const al = QR_ALIGN[v - 1] || [];
+        const inFinder = (r, c) => (r <= 7 && c <= 7) || (r <= 7 && c >= size - 8) || (r >= size - 8 && c <= 7);
+        for (let i = 0; i < al.length; i++) for (let j = 0; j < al.length; j++) {
+            const r = al[i], c = al[j];
+            if (inFinder(r, c)) continue;
+            for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+                const dark = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+                m[r + dr][c + dc] = dark ? 1 : 0; setFn(r + dr, c + dc);
+            }
+        }
+        for (let i = 8; i < size - 8; i++) {
+            if (!fn[6][i]) { m[6][i] = i % 2 === 0 ? 1 : 0; setFn(6, i); }
+            if (!fn[i][6]) { m[i][6] = i % 2 === 0 ? 1 : 0; setFn(i, 6); }
+        }
+        m[size - 8][8] = 1; setFn(size - 8, 8);
+        for (let i = 0; i < 9; i++) { setFn(8, i); setFn(i, 8); }
+        for (let i = 0; i < 8; i++) { setFn(8, size - 1 - i); setFn(size - 1 - i, 8); }
+        if (v >= 7) {
+            let rem = v;
+            for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) & 1) * 0x1F25;
+            const vb = ((v << 12) | rem) >>> 0;
+            for (let i = 0; i < 18; i++) {
+                const dark = ((vb >> i) & 1) === 1;
+                const a = Math.floor(i / 3), bc = (i % 3) + size - 11;
+                m[bc][a] = dark; setFn(bc, a); m[a][bc] = dark; setFn(a, bc);
+            }
+        }
+        return { m, fn, size };
+    }
+    formatBits(mask) {
+        const data = (1 << 3) | mask;   /* ECC L = 01 */
+        let rem = data;
+        for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) & 1) * 0x537;
+        return ((data << 10) | rem) ^ 0x5412;
+    }
+    placeData(ctx, cw) {
+        const { m, fn, size } = ctx;
+        let i = 0, bit = 7;
+        const nextBit = () => { if (i >= cw.length) return 0; const b = (cw[i] >> bit) & 1; if (bit-- === 0) { bit = 7; i++; } return b; };
+        for (let right = size - 1; right >= 1; right -= 2) {
+            if (right === 6) right = 5;
+            for (let vert = 0; vert < size; vert++) {
+                for (let j = 0; j < 2; j++) {
+                    const c = right - j;
+                    const up = ((right + 1) & 2) === 0;
+                    const r = up ? size - 1 - vert : vert;
+                    if (!fn[r][c]) m[r][c] = nextBit();
+                }
+            }
+        }
+    }
+    applyMask(ctx, mask) {
+        const { m, size } = ctx;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) {
+            if (ctx.fn[r][c]) continue;
+            let f = false;
+            switch (mask) {
+                case 0: f = (r + c) % 2 === 0; break;
+                case 1: f = r % 2 === 0; break;
+                case 2: f = c % 3 === 0; break;
+                case 3: f = (r + c) % 3 === 0; break;
+                case 4: f = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
+                case 5: f = ((r * c) % 2) + ((r * c) % 3) === 0; break;
+                case 6: f = (((r * c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+                case 7: f = (((r + c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+            }
+            if (f) m[r][c] ^= 1;
+        }
+    }
+    drawFormat(ctx, mask) {
+        const { m, size } = ctx;
+        const bits = this.formatBits(mask);
+        const dk = (i) => ((bits >> i) & 1) === 1;
+        for (let i = 0; i < 15; i++) {
+            if (i < 6) m[i][8] = dk(i); else if (i < 8) m[i + 1][8] = dk(i); else m[size - 15 + i][8] = dk(i);
+            if (i < 8) m[8][size - 1 - i] = dk(i); else if (i < 9) m[8][7] = dk(i); else m[8][14 - i] = dk(i);
+        }
+        m[size - 8][8] = 1;
+    }
+    penalty(m, size) {
+        let p = 0;
+        const line = (get) => {
+            let run = 1;
+            for (let i = 1; i <= size; i++) {
+                if (i < size && get(i) === get(i - 1)) run++;
+                else { if (run >= 5) p += 3 + (run - 5); run = 1; }
+            }
+        };
+        for (let r = 0; r < size; r++) line((c) => m[r][c]);
+        for (let c = 0; c < size; c++) line((r) => m[r][c]);
+        for (let r = 0; r < size - 1; r++) for (let c = 0; c < size - 1; c++) {
+            const v = m[r][c];
+            if (v === m[r][c + 1] && v === m[r + 1][c] && v === m[r + 1][c + 1]) p += 3;
+        }
+        const pat = [1, 0, 1, 1, 1, 0, 1];
+        const win = (get, i) => {
+            for (let k = 0; k < 7; k++) if (get(i + k) !== pat[k]) return false;
+            const l4 = [get(i - 4), get(i - 3), get(i - 2), get(i - 1)];
+            const r4 = [get(i + 7), get(i + 8), get(i + 9), get(i + 10)];
+            const light = (a) => a.every((x) => x === 0);
+            const lOK = i >= 4 && light(l4), rOK = i + 11 <= size && light(r4);
+            return (lOK || rOK) ? 40 : 0;
+        };
+        for (let r = 0; r < size; r++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[r][x]), i);
+        for (let c = 0; c < size; c++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[x][c]), i);
+        let dark = 0;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) dark += m[r][c];
+        p += Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
+        return p;
+    }
+    encode(text) {
+        const bytes = Array.from(new TextEncoder().encode(String(text)));
+        const v = this.pickVersion(bytes.length);
+        const cw = this.buildCodewords(bytes, v);
+        const ctx = this.makeMatrix(v);
+        this.placeData(ctx, cw);
+        let best = null, bestP = Infinity, bestMask = 0;
+        for (let mask = 0; mask < 8; mask++) {
+            const t = { m: ctx.m.map((row) => Uint8Array.from(row)), fn: ctx.fn, size: ctx.size };
+            this.applyMask(t, mask); this.drawFormat(t, mask);
+            const p = this.penalty(t.m, ctx.size);
+            if (p < bestP) { bestP = p; best = t; bestMask = mask; }
+        }
+        return { version: v, size: ctx.size, mask: bestMask, modules: best.m };
+    }
+    toCanvas(cv, text, px) {
+        const q = this.encode(text);
+        const quiet = 3, scale = px || Math.max(2, Math.floor(300 / (q.size + 6)));
+        const dim = (q.size + quiet * 2) * scale;
+        cv.width = dim; cv.height = dim;
+        cv.style.width = Math.min(280, dim) + 'px';
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#ffffff'; cx.fillRect(0, 0, dim, dim);
+        cx.fillStyle = '#000000';
+        for (let r = 0; r < q.size; r++) for (let c = 0; c < q.size; c++) if (q.modules[r][c]) cx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+        return q;
+    }
+}
+
+/* ── 0b. УПАКОВКА SDP: deflate → base64url (SQ1/SQ2), фолбэк b64 (SQ0) ─── */
+const SDP_B64 = (u8) => {
+    let bin = '';
+    for (let i = 0; i < u8.length; i++) bin += String.fromCharCode(u8[i]);
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+const SDP_UNB64 = (s) => {
+    const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return u8;
+};
+async function sdPack(obj) {
+    const raw = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream === 'function') {
+        for (const [fmt, tag] of [['deflate-raw', 'SQ1'], ['deflate', 'SQ2']]) {
+            try {
+                const st = new Blob([raw]).stream().pipeThrough(new CompressionStream(fmt));
+                const buf = new Uint8Array(await new Response(st).arrayBuffer());
+                return tag + '.' + SDP_B64(buf);
+            } catch (e) { /* пробуем следующий формат */ }
+        }
+    }
+    return 'SQ0.' + SDP_B64(raw);
+}
+async function sdUnpack(str) {
+    str = String(str || '').trim().replace(/\s+/g, '');
+    const dot = str.indexOf('.');
+    if (dot < 0) throw new Error('код без формата (нужен SQ1./SQ2./SQ0.)');
+    const tag = str.slice(0, dot), buf = SDP_UNB64(str.slice(dot + 1));
+    if (tag === 'SQ0') return JSON.parse(new TextDecoder().decode(buf));
+    const fmt = tag === 'SQ1' ? 'deflate-raw' : 'deflate';
+    const st = new Blob([buf]).stream().pipeThrough(new DecompressionStream(fmt));
+    return JSON.parse(new TextDecoder().decode(await new Response(st).arrayBuffer()));
+}
+
+/* ── 0c. HALLP2P: air-gapped WebRTC DataChannel (по ТЗ SingulyarP2PStage) ── */
+class HallP2P {
+    constructor(handlers) {
+        this.h = handlers || {};
+        this.pc = null; this.dc = null; this.role = null;
+    }
+    _iceDone(pc) {
+        return new Promise((resolve) => {
+            if (pc.iceGatheringState === 'complete') return resolve();
+            const to = setTimeout(resolve, 2500);   /* host-кандидаты собираются быстро */
+            pc.addEventListener('icegatheringstatechange', () => {
+                if (pc.iceGatheringState === 'complete') { clearTimeout(to); resolve(); }
+            });
+        });
+    }
+    _wireDc(dc) {
+        this.dc = dc;
+        dc.onopen = () => { if (this.h.onOpen) this.h.onOpen(); };
+        dc.onclose = () => { if (this.h.onClose) this.h.onClose(); };
+        dc.onmessage = (e) => {
+            try { const m = JSON.parse(e.data); if (this.h.onMsg) this.h.onMsg(m); } catch (err) { /* битый пакет — игнор */ }
+        };
+    }
+    async hostCreate() {
+        this.role = 'host';
+        this.pc = new RTCPeerConnection({ iceServers: [] });
+        this.dc = this.pc.createDataChannel('singulyar_p2p_data', { ordered: false, maxRetransmits: 0 });
+        this._wireDc(this.dc);
+        await this.pc.setLocalDescription(await this.pc.createOffer());
+        await this._iceDone(this.pc);
+        return sdPack({ type: this.pc.localDescription.type, sdp: this.pc.localDescription.sdp });
+    }
+    async clientJoin(code) {
+        this.role = 'client';
+        const offer = await sdUnpack(code);
+        this.pc = new RTCPeerConnection({ iceServers: [] });
+        this.pc.ondatachannel = (e) => this._wireDc(e.channel);
+        await this.pc.setRemoteDescription({ type: offer.type, sdp: offer.sdp });
+        await this.pc.setLocalDescription(await this.pc.createAnswer());
+        await this._iceDone(this.pc);
+        return sdPack({ type: this.pc.localDescription.type, sdp: this.pc.localDescription.sdp });
+    }
+    async hostAccept(code) {
+        if (this.role !== 'host' || !this.pc) throw new Error('сначала создай пару');
+        const ans = await sdUnpack(code);
+        await this.pc.setRemoteDescription({ type: ans.type, sdp: ans.sdp });
+    }
+    send(t, d) {
+        if (this.dc && this.dc.readyState === 'open') { try { this.dc.send(JSON.stringify({ t, d })); } catch (e) {} }
+    }
+    close() {
+        if (this.dc) { try { this.dc.close(); } catch (e) {} }
+        if (this.pc) { try { this.pc.close(); } catch (e) {} }
+        this.dc = null; this.pc = null; this.role = null;
+    }
+}
+
+  /* ── 4. СОСТОЯНИЕ ДВЕРИ ─────────────────────────────────────────────── */
+  var ОБЩАК = ОБЩАК_ВШИТО;
+  var КЛЮЧ_РАЗВЕДКИ = 'снг-фонд-разведка-v1';
+  var ТАЙМАУТ_МС = 9000;
+  var ид = function (х) { return document.getElementById(х); };
+  function сл(родитель, тег, класс, текст) {
+    var узел = document.createElement(тег);
+    if (класс) узел.className = класс;
+    if (текст != null) узел.textContent = текст;
+    родитель.appendChild(узел);
+    return узел;
+  }
+  function честоВремя(мс) {
+    try { return new Date(мс).toLocaleString(); } catch (е) { return String(мс); }
+  }
+
+  /* ── 5. КОНФИГ: перечитать JSON при сети (источник правды — репа) ───── */
+  function конфигСвеж(дж) {
+    if (!дж || typeof дж !== 'object') return false;
+    if (!Array.isArray(дж.адреса) || !Array.isArray(дж.узлы)) return false;
+    var свеж = String(дж.обновлено || '');
+    var вшито = String(ОБЩАК.обновлено || '');
+    return !(вшито && свеж && свеж < вшито);
+  }
+  function перечитатьКонфиг(громко) {
+    try {
+      var ст = ид('статусКошелька');
+      if (громко && ст) ст.textContent = 'перечитываю ФОНД/ОБЩАК.json…';
+      fetch('ФОНД/ОБЩАК.json', { cache: 'no-store', referrerPolicy: 'no-referrer', credentials: 'omit' })
+        .then(function (р) { if (!р.ok) throw new Error('HTTP ' + р.status); return р.json(); })
+        .then(function (дж) {
+          if (!конфигСвеж(дж)) throw new Error('конфиг не свежее вшитого');
+          ОБЩАК = дж;
+          перерисовать();
+          if (громко) {
+            var с = ид('статусКошелька');
+            if (с) с.textContent = 'конфиг перечитан: ' + (ОБЩАК.обновлено || 'без даты') + ' · адресов: ' + ОБЩАК.адреса.length;
+          }
+        })
+        .catch(function () {
+          if (громко && ст) ст.textContent = 'JSON не дотянулся (офлайн или файл://) — живёт вшитая копия от ' + (ОБЩАК.обновлено || '?');
+        });
+    } catch (е) { /* страница не роняет себя */ }
+  }
+
+  /* ── 6. РИСОВАНИЕ ДВЕРИ (createElement/textContent — ноль присваиваний разметки) ── */
+  function адресСписок() {
+    var а = (ОБЩАК && Array.isArray(ОБЩАК.адреса)) ? ОБЩАК.адреса.filter(валиденАдрес) : [];
+    return а;
+  }
+  function перерисовать() {
+    try {
+      /* узлы разведки */
+      var сел = ид('выборУзла');
+      if (сел) {
+        while (сел.firstChild) сел.removeChild(сел.firstChild);
+        var сп = сл(сел, 'option', null, 'АВТО (по порядку)');
+        сп.value = 'авто';
+        var узлы = (ОБЩАК && Array.isArray(ОБЩАК.узлы)) ? ОБЩАК.узлы : [];
+        узлы.forEach(function (у) {
+          if (!у || !у.имя || !у.url) return;
+          var о = сл(сел, 'option', null, у.имя);
+          о.value = у.имя;
+        });
+        var свой = сл(сел, 'option', null, 'свой узел (из поля)');
+        свой.value = 'свой';
+      }
+      /* статус кошелька */
+      var адр = адресСписок();
+      var стат = ид('статусКошелька');
+      if (стат) {
+        if (!адр.length) {
+          стат.textContent = 'КОШЕЛЁК ДОМА ЕЩЁ НЕ СОЗДАН. Держатель создаёт его офлайн (НАСТРОИТЬ_КОШЕЛЁК_ФОНДА.md — лучшие практики без потерь), адрес вшивается в ФОНД/ОБЩАК.json. Пока считать нечего — и дом честно это говорит.';
+        } else {
+          стат.textContent = 'общак дома · адресов: ' + адр.length + ' · сеть mainnet · конфиг от ' + (ОБЩАК.обновлено || '?');
+        }
+      }
+      /* панель кошелька */
+      нарисоватьКошелёк(адр);
+      /* последняя разведка */
+      показатьПоследнююРазведку();
+    } catch (е) { /* тише тишины — страница жива */ }
+  }
+
+  function нарисоватьКошелёк(адр) {
+    var пан = ид('панельКошелька');
+    if (!пан) return;
+    while (пан.firstChild) пан.removeChild(пан.firstChild);
+    if (!адр.length) {
+      сл(пан, 'b', null, 'Монет пока принимать некому — и это честно.');
+      сл(пан, 'p', 'счёт-под', 'Дом показывает пустоту, а не выдумывает числа: кошелёк создаёт человек — офлайн, своей рукой. Когда адрес встанет в ФОНД/ОБЩАК.json, здесь появятся адрес, QR и счётчик. Никакой «заглушки-сборщика» не будет: пусто — значит пусто.');
+      return;
+    }
+    сл(пан, 'p', 'счёт-под', 'Один клик — копируй адрес; камера кошелька — на QR. Сумму назначает человек: от сатоши до сколько душе угодно. Сайт денег не касается — перевод идёт из твоего кошелька прямо в цепь.');
+    адр.forEach(function (а) {
+      var бокс = сл(пан, 'div', 'qrbox');
+      var канва = document.createElement('canvas');
+      канва.setAttribute('aria-label', 'QR-код для перевода в общак дома: ' + а);
+      бокс.appendChild(канва);
+      var кол = сл(бокс, 'div', 'кол');
+      сл(кол, 'div', 'адрес', а);
+      var ряд = сл(кол, 'div', 'кнопки');
+      var кн = сл(ряд, 'button', 'действие действие-золото', '¶ КОПИРОВАТЬ АДРЕС');
+      кн.type = 'button';
+      кн.addEventListener('click', function () { копировать(а, кн); });
+      var ссылка = сл(ряд, 'a', 'действие', 'открыть bip21-ссылку');
+      ссылка.href = бип21(а);
+      ссылка.rel = 'noopener';
+      сл(кол, 'p', 'счёт-под', 'Анти-фишинг: сверяй первые и последние символы адреса со своим кошельком. QR нарисован на твоём устройстве и в сети не ходит.');
+      try {
+        var рисунок = new SingulyarQR();
+        /* третий аргумент toCanvas — МАСШТАБ на модуль (не размер!): не передаём,
+           ·17 сам считает разумный (~300px) и ставит style.width ≤ 280 */
+        рисунок.toCanvas(канва, бип21(а));
+      } catch (е) {
+        сл(кол, 'p', 'счёт-под', 'QR не собрался (' + (е && е.message || 'сбой') + ') — адрес выше можно скопировать руками: он тот же.');
+      }
+    });
+  }
+
+  function копировать(текст, кнопка) {
+    var было = кнопка.textContent;
+    function отозвалось() {
+      кнопка.textContent = '◇ скопировано';
+      setTimeout(function () { кнопка.textContent = было; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(текст).then(отозвалось).catch(function () { копироватьЗапасом(текст); отозвалось(); });
+    } else {
+      копироватьЗапасом(текст); отозвалось();
+    }
+  }
+  function копироватьЗапасом(текст) {
+    try {
+      var т = document.createElement('textarea');
+      т.value = текст;
+      т.setAttribute('readonly', 'readonly');
+      т.style.position = 'fixed'; т.style.left = '-9999px';
+      document.body.appendChild(т);
+      т.select();
+      try { document.execCommand('copy'); } catch (е) {}
+      document.body.removeChild(т);
+    } catch (е) {}
+  }
+
+  function показатьПоследнююРазведку() {
+    var циф = ид('цифраСчёта'), под = ид('подписьСчёта');
+    if (!циф || !под) return;
+    var сохран = null;
+    try { сохран = JSON.parse(localStorage.getItem(КЛЮЧ_РАЗВЕДКИ) || 'null'); } catch (е) {}
+    if (сохран && typeof сохран.сатоши === 'number') {
+      циф.textContent = сатоВБтк(сохран.сатоши) + ' BTC';
+      var части = ['последняя разведка: ' + сатоГрупп(сохран.сатоши) + ' сатоши'];
+      if (typeof сохран.вПолёте === 'number' && сохран.вПолёте > 0) части.push('в полёте ' + сатоГрупп(сохран.вПолёте));
+      if (сохран.узел) части.push('узел: ' + сохран.узел);
+      if (сохран.время) части.push(честоВремя(сохран.время));
+      под.textContent = части.join(' · ');
+    }
+  }
+
+  /* ── 7. РАЗВЕДКА: сеть — только по явному клику человека ───────────── */
+  function узлыПорядка() {
+    var свой = ид('свойУзел'), выбор = ид('выборУзла');
+    var список = [];
+    var свойУрл = свой ? нормУзел(свой.value) : '';
+    if (свойУрл) список.push({ имя: 'свой узел', url: свойУрл, тип: 'esplora' });
+    var выборЗнач = (выбор && выбор.value) ? выбор.value : 'авто';
+    var узлы = (ОБЩАК && Array.isArray(ОБЩАК.узлы)) ? ОБЩАК.узлы : [];
+    узлы.forEach(function (у) {
+      if (выборЗнач === 'авто' || выборЗнач === у.имя) список.push(у);
+    });
+    return список;
+  }
+
+  function дотянуться(урл, таймаут) {
+    var вол = ('AbortController' in window) ? new AbortController() : null;
+    var обещание = fetch(урл, {
+      referrerPolicy: 'no-referrer',
+      cache: 'no-store',
+      credentials: 'omit',
+      mode: 'cors',
+      signal: вол ? вол.signal : undefined
+    });
+    var полёт = обещание.then(function (р) {
+      if (!р.ok) throw new Error('HTTP ' + р.status);
+      return р.json();
+    });
+    if (!вол) return полёт;
+    var будильник = setTimeout(function () { try { вол.abort(); } catch (е) {} }, таймаут);
+    var прикрыть = полёт['finally'] ? полёт['finally'](function () { clearTimeout(будильник); })
+                                    : полёт.then(function () { clearTimeout(будильник); },
+                                                 function () { clearTimeout(будильник); });
+    return прикрыть;
+  }
+
+  function спроситьУзел(узел, адрес) {
+    var у = нормУзел(узел.url);
+    if (!у) return Promise.reject(new Error('узел не понял адреса'));
+    if (узел.тип === 'blockcypher') {
+      return дотянуться(у + '/addrs/' + адрес + '/balance', ТАЙМАУТ_МС).then(разборБлоксайфера);
+    }
+    if (узел.тип === 'blockchaininfo') {
+      return дотянуться(у + '/rawaddr/' + адрес + '?cors=true', ТАЙМАУТ_МС).then(разборЦепиИнфо);
+    }
+    /* esplora и всё, что на него похоже */
+    return дотянуться(у.replace(/\/$/, '') + '/address/' + адрес, ТАЙМАУТ_МС).then(разборЭсплоры);
+  }
+
+  function разведка() {
+    var кн = ид('кнРазведка'), циф = ид('цифраСчёта'), под = ид('подписьСчёта'), стат = ид('статусКошелька');
+    var адр = адресСписок();
+    if (!кн || !циф || !под) return;
+    if (!адр.length) {
+      под.textContent = 'считать нечего: кошелёк дома ещё не создан. Вшей адрес в ФОНД/ОБЩАК.json — и разведка пойдёт.';
+      return;
+    }
+    var узлы = узлыПорядка();
+    if (!узлы.length) { под.textContent = 'ни одного узла не выбрано — верни АВТО или впиши свой узел.'; return; }
+    кн.disabled = true;
+    var старый = кн.textContent;
+    кн.textContent = '⌇ СМОТРЮ…';
+    циф.textContent = '◇ ◇ ◇';
+    под.textContent = 'стучусь: ' + узлы.map(function (у) { return у.имя; }).join(' → ') + ' (таймаут 9 с, referrer отрезан)';
+    var отчёты = [];
+    function шаг(и) {
+      if (и >= узлы.length) return Promise.reject(new Error('все узлы промолчали'));
+      var узел = узлы[и];
+      return Promise.all(адр.map(function (а) {
+        return спроситьУзел(узел, а).then(function (р) { return { адрес: а, разбор: р }; });
+      })).then(function (ответы) {
+        var сумма = 0, полёт = 0, былоПолёт = false;
+        ответы.forEach(function (о) {
+          if (!о.разбор) throw new Error('узел ответил непонятным');
+          сумма += о.разбор.подтверждено || 0;
+          if (typeof о.разбор.вПолёте === 'number') { полёт += о.разбор.вПолёте; былоПолёт = true; }
+        });
+        return { узел: узел.имя, сатоши: сумма, вПолёте: былоПолёт ? полёт : null };
+      }).catch(function (ошибка) {
+        отчёты.push(узел.имя + ': ' + (ошибка && ошибка.message || 'молчит'));
+        return шаг(и + 1);
+      });
+    }
+    шаг(0)
+      .then(function (итог) {
+        циф.textContent = сатоВБтк(итог.сатоши) + ' BTC';
+        var части = [сатоГрупп(итог.сатоши) + ' сатоши'];
+        if (итог.вПолёте != null && итог.вПолёте > 0) части.push('в полёте ' + сатоГрупп(итог.вПолёте));
+        части.push('узел: ' + итог.узел);
+        части.push('спросил: ' + честоВремя(Date.now()));
+        под.textContent = части.join(' · ');
+        if (отчёты.length && стат) стат.textContent = 'по дороге промолчали: ' + отчёты.join('; ');
+        try {
+          localStorage.setItem(КЛЮЧ_РАЗВЕДКИ, JSON.stringify({
+            сатоши: итог.сатоши,
+            вПолёте: итог.вПолёте,
+            узел: итог.узел,
+            время: Date.now()
+          }));
+        } catch (е) { /* приватный режим — цифра просто не задержится */ }
+        цепьПомнит();
+      })
+      .catch(function (ошибка) {
+        циф.textContent = '◇ — ◇';
+        под.textContent = 'цепь не ответила никому: ' + (ошибка && ошибка.message || 'неизвестно') +
+          (отчёты.length ? ' · ' + отчёты.join('; ') : '') +
+          '. Бесплатные узлы порой лимитируют (429) — попробуй ещё раз или впиши свой узел.';
+      })
+      .then(function () {}, function () {})
+      .then(function () {
+        кн.disabled = false;
+        кн.textContent = старый;
+      });
+  }
+
+  /* ── 8. ЦЕПЬ ПОМНИТ: последние поступления (Esplora /txs) ──────────── */
+  function цепьПомнит() {
+    var бокс = ид('цепьПомнит'), тело = ид('телоПоступлений'), под = ид('поступленияПодпись');
+    if (!бокс || !тело || !под) return;
+    while (тело.firstChild) тело.removeChild(тело.firstChild);
+    /* /txs есть у esplora-узлов; если победил другой тип — честно скажем */
+    var эсплораУзлы = узлыПорядка().filter(function (у) { return !у.тип || у.тип === 'esplora'; });
+    if (!эсплораУзлы.length) {
+      под.textContent = 'этот узел не отдаёт список переводов по адресу — «цепь помнит» умеют Esplora-узлы (mempool.space, blockstream, свой).';
+      бокс.hidden = false;
+      return;
+    }
+    var адрес = адресСписок()[0];
+    дотянуться(нормУзел(эсплораУзлы[0].url).replace(/\/$/, '') + '/address/' + адрес + '/txs', ТАЙМАУТ_МС)
+      .then(function (тхс) {
+        var приход = извлечьПриходы(адрес, тхс, 8);
+        if (!приход.length) {
+          под.textContent = 'в последних ' + (Array.isArray(тхс) ? тхс.length : 0) + ' переводах этого адреса приходящих нет — монет ещё не заносили (или занесли раньше, чем 50 свежих).';
+        } else {
+          приход.forEach(function (п) {
+            var строка = сл(тело, 'tr');
+            сл(строка, 'td', null, п.время ? new Date(п.время * 1000).toLocaleString() : (п.подтверждено ? 'давно' : 'в полёте'));
+            сл(строка, 'td', null, сатоГрупп(п.сатоши));
+            сл(строка, 'td', null, п.подтверждено ? 'в цепи' : 'в полёте');
+            var сд = сл(строка, 'td');
+            var а = сл(сд, 'a', null, п.txid ? (п.txid.slice(0, 8) + '…' + п.txid.slice(-6)) : '—');
+            if (п.txid) {
+              а.href = 'https://mempool.space/tx/' + п.txid;
+              а.rel = 'noopener noreferrer';
+              а.target = '_blank';
+            }
+          });
+          под.textContent = 'входящие по адресу: ' + адрес + ' · проверяемо по хэшу в открытом обозревателе цепи.';
+        }
+        бокс.hidden = false;
+      })
+      .catch(function (ошибка) {
+        под.textContent = 'список поступлений не дотянулся: ' + (ошибка && ошибка.message || 'узел молчит') + '. Баланс выше всё равно показан.';
+        бокс.hidden = false;
+      });
+  }
+
+  /* ── 9. ЛЕТОПИСЬ: кнопка открывает шаблон записи в репе дома ───────── */
+  function летописьУрл() {
+    var репо = (ОБЩАК && ОБЩАК.летопись && ОБЩАК.летопись.репо) || 'rtynbirf/singulyar';
+    var шаблон = (ОБЩАК && ОБЩАК.летопись && ОБЩАК.летопись.шаблон) || '';
+    if (шаблон) {
+      return 'https://github.com/' + репо + '/issues/new?template=' + encodeURIComponent(шаблон);
+    }
+    return 'https://github.com/' + репо + '/issues';
+  }
+
+  /* ── 10. ЗАПУСК ДВЕРИ ───────────────────────────────────────────────── */
+  function жива() {
+    try {
+      var кнР = ид('кнРазведка'), кнК = ид('кнКонфиг'), кнЛ = ид('кнЛетопись');
+      if (кнР) кнР.addEventListener('click', разведка);
+      if (кнК) кнК.addEventListener('click', function () { перечитатьКонфиг(true); });
+      if (кнЛ) кнЛ.addEventListener('click', function () { try { window.open(летописьУрл(), '_blank', 'noopener'); } catch (е) {} });
+      var свой = ид('свойУзел');
+      if (свой) свой.addEventListener('input', function () {
+        var п = ид('узелПодсказка');
+        var у = нормУзел(свой.value);
+        if (п) п.textContent = у ? ('свой узел поймёт: ' + у + ' — разведка пойдёт только домой, мимо чужих глаз.')
+                                 : 'свой узел: https://… (Esplora-совместимый); localhost разрешён без https.';
+      });
+      перерисовать();
+      перечитатьКонфиг(false);
+    } catch (е) { /* страница не роняет себя */ }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', жива);
+  else жива();
+})();
+</script>
+<script defer src="./singulyar-modules.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+</html>
