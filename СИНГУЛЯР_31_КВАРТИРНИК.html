@@ -343,12 +343,12 @@ body[data-scene="day"] #sceneRow button.on{background:#A8602E;color:#fff}
 
 /* ───── языковые подпевки ───── */
 /* v10.4 «ОДИН СМЫСЛ»: кириллическая транскрипция понимания — «как звучит» под строкой */
-.line .tc{display:block;font-size:.66em;font-weight:800;color:var(--gold);opacity:.92;letter-spacing:.02em;margin-top:6px;line-height:1.3;pointer-events:none}
+.line .tc{display:block;font-size:calc(.66em*var(--tcScale,1));font-weight:800;color:var(--gold);opacity:.92;letter-spacing:.02em;margin-top:6px;line-height:1.3;pointer-events:none}
 body.nosub .line .tc{display:none!important}
-.line .sub{display:block;font-size:.56em;font-weight:700;color:var(--faint);letter-spacing:0;/* v10.1: пол; рост/потолок в sngAdaptStyle */
+.line .sub{display:block;font-size:calc(.56em*var(--subScale,1));font-weight:700;color:var(--faint);letter-spacing:0;/* v10.1: пол; рост/потолок в sngAdaptStyle */
   line-height:1.4;opacity:0;max-height:0;overflow:hidden;transition:opacity .35s,max-height .35s}
 .line.on .sub,.line:hover .sub{opacity:1;max-height:3.2em}
-body[data-scene="kids"] .line .sub{font-size:.56em}/* v10.8: транскрипция крупнее — em от строки */
+body[data-scene="kids"] .line .sub{font-size:calc(.56em*var(--subScale,1))}/* v10.8: транскрипция крупнее — em от строки */
 .line[data-lang="ru"] .sub{display:none}
 
 /* ───── ТЕКСТ-ПУЛЬС и такт-монитор (v3) ───── */
@@ -715,7 +715,7 @@ window.__ALERT = function(t){
   <button id="btnLight" class="tbtn on" data-tip="Свет сцены: палитры меняются вместе с секциями песни (клавиша L)">СВЕТ</button>
   <button id="btnToasts" class="tbtn on" data-tip="Подсказки между куплетами — выключи, если хочешь тишину">ТОСТЫ</button>
   <button id="btnMotion" class="tbtn on" data-tip="Движение: пульс фона и отсчёт (клавиша M); полное/мерцонное/выкл — в ПУЛЬТе">ДВИЖ</button>
-  <a id="btnHome" class="tbtn" href="./index.html?v=108" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
+  <a id="btnHome" class="tbtn" href="./index.html?v=109" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
   <button id="btnInstall" class="tbtn" hidden data-tip="Дом умеет ставиться приложением: браузер сам предложил — жми, и иконка появится на устройстве">УСТАНОВИТЬ</button>
   <button id="btnHelp" class="tbtn" aria-label="Справка (клавиша ?)" data-tip="Справка: 6 вкладок — старт, кнопки, клавиши, голос, кому что, вопросы (?)">?</button>
 </header>
@@ -1406,6 +1406,7 @@ function health(){
       { sec:"S", n:"РЕЛАКС: "+(рел ? "вкл — при пении гаснут ВСЕ панели и слайдеры, касание возвращает" : "выкл — панели всегда видны")+" (выбор помнится)", ok: (function(){ try{ var з=window.__РЕЛАКС, а=document.querySelector("audio"); if(!з||typeof з.примени!=="function")return false; if(а&&!а.paused&&з.вкл)return document.body.classList.contains("relax"); return true; }catch(e){ return false; } })() },
       { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
       { sec:"S", n:"ПУЛЬТ закрыт = скрыт совсем: не просвечивает и не ест касания зала", ok: (function(){ try{ var п=document.getElementById("panel"); return !!п && !п.open && getComputedStyle(п).display==="none"; }catch(e){ return false; } })() },
+      { sec:"S", n:"ТРИ СТРОКИ: титры · транскрипция · оригинал — свои ползунки в ПУЛЬТе, размер помнится за каждым", ok: (function(){ try{ var a=document.getElementById("tcSlider"), b=document.getElementById("sbsSlider"), r=getComputedStyle(document.documentElement); return !!(a&&b&&r.getPropertyValue("--tcScale")&&r.getPropertyValue("--subScale")); }catch(e){ return false; } })() },
     ];
   };
   [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8].forEach(fn=>{
@@ -3582,7 +3583,7 @@ document.body.insertAdjacentHTML("beforeend", `
   <b>v2</b> — на все случаи жизни: сцены ВЕЧЕРИНКА/ДЕТИ/РОМАНТИКА/ДЕНЬ, 4 языка строк, голосовые команды, озвучка вперед, одна кнопка, вибро, контраст, гигант.<br>
   <b>v3</b> — текст-пульс: побуквенно/послогово/пословно/построчно в такт музыке, такт-монитор 1·2·3·4 и BPM из самого звука.<br>
   <b>v4</b> — свобода: память вечера, продолжение с места, синхрон строк, запись выступления, Media Session (экран блокировки), экран не засыпает, тише под речью, тихий вечер, лёгкое чтение, световой бит, лампа, экспорт/импорт настроек, RU·EN·ES интерфейс.<br>
-  <b>v5</b> — пульт: панель настроек из шести разделов с поиском, подсказка на каждой кнопке (WCAG 1.4.13), справка-вкладки, пять тем подачи, четыре стиля подсветки текста, шрифты, размер строк и громкость слайдерами, режимы конфетти, сброс к заводским.<br>
+  <b>v5</b> — пульт: панель настроек из шести разделов с поиском, подсказка на каждой кнопке (WCAG 1.4.13), справка-вкладки, пять тем подачи, четыре стиля подсветки текста, шрифты, три строки подачи — титры · транскрипция · оригинал, у каждой свой ползунок — и громкость слайдерами, размеры помнятся за каждым, режимы конфетти, сброс к заводским.<br>
   <b>v6</b> — лаборатория: свои цвета выше тем и сцен (21 пипетка), джокер — палитры из ~10^170 вариантов с контраст-гардом WCAG 4,5:1, «слово → цвета», типографика строк (вес, межбуквенное, межстрочное), свой цвет и сила подсветки, множители конфетти и вибро, до 12 своих наборов вечера, размер строк 60–200%, голосовая команда «джокер».<br>
   <b>v7</b> — «ещё»: голос «ещё» и кнопка «ещё!» — каждая переброска кладёт прежнюю палитру в историю (12 кружков, любой шаг назад, счётчик); фото → цвета вечера (частотное извлечение из картинки с контраст-гардом); конструктор «свой пресет с нуля» — шесть вопросов с примеркой на весь вечер на каждом шаге, финал — именованный набор в «моих наборах»; отмена конструктора возвращает всё как было.<br>
   <b>v8</b> — автор: штрих-код песни на СТАРТе и в БРАВО (QR с клипом, встроен прямо в файл и сканируется камерой даже без сети), подпись «песня — дитя автора RUVSON» и ссылка на канал — подпишись и поддержи; проверка ЗДОРОВЬЯ теперь и за авторством.<br>
@@ -3596,6 +3597,7 @@ document.body.insertAdjacentHTML("beforeend", `
   <br><b>v9.7</b> — «ТОМОГРАФ»: ЗДОРОВЬЕ стал честным диагностическим томографом, а не зелёной лампочкой: четыре слоя — ЦЕЛОСТНОСТЬ (файл и структуры) · ВОЗМОЖНОСТИ (что умеет этот браузер) · ЖИВОЙ ЗАПУСК (что реально работает сейчас) · СОСТОЯНИЕ ЧЕЛОВЕКА (твои настройки), вердикт сверху, легенда снизу, «UNKNOWN ≠ FAIL». Память настроек проверяется настоящей записью→чтением→сверкой, а не «есть функция»; кодек записи выбирается через MediaRecorder.isTypeSupported (webm/opus → webm → mp4 → ogg), у файла записи честный тип и расширение; wake lock и медиасессия докладывают живое состояние («держу экран», «обработчики поставлены»); голосовые команды честно помечены: браузерное распознавание может просить сеть — офлайн-гарантии нет; вкладки пульта и справки получили полную ARIA-семантику (role=tab→tabpanel, aria-controls, стрелки+Home/End, roving tabindex); сообщения разошлись по каналам: спокойные — вежливо, срочные — сразу; бирка двигается тремя независимыми способами — перетаскивание, клавиатура (Shift — крупный шаг, Home/End — углы, Enter — крестовина), крестовина-джойстик по тапу (WCAG 2.2 · 2.5.7 «без перетаскивания»); тап-цели в ЗДОРОВЬЕ проверяются измерением, не глазомером.
 <br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n<br><b>v10.7</b> — «ЧИСТЫЙ СВЕТ»: белый слой наверху навсегда. Светлые комнаты ДЕТИ и ДЕНЬ закреплены инлайном на html+body — ни тема, ни старый кэш ТВ, ни чужой каскад не сделают чёрную подложку; свет сцены в светлых комнатах не льёт тёмные заливки вовсе («ТВ-растр» и «ёмные затемнения» изгнаны, старые заливки смываются при входе в комнату). ПУЛЬТ по приказу владельца открывается сразу во весь экран, «РАЗВЕРНУТЬ» снят, Esc и ✕ — выход из меню. РЕЛАКС честен до конца: при пении гаснут ВСЕ панели, слайдеры, бирка модуля, шапка песни, тосты и бирка автора — только отдых, только текст, только песня; касание возвращает на 2,6 с, пауза возвращает всё. ЛАБ и высокий контраст стоят выше закрепления — ЧЕЛОВЕК РЕШАЕТ. Пробы ЗДОРОВЬЯ говорят правду: ни одной «ok: true» без настоящей проверки. Номер v10.6 не живёт в этом зале: чужая сборка под этим номером (без контента дома) снята словом владельца, номер вычеркнут — «из пятницы суббота не торчит».
 <br><b>v10.8</b> — «ПОРЯДОК»: ПУЛЬТ больше не просвечивает и не мешает залу: закрытая панель скрыта намертво (правило автора display:flex больше не перебивает браузерное «dialog не открыт = не показан»), стекло больше не съедало касания — все кнопки зала снова на месте. ПУЛЬТ — сразу во весь экран, без скролл-бара (прокрутка колесом и пальцем, полоса не рисуется), меню непрозрачное и держит характер комнаты: ДЕТИ — крем, ДЕНЬ — бумага, РОМАНТИКА — лиловый вечер, темы подачи (ТЕПЛО/НЕОН/МИНИМАЛ/БАРХАТ/КРАФТ) меняют характер элементов везде. Транскрипция «как звучит» — крупнее втрое и растёт вместе со строкой (0,66 высоты строки против прежних жёстких 12px) — её человек смотрит из дальнего угла, лупа не нужна. Портянка владельца вшита ЦЕЛИКОМ: 92 новых понимания «Просто люби» из групп по 20 — Африка и Океания, Индия, кельты и романы Европы, исчезающие языки России/Австралии/Америк (ижорский, вепсский, мэнский, корнский, навахо, чероки, инуктитут, гренландский…), Африка-2 (волоф, фула, бамбара, шона…), исторические (средневековая латынь, старофранцузский, староитальянский, древневерхненемецкий, древнерусский) — у всех чтение кириллицей, выравнивание по оси 40 строк, пустые места честно падают на оригинал; таблица ЯЗЫК теперь держит 108 пониманий. Числа носителей сверены и исправлены (Ethnologue 2023/24 + цифры самих партий): формат честный — млн / тыс. / штуки со склонением, у исторических — «историческое понимание». Пробы ЗДОРОВЬЯ починены: проба CSP имела сломанный селектор и молчала, порог оси поднят до честных 100.
+<br><b>v10.9</b> — «ТРИ СТРОКИ»: подача принадлежит человеку. На реплику — три строки: титры выбранным языком (крупная), «как звучит» — транскрипция буквами родного языка, и оригинал песни; у каждой строки СВОЙ ползунок в ПУЛЬТе (СТРОКА 1 · ТИТРЫ, СТРОКА 2 · ТРАНСКРИПЦИЯ, СТРОКА 3 · ОРИГИНАЛ), и дом помнит размер за каждым — все разные, вкусы разные (kv.prefs: tcs, sbs). Множители calc() с var() живут поверх старых em-пропорций — адаптив, сцены и темы подачи не тронуты; ползунки честно показывают свои значения при каждом открытии ПУЛЬТа; проба ЗДОРОВЬЯ держит правду о трёх строках.
 
   <p style="margin-top:10px"><b>Самодостаточность.</b> Всё живёт в этом одном файле: песня, движок, настройки в памяти браузера. Ничего не уходит в сеть. Файл переживёт своего родителя — и на другом устройстве настройки возвращаются из json.</p>
   <p style="margin-top:10px"><b>На экран телефона.</b> iPhone: «Поделиться» → «На экран „Домой“». Android/Chrome: меню ⋮ → «Установить приложение» / «Добавить на главный экран».</p>
@@ -3857,6 +3859,14 @@ window.__CONFETTI_MODE = (prefs.confetti==="chorus"||prefs.confetti==="off") ? p
 let lyrScale = clamp(parseInt(prefs.lyr||"100",10)||100, 60, 200);
 function applyLyr(){ root.style.setProperty("--lyrScale", String(lyrScale/100)); }
 applyLyr();
+/* v10.9 «ТРИ СТРОКИ» (приказ владельца): у каждой из трёх строк подачи — свой ползунок в ПУЛЬТе,
+   дом помнит размер за каждым (kv.prefs: tcs, sbs). Строка 1 — титры выбранным языком,
+   строка 2 — транскрипция буквами родного, строка 3 — оригинал песни. */
+let tcScale = clamp(parseInt(prefs.tcs||"100",10)||100, 40, 250);
+let sbsScale = clamp(parseInt(prefs.sbs||"100",10)||100, 40, 250);
+function applyTc(){ root.style.setProperty("--tcScale", String(tcScale/100)); }
+function applySbs(){ root.style.setProperty("--subScale", String(sbsScale/100)); }
+applyTc(); applySbs();
 let subOn = prefs.sub===undefined ? true : !!prefs.sub;
 function applySub(){ body.classList.toggle("nosub", !subOn); }
 applySub();
@@ -3906,10 +3916,22 @@ body.insertAdjacentHTML("beforeend", `
           <button data-fk="round" data-tip="Округлый — мягкий, для детей и дислексии">КРУГЛЫЙ</button>
         </div>
       </div>
-      <div class="prow2"><span class="plab2">РАЗМЕР СТРОК</span>
+      <div class="prow2"><span class="plab2">СТРОКА 1 · ТИТРЫ</span>
         <div class="sldrow">
-          <input type="range" id="lyrSlider" min="60" max="200" step="5" value="100" aria-label="размер поемых строк, проценты" data-tip="Слайдер: крупный текст видят из дальнего угла комнаты, мелкий — кладёт строки в карман">
+          <input type="range" id="lyrSlider" min="60" max="200" step="5" value="100" aria-label="размер строки титров, проценты" data-tip="Слайдер: крупный текст видят из дальнего угла комнаты, мелкий — кладёт строки в карман">
           <b class="sldval" id="lyrVal">100%</b>
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">СТРОКА 2 · ТРАНСКРИПЦИЯ</span>
+        <div class="sldrow">
+          <input type="range" id="tcSlider" min="40" max="250" step="5" value="100" aria-label="размер транскрипции, проценты" data-tip="Вторая строка — как звучит выбранная речь буквами твоего родного языка. Учишь язык — делай крупнее, уже читаешь — мельче">
+          <b class="sldval" id="tcVal">100%</b>
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">СТРОКА 3 · ОРИГИНАЛ</span>
+        <div class="sldrow">
+          <input type="range" id="sbsSlider" min="40" max="250" step="5" value="100" aria-label="размер строки оригинала, проценты" data-tip="Третья строка — смысл песни на языке, которым поют. Размер дом запомнит за тобой">
+          <b class="sldval" id="sbsVal">100%</b>
         </div>
       </div>
       <div class="prow2"><span class="plab2">АНИМАЦИИ</span>
@@ -4288,6 +4310,9 @@ bindSeg("rateChips2","data-rk",(k)=>{ const c=document.querySelector("#rateChips
 /* слайдеры */
 const lyrSlider = $("lyrSlider"), lyrVal = $("lyrVal");
 lyrSlider.addEventListener("input",()=>{ lyrScale = parseInt(lyrSlider.value,10); lyrVal.textContent = lyrScale+"%"; applyLyr(); prefs.lyr = lyrScale; savePrefs(); touch("lyrSlider"); });
+const tcSlider = $("tcSlider"), tcVal = $("tcVal"), sbsSlider = $("sbsSlider"), sbsVal = $("sbsVal");
+if(tcSlider) tcSlider.addEventListener("input",()=>{ tcScale = parseInt(tcSlider.value,10)||100; tcVal.textContent = tcScale+"%"; applyTc(); prefs.tcs = tcScale; savePrefs(); touch("tcSlider"); });
+if(sbsSlider) sbsSlider.addEventListener("input",()=>{ sbsScale = parseInt(sbsSlider.value,10)||100; sbsVal.textContent = sbsScale+"%"; applySbs(); prefs.sbs = sbsScale; savePrefs(); touch("sbsSlider"); });
 const volSlider = $("volSlider"), volVal = $("volVal");
 if(window.__VOL){
   volSlider.addEventListener("input",()=>{ const v = parseInt(volSlider.value,10)/100; window.__VOL.set(v); volVal.textContent = volSlider.value+"%"; touch("volSlider"); });
@@ -4408,7 +4433,7 @@ function pultPaint(){
   if(window.__VIS_PAINT) window.__VIS_PAINT(); /* v9.5: трассер ШИЛКИ в мс */
   if(window.__SHILKA_INFO) window.__SHILKA_INFO(); /* v9.5: живой расчёт упреждения */
   if(window.__VOL){ volSlider.value = Math.round(window.__VOL.get()*100); volVal.textContent = volSlider.value+"%"; }
-  lyrSlider.value = lyrScale; lyrVal.textContent = lyrScale+"%";
+  lyrSlider.value = lyrScale; lyrVal.textContent = lyrScale+"%"; if(tcSlider){ tcSlider.value = tcScale; tcVal.textContent = tcScale+"%"; } if(sbsSlider){ sbsSlider.value = sbsScale; sbsVal.textContent = sbsScale+"%"; }
   threadPaint(); /* v9.2: нить вечера живёт в ногах панели */
 }
 window.__PULT = {
@@ -4457,7 +4482,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.8 «ПОРЯДОК»";
+      b.className="sng-верш"; b.textContent="· v10.9 «ТРИ СТРОКИ»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -5992,10 +6017,10 @@ html[data-env="тв"]{--sng-st:5vh;--sng-sb:5vh;--sng-sl:5vw;--sng-sr:5vw;--sng-
 @media (min-width:1200px){#bravo h1{font-size:120px}}
 @media (min-width:501px) and (max-width:1299px){body.biglyrics .line{font-size:calc(6vw*var(--lyrScale,1))}}
 @media (min-width:1300px){body.biglyrics .line{font-size:calc(78px*var(--lyrScale,1))}}
-@media (min-width:813px) and (max-width:1249px){.line .sub{font-size:.56em}}
-@media (min-width:1250px){.line .sub{font-size:.56em}}
-@media (min-width:701px) and (max-width:1199px){body[data-scene="kids"] .line .sub{font-size:.56em}}
-@media (min-width:1200px){body[data-scene="kids"] .line .sub{font-size:.56em}}
+@media (min-width:813px) and (max-width:1249px){.line .sub{font-size:calc(.56em*var(--subScale,1))}}
+@media (min-width:1250px){.line .sub{font-size:calc(.56em*var(--subScale,1))}}
+@media (min-width:701px) and (max-width:1199px){body[data-scene="kids"] .line .sub{font-size:calc(.56em*var(--subScale,1))}}
+@media (min-width:1200px){body[data-scene="kids"] .line .sub{font-size:calc(.56em*var(--subScale,1))}}
 @media (min-width:536px) and (max-width:1249px){body.giant .line{font-size:calc(5.6vw*var(--lyrScale,1))}}
 @media (min-width:1250px){body.giant .line{font-size:calc(70px*var(--lyrScale,1))}}
 @media (min-width:521px) and (max-width:1279px){body[data-scene="kids"] .line{font-size:calc(5vw*var(--lyrScale,1))}}
