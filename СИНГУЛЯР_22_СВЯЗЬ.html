@@ -2375,6 +2375,7 @@ const S22 = (function () {
 /* Adapter OS v0.2 · мост ·22 (срез 2): транспорт зала как канал-адаптер +
    зеркало смыслов зала в шину Adapter OS. Ядро страницы не тронуто:
    представление входящего по-прежнему строит получатель (·21). */
+(async function () {
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
   const естьБЧ = (typeof BroadcastChannel !== 'undefined');
@@ -2405,6 +2406,7 @@ try {
     } catch (e) { /* зеркало не поднялось — проводка остаётся прежней */ }
   }
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '22-СВЯЗЬ', reason: String((e && e.message) || e) }; } catch (e2) {} }
+})();
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>

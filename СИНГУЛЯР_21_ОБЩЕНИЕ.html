@@ -561,7 +561,7 @@ let voices = ('speechSynthesis' in window) ? (speechSynthesis.getVoices() || [])
 
 function load(){
   try { const x = JSON.parse(localStorage.getItem(S21.STORE_KEY)); if (x && x.people) return x; } catch(e){}
-  return { people: structuredClone(DEFAULT_PEOPLE), messages: [] };
+  return { people: JSON.parse(JSON.stringify(DEFAULT_PEOPLE)), messages: [] };
 }
 function save(){ try { localStorage.setItem(S21.STORE_KEY, JSON.stringify(db)); } catch(e){} render(); }
 function personById(id){ return db.people.find(function(p){ return p.id === id; }); }
@@ -811,7 +811,7 @@ document.getElementById('btnStopVoice').addEventListener('click', function(){
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   document.getElementById('voiceStatus').textContent = 'Озвучивание остановлено.';
 });
-document.getElementById('btnReset').addEventListener('click', function(){ db = { people: structuredClone(DEFAULT_PEOPLE), messages: [] }; save(); });
+document.getElementById('btnReset').addEventListener('click', function(){ db = { people: JSON.parse(JSON.stringify(DEFAULT_PEOPLE)), messages: [] }; save(); });
 document.getElementById('voicePerson').addEventListener('change', loadVoiceForm);
 document.getElementById('voiceLang').addEventListener('change', function(){ saveVoiceField(); renderVoiceList(); });
 document.getElementById('voicePreference').addEventListener('change', saveVoiceField);
@@ -832,6 +832,7 @@ render();
    реестр адаптеров, ядро остаётся исполнителем истины и фолбэком.
    Порядок: СМЫСЛ → реестр (каналы получателя) → адаптер → ядро → представление.
    Контракт среза 1 не тронут: output.21-брайль / tool.21-маршрутизация на месте. */
+(async function () {
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
   /* КРИСТАЛЛ (v1.16): ·21 = слой представлений. Ядро протокола вшивается
@@ -1113,6 +1114,7 @@ try {
     статусыОбновить();
   } catch (мозгОшибка) { try { console.warn('МОЗГ не собрался:', мозгОшибка); } catch (e) {} }
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '21-ОБЩЕНИЕ', reason: String((e && e.message) || e) }; } catch (e2) {} }
+})();
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>
