@@ -32,11 +32,11 @@ def ок(имя, условие):
 
 # ── 2. Версии дома ──
 ман = json.load(io.open(os.path.join(окружение, 'ГОТОВНОСТЬ.manifest.json'), encoding='utf-8'))
-ок('ГОТОВНОСТЬ: версия 1.52.0', ман.get('version') == '1.52.0')
+ок('ГОТОВНОСТЬ: версия 1.56.0', ман.get('version') == '1.56.0')
 ок('ГОТОВНОСТЬ: запись ВЕРДИКТ в production_ready', any('ВЕРДИКТ' in str(x) for x in ман.get('production_ready', [])))
 ок('ГОТОВНОСТЬ: отвергнутые из 300 зафиксированы с причинами', any('ОТВЕРГНУТО' in str(x) for x in ман.get('production_ready', [])))
 св = io.open(os.path.join(окружение, 'sw15.js'), encoding='utf-8').read()
-ок('SW: кэш v66', 's15-orkestrator-v66' in св)
+ок('SW: кэш v69', 's15-orkestrator-v69' in св)
 
 # ── 3. Живой микрофон: фейковое устройство Chromium ──
 ошибки = []

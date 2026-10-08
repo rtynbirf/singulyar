@@ -615,6 +615,8 @@
         if (e.key === 'Escape' || tvBack) {
             if (isOpen) { e.preventDefault(); closeMenu(true); return; }
             if (hostHotkeysOff) return;
+            /* v10.7 закон верхнего слоя: Esc при открытом диалоге (ПУЛЬТ, легенда, языки…) закрывает сам диалог — не ведёт на index */
+            if (document.querySelector && document.querySelector('dialog[open]')) return;
             if (!typing) {
                 var p = location.pathname || '';
                 if (!/index\.html?$/i.test(p) && !/\/$/.test(p)) { e.preventDefault(); window.location.href = 'index.html'; }
