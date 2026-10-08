@@ -1254,6 +1254,7 @@ function health(){
     { n:"свет сцены: "+LIGHTS.length+" палитр", ok: LIGHTS.length===SECS.length },
     { n:"караоке-движок: "+lineEls.length+" строк", ok: lineEls.length===CUES.length },
     { sec:"C", n:"микрофон: "+(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia?"готов к запросу":"недоступен"), ok: !!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia) },
+    { sec:"C", n:"микрофон-вердикт: "+(function(){ const mf=window.__MIC_FACTS; if(!mf) return "ещё не запрашивался — попросили ≠ применили"; if(mf.state!=="прочитаны") return mf.state; const a=mf.actual||{}; const б=(x)=>x===undefined?"неизвестно":(x?"вкл":"выкл"); return "попросили эхо/шум/усиление выкл — фактически: эхо="+б(a.echoCancellation)+", шум="+б(a.noiseSuppression)+", усиление="+б(a.autoGainControl)+(a.sampleRate?", "+a.sampleRate+" Гц":""); })(), ok: !window.__MIC_FACTS || (window.__MIC_FACTS.state==="прочитаны" && window.__MIC_FACTS.honest!==false) }, /* v10.2 */
     { n:"сцены: "+(window.__SCENE?window.__SCENE.list.length:0)+" облика", ok: !!(window.__SCENE&&window.__SCENE.list.length===4) },
     { n:"языки строк: "+(window.__LANGS?window.__LANGS.list.length:1), ok: !!(window.__LANGS&&window.__LANGS.list.length===4) },
     { sec:"C", n:"голосовые команды: "+((window.SpeechRecognition||window.webkitSpeechRecognition)?"доступны — но браузерное распознавание может просить сеть, офлайн-гарантии нет":"нет в этом браузере"), ok: !!(window.SpeechRecognition||window.webkitSpeechRecognition) },
@@ -1374,7 +1375,7 @@ const micPanel = $("micPanel"), micNote = $("micNote"), micTime = $("micTime"),
       micGo = $("micGo"), micStop = $("micStop");
 const NOTES = ["до","до♯","ре","ре♯","ми","фа","фа♯","соль","соль♯","ля","ля♯","си"];
 let stream = null, micAc = null, micAn = null, micBuf = null, micRAF = 0;
-let running = false, score = 0, refF = 0, lastT = 0, micSkip = false;
+let running = false, score = 0, refF = 0, lastT = 0, micSkip = false, clipShown = false;
 
 window.openMic = function(){
   let b = 0; try{ b = parseFloat(localStorage.getItem("kv.best")||"0")||0; }catch(e){}
@@ -1389,10 +1390,10 @@ function noteName(f){
   return name + " · " + (oct+1) + " окт";
 }
 function autoCorrelate(buf, sr){
-  let rms = 0;
-  for(let i=0;i<buf.length;i++) rms += buf[i]*buf[i];
+  let rms = 0, peak = 0;
+  for(let i=0;i<buf.length;i++){ const v = buf[i]; rms += v*v; const a = v<0 ? -v : v; if(a>peak) peak = a; }
   rms = Math.sqrt(rms/buf.length);
-  if(rms < 0.012) return { f:0, rms:rms };
+  if(rms < 0.012) return { f:0, rms:rms, peak:peak }; /* v10.2: peak — для вердикта перегруза */
   const N = buf.length;
   let bestOff = -1, bestCor = 0, lastCor = 1;
   const minOff = Math.floor(sr/900), maxOff = Math.floor(sr/70);
@@ -1403,8 +1404,8 @@ function autoCorrelate(buf, sr){
     if(cor > bestCor && cor > lastCor*1.02){ bestCor = cor; bestOff = off; }
     lastCor = cor;
   }
-  if(bestOff<0 || bestCor < 0.0009) return { f:0, rms:rms };
-  return { f: sr/bestOff, rms:rms };
+  if(bestOff<0 || bestCor < 0.0009) return { f:0, rms:rms, peak:peak };
+  return { f: sr/bestOff, rms:rms, peak:peak };
 }
 function setStat(s){ micStat.textContent = s; }
 
@@ -1416,13 +1417,17 @@ function micLoop(){
   const now = performance.now(), dt = Math.min(0.1,(now-lastT)/1000); lastT = now;
   micSkip = !micSkip; /* v9.2: тяжёлую автокорреляцию — через кадр, бережём батарею телефона */
   if(micSkip && running){ return; }
-  const { f, rms } = autoCorrelate(micBuf, micAc.sampleRate);
+  const { f, rms, peak } = autoCorrelate(micBuf, micAc.sampleRate);
+  /* v10.2 «ВЕРДИКТ»: перегруз честен — на клиппинге нота читается неверно, счёт не тикает */
+  const clipped = peak >= 0.985;
+  if(clipped && !clipShown){ clipShown = true; setStat("ПЕРЕГРУЗ: слишком громко — отодвиньтесь от микрофона"); }
+  else if(!clipped && clipShown && running){ clipShown = false; setStat("уровень в норме — тяни дальше"); }
   if(f>0){
     micNote.textContent = noteName(f);
     if(!refF) refF = f;
     const cents = 1200*Math.log2(f/refF);
     if(Math.abs(cents)<60) refF = refF*0.97 + f*0.03;
-    const stable = Math.abs(cents)<35 && rms>0.02;
+    const stable = Math.abs(cents)<35 && rms>0.02 && !clipped;
     micNeedle.style.width = clampPct(100 - Math.abs(cents)/50*100) + "%";
     if(stable){
       score += dt;
@@ -1445,6 +1450,26 @@ async function startMic(){
     stream = await navigator.mediaDevices.getUserMedia({
       audio:{ echoCancellation:false, noiseSuppression:false, autoGainControl:false }
     });
+    /* v10.2 «ВЕРДИКТ»: попросили ≠ применили — читаем фактические настройки трека (практика track.getSettings) */
+    window.__MIC_FACTS = (function(){
+      try{
+        const tr = stream.getAudioTracks && stream.getAudioTracks()[0];
+        if(!tr) return { state:"трек не найден" };
+        if(!tr.getSettings) return { state:"браузер не отдаёт фактические настройки" };
+        const st = tr.getSettings() || {};
+        return {
+          state:"прочитаны",
+          actual:{
+            echoCancellation: st.echoCancellation,
+            noiseSuppression: st.noiseSuppression,
+            autoGainControl: st.autoGainControl,
+            sampleRate: st.sampleRate,
+            channelCount: st.channelCount
+          },
+          honest: st.echoCancellation===false && st.noiseSuppression===false && st.autoGainControl===false
+        };
+      }catch(e){ return { state:"ошибка чтения: "+(e&&e.name?e.name:"неизвестно") }; }
+    })();
   }catch(e){ micGo.disabled = false; setStat("нет доступа к микрофону — нужно разрешение"); if(window.__ALERT) __ALERT("Нет доступа к микрофону — разрешение не дано. Игра «Держи ноту» ждёт, всё остальное работает."); return; }
   try{
     micAc = new (window.AudioContext||window.webkitAudioContext)();
@@ -1454,9 +1479,14 @@ async function startMic(){
     micBuf = new Float32Array(micAn.fftSize);
     src.connect(micAn);
   }catch(e){ setStat("не удалось запустить анализ"); stopMic(); return; }
-  running = true; score = 0; refF = 0; lastT = performance.now(); micSkip = false;
+  running = true; score = 0; refF = 0; lastT = performance.now(); micSkip = false; clipShown = false;
   micTime.textContent = "0.0 с";
-  setStat("тяни любую ноту — ровно и долго");
+  const mf = window.__MIC_FACTS;
+  if(mf && mf.state==="прочитаны" && mf.honest===false){
+    setStat("браузер включил свои обработки звука — нота может искажаться"); /* v10.2: честный вердикт */
+  } else {
+    setStat("тяни любую ноту — ровно и долго");
+  }
   micLoop();
 }
 function stopMic(){
