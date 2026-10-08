@@ -377,7 +377,7 @@ export function makeBridge({ источник = 'модуль', ядро = null,
     const события = await С.жу.all();
     const мои = события.filter(function (е) {
       return е.conversation === РАЗГОВОРЫ.identity
-        && (е.semantic?.attachments || []).some(function (в) {
+        && ((е.semantic && е.semantic.attachments) || []).some(function (в) {
           return в.kind === 'identity.ref' && в.id === String(личностьId);
         });
     });

@@ -4442,12 +4442,12 @@ function paintCount(){
 function labPaint(){
   paintSwCustom(); buildPickers(); renderMy(); paintCount(); paintJHist();
   const C = cu();
-  const wS=$("wSlider"); if(wS){ wS.value = C.w??800; $("wVal").textContent = String(C.w??800); }
-  const lS=$("lsSlider"); if(lS){ lS.value = C.ls??0; $("lsVal").textContent = (C.ls>0?"+":"")+fmt1(C.ls??0)+" px"; }
-  const hS=$("lhSlider"); if(hS){ hS.value = C.lh??1.18; $("lhVal").textContent = fmt1(C.lh??1.18); }
-  const gS=$("gkSlider"); if(gS){ gS.value = C.gk??1; $("gkVal").textContent = "×"+fmt1(C.gk??1); }
-  const cS=$("ckSlider"); if(cS){ cS.value = C.ck??1; $("ckVal").textContent = "×"+fmt1(C.ck??1); }
-  const vS=$("vkSlider"); if(vS){ vS.value = C.vk??1; $("vkVal").textContent = "×"+fmt1(C.vk??1); }
+  const wS=$("wSlider"); if(wS){ wS.value = (C.w!=null?C.w:800); $("wVal").textContent = String((C.w!=null?C.w:800)); }
+  const lS=$("lsSlider"); if(lS){ lS.value = (C.ls!=null?C.ls:0); $("lsVal").textContent = (C.ls>0?"+":"")+fmt1((C.ls!=null?C.ls:0))+" px"; }
+  const hS=$("lhSlider"); if(hS){ hS.value = (C.lh!=null?C.lh:1.18); $("lhVal").textContent = fmt1((C.lh!=null?C.lh:1.18)); }
+  const gS=$("gkSlider"); if(gS){ gS.value = (C.gk!=null?C.gk:1); $("gkVal").textContent = "×"+fmt1((C.gk!=null?C.gk:1)); }
+  const cS=$("ckSlider"); if(cS){ cS.value = (C.ck!=null?C.ck:1); $("ckVal").textContent = "×"+fmt1((C.ck!=null?C.ck:1)); }
+  const vS=$("vkSlider"); if(vS){ vS.value = (C.vk!=null?C.vk:1); $("vkVal").textContent = "×"+fmt1((C.vk!=null?C.vk:1)); }
   const hp=$("hiPick"); if(hp){ const cs=getComputedStyle(body); hp.value = (C.on&&C.c["--hi"]) ? C.c["--hi"] : (cs.getPropertyValue("--gold").trim()||"#FEE29F"); }
   [["hiWPick","--hiW"],["hiSPick","--hiS"],["hiCPick","--hiC"]].forEach(([id,key])=>{
     const el=$(id); if(!el) return;

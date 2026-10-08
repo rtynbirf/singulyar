@@ -91,7 +91,7 @@
       + тёплое золотое свечение платформы (титульный макет 01) */
 body{background:var(--bg-base);color:var(--text-primary)}
 .singulyar-canvas-bg{
-  position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+  position:fixed;top:0;right:0;bottom:0;left:0;z-index:-1;pointer-events:none;overflow:hidden;
   background:
     radial-gradient(ellipse 62% 34% at 50% 92%, rgba(212,175,55,.11) 0%, transparent 60%),
     radial-gradient(circle 38% at 12% 6%, rgba(200,204,210,.05) 0%, transparent 70%),
@@ -207,7 +207,9 @@ body{background:var(--bg-base);color:var(--text-primary)}
 :root{
   --chrome-grad:linear-gradient(180deg,#FDFDFE 0%,#C8CCD2 46%,#8A9099 72%,#E8EAEE 100%);
   --crystal-core:#FFD98A;
+  --void-lg:84px;                   /* фолбэк chrome76 (clamp появился в 79-м) */
   --void-lg:clamp(44px,7vw,84px);   /* Comfort Guardrails: обязательный воздух */
+  --void-md:52px;                   /* фолбэк chrome76 */
   --void-md:clamp(28px,4.5vw,52px);
 }
 /* Титул SINGULYAR — антиква + хром-серебро (как на эталоне владельца) */

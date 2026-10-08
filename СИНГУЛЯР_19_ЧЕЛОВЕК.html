@@ -1027,6 +1027,7 @@ try {
 </script>
 <script type="module">
 /* Adapter OS v0.1 · мост: предпочтения ·19 (человека, не автоматики) → capability-модель; ядро страницы не тронуто */
+(async function () {
 try {
   const { bootAdapterOS } = await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs');
   const prefs = (function(){ try { return JSON.parse(localStorage.getItem('singulyar.adaptation.v1') || '{}'); } catch (e) { return {}; } })();
@@ -1035,6 +1036,7 @@ try {
     read: () => { try { return JSON.parse(localStorage.getItem('singulyar.adaptation.v1') || '{}'); } catch (e) { return {}; } } };
   await bootAdapterOS({ page: '19-ЧЕЛОВЕК', preferences: { адаптация: prefs }, adapters: [адаптация] });
 } catch (e) { try { window.SingulyarOS = { state: 'unavailable', page: '19-ЧЕЛОВЕК', reason: String((e && e.message) || e) }; } catch (e2) {} }
+})();
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>

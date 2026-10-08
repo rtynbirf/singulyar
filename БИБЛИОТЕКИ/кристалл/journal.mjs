@@ -147,7 +147,7 @@ export async function purgeExpired(now) {
   const б = await open(); if (!б) return null;
   const события = await all();
   const живые = события.filter(function (e) {
-    const p = e?.policy || {};
+    const p = (e && e.policy) || {};
     if (p.retention !== 'temporary' || !Number.isFinite(p.ttl)) return true;
     return e.createdAt + p.ttl > now;
   });
@@ -155,7 +155,7 @@ export async function purgeExpired(now) {
   if (истёкшие > 0) {
     const мёртвыеId = {};
     события.forEach(function (e) {
-      const p = e?.policy || {};
+      const p = (e && e.policy) || {};
       const жив = (p.retention !== 'temporary' || !Number.isFinite(p.ttl)) || (e.createdAt + p.ttl > now);
       if (!жив) мёртвыеId[e.id] = true;
     });

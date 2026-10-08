@@ -3,7 +3,7 @@ import { STATUS } from '../src/core.mjs';
 export const textOutput = {
   id: 'output.text', kind: 'output', priority: 100,
   status: () => ({ state: STATUS.READY, privacy: 'local' }),
-  render(message, target) { target.textContent = message.text ?? ''; }
+  render(message, target) { target.textContent = message.text != null ? message.text : ''; }
 };
 
 export const ttsOutput = {
@@ -46,13 +46,13 @@ export const speechInput = {
 
 export const cameraProbe = {
   id: 'input.camera', kind: 'input', priority: 10,
-  status: () => ({ state: navigator.mediaDevices?.getUserMedia ? STATUS.PERMISSION_REQUIRED : STATUS.UNAVAILABLE, privacy: 'local-if-used' }),
+  status: () => ({ state: (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? STATUS.PERMISSION_REQUIRED : STATUS.UNAVAILABLE, privacy: 'local-if-used' }),
   async request() { return navigator.mediaDevices.getUserMedia({ video: true }); }
 };
 
 export const microphoneProbe = {
   id: 'input.microphone', kind: 'input', priority: 10,
-  status: () => ({ state: navigator.mediaDevices?.getUserMedia ? STATUS.PERMISSION_REQUIRED : STATUS.UNAVAILABLE, privacy: 'local-if-used' }),
+  status: () => ({ state: (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? STATUS.PERMISSION_REQUIRED : STATUS.UNAVAILABLE, privacy: 'local-if-used' }),
   async request() { return navigator.mediaDevices.getUserMedia({ audio: true }); }
 };
 

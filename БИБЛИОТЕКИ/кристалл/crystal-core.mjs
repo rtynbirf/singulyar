@@ -60,8 +60,8 @@ export function message({ from, conversation, text = '', attachments = [], reply
 
 /* Проверка одного требования к среде исполнения. */
 function hasCapability(name, runtime) {
-  if (name === 'speechSynthesis') return !!runtime?.speechSynthesis;
-  if (name === 'vibrate') return typeof runtime?.navigator?.vibrate === 'function';
+  if (name === 'speechSynthesis') return !!(runtime && runtime.speechSynthesis);
+  if (name === 'vibrate') return !!(runtime && runtime.navigator) && typeof runtime.navigator.vibrate === 'function';
   return true;
 }
 
@@ -100,14 +100,14 @@ export function chooseRepresentation(msg, preference = {}, runtime = globalThis)
 
 /* ── ПРЕДСТАВЛЕНИЕ: строится из события, смысл не меняется ── */
 export function represent(msg, decision, preference = {}) {
-  if (!decision?.mode) return { ok: false, error: 'NO_REPRESENTATION' };
-  const text = msg.semantic?.text ?? '';
+  if (!decision || !decision.mode) return { ok: false, error: 'NO_REPRESENTATION' };
+  const text = (msg.semantic && msg.semantic.text != null) ? msg.semantic.text : '';
   switch (decision.mode) {
-    case 'tts':         return { ok: true, mode: 'tts', text, voice: preference.voice ?? null, rate: preference.rate ?? 1, pitch: preference.pitch ?? 1 };
+    case 'tts':         return { ok: true, mode: 'tts', text, voice: (preference.voice != null ? preference.voice : null), rate: (preference.rate != null ? preference.rate : 1), pitch: (preference.pitch != null ? preference.pitch : 1) };
     case 'captions':    return { ok: true, mode: 'captions', text, punctuation: preference.punctuation !== false };
-    case 'braille':     return { ok: true, mode: 'braille', text, grade: preference.grade ?? 'auto' };
-    case 'tactile':     return { ok: true, mode: 'tactile', text, pattern: preference.pattern ?? 'default' };
-    case 'translation': return { ok: true, mode: 'translation', text, target: preference.language ?? 'ru', provider: preference.provider ?? 'user-selected' };
+    case 'braille':     return { ok: true, mode: 'braille', text, grade: (preference.grade != null ? preference.grade : 'auto') };
+    case 'tactile':     return { ok: true, mode: 'tactile', text, pattern: (preference.pattern != null ? preference.pattern : 'default') };
+    case 'translation': return { ok: true, mode: 'translation', text, target: (preference.language != null ? preference.language : 'ru'), provider: (preference.provider != null ? preference.provider : 'user-selected') };
     default:            return { ok: true, mode: 'text', text };
   }
 }
@@ -120,7 +120,7 @@ export function envelope(event, transport = 'local') {
 /* ── RETENTION: временное умирает, постоянное живёт ── */
 export function retentionFilter(events, now = Date.now()) {
   return events.filter(function (e) {
-    const p = e?.policy || {};
+    const p = (e && e.policy) || {};
     if (p.retention !== 'temporary' || !Number.isFinite(p.ttl)) return true;
     return e.createdAt + p.ttl > now;
   });
@@ -223,7 +223,7 @@ export function mergeDelivery(current, incoming) {
   if (вперёд) {
     /* RETRY/FAILED вперёд по рангу, но без прямой цепочки — только легальный переход */
     if (canTransition(current.state, incoming.state)) {
-      return advance(current, incoming.state, (incoming.history || []).slice(-1)[0]?.note || 'слияние');
+      return advance(current, incoming.state, ((incoming.history || []).slice(-1)[0] || {}).note || 'слияние');
     }
     return { ok: false, reason: 'ILLEGAL_TRANSITION', from: current.state, to: incoming.state };
   }
