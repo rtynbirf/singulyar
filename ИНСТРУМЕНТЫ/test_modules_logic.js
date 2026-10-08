@@ -187,7 +187,7 @@ test('комната ·28: формула, инвариант, протокол 
    (офлайн-закон I-05) — а сам дом обязан собираться без внешних зависимостей. */
 test('sw15.js v62: ядро модулей, УЗЕЛ ·28, СВОБОДА ·29, ТКАНЬ ·30, КВАРТИРНИК ·31, СЦЕНА ·32, ФОНД ·33, ДОМ ФОНДА ·34 в прекэше', () => {
   const св = fs.readFileSync(path.join(ROOT, 'sw15.js'), 'utf8');
-  assert.ok(св.includes("s15-orkestrator-v64"), 'кэш v63');
+  assert.ok(св.includes("s15-orkestrator-v65"), 'кэш v63');
   assert.ok(св.includes('S15_CORE_SET'), 'ядро офлайна неприкасаемо при вытеснении (СТАЛЬ)');
   assert.ok(св.includes("./singulyar-modules.js"), 'ядро в прекэше');
   assert.ok(св.includes("./СИНГУЛЯР_28_УЗЕЛ.html"), '·28 в прекэше');

@@ -194,7 +194,7 @@ test('летопись: шаблон issue на месте с честной ш�
 });
 
 test('SW v62: несёт ·33, ·34 и конфиг общака, конфиг ходит сетью-первой', () => {
-  assert.match(SW, /s15-orkestrator-v64/);
+  assert.match(SW, /s15-orkestrator-v65/);
   assert.match(SW, /'\.\/СИНГУЛЯР_33_ФОНД\.html'/);
   assert.match(SW, /'\.\/СИНГУЛЯР_34_ДОМ_ФОНДА\.html'/);
   assert.match(SW, /'\.\/ФОНД\/УСТАВ_ФОНДА\.md'/);
