@@ -265,6 +265,17 @@
 
   window.addEventListener('unhandledrejection', function (событие) {
     try {
+      /* v1.53.0 «ЛИЦО»: скип вида-перехода — не сбой дома. Chromium сам прерывает
+      кросс-документные переходы (@view-transition) и честно признаётся
+      «Transition was skipped/interrupted» — это норма жизни, не рваная нить:
+      в журнал — тихо, без паники и без счётчика сбоев. */
+      var пПричина = событие && событие.reason;
+      var пТекст = пПричина && пПричина.message ? String(пПричина.message) : String(пПричина || '');
+      if (/^Transition was (skipped|interrupted)/i.test(пТекст)) {
+        писатьЖурнал({ т: меткаВремени(), откуда: 'вид-переход', что: 'скипнут движком — не сбой' });
+        try { событие.preventDefault(); } catch (еп) { }
+        return;
+      }
       var п = событие && событие.reason;
       var что = (п && п.message) ? п.message : (п && п.stack ? String(п.stack).split('\n')[0] : String(п));
       показатьПанель('обещание', что, п && п.stack);

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- СИНГУЛЯР · ЛИЦО ЧЕЛОВЕКА — фавикон дома (v1.53.0 «ЛИЦО»)
+       Канон: void + стекло-осколки кристалла + золото — единственный акцент.
+       Лицо узнаётся от 16px: золото головы, void-глаза, покой улыбки, купол плеч. -->
+  <defs>
+    <radialGradient id="void" cx="50%" cy="40%" r="78%">
+      <stop offset="0" stop-color="#15181E"/>
+      <stop offset=".62" stop-color="#0B0D11"/>
+      <stop offset="1" stop-color="#06070A"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6DC92"/>
+      <stop offset=".5" stop-color="#E9B84E"/>
+      <stop offset="1" stop-color="#C8963C"/>
+    </linearGradient>
+    <linearGradient id="gold2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EDC166"/>
+      <stop offset="1" stop-color="#B27F2C"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#void)"/>
+
+  <!-- кристалл: осколки стекла за лицом -->
+  <g stroke="rgba(240,240,248,.28)" stroke-width="3" stroke-linejoin="round">
+    <path d="M256 92 420 256 256 420 92 256Z" fill="rgba(240,240,248,.045)"/>
+    <path d="M256 92 420 256 256 256Z" fill="rgba(240,240,248,.085)"/>
+    <path d="M256 256 92 256 256 420Z" fill="rgba(240,240,248,.065)"/>
+    <path d="M256 92 256 256 92 256Z" fill="rgba(240,240,248,.03)"/>
+    <path d="M256 256 420 256 256 420Z" fill="rgba(240,240,248,.04)"/>
+  </g>
+  <path d="M256 92 420 256 256 420 92 256Z" fill="none" stroke="rgba(240,240,248,.38)" stroke-width="4"/>
+
+  <!-- купол плеч -->
+  <path d="M142 456a114 114 0 0 1 228 0Z" fill="url(#gold2)"/>
+
+  <!-- лицо -->
+  <circle cx="256" cy="210" r="96" fill="url(#gold)"/>
+  <circle cx="222" cy="198" r="13" fill="#0A0A0C"/>
+  <circle cx="290" cy="198" r="13" fill="#0A0A0C"/>
+  <path d="M220 242q36 24 72 0" stroke="#0A0A0C" stroke-width="12" stroke-linecap="round" fill="none"/>
+</svg>
