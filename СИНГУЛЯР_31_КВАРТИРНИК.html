@@ -2,7 +2,13 @@
 <html lang="ru" data-motion="on">
 <head>
 <meta charset="utf-8"/>
-<link rel="icon" href="icons/icon-192.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда: void + стекло-осколки + золото;
+     ICO — для ТВ-Chromium 76 (SVG-фавиконы он не знает), SVG — для свежих, PNG — для старых движков -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
 <!-- ДОМ СИНГУЛЯР: дверь ·31 подключена к ядру; визит пишет само ядро.
      Оригинал КВАРТИРНИКА не тронут: ниже идёт baseline 1:1. -->
 <script defer src="./singulyar-modules.js"></script>
@@ -11,7 +17,11 @@
 <meta name="theme-color" content="#050608"/>
 <meta name="color-scheme" content="dark"/>
 <meta name="description" content="КВАРТИРНИК v9.7 · ТОМОГРАФ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри."/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050608'/%3E%3Ccircle cx='32' cy='26' r='11' fill='none' stroke='%23DEA968' stroke-width='4'/%3E%3Cpath d='M32 40v10M22 54h20' stroke='%23F5A623' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"/>
+<link rel="icon" href="favicon.ico" sizes="any">
+<!-- v1.53.0 «ЛИЦО»: старый глиф-силуэт заменён лицом человека дома (favicon.svg) -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
 <title>СИНГУЛЯР ·31 — КВАРТИРНИК v9.7 · ТОМОГРАФ — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
@@ -487,7 +497,18 @@ body[data-scene="day"] .big,body[data-scene="day"] .round.bigplay{color:#fff}
 #tip.down .tarr{top:-6px;border-left:1px solid rgba(222,169,104,.35);border-top:1px solid rgba(222,169,104,.35)}
 
 /* ───── v5 · ПУЛЬТ: панель настроек ───── */
-dialog#panel{max-width:760px;padding:0;overflow:hidden;background:var(--panel2)}/* v10.1: min() мёртв — рост в sngAdaptStyle */
+/* v10.3 «ЛИЦО» — футуризм ФУНДАМЕНТА: стекло дома, тонкая золотая грань сверху, серебро-типографика */
+dialog::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,.55) 50%,transparent)}
+dialog h3{font-family:ui-monospace,Consolas,'Courier New',monospace;letter-spacing:.2em;
+  background:linear-gradient(135deg,#F6DC92,#D4AF37 55%,#F6DC92);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+dialog#panel{max-width:460px;padding:0;overflow:hidden;background:var(--panel2);
+  /* v10.3 «ЛИЦО»: панель живёт у СВОЕЙ кнопки — док справа, под шапкой; по умолчанию СВЁРНУТА */
+  position:fixed;top:calc(var(--sng-topH,68px) + 8px);right:12px;left:auto;bottom:auto;margin:0;transform:none;
+  width:94vw;max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-dockH,84px) - 24px)}
+dialog#panel.свёрнут{width:auto;max-width:94vw}
+dialog#panel.свёрнут .p-search,dialog#panel.свёрнут .p-body{display:none}
 .p-head{display:flex;align-items:center;gap:12px;padding:18px 22px 12px;border-bottom:1px solid #ffffff12;flex-wrap:wrap}
 .p-head h3{margin:0}
 .p-search{flex:1;min-width:150px;padding:10px 14px;border-radius:12px;background:#ffffff0c;
@@ -498,8 +519,10 @@ dialog#panel{max-width:760px;padding:0;overflow:hidden;background:var(--panel2)}
 .p-tabs button{flex:none;padding:9px 14px;border-radius:12px 12px 0 0;font-size:11.5px;font-weight:900;
   letter-spacing:.1em;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;transition:.15s}
 .p-tabs button:hover{color:var(--text)}
-.p-tabs button.on{color:var(--amber);border-bottom-color:var(--amber);background:rgba(222,169,104,.05)}
-.p-body{overflow-y:auto;padding:6px 22px 20px;max-height:560px;max-height:min(62dvh,560px);overscroll-behavior:contain}
+.p-tabs button.on{color:var(--amber);border-bottom-color:transparent;
+  background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(212,175,55,.03));box-shadow:inset 0 -2px 0 var(--amber)}
+.p-body{overflow-y:auto;padding:6px 22px 20px;max-height:560px;
+  max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-dockH,84px) - 150px);overscroll-behavior:contain}
 .ptab{display:none}
 .ptab.on{display:block}
 .prow2{display:flex;flex-direction:column;gap:7px;padding:13px 0;border-bottom:1px solid #ffffff0a}
@@ -643,6 +666,7 @@ window.__ALERT = function(t){
   <button id="btnToasts" class="tbtn on" data-tip="Подсказки между куплетами — выключи, если хочешь тишину">ТОСТЫ</button>
   <button id="btnMotion" class="tbtn on" data-tip="Движение: пульс фона и отсчёт (клавиша M); полное/мерцонное/выкл — в ПУЛЬТе">ДВИЖ</button>
   <a id="btnHome" class="tbtn" href="./index.html" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
+  <button id="btnInstall" class="tbtn" hidden data-tip="Дом умеет ставиться приложением: браузер сам предложил — жми, и иконка появится на устройстве">УСТАНОВИТЬ</button>
   <button id="btnHelp" class="tbtn" aria-label="Справка (клавиша ?)" data-tip="Справка: 6 вкладок — старт, кнопки, клавиши, голос, кому что, вопросы (?)">?</button>
 </header>
 
@@ -3157,6 +3181,7 @@ body.insertAdjacentHTML("beforeend", `
   <div class="p-head">
     <h3>⚙ ПУЛЬТ</h3>
     <input id="pSearch" class="p-search" type="search" placeholder="поиск по настройкам…" aria-label="поиск по настройкам">
+    <button class="pbtn" id="pulToggle" aria-expanded="false" data-tip="Панель по умолчанию свёрнута: рельса вкладок сразу, все настройки — по желанию">РАЗВЕРНУТЬ</button>
     <button class="x" id="pulClose" data-tip="Закрыть пульт (Esc)">✕</button>
   </div>
   <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button role="tab" id="ptab-look" data-pt="look" class="on" aria-selected="true" aria-controls="ppanel-look">ВИД</button>
@@ -3704,7 +3729,13 @@ function pultPaint(){
   threadPaint(); /* v9.2: нить вечера живёт в ногах панели */
 }
 window.__PULT = {
-  open(){ $("pSearch").value=""; applySearch(); pultPaint(); $("panel").showModal(); },
+  open(){ $("pSearch").value=""; applySearch(); pultPaint();
+    /* v10.3 «ЛИЦО» (эргономика владельца): панель открывается у СВОЕЙ кнопки (док справа,
+       под шапкой) и по умолчанию СВЁРНУТА — рельса вкладок сразу, все настройки по желанию */
+    свернутьПульт(true);
+    $("panel").showModal();
+    var т=$("pulToggle"); if(т){ try{ т.focus({preventScroll:true}); }catch(e){ try{ т.focus(); }catch(e2){} } }
+  },
   paint: pultPaint,
   touch,
   applyAll(){
@@ -3721,6 +3752,39 @@ window.__PULT = {
     pultPaint();
   }
 };
+/* v10.3 «ЛИЦО»: рельса ↔ вся панель — решает человек, состояние честно в aria-expanded */
+function свернутьПульт(свёрнута){
+  var п=$("panel"), т=$("pulToggle"); if(!п||!т) return;
+  п.classList.toggle("свёрнут", !!свёрнута);
+  т.textContent = свёрнута ? "РАЗВЕРНУТЬ" : "СВЕРНУТЬ";
+  т.setAttribute("aria-expanded", свёрнута ? "false" : "true");
+}
+(function(){
+  function boot(){
+    var т=$("pulToggle"); if(!т) return;
+    т.addEventListener("click", function(){ свернутьПульт(!$("panel").classList.contains("свёрнут")); });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+/* v10.3 «ЛИЦО»: установка дома приложением — только когда браузер сам предлагает (I-01);
+   ТВ-браузеры (Tizen 6.5 / webOS) установку не дают вовсе — кнопка честно не появится */
+(function(){
+  var отложено=null;
+  function boot(){
+    var b=$("btnInstall"); if(!b) return;
+    window.addEventListener("beforeinstallprompt", function(e){
+      try{ e.preventDefault(); }catch(err){}
+      отложено=e; b.hidden=false;
+    });
+    window.addEventListener("appinstalled", function(){ отложено=null; b.hidden=true; });
+    b.addEventListener("click", function(){
+      if(!отложено) return;
+      try{ отложено.prompt(); }catch(e){}
+      try{ отложено.userChoice.then(function(){ отложено=null; b.hidden=true; }).catch(function(){}); }catch(e){}
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
 
 /* ── хвост памяти вечера: свет, тосты, движение, подача при загрузке ── */
 (function boot(){
@@ -5178,8 +5242,8 @@ html[data-rc="1"] *:focus{outline:4px solid var(--rc-ring)!important;outline-off
 html[data-rc="1"]:not([data-rc-ns="1"]) .dock button:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .tbtn:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .pbtn:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .seg button:focus{transform:scale(1.07)}
 html[data-rc="1"] .dock{padding-bottom:calc(14px + var(--sng-sb,0px))}/* v10.1: max() мёртв на chrome76 → var из sngAdaptStyle */
 html[data-rc="1"] .dock button{min-height:52px}
-html[data-rc="1"] dialog#panel{max-width:640px;max-height:90vh}/* v10.1: min() мёртв — рост в sngAdaptStyle */
-html[data-rc="1"] dialog#panel .p-body{max-height:calc(90vh - 118px)}
+html[data-rc="1"] dialog#panel{max-width:560px;max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-dockH,84px) - 24px)}
+html[data-rc="1"] dialog#panel .p-body{max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-dockH,84px) - 150px)}
 html[data-rc="1"] dialog#panel .p-body button,html[data-rc="1"] dialog#panel .p-body .sw{min-height:44px}
 #rcToast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translateX(-50%);z-index:2147483600;background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
 #rcToast.on{opacity:1}
