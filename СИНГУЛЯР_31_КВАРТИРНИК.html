@@ -198,14 +198,17 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 .modes button{padding:8px 14px;border-radius:12px;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   color:var(--faint);background:#ffffff08;border:1px solid #ffffff10;transition:.2s}
 .modes button.on{color:#050608;background:var(--mint);border-color:transparent}
-#lyricsWrap{position:absolute;inset:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px) 0 calc(var(--sng-dockH,84px) + var(--sng-tagH,0px) + 24px);overflow:hidden}
+/* v10.10 «ОДИН СЛОЙ» (приказ владельца): колонка текста — один слой изображения для всех трёх ползунков
+   (титры/транскрипция/оригинал), САМЫЙ ВЕРХНИЙ всегда (выше тостов z6, трассера z44 и бирок; ниже только
+   ПУЛЬТа — нативный top layer — и системного тоста) и занимает больше экрана: полосы 2px/6px вместо 16/24 */
+#lyricsWrap{position:absolute;inset:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 2px) 0 calc(var(--sng-dockH,84px) + var(--sng-tagH,0px) + 6px);overflow:hidden;z-index:2147483000}
 #lyricsWrap::before,#lyricsWrap::after{content:"";position:absolute;left:0;right:0;height:90px;z-index:2;pointer-events:none}
 #lyricsWrap::before{top:0;background:linear-gradient(var(--bg),transparent)}
 #lyricsWrap::after{bottom:0;background:linear-gradient(transparent,var(--bg))}
 /* fades уже на var(--bg) — темы и сцены красят без правок */
 #lyrics{position:absolute;left:0;right:0;top:0;transition:transform .5s cubic-bezier(.22,.9,.3,1);will-change:transform}
-.line{position:relative;padding:14px 34px 14px 52px;font-size:calc(24px*var(--lyrScale,1));/* v10.1: пол; рост/потолок в sngAdaptStyle */
-  font-weight:var(--lyrW,800);line-height:var(--lyrLH,1.18);letter-spacing:var(--lyrLS,-.01em);color:var(--lyr);opacity:.6;
+.line{position:relative;padding:14px 34px 14px 52px;font-size:calc(24px*var(--lyrScale,1)*var(--fitK,1));/* v10.1: пол; v10.10: автоподстройка --fitK; рост/потолок в sngAdaptStyle */
+  font-weight:var(--lyrW,800);line-height:var(--lyrLH,1.18);letter-spacing:var(--lyrLS,-.01em);color:var(--lyr);opacity:.74;/* v10.10: стол текста читается, не мозолит */
   transition:color .35s,opacity .35s,transform .35s;cursor:pointer}
 .line.done{opacity:.22}
 .line.on{color:var(--lyrOn,var(--text));opacity:1;transform:scale(1.02)}
@@ -231,7 +234,7 @@ body[data-mode="all"] .line{cursor:default}
 html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:none}
 
 /* ───── тосты ───── */
-.toast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translate(-50%,-16px);z-index:6;pointer-events:none;
+.toast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translate(-50%,-16px);z-index:2147483100;pointer-events:none;/* v10.10: выше колонки-слоя, чтобы тост всегда читался */
   background:#101113f2;border:1px solid rgba(222,169,104,.23);color:var(--text);padding:15px 26px;border-radius:18px;
   font-size:15.5px;font-weight:700;letter-spacing:.02em;box-shadow:0 14px 50px #00000070,inset 0 1px 0 rgba(240,240,248,.06);
   opacity:0;transition:.45s;max-width:520px;text-align:center}/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
@@ -317,7 +320,7 @@ dialog:modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);marg
 body.biglyrics .topbar,body.biglyrics .dock{opacity:.08;pointer-events:none;transition:opacity .4s}
 body.biglyrics .seclabel,body.biglyrics .modes{opacity:.08;pointer-events:none;transition:opacity .4s}
 body.biglyrics #lyricsWrap{inset:40px 0 40px}
-body.biglyrics .line{font-size:calc(30px*var(--lyrScale,1))}/* v10.1: пол; рост/потолок в sngAdaptStyle */
+body.biglyrics .line{font-size:calc(30px*var(--lyrScale,1)*var(--fitK,1))}/* v10.1: пол; v10.10: автоподстройка; рост/потолок в sngAdaptStyle */
 
 /* ───── сцены ───── */
 #sceneRow{position:fixed;top:calc(var(--sng-topH,68px) + 2px);left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:6px;
@@ -545,9 +548,12 @@ dialog#panel .p-body{max-height:none;flex:1 1 auto;overscroll-behavior:contain}
 .p-search{flex:1;min-width:150px;padding:10px 14px;border-radius:12px;background:#ffffff0c;
   border:1px solid #ffffff18;color:var(--text);font:inherit;font-size:13px;outline-offset:2px}
 .p-search::placeholder{color:var(--faint)}
-.p-tabs{display:flex;gap:4px;padding:10px 14px 0;overflow-x:auto;scrollbar-width:none}
+/* v10.10 (приказ владельца: «КАК НА ДРУГУЮ ВКЛАДКУ ПЕРЕЙТИ?»): ряд вкладок ПЕРЕНОСИТСЯ —
+   все разделы (ВИД·ТЕКСТ·ЗВУК·ЭФФЕКТЫ·ЛЮДИ·ДАННЫЕ·ЛАБ) всегда видны целиком, никакого
+   скрытого горизонтального скролла; переход — один клик из любого места панели */
+.p-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px 0;position:relative;z-index:2}
 .p-tabs::-webkit-scrollbar{display:none}
-.p-tabs button{flex:none;padding:9px 14px;border-radius:12px 12px 0 0;font-size:11.5px;font-weight:900;
+.p-tabs button{flex:none;padding:12px 16px;min-height:42px;border-radius:12px 12px 0 0;font-size:12.5px;font-weight:900;
   letter-spacing:.1em;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;transition:.15s}
 .p-tabs button:hover{color:var(--text)}
 .p-tabs button.on{color:var(--amber);border-bottom-color:transparent;
@@ -679,6 +685,11 @@ html[data-env="тв"] .langgrid{max-height:52vh}
   body.relax .sng-strip, body.relax #toast, body.relax #authorTag{opacity:0;pointer-events:none;transition:opacity .5s}
   body.relax-peek .topbar, body.relax-peek #sceneRow, body.relax-peek .songhead, body.relax-peek .dock,
   body.relax-peek .sng-strip, body.relax-peek #toast, body.relax-peek #authorTag{opacity:1;pointer-events:auto}
+  /* v10.10 «ОДИН СЛОЙ» (приказ владельца: «СТОЛ ДЛЯ РЕЛАКСА ОСВОБОЖДЁН — ЗАБЕЙ ТЕКСТОМ, УНИСОН ШИЛКУ,
+     ВСЁ НА АВТОМАТ»): панелей нет — колонка текста забирает почти весь экран; унисон со ШИЛКОЙ
+     ведёт сам движок строк (активная строка = свет ШИЛКИ), автоподстройка --fitK ужимает длинное */
+  body.relax #lyricsWrap{inset:6vh 0 4vh}
+  body.relax .line{opacity:.82}
 </style>
 </head>
 <body data-mode="start" data-scene="party" class="">
@@ -715,7 +726,7 @@ window.__ALERT = function(t){
   <button id="btnLight" class="tbtn on" data-tip="Свет сцены: палитры меняются вместе с секциями песни (клавиша L)">СВЕТ</button>
   <button id="btnToasts" class="tbtn on" data-tip="Подсказки между куплетами — выключи, если хочешь тишину">ТОСТЫ</button>
   <button id="btnMotion" class="tbtn on" data-tip="Движение: пульс фона и отсчёт (клавиша M); полное/мерцонное/выкл — в ПУЛЬТе">ДВИЖ</button>
-  <a id="btnHome" class="tbtn" href="./index.html?v=109" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
+  <a id="btnHome" class="tbtn" href="./index.html?v=110" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
   <button id="btnInstall" class="tbtn" hidden data-tip="Дом умеет ставиться приложением: браузер сам предложил — жми, и иконка появится на устройстве">УСТАНОВИТЬ</button>
   <button id="btnHelp" class="tbtn" aria-label="Справка (клавиша ?)" data-tip="Справка: 6 вкладок — старт, кнопки, клавиши, голос, кому что, вопросы (?)">?</button>
 </header>
@@ -1407,6 +1418,7 @@ function health(){
       { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
       { sec:"S", n:"ПУЛЬТ закрыт = скрыт совсем: не просвечивает и не ест касания зала", ok: (function(){ try{ var п=document.getElementById("panel"); return !!п && !п.open && getComputedStyle(п).display==="none"; }catch(e){ return false; } })() },
       { sec:"S", n:"ТРИ СТРОКИ: титры · транскрипция · оригинал — свои ползунки в ПУЛЬТе, размер помнится за каждым", ok: (function(){ try{ var a=document.getElementById("tcSlider"), b=document.getElementById("sbsSlider"), r=getComputedStyle(document.documentElement); return !!(a&&b&&r.getPropertyValue("--tcScale")&&r.getPropertyValue("--subScale")); }catch(e){ return false; } })() },
+      { sec:"S", n:"ОДИН СЛОЙ: колонка текста — самый верхний слой (z=2147483000) и больше экрана; вкладки ПУЛЬТа переносятся и всегда видны; зашёл в ПУЛЬТ = вкладка ВИД", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==2147483000) return false; var tb=document.querySelector(".p-tabs"); if(!tb||getComputedStyle(tb).flexWrap!=="wrap") return false; var pp=document.querySelector('.p-tabs button[data-pt="look"]'); return !!pp; }catch(e){ return false; } })() },
     ];
   };
   [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8].forEach(fn=>{
@@ -2546,6 +2558,24 @@ window.__ON_LINE = (i)=>{
   say(cur ? "Строка: "+cur.t : "");
 };
 
+/* ── v10.10 «ОДИН СЛОЙ» (приказ владельца: «ВСЁ НА АВТОМАТ — ЧТОБ РАБОТАЛО НА АВТОМАТЕ, ПОДСТРОЙКА») ──
+   Активная строка сама подстраивается под высоту слоя: длинная реплика — чуть мельче, короткая — крупнее.
+   Цепляемся ПОВЕРХ существующего __ON_LINE (речь/сообщения не тронуты) — смена строки = унисон со ШИЛКОй */
+(function(){
+  const п0 = window.__ON_LINE;
+  window.__ON_LINE = function(i){
+    try{
+      const w = $("lyricsWrap"), el = lineEls[i];
+      if(w && el){ requestAnimationFrame(function(){ try{
+        const avail = w.clientHeight||1, need = el.offsetHeight||1;
+        const k = Math.max(0.5, Math.min(1, (avail*0.6)/need));
+        w.style.setProperty("--fitK", k.toFixed(3));
+      }catch(e){} }); }
+    }catch(e){}
+    if(п0) try{ п0(i); }catch(e){}
+  };
+})();
+
 /* ── ГОЛОСОВОЕ УПРАВЛЕНИЕ ── */
 let rec = null, vcOn = false;
 const vcGo = $("vcGo"), vcStat = $("vcStat");
@@ -3598,6 +3628,7 @@ document.body.insertAdjacentHTML("beforeend", `
 <br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n<br><b>v10.7</b> — «ЧИСТЫЙ СВЕТ»: белый слой наверху навсегда. Светлые комнаты ДЕТИ и ДЕНЬ закреплены инлайном на html+body — ни тема, ни старый кэш ТВ, ни чужой каскад не сделают чёрную подложку; свет сцены в светлых комнатах не льёт тёмные заливки вовсе («ТВ-растр» и «ёмные затемнения» изгнаны, старые заливки смываются при входе в комнату). ПУЛЬТ по приказу владельца открывается сразу во весь экран, «РАЗВЕРНУТЬ» снят, Esc и ✕ — выход из меню. РЕЛАКС честен до конца: при пении гаснут ВСЕ панели, слайдеры, бирка модуля, шапка песни, тосты и бирка автора — только отдых, только текст, только песня; касание возвращает на 2,6 с, пауза возвращает всё. ЛАБ и высокий контраст стоят выше закрепления — ЧЕЛОВЕК РЕШАЕТ. Пробы ЗДОРОВЬЯ говорят правду: ни одной «ok: true» без настоящей проверки. Номер v10.6 не живёт в этом зале: чужая сборка под этим номером (без контента дома) снята словом владельца, номер вычеркнут — «из пятницы суббота не торчит».
 <br><b>v10.8</b> — «ПОРЯДОК»: ПУЛЬТ больше не просвечивает и не мешает залу: закрытая панель скрыта намертво (правило автора display:flex больше не перебивает браузерное «dialog не открыт = не показан»), стекло больше не съедало касания — все кнопки зала снова на месте. ПУЛЬТ — сразу во весь экран, без скролл-бара (прокрутка колесом и пальцем, полоса не рисуется), меню непрозрачное и держит характер комнаты: ДЕТИ — крем, ДЕНЬ — бумага, РОМАНТИКА — лиловый вечер, темы подачи (ТЕПЛО/НЕОН/МИНИМАЛ/БАРХАТ/КРАФТ) меняют характер элементов везде. Транскрипция «как звучит» — крупнее втрое и растёт вместе со строкой (0,66 высоты строки против прежних жёстких 12px) — её человек смотрит из дальнего угла, лупа не нужна. Портянка владельца вшита ЦЕЛИКОМ: 92 новых понимания «Просто люби» из групп по 20 — Африка и Океания, Индия, кельты и романы Европы, исчезающие языки России/Австралии/Америк (ижорский, вепсский, мэнский, корнский, навахо, чероки, инуктитут, гренландский…), Африка-2 (волоф, фула, бамбара, шона…), исторические (средневековая латынь, старофранцузский, староитальянский, древневерхненемецкий, древнерусский) — у всех чтение кириллицей, выравнивание по оси 40 строк, пустые места честно падают на оригинал; таблица ЯЗЫК теперь держит 108 пониманий. Числа носителей сверены и исправлены (Ethnologue 2023/24 + цифры самих партий): формат честный — млн / тыс. / штуки со склонением, у исторических — «историческое понимание». Пробы ЗДОРОВЬЯ починены: проба CSP имела сломанный селектор и молчала, порог оси поднят до честных 100.
 <br><b>v10.9</b> — «ТРИ СТРОКИ»: подача принадлежит человеку. На реплику — три строки: титры выбранным языком (крупная), «как звучит» — транскрипция буквами родного языка, и оригинал песни; у каждой строки СВОЙ ползунок в ПУЛЬТе (СТРОКА 1 · ТИТРЫ, СТРОКА 2 · ТРАНСКРИПЦИЯ, СТРОКА 3 · ОРИГИНАЛ), и дом помнит размер за каждым — все разные, вкусы разные (kv.prefs: tcs, sbs). Множители calc() с var() живут поверх старых em-пропорций — адаптив, сцены и темы подачи не тронуты; ползунки честно показывают свои значения при каждом открытии ПУЛЬТа; проба ЗДОРОВЬЯ держит правду о трёх строках.
+  <br><b>v10.10</b> — «ОДИН СЛОЙ»: три строки подачи (титры · транскрипция · оригинал) живут в ОДНОМ слое изображения — колонка текста теперь всегда самый верхний слой экрана (выше тостов и трассера; ПУЛЬТ по-прежнему выше всех) и занимает больше экрана. Вкладки ПУЛЬТа: ряд переносится — все разделы всегда видны, переход в один клик; зашёл в ПУЛЬТ — всегда первая вкладка ВИД, никакой залившей вкладки. РЕЛАКС: стол освобождён — колонка текста забирает весь экран (только отдых, только текст, только песня, унисон со ШИЛКОЙ). Подстройка на автомате: длинная реплика сама ужимается (--fitK), короткая — дышит.
 
   <p style="margin-top:10px"><b>Самодостаточность.</b> Всё живёт в этом одном файле: песня, движок, настройки в памяти браузера. Ничего не уходит в сеть. Файл переживёт своего родителя — и на другом устройстве настройки возвращаются из json.</p>
   <p style="margin-top:10px"><b>На экран телефона.</b> iPhone: «Поделиться» → «На экран „Домой“». Android/Chrome: меню ⋮ → «Установить приложение» / «Добавить на главный экран».</p>
@@ -4438,7 +4469,12 @@ function pultPaint(){
 }
 window.__PULT = {
   open(){ if($("panel").open) return; /* v10.7: двойной «пульт» голосом/кнопкой не валит showModal */
-    $("pSearch").value=""; applySearch(); pultPaint();
+    $("pSearch").value="";
+    /* v10.10 «ОДИН СЛОЙ» (приказ владельца: «ЗАХОДИШЬ В ЭТУ ЖЕ ЗАПОМНЕНУЮ — НЕ ВЫБРАТЬ ДРУГОЙ ВКЛАДКИ»):
+       зашёл в ПУЛЬТ = всегда первая вкладка ВИД; ни одной залившей вкладки; остальные — рядом, в один клик */
+    (function(){ document.querySelectorAll(".p-tabs button").forEach(x=>{ const в=x.dataset.pt==="look"; x.classList.toggle("on",в); x.setAttribute("aria-selected", в?"true":"false"); x.setAttribute("tabindex", в?"0":"-1"); });
+      document.querySelectorAll("#pBody .ptab").forEach(t=>t.classList.toggle("on", t.dataset.ptab==="look")); })();
+    applySearch(); pultPaint();
     /* v10.7 (приказ владельца): ПУЛЬТ открывается СРАЗУ ВО ВЕСЬ ЭКРАН; Esc/✕ — выход из меню */
     $("panel").showModal();
     if(window.__СЛОИ) setTimeout(function(){ window.__СЛОИ.аудит(true); }, 350); /* v10.4: закон слоёв — панель отчитывается честно */
@@ -4482,7 +4518,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.9 «ТРИ СТРОКИ»";
+      b.className="sng-верш"; b.textContent="· v10.10 «ОДИН СЛОЙ»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
