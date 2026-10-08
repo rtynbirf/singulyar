@@ -88,7 +88,7 @@ body[data-mode="sing"]  #sing{display:flex}
 body[data-mode="bravo"] #bravo{display:flex}
 
 /* ───── шапка ───── */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:14px;
+.topbar{position:fixed;top:var(--sng-stripH,0px);left:0;right:0;z-index:5;display:flex;align-items:center;gap:14px;
   padding:calc(14px + var(--sng-st,0px)) 18px 14px;pointer-events:none;
   background:linear-gradient(rgba(10,10,12,.94),transparent);background:linear-gradient(color-mix(in srgb,var(--bg) 94%,transparent),transparent)}
 .topbar>*{pointer-events:auto}
@@ -105,7 +105,8 @@ body[data-mode="bravo"] #bravo{display:flex}
 .chip.is-bad{color:var(--red)}
 
 /* ───── старт-экран ───── */
-#start{text-align:center;gap:20px;max-width:820px;margin:0 auto;padding:96px 24px 120px}
+#start{text-align:center;gap:20px;max-width:820px;margin:0 auto;/* v10.2 ВЕРДИКТ: старт живёт СВОЕЙ полосой ниже шапки и ряда сцены — нигде не наезжает */
+  padding:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + 36px) 24px calc(var(--sng-dockH,84px) + 36px)}
 #start h1{font-size:40px;font-weight:700;line-height:1.04;/* v10.1 АДАПТ: пол; рост/потолок в sngAdaptStyle (clamp мёртв на chrome76) */
   /* v9.3: антиква + хром-серебро — титул как у дома (design-v3.2 .sng-crystal-title) */
   font-family:Georgia,"Palatino Linotype","Book Antiqua","Times New Roman",serif;
@@ -140,7 +141,7 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 .hint{font-size:12.5px;color:var(--faint);line-height:1.6;max-width:520px}
 /* ───── v8→v9 АВТОР: штрих-код песни больше не портянка — скромная бирка в углу, перетаскивается ───── */
 #start,#bravo{overflow-y:auto;justify-content:safe center}
-#authorTag{position:fixed;z-index:24;right:14px;bottom:calc(96px + var(--sng-sb,0px));
+#authorTag{position:fixed;z-index:24;right:14px;bottom:calc(var(--sng-dockH,84px) + 14px);
   display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 6px 4px;border-radius:12px;
   background:rgba(23,24,26,.88);background:color-mix(in srgb, var(--panel) 88%, transparent);
   border:1px solid rgba(167,168,168,.24);border:1px solid color-mix(in srgb, var(--dim) 24%, transparent);
@@ -172,7 +173,9 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 
 /* ───── экран песни ───── */
 #sing{justify-content:flex-start;padding:0}
-.songhead{position:absolute;top:112px;left:0;right:0;display:flex;align-items:center;gap:14px;
+/* v10.2 ВЕРДИКТ: полосы экрана считаются от --sng-topH (шапка) и --sng-rowH (ряд сцены) —
+   каждый слой в своём ряду; ни один панель никогда не перекрывает другую ни на какой диагонали */
+.songhead{position:absolute;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + 8px);left:0;right:0;display:flex;align-items:center;gap:14px;
   padding:0 22px;z-index:4;flex-wrap:wrap}
 .seclabel{font-size:13px;font-weight:900;letter-spacing:.22em;color:var(--amber);
   padding:8px 16px;border-radius:999px;background:rgba(222,169,104,.08);border:1px solid rgba(222,169,104,.17)}
@@ -181,7 +184,7 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 .modes button{padding:8px 14px;border-radius:12px;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   color:var(--faint);background:#ffffff08;border:1px solid #ffffff10;transition:.2s}
 .modes button.on{color:#050608;background:var(--mint);border-color:transparent}
-#lyricsWrap{position:absolute;inset:168px 0 150px;overflow:hidden}
+#lyricsWrap{position:absolute;inset:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px) 0 calc(var(--sng-dockH,84px) + var(--sng-tagH,0px) + 24px);overflow:hidden}
 #lyricsWrap::before,#lyricsWrap::after{content:"";position:absolute;left:0;right:0;height:90px;z-index:2;pointer-events:none}
 #lyricsWrap::before{top:0;background:linear-gradient(var(--bg),transparent)}
 #lyricsWrap::after{bottom:0;background:linear-gradient(transparent,var(--bg))}
@@ -214,7 +217,7 @@ body[data-mode="all"] .line{cursor:default}
 html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:none}
 
 /* ───── тосты ───── */
-.toast{position:fixed;top:74px;left:50%;transform:translate(-50%,-16px);z-index:6;pointer-events:none;
+.toast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translate(-50%,-16px);z-index:6;pointer-events:none;
   background:#101113f2;border:1px solid rgba(222,169,104,.23);color:var(--text);padding:15px 26px;border-radius:18px;
   font-size:15.5px;font-weight:700;letter-spacing:.02em;box-shadow:0 14px 50px #00000070,inset 0 1px 0 rgba(240,240,248,.06);
   opacity:0;transition:.45s;max-width:520px;text-align:center}/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
@@ -274,6 +277,9 @@ dialog p{color:var(--dim);font-size:14px;line-height:1.7}
 dialog .x{position:absolute;top:14px;right:16px;color:var(--faint);font-size:20px;padding:6px 10px;border-radius:10px}
 dialog .x:hover{color:var(--text);background:#ffffff12}
 dialog{position:relative}
+/* v10.2 ВЕРДИКТ: показанное окно — своим слоем по центру; раньше dialog:modal терял нативное
+   центрирование и ложился в левый верх — поверх шапки и ряда сцены (слои перекрывались) */
+dialog:modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);margin:0}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;margin-top:16px;font-size:13px;color:var(--dim)}
 .keys kbd{background:#ffffff10;border:1px solid #ffffff1c;border-radius:8px;padding:2px 9px;
   font-family:inherit;font-weight:800;font-size:11.5px;color:var(--text);white-space:nowrap;justify-self:start}
@@ -300,7 +306,7 @@ body.biglyrics #lyricsWrap{inset:40px 0 40px}
 body.biglyrics .line{font-size:calc(30px*var(--lyrScale,1))}/* v10.1: пол; рост/потолок в sngAdaptStyle */
 
 /* ───── сцены ───── */
-#sceneRow{position:fixed;top:58px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:6px;
+#sceneRow{position:fixed;top:calc(var(--sng-topH,68px) + 2px);left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:6px;
   padding:6px 10px;border-radius:999px;background:rgba(18,20,24,.66);border:1px solid rgba(240,240,248,.14);backdrop-filter:blur(12px);flex-wrap:wrap;justify-content:center;max-width:96vw}
 #sceneRow .srlab{font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--faint)}
 #sceneRow button{padding:7px 13px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.1em;
@@ -386,7 +392,8 @@ body.giant .round.bigplay{width:96px;height:96px;font-size:31px}
 body.giant .clap{padding:20px 44px;font-size:22px}
 body.giant .tbtn{padding:14px 22px;font-size:15px}
 body.giant .line{font-size:calc(30px*var(--lyrScale,1))}/* v10.1: пол; рост/потолок в sngAdaptStyle */
-body.giant #sceneRow{top:74px}
+/* v10.2 ВЕРДИКТ: у гиганта шапка выше — полоса задана переменной, ряд сцены опустится сам, без наезда */
+body.giant{--sng-topH:calc(80px + var(--sng-st,0px))}
 
 /* ───── v5 · ТЕМЫ ПОДАЧИ (палитра — в сцене ВЕЧЕРИНКА; ДЕТИ/РОМАНТИКА/ДЕНЬ держат своё настроение) ───── */
 body[data-theme="neon"]:not([data-scene="kids"]):not([data-scene="romance"]):not([data-scene="day"]){
@@ -548,10 +555,21 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
 .who2 b{color:var(--amber);font-weight:800}
 
 @media (max-width:860px){
-  #sceneRow{top:auto;bottom:calc(140px + var(--sng-sb,0px))}
-  body.giant #sceneRow{bottom:calc(164px + var(--sng-sb,0px))}
-  #btnToasts,#btnMotion,#btnLang{display:none}
+  /* v10.2 ВЕРДИКТ: низ — свои ряды: док (замер) → ряд сцены (замер) → бирка автора → строки;
+     каждая полоса считается от честных чисел — переносы и гигант учтены сами собой.
+     ЯЗЫК остаётся в шапке — он теперь открывает таблицу, а не крутится по одному;
+     подсказка «Пробел/Esc» на узких экранах спрятана — это клавишная подсказка */
+  #sceneRow{top:auto;bottom:calc(var(--sng-dockH,84px) + 8px);flex-wrap:nowrap;padding:4px 8px}
+  /* v10.2 ВЕРДИКТ: на узких ширинах ряд сцены — одна строка, а не столбик: иначе нижний стек съедает экран */
+  #sceneRow button{padding:6px 9px;font-size:10px;min-height:36px}
+  body.giant #sceneRow{bottom:calc(var(--sng-dockH,84px) + 8px)}
+  #btnToasts,#btnMotion,#scanHint{display:none}
   #sceneRow .srlab{display:none}
+  .songhead{top:calc(var(--sng-topH,68px) + 4px)}
+  #lyricsWrap{top:calc(var(--sng-topH,68px) + 4px + var(--sng-headH,0px) + 8px);
+    bottom:calc(var(--sng-dockH,84px) + var(--sng-rowH,44px) + var(--sng-tagH,0px) + 32px)}
+  #authorTag{bottom:calc(var(--sng-dockH,84px) + var(--sng-rowH,44px) + 24px)}
+  #start{padding-top:calc(var(--sng-topH,68px) + 16px)}
 }
 @media (max-width:720px){
   .topbar{gap:8px;padding:10px 12px}    /* эргономика: цели касания остаются, лишний воздух уходит */
@@ -560,13 +578,12 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
   .brand span{display:none}            /* подзаголовок прячем — кнопки управления остаются в зоне большого пальца */
   .brand svg{width:30px;height:30px}
   .chip{padding:7px 10px;font-size:10.5px}
-  .topbar .tbtn:not(#btnPeople):not(#btnHelp):not(#btnPanel){display:none}
+  .topbar .tbtn:not(#btnPeople):not(#btnHelp):not(#btnPanel):not(#btnLang):not(#btnHome){display:none}
+  html{--sng-topH:calc(56px + var(--sng-st,0px))} /* v10.2 ВЕРДИКТ: узкая шапка стола — полосы пересчитаются сами */
   .topbar .tbtn{padding:8px 12px}
   .dock{flex-wrap:wrap;gap:10px}
   .tlwrap{order:-1;flex-basis:100%}
   .clap{padding:11px 22px}
-  .songhead{top:56px}
-  #lyricsWrap{inset:150px 0 190px}
   .line{padding-left:44px}
   .line .bar{left:16px}
   #takt{padding:6px 9px;gap:8px}
@@ -577,13 +594,21 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
   .tk-dots i:first-child{width:12px;height:12px}
   #tkGran{padding:6px 9px;font-size:9px}
 }
+/* v10.2 ВЕРДИКТ — таблица языков: нажал — выехала, ткнул — поём. Растёт хоть до 400 строк — листается */
+.langgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:56vh;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;padding:2px;margin:10px 0 6px}
+.langgrid button{padding:11px 14px;border-radius:14px;background:#ffffff0c;border:1px solid #ffffff14;color:var(--dim);
+  font-weight:800;letter-spacing:.08em;font-size:13px;text-align:left;min-height:52px;transition:.2s}
+.langgrid button b{display:block;font-size:14px;color:var(--text)}
+.langgrid button small{display:block;font-size:10.5px;color:var(--faint);font-weight:700;letter-spacing:.06em;margin-top:3px}
+.langgrid button:hover{background:#ffffff17}
+.langgrid button.on{background:var(--amber);border-color:transparent}
+.langgrid button.on b,.langgrid button.on small{color:#050608}
+html[data-env="тв"] .langgrid button{min-height:56px;font-size:15px}
+html[data-env="тв"] .langgrid{max-height:52vh}
 </style>
 </head>
 <body data-mode="start" data-scene="party" class="">
-<div class="дом-полоса" style="position:fixed;top:10px;right:12px;z-index:2147483000;display:flex;gap:8px;align-items:center;font-family:Georgia,'Times New Roman',serif">
-  <span style="background:rgba(18,20,24,.72);border:1px solid rgba(212,175,55,.35);border-radius:999px;color:#F0D78C;font-size:12px;padding:4px 12px">S·31 КВАРТИРНИК</span>
-  <a href="./index.html" title="Вернуться в дом: кристалл, нить Ариадны, все двери" style="background:rgba(18,20,24,.72);border:1px solid rgba(212,175,55,.35);border-radius:999px;color:#F0D78C;font-size:12px;padding:4px 12px;text-decoration:none">&#8962; дом</a>
-</div>
 <noscript><div style="position:fixed;left:0;right:0;bottom:0;z-index:999;background:#DEA968;color:#050608;font:800 14px/1.4 system-ui,sans-serif;padding:14px 18px;text-align:center">Этому вечеру нужен JavaScript: включи его — и музыка заработает. Весь файл автономен, сеть не нужна.</div></noscript>
 <script>window.__errlog=[];window.addEventListener("error",function(e){window.__errlog.push(String(e&&e.message||"?")+" @"+(e&&e.lineno)+":"+(e&&e.colno))});</script>
 <div id="sngbg" aria-hidden="true"></div>
@@ -612,11 +637,12 @@ window.__ALERT = function(t){
     <span><b>КВАРТИРНИК · v9</b><span>«Просто люби» · RUVSON · фонема = звук = буква · бирка автора — в угол и перетащи</span></span>
   </div>
   <button id="chipHealth" class="chip" data-tip="Самопроверка: проверяет все части инструмента и честно докладывает, что работает">ЗДОРОВЬЕ …</button>
-  <button id="btnLang" class="tbtn" data-tip="Язык строк: РУС · ТРАНСЛИТ · ENG · ESP — подперевод всегда рядом">ЯЗЫК · РУС</button>
+  <button id="btnLang" class="tbtn" data-tip="Таблица языков строк: нажал — выехала, ткнул — поём; подперевод всегда рядом">ЯЗЫК · РУС</button>
   <button id="btnPeople" class="tbtn on" data-tip="Доступность: голосовые команды, озвучка, вибро, одна кнопка, гигант, контраст">ЛЮДИ</button>
   <button id="btnLight" class="tbtn on" data-tip="Свет сцены: палитры меняются вместе с секциями песни (клавиша L)">СВЕТ</button>
   <button id="btnToasts" class="tbtn on" data-tip="Подсказки между куплетами — выключи, если хочешь тишину">ТОСТЫ</button>
   <button id="btnMotion" class="tbtn on" data-tip="Движение: пульс фона и отсчёт (клавиша M); полное/мерцонное/выкл — в ПУЛЬТе">ДВИЖ</button>
+  <a id="btnHome" class="tbtn" href="./index.html" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
   <button id="btnHelp" class="tbtn" aria-label="Справка (клавиша ?)" data-tip="Справка: 6 вкладок — старт, кнопки, клавиши, голос, кому что, вопросы (?)">?</button>
 </header>
 
@@ -1557,6 +1583,8 @@ function paintLangs(){
   });
   $("btnLang").textContent = "ЯЗЫК · " + L.name;
   [...document.querySelectorAll("#langChips .pbtn")].forEach(b=>b.classList.toggle("on", b.dataset.lang===L.k));
+  [...document.querySelectorAll("#langChips2 button[data-lk]")].forEach(b=>b.classList.toggle("on", b.dataset.lk===L.k));
+  [...document.querySelectorAll("#langGrid button[data-lik]")].forEach(b=>b.classList.toggle("on", b.dataset.lik===L.k));
 }
 window.__LANGS = {
   list: LANGS, get idx(){ return langIdx; },
@@ -1564,10 +1592,72 @@ window.__LANGS = {
   cycle(){ this.set((langIdx+1)%LANGS.length); },
   get current(){ return LANGS[langIdx]; }
 };
-$("btnLang").addEventListener("click", ()=>window.__LANGS.cycle());
+/* v10.2 ВЕРДИКТ (приказ владельца: «НАЖАЛ ВЫЕХАЛА ТАБЛИЦА ТКНУЛ»): язык — таблицей, не колесом по одному.
+   Таблица живая: сколько языков собрал Малыш — столько строк; хоть 400 — листается, всё в одном месте.
+   Диалог langSheet живёт ниже по дому — привязки встают после сборки DOM (иначе нулевые кнопки). */
+(function(){
+  function boot(){
+    const sheet = $("langSheet"), grid = $("langGrid");
+    if(!sheet || !grid) return;
+    function build(){
+      grid.innerHTML = "";
+      LANGS.forEach((L,i)=>{
+        const b = document.createElement("button");
+        b.type = "button";
+        b.dataset.lik = L.k;
+        if(L.k===LANGS[langIdx].k) b.classList.add("on");
+        b.setAttribute("role","option");
+        b.setAttribute("aria-selected", L.k===LANGS[langIdx].k ? "true" : "false");
+        const nm = document.createElement("b"); nm.textContent = L.name;
+        const sm = document.createElement("small");
+        sm.textContent = L.sub ? ("подперевод · " + ((LANGS.find(x=>x.k===L.sub)||{}).name||L.sub)) : "оригинал";
+        b.appendChild(nm); b.appendChild(sm);
+        b.addEventListener("click", ()=>{ window.__LANGS.set(i); try{ sheet.close(); }catch(e){} });
+        grid.appendChild(b);
+      });
+      const cnt = $("langCount"); if(cnt) cnt.textContent = String(LANGS.length);
+    }
+    function open(){
+      build();
+      try{ sheet.showModal(); }catch(e){ window.__LANGS.cycle(); return; } /* движок без <dialog> — честный фолбэк */
+      const f = grid.querySelector("button.on") || grid.querySelector("button") || $("langX");
+      if(f){ try{ f.focus({preventScroll:true}); }catch(e){ try{ f.focus(); }catch(e2){} } }
+    }
+    $("btnLang").addEventListener("click", open);
+    $("langX").addEventListener("click", ()=>{ try{ sheet.close(); }catch(e){} });
+    window.__LANGSHEET = { open, build };
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
 [...document.querySelectorAll("#langChips .pbtn")].forEach(b=>
   b.addEventListener("click", ()=>window.__LANGS.set(LANGS.findIndex(l=>l.k===b.dataset.lang))));
 paintLangs();
+
+/* ── v10.2 ВЕРДИКТ · МАЛЫШ-ПОМОГАТОР (директива владельца): Малыш ходит по сети, собирает все стихи
+   RUVSON, переводит на все доступные языки, расставляет время звучания каждой буквы и складывает
+   в плейлист дома — потихоньку, задача за задачей. Каркас честный: отчёт — из встроенного манифеста,
+   план — очередь задач; пуск — только человеком (I-01), офлайн-фундамент не трогаем. ── */
+const MALYSH = {
+  версия: "v1",
+  корпус: { песен: 61, пар: "228 из 732", полно: 3, флагман: "«Когда теряем» · 157 языков" },
+  очередь: [
+    "собрать тексты и транскрипты стихов RUVSON",
+    "перевести на все доступные языки (черновик → редактура)",
+    "расставить время звучания каждой буквы в плейлисте",
+    "сложить собранное в ДАННЫЕ дома — офлайн, навсегда"
+  ],
+  закон: "сам ничего не открывает и не решает — идёт только по поручению человека (I-01)"
+};
+window.__МАЛЫШ = MALYSH;
+(function(){
+  function boot(){
+    const r = $("malReport"), p = $("malPlan");
+    if(!r || !p) return;
+    r.addEventListener("click", ()=> say("МАЛЫШ · корпус: "+MALYSH.корпус.песен+" песен · пар «песня×язык» "+MALYSH.корпус.пар+" · полностью собрано: "+MALYSH.корпус.полно+" · флагман "+MALYSH.корпус.флагман));
+    p.addEventListener("click", ()=> say("МАЛЫШ · план: "+MALYSH.очередь.join(" → ")));
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
 
 /* ── СЦЕНЫ ЖИЗНИ ── */
 const SCENES = [
@@ -3152,7 +3242,15 @@ body.insertAdjacentHTML("beforeend", `
           <button data-lk="tr">ТРАНСЛИТ</button>
           <button data-lk="en">ENG</button>
           <button data-lk="es">ESP</button>
+          <button data-lk="sheet" data-tip="Вся таблица языков сразу — нажал, выехала, ткнул">ВСЕ ЯЗЫКИ…</button>
         </div>
+      </div>
+      <div class="prow2"><span class="plab2">МАЛЫШ · ПОМОЩНИК</span>
+        <div class="sldrow">
+          <button id="malReport" class="pbtn" data-tip="Честный отчёт Малыша: сколько стихов собрано, сколько языков готово, что ждёт таймингов">ОТЧЁТ МАЛЫША</button>
+          <button id="malPlan" class="pbtn" data-tip="План работы Малыша: сбор → переводы → время звучания каждой буквы → плейлист дома">ПЛАН</button>
+        </div>
+        <em class="pdesc">Малыш ходит по сети только по поручению человека — сам ничего не открывает и не решает (I-01). Всё собранное ложится в ДАННЫЕ дома и живёт офлайн; новые языки сами встают в таблицу «ЯЗЫК СТРОК».</em>
       </div>
       <div class="prow2"><span class="plab2">ПОДПЕРЕВОД</span>
         <div class="swrow"><button class="sw" id="swSub" role="switch" aria-checked="true" data-tip="Строка на втором языке снизу (видна на ENG/ESP/транслите)"></button><span class="swlab">показывать подперевод</span></div>
@@ -3476,7 +3574,7 @@ bindSeg("motionChips","data-mk",(k)=>{ root.dataset.motion = k; prefs.motion=k; 
 bindSeg("sceneChips","data-sck",(k)=>{ if(window.__SCENE) window.__SCENE.set(k); });
 bindSeg("confChips","data-ck",(k)=>{ window.__CONFETTI_MODE = k; prefs.confetti=k; savePrefs(); });
 bindSeg("granChips2","data-gk",(k)=>{ if(window.__PULSE) window.__PULSE.set(k); });
-bindSeg("langChips2","data-lk",(k)=>{ const i=["ru","tr","en","es"].indexOf(k); const c=document.querySelector("#langChips .pbtn[data-lang=\""+k+"\"]"); if(c) c.click(); else if(window.__LANGS) window.__LANGS.set(i); });
+bindSeg("langChips2","data-lk",(k)=>{ if(k==="sheet"){ if(window.__LANGSHEET&&window.__LANGSHEET.open)window.__LANGSHEET.open(); return; } const i=["ru","tr","en","es"].indexOf(k); const c=document.querySelector("#langChips .pbtn[data-lang=\""+k+"\"]"); if(c) c.click(); else if(window.__LANGS) window.__LANGS.set(i); });
 bindSeg("rateChips2","data-rk",(k)=>{ const c=document.querySelector("#rateChips .pbtn[data-rate=\""+k+"\"]"); if(c) c.click(); });
 
 /* слайдеры */
@@ -5083,7 +5181,7 @@ html[data-rc="1"] .dock button{min-height:52px}
 html[data-rc="1"] dialog#panel{max-width:640px;max-height:90vh}/* v10.1: min() мёртв — рост в sngAdaptStyle */
 html[data-rc="1"] dialog#panel .p-body{max-height:calc(90vh - 118px)}
 html[data-rc="1"] dialog#panel .p-body button,html[data-rc="1"] dialog#panel .p-body .sw{min-height:44px}
-#rcToast{position:fixed;top:4vh;left:50%;transform:translateX(-50%);z-index:2147483600;background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
+#rcToast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translateX(-50%);z-index:2147483600;background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
 #rcToast.on{opacity:1}
 body[data-theme="kraft"] #rcToast,body[data-scene="day"] #rcToast,body[data-scene="kids"] #rcToast{background:#fffaf0;color:#33291d;border-color:#b8772366}
 #rcHelp{width:600px;max-height:86vh;overflow:auto;background:var(--panel2,#14161a);color:var(--text,#f3ead2);padding:20px}/* v10.1: min() мёртв — рост в sngAdaptStyle */
@@ -5108,9 +5206,12 @@ body[data-theme="kraft"] .kc,body[data-scene="day"] .kc,body[data-scene="kids"] 
    I-01: детекция среды — только компоновка, никаких действий и фокусов сама. */
 :root{--sng-st:0px;--sng-sb:0px;--sng-sl:0px;--sng-sr:0px;
   --sng-st:env(safe-area-inset-top,0px);--sng-sb:env(safe-area-inset-bottom,0px);
-  --sng-sl:env(safe-area-inset-left,0px);--sng-sr:env(safe-area-inset-right,0px)}
-/* ТВ: safe-кадр 5% с каждой стороны (1920x1080 → кадр 1728x972 = action safe 90%; LG 20px перекрыт) */
-html[data-env="тв"]{--sng-st:5vh;--sng-sb:5vh;--sng-sl:5vw;--sng-sr:5vw}
+  --sng-sl:env(safe-area-inset-left,0px);--sng-sr:env(safe-area-inset-right,0px);
+  --sng-topH:calc(68px + var(--sng-st,0px));--sng-rowH:44px;
+  --sng-headH:0px;--sng-dockH:84px;--sng-tagH:0px;--sng-stripH:0px}
+/* ТВ: safe-кадр 5% с каждой стороны (1920x1080 → кадр 1728x972 = action safe 90%; LG 20px перекрыт);
+   v10.2 ВЕРДИКТ: свои высоты полос — шапка и ряд сцены на ТВ крупнее, следующие ряды считаются от них */
+html[data-env="тв"]{--sng-st:5vh;--sng-sb:5vh;--sng-sl:5vw;--sng-sr:5vw;--sng-topH:calc(76px + 5vh);--sng-rowH:60px}
 
 /* ── fluid-размер без clamp: пол (в базовых правилах) + рост + потолок ── */
 @media (min-width:527px) and (max-width:1210px){#start h1{font-size:7.6vw}}
@@ -5142,15 +5243,17 @@ html[data-env="тв"]{--sng-st:5vh;--sng-sb:5vh;--sng-sl:5vw;--sng-sr:5vw}
 @media (max-width:695px){html[data-rc="1"] dialog#panel{max-width:92vw}}
 @media (max-width:652px){#rcHelp{width:92vw}}
 
-/* ── ТВ: safe-кадр для всех краевых слоёв — панели никогда под кантом ── */
+/* ── ТВ: safe-кадр для всех краевых слоёв — панели никогда под кантом.
+      v10.2 ВЕРДИКТ (вердикт приёмки на реальном ТВ): раньше ряд сцены был прибит
+      к 12px+safe и ложился ПОВЕРХ выросшей шапки — теперь ряды считаются от
+      --sng-topH/--sng-rowH: шапка → ряд сцены → шапка песни → строки; никакие
+      два слоя не делят один ряд ни на какой диагонали ── */
 html[data-env="тв"] .topbar{padding:calc(10px + var(--sng-st,0px)) calc(18px + var(--sng-sr,0px)) 12px calc(18px + var(--sng-sl,0px))}
 html[data-env="тв"] .dock{padding:12px calc(18px + var(--sng-sr,0px)) calc(14px + var(--sng-sb,0px)) calc(18px + var(--sng-sl,0px))}
-html[data-env="тв"] #sceneRow{top:calc(12px + var(--sng-st,0px))}
-html[data-env="тв"] body.giant #sceneRow{top:calc(26px + var(--sng-st,0px))}
-html[data-env="тв"] .toast{top:calc(12px + var(--sng-st,0px))}
+html[data-env="тв"] #sceneRow{top:calc(var(--sng-topH,68px) + 2px);max-width:calc(100vw - var(--sng-sl,0px) - var(--sng-sr,0px) - 16px)}
+html[data-env="тв"] #sceneRow .srlab{font-size:12px}
+html[data-env="тв"] #sceneRow button{font-size:14px;padding:11px 18px;min-height:48px}
 html[data-env="тв"] #scanHint{bottom:calc(110px + var(--sng-sb,0px))}
-html[data-env="тв"] #rcToast{top:calc(10px + var(--sng-st,0px))}
-html[data-env="тв"] .дом-полоса{top:calc(10px + var(--sng-st,0px))!important;right:calc(12px + var(--sng-sr,0px))!important}
 html[data-env="тв"] #authorTag{right:calc(14px + var(--sng-sr,0px))}
 
 /* ── ТВ: 10-foot крупность (диван, 2.5–3 м) ── */
@@ -5175,12 +5278,19 @@ html[data-env="телефон"] .dock button,html[data-env="планшет"] .do
 html[data-env="телефон"] .tbtn,html[data-env="планшет"] .tbtn,html[data-env="телефон"] .chip,html[data-env="планшет"] .chip{min-height:48px}
 html[data-env="телефон"] .seg button,html[data-env="планшет"] .seg button{min-height:46px}
 html[data-env="телефон"] .topbar{padding:calc(10px + var(--sng-st,0px)) 12px 10px;gap:10px}
+html[data-env="телефон"]{--sng-topH:calc(68px + var(--sng-st,0px))} /* v10.2 ВЕРДИКТ: свои 48px цели — своя полоса */
 html[data-env="телефон"] .dock{padding:10px 12px calc(12px + var(--sng-sb,0px));gap:10px}
 html[data-env="телефон"] .round{width:52px;height:52px}
 html[data-env="телефон"] .round.bigplay{width:64px;height:64px}
 /* планшет: простор тем же каноном */
 html[data-env="планшет"] .topbar{padding:calc(12px + var(--sng-st,0px)) calc(16px + var(--sng-sr,0px)) 12px calc(16px + var(--sng-sl,0px))}
+html[data-env="планшет"]{--sng-topH:calc(72px + var(--sng-st,0px))} /* v10.2 ВЕРДИКТ: просторная шапка — своя полоса */
 </style>
+<dialog id="langSheet" aria-label="Язык строк — таблица выбора">
+  <div class="rchead"><h3>ЯЗЫК СТРОК</h3><button class="x" id="langX" aria-label="Закрыть таблицу языков">✕</button></div>
+  <div id="langGrid" class="langgrid" role="listbox" aria-label="Доступные языки строк"></div>
+  <p class="rcnote">Один тап — и поём на выбранном языке, подперевод остаётся рядом. Языков в таблице: <b id="langCount">4</b> — таблица растёт сама: Малыш-помогатор добавляет собранные переводы, хоть до 400 — листается колесом или свайпом.</p>
+</dialog>
 <dialog id="rcHelp" aria-label="Легенда пульта">
   <div class="rchead"><h3>ПУЛЬТ — работают все кнопки</h3><button class="x" id="rcHelpX" aria-label="Закрыть легенду">✕</button></div>
   <table>
@@ -5236,11 +5346,28 @@ function адапт(){
   var с=средуаУзнать(), о=окноУзнать();
   if(R.getAttribute('data-env')!==с)R.setAttribute('data-env',с);
   if(R.getAttribute('data-окно')!==о)R.setAttribute('data-окно',о);
+  /* v10.2 ВЕРДИКТ (закон владельца: слои не перекрываются): полосы — не догадки, а замер.
+     Бирка модуля (sng-strip от движка дома) — нулевой ряд; шапка живёт под ней;
+     --sng-topH = бирка + шапка целиком. Шапка и ряд сцены измеряются как есть —
+     во всех темах, шрифтах и диагоналях; следующие ряды считаются от честных чисел. Только компоновка — I-01. */
+  var st=D.querySelector('.sng-strip'), tb=D.querySelector('.topbar'), sr=D.getElementById('sceneRow'), sh=D.querySelector('.songhead'), dk=D.querySelector('.dock');
+  var полн=0;
+  try{ if(st&&st.offsetHeight>0){ полн=st.offsetHeight; R.style.setProperty('--sng-stripH',полн+'px'); } }catch(e){}
+  try{ if(tb&&tb.offsetHeight>0)R.style.setProperty('--sng-topH',(полн+tb.offsetHeight)+'px'); }catch(e){}
+  try{ if(sr&&sr.offsetHeight>0)R.style.setProperty('--sng-rowH',sr.offsetHeight+'px'); }catch(e){}
+  try{ if(sh&&sh.offsetHeight>0)R.style.setProperty('--sng-headH',sh.offsetHeight+'px'); }catch(e){}
+  try{ if(dk&&dk.offsetHeight>0)R.style.setProperty('--sng-dockH',dk.offsetHeight+'px'); }catch(e){}
+  var tg=D.getElementById('authorTag');
+  try{ if(tg&&tg.offsetHeight>0)R.style.setProperty('--sng-tagH',tg.offsetHeight+'px'); }catch(e){}
 }
 if(!window.SNGАДАПТ){
   адапт();
   var rT0=null;
   window.addEventListener('resize',function(){ if(rT0)clearTimeout(rT0); rT0=setTimeout(function(){ адапт(); },180); });
+  window.addEventListener('load',function(){ адапт(); });
+  /* v10.2 ВЕРДИКТ: шапка песни и сцена меняют высоту при смене режима/сцены/темы — пересчитываем полосы */
+  try{ if(window.MutationObserver){ var мo=new MutationObserver(function(){ if(rT0)clearTimeout(rT0); rT0=setTimeout(function(){ адапт(); },80); });
+    мo.observe(D.body,{attributes:true,childList:true,attributeFilter:['data-mode','data-scene','data-theme','data-motion','class']}); } }catch(e){}
   window.SNGАДАПТ={версия:'v10.1 «АДАПТ»',среда:средуаУзнать,окно:окноУзнать,обновить:адапт};
 }
 function $(id){ return D.getElementById(id); }
