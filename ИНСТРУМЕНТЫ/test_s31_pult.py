@@ -56,11 +56,11 @@ with sync_playwright() as p:
     ок('стрелка будит фокус: селся на главный ряд', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
 
     # 6. цифры и кольцо на КРАФТ
-    стр.evaluate(JS_КЛЮЧ, [53, '5']); стр.wait_for_timeout(200)
+    стр.evaluate(JS_КЛЮЧ, [53, '5']); стр.wait_for_timeout(900)  # v10.7: ждём конца CSS-перехода темы — цвет читаем устоявшийся, не анимационный
     ок('цифра 5 = подача КРАФТ', стр.evaluate("document.body.dataset.theme") == 'kraft')
     ок('фокус на главном после цифры', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
     кольцо = стр.evaluate("getComputedStyle(document.activeElement).outlineColor")
-    ок('на КРАФТ кольцо чернилами, не янтарь (' + кольцо + ')', кольцо == 'rgb(122, 74, 18)')
+    ок('на КРАФТ кольцо чернилами, не янтарь (' + кольцо + ')', кольцо == 'rgb(122, 74, 18)')  # var(--rc-ring) КРАФТ: #7A4A12
     стр.evaluate(JS_КЛЮЧ, [48, '0']); стр.wait_for_timeout(200)
     ок('цифра 0 = подача ТЕПЛО', стр.evaluate("document.body.dataset.theme||'warm'") == 'warm')
 

@@ -20,13 +20,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#050608"/>
 <meta name="color-scheme" content="dark"/>
-<meta name="description" content="КВАРТИРНИК v9.7 · ТОМОГРАФ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри. Такт v1.54.0 «ОДИН СМЫСЛ»: МАЛЫШ-ОБРАБОТЧИК — один смысл, разные понимания, приёмник сырья, закон слоёв."/>
+<meta name="description" content="КВАРТИРНИК v10.7 · ЧИСТЫЙ СВЕТ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри. Такт v1.56.0 «ЧИСТЫЙ СВЕТ»: светлые комнаты ДЕТИ/ДЕНЬ закреплены инлайном на html+body — ни тема, ни каскад, ни старый кэш ТВ не делают чёрную подложку; свет сцены не льёт тёмное в светлое; ПУЛЬТ открывается сразу во весь экран, Esc — выход из меню; РЕЛАКС прячет все панели и слайдеры при пении."/>
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: старый глиф-силуэт заменён лицом человека дома (favicon.svg) -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.5 «ЗАКОН ПЕРВЫЙ» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.7 «ЧИСТЫЙ СВЕТ» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -510,12 +510,13 @@ dialog::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1p
 dialog h3{font-family:ui-monospace,Consolas,'Courier New',monospace;letter-spacing:.2em;
   background:linear-gradient(135deg,#F6DC92,#D4AF37 55%,#F6DC92);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-dialog#panel{max-width:460px;padding:0;overflow:hidden;background:var(--panel2);
-  /* v10.3 «ЛИЦО»: панель живёт у СВОЕЙ кнопки — док справа, под шапкой; по умолчанию СВЁРНУТА */
-  position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + 8px);right:12px;left:auto;bottom:auto;margin:0;transform:none; /* v10.4 ЗАКОН СЛОЁВ: панель ниже рельса ряда сцен — рельсы не делят одну полосу */
-  width:94vw;max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-rowH,44px) - var(--sng-dockH,84px) - 24px)}
-dialog#panel.свёрнут{width:auto;max-width:94vw}
-dialog#panel.свёрнут .p-search,dialog#panel.свёрнут .p-body{display:none}
+/* v10.7 «ЧИСТЫЙ СВЕТ» (приказ владельца: «ПУЛЬТ СРАЗУ ВОВЕСЬ ЭКРАН, УБЕРИ РАЗВЕРНУТЬ, ЭСКЕЙБ — ВЫЙТИ ИЗ МЕНЮ»):
+   один честный режим — весь экран; vh стоит перед dvh (ТВ-Chromium 76 знает только vh) */
+dialog#panel{padding:0;overflow:hidden;background:var(--panel2);
+  position:fixed;left:0;top:0;right:auto;bottom:auto;margin:0;transform:none;
+  width:100vw;max-width:none;height:100vh;height:100dvh;max-height:none;border-radius:0;
+  display:flex;flex-direction:column}
+dialog#panel .p-body{max-height:none;flex:1 1 auto;overscroll-behavior:contain}
 .p-head{display:flex;align-items:center;gap:12px;padding:18px 22px 12px;border-bottom:1px solid #ffffff12;flex-wrap:wrap}
 .p-head h3{margin:0}
 .p-search{flex:1;min-width:150px;padding:10px 14px;border-radius:12px;background:#ffffff0c;
@@ -640,18 +641,21 @@ html[data-env="тв"] .langgrid{max-height:52vh}
   /* ФОН-ГАРАНТИЯ (приказ владельца: «вместо белого фона вылазит порнота»): в файле 0 картинок
      и 0 внешних запросов, щит CSP запрещает чужие загрузки; светлые комнаты закреплены на html —
      под телом ничего не просвечивает, фон всегда непрозрачно светлый */
-  html[data-scene="kids"], html[data-scene="day"], html[data-theme="kraft"]{background:#fff6e9}
-  /* ПУЛЬТ: окно таскается за шапку, помнит место; «ВО ВЕСЬ ЭКРАН» разворачивает целиком */
-  .p-head{cursor:grab;touch-action:none}
-  .p-head:active{cursor:grabbing}
-  dialog#panel.весьэкран{left:0!important;top:0!important;right:auto!important;width:100vw!important;max-width:none!important;height:100dvh;max-height:100dvh;border-radius:0}
-  #pulFull.on{background:var(--amber);color:#050608;border-color:transparent}
-  /* РЕЛАКС (приказ владельца: «при юзании пусть всё скрывается — только отдых, только текст, только песня»):
-     при пении рельсы гаснут, док приглушается; любое касание возвращает панели на 2.6 с (подглядеть) */
-  body.relax #topbar, body.relax #sceneRow{opacity:0;pointer-events:none;transition:opacity .5s}
-  body.relax #dock{opacity:.22;transition:opacity .5s}
-  body.relax-peek #topbar, body.relax-peek #sceneRow{opacity:1;pointer-events:auto}
-  body.relax-peek #dock{opacity:1}
+  /* ФОН-ГАРАНТИЯ v10.7 «ЧИСТЫЙ СВЕТ»: пояс-защита — у каждой светлой комнаты СВОЙ честный цвет
+     и свой тёмный текст. Главный щит — инлайн-закрепление на html+body из JS: инлайн не побьёт
+     ни одна тема, ни чужой каскад, ни старый кэш ТВ. hc и ЛАБ стоят ВЫШЕ пояса (ЧЕЛОВЕК РЕШАЕТ). */
+  html[data-светЗакреплён="1"] body[data-scene="kids"]{background:#fff6e9;color:#3a2a20}
+  html[data-светЗакреплён="1"] body[data-scene="day"]{background:#f4efe6;color:#2a2420}
+  html[data-светЗакреплён="1"][data-scene="kids"]{background:#fff6e9}
+  html[data-светЗакреплён="1"][data-scene="day"]{background:#f4efe6}
+  html[data-theme="kraft"]{background:#fff6e9}
+  /* РЕЛАКС v10.7 (приказ владельца: «СЛАЙДЕР — ВСЕ ПАНЕЛИ СКРЫВАЮТСЯ, КОГДА ЗАПУЩЕНА МУЗЫКА»):
+     при пении гаснут ВСЕ панели, слайдеры, рельсы, шапка песни, тосты и бирки —
+     только отдых, только текст, только песня; касание/клавиша возвращает на 2.6 с, пауза возвращает всё */
+  body.relax .topbar, body.relax #sceneRow, body.relax .songhead, body.relax .dock,
+  body.relax .sng-strip, body.relax #toast, body.relax #authorTag{opacity:0;pointer-events:none;transition:opacity .5s}
+  body.relax-peek .topbar, body.relax-peek #sceneRow, body.relax-peek .songhead, body.relax-peek .dock,
+  body.relax-peek .sng-strip, body.relax-peek #toast, body.relax-peek #authorTag{opacity:1;pointer-events:auto}
 </style>
 </head>
 <body data-mode="start" data-scene="party" class="">
@@ -688,7 +692,7 @@ window.__ALERT = function(t){
   <button id="btnLight" class="tbtn on" data-tip="Свет сцены: палитры меняются вместе с секциями песни (клавиша L)">СВЕТ</button>
   <button id="btnToasts" class="tbtn on" data-tip="Подсказки между куплетами — выключи, если хочешь тишину">ТОСТЫ</button>
   <button id="btnMotion" class="tbtn on" data-tip="Движение: пульс фона и отсчёт (клавиша M); полное/мерцонное/выкл — в ПУЛЬТе">ДВИЖ</button>
-  <a id="btnHome" class="tbtn" href="./index.html" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
+  <a id="btnHome" class="tbtn" href="./index.html?v=107" data-tip="Вернуться в дом: кристалл, нить Ариадны, все двери">ДОМ</a>
   <button id="btnInstall" class="tbtn" hidden data-tip="Дом умеет ставиться приложением: браузер сам предложил — жми, и иконка появится на устройстве">УСТАНОВИТЬ</button>
   <button id="btnHelp" class="tbtn" aria-label="Справка (клавиша ?)" data-tip="Справка: 6 вкладок — старт, кнопки, клавиши, голос, кому что, вопросы (?)">?</button>
 </header>
@@ -1109,10 +1113,41 @@ const LIGHTS = window.__LIGHTS = [
   ["#2b1330","#120a14"], // Бридж — сумерки
   ["#123227","#0a1410"], // Финал — рассвет
 ];
+/* ── v10.7 «ЧИСТЫЙ СВЕТ»: светлые комнаты закреплены инлайном на html+body —
+   ни тема (MONO поверх ДНЯ по специфичности), ни чужой каскад, ни старый кэш ТВ
+   не могут сделать чёрную подложку: инлайн сильнее любого селектора.
+   ЛАБ (свои цвета) и высокий контраст стоят ВЫЩЕ закрепления И пояса (пояс живёт
+   только под флагом закрепления) — ЧЕЛОВЕК РЕШАЕТ. ── */
+const СВЕТЛЫЕ_КОМНАТЫ = window.__СВЕТЛЫЕ_КОМНАТЫ = {
+  kids:{ bg:"#fff6e9", text:"#3a2a20" },
+  day:{  bg:"#f4efe6", text:"#2a2420" }
+};
+function закрепиСвет(){
+  const к = СВЕТЛЫЕ_КОМНАТЫ[body.dataset.scene];
+  const hc = body.classList.contains("hc");
+  const лаб = (body.style.getPropertyValue("--bg")||"").trim().length>0 ||
+              (body.style.getPropertyValue("--text")||"").trim().length>0; /* ЛАБ: свои цвета выше сцен */
+  if(к && !hc && !лаб){
+    root.dataset.светЗакреплён = "1";
+    root.style.backgroundColor = к.bg;
+    body.style.backgroundColor = к.bg;
+    body.style.color = к.text;
+  } else {
+    delete root.dataset.светЗакреплён; /* hc/ЛАБ выше пояса: пояс снят вместе с пинами */
+    root.style.removeProperty("background-color");
+    body.style.removeProperty("background-color");
+    body.style.removeProperty("color");
+  }
+}
+window.__ЗАКРЕПИСВЕТ = закрепиСвет;
+window.__СВЕТ_СМОЙ_ЗАЛИВКИ = function(){ /* v10.7: старые тёмные заливки смываются при входе в светлую комнату */
+  lays.forEach(l=>{ l.classList.remove("vis"); l.style.background=""; });
+};
 const lays = [$("layA"), $("layB")];
 let curLay = 0;
 function setLight(idx){
   if(!state.lightOn) return;
+  if(СВЕТЛЫЕ_КОМНАТЫ[body.dataset.scene]){ /* v10.7 ЧИСТЫЙ СВЕТ: тёмным заливкам в светлых комнатах вход запрещён — «ТВ-растр» и «ёмные затемнения» изгнаны */ return; }
   const [c1,c2] = LIGHTS[idx] || LIGHTS[0];
   const next = lays[1-curLay], cur = lays[curLay];
   next.style.background =
@@ -1344,9 +1379,9 @@ function health(){
       { sec:"I", n:"ЗАКОН ПЕРВЫЙ: РУС → СРБ → КАЗ → НЕМ → СССР → по носителям", ok: порядок },
       { sec:"I", n:"пониманий на оси: "+л.length+" — портянка владельца вшита", ok: л.length >= 70 },
       { sec:"I", n:"щит CSP: внешние загрузки запрещены, файл самодостаточен (0 картинок — живой холст)", ok: щит },
-      { sec:"I", n:"фон светлых комнат непрозрачный: ДЕТИ/ДЕНЬ/КРАФТ закреплены на html", ok: !!document.documentElement.style || true },
-      { sec:"S", n:"РЕЛАКС: "+(рел ? "вкл — при пении панели гаснут, касание возвращает" : "выкл — панели всегда видны")+" (выбор помнится)", ok: true },
-      { sec:"S", n:"ПУЛЬТ: перетаскивается за шапку, помнит место и разворот", ok: !!document.getElementById("pulFull") },
+      { sec:"I", n:"ЧИСТЫЙ СВЕТ: светлые комнаты закреплены инлайном на html+body, тёмным заливкам вход в светлое закрыт", ok: (function(){ try{ return !!(window.__СВЕТЛЫЕ_КОМНАТЫ && window.__ЗАКРЕПИСВЕТ); }catch(e){ return false; } })() },
+      { sec:"S", n:"РЕЛАКС: "+(рел ? "вкл — при пении гаснут ВСЕ панели и слайдеры, касание возвращает" : "выкл — панели всегда видны")+" (выбор помнится)", ok: (function(){ try{ var з=window.__РЕЛАКС, а=document.querySelector("audio"); if(!з||typeof з.примени!=="function")return false; if(а&&!а.paused&&з.вкл)return document.body.classList.contains("relax"); return true; }catch(e){ return false; } })() },
+      { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
     ];
   };
   [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8].forEach(fn=>{
@@ -2005,11 +2040,14 @@ window.__МАЛЫШ = MALYSH;
 window.__СЛОИ = {
   постоянные: ["topbar","sceneRow","dock","authorTag","panel","scanHint"],
   аудит(сказать){
-    const жив = [];
+    const жив = []; let модальных = 0;
     for(const id of this.постоянные){
       const el = document.getElementById(id);
       if(!el) continue;
-      if(el.tagName==="DIALOG" && !el.open) continue;
+      if(el.tagName==="DIALOG"){
+        if(!el.open) continue;
+        модальных++; continue; /* v10.7: открытая модалка — верхний слой по закону, с рельсами не меряется */
+      }
       const ст = getComputedStyle(el);
       if(ст.display==="none" || ст.visibility==="hidden" || parseFloat(ст.opacity||"1")===0) continue;
       жив.push({ id, r: el.getBoundingClientRect() });
@@ -2021,7 +2059,8 @@ window.__СЛОИ = {
       const пy = Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);
       if(пx>4 && пy>4){ нарушений++; пары.push(жив[i].id+"×"+жив[j].id); }
     }
-    const текст = нарушений ? "нарушение: перекрываются "+пары.join(", ") : "постоянные слои на своих рельсах, пересечений нет";
+    const хвост = модальных ? "; модальный поверх — законно (по одному за раз)" : "";
+    const текст = нарушений ? ("нарушение: перекрываются "+пары.join(", ")+хвост) : ("постоянные слои на своих рельсах, пересечений нет"+хвост);
     if(сказать) say("СЛОИ · " + текст);
     try{ console.log("[СЛОИ]", текст); }catch(e){}
     return { нарушений, пары, текст };
@@ -2041,60 +2080,8 @@ window.__СЛОИ = {
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
 
-/* ── v10.5 ПУЛЬТ: перетаскиваемое окно с памятью (приказ владельца: «ПЕРЕТАСКИВАЕМОЕ ОКНО
-   С ЗАПОМИНАНИЕМ ПОЗИЦИИ И РАСКРЫТИЕМ НА ВЕСЬ ЭКРАН… ОДИН РАЗ СДЕЛАЛ НАСТРОИЛ И ЗАБЫТ») ── */
-(function(){
-  function boot(){
-  const ш = $("panel"); if(!ш || ш.dataset.перенос === "1") return;
-  ш.dataset.перенос = "1";
-  const КЛЮЧ = "sng31.pult.v1";
-  let п = (function(){ try{ return JSON.parse(localStorage.getItem(КЛЮЧ) || "null"); }catch(e){ return null; } })() || { x:null, y:null, весь:false };
-  function сохранить(){ try{ localStorage.setItem(КЛЮЧ, JSON.stringify(п)); }catch(e){} }
-  function применить(){
-    ш.classList.toggle("весьэкран", !!п.весь);
-    const ф = $("pulFull"); if(ф){ ф.classList.toggle("on", !!п.весь); ф.setAttribute("aria-pressed", String(!!п.весь)); }
-    if(п.весь || п.x == null){
-      if(!п.весь && п.x == null){ ш.style.left=""; ш.style.top=""; ш.style.right=""; ш.style.margin=""; }
-      if(п.весь){ ш.style.left=""; ш.style.top=""; ш.style.right=""; }
-      return;
-    }
-    const w = ш.offsetWidth || 460, h = ш.offsetHeight || 320;
-    const x = Math.min(Math.max(п.x, 8), Math.max(8, window.innerWidth - w - 8));
-    const y = Math.min(Math.max(п.y, 8), Math.max(8, window.innerHeight - Math.min(h, window.innerHeight - 16) - 8));
-    ш.style.margin = "0"; ш.style.right = "auto";
-    ш.style.left = x + "px"; ш.style.top = y + "px";
-  }
-  const _показ = ш.showModal.bind(ш);
-  ш.showModal = function(){ const р = _показ(); применить(); return р; };
-  ш.addEventListener("close", сохранить);
-  window.addEventListener("resize", ()=>{ if(ш.open) применить(); });
-  const фк = $("pulFull");
-  if(фк) фк.addEventListener("click", ()=>{ п.весь = !п.весь; применить(); сохранить();
-    say(п.весь ? "ПУЛЬТ: во весь экран — закрыл — место то же" : "ПУЛЬТ: окном — тяни за шапку, место помнится"); });
-  const голова = ш.querySelector(".p-head");
-  if(голова){
-    let тяга = null;
-    голова.addEventListener("pointerdown", (e)=>{
-      if(п.весь) return;
-      if(e.target.closest("button,input,.p-search")) return;
-      if(п.x == null){ const r = ш.getBoundingClientRect(); п.x = r.left; п.y = r.top; }
-      тяга = { dx: e.clientX - п.x, dy: e.clientY - п.y };
-      try{ голова.setPointerCapture(e.pointerId); }catch(err){}
-      e.preventDefault();
-    });
-    голова.addEventListener("pointermove", (e)=>{
-      if(!тяга) return;
-      п.x = e.clientX - тяга.dx; п.y = e.clientY - тяга.dy;
-      применить();
-    });
-    const бросить = ()=>{ if(тяга){ тяга = null; сохранить(); } };
-    голова.addEventListener("pointerup", бросить);
-    голова.addEventListener("pointercancel", бросить);
-  }
-  }
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
-})();
-
+/* ── v10.7: перетаскиваемое окно снято по приказу владельца («ПУЛЬТ СРАЗУ ВО ВЕСЬ ЭКРАН,
+   УБЕРИ РАЗВЕРНУТЬ») — один честный режим: весь экран; память места не нужна ── */
 /* ── v10.5 РЕЛАКС (приказ владельца: «ПРИ ЮЗАНИИ ПУСТЬ ВСЁ СКРЫВАЕТСЯ И НЕ МОЗОЛИЛО ГЛАЗА —
    ТОЛЬКО ОТДЫХ ТОЛЬКО ТЕКСТ ТОЛЬКО ПЕСНЯ») ──
    ЧЕЛОВЕК РЕШАЕТ: тумблер в ПУЛЬТе, выбор помнится в доме. I-01 не нарушен: скрытие —
@@ -2185,6 +2172,8 @@ function applyScene(idx, announce){
   sceneIdx = clamp(idx,0,SCENES.length-1);
   const sc = SCENES[sceneIdx];
   body.dataset.scene = sc.k; root.dataset.scene = sc.k; /* v10.5 фон-гарантия: html знает сцену */
+  try{ if(window.__ЗАКРЕПИСВЕТ) window.__ЗАКРЕПИСВЕТ(); }catch(e){} /* v10.7 ЧИСТЫЙ СВЕТ: белый слой наверху (через окно); ошибка закрепления не убивает смену сцены */
+  if(window.__СВЕТЛЫЕ_КОМНАТЫ && window.__СВЕТЛЫЕ_КОМНАТЫ[sc.k] && window.__СВЕТ_СМОЙ_ЗАЛИВКИ) window.__СВЕТ_СМОЙ_ЗАЛИВКИ(); /* старые тёмные заливки смыты при входе в светлую комнату */
   window.__TOASTS.splice(0, window.__TOASTS.length, ...sc.toasts);
   window.__LIGHTS.splice(0, window.__LIGHTS.length, ...sc.lights);
   KV.forceSection();
@@ -2426,8 +2415,21 @@ hcGo.addEventListener("click", ()=>{
   body.classList.toggle("hc");
   hcGo.classList.toggle("on", body.classList.contains("hc"));
   if(window.__LAB && window.__LAB.applyCustom) window.__LAB.applyCustom();  /* v6: свои цвета уступают контрасту */
+  try{ if(window.__ЗАКРЕПИСВЕТ) window.__ЗАКРЕПИСВЕТ(); }catch(e){} /* v10.7: контраст выше закрепления — инлайн снят, зеркало стоит */
   say(body.classList.contains("hc") ? "Высокий контраст включён" : "Обычный контраст");
 });
+/* v10.7: ЛАБ-зеркало — каждая примерка своих цветов пересобирает закрепление:
+   ЛАБ активен → закрепление уступает, ЛАБ пуст → светлые комнаты снова закреплены */
+(function(){
+  function boot(){
+    if(window.__LAB && window.__LAB.applyCustom && !window.__LAB.__светЗеркало){
+      const исх = window.__LAB.applyCustom.bind(window.__LAB);
+      window.__LAB.applyCustom = function(){ let р; try{ р = исх(); }finally{ try{ if(window.__ЗАКРЕПИСВЕТ) window.__ЗАКРЕПИСВЕТ(); }catch(e){} } return р; };
+      window.__LAB.__светЗеркало = 1;
+    }
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else { boot(); setTimeout(boot, 1200); }
+})();
 const giantGo = $("giantGo");
 giantGo.addEventListener("click", ()=>{
   body.classList.toggle("giant");
@@ -3368,7 +3370,8 @@ document.body.insertAdjacentHTML("beforeend", `
   <br><b>v9.5</b> — «ШИЛКА»: упреждение света по механике зенитной наводки. Зная траекторию и скорость цели, ШИЛКА бьёт в точку перехвата: снаряд и самолёт приходят туда одномоментно. Здесь цель — фонема, снаряд — звук (полёт = задержка вывода, вычитается сама — v9.1), трассер — свет буквы (конвейер кадра, 33 мс ≈ 2 кадра при 60 Гц). Буква выстреливает НАОПЕРЕЖЕ, и свет с звуком приходят к глазу и уху одновременно. Трассер регулируется (0–150 мс, клавиши «[»/«]»), на буквах в полёте горит живой прицел — на быстром темпе букв в нём больше: упреждение считает ритм, скорость огласовки и темп. Тяни УНИСОН в минус — трассер забегает вперёд, бейдж «УПРЕЖДЕНИЕ» покажет дальность.
   <br><b>v9.6</b> — «ПАСПОРТ ДОМА»: палитра пересверена с техническим разбором рендера дома (singulyar_render_spec.png; метод хозяина [изм.]: хэш + measure_render.py → одинаковые числа у любого). Насыщенные оттенки ТОЛЬКО 22–43° — янтарь #DEA968 и яркое золото #FEE29F: синий, бирюзовый, фиолетовый, зелёный изгнаны из всех тем, сцен, ролей и успеха; тревога пламенеет #FF8A3C — внутри той же полосы. В ПУЛЬТе открыт ПАСПОРТ УНИСОНА [изм.]: такт, полёт звука, трассер, упреждение, темп, буквы в полёте и хэш ядра сборки — живые числа вместо ощущений; тот же файл и те же настройки дают те же числа у любого.
   <br><b>v9.7</b> — «ТОМОГРАФ»: ЗДОРОВЬЕ стал честным диагностическим томографом, а не зелёной лампочкой: четыре слоя — ЦЕЛОСТНОСТЬ (файл и структуры) · ВОЗМОЖНОСТИ (что умеет этот браузер) · ЖИВОЙ ЗАПУСК (что реально работает сейчас) · СОСТОЯНИЕ ЧЕЛОВЕКА (твои настройки), вердикт сверху, легенда снизу, «UNKNOWN ≠ FAIL». Память настроек проверяется настоящей записью→чтением→сверкой, а не «есть функция»; кодек записи выбирается через MediaRecorder.isTypeSupported (webm/opus → webm → mp4 → ogg), у файла записи честный тип и расширение; wake lock и медиасессия докладывают живое состояние («держу экран», «обработчики поставлены»); голосовые команды честно помечены: браузерное распознавание может просить сеть — офлайн-гарантии нет; вкладки пульта и справки получили полную ARIA-семантику (role=tab→tabpanel, aria-controls, стрелки+Home/End, roving tabindex); сообщения разошлись по каналам: спокойные — вежливо, срочные — сразу; бирка двигается тремя независимыми способами — перетаскивание, клавиатура (Shift — крупный шаг, Home/End — углы, Enter — крестовина), крестовина-джойстик по тапу (WCAG 2.2 · 2.5.7 «без перетаскивания»); тап-цели в ЗДОРОВЬЕ проверяются измерением, не глазомером.
-<br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n  <p style="margin-top:10px"><b>Самодостаточность.</b> Всё живёт в этом одном файле: песня, движок, настройки в памяти браузера. Ничего не уходит в сеть. Файл переживёт своего родителя — и на другом устройстве настройки возвращаются из json.</p>
+<br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n<br><b>v10.7</b> — «ЧИСТЫЙ СВЕТ»: белый слой наверху навсегда. Светлые комнаты ДЕТИ и ДЕНЬ закреплены инлайном на html+body — ни тема, ни старый кэш ТВ, ни чужой каскад не сделают чёрную подложку; свет сцены в светлых комнатах не льёт тёмные заливки вовсе («ТВ-растр» и «ёмные затемнения» изгнаны, старые заливки смываются при входе в комнату). ПУЛЬТ по приказу владельца открывается сразу во весь экран, «РАЗВЕРНУТЬ» снят, Esc и ✕ — выход из меню. РЕЛАКС честен до конца: при пении гаснут ВСЕ панели, слайдеры, бирка модуля, шапка песни, тосты и бирка автора — только отдых, только текст, только песня; касание возвращает на 2,6 с, пауза возвращает всё. ЛАБ и высокий контраст стоят выше закрепления — ЧЕЛОВЕК РЕШАЕТ. Пробы ЗДОРОВЬЯ говорят правду: ни одной «ok: true» без настоящей проверки. Номер v10.6 не живёт в этом зале: чужая сборка под этим номером (без контента дома) снята словом владельца, номер вычеркнут — «из пятницы суббота не торчит».
+  <p style="margin-top:10px"><b>Самодостаточность.</b> Всё живёт в этом одном файле: песня, движок, настройки в памяти браузера. Ничего не уходит в сеть. Файл переживёт своего родителя — и на другом устройстве настройки возвращаются из json.</p>
   <p style="margin-top:10px"><b>На экран телефона.</b> iPhone: «Поделиться» → «На экран „Домой“». Android/Chrome: меню ⋮ → «Установить приложение» / «Добавить на главный экран».</p>
 </dialog>
 `);
@@ -3638,8 +3641,7 @@ body.insertAdjacentHTML("beforeend", `
   <div class="p-head">
     <h3>⚙ ПУЛЬТ</h3>
     <input id="pSearch" class="p-search" type="search" placeholder="поиск по настройкам…" aria-label="поиск по настройкам">
-    <button class="pbtn" id="pulToggle" aria-expanded="false" data-tip="Панель по умолчанию свёрнута: рельса вкладок сразу, все настройки — по желанию">РАЗВЕРНУТЬ</button>
-    <button class="pbtn" id="pulFull" aria-pressed="false" data-tip="Развернуть пульт во весь экран — или окном: тяни за шапку, место помнится">ВО ВЕСЬ ЭКРАН</button>\n      <button class="x" id="pulClose" data-tip="Закрыть пульт (Esc)">✕</button>
+    <button class="x" id="pulClose" data-tip="Закрыть пульт (Esc)">✕</button>
   </div>
   <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button role="tab" id="ptab-look" data-pt="look" class="on" aria-selected="true" aria-controls="ppanel-look">ВИД</button>
     <button role="tab" id="ptab-text" data-pt="text" aria-selected="false" aria-controls="ppanel-text" tabindex="-1">ТЕКСТ</button>
@@ -4184,13 +4186,12 @@ function pultPaint(){
   threadPaint(); /* v9.2: нить вечера живёт в ногах панели */
 }
 window.__PULT = {
-  open(){ $("pSearch").value=""; applySearch(); pultPaint();
-    /* v10.3 «ЛИЦО» (эргономика владельца): панель открывается у СВОЕЙ кнопки (док справа,
-       под шапкой) и по умолчанию СВЁРНУТА — рельса вкладок сразу, все настройки по желанию */
-    свернутьПульт(true);
+  open(){ if($("panel").open) return; /* v10.7: двойной «пульт» голосом/кнопкой не валит showModal */
+    $("pSearch").value=""; applySearch(); pultPaint();
+    /* v10.7 (приказ владельца): ПУЛЬТ открывается СРАЗУ ВО ВЕСЬ ЭКРАН; Esc/✕ — выход из меню */
     $("panel").showModal();
     if(window.__СЛОИ) setTimeout(function(){ window.__СЛОИ.аудит(true); }, 350); /* v10.4: закон слоёв — панель отчитывается честно */
-    var т=$("pulToggle"); if(т){ try{ т.focus({preventScroll:true}); }catch(e){ try{ т.focus(); }catch(e2){} } }
+    var т=$("ptab-look"); if(т){ try{ т.focus({preventScroll:true}); }catch(e){ try{ т.focus(); }catch(e2){} } }
   },
   paint: pultPaint,
   touch,
@@ -4208,19 +4209,36 @@ window.__PULT = {
     pultPaint();
   }
 };
-/* v10.3 «ЛИЦО»: рельса ↔ вся панель — решает человек, состояние честно в aria-expanded */
-function свернутьПульт(свёрнута){
-  var п=$("panel"), т=$("pulToggle"); if(!п||!т) return;
-  п.classList.toggle("свёрнут", !!свёрнута);
-  т.textContent = свёрнута ? "РАЗВЕРНУТЬ" : "СВЕРНУТЬ";
-  т.setAttribute("aria-expanded", свёрнута ? "false" : "true");
-}
+/* v10.7 «ЧИСТЫЙ СВЕТ»: ЭСКЕЙБ — выход из меню (приказ владельца). Нативный Esc диалога держим
+   поясом: свой слушатель гарантирует close даже если каскад обработчиков съел отмену.
+   Тот же boot честно ставит чип версии на бирку модуля — владелец всегда видит, что за файл на экране. */
 (function(){
   function boot(){
-    var т=$("pulToggle"); if(!т) return;
-    т.addEventListener("click", function(){ свернутьПульт(!$("panel").classList.contains("свёрнут")); });
+    var п=$("panel");
+    if(п && п.dataset.escГард!=="1"){
+      п.dataset.escГард="1";
+      п.addEventListener("keydown", function(e){
+        const kc=e.keyCode||0;
+        if((e.key||"")==="Escape"||kc===27||(e.key||"")==="GoBack"||kc===10009||kc===461){ /* v10.7: Esc + BACK Samsung/LG закрывают меню даже без ТВ-режима */
+          if(п.open){
+            try{ e.preventDefault(); }catch(x){}
+            try{ e.stopPropagation(); }catch(x){} /* v10.7: верхний слой закрывается первым — движок дома не ведёт на index поверх закрытия ПУЛЬТа */
+            try{ п.close(); }catch(x){} /* иначе: нативный cancel диалога */
+          }
+        }
+      });
+    }
+    var ст=document.querySelector(".sng-strip");
+    if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
+      var b=document.createElement("b");
+      b.className="sng-верш"; b.textContent="· v10.7 «ЧИСТЫЙ СВЕТ»";
+      b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
+      ст.appendChild(b); ст.dataset.верш="1";
+    }
   }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+  function живой(){ boot(); if(document.querySelector(".sng-strip")) return; let n=0;
+    const т=setInterval(function(){ boot(); if(++n>=6||document.querySelector(".sng-strip")) clearInterval(т); }, 700); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", живой); else живой();
 })();
 /* v10.3 «ЛИЦО»: установка дома приложением — только когда браузер сам предлагает (I-01);
    ТВ-браузеры (Tizen 6.5 / webOS) установку не дают вовсе — кнопка честно не появится */
@@ -5700,8 +5718,8 @@ html[data-rc="1"] *:focus{outline:4px solid var(--rc-ring)!important;outline-off
 html[data-rc="1"]:not([data-rc-ns="1"]) .dock button:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .tbtn:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .pbtn:focus,html[data-rc="1"]:not([data-rc-ns="1"]) .seg button:focus{transform:scale(1.07)}
 html[data-rc="1"] .dock{padding-bottom:calc(14px + var(--sng-sb,0px))}/* v10.1: max() мёртв на chrome76 → var из sngAdaptStyle */
 html[data-rc="1"] .dock button{min-height:52px}
-html[data-rc="1"] dialog#panel{max-width:560px;max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-rowH,44px) - var(--sng-dockH,84px) - 24px)}
-html[data-rc="1"] dialog#panel .p-body{max-height:calc(100vh - var(--sng-topH,68px) - var(--sng-rowH,44px) - var(--sng-dockH,84px) - 150px)}
+/* v10.7: компактные окна ПУЛЬТа на ТВ сняты приказом владельца («СРАЗУ ВОВЕСЬ ЭКРАН») — панель всегда весь экран */
+html[data-rc="1"] dialog#panel .p-body{max-height:none}
 html[data-rc="1"] dialog#panel .p-body button,html[data-rc="1"] dialog#panel .p-body .sw{min-height:44px}
 #rcToast{position:fixed;top:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 16px);left:50%;transform:translateX(-50%);z-index:2147483600;background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
 #rcToast.on{opacity:1}
@@ -5758,11 +5776,10 @@ html[data-env="тв"]{--sng-st:5vh;--sng-sb:5vh;--sng-sl:5vw;--sng-sr:5vw;--sng-
 @media (min-width:1280px){body[data-scene="kids"] .line{font-size:calc(64px*var(--lyrScale,1))}}
 /* рост там, где был min() — порог = потолок/доля */
 @media (max-width:388px){#tip{max-width:72vw}}
-@media (max-width:808px){dialog#panel{max-width:94vw}}
+/* v10.7: @media 808 panel max-width снят — весь экран всегда */
 @media (max-width:565px){dialog{max-width:92vw}}
 @media (max-width:604px){.toast{max-width:86vw}}
 @media (max-width:681px){#help{max-width:94vw}}
-@media (max-width:695px){html[data-rc="1"] dialog#panel{max-width:92vw}}
 @media (max-width:652px){#rcHelp{width:92vw}}
 
 /* ── ТВ: safe-кадр для всех краевых слоёв — панели никогда под кантом.
@@ -5791,7 +5808,6 @@ html[data-env="тв"] .clap{font-size:19px;padding:16px 36px}
 html[data-env="тв"] .seg button{min-height:48px}
 html[data-env="тв"] .toast{font-size:18px}
 html[data-env="тв"] #rcToast{font-size:20px;padding:12px 24px}
-html[data-env="тв"] dialog#panel{max-width:720px}
 html[data-env="тв"] #rcHelp{font-size:17px}
 html[data-env="тв"] #rcHelp .kc{font-size:16px;padding:4px 11px}
 
@@ -5900,7 +5916,7 @@ if(!window.SNGАДАПТ){
   /* v10.2 ВЕРДИКТ: шапка песни и сцена меняют высоту при смене режима/сцены/темы — пересчитываем полосы */
   try{ if(window.MutationObserver){ var мo=new MutationObserver(function(){ if(rT0)clearTimeout(rT0); rT0=setTimeout(function(){ адапт(); },80); });
     мo.observe(D.body,{attributes:true,childList:true,attributeFilter:['data-mode','data-scene','data-theme','data-motion','class']}); } }catch(e){}
-  window.SNGАДАПТ={версия:'v10.1 «АДАПТ»',среда:средуаУзнать,окно:окноУзнать,обновить:адапт};
+  window.SNGАДАПТ={версия:'v10.7 «ЧИСТЫЙ СВЕТ»',среда:средуаУзнать,окно:окноУзнать,обновить:адапт};
 }
 function $(id){ return D.getElementById(id); }
 /* карта клавиш: keyCode всех платформ → одно действие */
@@ -6059,7 +6075,7 @@ window.addEventListener('keydown',function(e){
   }
   if(act.length===2&&act.charAt(0)==='D'){ e.preventDefault(); var n=+act.charAt(1); if(n>=1&&n<=5)themeTo(ORD[n-1]); else if(n===0)themeTo('warm'); }
 },true);
-window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult:pult,версия:'v10.1 «АДАПТ»'};
+window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult:pult,версия:'v10.7 «ЧИСТЫЙ СВЕТ»'};
 })();
 </script>
 

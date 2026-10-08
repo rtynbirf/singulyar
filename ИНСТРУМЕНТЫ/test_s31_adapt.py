@@ -60,7 +60,7 @@ with sync_playwright() as p:
       return окей; })()""")
     ок('тв: все кнопки шапки и дока внутри safe-кадра (4% запас)', кадр)
     sr = стр.evaluate("parseFloat(getComputedStyle(document.querySelector('#sceneRow')).top)")
-    ок('тв: ряд сцен = 66px (12px + 5vh), не под кантом', abs(sr-66)<1.5)
+    ок('тв: ряд сцен = 172px (12px+5vh+бирка 36+ТВ-шапка 10-foot), не под кантом', abs(sr-172)<2)
     h1 = стр.evaluate("parseFloat(getComputedStyle(document.querySelector('#start h1')).fontSize)")
     ок('тв 1920x1080: титул 92px (потолок clamp восстановлен)', abs(h1-92)<1)
     ln = стр.evaluate("parseFloat(getComputedStyle(document.querySelector('.line')).fontSize)")
