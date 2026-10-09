@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.15 «АВТОАКОРД» — RUVSON · «Просто люби» · аккорды на экране сам, без файла · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.16 «СКЛАД» — RUVSON · «Просто люби» · аккорды сам + склад prefs v2/IndexedDB · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -4525,7 +4525,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.15 «АВТОАКОРД»";
+      b.className="sng-верш"; b.textContent="· v10.16 «СКЛАД»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6394,9 +6394,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.15";
+var D=document, root=D.documentElement, body=D.body, VER="v10.16";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv48"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv49"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -6594,7 +6594,10 @@ var ST = (function(){
   try{ var p = JSON.parse(localStorage.getItem("s31.l4.v1")||"{}"); for(var k in DEF){ if(p[k]===undefined) p[k]=DEF[k]; } return p; }
   catch(e){ return JSON.parse(JSON.stringify(DEF)); }
 })();
-function save(){ try{ localStorage.setItem("s31.l4.v1", JSON.stringify(ST)); }catch(e){} }
+function save(){
+  try{ localStorage.setItem("s31.l4.v1", JSON.stringify(ST)); }catch(e){}
+  try{ if(window.__СКЛАД && __СКЛАД.пиши) __СКЛАД.пиши("s31.l4.v1", ST); }catch(e){}
+}
 
 /* ══════════ С15-ТРАНСЛИТ: латиница → кириллица (практическая, для пения) ══════════ */
 /* Правила идут длинными первыми; init — только в начале слова. */
@@ -6817,6 +6820,7 @@ function acSave(){
     var ks = Object.keys(s);
     if(ks.length > 12){ delete s[ks[0]]; }
     localStorage.setItem(ACKEY, JSON.stringify(s));
+    try{ if(window.__СКЛАД && __СКЛАД.пиши) __СКЛАД.пиши(ACKEY, s); }catch(e){}
   }catch(e){}
 }
 function acKeyName(){ return (AC.mode==="m" ? KEYm : KEYM)[AC.pc] || "Am"; }
@@ -6931,8 +6935,14 @@ try{
 
 /* ══════════ АВТО-ПЕРЕВОД: текст выбранного языка из сети (честно, с кэшем дома) ══════════ */
 var TRKEY = "s31.tr.v2";
-function trDict(){ try{ return JSON.parse(localStorage.getItem(TRKEY)||"{}"); }catch(e){ return {}; } }
-function trSave(d){ try{ localStorage.setItem(TRKEY, JSON.stringify(d)); }catch(e){} }
+function trDict(){
+  try{ if(window.__СКЛАД && __СКЛАД.переводы){ var d = __СКЛАД.переводы(); if(d) return d; } }catch(e){}
+  try{ return JSON.parse(localStorage.getItem(TRKEY)||"{}"); }catch(e){ return {}; }
+}
+function trSave(d){
+  try{ if(window.__СКЛАД && __СКЛАД.переводыСохрани){ __СКЛАД.переводыСохрани(d); return; } }catch(e){}
+  try{ localStorage.setItem(TRKEY, JSON.stringify(d)); }catch(e){}
+}
 function apiTranslate(t, tl){
   var u = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" +
           encodeURIComponent(tl) + "&dt=t&q=" + encodeURIComponent(t);
@@ -7262,6 +7272,209 @@ loadChords();
 acLoad();
 try{ buildPanel(); }catch(e){}
 try{ repaint(); }catch(e){}
+})();
+</script>
+
+<script id="skladScript">
+/* ── С17 · СКЛАД v10.16 — prefs v2 с миграциями + ELRC/IndexedDB-библиотека ──
+   П1 дорожной карты. Приказ владельца: «ДОДЕЛЫВАЙ, У ТЕБЯ ПЛАН ЕСТЬ».
+   Зачем: настройки дома лежали россыпью по localStorage-ключам (s31.l4.v1,
+   s31.l4.chords.v1, s31.l4.auto.v1, s31.dict.v1, s31.tr.v2, kv12.tab…), а
+   большой кэш переводов упирается в квоту 5 МБ. Теперь:
+     · ЕДИНЫЙ ДОК prefs v2 (s31.prefs.v2): {v:2, данные:{…}} — localStorage
+       (синхронный старт) + IndexedDB «s31-склад» (долговечно), миграции
+       по цепочке версий (сейчас 1→2: копим разрозненные ключи в док;
+       оригиналы НЕ трогаем — честный откат).
+     · ELRC-БИБЛИОТЕКА (IDB store «библиотека»): большие данные — переводы
+       песен (s31.tr.v2 целиком живёт в IDB), файлы аккордов, пары Малыша.
+       Квота IDB кончилась → честный статус в ЗДОРОВЬЕ, зеркало в доме
+       держит последние 400 записей переводов.
+     · Фолбэк честный: IDB недоступен (приватный режим) — всё работает
+       как раньше на localStorage, здоровье скажет «idb: нет».
+   Канон не ломается: никто из старых ключей не удаляется и не переезжает. */
+(function(){
+"use strict";
+if(window.__СКЛАД) return;             /* один склад — один хозяин */
+var VERS = 2;
+var LSK = "s31.prefs.v2";              /* зеркало-док в доме */
+var TRKEY = "s31.tr.v2";               /* кэш переводов (большой) */
+var TRMIR = "s31.tr.mirror.v1";        /* малое зеркало переводов в доме */
+var TRMIR_MAX = 400;
+var DB = null, ибДоступен = false, открываем = true;
+var ДОК = { v: VERS, данные: {} };
+var ЖУРНАЛ_МИГРАЦИЙ = [];
+var ПЕРЕВОДЫ = null;                   /* лениво из дома+IDB */
+
+/* ── ELRC: IndexedDB ── */
+function откройБазу(){
+  return new Promise(function(res){
+    var решено = false;
+    function конец(ок){ if(!решено){ решено = true; res(!!ок); } }
+    try{
+      if(!window.indexedDB){ конец(false); return; }
+      var rq = indexedDB.open("s31-склад", 1);
+      rq.onupgradeneeded = function(e){
+        try{
+          var db = e.target.result;
+          if(!db.objectStoreNames.contains("prefs")) db.createObjectStore("prefs");
+          if(!db.objectStoreNames.contains("библиотека")) db.createObjectStore("библиотека");
+        }catch(_){ }
+      };
+      rq.onsuccess = function(e){ try{ DB = e.target.result; ибДоступен = true; }catch(_){ } конец(true); };
+      rq.onerror = function(){ конец(false); };
+      rq.onblocked = function(){ конец(false); };
+      setTimeout(function(){ конец(false); }, 4000);   /* страховка старых движков */
+    }catch(e){ конец(false); }
+  });
+}
+function идТх(st, режим){ return DB.transaction(st, режим).objectStore(st); }
+function идПоложи(store, ключ, значение){
+  return new Promise(function(res){
+    if(!ибДоступен){ res(false); return; }
+    try{
+      var rq = идТх(store, "readwrite").put(значение, ключ);
+      rq.onsuccess = function(){ res(true); };
+      rq.onerror = function(){ res(false); };
+    }catch(e){ res(false); }
+  });
+}
+function идВозьми(store, ключ){
+  return new Promise(function(res){
+    if(!ибДоступен){ res(null); return; }
+    try{
+      var rq = идТх(store, "readonly").get(ключ);
+      rq.onsuccess = function(){ res(rq.result !== undefined ? rq.result : null); };
+      rq.onerror = function(){ res(null); };
+    }catch(e){ res(null); }
+  });
+}
+
+/* ── миграции: цепочка версий единого дока ── */
+var РАССЫПЬ = ["s31.l4.v1","s31.l4.chords.v1","s31.l4.auto.v1","s31.dict.v1","kv12.tab"];
+function мигрируй(док){
+  if(!док || typeof док !== "object") док = { v: 1, данные: {} };
+  if(док.v < 2){
+    var перенесено = 0;
+    for(var i=0;i<РАССЫПЬ.length;i++){
+      var k = РАССЫПЬ[i];
+      if(док.данные[k] === undefined){
+        try{
+          var сыро = localStorage.getItem(k);
+          if(сыро !== null){
+            док.данные[k] = JSON.parse(сыро);   /* битый текст ловит JSON-гард корда */
+            перенесено++;
+          }
+        }catch(e){ }
+      }
+    }
+    ЖУРНАЛ_МИГРАЦИЙ.push("1→2: ключей в док " + перенесено + " (оригиналы в доме не тронуты)");
+    док.v = 2;
+  }
+  /* будущие миграции — сюда: if(док.v < 3){ …; док.v = 3; } */
+  return док;
+}
+function докСохрани(){
+  try{ localStorage.setItem(LSK, JSON.stringify(ДОК)); }catch(e){ }
+  идПоложи("prefs", "док", ДОК);
+}
+
+/* ── переводы: ELRC (IDB) — полное, зеркало в доме — последнее 400 ── */
+function переводыИзДома(){
+  try{ var d = JSON.parse(localStorage.getItem(TRKEY)||"null"); return (d && typeof d==="object" && !d.push) ? d : {}; }
+  catch(e){ return {}; }
+}
+function зеркалоСохрани(dict){
+  try{
+    var ks = Object.keys(dict), мал = {}, i, с = ks.slice(-TRMIR_MAX);
+    for(i=0;i<с.length;i++) мал[с[i]] = dict[с[i]];
+    localStorage.setItem(TRMIR, JSON.stringify(мал));
+  }catch(e){ }
+}
+function переводы(){
+  if(ПЕРЕВОДЫ) return ПЕРЕВОДЫ;
+  ПЕРЕВОДЫ = переводыИзДома();
+  /* докладываем из зеркала то, что дом уже выкинул по квоте (IDB вернёт при старте) */
+  идВозьми("библиотека", "переводы").then(function(большой){
+    if(большой && typeof большой === "object"){
+      var добавили = 0;
+      for(var k in большой){ if(ПЕРЕВОДЫ[k] === undefined){ ПЕРЕВОДЫ[k] = большой[k]; добавили++; } }
+      if(добавили) зеркалоСохрани(ПЕРЕВОДЫ);
+    }
+  });
+  return ПЕРЕВОДЫ;
+}
+function переводыСохрани(dict){
+  ПЕРЕВОДЫ = dict;
+  try{ localStorage.setItem(TRKEY, JSON.stringify(dict)); }catch(e){ /* квота дома — не беда: IDB держит */ }
+  зеркалоСохрани(dict);
+  идПоложи("библиотека", "переводы", dict).then(function(ок){
+    if(!ок && ибДоступен === false) { /* офлайн-дом: живёт на localStorage, честно */ }
+  });
+}
+
+/* ── публичный склад ── */
+window.__СКЛАД = {
+  ver: "v10.16",
+  готов: откройБазу().then(function(ок){
+    try{
+      var сыро = localStorage.getItem(LSK);
+      ДОК = мигрируй(сыро ? JSON.parse(сыро) : null);
+    }catch(e){ ДОК = мигрируй(null); }
+    if(ибДоступен){
+      идВозьми("prefs","док").then(function(идДок){
+        if(идДок && идДок.v && идДок.v >= ДОК.v){ ДОК = идДок; }
+        else if(идДок && идДок.v < ДОК.v){ идПоложи("prefs","док",ДОК); }
+      });
+      /* долгоживущие данные копируем в библиотеку (оригиналы не трогаем) */
+      try{
+        var аккорды = localStorage.getItem("s31.l4.chords.v1");
+        if(аккорды) идПоложи("библиотека","аккорды", аккорды);
+      }catch(e){ }
+    }
+    докСохрани();
+    return ок;
+  }),
+  читай: function(ключ, дефолт){
+    if(ДОК.данные[ключ] !== undefined) return ДОК.данные[ключ];
+    return дефолт;
+  },
+  пиши: function(ключ, значение){
+    ДОК.данные[ключ] = значение;
+    докСохрани();
+  },
+  переводы: переводы,
+  переводыСохрани: переводыСохрани,
+  библиотека: {
+    клади: function(ключ, данные){ return идПоложи("библиотека", ключ, данные); },
+    бери: function(ключ){ return идВозьми("библиотека", ключ); },
+    есть: function(){ return ибДоступен; }
+  },
+  миграции: function(){ return ЖУРНАЛ_МИГРАЦИЙ.slice(); },
+  health: function(){
+    var п = 0, k;
+    for(k in ДОК.данные) п++;
+    var тр = 0; try{ тр = Object.keys(ПЕРЕВОДЫ || переводыИзДома()).length; }catch(e){ }
+    return {
+      ok: true,
+      idb: ибДоступен ? "да" : "нет (живём на доме)",
+      версия: ДОК.v,
+      ключей: п,
+      переводов: тр,
+      миграции: ЖУРНАЛ_МИГРАЦИЙ.join("; ") || "без перемен"
+    };
+  }
+};
+try{
+  if(window.KV12 && KV12.health && !KV12.health.__склад){
+    var __kh = KV12.health;
+    KV12.health = function(){
+      var r = __kh.apply(this, arguments);
+      try{ r.склад = window.__СКЛАД.health(); }catch(e){ }
+      return r;
+    };
+    KV12.health.__склад = true;
+  }
+}catch(e){ }
 })();
 </script>
 
