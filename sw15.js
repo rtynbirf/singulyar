@@ -126,9 +126,24 @@
    больше не глотаются в catch — перезапрос без Range кладёт честный 200).
    Бамп v79→v86: v80–v82 — такты владельца КАДР/ОДИН ГОЛОС/ЦВЕТ, v83 — ПРИВАТ, v84/v85 — КОНТРАСТ/ЧЕСТНЫЙ ЯЗЫК;
    v86 строго выше обеих линий — коллизии поколений кэша нет. */
-var S15_CACHE = 's15-orkestrator-v87';   /* v10.28 «ФОНДОТЕКА»: + R-06 (·16 в пре-кэше) — установленным PWA нужен новый кэш, иначе добавка не доедет */
+/* Такт v10.28 «ФОНДОТЕКА» (владелец): кэш v87 — + R-06 (·16 в пре-кэше) —
+   установленным PWA нужен новый кэш, иначе добавка не доедет.
+   Такт v10.30 «ЭМЕРДЖЕНТ» (виток 11): кэш v88 — AI-АБСОЛЮТ: кэши моделей объявлены
+   НЕПРИКОСНОВЕННЫМИ (singular-llm-parts-v1, singular-llm-rules-v1,
+   transformers-cache переживают такты — 469 МБ мозга больше не перекачиваются
+   после каждого бампа); чужие двери CDN (jsdelivr-либа transformers, веса
+   whisper-tiny с huggingface.co) кэшируются в свой s15-ai-v1 — прогрет один
+   раз, поёт офлайн; message-нить: S15_PING/S15_ОТЧЁТ для двери ·38 ПУЛЬС.
+   Бамп v86→v88: v87 — ФОНДОТЕКА владельца, v88 — ЭМЕРДЖЕНТ (строго выше —
+   коллизий поколений нет). */
+var S15_CACHE = 's15-orkestrator-v88';   /* ФОНДОТЕКА + ЭМЕРДЖЕНТ: ·16 в ядре, модели переживают такты */
 var S15_MAX = 140;                      /* честный потолок кэша по ЧИСЛУ ключей (ЗАКАЛКА) */
 var S15_MAX_BYTES = 250 * 1024 * 1024;  /* ЭП-09/R-03: потолок по ВЕСУ не-ядерного кэша */
+/* ЗАКОН AI-АБСОЛЮТА (v88): AI-кэш не оседлать потолком: модель, прогретая
+   человеком, живёт до явного решения человека (I-01). Ни S15_MAX, ни
+   S15_MAX_BYTES, ни бамп S15_CACHE их не трогают — переживают такты. */
+var S15_AI_КЭШ = 's15-ai-v1';           /* чужие двери CDN: либа transformers + веса whisper-tiny */
+var S15_ЗАЩИТА = ['singular-llm-parts-v1','singular-llm-rules-v1','transformers-cache','s15-ai-v1'];
 var S15_ВЕС_ПО_УМОЛЧАНИЮ = 512 * 1024;  /* нет content-length — примерный кламп записи */
 var S15_ТАЙМАУТ_СЕТИ = 3000;            /* ЭП-09/F-28: навигации ждут сеть не дольше 3 с */
 var S15_ВЕС = -1;                       /* вес не-ядерного кэша (приближение); -1 — не считан */
@@ -231,7 +246,20 @@ var S15_CORE = [
   './ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME_v2.md',
   './ДОКУМЕНТЫ/ЖИВАЯ_НИТЬ.md',
   './ДОКУМЕНТЫ/РЕВИЗИЯ_РУМ.md',
-  './ДОКУМЕНТЫ/СТАЛЬ_НИТИ_И_ЯДРО.md'
+  './ДОКУМЕНТЫ/СТАЛЬ_НИТИ_И_ЯДРО.md',
+
+  /* ЭМЕРДЖЕНТ v87: двери ·35–·38 и реестр версий (источник правды дома).
+     Файлы создаются параллельными агентами витка; install уже устойчив
+     к отсутствию — c.add(...).catch(null) не срывает установку. */
+  './СИНГУЛЯР_35_ВОПРОСЫ.html',
+  './СИНГУЛЯР_36_СЛОВАРЬ.html',
+  './СИНГУЛЯР_37_О_ДОМЕ.html',
+  './СИНГУЛЯР_38_ПУЛЬС.html',
+  './js/sg-registry.js',
+  './js/room-35.js',
+  './js/room-36.js',
+  './js/room-38.js',
+  './data/versions.json'
 ];
 
 /* R-05 (ЭП-09): './' и './index.html' — один ресурс, один ключ. Канон:
@@ -442,7 +470,11 @@ self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(keys.map(function (k) {
-        return k === S15_CACHE ? null : caches.delete(k);
+        if (k === S15_CACHE) return null;          /* свой кэш — только что собран */
+        /* AI-АБСОЛЮТ (v87): защищённые кэши моделей переживают бампы —
+           469 МБ мозга не перекачиваются после каждого такта (I-01). */
+        if (S15_ЗАЩИТА.indexOf(k) !== -1) return null;
+        return caches.delete(k);                   /* прочие — прежний закон: стереть */
       }));
     }).then(function () { return self.clients.claim(); })
   );
@@ -452,6 +484,41 @@ self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
+  /* ветка AI (v87 «ЭМЕРДЖЕНТ»): чужие двери CDN — cache-first в s15-ai-v1.
+     ЧЕСТНО ПРО ОХВАТ: через s15-ai-v1 идёт только whisper-TINY — либа
+     transformers (jsdelivr, @huggingface/@xenova) и её веса (huggingface.co,
+     onnx-community/Xenova whisper-tiny). base/small намеренно идут мимо этой
+     ветки: их ведёт собственный transformers-cache самой библиотеки — он
+     объявлен защищённым (S15_ЗАЩИТА, переживает такты); держать ту же модель
+     во втором кэше — жечь квоту устройства без пользы. */
+  var хост = url.hostname;
+  var путь = url.pathname;
+  var isAi = (хост === 'cdn.jsdelivr.net' && (путь.indexOf('/npm/@huggingface/transformers') === 0 || путь.indexOf('/npm/@xenova/transformers') === 0)) ||
+             (хост === 'huggingface.co' && (путь.indexOf('/onnx-community/whisper-tiny/') === 0 || путь.indexOf('/Xenova/whisper-tiny/') === 0));
+  if (isAi) {
+    var ай504 = function () {
+      return new Response('СИНГУЛЯР: AI-ресурс не прогрет — один раз нужна сеть',
+        { status: 504, statusText: 'SNG offline', headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    };
+    e.respondWith(
+      caches.open(S15_AI_КЭШ).then(function (c) {
+        return c.match(req).then(function (hit) {
+          if (hit) return hit;                     /* прогрет — поёт офлайн */
+          return fetch(req).then(function (res) {
+            /* в кэш — только честный 200; каждый put в catch: квота молчит */
+            if (res && res.ok && res.status === 200) {
+              try { c.put(req, res.clone()).catch(function () { }); } catch (о) { }
+            }
+            return res;
+          }).catch(ай504);
+        });
+      }).catch(function () {
+        /* кэш не открылся (приватный режим) — кэш-первой нет, честная сеть */
+        return fetch(req).catch(ай504);
+      })
+    );
+    return;
+  }
   if (url.origin !== location.origin) return;      /* чужое — мимо кэша */
   /* минусовки: сеть-первая с кэш-фолбэком (файлы могут добавляться) */
   var isMinus = /\/minus\/.+\.(?:mp3|webm)$/.test(url.pathname);
@@ -530,4 +597,66 @@ self.addEventListener('fetch', function (e) {
       });
     })
   );
+});
+
+/* message-нить (v87 «ЭМЕРДЖЕНТ»): дверь ·38 ПУЛЬС стучится в дом напрямую —
+   S15_PING (жив ли воркер, какое поколение) и S15_ОТЧЁТ (все кэши: сколько
+   ключей и какой вес; тела не читаем — только content-length). Всё в
+   try/catch: битое сообщение не роняет воркер. */
+function ответить(e, объект) {
+  try {
+    if (e && e.source && typeof e.source.postMessage === 'function') {
+      e.source.postMessage(объект);
+      return;
+    }
+    if (self.clients && self.clients.matchAll) {
+      self.clients.matchAll({ includeUncontrolled: true }).then(function (все) {
+        все.forEach(function (клиент) {
+          try { клиент.postMessage(объект); } catch (о) { }
+        });
+      }).catch(function () { });
+    }
+  } catch (о) { }
+}
+
+self.addEventListener('message', function (e) {
+  try {
+    var м = (e && e.data) || {};
+    if (м.type === 'S15_PING') {
+      ответить(e, {
+        type: 'S15_PONG',
+        кэш: S15_CACHE,
+        поколение: 'v87',
+        ядро: S15_CORE.length,
+        защита: S15_ЗАЩИТА
+      });
+    }
+    if (м.type === 'S15_ОТЧЁТ') {
+      caches.keys().then(function (имена) {
+        return Promise.all(имена.map(function (имя) {
+          return caches.open(имя).then(function (c) {
+            return c.keys().then(function (ключи) {
+              return Promise.all(ключи.map(function (к) {
+                return c.match(к).then(function (r) {
+                  var cl = r && r.headers ? r.headers.get('content-length') : null;
+                  var n = cl ? parseInt(cl, 10) : 0;
+                  return (isFinite(n) && n > 0) ? n : 0;
+                }).catch(function () { return 0; });
+              })).then(function (веса) {
+                var вес = 0;
+                веса.forEach(function (в) { вес += в; });
+                return { имя: имя, ключей: ключи.length, вес: вес };
+              });
+            });
+          }).catch(function () {
+            return { имя: имя, ключей: 0, вес: 0 };
+          });
+        }));
+      }).then(function (кэши) {
+        ответить(e, { type: 'S15_ОТЧЁТ', кэши: кэши, защита: S15_ЗАЩИТА, поколение: 'v87' });
+      }).catch(function () {
+        ответить(e, { type: 'S15_ОТЧЁТ', кэши: [], защита: S15_ЗАЩИТА, поколение: 'v87' });
+      });
+    }
+  } catch (о) { /* битое сообщение — воркер держится */ }
 });
