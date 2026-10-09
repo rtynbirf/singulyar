@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.14 «КРЫША» — RUVSON · «Просто люби» · телефоны по Wi-Fi (WebRTC) + Whisper-автосинхрон · шасси v10.13 не тронуто</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.15 «АВТОАКОРД» — RUVSON · «Просто люби» · аккорды на экране сам, без файла · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -4525,7 +4525,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.13 «ЧЕТВЁРКА»";
+      b.className="sng-верш"; b.textContent="· v10.15 «АВТОАКОРД»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6394,9 +6394,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.13";
+var D=document, root=D.documentElement, body=D.body, VER="v10.15";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv47"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv48"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -6549,7 +6549,7 @@ try{
 })();
 </script>
 <style id="l4style">
-/* ── С15 · ЧЕТВЁРКА v10.13 — строка 4 «АККОРДЫ» + несворачаемые строки 2/3 ──
+/* ── С15+С16 · ЧЕТВЁРКА v10.15 «АВТОАКОРД» — строка 4 «АККОРДЫ» + несворачаемые строки 2/3 ──
    Экран человека = 4 строки: 1 текст выбранного языка (.txt) · 2 транскрипция кириллицей (.tc)
    · 3 оригинал песни (.sub) · 4 аккорды (.chd). Режим включён — строки не прячутся. */
 #lyricsWrap .line .chd{display:none}
@@ -6569,15 +6569,16 @@ body.four4 #lyricsWrap .line .tc:empty{display:none}
 
 </style>
 <script id="l4script">
-/* ── С15 · ЧЕТВЁРКА v10.13 — ЯДРО ВЫВОДА: 4 строки на экране одновременно ──
-   Приказ владельца (экран песни = ровно 4 строки):
-   1 строка — ТЕКСТ на языке, выбранном человеком (живёт в .txt — paintLangs, не трогаем)
-   2 строка — ТРАНСКРИПЦИЯ этого языка кириллическими графемами: ручная пара Малыша,
-               иначе АЛГОРИТМИЧЕСКИЙ ТРАНСЛИТ (латиница→кириллица, всегда, офлайн)
-   3 строка — ТЕКСТ ОРИГИНАЛА песни (.sub, CUES[i].t — в ЧЕТВЁРКЕ не сворачивается)
-   4 строка — АККОРДЫ (.chd — новая строка: файл аккордов / аккорды-над-строкой / [Am] в оригинале)
-   Плюс: АВТО-ПЕРЕВОД песни онлайн на выбранный язык (кэш в доме, честный статус).
-   Канон не ломается: пульс по буквам, ДЕТИ-сцена, ШИЛКА, __HEALTH9 — без изменений. */
+/* ── С15+С16 · ЧЕТВЁРКА v10.15 «АВТОАКОРД» — ЯДРО ВЫВОДА: 4 строки на экране ──
+   Приказ владельца («ТЫ САМ ИХ ДОЛЖЕН ВКАТЫВАТЬ — РЕБЁНОК ТОЛЬКО УЧИТСЯ»):
+   1 строка — ТЕКСТ на языке, выбранном человеком (.txt — paintLangs, не трогаем)
+   2 строка — ТРАНСКРИПЦИЯ кириллицей: ручная пара Малыша, иначе алгоритмический транслит
+   3 строка — ТЕКСТ ОРИГИНАЛА песни (.sub — в ЧЕТВЁРКЕ не сворачивается)
+   4 строка — АККОРДЫ, и теперь их СТАВИТ САМ ДВИЖОК (С16 АВТОАКОРД): файл не нужен.
+              Приоритет: файл песенника → [Am] в оригинале → АВТОАКОРД (диатоника тональности).
+   Плюс: СЛОВАРЬ ИСТИНЫ — правим ложных друзей машины (приказ владельца:
+   «РЫБНОЕ МЕСТО» ≠ «ФИШИНГ», «ПОРНОТА» ≠ «PORNO»).
+   Канон не ломается: пульс по буквам, ДЕТИ-сцена, ШИЛКА, __HEALTH9, КРЫША — без изменений. */
 (function(){
 "use strict";
 if(window.__4L) return;
@@ -6588,7 +6589,7 @@ var wrap = $("lyricsWrap");
 var CUES2 = (window.SONG||{}).cues||[];
 
 /* ---------- состояние (дом хранит) ---------- */
-var DEF = { on:1, l2:1, l4:1, src2:"auto", trlang:"auto", l4size:100 };
+var DEF = { on:1, l2:1, l4:1, src2:"auto", trlang:"auto", l4size:100, ac:1 };
 var ST = (function(){
   try{ var p = JSON.parse(localStorage.getItem("s31.l4.v1")||"{}"); for(var k in DEF){ if(p[k]===undefined) p[k]=DEF[k]; } return p; }
   catch(e){ return JSON.parse(JSON.stringify(DEF)); }
@@ -6698,7 +6699,7 @@ function transText(text, langKey){
   return out;
 }
 
-/* ══════════ С15-АККОРДЫ: строка 4 ══════════ */
+/* ══════════ С15-АККОРДЫ: строка 4 — файл песенника / [Am] в оригинале ══════════ */
 var CH_TOK = /^[A-H][#b♯♭]?(?:m|maj|min|dim|aug|sus|add|mmaj)?(?:\d+)?(?:sus\d|add\d+|b\d+|#\d+|no\d+)*(?:\/[A-H][#b♯♭]?)?(?:\([^)]{1,14}\))?$/;
 function isChordLine(line){
   var t = String(line||"").trim();
@@ -6757,6 +6758,103 @@ function storeChords(arr, kind){
   }catch(e){}
 }
 
+/* ══════════ С16-АВТОАКОРД: движок сам ставит аккорды — файл НЕ нужен ══════════
+   Учебная гармоническая сетка: диатоника выбранной тональности по паттерну.
+   По умолчанию — квартирник: Am · ДВОР (Am–Dm–E–Am) · смена через 2 строки. */
+var MAJ = [
+  ["C","Dm","Em","F","G","Am","Bdim"],
+  ["Db","Ebm","Fm","Gb","Ab","Bbm","Cdim"],
+  ["D","Em","F#m","G","A","Bm","C#dim"],
+  ["Eb","Fm","Gm","Ab","Bb","Cm","Ddim"],
+  ["E","F#m","G#m","A","B","C#m","D#dim"],
+  ["F","Gm","Am","Bb","C","Dm","Edim"],
+  ["F#","G#m","A#m","B","C#","D#m","E#dim"],
+  ["G","Am","Bm","C","D","Em","F#dim"],
+  ["Ab","Bbm","Cm","Db","Eb","Fm","Gdim"],
+  ["A","Bm","C#m","D","E","F#m","G#dim"],
+  ["Bb","Cm","Dm","Eb","F","Gm","Adim"],
+  ["B","C#m","D#m","E","F#","G#m","A#dim"]
+];
+var MIN = [
+  ["Cm","Ddim","Eb","Fm","Gm","Ab","Bb"],
+  ["C#m","D#dim","E","F#m","G#m","A","B"],
+  ["Dm","Edim","F","Gm","Am","Bb","C"],
+  ["Ebm","Fdim","Gb","Abm","Bbm","B","Db"],
+  ["Em","F#dim","G","Am","Bm","C","D"],
+  ["Fm","Gdim","Ab","Bbm","Cm","Db","Eb"],
+  ["F#m","G#dim","A","Bm","C#m","D","E"],
+  ["Gm","Adim","Bb","Cm","Dm","Eb","F"],
+  ["G#m","A#dim","B","C#m","D#m","E","F#"],
+  ["Am","Bdim","C","Dm","Em","F","G"],
+  ["Bbm","Cdim","Db","Ebm","Fm","Gb","Ab"],
+  ["Bm","C#dim","D","Em","F#m","G","A"]
+];
+var KEYM = ["C","Db","D","Eb","E","F","F#","G","Ab","A","Bb","B"];
+var KEYm = ["Cm","C#m","Dm","Ebm","Em","Fm","F#m","Gm","G#m","Am","Bbm","Bm"];
+var PATS = {
+  "двор":   { n:"ДВОР",   maj:[0,3,4,0], min:[0,3,4,0], dom:true },
+  "поп":    { n:"ПОП",    maj:[0,4,5,3], min:[0,5,2,6] },
+  "романс": { n:"РОМАНС", maj:[5,3,0,4], min:[0,5,3,6] },
+  "баллада":{ n:"БАЛЛАДА",maj:[0,5,3,4], min:[0,5,3,4] },
+  "кантри": { n:"КАНТРИ", maj:[0,3,0,4], min:[0,3,0,4] },
+  "тьма":   { n:"ТЬМА",   maj:[0,5,4,0], min:[0,6,5,0] },
+  "блюз":   { n:"БЛЮЗ",   maj:[0,0,0,0,3,3,0,0,4,3,0,4], min:[0,0,0,0,3,3,0,0,4,3,0,4], sev:true }
+};
+var PATORDER = ["двор","поп","романс","баллада","кантри","тьма","блюз"];
+var ACKEY = "s31.l4.auto.v1";
+var AC = { pc:9, mode:"m", pat:"двор", den:2 };
+function acLoad(){
+  try{
+    var s = JSON.parse(localStorage.getItem(ACKEY)||"{}");
+    var a = s[axisHash()];
+    if(a){ for(var k in AC){ if(a[k]!==undefined) AC[k]=a[k]; } }
+  }catch(e){}
+}
+function acSave(){
+  try{
+    var s = JSON.parse(localStorage.getItem(ACKEY)||"{}");
+    s[axisHash()] = AC;
+    var ks = Object.keys(s);
+    if(ks.length > 12){ delete s[ks[0]]; }
+    localStorage.setItem(ACKEY, JSON.stringify(s));
+  }catch(e){}
+}
+function acKeyName(){ return (AC.mode==="m" ? KEYm : KEYM)[AC.pc] || "Am"; }
+function autoCh(i){
+  if(!CUES2.length || i >= CUES2.length) return "";
+  var P = PATS[AC.pat] || PATS["двор"];
+  var arr = (AC.mode==="m") ? MIN[AC.pc] : MAJ[AC.pc];
+  var cyc = (AC.mode==="m") ? P.min : P.maj;
+  var step = Math.floor(i / Math.max(1, AC.den)) % cyc.length;
+  var deg = cyc[step];
+  var nm = arr[deg] || "";
+  if(P.sev) nm += "7";
+  if(P.dom && AC.mode==="m" && deg===4) nm = nm.replace(/m$/,""); /* двор: гармоническая доминанта E */
+  return nm;
+}
+
+/* ══════════ СЛОВАРЬ ИСТИНЫ: правим ложных друзей машинного перевода ══════════
+   Приказ владельца: «РЫБНОЕ МЕСТО» ≠ «ФИШИНГ», «ПОРНОТА» ≠ «PORNO». */
+var DICKEY = "s31.dict.v1";
+var DICTDEF = [
+  ["фишинг","рыбалка"],
+  ["porno","порнота"],
+  ["porn","порнота"]
+];
+function dicUser(){ try{ return JSON.parse(localStorage.getItem(DICKEY)||"[]"); }catch(e){ return []; } }
+function dicSaveUser(a){ try{ localStorage.setItem(DICKEY, JSON.stringify(a)); }catch(e){} }
+function applyDict(t){
+  t = String(t||"");
+  var all = dicUser().concat(DICTDEF), i;
+  for(i=0;i<all.length;i++){
+    var bad = all[i][0], good = all[i][1];
+    if(bad && good){
+      try{ t = t.replace(new RegExp(bad.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"), good); }catch(e){}
+    }
+  }
+  return t;
+}
+
 /* ══════════ ПРИМЕНЕНИЕ К СТРОКАМ ══════════ */
 function curLang(){
   /* язык строк берём из DOM (dataset.lang ставит paintLangs) — LANGS блочная и снаружи не видна */
@@ -6782,16 +6880,20 @@ function repaint(){
     if(!tc){ tc = D.createElement("span"); tc.className = "tc"; el.insertBefore(tc, sub); }
     var chd = el.querySelector(".chd");
     if(!chd){ chd = D.createElement("span"); chd.className = "chd"; el.appendChild(chd); }
-    /* 4 строка: аккорды */
-    chd.textContent = (ST.on && ST.l4 && chordsArr && chordsArr[i]) ? chordsArr[i] : "";
-    /* [Am] внутри оригинала — сами уезжают в строку 4 */
-    if(ST.on && ST.l4 && !chordsArr && sub){
-      var st = sub.textContent || "";
-      var br = st.match(/\[([A-G][#b][^\]]{0,10}|[A-G][#b]?[a-zA-Z0-9#()\/]{0,8})\]/g);
-      if(br && br.length){
-        chd.textContent = br.map(function(x){ return x.slice(1,-1); }).join(" ");
-        sub.textContent = st.replace(/\[[^\]]{1,12}\]/g, "").replace(/\s{2,}/g, " ").trim();
+    /* 4 строка: аккорды — файл → [Am] из оригинала → АВТОАКОРД (сам, без файла) */
+    chd.textContent = "";
+    if(ST.on && ST.l4){
+      if(chordsArr){
+        chd.textContent = chordsArr[i] || "";
+      } else if(sub){
+        var st = sub.textContent || "";
+        var br = st.match(/\[([A-G][#b][^\]]{0,10}|[A-G][#b]?[a-zA-Z0-9#()\/]{0,8})\]/g);
+        if(br && br.length){
+          chd.textContent = br.map(function(x){ return x.slice(1,-1); }).join(" ");
+          sub.textContent = st.replace(/\[[^\]]{1,12}\]/g, "").replace(/\s{2,}/g, " ").trim();
+        }
       }
+      if(!chd.textContent && ST.ac){ chd.textContent = autoCh(i); }
     }
     /* 2 строка: транскрипция — ручная пара Малыша приоритетна (в АВТО), иначе алгоритмический транслит */
     if(!ST.on || !ST.l2){ tc.textContent = ""; }
@@ -6855,7 +6957,7 @@ function translateSong(tl){
       busy = false;
       if(ok > 0){
         var имя = "АВТО·" + tl.toUpperCase();
-        var пары = out.map(function(t){ return { t: t }; });
+        var пары = out.map(function(t){ return { t: applyDict(t) }; });
         var done = false;
         try{
           if(typeof MALYSH !== "undefined" && MALYSH && MALYSH.регистрируй){
@@ -6874,7 +6976,7 @@ function translateSong(tl){
           }catch(e){}
         }
         trSave(dict);
-        status("перевод: готово — «"+имя+"» в таблице ЯЗЫК ("+ok+" строк"+(fail?", сбоев "+fail:"")+")");
+        status("перевод: готово — «"+имя+"» в таблице ЯЗЫК ("+ok+" строк"+(fail?", сбоев "+fail:"")+")· словарь истины применён");
       } else {
         status("перевод: сеть недоступна (офлайн-дом) — загрузи перевод файлом через МАЛЫША");
       }
@@ -6884,9 +6986,9 @@ function translateSong(tl){
     out[i] = "";
     if(!t.trim()){ i++; setTimeout(step, 30); return; }
     var key = tl+"|"+t;
-    if(dict[key] !== undefined){ out[i] = dict[key]; ok++; i++; if(ok%6===0) status("перевод: "+(i)+"/"+CUES2.length+" (кэш дома)"); setTimeout(step, 15); return; }
+    if(dict[key] !== undefined){ out[i] = applyDict(dict[key]); ok++; i++; if(ok%6===0) status("перевод: "+(i)+"/"+CUES2.length+" (кэш дома)"); setTimeout(step, 15); return; }
     apiTranslate(t, tl).then(function(tr){
-      dict[key] = tr || ""; out[i] = tr || ""; ok++;
+      tr = tr || ""; dict[key] = tr; out[i] = applyDict(tr); ok++;
     }).catch(function(){ fail++; }).then(function(){
       i++;
       if(i % 4 === 0) status("перевод: "+i+"/"+CUES2.length+(fail?" · сбоев "+fail:""));
@@ -6895,18 +6997,26 @@ function translateSong(tl){
   }
   step();
 }
-
 /* ══════════ ПУЛЬТ: вкладка «4 СТРОКИ» ══════════ */
 function el(tag, cls, html){ var e = D.createElement(tag); if(cls) e.className = cls; if(html !== undefined) e.innerHTML = html; return e; }
 function swBtn(id, on, tip){ return '<button class="sw" id="'+id+'" role="switch" aria-checked="'+(on?"true":"false")+'"'+(tip?' data-tip="'+tip+'"':"")+'></button>'; }
 var statEl = null;
+function acStatText(){
+  var P = PATS[AC.pat] || PATS["двор"];
+  return "АВТОАКОРД " + acKeyName() + " · " + P.n + " · " + (AC.den===1 ? "каждую строку" : "через "+AC.den);
+}
 function status(msg){
   if(statEl){
     var ch = chordsArr ? chordsArr.filter(function(x){ return x && x.trim(); }).length : 0;
     var L = curLang();
+    var аккорды;
+    if(chordsArr) аккорды = (ch + "/" + CUES2.length + " (" + chordsKind + ")");
+    else if(ST.l4 && ST.ac) аккорды = acStatText() + " — файл не нужен";
+    else if(ST.l4) аккорды = "нет файла — [Am] из оригинала";
+    else аккорды = "выкл";
     statEl.textContent = "ЧЕТВЁРКА: " + (ST.on ? "вкл" : "выкл") +
       " · транскрипция: " + (ST.l2 ? (ST.src2==="off" ? "выкл" : (ST.src2==="orig" ? "оригинал" : ST.src2==="l1" ? "строка 1" : "авто")) : "выкл") +
-      " · аккорды: " + (chordsArr ? (ch + "/" + CUES2.length + " (" + chordsKind + ")") : (ST.l4 ? "нет файла — [Am] из оригинала" : "выкл")) +
+      " · аккорды: " + аккорды +
       " · язык строк: " + (L ? L.name : "—");
   }
   if(msg && statEl){ statEl.textContent = msg; }
@@ -6931,13 +7041,18 @@ function buildPanel(){
     for(var j=0;j<ps.length;j++){ ps[j].classList.toggle("on", ps[j].dataset.ptab === "four"); }
     status();
   });
+  var patOpts = "", i2;
+  for(i2=0;i2<PATORDER.length;i2++){
+    var pk = PATORDER[i2];
+    patOpts += '<option value="'+pk+'"'+(AC.pat===pk?' selected':'')+'>'+PATS[pk].n+'</option>';
+  }
   var p = el("div", "ptab");
   p.setAttribute("role","tabpanel"); p.id = "ppanel-four";
   p.setAttribute("aria-labelledby","ptab-four"); p.tabIndex = 0; p.dataset.ptab = "four";
   p.innerHTML =
     '<div class="prow2"><span class="plab2">РЕЖИМ «ЧЕТВЁРКА» — ЯДРО ЭКРАНА</span>' +
       '<div class="swrow">'+swBtn("l4swOn", ST.on, "4 строки: текст выбранного языка · транскрипция кириллицей · оригинал · аккорды")+'<span class="swlab">показывать 4 строки</span></div>' +
-      '<em class="pdesc">1 строка — язык, выбранный человеком. 2 строка — его транскрипция кириллическими графемами (ручная пара Малыша или автоматический транслит). 3 строка — оригинал песни, не сворачивается. 4 строка — аккорды.</em>' +
+      '<em class="pdesc">1 строка — язык, выбранный человеком. 2 строка — его транскрипция кириллическими графемами (ручная пара Малыша или автоматический транслит). 3 строка — оригинал песни, не сворачивается. 4 строка — аккорды, теперь ставит их сам движок.</em>' +
     '</div>' +
     '<div class="prow2"><span class="plab2">СТРОКА 2 · ТРАНСКРИПЦИЯ</span>' +
       '<div class="swrow">'+swBtn("l4swL2", ST.l2, "вторая строка — как звучит текст первой, кириллическими графемами")+'<span class="swlab">транскрипция кириллицей</span></div>' +
@@ -6957,13 +7072,24 @@ function buildPanel(){
       '</div>' +
       '<em class="pdesc">Проверка вживую: <b id="l4probe"></b></em></div>' +
     '</div>' +
-    '<div class="prow2"><span class="plab2">СТРОКА 4 · АККОРДЫ</span>' +
-      '<div class="swrow">'+swBtn("l4swCh", ST.l4, "четвёртая строка над/под песней — аккорды")+'<span class="swlab">показывать аккорды</span></div>' +
+    '<div class="prow2"><span class="plab2">СТРОКА 4 · АККОРДЫ — ДВИЖОК СТАВИТ САМ</span>' +
+      '<div class="swrow">'+swBtn("l4swAc", ST.ac, "АВТОАКОРД: гармоническая сетка тональности прямо на экране — ребёнку файл не нужен, он только учится")+'<span class="swlab">АВТОАКОРД (без файла)</span></div>' +
+      '<div class="sldrow"><span class="plab2">ТОНАЛЬНОСТЬ</span>' +
+        '<button class="pbtn" id="l4acDown" data-tip="На полтона вниз">−</button>' +
+        '<b class="sldval" id="l4acKey">'+acKeyName()+'</b>' +
+        '<button class="pbtn" id="l4acUp" data-tip="На полтона вверх">+</button>' +
+        '<select id="l4acPat" data-tip="Гармонический паттерн (сетка)" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit">'+patOpts+'</select>' +
+        '<select id="l4acDen" data-tip="Как часто менять аккорд" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit">' +
+          '<option value="1"'+(AC.den===1?' selected':'')+'>КАЖДУЮ СТРОКУ</option>' +
+          '<option value="2"'+(AC.den===2?' selected':'')+'>ЧЕРЕЗ 2 СТРОКИ</option>' +
+          '<option value="4"'+(AC.den===4?' selected':'')+'>ЧЕРЕЗ 4 СТРОКИ</option>' +
+        '</select></div>' +
+      '<div class="sldrow"><div class="swrow">'+swBtn("l4swCh", ST.l4, "четвёртая строка — аккорды")+'<span class="swlab">показывать строку аккордов</span></div></div>' +
       '<div class="sldrow"><input type="range" id="l4sld" min="40" max="260" step="5" value="'+ST.l4size+'" aria-label="размер строки аккордов" data-tip="Размер строки аккордов"><b class="sldval" id="l4sldVal">'+ST.l4size+'%</b></div>' +
-      '<div class="sldrow"><button class="pbtn" id="l4crdBtn">ВКАТАТЬ ФАЙЛ АККОРДОВ</button>' +
-      '<button class="pbtn" id="l4crdDrop" data-tip="Убрать аккорды из дома">СБРОС</button>' +
+      '<div class="sldrow"><button class="pbtn" id="l4crdBtn">ВКАТАТЬ ФАЙЛ АККОРДОВ (профессиональный режим)</button>' +
+      '<button class="pbtn" id="l4crdDrop" data-tip="Убрать аккорды файла из дома">СБРОС ФАЙЛА</button>' +
       '<input type="file" id="l4crdFile" accept=".txt,.crd,.chord,.chords,.pro,.srt" hidden></div>' +
-      '<em class="pdesc">Песенник: строка аккордов над строкой текста — или построчно по оси песни. Аккорды в скобках [Am] внутри оригинала подхватываются сами. Файл хранится в доме — привязан к песне.</em>' +
+      '<em class="pdesc">Честно и по-хозяйски: АВТОАКОРД — учебная гармоническая сетка (диатоника тональности), он не претендует на оригинальную партитуру. Файл песенника и [Am] в оригинале всегда приоритетны. Тональность и паттерн хранятся в доме — привязаны к песне.</em>' +
     '</div>' +
     '<div class="prow2"><span class="plab2">АВТО-ПЕРЕВОД · ЯЗЫК ЧЕЛОВЕКА</span>' +
       '<div class="sldrow"><select id="l4selTl" data-tip="На какой язык перевести песню (онлайн, кэш в доме)" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit">' +
@@ -6976,6 +7102,13 @@ function buildPanel(){
       '</select>' +
       '<button class="pbtn" id="l4trBtn" data-tip="Перевести песню на выбранный язык онлайн и посадить в таблицу ЯЗЫК">ПЕРЕВЕСТИ ПЕСНЮ</button></div>' +
       '<em class="pdesc">Человек выбирает любой язык — песня переводится построчно онлайн и встаёт в таблицу «ЯЗЫК СТРОК» как черновик Малыша. Сеть молчит — дом честно скажет. Переводы кэшируются офлайн.</em>' +
+    '</div>' +
+    '<div class="prow2"><span class="plab2">СЛОВАРЬ ИСТИНЫ — ПРОТИВ ЛОЖНЫХ ДРУЗЕЙ</span>' +
+      '<div class="sldrow"><input id="l4dicBad" placeholder="плохо (как перевела машина)" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit;flex:1">' +
+      '<input id="l4dicGood" placeholder="хорошо (как надо)" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit;flex:1">' +
+      '<button class="pbtn" id="l4dicAdd" data-tip="Добавить пару в словарь истины">ДОБАВИТЬ</button></div>' +
+      '<div id="l4dicList"></div>' +
+      '<em class="pdesc">Приказ владельца исполнен: «рыбное место» — не «фишинг», «порнота» — не «PORNO». Встроенные пары: фишинг→рыбалка, PORNO/porn→порнота. Свои пары добавляй выше — они сильнее машины и переживают перезапуск. Применяются к новым переводам и к кэшу при чтении.</em>' +
     '</div>' +
     '<div class="prow2"><span class="plab2">СОСТОЯНИЕ</span><em class="pdesc" id="l4stat">…</em></div>';
   body.appendChild(p);
@@ -6992,6 +7125,7 @@ function buildPanel(){
   hookSw("l4swOn", function(on){ ST.on = on?1:0; save(); repaint(); });
   hookSw("l4swL2", function(on){ ST.l2 = on?1:0; save(); repaint(); });
   hookSw("l4swCh", function(on){ ST.l4 = on?1:0; save(); repaint(); });
+  hookSw("l4swAc", function(on){ ST.ac = on?1:0; save(); repaint(); });
   function hookSeg(id, fn){
     var s = $(id); if(!s) return;
     s.addEventListener("click", function(e){
@@ -7011,11 +7145,19 @@ function buildPanel(){
     pr.textContent = "«" + src + "» → «" + transText(src, k) + "»";
   }
   var sld = $("l4sld");
-  sld.addEventListener("input", function(){
-    ST.l4size = +sld.value; $("l4sldVal").textContent = sld.value + "%";
-    if(wrap) wrap.style.setProperty("--l4s4", String(ST.l4size/100));
-    save();
-  });
+  if(sld){
+    sld.addEventListener("input", function(){
+      ST.l4size = +sld.value; if($("l4sldVal")) $("l4sldVal").textContent = sld.value + "%";
+      if(wrap) wrap.style.setProperty("--l4s4", String(ST.l4size/100));
+      save();
+    });
+  }
+  var acDown = $("l4acDown"), acUp = $("l4acUp"), acPat = $("l4acPat"), acDen = $("l4acDen");
+  function acPaint(){ $("l4acKey").textContent = acKeyName(); acSave(); repaint(); }
+  acDown.addEventListener("click", function(){ AC.pc = (AC.pc + 11) % 12; acPaint(); });
+  acUp.addEventListener("click", function(){ AC.pc = (AC.pc + 1) % 12; acPaint(); });
+  acPat.addEventListener("change", function(){ AC.pat = acPat.value; acPaint(); });
+  acDen.addEventListener("change", function(){ AC.den = +acDen.value || 2; acPaint(); });
   var fbtn = $("l4crdBtn"), fin = $("l4crdFile");
   fbtn.addEventListener("click", function(){ fin.click(); });
   fin.addEventListener("change", function(){
@@ -7039,24 +7181,66 @@ function buildPanel(){
     repaint();
   });
   $("l4trBtn").addEventListener("click", function(){ translateSong($("l4selTl").value); });
+  /* СЛОВАРЬ ИСТИНЫ: интерфейс */
+  function dicPaint(){
+    var box = $("l4dicList"); if(!box) return;
+    var u = dicUser(), h = "";
+    for(var i=0;i<u.length;i++){
+      h += '<div class="sldrow" style="align-items:center;gap:8px"><code style="opacity:.85">'+String(u[i][0]).replace(/</g,"&lt;")+' → '+String(u[i][1]).replace(/</g,"&lt;")+'</code>' +
+           '<button class="pbtn" data-dicdel="'+i+'" data-tip="Убрать пару">✕</button></div>';
+    }
+    if(!u.length) h = '<em class="pdesc">своих пар пока нет — работают встроенные</em>';
+    box.innerHTML = h;
+  }
+  $("l4dicAdd").addEventListener("click", function(){
+    var b = $("l4dicBad"), g = $("l4dicGood");
+    if(!b.value.trim() || !g.value.trim()){ status("словарь: заполни обе половины — плохо и хорошо"); return; }
+    var u = dicUser();
+    u.push([b.value.trim(), g.value.trim()]);
+    dicSaveUser(u); b.value=""; g.value=""; dicPaint();
+    status("словарь истины: пара принята — применю к новым переводам и кэшу");
+  });
+  $("l4dicList").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-dicdel]"); if(!b) return;
+    var u = dicUser(); u.splice(+b.dataset.dicdel, 1); dicSaveUser(u); dicPaint(); status();
+  });
+  dicPaint();
   probe();
   status();
 }
 
 /* ══════════ API + ЗДОРОВЬЕ ══════════ */
 window.__4L = {
-  ver: "v10.13",
+  ver: "v10.15",
   st: ST,
   repaint: function(){ try{ repaint(); }catch(e){} },
   translit: transText,
   chords: function(){ return chordsArr; },
   setChords: function(arr, kind){ storeChords(arr||[], kind||"внешний"); repaint(); },
+  auto: function(){ return { key: acKeyName(), pc: AC.pc, mode: AC.mode, pat: AC.pat, den: AC.den }; },
+  setAuto: function(o){
+    if(!o) return;
+    if(o.key !== undefined){
+      var km = KEYm.indexOf(String(o.key)), kM = KEYM.indexOf(String(o.key));
+      if(km >= 0){ AC.pc = km; AC.mode = "m"; }
+      else if(kM >= 0){ AC.pc = kM; AC.mode = "M"; }
+    }
+    if(o.pat && PATS[o.pat]) AC.pat = o.pat;
+    if(o.den) AC.den = +o.den;
+    acSave(); repaint();
+  },
+  dict: {
+    apply: applyDict,
+    user: dicUser,
+    add: function(b, g){ var u = dicUser(); u.push([String(b), String(g)]); dicSaveUser(u); return u; }
+  },
   health: function(){
     var ln = D.querySelector("#lyricsWrap .line");
     return {
       ok: ST.on ? !!(ln && ln.querySelector(".chd")) : true,
       режим: ST.on ? "вкл" : "выкл",
       аккорды: chordsArr ? chordsArr.filter(function(x){ return x && x.trim(); }).length : 0,
+      автоаккорд: (ST.l4 && ST.ac && !chordsArr) ? acStatText() : "выкл",
       ось: CUES2.length
     };
   }
@@ -7073,12 +7257,12 @@ try{
   }
 }catch(e){}
 
-/* старт: аккорды из дома, панель, первая перекраска */
+/* старт: аккорды из дома, АВТОАКОРД из дома, панель, первая перекраска */
 loadChords();
+acLoad();
 try{ buildPanel(); }catch(e){}
 try{ repaint(); }catch(e){}
 })();
-
 </script>
 
 <script>/* v10.14 «КРЫША» · инлайн-библиотека QR (qrcode-generator 1.4.4, MIT) */
