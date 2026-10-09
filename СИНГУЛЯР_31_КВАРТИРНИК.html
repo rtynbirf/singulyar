@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.19 «ГРАМОТА» — RUVSON · «Просто люби» · один RAF-такт + стро́й YIN + склад · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.20 «КАДР» — RUVSON · «Просто люби» · сцены М1 в общем конвейере кадра · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1400,6 +1400,7 @@ function health(){
     { sec:"C", n:"синтез речи (озвучка): "+("speechSynthesis" in window?"есть":"нет"), ok: ("speechSynthesis" in window) },
     { sec:"C", n:"вибро-ритм: "+("vibrate" in navigator?"есть":"нет в этом устройстве"), ok: ("vibrate" in navigator) },
     { n:"одна кнопка: сканер готов", ok: !!(window.__SCAN) },
+  { sec:"R", n:"конвейер кадра: ядро + сцены М1 — один RAF на всех", ok: !!(window.__КОНВЕЙЕР&&window.SNG&&window.SNG.конвейер) },
     { n:"текст-пульс: строка·слово·слог·буква", ok: !!(window.__PULSE) },
     { sec:"R", n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
   ];
@@ -4530,7 +4531,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.18 «КОНВЕЙЕР»";
+      b.className="sng-верш"; b.textContent="· v10.20 «КАДР»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6399,9 +6400,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.18";
+var D=document, root=D.documentElement, body=D.body, VER="v10.20";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv51"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv52"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -6554,14 +6555,14 @@ try{
 })();
 </script>
 <script id="taktScript">
-/* ── С19 · КОНВЕЙЕР v10.18 — один RAF-такт на весь дом ──
-   П1 дорожной карты. Раньше у дома были свои петли: пульс-бит (С6),
-   микрофон «ДЕРЖИ НОТУ» (С4), указатели СВОБОДЫ (С7) — каждый дёргал
-   requestAnimationFrame сам по себе. Теперь один конвейер: поставил такт —
-   идёшь в общем ритме; снял такт — не дёргаешься. Падение одного такта
-   не роняет остальных (ловушка на каждом). Частота конвейера видна
-   в ЗДОРОВЬЕ. Одноразовые RAF (переезды, конфетти) остаются как были —
-   они не постоянные петли. */
+/* ── С19 · КОНВЕЙЕР v10.20 «КАДР» — один RAF-такт на весь дом ──
+   П1 дорожной карты; П2/T-20 доводит дело до конца: теперь в общем такте
+   и сцены М1 (призма/кристалл/шар-осколки) — конвейер живёт в ядре модулей
+   и на страницах ДОМА, здесь он главный (taktScript стоит раньше defer-
+   скриптов). Поставил такт — идёшь в общем ритме; снял такт — не дёргаешься.
+   Падение одного такта не роняет остальных (ловушка на каждом). Частота
+   конвейера видна в ЗДОРОВЬЕ. Одноразовые RAF (переезды, конфетти,
+   перетаскивание нити) остаются как были — они не постоянные петли. */
 (function(){
 "use strict";
 if(window.__КОНВЕЙЕР) return;             /* один конвейер — один такт */
@@ -6573,7 +6574,7 @@ function такт(now){
   requestAnimationFrame(такт);
 }
 window.__КОНВЕЙЕР = {
-  ver: "v10.18",
+  ver: "v10.20",
   поставь: function(fn, ид){
     if(typeof fn !== "function") return null;
     if(!ид) ид = "такт" + (СЧЁТ++);
