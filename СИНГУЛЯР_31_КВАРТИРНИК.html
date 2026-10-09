@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.18 «КОНВЕЙЕР» — RUVSON · «Просто люби» · один RAF-такт + стро́й YIN + склад · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.19 «ГРАМОТА» — RUVSON · «Просто люби» · один RAF-такт + стро́й YIN + склад · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -899,7 +899,7 @@ window.__ALERT = function(t){
     <div class="keys">
       <kbd>Пробел</kbd><span>хлопок (в режиме одной кнопки — выбор)</span>
       <kbd>← →</kbd><span>перемотка ±5 секунд</span>
-      <kbd>K</kbd><span>лирики на весь экран</span>
+      <kbd>K</kbd><span>лирика на весь экран</span>
       <kbd>L</kbd><span>свет сцены</span>
       <kbd>M</kbd><span>игра «Держи ноту»</span>
       <kbd>R</kbd><span>заново</span>
@@ -1414,7 +1414,7 @@ function health(){
     return [
       { sec:"I", n:"ЗАКОН ПЕРВЫЙ: РУС → СРБ → КАЗ → НЕМ → СССР → по носителям", ok: порядок },
       { sec:"I", n:"пониманий на оси: "+л.length+" — портянка владельца (группы по 20 + исчезающие + исторические) вшита целиком", ok: л.length >= 100 },
-      { sec:"I", n:"щит CSP: внешние загрузки запрещены, файл самодостаточен (0 картинок — живой холст)", ok: щит },
+      { sec:"I", n:"щит CSP: скрипты свои, из внешних — только Whisper/CDN-двери (0 картинок — живой холст)", ok: щит },
       { sec:"I", n:"ЧИСТЫЙ СВЕТ: светлые комнаты закреплены инлайном на html+body, тёмным заливкам вход в светлое закрыт", ok: (function(){ try{ return !!(window.__СВЕТЛЫЕ_КОМНАТЫ && window.__ЗАКРЕПИСВЕТ); }catch(e){ return false; } })() },
       { sec:"S", n:"РЕЛАКС: "+(рел ? "вкл — при пении гаснут ВСЕ панели и слайдеры, касание возвращает" : "выкл — панели всегда видны")+" (выбор помнится)", ok: (function(){ try{ var з=window.__РЕЛАКС, а=document.querySelector("audio"); if(!з||typeof з.примени!=="function")return false; if(а&&!а.paused&&з.вкл)return document.body.classList.contains("relax"); return true; }catch(e){ return false; } })() },
       { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
@@ -3621,7 +3621,7 @@ document.body.insertAdjacentHTML("beforeend", `
   <button class="x" id="ppClose" title="закрыть">✕</button>
   <h3>ПАСПОРТ · КВАРТИРНИК v9.3 «ЛИЦО ДОМА»</h3>
   <p><b>v1</b> — квартирник: голоса, эстафета, канон, свет по секциям, отсчёт, хлопки, «Держи ноту», БРАВО.<br>
-  <b>v2</b> — на все случаи жизни: сцены ВЕЧЕРИНКА/ДЕТИ/РОМАНТИКА/ДЕНЬ, 4 языка строк, голосовые команды, озвучка вперед, одна кнопка, вибро, контраст, гигант.<br>
+  <b>v2</b> — на все случаи жизни: сцены ВЕЧЕРИНКА/ДЕТИ/РОМАНТИКА/ДЕНЬ, 4 языка строк, голосовые команды, озвучка вперёд, одна кнопка, вибро, контраст, гигант.<br>
   <b>v3</b> — текст-пульс: побуквенно/послогово/пословно/построчно в такт музыке, такт-монитор 1·2·3·4 и BPM из самого звука.<br>
   <b>v4</b> — свобода: память вечера, продолжение с места, синхрон строк, запись выступления, Media Session (экран блокировки), экран не засыпает, тише под речью, тихий вечер, лёгкое чтение, световой бит, лампа, экспорт/импорт настроек, RU·EN·ES интерфейс.<br>
   <b>v5</b> — пульт: панель настроек из шести разделов с поиском, подсказка на каждой кнопке (WCAG 1.4.13), справка-вкладки, пять тем подачи, четыре стиля подсветки текста, шрифты, три строки подачи — титры · транскрипция · оригинал, у каждой свой ползунок — и громкость слайдерами, размеры помнятся за каждым, режимы конфетти, сброс к заводским.<br>
@@ -5988,7 +5988,7 @@ window.__HEALTH7 = ()=>[
     открыт = (состояние === undefined) ? !открыт : !!состояние;
     панель.style.display = открыт ? 'block' : 'none';
     if (открыт){
-      перерисовать(); событие('открыт'); статус('Реестр на лицо: три ключа, все обратимы.');
+      перерисовать(); событие('открыт'); статус('Реестр налицо: три ключа, все обратимы.');
       try{ var кб = панель.querySelector('button'); if (кб) кб.focus({preventScroll:true}); }catch(e){}
     }
   }
@@ -6131,7 +6131,7 @@ html[data-env="планшет"]{--sng-topH:calc(72px + var(--sng-st,0px))} /* v1
 <dialog id="malSheet" aria-label="Малыш — приёмник сырья">
   <div class="rchead"><h3>МАЛЫШ · ПРИЁМНИК СЫРЬЯ</h3><button class="x" id="malX" aria-label="Закрыть приёмник">✕</button></div>
   <p class="rcnote">Вката Малышу сырьё — обработает шестью приёмами: разбор, чистка, выравнивание, транскрипция, регистрация, ревизия. Формат: первая строка — «ЯЗЫК: название», дальше строки песни; строка с «→» впереди — кириллическая транскрипция предыдущей; пометки [музыка] и нумерация SRT срезаются сами. Понимание обязано лечь на ось смысла (повторяемые строки — бит-в-бит), иначе честный отказ.</p>
-  <textarea id="malRaw" rows="9" aria-label="Сырё для Малыша" style="width:100%;border-radius:12px;background:#ffffff0c;border:1px solid #ffffff18;color:var(--text);font:13px/1.55 inherit;padding:12px;resize:vertical" placeholder="ЯЗЫК: НОМЕ&#10;первая строка песни&#10;→ как звучит кириллицей&#10;вторая строка…"></textarea>
+  <textarea id="malRaw" rows="9" aria-label="Сырьё для Малыша" style="width:100%;border-radius:12px;background:#ffffff0c;border:1px solid #ffffff18;color:var(--text);font:13px/1.55 inherit;padding:12px;resize:vertical" placeholder="ЯЗЫК: НАЗВАНИЕ&#10;первая строка песни&#10;→ как звучит кириллицей&#10;вторая строка…"></textarea>
   <div class="sldrow" style="margin-top:12px">
     <button id="malGo" class="pbtn" data-tip="Обработать сырьё шестью приёмами и посадить язык в таблицу ЯЗЫК">ПУСК · ОБРАБОТАТЬ</button>
     <button id="malWipe" class="pbtn" data-tip="Забыть всё вкатанное ранее — встроенные понимания остаются">ЗАБЫТЬ ВКАТАННОЕ</button>
@@ -7712,7 +7712,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 if (window.__КРЫША) return;                       /* один такт — одна крыша */
 
 var D = document;
-var VER = 'v10.14 «КРЫША»';
+var VER = 'v10.19 «ГРАМОТА»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
 
@@ -7861,7 +7861,6 @@ if (roomArg){
       if(k==='sheet-theme'){ sheet([['warm','ТЕПЛО'],['neon','НЕОН'],['minimal','МИНИМАЛ'],['velvet','БАРХАТ'],['craft','КРАФТ']], 'theme'); return; }
       if(k==='sheet-close'){ D.getElementById('kv31gSheet').classList.remove('open'); return; }
       if(k==='mic'){ micToggle(); return; }
-      if(k==='toggle'){ b.innerHTML='…'; setTimeout(function(){},0); }
       cmd(k);
     });
     var lastState=null;
@@ -7886,7 +7885,7 @@ if (roomArg){
         try{ if(S && S.micStream) { var tr=(S.micStream.getTracks&&S.micStream.getTracks())||[]; for(var i=0;i<tr.length;i++) tr[i].stop(); } }catch(_){}
         micOn=false; D.getElementById('kv31gMic').classList.remove('kv31-mic-on'); setStat('голос выключен'); return;
       }
-      if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){ setStat('микрофон не доступен'); return; }
+      if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){ setStat('микрофон недоступен'); return; }
       setStat('прошу микрофон…');
       navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}})
         .then(function(st){
@@ -7910,7 +7909,7 @@ if (roomArg){
   p.innerHTML = '<div class="kv31-p-door">дома сингуляр · дверь ·31</div>'
   + '<div class="kv31-p-big">КВАРТИРНИК</div>'
   + '<div class="kv31-p-song">'+esc((window.SONG&&window.SONG.t)||'')+' — '+esc((window.SONG&&window.SONG.artist)||'')+'</div>'
-  + '<div class="kv31-p-tag">КРЫША v10.14 · ТЕЛЕФОНЫ ПО WI-FI · WHISPER-АВТОСИНХРОН</div>';
+  + '<div class="kv31-p-tag">КРЫША v10.19 · ТЕЛЕФОНЫ ПО WI-FI · WHISPER-АВТОСИНХРОН</div>';
   D.body.appendChild(p);
   var gone=false;
   function bye(){ if(gone) return; gone=true; p.classList.add('kv31-bye'); setTimeout(function(){ try{p.remove();}catch(_){} }, 900); }
@@ -7944,7 +7943,7 @@ panel.innerHTML = ''
 +   '<button id="kv31btnWBack" class="kv31-danger">ВЕРНУТЬ КАК БЫЛО</button>'
 +   '<div class="kv31-log" id="kv31wLog">модель придёт с CDN один раз и осядет в кэше браузера; дальше — офлайн. Выравниваю по словам, применяю честную медиану в родной __SYNC_SET.</div>'
 + '</div>'
-+ '<div class="kv31-card"><b>РУЛЬ ЗАЛА</b> — что умеет телефон: пуск/стоп, ±15 с, секции, громкость, сцены, темы, ПУЛЬТ, БРАВО, ПОКАЗ, живой голос в колонки. Состояние строки телефона видят всегда.</div>'
++ '<div class="kv31-card"><b>РУЛЬ ЗАЛА</b> — что умеет телефон: пуск/стоп, ±15 с, секции, громкость, сцены, темы, ПУЛЬТ, БРАВО, ПОКАЗ, живой голос в колонки. Телефон всегда показывает текущую строку.</div>'
 + '<div style="text-align:right"><button id="kv31btnBye">СНЯТЬ КРЫШУ</button></div>';
 D.body.appendChild(panel);
 
@@ -7956,7 +7955,7 @@ D.getElementById('kv31paVol').addEventListener('input', function(){ S.micPAgain 
 
 /* ── ЗАЛ: ХОСТ ── */
 var hallBox = D.getElementById('kv31hallBox');
-function hallLog(t){ hallBox.innerHTML += '<div>'+t+'</div>'; }
+function hallLog(t){ var d=document.createElement('div'); d.innerHTML=t; hallBox.appendChild(d); }
 function hallClear(){ hallBox.innerHTML=''; }
 
 function joinURL(id){
@@ -8047,8 +8046,7 @@ function startBroadcast(){
 
 /* ── РУЛЬ: команды телефона → родные ручки шасси ── */
 function onRemoteCmd(m, conn){
-  if(!m || m.t!=='kv31c') return;
-  if(m.t==='kv31hello'){ return; }
+  if(!m || (m.t!=='kv31c' && m.t!=='kv31hello')) return;
   var ok=false, KV=window.__KV;
   try{
     switch(m.cmd){
@@ -8076,6 +8074,7 @@ function onRemoteCmd(m, conn){
 }
 function themeChip(k){
   try{
+    if(!/^(warm|neon|mono|velvet|kraft)$/.test(String(k||''))) return false;
     var b=D.querySelector('#themeChips button[data-theme-k="'+k+'"]');
     if(b){ b.click(); return true; }
   }catch(_){}
