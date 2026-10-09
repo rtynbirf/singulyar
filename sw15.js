@@ -124,7 +124,9 @@ var S15_MAX = 140;   /* честный потолок кэша (ЗАКАЛКА):
 var S15_CORE = [
   './',
   './index.html',
+  './cord.js',
   './manifest.webmanifest',
+  './КРИСТАЛЛ.webp',
   './singulyar-ux-engine-v9.js',
   './singulyar-modules.js',
   './singulyar-design-v3.css',
@@ -152,6 +154,7 @@ var S15_CORE = [
   './СИНГУЛЯР_29_СВОБОДА.html',
   './СИНГУЛЯР_30_ТКАНЬ.html',
   './СИНГУЛЯР_31_КВАРТИРНИК.html',
+  './minus/prosto-lubi.webm',
   './СИНГУЛЯР_32_СЦЕНА.html',
   './СИНГУЛЯР_33_ФОНД.html',
   './СИНГУЛЯР_34_ДОМ_ФОНДА.html',
@@ -299,7 +302,7 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(req.url);
   if (url.origin !== location.origin) return;      /* чужое — мимо кэша */
   /* минусовки: сеть-первая с кэш-фолбэком (файлы могут добавляться) */
-  var isMinus = /\/minus\/.+\.mp3$/.test(url.pathname);
+  var isMinus = /\/minus\/.+\.(?:mp3|webm)$/.test(url.pathname);
   if (isMinus) {
     e.respondWith(
       fetch(req).then(function (res) {
