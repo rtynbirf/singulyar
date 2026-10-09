@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self'; manifest-src 'self'; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://translate.googleapis.com https://api.mymemory.translated.net; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta charset="utf-8"/>
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда: void + стекло-осколки + золото;
@@ -20,13 +20,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#050608"/>
 <meta name="color-scheme" content="dark"/>
-<meta name="description" content="КВАРТИРНИК v10.7 · ЧИСТЫЙ СВЕТ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри. Такт v1.56.0 «ЧИСТЫЙ СВЕТ»: светлые комнаты ДЕТИ/ДЕНЬ закреплены инлайном на html+body — ни тема, ни каскад, ни старый кэш ТВ не делают чёрную подложку; свет сцены не льёт тёмное в светлое; ПУЛЬТ открывается сразу во весь экран, Esc — выход из меню; РЕЛАКС прячет все панели и слайдеры при пении."/>
+<meta name="description" content="КВАРТИРНИК v10.7 · ЧИСТЫЙ СВЕТ — поющий инструмент в палитре разбора рендера родного дома СИНГУЛАР [изм.]: насыщенные оттенки только 22–43° (янтарь #DEA968, яркое золото #FEE29F), синего, бирюзового, фиолетового, зелёного — 0; упреждение света по зенитной механике перехвата: зная ритм, скорость огласовки и темп, буква выстреливает НАОПЕРЕЖЕ на время трассера (конвейер кадра) — и свет с звуком приходят к глазу и уху одномоментно, как снаряд и цель в точке пересечения траекторий; живой прицел на буквах в полёте; ручная юстировка свет↔звук по мировой практике: слайдер ±1,5 с шагом 10 мс (osu!/LRC), кнопки и клавиши «,»/«.» по 50 мс (VLC G/H), тап-юстировка по звуку (Rock Band/Clone Hero); цвет ИСПОЛНЯЕМОЙ строки и свой цвет подсветки у буквы, слога и слова по отдельности; пульс по голосу — фонема = звук = буква; двойные часы и авто-компенсация задержки вывода — такт и буквы идут по звуку, каким его слышит ухо, даже на Bluetooth; бег строк держит гласные дольше, как в живом пении; бирка автора — скромный штрих-код в углу; плюс всё v8: джокер «ещё» с историей, фото → цвета, конструктор с нуля, ЛАБ, ПУЛЬТ (7 разделов), подсказки, 5 тем, 4 стиля подсветки, сцены, 4 языка строк, такт-монитор, запись, лампа, озвучка, одна кнопка. Автономный HTML, аудио внутри. Такт v1.56.0 «ЧЕТВЁРКА»: светлые комнаты ДЕТИ/ДЕНЬ закреплены инлайном на html+body — ни тема, ни каскад, ни старый кэш ТВ не делают чёрную подложку; свет сцены не льёт тёмное в светлое; ПУЛЬТ открывается сразу во весь экран, Esc — выход из меню; РЕЛАКС прячет все панели и слайдеры при пении."/>
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: старый глиф-силуэт заменён лицом человека дома (favicon.svg) -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.12 «ЧИСТЫЙ СВЕТ» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.13 «ЧЕТВЁРКА» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -511,7 +511,7 @@ dialog::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1p
 dialog h3{font-family:ui-monospace,Consolas,'Courier New',monospace;letter-spacing:.2em;
   background:linear-gradient(135deg,#F6DC92,#D4AF37 55%,#F6DC92);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-/* v10.7 «ЧИСТЫЙ СВЕТ» (приказ владельца: «ПУЛЬТ СРАЗУ ВОВЕСЬ ЭКРАН, УБЕРИ РАЗВЕРНУТЬ, ЭСКЕЙБ — ВЫЙТИ ИЗ МЕНЮ»):
+/* v10.7 «ЧЕТВЁРКА» (приказ владельца: «ПУЛЬТ СРАЗУ ВОВЕСЬ ЭКРАН, УБЕРИ РАЗВЕРНУТЬ, ЭСКЕЙБ — ВЫЙТИ ИЗ МЕНЮ»):
    один честный режим — весь экран; vh стоит перед dvh (ТВ-Chromium 76 знает только vh) */
 dialog#panel{padding:0;overflow:hidden;background:var(--panel2);
   position:fixed;left:0;top:0;right:auto;bottom:auto;margin:0;transform:none;
@@ -668,7 +668,7 @@ html[data-env="тв"] .langgrid{max-height:52vh}
   /* ФОН-ГАРАНТИЯ (приказ владельца: «вместо белого фона вылазит порнота»): в файле 0 картинок
      и 0 внешних запросов, щит CSP запрещает чужие загрузки; светлые комнаты закреплены на html —
      под телом ничего не просвечивает, фон всегда непрозрачно светлый */
-  /* ФОН-ГАРАНТИЯ v10.7 «ЧИСТЫЙ СВЕТ»: пояс-защита — у каждой светлой комнаты СВОЙ честный цвет
+  /* ФОН-ГАРАНТИЯ v10.7 «ЧЕТВЁРКА»: пояс-защита — у каждой светлой комнаты СВОЙ честный цвет
      и свой тёмный текст. Главный щит — инлайн-закрепление на html+body из JS: инлайн не побьёт
      ни одна тема, ни чужой каскад, ни старый кэш ТВ. hc и ЛАБ стоят ВЫШЕ пояса (ЧЕЛОВЕК РЕШАЕТ). */
   html[data-светЗакреплён="1"] body[data-scene="kids"]{background:#fff6e9;color:#3a2a20}
@@ -1145,7 +1145,7 @@ const LIGHTS = window.__LIGHTS = [
   ["#2b1330","#120a14"], // Бридж — сумерки
   ["#123227","#0a1410"], // Финал — рассвет
 ];
-/* ── v10.7 «ЧИСТЫЙ СВЕТ»: светлые комнаты закреплены инлайном на html+body —
+/* ── v10.7 «ЧЕТВЁРКА»: светлые комнаты закреплены инлайном на html+body —
    ни тема (MONO поверх ДНЯ по специфичности), ни чужой каскад, ни старый кэш ТВ
    не могут сделать чёрную подложку: инлайн сильнее любого селектора.
    ЛАБ (свои цвета) и высокий контраст стоят ВЫЩЕ закрепления И пояса (пояс живёт
@@ -3627,7 +3627,7 @@ document.body.insertAdjacentHTML("beforeend", `
   <br><b>v9.5</b> — «ШИЛКА»: упреждение света по механике зенитной наводки. Зная траекторию и скорость цели, ШИЛКА бьёт в точку перехвата: снаряд и самолёт приходят туда одномоментно. Здесь цель — фонема, снаряд — звук (полёт = задержка вывода, вычитается сама — v9.1), трассер — свет буквы (конвейер кадра, 33 мс ≈ 2 кадра при 60 Гц). Буква выстреливает НАОПЕРЕЖЕ, и свет с звуком приходят к глазу и уху одновременно. Трассер регулируется (0–150 мс, клавиши «[»/«]»), на буквах в полёте горит живой прицел — на быстром темпе букв в нём больше: упреждение считает ритм, скорость огласовки и темп. Тяни УНИСОН в минус — трассер забегает вперёд, бейдж «УПРЕЖДЕНИЕ» покажет дальность.
   <br><b>v9.6</b> — «ПАСПОРТ ДОМА»: палитра пересверена с техническим разбором рендера дома (singulyar_render_spec.png; метод хозяина [изм.]: хэш + measure_render.py → одинаковые числа у любого). Насыщенные оттенки ТОЛЬКО 22–43° — янтарь #DEA968 и яркое золото #FEE29F: синий, бирюзовый, фиолетовый, зелёный изгнаны из всех тем, сцен, ролей и успеха; тревога пламенеет #FF8A3C — внутри той же полосы. В ПУЛЬТе открыт ПАСПОРТ УНИСОНА [изм.]: такт, полёт звука, трассер, упреждение, темп, буквы в полёте и хэш ядра сборки — живые числа вместо ощущений; тот же файл и те же настройки дают те же числа у любого.
   <br><b>v9.7</b> — «ТОМОГРАФ»: ЗДОРОВЬЕ стал честным диагностическим томографом, а не зелёной лампочкой: четыре слоя — ЦЕЛОСТНОСТЬ (файл и структуры) · ВОЗМОЖНОСТИ (что умеет этот браузер) · ЖИВОЙ ЗАПУСК (что реально работает сейчас) · СОСТОЯНИЕ ЧЕЛОВЕКА (твои настройки), вердикт сверху, легенда снизу, «UNKNOWN ≠ FAIL». Память настроек проверяется настоящей записью→чтением→сверкой, а не «есть функция»; кодек записи выбирается через MediaRecorder.isTypeSupported (webm/opus → webm → mp4 → ogg), у файла записи честный тип и расширение; wake lock и медиасессия докладывают живое состояние («держу экран», «обработчики поставлены»); голосовые команды честно помечены: браузерное распознавание может просить сеть — офлайн-гарантии нет; вкладки пульта и справки получили полную ARIA-семантику (role=tab→tabpanel, aria-controls, стрелки+Home/End, roving tabindex); сообщения разошлись по каналам: спокойные — вежливо, срочные — сразу; бирка двигается тремя независимыми способами — перетаскивание, клавиатура (Shift — крупный шаг, Home/End — углы, Enter — крестовина), крестовина-джойстик по тапу (WCAG 2.2 · 2.5.7 «без перетаскивания»); тап-цели в ЗДОРОВЬЕ проверяются измерением, не глазомером.
-<br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n<br><b>v10.7</b> — «ЧИСТЫЙ СВЕТ»: белый слой наверху навсегда. Светлые комнаты ДЕТИ и ДЕНЬ закреплены инлайном на html+body — ни тема, ни старый кэш ТВ, ни чужой каскад не сделают чёрную подложку; свет сцены в светлых комнатах не льёт тёмные заливки вовсе («ТВ-растр» и «ёмные затемнения» изгнаны, старые заливки смываются при входе в комнату). ПУЛЬТ по приказу владельца открывается сразу во весь экран, «РАЗВЕРНУТЬ» снят, Esc и ✕ — выход из меню. РЕЛАКС честен до конца: при пении гаснут ВСЕ панели, слайдеры, бирка модуля, шапка песни, тосты и бирка автора — только отдых, только текст, только песня; касание возвращает на 2,6 с, пауза возвращает всё. ЛАБ и высокий контраст стоят выше закрепления — ЧЕЛОВЕК РЕШАЕТ. Пробы ЗДОРОВЬЯ говорят правду: ни одной «ok: true» без настоящей проверки. Номер v10.6 не живёт в этом зале: чужая сборка под этим номером (без контента дома) снята словом владельца, номер вычеркнут — «из пятницы суббота не торчит».
+<br><b>v9.8</b> — «СТРАХОВКА»: ЗДОРОВЬЕ выживает любую сломанную пробу (упала одна — томограф жив, строка «?»); wake lock говорит раздельно «API есть» и «реально держит» (UNKNOWN ≠ OK); экспорт и свои наборы обещают ровно то, что делают; пульт I-11 закрывается по Esc и берёт фокус на себя.<br><b>v10.4</b> — «ОДИН СМЫСЛ»: у зала один смысл — каноническая ось строк песни, и сколько бы языков ни собрал МАЛЫШ-помогатор, каждое понимание ложится на ту же ось: строка с тем же номером говорит о том же, повторяемые строки повторяются бит-в-бит, пульс бьёт в тот же такт. Таблица «ЯЗЫК» растёт сама: МАЛЫШ принимает сырьё (ПУЛЬТ → МАЛЫШ → «ВКАТАТЬ СЫРЬЁ»), обрабатывает шестью приёмами — разбор, чистка, выравнивание по оси, кириллическая транскрипция «как звучит», регистрация в таблице, ревизия — и помнит вкатанное в памяти дома, офлайн. Первая партия МАЛЫША — 12 языков (УКР, БЕЛ, БОЛ, НЕМ, ФРА, ИТА, ПОР, ПОЛ, РУМ, НИД, ШВЕ, ГРЕ), у десяти — чтение кириллицей. Черновики честно помечены: смысловая редактура — за людьми (ЧЕЛОВЕК РЕШАЕТ). И закон слоёв: экран разрезан на рельсы (шапка → ряд сцен → сцена → док), постоянные слои прибиты к своим рельсам, панели открываются ниже ряда сцен, модальные — по одному за раз; «СЛОИ.аудит» меряет пересечения и докладывает честно — проверяется в ЗДОРОВЬЕ.<br><b>v10.5</b> — «ЗАКОН ПЕРВЫЙ»: порядок языков всегда один и неизменен — РУС → СРБ → КАЗ → НЕМ, затем страны СССР, затем все остальные по числу носителей от большего к меньшему; ТРАНСЛИТ убит вовсе (не язык, а подсказка), ENG/ESP живут в хвосте по закону. Портянка владельца вшита целиком: 60 новых пониманий «Просто люби» (Африка, Океания, Индия, дравиды, девять исторических языков — от древнегреческого до староиспанского), у всех «как звучит» кириллицей; у таблицы каждая строка показывает своё место по закону и число носителей. ПУЛЬТ теперь перетаскиваемое окно: тяни за шапку — место помнится, «ВО ВЕСЬ ЭКРАН» разворачивает целиком, после закрытия всё открывается как ты оставил — один раз настроил и забыл. РЕЛАКС: при пении панели гаснут — только отдых, только текст, только песня; касание возвращает, выбор помнится. И щит: файл запрещает себе любые внешние загрузки (CSP) — никакая чужая картинка в зал больше не попадёт; фон светлых комнат закреплён намертво.\n<br><b>v10.7</b> — «ЧЕТВЁРКА»: белый слой наверху навсегда. Светлые комнаты ДЕТИ и ДЕНЬ закреплены инлайном на html+body — ни тема, ни старый кэш ТВ, ни чужой каскад не сделают чёрную подложку; свет сцены в светлых комнатах не льёт тёмные заливки вовсе («ТВ-растр» и «ёмные затемнения» изгнаны, старые заливки смываются при входе в комнату). ПУЛЬТ по приказу владельца открывается сразу во весь экран, «РАЗВЕРНУТЬ» снят, Esc и ✕ — выход из меню. РЕЛАКС честен до конца: при пении гаснут ВСЕ панели, слайдеры, бирка модуля, шапка песни, тосты и бирка автора — только отдых, только текст, только песня; касание возвращает на 2,6 с, пауза возвращает всё. ЛАБ и высокий контраст стоят выше закрепления — ЧЕЛОВЕК РЕШАЕТ. Пробы ЗДОРОВЬЯ говорят правду: ни одной «ok: true» без настоящей проверки. Номер v10.6 не живёт в этом зале: чужая сборка под этим номером (без контента дома) снята словом владельца, номер вычеркнут — «из пятницы суббота не торчит».
 <br><b>v10.8</b> — «ПОРЯДОК»: ПУЛЬТ больше не просвечивает и не мешает залу: закрытая панель скрыта намертво (правило автора display:flex больше не перебивает браузерное «dialog не открыт = не показан»), стекло больше не съедало касания — все кнопки зала снова на месте. ПУЛЬТ — сразу во весь экран, без скролл-бара (прокрутка колесом и пальцем, полоса не рисуется), меню непрозрачное и держит характер комнаты: ДЕТИ — крем, ДЕНЬ — бумага, РОМАНТИКА — лиловый вечер, темы подачи (ТЕПЛО/НЕОН/МИНИМАЛ/БАРХАТ/КРАФТ) меняют характер элементов везде. Транскрипция «как звучит» — крупнее втрое и растёт вместе со строкой (0,66 высоты строки против прежних жёстких 12px) — её человек смотрит из дальнего угла, лупа не нужна. Портянка владельца вшита ЦЕЛИКОМ: 92 новых понимания «Просто люби» из групп по 20 — Африка и Океания, Индия, кельты и романы Европы, исчезающие языки России/Австралии/Америк (ижорский, вепсский, мэнский, корнский, навахо, чероки, инуктитут, гренландский…), Африка-2 (волоф, фула, бамбара, шона…), исторические (средневековая латынь, старофранцузский, староитальянский, древневерхненемецкий, древнерусский) — у всех чтение кириллицей, выравнивание по оси 40 строк, пустые места честно падают на оригинал; таблица ЯЗЫК теперь держит 108 пониманий. Числа носителей сверены и исправлены (Ethnologue 2023/24 + цифры самих партий): формат честный — млн / тыс. / штуки со склонением, у исторических — «историческое понимание». Пробы ЗДОРОВЬЯ починены: проба CSP имела сломанный селектор и молчала, порог оси поднят до честных 100.
 <br><b>v10.9</b> — «ТРИ СТРОКИ»: подача принадлежит человеку. На реплику — три строки: титры выбранным языком (крупная), «как звучит» — транскрипция буквами родного языка, и оригинал песни; у каждой строки СВОЙ ползунок в ПУЛЬТе (СТРОКА 1 · ТИТРЫ, СТРОКА 2 · ТРАНСКРИПЦИЯ, СТРОКА 3 · ОРИГИНАЛ), и дом помнит размер за каждым — все разные, вкусы разные (kv.prefs: tcs, sbs). Множители calc() с var() живут поверх старых em-пропорций — адаптив, сцены и темы подачи не тронуты; ползунки честно показывают свои значения при каждом открытии ПУЛЬТа; проба ЗДОРОВЬЯ держит правду о трёх строках.
   <br><b>v10.11</b> — «НА ВЕРХУ»: приказ владельца исполнен — три строки (.txt титры · .tc транскрипция · .sub оригинал) выводятся ВСЕГДА: строка-оригинал больше не сворачивается (была видна только на активной строке), в РУС-режиме тоже живёт; колонка трёх строк — один слой, заказан z=2147483700 (браузерный потолок 2147483647 — всё равно выше тостов), ничем не перекрыть (ПУЛЬТ — нативный верх), тосты переехали вниз в зону дока; транскрипции «как звучит» у верхних языков ЗАКОНа: СРБ, КАЗ (автоматом, карты букв), ESP, ENG (вручную, по оси песни); проба ЗДОРОВЬЯ держит правду о выводе.
@@ -4499,7 +4499,7 @@ window.__PULT = {
     pultPaint();
   }
 };
-/* v10.7 «ЧИСТЫЙ СВЕТ»: ЭСКЕЙБ — выход из меню (приказ владельца). Нативный Esc диалога держим
+/* v10.7 «ЧЕТВЁРКА»: ЭСКЕЙБ — выход из меню (приказ владельца). Нативный Esc диалога держим
    поясом: свой слушатель гарантирует close даже если каскад обработчиков съел отмену.
    Тот же boot честно ставит чип версии на бирку модуля — владелец всегда видит, что за файл на экране. */
 (function(){
@@ -4521,7 +4521,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.11 «НА ВЕРХУ»";
+      b.className="sng-верш"; b.textContent="· v10.13 «ЧЕТВЁРКА»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6206,7 +6206,7 @@ if(!window.SNGАДАПТ){
   /* v10.2 ВЕРДИКТ: шапка песни и сцена меняют высоту при смене режима/сцены/темы — пересчитываем полосы */
   try{ if(window.MutationObserver){ var мo=new MutationObserver(function(){ if(rT0)clearTimeout(rT0); rT0=setTimeout(function(){ адапт(); },80); });
     мo.observe(D.body,{attributes:true,childList:true,attributeFilter:['data-mode','data-scene','data-theme','data-motion','class']}); } }catch(e){}
-  window.SNGАДАПТ={версия:'v10.7 «ЧИСТЫЙ СВЕТ»',среда:средуаУзнать,окно:окноУзнать,обновить:адапт};
+  window.SNGАДАПТ={версия:'v10.7 «ЧЕТВЁРКА»',среда:средуаУзнать,окно:окноУзнать,обновить:адапт};
 }
 function $(id){ return D.getElementById(id); }
 /* карта клавиш: keyCode всех платформ → одно действие */
@@ -6365,7 +6365,7 @@ window.addEventListener('keydown',function(e){
   }
   if(act.length===2&&act.charAt(0)==='D'){ e.preventDefault(); var n=+act.charAt(1); if(n>=1&&n<=5)themeTo(ORD[n-1]); else if(n===0)themeTo('warm'); }
 },true);
-window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult:pult,версия:'v10.7 «ЧИСТЫЙ СВЕТ»'};
+window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult:pult,версия:'v10.7 «ЧЕТВЁРКА»'};
 })();
 </script>
 
@@ -6390,7 +6390,7 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.12";
+var D=document, root=D.documentElement, body=D.body, VER="v10.13";
 /* T-05: единая точка правды версий */
 window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv47"};
 
@@ -6543,6 +6543,538 @@ try{
   window.KV12={ver:VER,tabs:tabs,fit:fit,channel:bc,health:function(){return window.__HEALTH9();}};
 }catch(_){}
 })();
+</script>
+<style id="l4style">
+/* ── С15 · ЧЕТВЁРКА v10.13 — строка 4 «АККОРДЫ» + несворачаемые строки 2/3 ──
+   Экран человека = 4 строки: 1 текст выбранного языка (.txt) · 2 транскрипция кириллицей (.tc)
+   · 3 оригинал песни (.sub) · 4 аккорды (.chd). Режим включён — строки не прячутся. */
+#lyricsWrap .line .chd{display:none}
+body.four4 #lyricsWrap .line .chd{
+  display:block;font-size:calc(.58em*var(--l4s4,1));font-weight:800;color:var(--gold);
+  opacity:.92;letter-spacing:.1em;margin-top:5px;line-height:1.25;pointer-events:none;
+  font-family:ui-monospace,'Cascadia Mono',Consolas,monospace;white-space:pre-wrap;
+  text-transform:uppercase;text-shadow:0 0 14px rgba(255,190,80,.18)}
+body.four4 #lyricsWrap .line .tc{display:block!important;opacity:1!important}
+body.four4 #lyricsWrap .line .sub{display:block!important;opacity:1!important;max-height:none!important}
+body.four4.nosub #lyricsWrap .line .tc{display:block!important}
+body.four4.nosub #lyricsWrap .line .sub{display:block!important}
+body.four4 #lyricsWrap .line{padding-bottom:10px}
+/* пустая строка не ест место: без текста — без высоты */
+body.four4 #lyricsWrap .line .chd:empty{display:none}
+body.four4 #lyricsWrap .line .tc:empty{display:none}
+
+</style>
+<script id="l4script">
+/* ── С15 · ЧЕТВЁРКА v10.13 — ЯДРО ВЫВОДА: 4 строки на экране одновременно ──
+   Приказ владельца (экран песни = ровно 4 строки):
+   1 строка — ТЕКСТ на языке, выбранном человеком (живёт в .txt — paintLangs, не трогаем)
+   2 строка — ТРАНСКРИПЦИЯ этого языка кириллическими графемами: ручная пара Малыша,
+               иначе АЛГОРИТМИЧЕСКИЙ ТРАНСЛИТ (латиница→кириллица, всегда, офлайн)
+   3 строка — ТЕКСТ ОРИГИНАЛА песни (.sub, CUES[i].t — в ЧЕТВЁРКЕ не сворачивается)
+   4 строка — АККОРДЫ (.chd — новая строка: файл аккордов / аккорды-над-строкой / [Am] в оригинале)
+   Плюс: АВТО-ПЕРЕВОД песни онлайн на выбранный язык (кэш в доме, честный статус).
+   Канон не ломается: пульс по буквам, ДЕТИ-сцена, ШИЛКА, __HEALTH9 — без изменений. */
+(function(){
+"use strict";
+if(window.__4L) return;
+var D = document;
+function $(id){ return D.getElementById(id); }
+var CYR = /[\u0400-\u04FF]/;
+var wrap = $("lyricsWrap");
+var CUES2 = (window.SONG||{}).cues||[];
+
+/* ---------- состояние (дом хранит) ---------- */
+var DEF = { on:1, l2:1, l4:1, src2:"auto", trlang:"auto", l4size:100 };
+var ST = (function(){
+  try{ var p = JSON.parse(localStorage.getItem("s31.l4.v1")||"{}"); for(var k in DEF){ if(p[k]===undefined) p[k]=DEF[k]; } return p; }
+  catch(e){ return JSON.parse(JSON.stringify(DEF)); }
+})();
+function save(){ try{ localStorage.setItem("s31.l4.v1", JSON.stringify(ST)); }catch(e){} }
+
+/* ══════════ С15-ТРАНСЛИТ: латиница → кириллица (практическая, для пения) ══════════ */
+/* Правила идут длинными первыми; init — только в начале слова. */
+var EN = {
+  "tion":"шен","sion":"шен","ture":"чёр","sure":"жёр",
+  "eigh":"эй","ough":"оу","ugh":"ф","igh":"ай",
+  "sch":"ш","tch":"ч","sh":"ш","ch":"ч","ph":"ф","th":"т","wh":"в","kh":"х","gh":"г",
+  "ck":"к","ng":"нг","qu":"кв","kn":"н","wr":"р","mb":"м",
+  "ee":"и","ea":"и","oo":"у","ou":"ау","ow":"оу","oa":"оу","oi":"ой","oy":"ой",
+  "ai":"эй","ay":"эй","ei":"эй","ey":"эй","au":"о","aw":"о","ie":"и","eu":"ю","ew":"ю",
+  "er":"эр","ir":"эр","ur":"эр","ar":"ар","or":"ор",
+  "a":"а","b":"б","c":"к","d":"д","e":"е","f":"ф","g":"г","h":"х","i":"и","j":"дж",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"у","v":"в","w":"в","x":"кс","y":"и","z":"з"
+};
+var DE = {
+  "tsch":"ч","dsch":"дж","sch":"ш","chs":"кс","ch":"х","ph":"ф","qu":"кв","ck":"к","tz":"ц",
+  "sp":"шп","st":"шт",
+  "ei":"ай","ie":"и","eu":"ой","ai":"ай","au":"ау",
+  "ä":"э","ö":"ё","ü":"ю","ß":"сс",
+  "a":"а","b":"б","c":"к","d":"д","e":"е","f":"ф","g":"г","h":"х","i":"и","j":"й",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"у","v":"ф","w":"в","x":"кс","y":"ю","z":"ц"
+};
+var FR = {
+  "eau":"о","eaux":"о","oin":"уэн","ien":"ьян","aille":"ай","eille":"эй",
+  "ou":"у","au":"о","ai":"э","ei":"э","oi":"уа","an":"ан","am":"ан","en":"ан","em":"ан",
+  "on":"он","om":"он","in":"эн","un":"эн","ain":"эн","ein":"эн","eu":"ё","œu":"ё",
+  "ch":"ш","ph":"ф","th":"т","gn":"нь","ill":"ий","qu":"к","gu":"г",
+  "é":"э","è":"э","ê":"э","ë":"э","ç":"с","â":"а","ô":"о","î":"эн","û":"у","ù":"у",
+  "a":"а","b":"б","c":"к","d":"д","e":"ё","f":"ф","g":"г","h":"","i":"и","j":"ж",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"ю","v":"в","w":"в","x":"кс","y":"и","z":"з"
+};
+var ES = {
+  "ll":"й","rr":"р","ch":"ч","que":"ке","qui":"ки","gue":"ге","gui":"ги",
+  "ge":"хе","gi":"хи","ce":"се","ci":"си","ue":"уэ","ie":"е",
+  "ñ":"нь","á":"а","é":"э","í":"и","ó":"о","ú":"у","ü":"ю",
+  "a":"а","b":"б","c":"к","d":"д","e":"е","f":"ф","g":"г","h":"","i":"и","j":"х",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"у","v":"в","w":"в","x":"кс","y":"й","z":"с"
+};
+var IT = {
+  "gli":"льи","gn":"нь","ch":"к","gh":"г","ci":"чи","ce":"че","gi":"джи","ge":"дже",
+  "sce":"ше","sci":"ши","qu":"ку",
+  "à":"а","è":"э","é":"э","ì":"и","ò":"о","ù":"у",
+  "a":"а","b":"б","c":"к","d":"д","e":"е","f":"ф","g":"г","h":"","i":"и","j":"й",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"у","v":"в","w":"в","x":"кс","y":"и","z":"ц"
+};
+var UN = {
+  "sh":"ш","ch":"ч","ph":"ф","th":"т","kh":"х","qu":"кв","ck":"к",
+  "a":"а","b":"б","c":"к","d":"д","e":"е","f":"ф","g":"г","h":"х","i":"и","j":"дж",
+  "k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"к","r":"р","s":"с","t":"т",
+  "u":"у","v":"в","w":"в","x":"кс","y":"и","z":"з"
+};
+function rulesOf(m){
+  var arr=[], k;
+  for(k in m){ arr.push([k, m[k]]); }
+  arr.sort(function(a,b){ return b[0].length - a[0].length; });
+  return arr;
+}
+var TABLES = { en:rulesOf(EN), de:rulesOf(DE), fr:rulesOf(FR), es:rulesOf(ES), it:rulesOf(IT), un:rulesOf(UN) };
+function detectLang(t){
+  if(/ß|ä|ö|ü/i.test(t)) return "de";
+  if(/ñ|¿|¡/i.test(t)) return "es";
+  if(/[éèêëçàùôœ]/i.test(t)) return "fr";
+  if(/[àèìòù]/i.test(t)) return "it";
+  return "en";
+}
+function trWord(w, R, dropE){
+  var low = w.toLowerCase(), out = "", i = 0, hit, j, n;
+  while(i < low.length){
+    hit = null;
+    for(j=0;j<R.length;j++){ if(low.indexOf(R[j][0], i)===i){ hit=R[j]; break; } }
+    if(hit){ out += hit[1]; i += hit[0].length; }
+    else { out += low[i]; i++; }
+  }
+  n = out;
+  /* финальная немая e: love→лов, more→море (перед р/л/м/н не роняем, иначе «хер» из here) */
+  if(dropE && n.length >= 3 && /е$/.test(n) && !/[рлмн]е$/.test(n)) n = n.slice(0,-1);
+  if(/^[а-яё]{3,}/.test(n)) n = n.replace(/([бвгджзклмнпрстфхцчшщ])\1+/g, "$1");
+  if(!n) n = out;
+  if(w === w.toUpperCase() && /\S/.test(w)) return n.toUpperCase();
+  if(w[0] === w[0].toUpperCase() && /[a-zà-ÿ]/i.test(w[0])) return n.charAt(0).toUpperCase()+n.slice(1);
+  return n;
+}
+var trCache = {};
+function transText(text, langKey){
+  text = String(text||"");
+  if(!text.trim() || !/[a-zà-ÿа-яё]/i.test(text)) return "";
+  if(CYR.test(text) && !/[a-zà-ÿ]/i.test(text)) return ""; /* уже кириллица */
+  var key = (langKey||"auto")+"\n"+text;
+  if(trCache[key] !== undefined) return trCache[key];
+  var L = (langKey && TABLES[langKey]) ? langKey : null;
+  if(!L && langKey !== "un") L = detectLang(text);
+  var use = L || "un";
+  var R = TABLES[use] || TABLES.un;
+  var dropE = (use === "en" || use === "fr");
+  var out = text.replace(/[A-Za-zÀ-ÿ]+/g, function(w){ return trWord(w, R, dropE); });
+  trCache[key] = out;
+  return out;
+}
+
+/* ══════════ С15-АККОРДЫ: строка 4 ══════════ */
+var CH_TOK = /^[A-H][#b♯♭]?(?:m|maj|min|dim|aug|sus|add|mmaj)?(?:\d+)?(?:sus\d|add\d+|b\d+|#\d+|no\d+)*(?:\/[A-H][#b♯♭]?)?(?:\([^)]{1,14}\))?$/;
+function isChordLine(line){
+  var t = String(line||"").trim();
+  if(!t || t.length>90) return false;
+  var toks = t.split(/\s+/), ok = 0;
+  for(var i=0;i<toks.length;i++){
+    var x = toks[i];
+    if(x === "|"){ ok++; continue; }
+    if(CH_TOK.test(x) && /[A-H]/.test(x) && (x.length>1 || toks.length>1)) ok++;
+    else if(/^[|:\-]+$/.test(x)) ok++;
+    else return false;
+  }
+  return ok === toks.length;
+}
+function chordsFromPairFile(text){
+  /* аккорды над строкой текста (песенник) или построчно по оси — как ляжет */
+  var ls = text.split(/\r?\n/), out = [], i;
+  if(CUES2.length && ls.length === CUES2.length){
+    for(i=0;i<ls.length;i++) out[i] = ls[i].trim();
+    var filled = out.filter(function(x){ return x && isChordLine(x); }).length;
+    if(filled >= Math.max(2, Math.ceil(CUES2.length*0.12))) return { arr: out, kind: "построчно по оси" };
+  }
+  out = []; var pending = "", idx = 0;
+  for(i=0;i<ls.length;i++){
+    var ln = ls[i];
+    if(!ln.trim()){ continue; }
+    if(isChordLine(ln)){ pending = pending ? pending + "  " + ln.trim() : ln.trim(); }
+    else { out[idx++] = pending; pending = ""; }
+  }
+  var good = out.filter(function(x){ return x && x.trim(); }).length;
+  if(good >= 3 && Math.abs(good - CUES2.length) <= Math.ceil(CUES2.length*0.3) + 4)
+    return { arr: out, kind: "аккорды над строкой" };
+  return null;
+}
+var CHKEY = "s31.l4.chords.v1";
+var chordsArr = null, chordsKind = "";
+function axisHash(){
+  return CUES2.slice(0,3).map(function(c){ return (c&&c.t)||""; }).join("␟") + "#" + CUES2.length;
+}
+function loadChords(){
+  try{
+    var store = JSON.parse(localStorage.getItem(CHKEY)||"{}");
+    var a = store[axisHash()];
+    if(Array.isArray(a) && a.length){ chordsArr = a; chordsKind = "из дома"; return true; }
+  }catch(e){}
+  return false;
+}
+function storeChords(arr, kind){
+  chordsArr = arr; chordsKind = kind||"файл";
+  try{
+    var store = JSON.parse(localStorage.getItem(CHKEY)||"{}");
+    store[axisHash()] = arr;
+    var ks = Object.keys(store);
+    if(ks.length > 6){ delete store[ks[0]]; }
+    localStorage.setItem(CHKEY, JSON.stringify(store));
+  }catch(e){}
+}
+
+/* ══════════ ПРИМЕНЕНИЕ К СТРОКАМ ══════════ */
+function curLang(){
+  /* язык строк берём из DOM (dataset.lang ставит paintLangs) — LANGS блочная и снаружи не видна */
+  var el = D.querySelector("#lyricsWrap .line");
+  var k = el && el.dataset.lang ? el.dataset.lang : null;
+  if(!k) return null;
+  try{
+    var list = (window.__LANGS && window.__LANGS.list) || null;
+    if(list){ for(var i=0;i<list.length;i++){ if(list[i].k===k) return list[i]; } }
+  }catch(e){}
+  return { k:k, name:k.toUpperCase() };
+}
+function lineElsNow(){ return D.querySelectorAll("#lyricsWrap .line"); }
+function repaint(){
+  var els = lineElsNow(), L = curLang(), i, el;
+  D.body.classList.toggle("four4", !!ST.on);
+  if(wrap) wrap.style.setProperty("--l4s4", String(ST.l4size/100));
+  var manual = (L && window.LYR && window.LYR[L.k+"_tc"]) || null;
+  for(i=0;i<els.length;i++){
+    el = els[i];
+    var txt = el.querySelector(".txt"), sub = el.querySelector(".sub"), tc = el.querySelector(".tc");
+    if(!sub){ sub = D.createElement("span"); sub.className = "sub"; el.appendChild(sub); }
+    if(!tc){ tc = D.createElement("span"); tc.className = "tc"; el.insertBefore(tc, sub); }
+    var chd = el.querySelector(".chd");
+    if(!chd){ chd = D.createElement("span"); chd.className = "chd"; el.appendChild(chd); }
+    /* 4 строка: аккорды */
+    chd.textContent = (ST.on && ST.l4 && chordsArr && chordsArr[i]) ? chordsArr[i] : "";
+    /* [Am] внутри оригинала — сами уезжают в строку 4 */
+    if(ST.on && ST.l4 && !chordsArr && sub){
+      var st = sub.textContent || "";
+      var br = st.match(/\[([A-G][#b][^\]]{0,10}|[A-G][#b]?[a-zA-Z0-9#()\/]{0,8})\]/g);
+      if(br && br.length){
+        chd.textContent = br.map(function(x){ return x.slice(1,-1); }).join(" ");
+        sub.textContent = st.replace(/\[[^\]]{1,12}\]/g, "").replace(/\s{2,}/g, " ").trim();
+      }
+    }
+    /* 2 строка: транскрипция — ручная пара Малыша приоритетна (в АВТО), иначе алгоритмический транслит */
+    if(!ST.on || !ST.l2){ tc.textContent = ""; }
+    else if(ST.src2 === "auto" && manual){ tc.textContent = manual[i] || ""; }
+    else {
+      var s1 = txt ? txt.textContent : "";
+      var s3 = sub ? sub.textContent : "";
+      var pick, base;
+      if(ST.src2 === "orig"){ pick = s3; base = "orig"; }
+      else if(ST.src2 === "l1"){ pick = s1; base = "l1"; }
+      else { pick = CYR.test(s1||"а") ? s3 : s1; base = CYR.test(s1||"а") ? "orig" : "l1"; }
+      if(pick && !CYR.test(pick)) tc.textContent = transText(pick);
+      else tc.textContent = "";
+    }
+  }
+  status();
+}
+/* перехват paintLangs: каждая перекраска языка автоматически проходит через ЧЕТВЁРКУ */
+try{
+  if(typeof paintLangs === "function" && !paintLangs.__l4){
+    var __pf = paintLangs;
+    paintLangs = function(){ var r = __pf.apply(this, arguments); try{ repaint(); }catch(e){} return r; };
+    paintLangs.__l4 = true;
+  }
+}catch(e){}
+/* страховка: смена языка/строк вне paintLangs — атрибут data-lang */
+try{
+  if(wrap && window.MutationObserver){
+    new MutationObserver(function(){
+      clearTimeout(repaint.__t);
+      repaint.__t = setTimeout(function(){ try{ repaint(); }catch(e){} }, 120);
+    }).observe(wrap, { subtree:true, attributes:true, attributeFilter:["data-lang"] });
+  }
+}catch(e){}
+
+/* ══════════ АВТО-ПЕРЕВОД: текст выбранного языка из сети (честно, с кэшем дома) ══════════ */
+var TRKEY = "s31.tr.v2";
+function trDict(){ try{ return JSON.parse(localStorage.getItem(TRKEY)||"{}"); }catch(e){ return {}; } }
+function trSave(d){ try{ localStorage.setItem(TRKEY, JSON.stringify(d)); }catch(e){} }
+function apiTranslate(t, tl){
+  var u = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=" +
+          encodeURIComponent(tl) + "&dt=t&q=" + encodeURIComponent(t);
+  return fetch(u).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(j){
+    if(j && j[0] && j[0].length){
+      return j[0].map(function(x){ return x && x[0] ? x[0] : ""; }).join("");
+    }
+    throw new Error("пустой ответ");
+  });
+}
+var busy = false;
+function translateSong(tl){
+  if(busy || !CUES2.length){ status(!CUES2.length ? "перевод: ось песни пуста" : null); return; }
+  busy = true;
+  var dict = trDict(), out = [], ok = 0, fail = 0, i = 0;
+  status("перевод: 0/"+CUES2.length+" …");
+  function step(){
+    if(i >= CUES2.length){
+      busy = false;
+      if(ok > 0){
+        var имя = "АВТО·" + tl.toUpperCase();
+        var пары = out.map(function(t){ return { t: t }; });
+        var done = false;
+        try{
+          if(typeof MALYSH !== "undefined" && MALYSH && MALYSH.регистрируй){
+            MALYSH.регистрируй(имя, пары); done = true;
+          }
+        }catch(e){}
+        if(!done){
+          try{
+            var kk = "m_auto_" + tl + "_" + (Date.now()%100000);
+            window.LYR[kk] = out;
+            if(window.__LANGS && window.__LANGS.list){
+              window.__LANGS.list.push({ k:kk, name:имя, sub:"ru", draft:true, tc:false });
+              if(window.__LANGSHEET && window.__LANGSHEET.build) window.__LANGSHEET.build();
+              window.__LANGS.set(window.__LANGS.list.length - 1);
+            } else if(typeof paintLangs === "function"){ paintLangs(); }
+          }catch(e){}
+        }
+        trSave(dict);
+        status("перевод: готово — «"+имя+"» в таблице ЯЗЫК ("+ok+" строк"+(fail?", сбоев "+fail:"")+")");
+      } else {
+        status("перевод: сеть недоступна (офлайн-дом) — загрузи перевод файлом через МАЛЫША");
+      }
+      return;
+    }
+    var t = (CUES2[i] && CUES2[i].t) || "";
+    out[i] = "";
+    if(!t.trim()){ i++; setTimeout(step, 30); return; }
+    var key = tl+"|"+t;
+    if(dict[key] !== undefined){ out[i] = dict[key]; ok++; i++; if(ok%6===0) status("перевод: "+(i)+"/"+CUES2.length+" (кэш дома)"); setTimeout(step, 15); return; }
+    apiTranslate(t, tl).then(function(tr){
+      dict[key] = tr || ""; out[i] = tr || ""; ok++;
+    }).catch(function(){ fail++; }).then(function(){
+      i++;
+      if(i % 4 === 0) status("перевод: "+i+"/"+CUES2.length+(fail?" · сбоев "+fail:""));
+      setTimeout(step, fail > 4 ? 400 : 90);
+    });
+  }
+  step();
+}
+
+/* ══════════ ПУЛЬТ: вкладка «4 СТРОКИ» ══════════ */
+function el(tag, cls, html){ var e = D.createElement(tag); if(cls) e.className = cls; if(html !== undefined) e.innerHTML = html; return e; }
+function swBtn(id, on, tip){ return '<button class="sw" id="'+id+'" role="switch" aria-checked="'+(on?"true":"false")+'"'+(tip?' data-tip="'+tip+'"':"")+'></button>'; }
+var statEl = null;
+function status(msg){
+  if(statEl){
+    var ch = chordsArr ? chordsArr.filter(function(x){ return x && x.trim(); }).length : 0;
+    var L = curLang();
+    statEl.textContent = "ЧЕТВЁРКА: " + (ST.on ? "вкл" : "выкл") +
+      " · транскрипция: " + (ST.l2 ? (ST.src2==="off" ? "выкл" : (ST.src2==="orig" ? "оригинал" : ST.src2==="l1" ? "строка 1" : "авто")) : "выкл") +
+      " · аккорды: " + (chordsArr ? (ch + "/" + CUES2.length + " (" + chordsKind + ")") : (ST.l4 ? "нет файла — [Am] из оригинала" : "выкл")) +
+      " · язык строк: " + (L ? L.name : "—");
+  }
+  if(msg && statEl){ statEl.textContent = msg; }
+}
+function buildPanel(){
+  var body = $("pBody"); if(!body || $("ppanel-four")) return;
+  var tabs = D.querySelector("#panel .p-tabs"); if(!tabs) return;
+  var tb = D.createElement("button");
+  tb.type = "button"; tb.id = "ptab-four"; tb.setAttribute("role","tab");
+  tb.setAttribute("aria-controls","ppanel-four"); tb.setAttribute("aria-selected","false"); tb.setAttribute("tabindex","-1");
+  tb.dataset.pt = "four"; tb.textContent = "4 СТРОКИ";
+  tabs.appendChild(tb);
+  tb.addEventListener("click", function(){
+    var bs = D.querySelectorAll(".p-tabs button");
+    for(var i=0;i<bs.length;i++){
+      var on = bs[i] === tb;
+      bs[i].classList.toggle("on", on);
+      bs[i].setAttribute("aria-selected", on ? "true" : "false");
+      bs[i].setAttribute("tabindex", on ? "0" : "-1");
+    }
+    var ps = D.querySelectorAll(".ptab");
+    for(var j=0;j<ps.length;j++){ ps[j].classList.toggle("on", ps[j].dataset.ptab === "four"); }
+    status();
+  });
+  var p = el("div", "ptab");
+  p.setAttribute("role","tabpanel"); p.id = "ppanel-four";
+  p.setAttribute("aria-labelledby","ptab-four"); p.tabIndex = 0; p.dataset.ptab = "four";
+  p.innerHTML =
+    '<div class="prow2"><span class="plab2">РЕЖИМ «ЧЕТВЁРКА» — ЯДРО ЭКРАНА</span>' +
+      '<div class="swrow">'+swBtn("l4swOn", ST.on, "4 строки: текст выбранного языка · транскрипция кириллицей · оригинал · аккорды")+'<span class="swlab">показывать 4 строки</span></div>' +
+      '<em class="pdesc">1 строка — язык, выбранный человеком. 2 строка — его транскрипция кириллическими графемами (ручная пара Малыша или автоматический транслит). 3 строка — оригинал песни, не сворачивается. 4 строка — аккорды.</em>' +
+    '</div>' +
+    '<div class="prow2"><span class="plab2">СТРОКА 2 · ТРАНСКРИПЦИЯ</span>' +
+      '<div class="swrow">'+swBtn("l4swL2", ST.l2, "вторая строка — как звучит текст первой, кириллическими графемами")+'<span class="swlab">транскрипция кириллицей</span></div>' +
+      '<div class="sldrow"><div class="seg" id="l4segSrc">' +
+        '<button data-v="auto"'+(ST.src2==="auto"?' class="on"':'')+'>АВТО</button>' +
+        '<button data-v="l1"'+(ST.src2==="l1"?' class="on"':'')+'>СТРОКА 1</button>' +
+        '<button data-v="orig"'+(ST.src2==="orig"?' class="on"':'')+'>ОРИГИНАЛ</button>' +
+      '</div></div>' +
+      '<div class="sldrow"><span class="plab2">ПРАВИЛА ТРАНСЛИТА</span><div class="seg" id="l4segTr">' +
+        '<button data-v="auto"'+(ST.trlang==="auto"?' class="on"':'')+'>АВТО</button>' +
+        '<button data-v="en"'+(ST.trlang==="en"?' class="on"':'')+'>EN</button>' +
+        '<button data-v="de"'+(ST.trlang==="de"?' class="on"':'')+'>DE</button>' +
+        '<button data-v="fr"'+(ST.trlang==="fr"?' class="on"':'')+'>FR</button>' +
+        '<button data-v="es"'+(ST.trlang==="es"?' class="on"':'')+'>ES</button>' +
+        '<button data-v="it"'+(ST.trlang==="it"?' class="on"':'')+'>IT</button>' +
+        '<button data-v="un"'+(ST.trlang==="un"?' class="on"':'')+'>УНИВЕРСАЛ</button>' +
+      '</div>' +
+      '<em class="pdesc">Проверка вживую: <b id="l4probe"></b></em></div>' +
+    '</div>' +
+    '<div class="prow2"><span class="plab2">СТРОКА 4 · АККОРДЫ</span>' +
+      '<div class="swrow">'+swBtn("l4swCh", ST.l4, "четвёртая строка над/под песней — аккорды")+'<span class="swlab">показывать аккорды</span></div>' +
+      '<div class="sldrow"><input type="range" id="l4sld" min="40" max="260" step="5" value="'+ST.l4size+'" aria-label="размер строки аккордов" data-tip="Размер строки аккордов"><b class="sldval" id="l4sldVal">'+ST.l4size+'%</b></div>' +
+      '<div class="sldrow"><button class="pbtn" id="l4crdBtn">ВКАТАТЬ ФАЙЛ АККОРДОВ</button>' +
+      '<button class="pbtn" id="l4crdDrop" data-tip="Убрать аккорды из дома">СБРОС</button>' +
+      '<input type="file" id="l4crdFile" accept=".txt,.crd,.chord,.chords,.pro,.srt" hidden></div>' +
+      '<em class="pdesc">Песенник: строка аккордов над строкой текста — или построчно по оси песни. Аккорды в скобках [Am] внутри оригинала подхватываются сами. Файл хранится в доме — привязан к песне.</em>' +
+    '</div>' +
+    '<div class="prow2"><span class="plab2">АВТО-ПЕРЕВОД · ЯЗЫК ЧЕЛОВЕКА</span>' +
+      '<div class="sldrow"><select id="l4selTl" data-tip="На какой язык перевести песню (онлайн, кэш в доме)" style="background:#181818;color:#eee;border:1px solid #444;border-radius:8px;padding:6px 10px;font:inherit">' +
+        '<option value="ru">РУС</option><option value="en">ENG</option><option value="es">ESP</option>' +
+        '<option value="de">DEU</option><option value="fr">FRA</option><option value="it">ITA</option>' +
+        '<option value="uk">УКР</option><option value="pl">ПОЛ</option><option value="kk">КАЗ</option>' +
+        '<option value="sr">СРБ</option><option value="pt">ПОР</option><option value="tr">ТУР</option>' +
+        '<option value="ar">АРА</option><option value="hi">ХИН</option><option value="zh">КИТ</option>' +
+        '<option value="ja">ЯПО</option><option value="ko">КОР</option>' +
+      '</select>' +
+      '<button class="pbtn" id="l4trBtn" data-tip="Перевести песню на выбранный язык онлайн и посадить в таблицу ЯЗЫК">ПЕРЕВЕСТИ ПЕСНЮ</button></div>' +
+      '<em class="pdesc">Человек выбирает любой язык — песня переводится построчно онлайн и встаёт в таблицу «ЯЗЫК СТРОК» как черновик Малыша. Сеть молчит — дом честно скажет. Переводы кэшируются офлайн.</em>' +
+    '</div>' +
+    '<div class="prow2"><span class="plab2">СОСТОЯНИЕ</span><em class="pdesc" id="l4stat">…</em></div>';
+  body.appendChild(p);
+  statEl = $("l4stat");
+
+  function hookSw(id, fn){
+    var b = $(id); if(!b) return;
+    b.addEventListener("click", function(){
+      var on = b.getAttribute("aria-checked") !== "true";
+      b.setAttribute("aria-checked", on ? "true" : "false");
+      fn(on);
+    });
+  }
+  hookSw("l4swOn", function(on){ ST.on = on?1:0; save(); repaint(); });
+  hookSw("l4swL2", function(on){ ST.l2 = on?1:0; save(); repaint(); });
+  hookSw("l4swCh", function(on){ ST.l4 = on?1:0; save(); repaint(); });
+  function hookSeg(id, fn){
+    var s = $(id); if(!s) return;
+    s.addEventListener("click", function(e){
+      var b = e.target.closest("button[data-v]"); if(!b) return;
+      var bs = s.querySelectorAll("button");
+      for(var i=0;i<bs.length;i++) bs[i].classList.toggle("on", bs[i]===b);
+      fn(b.dataset.v);
+    });
+  }
+  hookSeg("l4segSrc", function(v){ ST.src2 = v; save(); repaint(); });
+  hookSeg("l4segTr", function(v){ ST.trlang = v; save(); repaint(); probe(); });
+  function probe(){
+    var pr = $("l4probe"); if(!pr) return;
+    var samples = { en:"Hello darkness my old friend", de:"Gute Nacht Freunde", fr:"Bonsoir mes amis", es:"Buenas noches amigos", it:"Buonasera amici" };
+    var k = ST.trlang === "auto" ? null : ST.trlang;
+    var src = ST.trlang === "auto" ? samples.en : samples[ST.trlang] || samples.en;
+    pr.textContent = "«" + src + "» → «" + transText(src, k) + "»";
+  }
+  var sld = $("l4sld");
+  sld.addEventListener("input", function(){
+    ST.l4size = +sld.value; $("l4sldVal").textContent = sld.value + "%";
+    if(wrap) wrap.style.setProperty("--l4s4", String(ST.l4size/100));
+    save();
+  });
+  var fbtn = $("l4crdBtn"), fin = $("l4crdFile");
+  fbtn.addEventListener("click", function(){ fin.click(); });
+  fin.addEventListener("change", function(){
+    var f = fin.files && fin.files[0]; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      var r = chordsFromPairFile(String(rd.result||""));
+      if(r){ storeChords(r.arr, r.kind); repaint(); status("аккорды: вкатано — " + r.kind + ", строк с аккордами " + r.arr.filter(function(x){return x&&x.trim();}).length); }
+      else { status("аккорды: не распознал — нужен песенник (аккорды над строкой) или построчно по оси (" + CUES2.length + " строк)"); }
+      fin.value = "";
+    };
+    rd.readAsText(f);
+  });
+  $("l4crdDrop").addEventListener("click", function(){
+    chordsArr = null; chordsKind = "";
+    try{
+      var store = JSON.parse(localStorage.getItem(CHKEY)||"{}");
+      delete store[axisHash()];
+      localStorage.setItem(CHKEY, JSON.stringify(store));
+    }catch(e){}
+    repaint();
+  });
+  $("l4trBtn").addEventListener("click", function(){ translateSong($("l4selTl").value); });
+  probe();
+  status();
+}
+
+/* ══════════ API + ЗДОРОВЬЕ ══════════ */
+window.__4L = {
+  ver: "v10.13",
+  st: ST,
+  repaint: function(){ try{ repaint(); }catch(e){} },
+  translit: transText,
+  chords: function(){ return chordsArr; },
+  setChords: function(arr, kind){ storeChords(arr||[], kind||"внешний"); repaint(); },
+  health: function(){
+    var ln = D.querySelector("#lyricsWrap .line");
+    return {
+      ok: ST.on ? !!(ln && ln.querySelector(".chd")) : true,
+      режим: ST.on ? "вкл" : "выкл",
+      аккорды: chordsArr ? chordsArr.filter(function(x){ return x && x.trim(); }).length : 0,
+      ось: CUES2.length
+    };
+  }
+};
+try{
+  if(window.KV12 && KV12.health && !KV12.health.__l4){
+    var __kh = KV12.health;
+    KV12.health = function(){
+      var r = __kh.apply(this, arguments);
+      try{ r.l4 = window.__4L.health(); }catch(e){}
+      return r;
+    };
+    KV12.health.__l4 = true;
+  }
+}catch(e){}
+
+/* старт: аккорды из дома, панель, первая перекраска */
+loadChords();
+try{ buildPanel(); }catch(e){}
+try{ repaint(); }catch(e){}
+})();
+
 </script>
 </body>
 </html>
