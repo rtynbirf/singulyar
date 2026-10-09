@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.17 «СТРОЙ» — RUVSON · «Просто люби» · аккорды сам + склад + стро́й YIN · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.18 «КОНВЕЙЕР» — RUVSON · «Просто люби» · один RAF-такт + стро́й YIN + склад · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1471,7 +1471,8 @@ setTimeout(()=>{ try{ health(); }catch(e){} }, 2000);
 const pulseEl = $("pulse");
 let beatE = 0;
 function loop(){
-  requestAnimationFrame(loop);
+  /* v10.18 «КОНВЕЙЕР»: один RAF на всех; фолбэк — конвейер может ещё парситься */
+  if(window.__КОНВЕЙЕР) __КОНВЕЙЕР.поставь(loop, "пульс"); else requestAnimationFrame(loop);
   /* v9.1: раз в секунду перечитываем задержку вывода — устройство могли сменить */
   if(ac){ const nw = performance.now(); if((loop._olT||0)+1000 < nw){ loop._olT = nw; refreshOutLat(); } }
   /* v9.1: вычитаем задержку вывода (полёт снаряда-звука). v9.5 «ШИЛКА»:
@@ -1566,7 +1567,7 @@ function autoCorrelate(buf, sr){
 function setStat(s){ micStat.textContent = s; }
 
 function micLoop(){
-  micRAF = requestAnimationFrame(micLoop);
+  if(window.__КОНВЕЙЕР) __КОНВЕЙЕР.поставь(micLoop, "микрофон"); else micRAF = requestAnimationFrame(micLoop); /* v10.18: фолбэк */
   if(!micAn) return;
   if(!micAn.getFloatTimeDomainData){ setStat("браузер не умеет анализ звука"); stopMic(); return; }
   const живой = (window.__СТРОЙ && __СТРОЙ.жива) ? __СТРОЙ.свежий() : null; /* v10.17: YIN считает в аудио-потоке */
@@ -1655,7 +1656,7 @@ function stopMic(){
     setStat("новый рекорд вечера: "+score.toFixed(1)+" с!");
   } else if(running){ setStat("микрофон выключен"); }
   running = false;
-  cancelAnimationFrame(micRAF);
+  if(window.__КОНВЕЙЕР) __КОНВЕЙЕР.сними("микрофон"); /* v10.18 «КОНВЕЙЕР» */
   if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
   try{ if(window.__СТРОЙ) __СТРОЙ.стоп(); }catch(e){}
   if(micAc){ try{ micAc.close(); }catch(e){} micAc = null; micAn = null; }
@@ -3089,7 +3090,8 @@ function beatFrame(now){
 
 /* ── свой цикл: указатель + такт, каждый кадр ── */
 function tick(){
-  requestAnimationFrame(tick);
+  /* v10.18 «КОНВЕЙЕР»; фолбэк — конвейер может ещё парситься */
+  if(window.__КОНВЕЙЕР) __КОНВЕЙЕР.поставь(tick, "свобода"); else requestAnimationFrame(tick);
   try{ paintPointers(); }catch(e){}
   try{ beatFrame(performance.now()); }catch(e){}
 }
@@ -4528,7 +4530,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.17 «СТРОЙ»";
+      b.className="sng-верш"; b.textContent="· v10.18 «КОНВЕЙЕР»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6397,9 +6399,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.17";
+var D=document, root=D.documentElement, body=D.body, VER="v10.18";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv50"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv51"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -6549,6 +6551,53 @@ try{
   };
   window.KV12={ver:VER,tabs:tabs,fit:fit,channel:bc,health:function(){return window.__HEALTH9();}};
 }catch(_){}
+})();
+</script>
+<script id="taktScript">
+/* ── С19 · КОНВЕЙЕР v10.18 — один RAF-такт на весь дом ──
+   П1 дорожной карты. Раньше у дома были свои петли: пульс-бит (С6),
+   микрофон «ДЕРЖИ НОТУ» (С4), указатели СВОБОДЫ (С7) — каждый дёргал
+   requestAnimationFrame сам по себе. Теперь один конвейер: поставил такт —
+   идёшь в общем ритме; снял такт — не дёргаешься. Падение одного такта
+   не роняет остальных (ловушка на каждом). Частота конвейера видна
+   в ЗДОРОВЬЕ. Одноразовые RAF (переезды, конфетти) остаются как были —
+   они не постоянные петли. */
+(function(){
+"use strict";
+if(window.__КОНВЕЙЕР) return;             /* один конвейер — один такт */
+var ИД = new Map(), СЧЁТ = 0, КАДРОВ = 0, ПОСЛ = 0, ЧАСТ = 0;
+function такт(now){
+  КАДРОВ++;
+  if(now - ПОСЛ >= 1000){ ЧАСТ = Math.round(КАДРОВ * 1000 / (now - ПОСЛ)); КАДРОВ = 0; ПОСЛ = now; }
+  ИД.forEach(function(fn){ try{ fn(now); }catch(e){ /* такт одного не роняет остальных */ } });
+  requestAnimationFrame(такт);
+}
+window.__КОНВЕЙЕР = {
+  ver: "v10.18",
+  поставь: function(fn, ид){
+    if(typeof fn !== "function") return null;
+    if(!ид) ид = "такт" + (СЧЁТ++);
+    if(!ИД.has(ид)) ИД.set(ид, fn);
+    return ид;
+  },
+  сними: function(ид){ ИД.delete(ид); },
+  частота: function(){ return ЧАСТ; },
+  health: function(){
+    return { ok: true, петель: ИД.size, частота: ЧАСТ + " кадр/с", конвейер: "один RAF на всех" };
+  }
+};
+requestAnimationFrame(function п(now){ ПОСЛ = now; requestAnimationFrame(такт); });
+try{
+  if(window.KV12 && KV12.health && !KV12.health.__такт){
+    var __kh = KV12.health;
+    KV12.health = function(){
+      var r = __kh.apply(this, arguments);
+      try{ r.конвейер = window.__КОНВЕЙЕР.health(); }catch(e){ }
+      return r;
+    };
+    KV12.health.__конвейер = true;
+  }
+}catch(e){ }
 })();
 </script>
 <script id="strojScript">
