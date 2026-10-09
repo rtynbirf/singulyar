@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.29 «ОЧЕРЕДЬ» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.34 «АРБИТР» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.33 «ПУСК» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.34 «АРБИТР» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1458,7 +1458,7 @@ window.addEventListener("keydown",(e)=>{
 /* ── диалоги ── */
 $("btnHelp").addEventListener("click",()=>$("help").showModal());
 $("helpClose").addEventListener("click",()=>$("help").close());
-$("micClose").addEventListener("click",()=>$("micPanel").close());
+$("micClose").addEventListener("click",()=>{ if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.отменить("нота"); $("micPanel").close(); }); /* С21: закрыл игру — очередь честно отменена */
 $("btnMicGame").addEventListener("click",()=>{ if(typeof openMic==="function") openMic(); });
 
 /* ── ЗДОРОВЬЕ ── */
@@ -1481,6 +1481,7 @@ function health(){
     { n:"одна кнопка: сканер готов", ok: !!(window.__SCAN) },
   { sec:"R", n:"конвейер кадра: ядро + сцены М1 — один RAF на всех", ok: !!(window.__КОНВЕЙЕР&&window.SNG&&window.SNG.конвейер) },
   { sec:"R", n:"голос: один распознаватель на страницу (КВАРТИРНИК + UX-движок в одном микрофоне)", ok: !!window.__ГОЛОС },
+  { sec:"R", n:"микрофон: один тракт getUserMedia на страницу (нота/запись/зал через брокера)", ok: !!(window.__ГОЛОС && window.__ГОЛОС.тракт) },   /* С21 */
     { n:"текст-пульс: строка·слово·слог·буква", ok: !!(window.__PULSE) },
     { sec:"R", n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
   ];
@@ -1681,6 +1682,12 @@ function clampPct(v){ return Math.max(2,Math.min(100,v)); }
 
 async function startMic(){
   if(stream || micAc || running) return; /* v9.2: гард от двойного клика — второй старт не перетирает стрим */
+  /* С21 «ОДИН МИКРОФОН»: тракт getUserMedia выдаёт брокер — второй получает честный отказ и очередь */
+  if(window.__ГОЛОС && window.__ГОЛОС.тракт && !window.__ГОЛОС.тракт.занять("нота")){
+    setStat("микрофон у «"+(window.__ГОЛОС.тракт.держатель()||"другого тракта")+"» — игра встанет в очередь и стартует сама");
+    window.__ГОЛОС.тракт.ждать("нота", startMic);
+    return;
+  }
   micGo.disabled = true; /* сразу, до await — окно ожидания не даёт второй клик */
   if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)){
     micGo.disabled = false; setStat("микрофон недоступен в этом браузере"); if(window.__ALERT) __ALERT("Микрофона в этом браузере нет. Игра «Держи ноту» отдыхает — всё остальное работает."); return;
@@ -1709,7 +1716,7 @@ async function startMic(){
         };
       }catch(e){ return { state:"ошибка чтения: "+(e&&e.name?e.name:"неизвестно") }; }
     })();
-  }catch(e){ micGo.disabled = false; setStat("нет доступа к микрофону — нужно разрешение"); if(window.__ALERT) __ALERT("Нет доступа к микрофону — разрешение не дано. Игра «Держи ноту» ждёт, всё остальное работает."); return; }
+  }catch(e){ micGo.disabled = false; if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("нота"); setStat("нет доступа к микрофону — нужно разрешение"); if(window.__ALERT) __ALERT("Нет доступа к микрофону — разрешение не дано. Игра «Держи ноту» ждёт, всё остальное работает."); return; }
   try{
     micAc = new (window.AudioContext||window.webkitAudioContext)();
     if(micAc.state==="suspended"){ const rp=micAc.resume(); if(rp&&rp.catch) rp.catch(()=>{}); }
@@ -1737,6 +1744,7 @@ function stopMic(){
     setStat("новый рекорд вечера: "+score.toFixed(1)+" с!");
   } else if(running){ setStat("микрофон выключен"); }
   running = false;
+  if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("нота"); /* С21: тракт свободен — очередь берёт сама */
   if(window.__КОНВЕЙЕР) __КОНВЕЙЕР.сними("микрофон"); /* v10.18 «КОНВЕЙЕР» */
   if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
   try{ if(window.__СТРОЙ) __СТРОЙ.стоп(); }catch(e){}
@@ -3504,7 +3512,10 @@ async function recToggle(){
   if(!recDest){ const rs=grs(); if(rs) rs.textContent = "Не удалось подключить запись к звуку."; return; }
   const rs0 = grs(); if(rs0) rs0.textContent = "Спрашиваю микрофон… (можно и без него — запишется сама песня)";
   let mic = false;
-  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+  /* С21 «ОДИН МИКРОФОН»: тракт занят другим — честный отказ; запись пойдёт с одной песней */
+  if(window.__ГОЛОС && window.__ГОЛОС.тракт && !window.__ГОЛОС.тракт.занять("запись")){
+    const rsz = grs(); if(rsz) rsz.textContent = "микрофон у «"+(window.__ГОЛОС.тракт.держатель()||"другого тракта")+"» — запишется сама песня, без голоса";
+  } else if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
     try{
       micStream = await navigator.mediaDevices.getUserMedia({ audio:true });
       const src = ac.createMediaStreamSource(micStream);
@@ -3517,11 +3528,12 @@ async function recToggle(){
   recMime = pickRecMime();
   try{
     mediaRec = new MediaRecorder(recDest.stream, recMime ? { mimeType: recMime } : undefined);
-  }catch(e){ const rs=grs(); if(rs) rs.textContent = "Запись не запустилась: "+(e.message||"формат не поддержан"); if(window.__ALERT) __ALERT("Запись не запустилась: браузер отказал рекордеру ("+(e && e.name ? e.name : "неизвестно")+"). Песня и свет работают — запись в этот раз нет."); return; }
+  }catch(e){ const rs=grs(); if(rs) rs.textContent = "Запись не запустилась: "+(e.message||"формат не поддержан"); if(window.__ALERT) __ALERT("Запись не запустилась: браузер отказал рекордеру ("+(e && e.name ? e.name : "неизвестно")+"). Песня и свет работают — запись в этот раз нет."); if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("запись"); return; }
   try{ recMime = mediaRec.mimeType || recMime; }catch(e){}
   mediaRec.ondataavailable = (e)=>{ if(e.data && e.data.size) recChunks.push(e.data); };
   mediaRec.onstop = ()=>{
     recOn = false;
+    if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("запись"); /* С21: тракт свободен */
     if(micStream){ try{ micStream.getTracks().forEach(t=>t.stop()); }catch(e){} micStream=null; }
     const blob = new Blob(recChunks, { type: recMime || "application/octet-stream" });
     if(recUrl){ try{ URL.revokeObjectURL(recUrl); }catch(e){} recUrl=null; }
@@ -8010,7 +8022,7 @@ var S = {
   ver: VER,
   peer: null, conns: [], calls: [],
   micPA: null, micPAgain: 1.0, micWant: false,
-  hostOn: false, whisper: { ready:false, busy:false, lastOffset:null, prevOffset:null, matches:0, model:null }
+  hostOn: false, ruleOpen: false, gseq: 0,   /* С21: руль закрыт по умолчанию; эпоха снимков */ whisper: { ready:false, busy:false, lastOffset:null, prevOffset:null, matches:0, model:null }
 };
 
 function секции(){ try{ return (window.SONG&&window.SONG.sections)||[]; }catch(_){ return []; } }
@@ -8059,7 +8071,7 @@ if (roomArg){
   /* С20·ЗАЛ: гость голосует тем же каналом, что и рулит */
   проголосовать: function(x){ try{ if(conn && conn.open){ conn.send({t:'kv31c', cmd:'vote', arg:String(x)}); return true; } }catch(_){} return false; } };
 
-    var peer=null, conn=null, micCall=null, micOn=false;
+    var peer=null, conn=null, micCall=null, micOn=false, lastSeq=null;   /* С21 */
     var stat = D.getElementById('kv31gStat');
     function setStat(t){ stat.textContent=t; }
 
@@ -8074,6 +8086,7 @@ if (roomArg){
           conn.on('data', onState);
           /* С20·ЗАЛ: новые слова зала — отдельным слушателем, руль КРЫШЫ не тронут */
           conn.on('data', function(m){ try{ if(m && (m.t==='kv31v'||m.t==='kv31w'||m.t==='kv31x') && window.__ЗАЛ) window.__ЗАЛ.гостьСлушает(m); }catch(_){} });
+          conn.on('data', function(m){ try{ if(m && m.t==='kv31a' && m.ok===false && m.why) setStat(m.why+' — голосование и БРАВО работают'); }catch(_){} });   /* С21: честный ответ руля */
           conn.on('close', function(){ micStop(true); setStat('зал ушёл'); });   /* F-10 */
         });
         peer.on('error', function(e){ micStop(true); setStat('нет связи: '+e.type); });   /* F-10 */
@@ -8083,6 +8096,7 @@ if (roomArg){
     function toastHello(){ try{ conn.send({t:'kv31hello'}); }catch(_){} }
     function onState(m){
       if(!m || m.t!=='kv31s') return;
+      if(m.seq!=null){ if(lastSeq!=null && m.seq<=lastSeq) return; lastSeq=m.seq; }   /* С21: старый снимок не перебьёт новый */
       D.getElementById('kv31gCur').textContent = m.cur || '…';
       D.getElementById('kv31gNext').textContent = m.next?('далее: '+m.next):'';
       D.getElementById('kv31gSec').textContent = m.sec||'';
@@ -8126,6 +8140,7 @@ if (roomArg){
       micCall=null;
       try{ var st=S&&S.micStream; if(st){ var tr=(st.getTracks&&st.getTracks())||[]; for(var i=0;i<tr.length;i++){ try{ tr[i].stop(); }catch(_){}}} }catch(_){}
       try{ S.micStream=null; }catch(_){}
+      if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("зал"); /* С21 */
       micOn=false;
       var mb=D.getElementById('kv31gMic'); if(mb) mb.classList.remove('kv31-mic-on');
       if(!quiet) setStat('голос выключен');
@@ -8133,6 +8148,7 @@ if (roomArg){
     function micToggle(){
       if(micOn){ micStop(false); return; }
       if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){ setStat('микрофон недоступен'); return; }
+      if(window.__ГОЛОС && window.__ГОЛОС.тракт && !window.__ГОЛОС.тракт.занять("зал")){ setStat('микрофон занят другим трактом'); return; }   /* С21 */
       setStat('прошу микрофон…');
       navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}})
         .then(function(st){
@@ -8141,7 +8157,7 @@ if (roomArg){
           micOn=true; D.getElementById('kv31gMic').classList.add('kv31-mic-on');
           setStat('голос в зале ✓ — стой ближе к колонкам');
         })
-        .catch(function(e){ setStat('микрофон отказал: '+(e&&e.name||'?')); });
+        .catch(function(e){ if(window.__ГОЛОС && window.__ГОЛОС.тракт) window.__ГОЛОС.тракт.освободить("зал"); setStat('микрофон отказал: '+(e&&e.name||'?')); });   /* С21 */
     }
     connect();
   })();
@@ -8179,6 +8195,7 @@ panel.innerHTML = ''
 + '<div class="kv31-card"><b>ТЕЛЕФОНЫ ПО WI-FI</b> — зал берёт руль и голос<br>'
 +   '<button id="kv31btnHall">СОБРАТЬ ЗАЛ</button>'
 +   '<button id="kv31btnHallOff" class="kv31-danger">ЗАКРЫТЬ ЗАЛ</button>'
++   '<button id="kv31btnRule" class="kv31-danger">РУЛЬ: ЗАКРЫТ</button>'   /* С21: полный руль — по кнопке хозяина */
 +   '<div id="kv31hallBox" style="margin-top:8px"></div>'
 +   '<div style="margin-top:6px">микрофон зала → колонки: <span id="kv31paState">выкл</span></div>'
 +   '<input type="range" id="kv31paVol" min="0" max="100" value="100" aria-label="громкость микрофона зала">'
@@ -8193,7 +8210,7 @@ panel.innerHTML = ''
 +   '<button id="kv31btnWBack" class="kv31-danger">ВЕРНУТЬ КАК БЫЛО</button>'
 +   '<div class="kv31-log" id="kv31wLog">модель придёт с CDN один раз и осядет в кэше браузера; дальше — офлайн. Выравниваю по словам, применяю честную медиану в родной __SYNC_SET.</div>'
 + '</div>'
-+ '<div class="kv31-card"><b>РУЛЬ ЗАЛА</b> — что умеет телефон: пуск/стоп, ±15 с, секции, громкость, сцены, темы, ПУЛЬТ, БРАВО, ПОКАЗ, живой голос в колонки. Телефон всегда показывает текущую строку.</div>'
++ '<div class="kv31-card"><b>РУЛЬ ЗАЛА</b> — что умеет телефон: пуск/стоп, ±15 с, секции, громкость, сцены, темы, ПУЛЬТ, БРАВО, ПОКАЗ, живой голос в колонки. Телефон всегда показывает текущую строку. Руль по умолчанию закрыт: телефон смотрит, голосует и бравит — полный руль открывает хозяин кнопкой «РУЛЬ».</div>'   /* С21 */
 + '<div style="text-align:right"><button id="kv31btnBye">СНЯТЬ КРЫШУ</button></div>';
 D.body.appendChild(panel);
 
@@ -8202,6 +8219,12 @@ badge.querySelector('.kv31-badge').addEventListener('click', function(){ panelOp
 badge.querySelector('.kv31-badge').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panelOpen(true);} });
 D.getElementById('kv31btnBye').addEventListener('click', function(){ panelOpen(false); toast('Крыша снята — шасси чистое. Обнови страницу, чтобы вернуть.'); });
 D.getElementById('kv31paVol').addEventListener('input', function(){ S.micPAgain = (parseInt(this.value,10)||0)/100; if(S.micPA) S.micPA.volume = S.micPAgain; });
+D.getElementById('kv31btnRule').addEventListener('click', function(){   /* С21 «АРБИТР РУЛЯ» */
+  S.ruleOpen = !S.ruleOpen;
+  this.textContent = 'РУЛЬ: '+(S.ruleOpen?'ОТКРЫТ':'ЗАКРЫТ');
+  this.classList.toggle('kv31-danger', !S.ruleOpen);
+  hallLog(S.ruleOpen ? 'руль открыт — телефон рулит всем' : 'руль закрыт — телефон смотрит, голосует, браво');
+});
 
 /* ── ЗАЛ: ХОСТ ── */
 var hallBox = D.getElementById('kv31hallBox');
@@ -8248,7 +8271,7 @@ function hostStart(){
     conn.on('open', function(){
       S.conns.push(conn);
       hallLog('⌁ телефон подключился (всего: '+S.conns.length+')');
-      try{ var first={t:'kv31s'}; Object.assign(first, stateForGuest()); conn.send(first); }catch(_){}
+      try{ var first={t:'kv31s', seq:++S.gseq}; Object.assign(first, stateForGuest()); conn.send(first); }catch(_){}   /* С21: эпоха снимка */
       if(S.conns.length===1) toast('Телефон на связи — зал управляет');
     });
     conn.on('data', function(m){ onRemoteCmd(m, conn); });
@@ -8297,7 +8320,7 @@ function startBroadcast(){
   if(S.bcTimer) clearInterval(S.bcTimer);
   S.bcTimer = setInterval(function(){
     if(!S.conns.length) return;
-    var st = {t:'kv31s'}; try{ Object.assign(st, stateForGuest()); }catch(_){ return; }
+    var st = {t:'kv31s', seq:++S.gseq}; try{ Object.assign(st, stateForGuest()); }catch(_){ return; }   /* С21: эпоха снимка */
     S.conns.forEach(function(c){ try{ if(c.open) c.send(st); }catch(_){}} );
   }, 600);
 }
@@ -8306,6 +8329,12 @@ function startBroadcast(){
 function onRemoteCmd(m, conn){
   if(!m || (m.t!=='kv31c' && m.t!=='kv31hello')) return;
   var ok=false, KV=window.__KV;
+  /* С21 «АРБИТР РУЛЯ»: гость по умолчанию зритель — голосование и БРАВО всегда;
+     полный руль хозяин открывает кнопкой «РУЛЬ» в КРЫШЕ. */
+  if(m.t!=='kv31hello' && !S.ruleOpen && !(m.cmd in {ping:1,vote:1,bravo:1})){
+    try{ conn.send({t:'kv31a', cmd:m.cmd, ok:false, why:'руль закрыт'}); }catch(_){}
+    return;
+  }
   try{
     switch(m.cmd){
       case 'ping': ok=true; break;
