@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.36 «МЕШАНИНА» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.37 «КАЗНАЧЕЙ» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.36 «МЕШАНИНА» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.37 «КАЗНАЧЕЙ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1573,7 +1573,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -1614,6 +1614,63 @@ function health(){
   return r;
 }
 $("chipHealth").addEventListener("click", health);
+
+/* ── С22 · КАЗНАЧЕЙ v10.37: учёт казны дома (window.*) ──
+   Дом — один файл, у каждой подсистемы свои глобалы. Аудит v10.33 насчитал на глаз
+   ~114 присвоений — и после никто не считал. КАЗНАЧЕЙ ведёт учёт: реестр семей
+   (подсистема → признаки имён), сверка живой казны (кто есть в окне, кто учтён,
+   кто неучтёнка) и проба в ЗДОРОВЬЕ. Аддитивно: ничего не переименовано, ничего
+   не сдвинуто — только посчитано и доложено. Правило следующим тактам: новый
+   глобал — добавь признак в реестр, иначе он встанет в неучтёнку, и ЗДОРОВЬЕ
+   честно покажет долг. КРЫША (С20) учтена в реестре, не тронута. */
+window.__КАЗНА = (function(){
+  var ДОМ = /^(__|SNG|S31|KV|SingulyarUX$|peerjs$|Peer$|APP$|LYR$|SONG$|TRACK_|openMic$|ЗАКОН_|НОСИТЕЛИ$|ЧЕРНОВИКИ_|kv31)/;
+  var СЕМЬИ = [
+    ["ядро·данные",        /^SONG$|^TRACK_|^__BUILD_SHA$|^LYR$|^__PREFS$|^__STORAGE_DEAD$|^__errlog$|^__KV$|^APP$|^__ПОДНЯТЬ_ЗВУК$/],
+    ["казна·здоровье",     /^__HEALTH|^KV12$|^__FITK_REFIT$|^__КАЗНА/],
+    ["сцена·свет",         /^__SCENE$|^__LIGHTS$|^__BEATVIZ$|^__VIS_PAINT$|^__СВЕТ_|^__СВЕТЛЫЕ_|^__ЗАКРЕПИСВЕТ$|^__4L$|^__DUCK$|^__VOL$|^__NIGHT$|^__LAMP$/],
+    ["голос·микрофон",     /^__ГОЛОС|^__М2ГОЛОС$|^__КВГОЛОС$|^__PULSEVOICE$|^__VC$|^__MIC_|^__MS_STATE$|^openMic$|^__SHILKA$/],
+    ["такт·пульс·синхрон", /^__TAKT|^__PULSE$|^__ON_|^__SYNCOFF$|^__OUTLAT$|^__VISLAT$|^__SYNC_/],
+    ["МАЛЫШ·языки",        /^__МАЛЫШ$|^__LANGS|^__ЯЗЫКЧИПСЫ$|^ЗАКОН_|^НОСИТЕЛИ$|^ЧЕРНОВИКИ_|^__UILANG$/],
+    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__TIPS$|^__TOASTS$|^__ALERT/],
+    ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$/],
+    ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
+    ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
+    ["адапт·конвейер",     /^SNGRC$|^SNGАДАПТ$|^SNG$|^__СЛОИ$|^__КОНВЕЙЕР$|^__СТРОЙ$|^__SYN_PAINT$/],
+    ["модули·движок",      /^__SINGULYAR_|^SingulyarUX$|^__SUX_/],
+    ["ЗАЛ·КРЫША (С20)",    /^__ЗАЛ$|^__КРЫША$|^Peer$|^peerjs$|^kv31/]
+  ];
+  var КРИТИЧНО = ["SONG","TRACK_BUF","TRACK_READY","__ALERT","__SCENE","__LANGS","__TAKT","__PULSE","__КОНВЕЙЕР","SNGRC","S31ПУЛЬТ","KV12","APP","__КАЗНА"];
+  function семья(имя){ for(var i=0;i<СЕМЬИ.length;i++){ if(СЕМЬИ[i][1].test(имя)) return СЕМЬИ[i][0]; } return null; }
+  function сверка(){
+    var имена=[], всего=0, учтено=0, неучтёнка=[], семьи={};
+    try{ имена=Object.getOwnPropertyNames(window); }catch(e){}
+    имена.forEach(function(имя){
+      if(!ДОМ.test(имя)) return;
+      всего++;
+      var с=семья(имя);
+      if(с){ учтено++; if(!семьи[с]) семьи[с]=[]; семьи[с].push(имя); }
+      else неучтёнка.push(имя);
+    });
+    var пало=0;
+    for(var i=0;i<КРИТИЧНО.length;i++){ if(typeof window[КРИТИЧНО[i]]==="undefined") пало++; }
+    return { всего:всего, учтено:учтено, неучтено:неучтёнка.length, неучтёнка:неучтёнка, семьи:семьи,
+             критично:КРИТИЧНО.length, критичноПало:пало,
+             вер:(window.APP?("v"+window.APP.v+" «"+window.APP.такт+"»"):"?") };
+  }
+  return { сверка:сверка, семьи:СЕМЬИ.map(function(s){return s[0];}), критично:КРИТИЧНО, ДОМ:ДОМ };
+})();
+window.__HEALTH11 = function(){
+  var св;
+  try{ св = window.__КАЗНА.сверка(); }
+  catch(e){ return [{ sec:"I", n:"казна: сверка не сошлась ("+((e&&e.name)||"ошибка")+")", ok:true, warn:true }]; }
+  var н = "казна дома: "+св.всего+" глобалов · учтено "+св.учтено+" · неучтённых "+св.неучтено;
+  if(св.неучтено) н += " — "+св.неучтёнка.slice(0,6).join(", ")+(св.неучтено>6?"…":"");
+  return [
+    { sec:"I", n:н, ok:true, warn:св.неучтено>0 },
+    { sec:"I", n:"казна цела: критический интерфейс дома на месте ("+(св.критично-св.критичноПало)+"/"+св.критично+")", ok:св.критичноПало===0 }
+  ];
+};
 /* v9.2 «ДНК СИНГУЛАРА»: самопроверка сама — чип не висит с «…» до первого клика */
 setTimeout(()=>{ try{ health(); }catch(e){} }, 2000);
 
@@ -8026,7 +8083,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.36', такт:'МЕШАНИНА', кэш:'s15-orkestrator-v91', стр:'2026-10-10', ver:'v10.36 «МЕШАНИНА»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v91' };
+window.APP = { v:'10.37', такт:'КАЗНАЧЕЙ', кэш:'s15-orkestrator-v92', стр:'2026-10-10', ver:'v10.37 «КАЗНАЧЕЙ»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v92' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
