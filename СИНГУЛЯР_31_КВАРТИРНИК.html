@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.20 «КАДР» — RUVSON · «Просто люби» · сцены М1 в общем конвейере кадра · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.21 «ОДИН ГОЛОС» — RUVSON · «Просто люби» · один распознаватель и одна очередь оповещений · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -705,11 +705,41 @@ html[data-env="тв"] .langgrid{max-height:52vh}
 <div id="live" role="status" aria-live="polite"></div>
 <div id="liveAlert" role="alert" aria-live="assertive"></div>
 <script>
-/* v9.7 «ТОМОГРАФ»: два канала — спокойные вежливо (#live), срочные сразу (#liveAlert) */
-window.__ALERT = function(t){
+/* v9.7 «ТОМОГРАФ»: два канала — спокойные вежливо (#live), срочные сразу (#liveAlert).
+   v10.21 «ОДИН ГОЛОС» (П2/T-19): одна очередь с приоритетом — срочное слово
+   перебивает текущее, мирное ждёт своей очереди и не теряется; каждое держится
+   на экране свой такт, очередь не растёт бесконечно (потолок 4) */
+window.__ALERT = function(t, opts){
   try{
     var la = document.getElementById("liveAlert"); if(!la) return;
-    la.textContent = ""; setTimeout(function(){ la.textContent = t; }, 30);
+    var АQ = window.__ALERT_ОЧЕРЕДЬ = window.__ALERT_ОЧЕРЕДЬ || [];
+    var срочно = !(opts && opts.мирно);
+    var слово = { t: String(t==null?"":t), срочно: срочно, до: Date.now() + (срочно?2600:3400) };
+    if(срочно){
+      /* срочное перебивает показ, но мирные, что ждали, — не теряются: идут следом */
+      var ожидали = АQ.filter(function(с){ return !с.срочно; });
+      АQ.length = 0;
+      АQ.push(слово);
+      ожидали.forEach(function(с){ АQ.push(с); });
+      la.textContent = ""; setTimeout(function(){ la.textContent = слово.t; }, 30);
+      слово.до = Date.now() + 2600;
+    } else {
+      if(АQ.length >= 4) АQ.shift();    /* честный потолок: старое уходит, новое не теряется */
+      АQ.push(слово);
+    }
+    if(!window.__ALERT_ТАКТ){
+      window.__ALERT_ТАКТ = setInterval(function(){
+        var q = window.__ALERT_ОЧЕРЕДЬ || [];
+        var сейчас = Date.now();
+        while(q.length && q[0].до <= сейчас) q.shift();
+        var тек = la.textContent;
+        var живой = q.some(function(с){ return с.t === тек; });
+        if(!живой){
+          if(q.length){ la.textContent = q[0].t; }
+          else { la.textContent = ""; clearInterval(window.__ALERT_ТАКТ); window.__ALERT_ТАКТ = null; }
+        }
+      }, 400);
+    }
   }catch(e){}
 };
 </script>
@@ -1401,6 +1431,7 @@ function health(){
     { sec:"C", n:"вибро-ритм: "+("vibrate" in navigator?"есть":"нет в этом устройстве"), ok: ("vibrate" in navigator) },
     { n:"одна кнопка: сканер готов", ok: !!(window.__SCAN) },
   { sec:"R", n:"конвейер кадра: ядро + сцены М1 — один RAF на всех", ok: !!(window.__КОНВЕЙЕР&&window.SNG&&window.SNG.конвейер) },
+  { sec:"R", n:"голос: один распознаватель на страницу (КВАРТИРНИК + UX-движок в одном микрофоне)", ok: !!window.__ГОЛОС },
     { n:"текст-пульс: строка·слово·слог·буква", ok: !!(window.__PULSE) },
     { sec:"R", n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
   ];
@@ -2592,6 +2623,13 @@ let rec = null, vcOn = false;
 const vcGo = $("vcGo"), vcStat = $("vcStat");
 function vcHandle(text){
   const t = text.toLowerCase();
+  /* v10.21 «ОДИН ГОЛОС»: фильтр песни живёт В ОБРАБОТЧИКЕ — во время пения
+     слушаем только «стоп»/«пауза», спетые строки («тихо», «вечер») не команды;
+     так порядок честный при любом хосте микрофона */
+  const поёт = !!(KV.audio && !KV.audio.paused);
+  if(поёт){
+    if(t.indexOf("стоп")<0 && t.indexOf("пауза")<0) return;
+  }
   /* v9.2: матч по НАЧАЛУ слова — «вещей» больше не команда «еще», «деньги» не сцена ДЕНЬ */
   const words = t.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
   const has = (...ws)=>ws.some(w => w.indexOf(" ")>=0 ? t.indexOf(w)>=0 : words.some(wd => wd.indexOf(w)===0));
@@ -2627,22 +2665,22 @@ function vcHandle(text){
   else if(has("испанс")){ window.__LANGS.set(3); }
   else if(has("транслит")){ window.__LANGS.set(1); }
   else if(has("русск")){ window.__LANGS.set(0); }
+  /* v10.21: слова слышат и влитые слушатели (UX-движок) — уже после фильтра песни */
+  if(window.__ГОЛОС) __ГОЛОС.раздать(t, поёт);
 }
 window.__VC = { handle: vcHandle };   /* v7: голос-сканер наружу — ЗДОРОВЬЕ проверяет честно */
+window.__КВГОЛОС = { активен: ()=>vcOn, стоп: ()=>vcStop() };   /* v10.21: preempt для брокера «ОДИН ГОЛОС» */
 function vcStart(){
   const SR = window.SpeechRecognition||window.webkitSpeechRecognition;
+  /* v10.21 «ОДИН ГОЛОС»: микрофон один — если его держал UX-движок, он честно замолчит */
+  if(window.__ГОЛОС) window.__ГОЛОС.занять("кв");
   if(!SR){ vcStat.textContent = "Голосовые команды недоступны в этом браузере — но всё управляется с клавиатуры и кнопкой «одна кнопка»."; return; }
   try{ rec = new SR(); }catch(e){ vcStat.textContent = "Не удалось запустить распознавание."; return; }
   rec.lang = "ru-RU"; rec.continuous = true; rec.interimResults = false;
   rec.onresult = (e)=>{
     const r = e.results[e.results.length-1];
     if(!r || !r[0]) return;
-    /* v9.2: во время песни слушаем только «стоп»/«пауза» — спетые строки («тихо», «вечер») не команды */
-    if(KV.audio && !KV.audio.paused){
-      const tt = String(r[0].transcript||"").toLowerCase();
-      if(tt.indexOf("стоп")<0 && tt.indexOf("пауза")<0) return;
-    }
-    vcHandle(r[0].transcript);
+    vcHandle(r[0].transcript);   /* фильтр песни и раздача слушателям — внутри, единая точка */
   };
   rec.onerror = (e)=>{ if(e.error==="not-allowed"||e.error==="service-not-allowed"){ vcStat.textContent = "Нет доступа к микрофону для команд. Караоке-микрофон и клавиатура продолжают работать."; vcOn=false; vcGo.classList.remove("on"); } };
   rec.onend = ()=>{ if(vcOn){ try{ rec.start(); }catch(e){} } };
@@ -2650,6 +2688,7 @@ function vcStart(){
   catch(e){ vcStat.textContent = "Браузер не дал запустить распознавание."; }
 }
 function vcStop(){
+  if(window.__ГОЛОС) window.__ГОЛОС.освободить("кв");
   vcOn = false;
   if(rec){ try{ rec.onend=null; rec.stop(); }catch(e){} rec=null; }
   vcGo.classList.remove("on");
@@ -4531,7 +4570,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.20 «КАДР»";
+      b.className="sng-верш"; b.textContent="· v10.21 «ОДИН ГОЛОС»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6400,9 +6439,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.20";
+var D=document, root=D.documentElement, body=D.body, VER="v10.21";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv52"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv53"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
