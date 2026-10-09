@@ -110,7 +110,7 @@
         ':root[data-sux-theme="light"]{--sux-fg:#101418;--sux-accent:#7a5b10;--sux-border:rgba(0,0,0,.35);--sux-panel:#fff;}',
         ':root:not([data-sux-theme="contrast"]):not([data-sux-theme="light"]){--sux-fg:#C0C8D0;--sux-accent:#D4AF37;--sux-hi:#F0D78C;--sux-border:rgba(240,240,248,.22);--sux-panel:rgba(10,12,16,.94);}',
 
-        '#sux-menu{position:fixed;z-index:2147483001;width:min(calc(100vw - 20px),340px);',
+        '#sux-menu{position:fixed;z-index:40;width:min(calc(100vw - 20px),340px);',
           'background:var(--sux-panel,rgba(10,12,16,.94));color:var(--sux-fg,#C0C8D0);',
           'border:1px solid var(--sux-border,rgba(240,240,248,.22));border-radius:14px;',
           'box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(240,240,248,.07);',
@@ -140,7 +140,7 @@
         '@media (prefers-reduced-motion: reduce){#sux-menu,#sux-handle{transition:none!important;animation:none!important}}',
 
         // ручка ⌇ — тихая дверь меню дома для комнат (на лице её нет — там кристалл)
-        '#sux-handle{position:fixed;right:14px;bottom:14px;z-index:2147483000;width:40px;height:40px;margin:0;padding:0;',
+        '#sux-handle{position:fixed;right:14px;bottom:14px;z-index:40;width:40px;height:40px;margin:0;padding:0;',
           'border-radius:50%;display:flex;align-items:center;justify-content:center;',
           'font:17px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
           'color:var(--sux-accent,#D4AF37);background:var(--sux-panel,rgba(10,12,16,.82));',
@@ -157,7 +157,7 @@
           'border-color:rgba(212,175,55,.65);color:var(--sux-hi,#F0D78C);transition:none}',
         '@media (prefers-reduced-motion: reduce){#sux-handle.снг-тянет,#sux-home.снг-тянет{transition:none}}',
         '#crystalButton{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}',
-        '#sux-home{position:fixed;right:14px;bottom:62px;z-index:2147483000;width:40px;height:40px;margin:0;padding:0;',
+        '#sux-home{position:fixed;right:14px;bottom:62px;z-index:40;width:40px;height:40px;margin:0;padding:0;',
           'border-radius:50%;display:flex;align-items:center;justify-content:center;font:16px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
           'color:var(--sux-fg,#C0C8D0);background:var(--sux-panel,rgba(10,12,16,.82));border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:grab;',
           'touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;',
