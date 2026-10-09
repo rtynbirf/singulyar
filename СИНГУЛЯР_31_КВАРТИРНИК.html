@@ -5,7 +5,7 @@
      cdn.jsdelivr.net (PeerJS уже вшит, transformers.js едет с CDN),
      wss:/https: (сигналинг зала + модели Whisper с HF),
      blob:-воркер и wasm-unsafe-eval (инференс ONNX в браузере) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self' blob:; manifest-src 'self'; connect-src 'self' wss: https:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- такт v10.17 «СТРОЙ»: четвёртая дверь — blob: в script-src, точечно под AudioWorklet YIN (модуль стро́я вшит в файл) --> <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self' blob:; manifest-src 'self'; connect-src 'self' wss: https:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta charset="utf-8"/>
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда: void + стекло-осколки + золото;
@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.16 «СКЛАД» — RUVSON · «Просто люби» · аккорды сам + склад prefs v2/IndexedDB · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.17 «СТРОЙ» — RUVSON · «Просто люби» · аккорды сам + склад + стро́й YIN · КРЫША и шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1569,11 +1569,12 @@ function micLoop(){
   micRAF = requestAnimationFrame(micLoop);
   if(!micAn) return;
   if(!micAn.getFloatTimeDomainData){ setStat("браузер не умеет анализ звука"); stopMic(); return; }
-  micAn.getFloatTimeDomainData(micBuf);
+  const живой = (window.__СТРОЙ && __СТРОЙ.жива) ? __СТРОЙ.свежий() : null; /* v10.17: YIN считает в аудио-потоке */
+  if(!живой) micAn.getFloatTimeDomainData(micBuf);
   const now = performance.now(), dt = Math.min(0.1,(now-lastT)/1000); lastT = now;
   micSkip = !micSkip; /* v9.2: тяжёлую автокорреляцию — через кадр, бережём батарею телефона */
-  if(micSkip && running){ return; }
-  const { f, rms, peak } = autoCorrelate(micBuf, micAc.sampleRate);
+  if(micSkip && running && !живой){ return; }
+  const { f, rms, peak } = живой || autoCorrelate(micBuf, micAc.sampleRate);
   /* v10.2 «ВЕРДИКТ»: перегруз честен — на клиппинге нота читается неверно, счёт не тикает */
   const clipped = peak >= 0.985;
   if(clipped && !clipShown){ clipShown = true; setStat("ПЕРЕГРУЗ: слишком громко — отодвиньтесь от микрофона"); }
@@ -1634,6 +1635,7 @@ async function startMic(){
     micAn = micAc.createAnalyser(); micAn.fftSize = 2048;
     micBuf = new Float32Array(micAn.fftSize);
     src.connect(micAn);
+    try{ if(window.__СТРОЙ) __СТРОЙ.подключи(micAc, src); }catch(e){} /* v10.17 «СТРОЙ»: YIN в аудио-потоке, при неудаче — честный фолбэк */
   }catch(e){ setStat("не удалось запустить анализ"); stopMic(); return; }
   running = true; score = 0; refF = 0; lastT = performance.now(); micSkip = false; clipShown = false;
   micTime.textContent = "0.0 с";
@@ -1655,6 +1657,7 @@ function stopMic(){
   running = false;
   cancelAnimationFrame(micRAF);
   if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
+  try{ if(window.__СТРОЙ) __СТРОЙ.стоп(); }catch(e){}
   if(micAc){ try{ micAc.close(); }catch(e){} micAc = null; micAn = null; }
   micGo.disabled = false;
   micNote.textContent = "—"; micNeedle.style.width = "0%";
@@ -4525,7 +4528,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.16 «СКЛАД»";
+      b.className="sng-верш"; b.textContent="· v10.17 «СТРОЙ»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6394,9 +6397,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.16";
+var D=document, root=D.documentElement, body=D.body, VER="v10.17";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv49"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv50"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -6546,6 +6549,147 @@ try{
   };
   window.KV12={ver:VER,tabs:tabs,fit:fit,channel:bc,health:function(){return window.__HEALTH9();}};
 }catch(_){}
+})();
+</script>
+<script id="strojScript">
+/* ── С18 · СТРОЙ v10.17 — AudioWorklet YIN: точная высота в аудио-потоке ──
+   П1 дорожной карты. «ДЕРЖИ НОТУ» считала высоту автокорреляцией на главном
+   потоке (через кадр, бережём батарею). Теперь YIN-детектор живёт в аудио-
+   потоке (AudioWorkletNode): точнее на голосе (CMND + параболическая
+   интерполяция), главный поток только рисует иглу и счёт.
+   Честность: дверь blob: в script-src открыта точечно под модуль стро́я;
+   если браузер аудио-ворклетов не знает — С4 честно живёт на автокорреляции,
+   как жила. Никакой магии, никакой замены канона. */
+(function(){
+"use strict";
+if(window.__СТРОЙ) return;              /* один стро́й — один детектор */
+
+var ЖИВА = false, УЗЕЛ = null, КОНТЕКСТ = null, ПОСЛЕДНЕЕ = null, ОБНОВ = 0, ПОСЛТ = 0;
+
+var КОД = 'class YinStroj extends AudioWorkletProcessor {' +
+'  constructor(){ super();' +
+'    this.buf = new Float32Array(2048); this.pos = 0; this.счёт = 0; this.шаг = 6;' +
+'  }' +
+'  process(inputs){' +
+'    const вход = inputs[0];' +
+'    if(вход && вход[0]){' +
+'      const ch = вход[0];' +
+'      for(let i=0;i<ch.length;i++){' +
+'        this.buf[this.pos++] = ch[i];' +
+'        if(this.pos >= this.buf.length) this.pos = 0;' +
+'      }' +
+'      this.счёт++;' +
+'      if(this.счёт % this.шаг === 0) this.считай();' +
+'    }' +
+'    return true;' +
+'  }' +
+'  считай(){' +
+'    const sr = sampleRate, W = this.buf.length;' +
+'    let rms = 0, peak = 0;' +
+'    for(let i=0;i<W;i+=2){ const v = this.buf[i]; rms += v*v; const a = v<0?-v:v; if(a>peak) peak = a; }' +
+'    rms = Math.sqrt(rms/(W/2));' +
+'    if(rms < 0.012){ this.port.postMessage({f:0, rms:rms, peak:peak}); return; }' +
+'    const tauMin = Math.max(2, Math.floor(sr/900)), tauMax = Math.min(Math.floor(sr/70), W>>1);' +
+'    if(tauMax - tauMin < 8){ this.port.postMessage({f:0, rms:rms, peak:peak}); return; }' +
+'    const d = new Float32Array(tauMax+1);' +
+'    for(let tau=tauMin; tau<=tauMax; tau++){' +
+'      let s = 0, n = 0;' +
+'      for(let i=0;i<W-tau;i+=2){ const del = this.buf[i]-this.buf[i+tau]; s += del*del; n++; }' +
+'      d[tau] = n ? s/n : 1e12;' +
+'    }' +
+'    const cm = new Float32Array(tauMax+1);' +
+'    let бег = 0;' +
+'    for(let tau=tauMin; tau<=tauMax; tau++){ бег += d[tau]; cm[tau] = бег/(tau-tauMin+1); }' +
+'    let tauЛуч = -1, порог = 0.15;' +
+'    for(let tau=tauMin+1; tau<tauMax; tau++){' +
+'      if(cm[tau] < порог){ while(tau+1<tauMax && cm[tau+1] < cm[tau]) tau++; tauЛуч = tau; break; }' +
+'    }' +
+'    if(tauЛуч < 0){' +
+'      let m = tauMin; for(let tau=tauMin+1; tau<=tauMax; tau++){ if(cm[tau] < cm[m]) m = tau; }' +
+'      if(cm[m] < 0.45) tauЛуч = m; else { this.port.postMessage({f:0, rms:rms, peak:peak}); return; }' +
+'    }' +
+'    let лучший = tauЛуч;' +
+'    const x0 = tauЛуч-1, x2 = tauЛуч+1;' +
+'    if(x0 >= tauMin && x2 <= tauMax){' +
+'      const s0 = cm[x0], s1 = cm[tauЛуч], s2 = cm[x2], знам = s0 + s2 - 2*s1;' +
+'      if(Math.abs(знам) > 1e-12){ const сдвиг = 0.5*(s0-s2)/знам; if(Math.abs(сдвиг) < 1) лучший = tauЛуч + сдвиг; }' +
+'    }' +
+'    this.port.postMessage({f: sr/лучший, rms:rms, peak:peak});' +
+'  }' +
+'}' +
+'registerProcessor("yin-stroj", YinStroj);';
+
+function свежий(){ return ПОСЛЕДНЕЕ; }
+function стоп(){
+  ЖИВА = false;
+  try{ if(УЗЕЛ){ УЗЕЛ.port.onmessage = null; УЗЕЛ.disconnect(); } }catch(e){}
+  УЗЕЛ = null; ПОСЛЕДНЕЕ = null;
+  метка();
+}
+function метка(){
+  try{
+    var панель = document.getElementById("micPanel");
+    if(!панель) return;
+    var стр = document.getElementById("strojLabel");
+    if(!стр){
+      стр = document.createElement("div");
+      стр.id = "strojLabel";
+      стр.style.cssText = "font-size:.72rem;opacity:.66;letter-spacing:.03em;padding:2px 6px 0;text-align:center";
+      панель.appendChild(стр);
+    }
+    стр.textContent = ЖИВА ? "стро́й: YIN в аудио-потоке (точный)" : "стро́й: автокорреляция на главном потоке (надёжный)";
+  }catch(e){ }
+}
+function подключи(ac, src){
+  КОНТЕКСТ = ac;
+  return new Promise(function(res){
+    try{
+      if(!ac.audioWorklet){ res(false); return; }
+      var url = URL.createObjectURL(new Blob([КОД], { type:"application/javascript" }));
+      ac.audioWorklet.addModule(url).then(function(){
+        try{
+          УЗЕЛ = new AudioWorkletNode(ac, "yin-stroj", { numberOfOutputs: 0, channelCount: 1, channelCountMode: "explicit" });
+          УЗЕЛ.port.onmessage = function(e){
+            ПОСЛЕДНЕЕ = e.data || null;
+            ОБНОВ++;
+          };
+          try{ src.connect(УЗЕЛ); }catch(_){ res(false); return; }
+          ЖИВА = true; ПОСЛТ = performance.now();
+          метка();
+          res(true);
+        }catch(e){ res(false); }
+      }).catch(function(){ res(false); });
+    }catch(e){ res(false); }
+  });
+}
+
+window.__СТРОЙ = {
+  ver: "v10.17",
+  подключи: подключи,
+  стоп: стоп,
+  свежий: свежий,
+  get жива(){ return ЖИВА; },
+  health: function(){
+    return {
+      ok: true,
+      режим: ЖИВА ? "YIN в аудио-потоке" : "автокорреляция (фолбэк)",
+      обновлений: ОБНОВ,
+      ворклет: (window.AudioWorkletNode && КОНТЕКСТ && КОНТЕКСТ.audioWorklet) ? "да" : "нет в этом браузере"
+    };
+  }
+};
+try{
+  if(window.KV12 && KV12.health && !KV12.health.__строй){
+    var __kh = KV12.health;
+    KV12.health = function(){
+      var r = __kh.apply(this, arguments);
+      try{ r.строй = window.__СТРОЙ.health(); }catch(e){ }
+      return r;
+    };
+    KV12.health.__строй = true;
+  }
+}catch(e){ }
+метка();
 })();
 </script>
 <style id="l4style">
