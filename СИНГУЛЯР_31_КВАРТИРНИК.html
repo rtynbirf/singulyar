@@ -26,7 +26,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.7 «ЧИСТЫЙ СВЕТ» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.12 «ЧИСТЫЙ СВЕТ» — RUVSON · «Просто люби» · янтарь 22–43° по разбору рендера СИНГУЛАРА + упреждение света + юстировка свет↔звук</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -201,7 +201,7 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 /* v10.10 «ОДИН СЛОЙ» (приказ владельца): колонка текста — один слой изображения для всех трёх ползунков
    (титры/транскрипция/оригинал), САМЫЙ ВЕРХНИЙ всегда (выше тостов z6, трассера z44 и бирок; ниже только
    ПУЛЬТа — нативный top layer — и системного тоста) и занимает больше экрана: полосы 2px/6px вместо 16/24 */
-#lyricsWrap{position:absolute;inset:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 2px) 0 calc(var(--sng-dockH,84px) + var(--sng-tagH,0px) + 6px);overflow:hidden;z-index:2147483700}
+#lyricsWrap{position:absolute;inset:calc(var(--sng-topH,68px) + var(--sng-rowH,44px) + var(--sng-headH,0px) + 2px) 0 calc(var(--sng-dockH,84px) + var(--sng-tagH,0px) + 6px);overflow:hidden;z-index:var(--z-lines,30)}
 #lyricsWrap::before,#lyricsWrap::after{content:"";position:absolute;left:0;right:0;height:90px;z-index:2;pointer-events:none}
 #lyricsWrap::before{top:0;background:linear-gradient(var(--bg),transparent)}
 #lyricsWrap::after{bottom:0;background:linear-gradient(transparent,var(--bg))}
@@ -234,7 +234,7 @@ body[data-mode="all"] .line{cursor:default}
 html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:none}
 
 /* ───── тосты ───── */
-.toast{position:fixed;bottom:10px;left:50%;transform:translate(-50%,-16px);z-index:2147483100;pointer-events:none;/* v10.10: выше колонки-слоя, чтобы тост всегда читался */
+.toast{position:fixed;bottom:10px;left:50%;transform:translate(-50%,-16px);z-index:var(--z-toast,60);pointer-events:none;/* v10.10: выше колонки-слоя, чтобы тост всегда читался */
   background:#101113f2;border:1px solid rgba(222,169,104,.23);color:var(--text);padding:15px 26px;border-radius:18px;
   font-size:15.5px;font-weight:700;letter-spacing:.02em;box-shadow:0 14px 50px #00000070,inset 0 1px 0 rgba(240,240,248,.06);
   opacity:0;transition:.45s;max-width:520px;text-align:center}/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
@@ -495,7 +495,7 @@ body[data-scene="day"] .big,body[data-scene="day"] .round.bigplay{color:#fff}
 #live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ───── v5 · ПОДСКАЗКИ (WCAG 1.4.13: закрываемы, наводимы, постоянны) ───── */
-#tip{position:fixed;z-index:95;max-width:280px;padding:9px 13px;border-radius:12px;/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
+#tip{position:fixed;z-index:40;max-width:280px;padding:9px 13px;border-radius:12px;/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
   background:#141416f6;border:1px solid rgba(222,169,104,.35);color:var(--text);font-size:12px;font-weight:600;
   line-height:1.45;letter-spacing:.02em;box-shadow:0 10px 34px #000000a8;visibility:hidden;
   opacity:0;transform:translateY(4px);transition:opacity .16s,transform .16s}
@@ -1416,7 +1416,7 @@ function health(){
       { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
       { sec:"S", n:"ПУЛЬТ закрыт = скрыт совсем: не просвечивает и не ест касания зала", ok: (function(){ try{ var п=document.getElementById("panel"); return !!п && !п.open && getComputedStyle(п).display==="none"; }catch(e){ return false; } })() },
       { sec:"S", n:"ТРИ СТРОКИ НА ВЫВОДЕ: титры · транскрипция · оригинал — строка-оригинал не сворачивается ни у какой строки, в РУС тоже; свои ползунки в ПУЛЬТе", ok: (function(){ try{ var a=document.getElementById("tcSlider"), b=document.getElementById("sbsSlider"), r=getComputedStyle(document.documentElement); if(!(a&&b&&r.getPropertyValue("--tcScale")&&r.getPropertyValue("--subScale"))) return false; var ln=document.querySelector("#lyricsWrap .line"); if(!ln) return false; var s=ln.querySelector(".sub"), t=ln.querySelector(".tc"); if(!s||!t) return false; var cs=getComputedStyle(s); if(cs.opacity!=="1"||cs.maxHeight==="0px") return false; if(!s.textContent.trim()) return false; return true; }catch(e){ return false; } })() },
-      { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)<2147483600) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
+      { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
   [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8].forEach(fn=>{
@@ -3129,7 +3129,7 @@ css.textContent = `
 #beatviz{position:fixed;inset:0;pointer-events:none;z-index:44;opacity:0;transition:opacity .14s ease-out;
   box-shadow:inset 0 0 90px 18px rgba(255,179,92,.45)}
 #beatviz.acc{box-shadow:inset 0 0 140px 34px rgba(255,109,94,.55)}
-#lamp{position:fixed;inset:0;z-index:76;display:none;cursor:pointer;background:#0d0a12}
+#lamp{position:fixed;inset:0;z-index:20;display:none;cursor:pointer;background:#0d0a12}
 #lamp.on{display:block}
 .lampcore{position:absolute;inset:0;transition:background 2.4s ease}
 .lampbreath{position:absolute;inset:-18%;
@@ -5593,7 +5593,7 @@ try{
   padCss.textContent = [
     "#authorTag:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px;border-radius:14px}",
     "[role=tabpanel]:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px}",
-    "#tagPad{position:fixed;z-index:2147483000;display:grid;grid-template-columns:repeat(3,46px);gap:4px;padding:8px;border-radius:14px;background:rgba(8,9,12,.94);border:1px solid rgba(222,169,104,.45);box-shadow:0 10px 34px rgba(0,0,0,.55)}",
+    "#tagPad{position:fixed;z-index:40;display:grid;grid-template-columns:repeat(3,46px);gap:4px;padding:8px;border-radius:14px;background:rgba(8,9,12,.94);border:1px solid rgba(222,169,104,.45);box-shadow:0 10px 34px rgba(0,0,0,.55)}",
     "#tagPad button{min-width:46px;min-height:46px;font:900 17px/1 Manrope,sans-serif;border-radius:10px;border:1px solid rgba(222,169,104,.35);background:rgba(255,255,255,.05);color:var(--text,#E8E4DA);cursor:pointer;padding:0}",
     "#tagPad button:hover{border-color:var(--amber,#DEA968)}",
     "#tagPad button:focus-visible{outline:3px solid var(--amber,#DEA968);outline-offset:2px}",
@@ -5912,7 +5912,7 @@ window.__HEALTH7 = ()=>[
     панель = document.createElement('div');
     панель.setAttribute('role','dialog');
     панель.setAttribute('aria-label','Пульт I-11: реестр параметров двери');
-    панель.style.cssText = 'display:none;position:fixed;right:12px;bottom:56px;z-index:2147483000;width:92vw;max-width:360px;background:rgba(18,20,24,.92);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:12px;box-shadow:0 12px 40px rgba(0,0,0,.6);font-family:Georgia,\'Times New Roman\',serif'; /* v10.1: min() мёртв на chrome76 → width+max-width */
+    панель.style.cssText = 'display:none;position:fixed;right:12px;bottom:56px;z-index:40;width:92vw;max-width:360px;background:rgba(18,20,24,.92);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:12px;box-shadow:0 12px 40px rgba(0,0,0,.6);font-family:Georgia,\'Times New Roman\',serif'; /* v10.1: min() мёртв на chrome76 → width+max-width */
     var шапка = document.createElement('div');
     шапка.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px';
     var заголовок = document.createElement('b');
@@ -5989,7 +5989,7 @@ window.__HEALTH7 = ()=>[
     к.type='button'; к.id='s31-пульт-кнопка';
     к.textContent='⌇ пульт I-11';
     к.title='Реестр параметров двери: посмотреть, править, откатить, выгрузить';
-    к.style.cssText = 'position:fixed;right:12px;bottom:14px;z-index:2147483000;background:rgba(18,20,24,.72);border:1px solid rgba(212,175,55,.35);border-radius:999px;color:#F0D78C;font:12px Georgia,serif;padding:4px 12px;cursor:pointer';
+    к.style.cssText = 'position:fixed;right:12px;bottom:14px;z-index:40;background:rgba(18,20,24,.72);border:1px solid rgba(212,175,55,.35);border-radius:999px;color:#F0D78C;font:12px Georgia,serif;padding:4px 12px;cursor:pointer';
     к.addEventListener('click', function(){ переключить(); });
     document.body.appendChild(к);
   }
@@ -6011,7 +6011,7 @@ html[data-rc="1"] .dock button{min-height:52px}
 /* v10.7: компактные окна ПУЛЬТа на ТВ сняты приказом владельца («СРАЗУ ВОВЕСЬ ЭКРАН») — панель всегда весь экран */
 html[data-rc="1"] dialog#panel .p-body{max-height:none}
 html[data-rc="1"] dialog#panel .p-body button,html[data-rc="1"] dialog#panel .p-body .sw{min-height:44px}
-#rcToast{position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:2147483600;background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
+#rcToast{position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:var(--z-toast,60);background:rgba(12,13,16,.9);color:#F5E9CF;border:1px solid rgba(212,175,55,.5);border-radius:12px;padding:10px 18px;font-size:17px;opacity:0;pointer-events:none;transition:opacity .2s}
 #rcToast.on{opacity:1}
 body[data-theme="kraft"] #rcToast,body[data-scene="day"] #rcToast,body[data-scene="kids"] #rcToast{background:#fffaf0;color:#33291d;border-color:#b8772366}
 #rcHelp{width:600px;max-height:86vh;overflow:auto;background:var(--panel2,#14161a);color:var(--text,#f3ead2);padding:20px}/* v10.1: min() мёртв — рост в sngAdaptStyle */
@@ -6234,7 +6234,7 @@ try{ if(window.matchMedia&&matchMedia('(hover: none)').matches&&matchMedia('(poi
 /* слои: верхний закрывается BACK первым (Android: предсказуемый BACK) */
 function topDialog(){ var d=D.querySelector('dialog[open]'); return d&&d.id!=='rcHelp'?d:null; }
 function helpD(){ return $('rcHelp'); }
-function regPanel(){ var p=D.querySelector('[role="dialog"][aria-label="Пульт I-11: реестр параметров двери"]'); return (p&&p.style.display!=='none')?p:null; }
+function regPanel(){ var p=D.querySelector('[data-panel="registry"]'); return (p&&p.style.display!=='none')?p:null; }
 function layer(){ if(helpD()&&helpD().open)return 'help'; if(topDialog())return 'dialog'; if(regPanel())return 'registry'; return null; }
 /* фокус-движок: spatial по W3C — вперёд по направлению, штраф за боковое отклонение, край — стоп */
 function vis(el){
@@ -6369,5 +6369,180 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
 })();
 </script>
 
+<style id="kv12style">
+/* ── С14 · АРБИТР v10.12 · T-03: шкала слоёв токенами (потолок 60; 0–9 — легальный внутрислоёвый порядок) ── */
+:root{--z-fund:10;--z-scene:20;--z-lines:30;--z-dock:40;--z-modal:50;--z-toast:60}
+/* ── T-01: единая типографика трёх строк — каждая точка sngAdaptStyle умножает токены на --fitK ── */
+@media (min-width:522px) and (max-width:1260px){.line{font-size:calc(4.6vw*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:1261px){.line{font-size:calc(58px*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:501px) and (max-width:1299px){body.biglyrics .line{font-size:calc(6vw*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:1300px){body.biglyrics .line{font-size:calc(78px*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:536px) and (max-width:1249px){body.giant .line{font-size:calc(5.6vw*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:1250px){body.giant .line{font-size:calc(70px*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:521px) and (max-width:1279px){body[data-scene="kids"] .line{font-size:calc(5vw*var(--lyrScale,1)*var(--fitK,1))}}
+@media (min-width:1280px){body[data-scene="kids"] .line{font-size:calc(64px*var(--lyrScale,1)*var(--fitK,1))}}
+/* T-01: кламп на контейнере, не на слайдерах */
+#lyricsWrap{overflow:hidden}
+</style>
+<script id="kv12script">
+/* ── С14 · АРБИТР v10.12 — П0-варка дорожной карты: T-01..T-06 + зерно T-15 ──
+   T-01 единая точка расчёта --fitK · T-02 контроллер вкладок · T-04 палитра над темой ·
+   T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
+(function(){
+"use strict";
+var D=document, root=D.documentElement, body=D.body, VER="v10.12";
+/* T-05: единая точка правды версий */
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv47"};
+
+/* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
+var TABKEY="kv12.tab";
+var tabs={tab:null,onchange:null,open:function(id){var b=D.querySelector('.p-tabs button[data-pt="'+id+'"]');if(b){b.click();return true;}return false;}};
+try{tabs.tab=localStorage.getItem(TABKEY);}catch(_){}
+D.addEventListener("click",function(e){
+  var t=e.target; if(!t||!t.closest)return;
+  var b=t.closest(".p-tabs button[data-pt]"); if(!b)return;
+  tabs.tab=b.getAttribute("data-pt");
+  try{localStorage.setItem(TABKEY,tabs.tab);}catch(_){}
+  if(typeof tabs.onchange==="function"){try{tabs.onchange(tabs.tab);}catch(_){}}
+},true);
+
+/* T-01: единая точка расчёта --fitK (ResizeObserver; формула С5 сохранена: кламп 0.5–1 на контейнере) */
+var wrap=D.getElementById("lyricsWrap"), ly=D.getElementById("lyrics");
+var fitTimer=0;
+function fit(){
+  if(!wrap||!ly)return;
+  if(fitTimer)return;
+  fitTimer=setTimeout(function(){ fitTimer=0;
+    try{
+      var avail=wrap.clientHeight||1, need=ly.offsetHeight||1;
+      var k=Math.max(0.5,Math.min(1,(avail*0.62)/need));
+      wrap.style.setProperty("--fitK",k.toFixed(3));
+    }catch(_){}
+  },60);
+}
+if(window.ResizeObserver){try{var ro=new ResizeObserver(fit);ro.observe(wrap);ro.observe(ly);}catch(_){}}
+window.addEventListener("resize",fit);
+try{new MutationObserver(fit).observe(root,{attributes:true,attributeFilter:["style"]});}catch(_){}
+try{new MutationObserver(fit).observe(ly,{childList:true,subtree:true});}catch(_){}
+setTimeout(fit,80); setTimeout(fit,700);
+
+/* T-04: палитра над темой — своя палитра ЛАБа остаётся явно, с бейджем и кнопкой сброса */
+var badge=null;
+function paletteBadge(){
+  var on=!!window.__LAB_COLORSON;
+  if(on&&!badge&&body){
+    badge=D.createElement("div"); badge.id="kv12palBadge"; badge.setAttribute("role","status");
+    badge.style.cssText="position:fixed;left:12px;bottom:14px;z-index:40;background:rgba(18,20,24,.92);border:1px solid rgba(212,175,55,.45);border-radius:999px;color:#F0D78C;font:12px Georgia,serif;padding:8px 12px;display:flex;gap:10px;align-items:center";
+    var s=D.createElement("span"); s.textContent="СВОЯ ПАЛИТРА АКТИВНА — ПОВЕРХ ТЕМЫ"; badge.appendChild(s);
+    var x=D.createElement("button"); x.textContent="СБРОСИТЬ"; x.setAttribute("type","button");
+    x.style.cssText="background:none;border:0;color:#DEA968;font:700 12px Georgia,serif;cursor:pointer;text-decoration:underline;padding:0";
+    x.addEventListener("click",function(){ if(window.__LAB&&window.__LAB.reset)window.__LAB.reset(); setTimeout(paletteBadge,120); if(window.__ALERT)window.__ALERT("Своя палитра сброшена — тема снова хозяин цвета"); });
+    badge.appendChild(x); body.appendChild(badge);
+  } else if(!on&&badge){ if(badge.parentNode)badge.parentNode.removeChild(badge); badge=null; }
+}
+D.addEventListener("click",function(){ setTimeout(paletteBadge,100); },true);
+setTimeout(paletteBadge,400);
+
+/* T-02/D-08: жёсткие data-panel-крючки для реестра слоёв */
+function tagRegistry(){
+  var p=D.querySelector('[aria-label="Пульт I-11: реестр параметров двери"]')||D.querySelector('dialog[aria-label*="реестр параметров"]');
+  if(p&&!p.getAttribute("data-panel"))p.setAttribute("data-panel","registry");
+  var pn=D.getElementById("panel"); if(pn&&!pn.getAttribute("data-panel"))pn.setAttribute("data-panel","pult");
+  return !!p;
+}
+if(!tagRegistry()){
+  try{
+    var mo=new MutationObserver(function(_m,o){ if(tagRegistry())o.disconnect(); });
+    mo.observe(body,{childList:true,subtree:true,attributes:true});
+  }catch(_){}
+  setTimeout(function(){ if(tagRegistry()&&mo)try{mo.disconnect();}catch(_){} },3000);
+}
+
+/* T-06: ЗДОРОВЬЕ — инвариант слоёв и вкладок */
+window.__HEALTH9=function(){
+  var bad=0,maxz=0,checked=0,off=[];
+  var all=D.querySelectorAll("*");
+  for(var i=0;i<all.length&&checked<4000;i++){
+    var el=all[i], st=null;
+    try{st=getComputedStyle(el);}catch(_){continue;}
+    if(!st||st.position==="static")continue;
+    var z=parseInt(st.zIndex,10); if(isNaN(z))continue;
+    checked++;
+    if(z>maxz)maxz=z;
+    if(z>60||z<0){bad++; if(off.length<5)off.push((el.id||el.tagName)+"="+z);}
+  }
+  var reg=!!D.querySelector('[data-panel="registry"]');
+  var tabBtns=D.querySelectorAll(".p-tabs button[data-pt]").length;
+  return {ok:(bad===0&&reg&&tabBtns>=6),z_max:maxz,z_violations:bad,checked:checked,registry_data_panel:reg,tabs:tabBtns,offenders:off,ver:VER};
+};
+/* С3 переопределяет window.__HEALTH при каждом запуске health() — арбитр переобёртывает с маркером */
+setInterval(function(){
+  try{
+    if(typeof window.__HEALTH!=="function"||window.__HEALTH.__kv12wrapped)return;
+    var prev=window.__HEALTH;
+    var w=function(){
+      var r=prev.apply(this,arguments);
+      try{
+        var kv=window.__HEALTH9();
+        var line="KV12 "+VER+": слои "+(kv.z_violations?("НАРУШЕНЫ("+kv.z_violations+")"):"в шкале (макс "+kv.z_max+")")+", реестр "+(kv.registry_data_panel?"data-panel":"нет")+", вкладки "+kv.tabs;
+        if(Object.prototype.toString.call(r)==="[object Array]")r.push(line);
+        else if(r&&typeof r==="object")r.kv12=line;
+      }catch(_){}
+      return r;
+    };
+    w.__kv12wrapped=true; window.__HEALTH=w;
+  }catch(_){}
+},1200);
+
+/* T-15 (зерно): телефон-пульт зала — BroadcastChannel, те же API, что и у движка */
+try{
+  var bc=new BroadcastChannel("kv-scene-v1");
+  var clampi=function(v,a,b){v=parseInt(v,10)||0;return Math.max(a,Math.min(b,v));};
+  function setScale(which,delta){
+    var id=which==="tc"?"tcSlider":(which==="sbs"?"sbsSlider":"lyrSlider");
+    var el=D.getElementById(id); if(!el)return false;
+    var lo=parseInt(el.getAttribute("min"),10)||40, hi=parseInt(el.getAttribute("max"),10)||250;
+    var v=clampi((parseInt(el.value,10)||100)+delta,lo,hi);
+    el.value=String(v); el.dispatchEvent(new Event("input",{bubbles:true})); return true;
+  }
+  function themeChip(k){ var b=D.querySelector('#themeChips button[data-theme-k="'+k+'"]'); if(b){b.click();return true;} return false; }
+  bc.onmessage=function(ev){
+    var m=ev&&ev.data; if(!m||m.t!=="kv12r")return;
+    var KV=window.__KV;
+    try{
+      if(m.cmd==="state"){
+        bc.postMessage({t:"kv12s",state:{
+          mode:(KV&&KV.state&&KV.state.mode)||null,
+          time:(KV&&KV.audio)?KV.audio.currentTime:null,
+          dur:(KV&&KV.audio)?KV.audio.duration:null,
+          scene:(window.__SCENE&&typeof window.__SCENE.idx==="number")?window.__SCENE.idx:null,
+          theme:(root.getAttribute("data-theme")||"warm"),
+          lyr:(D.getElementById("lyrSlider")||{}).value||null
+        }});
+        return;
+      }
+      var ok=false;
+      switch(m.cmd){
+        case "ping": ok=true; break;
+        case "toggle": if(KV&&KV.togglePlay){KV.togglePlay();ok=true;} break;
+        case "show": if(KV&&KV.startShow){KV.startShow();ok=true;} break;
+        case "bravo": if(KV&&KV.doClap){KV.doClap();ok=true;} break;
+        case "vol+": if(window.__VOL){window.__VOL.adjust(0.1);ok=true;} break;
+        case "vol-": if(window.__VOL){window.__VOL.adjust(-0.1);ok=true;} break;
+        case "seek+": if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime+15);ok=true;} break;
+        case "seek-": if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime-15);ok=true;} break;
+        case "scene": if(window.__SCENE&&window.__SCENE.set){window.__SCENE.set(m.arg);ok=true;} break;
+        case "theme": ok=themeChip(m.arg); break;
+        case "scale": ok=setScale(m.arg,(parseInt(m.delta,10)||10)); break;
+        case "pult": if(window.__PULT&&window.__PULT.open){window.__PULT.open();ok=true;} break;
+      }
+      bc.postMessage({t:"kv12ack",cmd:m.cmd,ok:ok});
+      if(ok&&m.cmd!=="ping"&&window.__ALERT)window.__ALERT("Пульт зала: "+m.cmd+(m.arg?" "+m.arg:""));
+    }catch(e){ try{bc.postMessage({t:"kv12ack",cmd:m.cmd,ok:false});}catch(_){}}
+  };
+  window.KV12={ver:VER,tabs:tabs,fit:fit,channel:bc,health:function(){return window.__HEALTH9();}};
+}catch(_){}
+})();
+</script>
 </body>
 </html>
