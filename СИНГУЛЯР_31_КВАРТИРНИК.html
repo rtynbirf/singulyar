@@ -30,7 +30,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.22 «ЦВЕТ» — RUVSON · «Просто люби» · палитры ЛАБа в OKLCH, контраст по APCA · КРЫША и шасси не тронуты</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.23 «ЗАЛ» — RUVSON · «Просто люби» · зал голосует и пускает волну (С20 поверх КРЫШЫ) · шасси не тронуты</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -4570,7 +4570,7 @@ window.__PULT = {
     var ст=document.querySelector(".sng-strip");
     if(ст && ст.dataset.верш!=="1" && !ст.querySelector(".sng-верш")){
       var b=document.createElement("b");
-      b.className="sng-верш"; b.textContent="· v10.22 «ЦВЕТ»";
+      b.className="sng-верш"; b.textContent="· v10.23 «ЗАЛ»";
       b.style.color="#F0D78C"; b.style.fontWeight="700"; b.style.letterSpacing=".4px"; b.style.whiteSpace="nowrap";
       ст.appendChild(b); ст.dataset.верш="1";
     }
@@ -6493,9 +6493,9 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.22";
+var D=document, root=D.documentElement, body=D.body, VER="v10.23";
 /* T-05: единая точка правды версий */
-window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv54"};
+window.APP={ver:VER,build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"),cache:"sw15-v1.36.1-kv55"};
 
 /* T-02: контроллер вкладок ПУЛЬТа — владелец состояния записи (все переключатели идут через DOM) */
 var TABKEY="kv12.tab";
@@ -7914,7 +7914,9 @@ if (roomArg){
     + '<div class="kv31-g-sheet" id="kv31gSheet"><div id="kv31gSheetBody"></div><button data-k="sheet-close">— закрыть —</button></div>';
     D.body.appendChild(g);
     if (window.__КРЫША) return;                    /* страховка */
-    window.__КРЫША = { ver: VER, role:'гость' };
+    window.__КРЫША = { ver: VER, role:'гость',
+  /* С20·ЗАЛ: гость голосует тем же каналом, что и рулит */
+  проголосовать: function(x){ try{ if(conn && conn.open){ conn.send({t:'kv31c', cmd:'vote', arg:String(x)}); return true; } }catch(_){} return false; } };
 
     var peer=null, conn=null, micCall=null, micOn=false;
     var stat = D.getElementById('kv31gStat');
@@ -7928,6 +7930,8 @@ if (roomArg){
           conn = peer.connect(roomArg, { reliable:true });
           conn.on('open', function(){ setStat('зал на связи ✓'); toastHello(); });
           conn.on('data', onState);
+          /* С20·ЗАЛ: новые слова зала — отдельным слушателем, руль КРЫШЫ не тронут */
+          conn.on('data', function(m){ try{ if(m && (m.t==='kv31v'||m.t==='kv31w'||m.t==='kv31x') && window.__ЗАЛ) window.__ЗАЛ.гостьСлушает(m); }catch(_){} });
           conn.on('close', function(){ setStat('зал ушёл'); });
         });
         peer.on('error', function(e){ setStat('нет связи: '+e.type); });
@@ -8145,6 +8149,8 @@ function onRemoteCmd(m, conn){
   try{
     switch(m.cmd){
       case 'ping': ok=true; break;
+      /* С20·ЗАЛ: голос гостя — в голосование (один голос с телефона) */
+      case 'vote': if(window.__ЗАЛ && window.__ЗАЛ.голос){ ok = !!window.__ЗАЛ.голос(m.arg, conn && conn.peer); } break;
       case 'toggle': if(KV&&KV.togglePlay){KV.togglePlay(); ok=true;} break;
       case 'show':   if(KV&&KV.startShow){KV.startShow(); ok=true;} break;
       case 'bravo':  if(KV&&KV.doClap){KV.doClap(); ok=true;} break;
@@ -8375,10 +8381,205 @@ window.__КРЫША = {
       peerjs: typeof window.Peer==='function', qrcode: typeof window.qrcode==='function'
     };
   },
-  align: whisperAlign, hostStart: hostStart, hostStop: hostStop
+  align: whisperAlign, hostStart: hostStart, hostStop: hostStop,
+  /* С20·ЗАЛ: мост для новых слов зала (голосование, волна) — КРЫША не переписана */
+  мост: {
+    разослать: function(m){ var n=0; S.conns.forEach(function(c){ try{ if(c.open){ c.send(m); n++; } }catch(_){} }); return n; },
+    сдать: function(){ return S.conns.filter(function(c){ return c.open; }).length; }
+  }
 };
 })();
 
 </script>
+<script id="zalScript">
+/* ═══════════════════════════════════════════════════════════════════════
+   С20 · ЗАЛ v10.23 — такт «ЗАЛ» поверх КРЫШЫ коллеги (П2/T-15 остаток)
+   ─────────────────────────────────────────────────────────────────────
+   КРЫША не переписана — только ведём: 4 добавки-моста в её файле помечены
+   «С20·ЗАЛ». Через мост идут два новых слова:
+     · ГОЛОСОВАНИЕ «что поём дальше» — список 61 песни фонда (каталог канала
+       вшит, офлайн). Гость голосует один раз, хозяин видит живой счёт и
+       вердикт зала. Плеер дома пока держит одну песню — это сказано честно:
+       вердикт подсказывает хозяину, что ставить следующим.
+     · БРАВО-ВОЛНА — хозяин пускает волну: телефоны зала вспыхивают и
+       хлопают по очереди (i×220 мс), сцена слышит перекат.
+   Один глобал наружу: window.__ЗАЛ. Закон I-11: реверс — «СНЯТЬ ЗАЛ».
+   ═══════════════════════════════════════════════════════════════════════ */
+(function(){
+"use strict";
+if (window.__ЗАЛ) return;
+var D = document;
+var VER = "v10.23 «ЗАЛ»";
+
+/* ── каталог фонда: 61 песня канала RUVSON (офлайн, вшито из ДАННЫЕ) ── */
+var КАТАЛОГ = [{"t": "Где настоящее", "v": "shs0TiOwx-M"}, {"t": "Свет в темноте ‣ Песня для тех кому сейчас тяжело", "v": "KFnJwNv008s"}, {"t": "Крик в тишине ‣ (Remix 2026) 🔉", "v": "KvzORszfsg8"}, {"t": "Цени моменты ‣ (Remix 2026) 🔉", "v": "EFaMUciH3Do"}, {"t": "А что если ДА ‣ (Remix 2026) 🔉", "v": "t9h3cCPCKoo"}, {"t": "А что если да", "v": "VfnGUIhaK2Y"}, {"t": "Я сам себе враг | Песня о внутренней борьбе", "v": "z3RcsfHajP8"}, {"t": "Живи как умеешь", "v": "Y7Wy_JBkz7A"}, {"t": "Когда ты удобен", "v": "X_-M_cjCFVg"}, {"t": "О чём мечтаешь ты", "v": "_gNbMCINv1Y"}, {"t": "В чём смысл - Трек который меняет взгляд на жизнь", "v": "n5IFJ-g1Rtc"}, {"t": "Там где ты - Трек о безусловной любви", "v": "vUb40twffCI"}, {"t": "Живи сейчас - Трек о жизни которую мы откладываем на по", "v": "fJwb931iJVg"}, {"t": "Твоё плавание не вечно (Official Music Video)", "v": "V-IaCbDUKao"}, {"t": "Меня не сломать — Песня о свободе духа в мире лжи", "v": "TkmSZp1dfBE"}, {"t": "Не спеши осуждать (Official Music Video)", "v": "pervLR9m-vk"}, {"t": "Нас учат потери — Трек о том, что делает нас Сильнее", "v": "pv3GAlLG9Lk"}, {"t": "Не вам жить мою жизнь (Official Music Video)", "v": "2g5n6B0bc2Q"}, {"t": "Сборник Музыки со Смыслом 🎶 песни, в которых узнаешь себ", "v": "Qb8xb0vUYDg"}, {"t": "Я сам себе судья", "v": "1BZs_wUPn1s"}, {"t": "Тень ушедших - Трек о тех кто не с нами (Lyric Video)", "v": "lkXLeITEtGA"}, {"t": "Вне зоны доступа - Песня о внутренней пустоте и одиночес", "v": "eA-fyeSkavI"}, {"t": "Не теряй шанс — Трек о упущенных моментах и времени кото", "v": "WMU46n--Z-s"}, {"t": "Действуй сейчас - Трек который заставит тебя НАЧАТЬ", "v": "LCADfnI8F-s"}, {"t": "Просто люби - Песня о том что делает нас настоящими", "v": "9ys_TVEtda8"}, {"t": "Код перемен - Трек о реальности которая ломает правила", "v": "eOMrrezWEZM"}, {"t": "Компас на Дом (Official Audio)", "v": "JRTUNak53nU"}, {"t": "Начать сначала - Трек который мотивирует не сдаваться", "v": "ahmGGM-P0CA"}, {"t": "Остаться человеком (Remix Version)", "v": "PIyWwF0t4wQ"}, {"t": "Ангел без крыльев (Lyric Video)", "v": "kziwaat2nu4"}, {"t": "Всё начинается с тебя (Official Audio)", "v": "_PCJ6fMfeRM"}, {"t": "Оставайся молодым - Песня-послание именно для тебя", "v": "POiQQ21I5n0"}, {"t": "Разгадка в небесах ‣ Песня о вопросах на которые нет отв", "v": "6woWDYcu1QY"}, {"t": "А время капает (Remix) ‣ Музыка со смыслом", "v": "HupAWAt7CmQ"}, {"t": "Время как вода - Песня о ценности времени", "v": "YaY-ZJVXFjI"}, {"t": "Не играй в любовь ‣ Песня о том как игра в любовь разруш", "v": "8zG2LBAn1AI"}, {"t": "Цени моменты - трек который заставляет задуматься | Музы", "v": "R0SOJreGbhM"}, {"t": "Когда погаснут огни - Трек о том что важно в жизни", "v": "X90mDPOhvKc"}, {"t": "Смысл жизни прост - Песня о смысле жизни и ценности кажд", "v": "KfKHWdiX3S4"}, {"t": "Пленники прошлого ‣ Песня о том как прошлое влияет на на", "v": "yK2aPehxmK8"}, {"t": "Гордость нас убивает - Песня о гордости которая разрушае", "v": "GB31hcDi3lo"}, {"t": "Не жди завтра - Песня о жизни которую мы откладываем", "v": "d2b72nYLiT8"}, {"t": "Одиночество среди людей ‣ Песня о внутреннем одиночестве", "v": "LqMrrKqK3AE"}, {"t": "Вера остаётся ‣ Песня о вере живущей внутри нас", "v": "G7L2d0Z5xfY"}, {"t": "Суть проста ‣ Песня о том что важно в жизни", "v": "8RRRYysSIHg"}, {"t": "Страх не слабость ‣ Песня о принятии страха", "v": "WIrhIrDQvwY"}, {"t": "Когда Теряем - трек о настоящих ценностях", "v": "TRcxZ7jfPsA"}, {"t": "Остаться человеком ‣ Песня о человечности", "v": "TobJGYOPlnw"}, {"t": "Ты одна дала - Песня о настоящей любви", "v": "_KwlGQNmC1Q"}, {"t": "Ты Главный игрок ‣ Песня о жизни без иллюзий", "v": "b_36rlzEIKk"}, {"t": "Жизнь не прощает - Песня о суровой правде жизни", "v": "QpeYJU83XiQ"}, {"t": "Неудача — не конец ‣ Песня о тех кто не сдался", "v": "q57MLk0Uf9c"}, {"t": "Не тех мы ценим ‣ Песня о тех кто рядом", "v": "cFHsQ-LP3ns"}, {"t": "Время покажет ‣ Музыка для размышлений", "v": "gMASVVNFr_A"}, {"t": "Тишина спасает ‣ Музыка для души", "v": "_E91VEQ-8lM"}, {"t": "Бой с собой - RUVSON | Музыка для души", "v": "ugjp6iaNplo"}, {"t": "Сердце в Огне ‣ Музыка для души", "v": "VwoK5U0qOys"}, {"t": "Дорога мой Учитель - Трек который вдохновляет | Музыка ", "v": "OHaRQj9PLUY"}, {"t": "Не Угасай — трек который цепляет | Музыка для души", "v": "MSqK5ig-alE"}, {"t": "Люди в Масках - Песня о фальшивых людях  | Музыка для ду", "v": "M9o3ZIlhHrU"}, {"t": "Цени время — трек который заставляет задуматься | Музыка", "v": "pP3Kk2_FHbE"}];
+
+function эл(tag, cls, html){ var e=D.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+function эк(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function сказать(t){ try{ if(window.__ALERT) window.__ALERT(t, { мирно:true }); }catch(e){} }
+
+/* ── состояние ── */
+var Г = { открыто:false, голоса:{}, кто:{}, всего:0, лист:[] };
+
+/* ── ХОЗЯИН ── */
+function карточка(){
+  var панель = D.getElementById('kv31panel');
+  if(!панель || D.getElementById('kv31zalCard')) return;
+  var к = эл('div', 'kv31-card'); к.id = 'kv31zalCard';
+  к.innerHTML = ''
+  + '<b>С20 · ЗАЛ '+VER+'</b> — голосование и волна зала<br>'
+  + '<span style="font-size:12px;color:#c9a05a">Плеер дома держит одну песню — зал голосует, что ставить следующим. Каталог фонда: '+КАТАЛОГ.length+' песен.</span>'
+  + '<div style="display:flex;gap:8px;margin:8px 0 4px;flex-wrap:wrap">'
+  + '<button type="button" id="kv31zOpen">ГОЛОСОВАНИЕ · ОТКРЫТЬ</button>'
+  + '<button type="button" id="kv31zWave">БРАВО-ВОЛНА</button>'
+  + '<button type="button" id="kv31zClose">ВЕРДИКТ</button>'
+  + '</div>'
+  + '<div id="kv31zTally" class="kv31-log">Голосование не открыто.</div>';
+  панель.appendChild(к);
+  D.getElementById('kv31zOpen').addEventListener('click', открыть);
+  D.getElementById('kv31zWave').addEventListener('click', волна);
+  D.getElementById('kv31zClose').addEventListener('click', вердикт);
+}
+function счётТекст(){
+  var пары = Object.keys(Г.голоса).map(function(инд){ return [parseInt(инд,10), Г.голоса[инд]]; });
+  пары.sort(function(a,b){ return b[1]-a[1]; });
+  if(!пары.length) return 'Голосов пока нет — зал молчит.';
+  return пары.slice(0,8).map(function(п){
+    var т = КАТАЛОГ[п[0]] ? КАТАЛОГ[п[0]].t : '?';
+    return '· '+п[1]+' гол. — '+эк(т);
+  }).join('\n');
+}
+function перерисовать(){
+  var т = D.getElementById('kv31zTally');
+  if(т) т.textContent = (Г.открыто ? 'ГОЛОСОВАНИЕ ОТКРЫТО ('+Г.всего+' телефонов):\n' : 'ВЕРДИКТ:\n') + счётТекст();
+}
+function разослать(m){
+  var К = window.__КРЫША;
+  if(К && К.мост && К.мост.разослать) return К.мост.разослать(m);
+  return 0;
+}
+function открыть(){
+  if(!window.__КРЫША || window.__КРЫША.role!=='хозяин'){ сказать('КРЫША не стоит — зал не собран.'); return; }
+  Г.открыто = true; Г.голоса = {}; Г.кто = {};
+  var дошло = разослать({ t:'kv31v', список: КАТАЛОГ });
+  перерисовать();
+  сказать('Зал голосует: список ушёл '+дошло+' телефонам.');
+}
+function голос(инд, идГостя){
+  инд = parseInt(инд,10);
+  if(!Г.открыто || !(инд>=0 && инд<КАТАЛОГ.length)) return false;
+  if(идГостя && Г.кто[идГостя] !== undefined) return false;   /* один человек — один голос */
+  if(идГостя) Г.кто[идГостя] = инд;
+  Г.голоса[инд] = (Г.голоса[инд]||0)+1;
+  перерисовать();
+  return true;
+}
+function лидер(){
+  var лучший = -1, сч = 0;
+  Object.keys(Г.голоса).forEach(function(инд){
+    if(Г.голоса[инд] > сч){ сч = Г.голоса[инд]; лучший = parseInt(инд,10); }
+  });
+  return лучший;
+}
+function вердикт(){
+  Г.открыто = false;
+  var л = лидер();
+  var имя = (л>=0 && КАТАЛОГ[л]) ? КАТАЛОГ[л].t : '—';
+  разослать({ t:'kv31x', имя: имя });
+  перерисовать();
+  сказать('Вердикт зала: '+имя+'. Хозяин ставит следующим.');
+}
+function волна(){
+  var К = window.__КРЫША;
+  var телефоны = (К && К.мост && К.мост.сдать) ? К.мост.сдать() : 0;
+  разослать({ t:'kv31w' });
+  вспышкаХозяина();
+  сказать('БРАВО-ВОЛНА пошла по залу ('+телефоны+' телефонов).');
+}
+function вспышкаХозяина(){
+  try{
+    var ф = эл('div'); ф.style.cssText = 'position:fixed;inset:0;z-index:2147483760;background:radial-gradient(80% 60% at 50% 100%,rgba(255,217,138,.35),transparent 70%);pointer-events:none;transition:opacity .8s';
+    D.body.appendChild(ф);
+    setTimeout(function(){ ф.style.opacity = '0'; }, 60);
+    setTimeout(function(){ ф.remove(); }, 900);
+  }catch(e){}
+}
+function слушайЗал(){
+  var панель = D.getElementById('kv31panel');
+  if(панель) карточка();
+  else setTimeout(слушайЗал, 1200);
+}
+
+/* ── ГОСТЬ ── */
+function листГостя(m){
+  var дом = D.getElementById('kv31guest'); if(!дом) return;
+  var ш = D.getElementById('kv31zSheet');
+  if(!ш){
+    ш = эл('div', 'kv31-g-sheet'); ш.id = 'kv31zSheet';
+    ш.innerHTML = '<div style="max-width:520px;max-height:78vh;overflow:auto;padding:18px">'
+    + '<b style="color:#ffd98a">ЧТО ПОЁМ ДАЛЬШЕ?</b><div style="font-size:12px;color:#c9a05a;margin:6px 0 10px">Один голос от телефона. Вердикт покажут на сцене.</div><div id="kv31zList"></div></div>';
+    дом.appendChild(ш);
+  }
+  var л = ш.querySelector('#kv31zList'); л.innerHTML = '';
+  (m.список||[]).forEach(function(п, инд){
+    var б = эл('button', null, эк(инд+1)+'. '+эк(п.t||''));
+    б.addEventListener('click', function(){
+      var К = window.__КРЫША;
+      var ок = К && К.проголосовать && К.проголосовать(инд);
+      ш.classList.remove('open');
+      сказать(ок ? 'Голос принят: '+п.t : 'Голос не ушёл — связи нет.');
+    });
+    л.appendChild(б);
+  });
+  ш.classList.add('open');
+}
+function волнаГостя(){
+  try{ if(navigator.vibrate) navigator.vibrate([60,80,60]); }catch(e){}
+  var ф = эл('div'); ф.id = 'kv31zSplash'; ф.style.cssText = 'position:fixed;inset:0;z-index:2147483770;background:radial-gradient(90% 70% at 50% 100%,rgba(255,217,138,.5),transparent 75%);pointer-events:none;display:flex;align-items:flex-end;justify-content:center;transition:opacity .7s';
+  ф.innerHTML = '<div style="font-size:12vw;font-weight:800;color:#ffd98a;text-shadow:0 4px 30px rgba(0,0,0,.6);padding-bottom:18vh">БРАВО!</div>';
+  D.body.appendChild(ф);
+  setTimeout(function(){ ф.style.opacity = '0'; }, 700);
+  setTimeout(function(){ ф.remove(); }, 1500);
+}
+function гостьСлушает(m){
+  try{
+    if(m.t === 'kv31v') листГостя(m);
+    else if(m.t === 'kv31w') волнаГостя();
+    else if(m.t === 'kv31x') сказать('Вердикт зала: '+(m.имя||'—'));
+  }catch(e){}
+}
+
+/* ── здоровье ── */
+function health(){
+  return {
+    ok: true, вер: VER,
+    голосование: Г.открыто ? 'открыто' : 'закрыто',
+    голосов: Object.keys(Г.голоса).reduce(function(s,k){ return s+Г.голоса[k]; }, 0),
+    каталог: КАТАЛОГ.length
+  };
+}
+
+/* ── выхлоп ── */
+window.__ЗАЛ = {
+  ver: VER,
+  голос: голос, гостьСлушает: гостьСлушает,
+  открыть: открыть, вердикт: вердикт, волна: волна,
+  health: health
+};
+try{
+  if(window.KV12 && KV12.health && !KV12.health.__зал){
+    var __kh = KV12.health;
+    KV12.health = function(){
+      var r = __kh.apply(this, arguments);
+      try{ r.зал = window.__ЗАЛ.health(); }catch(e){ }
+      return r;
+    };
+    KV12.health.__зал = true;
+  }
+}catch(e){ }
+слушайЗал();
+})();
+</script>
+
 </body>
 </html>
