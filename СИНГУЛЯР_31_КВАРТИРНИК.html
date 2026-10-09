@@ -5,8 +5,12 @@
      cdn.jsdelivr.net (PeerJS уже вшит, transformers.js едет с CDN),
      wss:/https: (сигналинг зала + модели Whisper с HF),
      blob:-воркер и wasm-unsafe-eval (инференс ONNX в браузере) -->
-<!-- такт v10.17 «СТРОЙ»: четвёртая дверь — blob: в script-src, точечно под AudioWorklet YIN (модуль стро́я вшит в файл) --> <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self' blob:; manifest-src 'self'; connect-src 'self' wss: https:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- такт v10.17 «СТРОЙ»: четвёртая дверь — blob: в script-src, точечно под AudioWorklet YIN (модуль стро́я вшит в файл) -->
 <meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' sha256-+eJloWimsU/gE75CmUbPIlRWHnNfFvUgshC/s7IJ+Iw= sha256-1m2zn/ysAjsTEih9n+rTjjAVgxXPaLIqVoYWUPtQmJ0= sha256-3lTshPRqSX5wiA5c9wR9RI9GdleUlQNjPIEMOd0YKi4= sha256-5kTZoN/FGqJ9GLwP22iPqkJsrDskAs/7D75a049O4bI= sha256-8CQsltqfPhbjNTe+HS12tjYDRrE+bGSuxGQPURBjQLA= sha256-8qvOiTYXkd9rz8Zo+21FrvOm7xkIDNKcUTePaeyEGsU= sha256-IK9yYWZ4VcLpEfJ6PPDY3pVSyiCnzzLRr4+EDIzEz+M= sha256-IZ41P/8Ce9hQ+rfkEwF8qLz78gi4dI7MhihI3FXl074= sha256-Ir8H+T5S1sDe+9jrRuNoSJO9Gk1Bd2dsbIdE+ltVnng= sha256-PsTP5mPcxbFJNwS2a6x7+4hzIpjPgbMqhF58O6e8RPo= sha256-Pv68ehFiYcKYUwzOaR3re6hvNYJRtVCsCjcg+12+ONo= sha256-VlXp1FXgfIf1jpQeCBTuS+9nrKMd/9ppywdTOMkrMac= sha256-XdMXCv4o0xR8VJLN1ek2d5Kt/MzMOjBO4MNH0km2W08= sha256-a/i+eMXhI4YTfYOGPiEgNM2h+8N6sl4fq/JlTrT0qfg= sha256-asJUuRuYeIX7vNk7Pw/NTsy61H3slK3LPyeeZ/zB03E= sha256-askeFc9My+ejprY68Dj+NS/AhoyinO+Mhcj8JkLEVvU= sha256-bPZZ4imiavMgmKit+6XyQ6ujjUGpSWbFDYDmw0/LVxo= sha256-cUUsrCec8pgw4xHfEvr+Azeg2pLIvYBDzrL5fGRcAZ8= sha256-e+5wNPUe+43lxNjQYsX1Zv33ED9Cf2O8t8BMHAkfR48= sha256-kLyVjXZ980MH0Vk/7FWBQmjk2XUCrdS3ThREGEbHdto= sha256-vJJdzdsIOEXQtJz8ovHB32meiXwVgoiyTqA+W3SMlnY= sha256-w2j7rhv3AnZRi3kzzXCOFhKSsyrm7CSQcchT+lAOZAY= sha256-wi6n/YrNHbdJUNLS0IfJTraw5095AiA1ubKzHbf+MWs= sha256-xxy1KKfGm0+ONWWMvpgPZWvMX55KAtye1OnFyvjAlJQ= sha256-yDKc+344wp5F/IJeY65XNSVjFdSCk2fs3weD0WjaZMM= https://cdn.jsdelivr.net 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.hf.co https://translate.googleapis.com wss:">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда: void + стекло-осколки + золото;
      ICO — для ТВ-Chromium 76 (SVG-фавиконы он не знает), SVG — для свежих, PNG — для старых движков -->
@@ -7919,7 +7923,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.29', такт:'ОЧЕРЕДЬ', кэш:'s15-orkestrator-v87', стр:'2026-10-09', ver:'v10.29 «ОЧЕРЕДЬ»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v87' };
+window.APP = { v:'10.30', такт:'ЭМЕРДЖЕНТ', кэш:'s15-orkestrator-v88', стр:'2026-10-09', ver:'v10.30 «ЭМЕРДЖЕНТ»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v88' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}

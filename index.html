@@ -4,12 +4,16 @@
 <!--СНГ:КОРД--> страховочный корд дома — общий файл: <script src="./cord.js"></script><!--/СНГ:КОРД-->
 
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' sha256-1keHZEFQu5Q742cepYOq1UIA/MPfXfVGq+adDUmt35A= sha256-LpLrHFk1VqfynL+0YVF6GglzaFwuP/dmvlH8ED26p2Y= sha256-XZUlkvATD9bOYvdV1O+ndRWKMk8dHyl1CdMM+3wcap0= sha256-bPZZ4imiavMgmKit+6XyQ6ujjUGpSWbFDYDmw0/LVxo= sha256-fL3bs0mIF/dhMTbX7vLThnaU6IuFNo7YMJv/ocPlhnY=; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР — суверенный караоке-дом · поёт без сети</title>
-<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: 23 двери, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
+<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: 27 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/">
 <meta property="og:title" content="СИНГУЛЯР — суверенный караоке-дом">
-<meta property="og:description" content="23 двери, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек.">
+<meta property="og:description" content="27 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
@@ -84,7 +88,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.45))}
 .нить[open] .нить-слово{color:var(--dim)}
 @keyframes нить-пульс{0%,100%{opacity:.55;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
-/* ── ДОМ (внутри нити): 23 двери ── */
+/* ── ДОМ (внутри нити): 27 дверей ── */
 #дом{padding:6px 0 26px;text-align:center;animation:дом-явь .5s ease both}
 @keyframes дом-явь{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #дом h2{font-size:19px;margin:0 0 8px;border:0}
@@ -190,7 +194,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
         <input type="search" id="ариаднаВвод" class="ариадна-ввод" placeholder="спроси дом: дверь, песня, слово"
                aria-label="Поиск по дому: дверь, песня, документ" enterkeyhint="search"
                autocomplete="off" spellcheck="false">
-        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — из 23 дверей, 62 песен фонда и документов. Ноль сети, ответ мгновенный и местный.">⌕</button>
+        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — из 27 дверей, 62 песен фонда и документов. Ноль сети, ответ мгновенный и местный.">⌕</button>
       </span>
       <span class="пульт-разделитель" aria-hidden="true"></span>
       <span class="пульт-группа" role="group" aria-label="Сквозная навигация по дому">
@@ -211,7 +215,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
     <p class="aio-sub">Ambient Intent Organism</p>
     <div class="подчерк" aria-hidden="true"><i></i></div>
     <p class="motto">Смысл один. Представление — твоё.</p>
-    <p class="тихо-подсказка" style="margin-top:2px">23 двери · 62 песни · 157 языков</p>
+    <p class="тихо-подсказка" style="margin-top:2px">27 дверей · 62 песни · 157 языков</p>
     <div class="obj-row">
       <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
       <a class="obj-chip" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">◇ Установить дом — 2 минуты</a>
@@ -235,12 +239,12 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   
 
   <details id="модули" class="нить" hidden>
-    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 23 дверей">
+    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 27 дверей">
       <span class="нить-линия" aria-hidden="true"></span>
       <span class="нить-слово">⌇ нить Ариадны</span>
     </summary>
     <div id="дом">
-      <h2>Дом <em>23 двери · каждая автономна</em></h2>
+      <h2>Дом <em>27 дверей · каждая автономна</em></h2>
       <p class="дом-тихо">Возможность предоставлена — путь человек находит сам. Дверь открывается по нити, не по указанию.</p>
       <nav id="двери" class="двери" aria-label="Двери дома СИНГУЛЯР"></nav>
     </div>
@@ -368,7 +372,7 @@ try{
    СДЕЛАЙ ВМЕСТО ПРОИГРЫВАТЕЛЯ ПОИСКОВУЮ СТРОКУ И НАУЧИ НАШЕГО ПОДОПЕЧНОГО
    ЕЁ ЮЗАТЬ». Эмерджентный синтез мировых практик поиска (намерение →
    источники → честная неопределённость) с канонами дома: ищет ПО ДОМУ —
-   23 двери, 62 песни фонда, документы. Ноль сети, ноль innerHTML,
+   27 дверей, 62 песни фонда, документы. Ноль сети, ноль innerHTML,
    ноль эмодзи; всё в try — АРИАДНА не имеет права уронить лицо.
    Музыка никуда не ушла: она живёт в дверях ·15 ·16 ·18 ·32. */
 (function(){
@@ -402,7 +406,11 @@ try{
     { ид:'s31', номер:'·31', имя:'КВАРТИРНИК', файл:'СИНГУЛЯР_31_КВАРТИРНИК.html' },
     { ид:'s32', номер:'·32', имя:'СЦЕНА', файл:'СИНГУЛЯР_32_СЦЕНА.html' },
     { ид:'s33', номер:'·33', имя:'ФОНД', файл:'СИНГУЛЯР_33_ФОНД.html' },
-    { ид:'s34', номер:'·34', имя:'ДОМ ФОНДА', файл:'СИНГУЛЯР_34_ДОМ_ФОНДА.html' }
+    { ид:'s34', номер:'·34', имя:'ДОМ ФОНДА', файл:'СИНГУЛЯР_34_ДОМ_ФОНДА.html' },
+    { ид:'s35', номер:'·35', имя:'ВОПРОСЫ', файл:'СИНГУЛЯР_35_ВОПРОСЫ.html' },
+    { ид:'s36', номер:'·36', имя:'СЛОВАРЬ', файл:'СИНГУЛЯР_36_СЛОВАРЬ.html' },
+    { ид:'s37', номер:'·37', имя:'О ДОМЕ', файл:'СИНГУЛЯР_37_О_ДОМЕ.html' },
+    { ид:'s38', номер:'·38', имя:'ПУЛЬС', файл:'СИНГУЛЯР_38_ПУЛЬС.html' }
     ];
     var ПЕСНИ=[
     ["1BZs_wUPn1s","Я сам себе судья"],
@@ -491,7 +499,11 @@ try{
       s31:['квартирник','здоровье','томограф','страховка','диагностика','проверка','живой запуск'],
       s32:['сцена','караоке','петь','поёт','поет','пение','песня','песни','музыка','очки','темп','минусовка','спеть'],
       s33:['фонд','общак','деньги','биткоин','btc','монета','пожертвовать','донат','поддержать','сатоши','баланс','цепь','кошелёк дома','кошелек дома'],
-      s34:['дом фонда','хелена','келлер','кесслер','keller','устав','хартия','права жертвователя','независимость','наследие','миссия','наш фонд']
+      s34:['дом фонда','хелена','келлер','кесслер','keller','устав','хартия','права жертвователя','независимость','наследие','миссия','наш фонд'],
+      s35:['вопрос','вопросы','ответы','faq','спросить','частые вопросы','как установить','почему'],
+      s36:['словарь','глоссарий','термин','термины','что такое','значение','определение'],
+      s37:['о доме','о проекте','что это','для кого','объясни','введение','с чего начать','попробовать'],
+      s38:['пульс','версии','реестр','кэш','обновление','статус','здоровье дома','диагностика дома']
     };
     var ДОКИ=[
       {файл:'ДОКУМЕНТАЦИЯ.html',номер:'¶',имя:'Документация дома',ключи:['документация','инварианты','доки','тесты','код','i-01','i-11']},
