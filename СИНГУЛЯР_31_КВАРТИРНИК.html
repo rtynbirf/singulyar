@@ -27,13 +27,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.25 «ЭТАЛОН» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.27 «ЭТАЛОН» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.25 «ЭТАЛОН» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.27 «ЭТАЛОН» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -45,8 +45,7 @@
   --bg:#050608; --panel:#17181A; --panel2:#101113;
   --text:#BABAB9; --dim:#A7A8A8; --faint:#9B9B9B;
   --amber:#DEA968; --coral:#F5A623; --mint:#FEE29F; --lilac:#A7A8A8; --gold:#FEE29F;
-  --red:#FF8A3C;
-  --ink-on-accent:#050608; --toast-bg:#101113f2; --toast-fg:#f4f6f8;
+  --red:#FF8A3C; --ink-on-accent:#050608; --toast-bg:#101113f2; --toast-fg:#BABAB9;
   --s0:#FEE29F; --s1:#F5A623; --s2:#DEA968; --s3:#E8B84A; --s4:#C98A3C; --s5:#A8742E; --s6:#BABAB9; --s7:#9B9B9B;
   --lyr:#8A8A88;
   --r:22px;
@@ -124,7 +123,7 @@ body[data-mode="bravo"] #bravo{display:flex}
 .tbtn{padding:9px 15px;border-radius:14px;background:#ffffff0c;border:1px solid #ffffff14;
   font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--dim);transition:.2s}
 .tbtn:hover{color:var(--text);background:#ffffff17}
-.tbtn.on{color:var(--ink-on-accent);background:var(--amber);border-color:transparent}
+.tbtn.on{color:var(--ink-on-accent,#050608);background:var(--amber);border-color:transparent}
 .chip{padding:9px 14px;border-radius:14px;background:#ffffff0c;border:1px solid #ffffff14;
   font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mint)}
 .chip.is-bad{color:var(--red)}
@@ -159,7 +158,7 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
   background:#ffffff0a;border:1px solid #ffffff14;font-size:12.5px;font-weight:800;letter-spacing:.06em}
 .singers .sc i{width:11px;height:11px;border-radius:50%;flex:none}
 .big{margin-top:4px;padding:19px 46px;border-radius:999px;font-size:19px;font-weight:900;letter-spacing:.04em;
-  color:var(--ink-on-accent);background:linear-gradient(135deg,var(--amber),var(--coral));
+  color:var(--ink-on-accent,#050608);background:linear-gradient(135deg,var(--amber),var(--coral));
   box-shadow:0 10px 44px rgba(222,169,104,.25),0 2px 0 #ffffff55 inset;transition:.2s}
 .big:hover{transform:translateY(-2px);box-shadow:0 16px 54px rgba(222,169,104,.38),0 0 24px rgba(222,169,104,.22)}
 .big:active{transform:translateY(0) scale(.98)}
@@ -208,7 +207,7 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
 .modes{display:flex;gap:6px;margin:0 auto}
 .modes button{padding:8px 14px;border-radius:12px;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   color:var(--faint);background:#ffffff08;border:1px solid #ffffff10;transition:.2s}
-.modes button.on{color:var(--ink-on-accent);background:var(--mint);border-color:transparent}
+.modes button.on{color:var(--ink-on-accent,#050608);background:var(--mint);border-color:transparent}
 /* v10.10 «ОДИН СЛОЙ» (приказ владельца): колонка текста — один слой изображения для всех трёх ползунков
    (титры/транскрипция/оригинал), САМЫЙ ВЕРХНИЙ всегда (выше тостов z6, трассера z44 и бирок; ниже только
    ПУЛЬТа — нативный top layer — и системного тоста) и занимает больше экрана: полосы 2px/6px вместо 16/24 */
@@ -246,7 +245,7 @@ html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:no
 
 /* ───── тосты ───── */
 .toast{position:fixed;bottom:10px;left:50%;transform:translate(-50%,-16px);z-index:var(--z-toast,60);pointer-events:none;/* v10.10: выше колонки-слоя, чтобы тост всегда читался */
-  background:var(--toast-bg);border:1px solid rgba(222,169,104,.23);color:var(--toast-fg);padding:15px 26px;border-radius:18px;
+  background:var(--toast-bg,#101113f2);border:1px solid rgba(222,169,104,.23);color:var(--toast-fg,#BABAB9);padding:15px 26px;border-radius:18px;
   font-size:15.5px;font-weight:700;letter-spacing:.02em;box-shadow:0 14px 50px #00000070,inset 0 1px 0 rgba(240,240,248,.06);
   opacity:0;transition:.45s;max-width:520px;text-align:center}/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -267,7 +266,7 @@ html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:no
 .round{width:56px;height:56px;border-radius:50%;flex:none;background:#ffffff0e;border:1px solid #ffffff1a;
   font-size:19px;font-weight:900;transition:.15s}
 .round:hover{background:#ffffff1a}
-.round.bigplay{width:70px;height:70px;font-size:23px;color:var(--ink-on-accent);background:linear-gradient(135deg,var(--amber),var(--coral));
+.round.bigplay{width:70px;height:70px;font-size:23px;color:var(--ink-on-accent,#050608);background:linear-gradient(135deg,var(--amber),var(--coral));
   box-shadow:0 8px 30px rgba(222,169,104,.3)}
 .round.bigplay:hover{filter:drop-shadow(0 0 16px rgba(222,169,104,.35))}
 .round.bigplay:active{transform:scale(.94)}
@@ -283,8 +282,8 @@ html[data-motion="off"] .countdown b.tick{animation:none;opacity:.9;transform:no
 .tlsec:hover span,.tlsec.on span{opacity:1}
 .ttime{font-size:12px;color:var(--dim);font-weight:700;letter-spacing:.04em;text-align:right;margin-top:6px}
 .clap{display:flex;flex-direction:column;align-items:center;gap:1px;padding:13px 30px;border-radius:999px;flex:none;
-  font-weight:900;font-size:16px;letter-spacing:.12em;color:var(--ink-on-accent);
-  background:linear-gradient(135deg,var(--coral),var(--gold));box-shadow:0 8px 32px rgba(222,169,104,.28);transition:.12s}
+  font-weight:900;font-size:16px;letter-spacing:.12em;color:var(--ink-on-accent,#050608);
+  background:linear-gradient(135deg,var(--coral),var(--amber));box-shadow:0 8px 32px rgba(222,169,104,.28);transition:.12s}
 .clap small{font-size:10px;letter-spacing:.18em;opacity:.75}
 .clap:active{transform:scale(.92)}
 .clap.flash{animation:clapf .35s ease}
@@ -324,7 +323,7 @@ dialog:modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);marg
 .micbtns button{padding:12px 22px;border-radius:14px;font-weight:800;font-size:13.5px;letter-spacing:.06em;
   background:#ffffff0e;border:1px solid #ffffff18;transition:.2s}
 .micbtns button:hover{background:#ffffff18}
-.micbtns .go{color:var(--ink-on-accent);background:var(--mint);border-color:transparent}
+.micbtns .go{color:var(--ink-on-accent,#050608);background:var(--mint);border-color:transparent}
 .micbtns .go:disabled{opacity:.4;cursor:default}
 
 /* полный экран лирики */
@@ -429,14 +428,14 @@ body[data-theme="neon"]:not([data-scene="kids"]):not([data-scene="romance"]):not
   --bg:#08070A;--panel:#141215;--panel2:#1A171A;--text:#FFF3E4;--dim:#C9B092;--faint:#8A7A66;
   --amber:#FFB03A;--coral:#FF7E32;--mint:#FEE29F;--lilac:#D9B48A;--gold:#FEE29F;--lyr:#8A7A66}
 body[data-theme="mono"]:not([data-scene="kids"]):not([data-scene="romance"]):not([data-scene="day"]){
-  --bg:#101012;--panel:#17171a;--panel2:#1c1c20;--text:#f2f2f0;--dim:#a8a8a4;--faint:#8b8b87;
+  --bg:#101012;--panel:#17171a;--panel2:#1c1c20;--text:#f2f2f0;--dim:#a8a8a4;--faint:#8a8a86;
   --amber:#e8e6df;--coral:#c9c7c0;--mint:#e8e6df;--lilac:#b5b3ac;--gold:#f5f3ea;--lyr:#808078}
 body[data-theme="velvet"]:not([data-scene="kids"]):not([data-scene="romance"]):not([data-scene="day"]){
-  --bg:#120E09;--panel:#1D160E;--panel2:#241C12;--text:#F7EDDC;--dim:#C9AC84;--faint:#8c785c;
-  --amber:#E0A458;--coral:#F58A4A;--mint:#FEE29F;--lilac:#D9B48A;--gold:#FED9A0;--lyr:#927e62}
+  --bg:#120E09;--panel:#1D160E;--panel2:#241C12;--text:#F7EDDC;--dim:#C9AC84;--faint:#a08c72;
+  --amber:#E0A458;--coral:#F58A4A;--mint:#FEE29F;--lilac:#D9B48A;--gold:#FED9A0;--lyr:#a89bb8}
 body[data-theme="kraft"]:not([data-scene="kids"]):not([data-scene="romance"]):not([data-scene="day"]){
-  --bg:#f7f2e8;--panel:#fffaf0;--panel2:#fffdf8;--text:#33291d;--dim:#7a6a54;--faint:#7a6d5a;
-  --amber:#b87723;--coral:#C9722E;--mint:#A8742E;--lilac:#8A765A;--gold:#7a6012;--lyr:#696052;--red:#a75a27}
+  --bg:#f7f2e8;--panel:#fffaf0;--panel2:#fffdf8;--text:#33291d;--dim:#7a6a54;--faint:#6f5c44;
+  --amber:#b87723;--coral:#C9722E;--mint:#A8742E;--lilac:#8A765A;--gold:#7a5c08;--red:#b3402a;--lyr:#75654e;--ink-on-accent:#33291d}
 body[data-theme="kraft"]{--r:16px}
 body[data-theme="neon"] .line.on,body[data-theme="neon"] .line.tok .txt .tk.now{text-shadow:0 0 26px currentColor}
 body[data-theme="neon"] .tbtn,body[data-theme="neon"] .chip,body[data-theme="neon"] #sceneRow{border-color:#FFB03A3d;box-shadow:0 0 18px #FFB03A14}
@@ -469,21 +468,21 @@ html[data-motion="calm"] .line{transition-duration:.16s}
 body.nosub .line .sub{display:none!important}
 
 /* ───── сцена: ДЕТИ ───── */
-body[data-scene="kids"]{--bg:#fff6e9;--panel:#fff;--panel2:#fff2df;--text:#3a2a20;--dim:#826a56;--faint:#806e5f;
-  --amber:#ff8c3a;--coral:#F5A623;--mint:#F5C860;--lilac:#E8B84A;--gold:#875f00;--lyr:#726154;--red:#ab5d28;--r:28px}
+body[data-scene="kids"]{--bg:#fff6e9;--panel:#fff;--panel2:#fff2df;--text:#3a2a20;--dim:#6f5646;--faint:#7a6450;
+  --amber:#ff8c3a;--coral:#F5A623;--mint:#F5C860;--lilac:#E8B84A;--gold:#7a5c08;--red:#b3402a;--lyr:#7a6350;--ink-on-accent:#3a2a20;--r:28px}
 body[data-scene="kids"] .line.done{opacity:.3}
 body[data-scene="kids"] #light{mix-blend-mode:multiply}
 body[data-scene="kids"] .topbar{background:linear-gradient(#fff6e9f0,#fff6e900)}
 body[data-scene="kids"] .dock{background:linear-gradient(#fff6e900,#fff6e9f2 40%)}
 body[data-scene="kids"] #lyricsWrap::before{background:linear-gradient(#fff6e9,transparent)}
 body[data-scene="kids"] #lyricsWrap::after{background:linear-gradient(transparent,#fff6e9)}
-body[data-scene="kids"] .big{color:#1c0f00;background:linear-gradient(135deg,var(--coral),var(--gold))}
+body[data-scene="kids"] .big{color:var(--ink-on-accent);background:linear-gradient(135deg,var(--coral),var(--gold))}
 body[data-scene="kids"] .round.bigplay{color:var(--ink-on-accent)}
 body[data-scene="kids"] .toast{background:#fff;border-color:#ff8c3a55;color:#3a2a20;box-shadow:0 14px 40px #ff8c3a2a}
 body[data-scene="kids"] .line{font-size:calc(26px*var(--lyrScale,1))}/* v10.1: пол; рост/потолок в sngAdaptStyle */
 
 /* ───── сцена: РОМАНТИКА ───── */
-body[data-scene="romance"]{--bg:#140a12;--panel:#221221;--panel2:#2b162b;--text:#f7e8ef;--dim:#c39ab2;--faint:#927285;
+body[data-scene="romance"]{--bg:#140a12;--panel:#221221;--panel2:#2b162b;--text:#f7e8ef;--dim:#c39ab2;--faint:#a8889a;
   --amber:#F0A868;--coral:#F58A4A;--mint:#E4E4E2;--lilac:#D9B49A;--gold:#FED9A0}
 body[data-scene="romance"] .dock,body[data-scene="romance"] .topbar{opacity:.45;transition:opacity .5s}
 body[data-scene="romance"] .dock:hover,body[data-scene="romance"] .dock:focus-within,
@@ -493,8 +492,8 @@ body[data-scene="romance"] .modes button.on{background:#F0A868}
 body[data-scene="romance"] .seclabel{color:#F0A868;background:#F0A86814;border-color:#F0A8682c}
 
 /* ───── сцена: ДЕНЬ ───── */
-body[data-scene="day"]{--bg:#f4efe6;--panel:#fffaf2;--panel2:#fff;--text:#2a2420;--dim:#6f6152;--faint:#786a5d;
-  --amber:#c96f2e;--coral:#C9722E;--mint:#A8742E;--lilac:#8A7A64;--gold:#7c5d15;--lyr:#695e51;--red:#a55927}
+body[data-scene="day"]{--bg:#f4efe6;--panel:#fffaf2;--panel2:#fff;--text:#2a2420;--dim:#6f6152;--faint:#6f5c44;
+  --amber:#c96f2e;--coral:#C9722E;--mint:#A8742E;--lilac:#8A7A64;--gold:#7a5c08;--red:#b3402a;--lyr:#71604c;--ink-on-accent:#2a2420}
 body[data-scene="day"] .topbar{background:linear-gradient(#f4efe6f0,#f4efe600)}
 body[data-scene="day"] .dock{background:linear-gradient(#f4efe600,#f4efe6f2 40%)}
 body[data-scene="day"] #lyricsWrap::before{background:linear-gradient(#f4efe6,transparent)}
@@ -2159,6 +2158,8 @@ function paintLangs(){
 window.__LANGS = {
   list: LANGS, get idx(){ return langIdx; },
   set(i){ langIdx = clamp(i,0,LANGS.length-1); paintLangs(); say("Язык строк: "+LANGS[langIdx].name); },
+  /* v10.26 «ЧЕСТНЫЙ ЯЗЫК» (F-01): язык ищется по ключу, не по индексу эры ТРАНСЛИТА */
+  setKey(k){ const i = LANGS.findIndex(l=>l.k===k); if(i<0){ say("Такого языка в доме пока нет: "+String(k).toUpperCase()); return false; } this.set(i); return true; },
   cycle(){ this.set((langIdx+1)%LANGS.length); },
   get current(){ return LANGS[langIdx]; }
 };
@@ -2684,26 +2685,12 @@ function vcHandle(text){
   else if(has("слог")){ if(window.__PULSE) window.__PULSE.set("syl"); }
   else if(has("пословн","по словам","словам","слово")){ if(window.__PULSE) window.__PULSE.set("word"); }
   else if(has("строкой","целиком")){ if(window.__PULSE) window.__PULSE.set("line"); }
-  else if(has("английск")){ langByKey("английский","en"); }
-  else if(has("испанс")){ langByKey("испанский","es"); }
-  else if(has("транслит")){ langByKey("транслит","tr"); }
-  else if(has("русск")){ langByKey("русский","ru"); }
+  else if(has("английск")){ window.__LANGS.setKey("en"); }
+  else if(has("испанс")){ window.__LANGS.setKey("es"); }
+  else if(has("транслит")){ say("Транскрипция кириллицей — вторая строка «как звучит», живёт на экране сама."); }
+  else if(has("русск")){ window.__LANGS.setKey("ru"); }
   /* v10.21: слова слышат и влитые слушатели (UX-движок) — уже после фильтра песни */
   if(window.__ГОЛОС) __ГОЛОС.раздать(t, поёт);
-}
-/* F-01/F-13: язык ищем по ключу/имени в ЖИВОМ списке LANGS (закон v10.5: РУС→СРБ→КАЗ→НЕМ; ТРАНСЛИТ убит),
-   а не по индексам эры ТРАНСЛИТА — иначе «английский» включал КАЗ, «испанский» — НЕМ, «транслит» — СРБ.
-   Не нашли язык — не переключаем вовсе (честный отказ). */
-function langByKey(name, k){
-  const ls = (window.__LANGS && window.__LANGS.list) || LANGS;
-  let idx = -1;
-  for(let j=0;j<ls.length;j++){
-    const l = ls[j];
-    if(!l) continue;
-    if(l.k===k || String(l.name||"").toLowerCase().indexOf(name)===0){ idx=j; break; }
-  }
-  if(idx>=0) window.__LANGS.set(idx);
-
 }
 window.__VC = { handle: vcHandle };   /* v7: голос-сканер наружу — ЗДОРОВЬЕ проверяет честно */
 window.__КВГОЛОС = { активен: ()=>vcOn, стоп: ()=>vcStop() };   /* v10.21: preempt для брокера «ОДИН ГОЛОС» */
@@ -2819,6 +2806,7 @@ function scanStart(){
 }
 function scanStop(){
   clearInterval(scanTimer);
+  try{ if(scanAc){ scanAc.close(); scanAc = null; } }catch(e){}   /* v10.26 (F-15): контекст не копится — лимит старых WebView */
   window.__SCAN_ACTIVE = false;
   body.classList.remove("scanning");
   scanGo.classList.remove("on");
@@ -3551,8 +3539,8 @@ KV.audio.addEventListener("play", ()=>{
   clearInterval(posTimer);
   posTimer = setInterval(()=>{ try{ if(!KV.audio.paused) localStorage.setItem("kv.pos", String(KV.audio.currentTime||0)); }catch(e){} }, 5000);
 });
-KV.audio.addEventListener("pause", ()=>{ if(posTimer){ clearInterval(posTimer); posTimer = 0; } try{ localStorage.setItem("kv.pos", String(KV.audio.currentTime||0)); }catch(e){} });   /* F-14: таймер позиции живёт только пока играем */
-KV.audio.addEventListener("ended", ()=>{ if(posTimer){ clearInterval(posTimer); posTimer = 0; } try{ localStorage.removeItem("kv.pos"); }catch(e){} });   /* F-14 */
+KV.audio.addEventListener("pause", ()=>{ clearInterval(posTimer); posTimer = 0; try{ localStorage.setItem("kv.pos", String(KV.audio.currentTime||0)); }catch(e){} });   /* v10.26 (F-14) */
+KV.audio.addEventListener("ended", ()=>{ clearInterval(posTimer); posTimer = 0; try{ localStorage.removeItem("kv.pos"); }catch(e){} });   /* v10.26 (F-14) */
 
 /* ── язык интерфейса: RU · EN · ES (ключевые надписи) ── */
 const UI = {
@@ -3620,9 +3608,7 @@ function importPrefs(file){
       if(window.__LANGS && prefs.lang!=null) window.__LANGS.set(prefs.lang|0);
       if(window.__PULSE && prefs.gran) window.__PULSE.set(prefs.gran);
       if(prefs.rate){ const c=document.querySelector('#rateChips .pbtn[data-rate="'+prefs.rate+'"]'); if(c) c.click(); }
-      /* F-12: sync через родной __SYNC_SET (решётка 0,05 + кламп ±3) — битый json не уводит унисон */
-      if(window.__SYNC_SET){ window.__SYNC_SET(Number(prefs.sync)||0); }
-      else { let _sy = Number(prefs.sync)||0; if(!isFinite(_sy)) _sy = 0; _sy = Math.max(-3, Math.min(3, Math.round(_sy/0.05)*0.05)); window.__SYNCOFF = _sy; paintSync(); }
+      window.__SYNCOFF = clamp(grid5(parseFloat(prefs.sync||"0")||0), -3, 3); paintSync();   /* v10.26 (F-12): битый json не уводит унисон за ±3 с */
       if(typeof prefs.vislat==="number"){ window.__VISLAT = clamp(prefs.vislat,0,150)/1000; paintVis(); }
       if($("btnNight")) $("btnNight").classList.toggle("on", !!prefs.night); night=!!prefs.night; applyVol();
       if($("btnBeatviz")) $("btnBeatviz").classList.toggle("on", !!prefs.beatviz); bvOn=!!prefs.beatviz;
@@ -4427,7 +4413,7 @@ bindSeg("motionChips","data-mk",(k)=>{ root.dataset.motion = k; prefs.motion=k; 
 bindSeg("sceneChips","data-sck",(k)=>{ if(window.__SCENE) window.__SCENE.set(k); });
 bindSeg("confChips","data-ck",(k)=>{ window.__CONFETTI_MODE = k; prefs.confetti=k; savePrefs(); });
 bindSeg("granChips2","data-gk",(k)=>{ if(window.__PULSE) window.__PULSE.set(k); });
-bindSeg("langChips2","data-lk",(k)=>{ if(k==="sheet"){ if(window.__LANGSHEET&&window.__LANGSHEET.open)window.__LANGSHEET.open(); return; } const c=document.querySelector("#langChips .pbtn[data-lang=\""+k+"\"]"); if(c){ c.click(); } else if(window.__LANGS){ const ls=window.__LANGS.list||[]; let fi=-1; for(let z=0;z<ls.length;z++){ if(ls[z]&&ls[z].k===k){ fi=z; break; } } if(fi>=0) window.__LANGS.set(fi); } });   /* F-01/F-13: фолбэк — по ключу LANGS, не по индексам эры ТРАНСЛИТА */
+bindSeg("langChips2","data-lk",(k)=>{ if(k==="sheet"){ if(window.__LANGSHEET&&window.__LANGSHEET.open)window.__LANGSHEET.open(); return; } const c=document.querySelector(   /* v10.26 (F-13): был индекс эры ТРАНСЛИта */"#langChips .pbtn[data-lang=\""+k+"\"]"); if(c) c.click(); else if(window.__LANGS && window.__LANGS.setKey) window.__LANGS.setKey(k); });
 bindSeg("rateChips2","data-rk",(k)=>{ const c=document.querySelector("#rateChips .pbtn[data-rate=\""+k+"\"]"); if(c) c.click(); });
 
 /* слайдеры */
@@ -4849,6 +4835,7 @@ function hashStr(s){ let h=2166136261; s=String(s||""); for(let i=0;i<s.length;i
    по восприятию; гард контраста — APCA Lc (гард 60: уровень текста по APCA).
    soft (аналоговые тона) / wild (далёкие тона) — семантика прежняя. ── */
 let lastRatio = 0;   /* теперь — |Lc| по APCA, не WCAG-пропорция */
+let lastGard = null;   /* v10.25: худшая пара гард-матрицы { худ, Lc } */
 function genPalette(mode, seed){
   const R = (seed==null) ? Math.random : rng(seed);
   const wild = mode==="wild";
@@ -4892,12 +4879,20 @@ function genPalette(mode, seed){
       ? oklchToHex(0.42+R()*0.06, 0.10+R()*0.06, H+i*38+R()*14)
       : oklchToHex(0.72+R()*0.06, 0.10+R()*0.06, H+i*38+R()*14);
   }
-  /* гард: текст обязан читаться — APCA Lc ≥ 60, дожимаем светлоту прямо в OKLCH */
-  let guard = 0;
-  let [Lt, Ct, Ht] = hexToOklch(c["--text"]);
-  while(Math.abs(apcaLc(c["--text"], c["--bg"])) < 60 && guard++ < 24){
-    Lt = light ? Math.max(0.04, Lt-0.03) : Math.min(0.99, Lt+0.03);
-    c["--text"] = oklchToHex(Lt, Ct, Ht);
+  /* гард v10.25 «КОНТРАСТ»: матрица пар — каждая роль обязана читаться (APCA Lc):
+     текст 60 (уровень текста), dim 45, faint 30, акценты amber/gold/red 45;
+     дожим светлоты прямо в OKLCH — палитра остаётся перцептивно ровной */
+  const GARD = [ ["--text",60], ["--dim",45], ["--faint",30], ["--amber",45], ["--gold",45], ["--red",45] ];
+  let worst = 100, worstPair = "--text";
+  for(const [gk, gmin] of GARD){
+    if(!c[gk]) continue;
+    let g = 0, [Lf, Cf, Hf] = hexToOklch(c[gk]);
+    while(Math.abs(apcaLc(c[gk], c["--bg"])) < gmin && g++ < 24){
+      Lf = light ? Math.max(0.04, Lf-0.03) : Math.min(0.99, Lf+0.03);
+      c[gk] = oklchToHex(Lf, Cf, Hf);
+    }
+    const glc = Math.abs(apcaLc(c[gk], c["--bg"]));
+    if(glc < worst){ worst = glc; worstPair = gk; }
   }
   /* гард-матрица v10.24 (ЭП-03/C-12, порт на APCA v10.22 «ЦВЕТ»): вторичные пары
      и неактивные строки обязаны читаться; метрика одна — APCA Lc (текст 60,
@@ -4920,7 +4915,8 @@ function genPalette(mode, seed){
   })();
   const ratio = Math.abs(apcaLc(c["--text"], c["--bg"]));
   lastRatio = Math.round(ratio);
-  return { c, ratio, light };
+  lastGard = { худ: worstPair, Lc: Math.round(worst) };
+  return { c, ratio, light, gard: lastGard };
 }
 
 function applyPalette(p){
@@ -5617,6 +5613,7 @@ window.__HEALTH4 = ()=>[
       return v==="#010203"; }catch(e){ return false; } })() },
   { sec:"R", n:"джокер: контраст текста Lc "+(lastRatio?lastRatio:"—")+" по APCA (гард 60 — уровень текста)", ok: lastRatio>=60 },
   { sec:"R", n:"ЦВЕТ: палитры ЛАБа в OKLCH (светлота ровная), гарды по APCA", ok: (typeof apcaLc==="function" && typeof oklchToHex==="function") },
+  { sec:"R", n:"КОНТРАСТ: гард-матрица 6 пар — худшая "+(lastGard?lastGard.худ+" Lc "+lastGard.Lc:"—"), ok: !!lastGard && lastGard.Lc>=30 },
   { sec:"R", n:"слово → цвета: тому же слову — та же палитра", ok: (function(){ try{
       const a = genPalette("soft", hashStr("проба")).c, b = genPalette("soft", hashStr("проба")).c;
       return Object.keys(a).every(k=>a[k]===b[k]); }catch(e){ return false; } })() },
@@ -5663,7 +5660,7 @@ window.__JOKER = { more:(m)=>jokMore(m), undo:jokUndo, count:()=>jokCount, hist:
 window.__WIZ  = { start:wizOpen, cancel:wizCancel, active:()=>!!wiz };
 window.__LAB = { joker, more:(m)=>jokMore(m), word:wordPaint, applyCustom,
   /* v10.22 «ЦВЕТ»: математика наружу — испытания и сторожа проверяют честно */
-  genPalette, apcaLc, oklchToHex, hexToOklch, applyAll:()=>{ applyCustom(); labPaint(); }, reset:()=>{ if(labReset) labReset.click(); }, paint:labPaint, tab:()=>{ if(window.__PULT && window.__PULT.open) window.__PULT.open(); if(labTabBtn) labTabBtn.click(); } };
+  genPalette, apcaLc, oklchToHex, hexToOklch, gard:()=>lastGard, applyAll:()=>{ applyCustom(); labPaint(); }, reset:()=>{ if(labReset) labReset.click(); }, paint:labPaint, tab:()=>{ if(window.__PULT && window.__PULT.open) window.__PULT.open(); if(labTabBtn) labTabBtn.click(); } };
 applyCustom();
 labPaint();
 })();
@@ -5982,8 +5979,9 @@ window.__HEALTH7 = ()=>[
     try { localStorage.removeItem(ключ); return true; } catch(e){ return false; }
   }
   function кратко(текст){
-    var тект = String(текст==null?'':текст);   /* F-18: была hoisted var на весь пульт — стала локальной */
-    return тект.length > 60 ? тект.slice(0,60)+'…' : тект;
+    /* v10.26 (F-18): было присваивание в общий «тект» модуля — теперь честный локал */
+    const т = String(текст==null?'':текст);
+    return т.length > 60 ? т.slice(0,60)+'…' : т;
   }
   function событие(метка){
     try { if (window.SNG && SNG.событие) SNG.событие('пульт', метка); } catch(e){}
@@ -6464,7 +6462,7 @@ function move(dir){
 }
 /* быстрые действия — зеркала живых контролов зала, никакой второй логики */
 function ck(id){ var el=$(id); if(el){ try{ el.click(); return true; }catch(e){} } return false; }
-function au(){ return (window.__KV && window.__KV.audio) || null; }   /* F-02: id="audio" в DOM нет — живой audio экспортирует window.__KV */
+function au(){ /* v10.26 (F-02): «audio» в этом блоке не существует — STOP был мёртвой */ try{ if(window.__KV&&window.__KV.audio) return window.__KV.audio; }catch(e){} try{ return audio; }catch(e){ return null; } }
 function say2(t){ var el=$('rcToast'); if(!el)return; el.textContent=t; el.classList.add('on'); if(say2._t)clearTimeout(say2._t); say2._t=setTimeout(function(){ el.classList.remove('on'); },2400); }
 var ORD=['warm','neon','mono','velvet','kraft'],NAM={warm:'ТЕПЛО',neon:'НЕОН',mono:'МИНИМАЛ',velvet:'БАРХАТ',kraft:'КРАФТ'};
 function themeTo(k){ var b=D.querySelector('#themeChips [data-theme-k="'+k+'"]'); if(b){ b.click(); say2('подача: '+NAM[k]); } }
@@ -6573,7 +6571,7 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
    T-05 реестр версий window.APP · T-06 инвариант слоёв в ЗДОРОВЬЕ · T-15 зерно: пульт зала на BroadcastChannel */
 (function(){
 "use strict";
-var D=document, root=D.documentElement, body=D.body, VER="v10.25";
+var D=document, root=D.documentElement, body=D.body, VER="v10.27";
 /* T-05: единая точка правды версий */
 /* T-05: единая точка правды версий — реестр ОДИН, живёт в ЭП-06 ниже по файлу
    (v/такт/кэш/стр + ver/build/cache в одном объекте; дубль-реестр отсюда убран v10.24) */
@@ -7921,7 +7919,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.25', такт:'ЭТАЛОН', кэш:'s15-orkestrator-v84', стр:'2026-10-09', ver:'v10.25 «ЭТАЛОН»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v84' };
+window.APP = { v:'10.27', такт:'ЭТАЛОН', кэш:'s15-orkestrator-v86', стр:'2026-10-09', ver:'v10.27 «ЭТАЛОН»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v86' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
