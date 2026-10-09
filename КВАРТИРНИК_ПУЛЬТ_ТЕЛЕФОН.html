@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru" data-motion="on">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ПУЛЬТ ЗАЛА · СИНГУЛЯР ·31 КВАРТИРНИК v10.12</title>
+<meta name="color-scheme" content="dark">
+<style>
+:root{--amber:#DEA968;--gold:#D4AF37;--bg:#0B0C0F;--panel:#14161A;--text:#F3EAD2;--faint:#8B8F98}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 Georgia,"Times New Roman",serif;display:flex;flex-direction:column}
+header{padding:12px 14px 8px;text-align:center;border-bottom:1px solid #ffffff12}
+header h1{margin:0;font-size:17px;letter-spacing:.12em;color:var(--amber)}
+#st{margin-top:6px;font:12px/1.5 monospace;color:var(--faint);white-space:pre-line}
+#st b{color:var(--text)}
+main{flex:1;overflow:auto;padding:10px 12px 26px}
+h2{font-size:11.5px;letter-spacing:.22em;color:var(--faint);margin:14px 4px 6px;text-transform:uppercase}
+.grid{display:grid;gap:8px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+button{font:700 15px Georgia,serif;color:var(--text);background:var(--panel);border:1px solid #ffffff1c;border-radius:14px;padding:14px 6px;min-height:52px;cursor:pointer}
+button:active{transform:scale(.96);border-color:var(--gold)}
+button.big{background:linear-gradient(180deg,#2A2118,#1A1710);border-color:#DEA96866;color:var(--amber);font-size:17px}
+button.warm{border-color:#DEA96855}
+button.on{outline:2px solid var(--gold);outline-offset:1px}
+footer{padding:8px 14px 14px;text-align:center;font:11px/1.5 monospace;color:var(--faint)}
+#flash{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#1A1C22EE;border:1px solid var(--gold);color:var(--amber);border-radius:999px;padding:8px 16px;font:13px Georgia,serif;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9}
+#flash.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <h1>ПУЛЬТ ЗАЛА · КВАРТИРНИК</h1>
+  <div id="st">ищу сцену на канале kv-scene-v1…</div>
+</header>
+<main>
+  <h2>Движение вечера</h2>
+  <div class="grid g2">
+    <button class="big" data-cmd="toggle">▶ / ⏸ ВОКАЛ</button>
+    <button class="big" data-cmd="show">✦ ПОКАЗ</button>
+    <button data-cmd="seek-">⏪ 15 с</button>
+    <button data-cmd="seek+">15 с ⏩</button>
+    <button data-cmd="vol-">− звук</button>
+    <button data-cmd="vol+">+ звук</button>
+  </div>
+  <h2>БРАВО и сцена</h2>
+  <div class="grid g3">
+    <button class="warm" data-cmd="bravo">👏 БРАВО</button>
+    <button data-cmd="scene" data-arg="party">ВЕЧЕРИНКА</button>
+    <button data-cmd="scene" data-arg="kids">ДЕТИ</button>
+    <button data-cmd="scene" data-arg="romance">РОМАНТИКА</button>
+    <button data-cmd="scene" data-arg="day">ДЕНЬ</button>
+    <button data-cmd="pult">ПУЛЬТ на ТВ</button>
+  </div>
+  <h2>Подача (тема)</h2>
+  <div class="grid g5">
+    <button class="warm" data-cmd="theme" data-arg="warm">ТЕПЛО</button>
+    <button data-cmd="theme" data-arg="neon">НЕОН</button>
+    <button data-cmd="theme" data-arg="mono">МИНИМАЛ</button>
+    <button data-cmd="theme" data-arg="velvet">БАРХАТ</button>
+    <button data-cmd="theme" data-arg="kraft">КРАФТ</button>
+  </div>
+  <h2>Размер строк (плюс/минус 10%)</h2>
+  <div class="grid g3">
+    <button data-cmd="scale" data-arg="lyr" data-delta="-10">строка 1 −</button>
+    <button data-cmd="scale" data-arg="lyr" data-delta="10">строка 1 +</button>
+    <button data-cmd="scale" data-arg="tc" data-delta="10">строка 2 +</button>
+    <button data-cmd="scale" data-arg="tc" data-delta="-10">строка 2 −</button>
+    <button data-cmd="scale" data-arg="sbs" data-delta="10">строка 3 +</button>
+    <button data-cmd="scale" data-arg="sbs" data-delta="-10">строка 3 −</button>
+  </div>
+</main>
+<footer>Сцена и пульт должны быть на одном адресе (GitHub Pages).<br>СИНГУЛЯР ·31 · v10.12 · канал kv-scene-v1</footer>
+<div id="flash"></div>
+<script>
+(function(){
+"use strict";
+var st=document.getElementById("st"), fl=document.getElementById("flash");
+var bc=null, seen=false, curTheme=null;
+function flash(t){ fl.textContent=t; fl.classList.add("show"); setTimeout(function(){fl.classList.remove("show");},900); }
+function send(cmd,arg,delta){
+  if(!bc){ flash("канала нет — открой сцену на том же адресе"); return; }
+  bc.postMessage({t:"kv12r",cmd:cmd,arg:arg,delta:delta});
+  flash(cmd+(arg?" "+arg:""));
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button[data-cmd]"); if(!b)return;
+  document.querySelectorAll("button.on").forEach(function(x){x.classList.remove("on");});
+  b.classList.add("on");
+  send(b.dataset.cmd,b.dataset.arg,b.dataset.delta?parseInt(b.dataset.delta,10):undefined);
+  if(b.dataset.cmd==="theme") markTheme(b.dataset.arg);
+});
+function markTheme(k){ curTheme=k;
+  document.querySelectorAll('button[data-cmd="theme"]').forEach(function(x){ x.classList.toggle("on", x.dataset.arg===k); });
+}
+function connect(){
+  try{ bc=new BroadcastChannel("kv-scene-v1"); }catch(e){ st.textContent="BroadcastChannel недоступен в этом браузере"; return; }
+  bc.onmessage=function(ev){
+    var m=ev&&ev.data; if(!m)return;
+    if(m.t==="kv12s"&&m.state){
+      seen=true;
+      var s=m.state, t=s.time!=null?Math.floor(s.time/60)+":"+("0"+Math.floor(s.time%60)).slice(-2):"—";
+      var d=s.dur!=null?Math.floor(s.dur/60)+":"+("0"+Math.floor(s.dur%60)).slice(-2):"—";
+      st.innerHTML="сцена отвечает ✓ · режим: <b>"+(s.mode||"—")+"</b> · время: <b>"+t+"</b> / "+d+"<br>подача: <b>"+(s.theme||"—")+"</b> · строка 1: <b>"+(s.lyr||"—")+"%</b>";
+      markTheme(s.theme);
+    } else if(m.t==="kv12ack"){ /* ack тихо */ }
+  };
+  setInterval(function(){ if(bc)bc.postMessage({t:"kv12r",cmd:"state"}); },2000);
+  setInterval(function(){ if(!seen) st.textContent="ищу сцену на канале kv-scene-v1… (открой КВАРТиРНИК на том же адресе)"; },2500);
+}
+connect();
+})();
+</script>
+</body>
+</html>
