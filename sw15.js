@@ -119,8 +119,20 @@
    всегда на выводе: строка-оригинал больше не сворачивается, в РУС тоже живёт; колонка трёх строк
    z=2147483700 — выше тостов, ничем не перекрыть, тосты ушли вниз в зону дока; транскрипции
    СРБ/КАЗ (автоматом) и ESP/ENG (вручную) по оси песни (v10.11; старый кэш v72 уходит). */
-var S15_CACHE = 's15-orkestrator-v78';
-var S15_MAX = 140;   /* честный потолок кэша (ЗАКАЛКА): выше — вытесняем старейшие */
+/* Такт v10.20 «ЭТАЛОН», ЭП-09 «СВ-ДОМ: КЭШ ПО ВЕСУ»: кэш v79 —
+   кэш по весу (S15_MAX_BYTES = 250 МБ на не-ядерный кэш, а не только число ключей),
+   mp3 cache-first (URL неизменяемы), таймаут навигаций 3 с (стейл сразу, сеть
+   докатывает в фоне), дверь ·16 СУФЛЁР встала в пре-кэш, 206-фикс (Range-ответы
+   больше не глотаются в catch — перезапрос без Range кладёт честный 200).
+   Бамп v78→v79: эпик писался от v76 — v77/v78 ушли тактами владельца
+   v10.17 «СТРОЙ» и v10.18 «КОНВЕЙЕР» без записей в этой шапке. */
+var S15_CACHE = 's15-orkestrator-v79';
+var S15_MAX = 140;                      /* честный потолок кэша по ЧИСЛУ ключей (ЗАКАЛКА) */
+var S15_MAX_BYTES = 250 * 1024 * 1024;  /* ЭП-09/R-03: потолок по ВЕСУ не-ядерного кэша */
+var S15_ВЕС_ПО_УМОЛЧАНИЮ = 512 * 1024;  /* нет content-length — примерный кламп записи */
+var S15_ТАЙМАУТ_СЕТИ = 3000;            /* ЭП-09/F-28: навигации ждут сеть не дольше 3 с */
+var S15_ВЕС = -1;                       /* вес не-ядерного кэша (приближение); -1 — не считан */
+var S15_ДОКАТЫВАЕМ = {};                /* url → идёт полный перезапрос вместо 206 (анти-дубль) */
 var S15_CORE = [
   './',
   './index.html',
@@ -139,6 +151,7 @@ var S15_CORE = [
   './БИБЛИОТЕКИ/wllama/index.js',
   './БИБЛИОТЕКИ/wllama/wasm/wllama.wasm',
   './СИНГУЛЯР_15_ОРКЕСТРАТОР.html',
+  './СИНГУЛЯР_16_СУФЛЁР.html',
   './СИНГУЛЯР_17_ЗАЛ.html',
   './СИНГУЛЯР_18_СОБЫТИЕ.html',
   './СИНГУЛЯР_19_ЧЕЛОВЕК.html',
@@ -218,41 +231,163 @@ var S15_CORE = [
   './ДОКУМЕНТЫ/СТАЛЬ_НИТИ_И_ЯДРО.md'
 ];
 
-/* положиВКэш: put с потолком и честной тишиной при квоте (ЗАКАЛКА).
-   Тело ответа передаётся уже клонированной копией — оригинал едет странице.
-   ЗАКАЛКА v1.43.0 (кирпичу нет — вторая доска):
-   · ЯДРО ОФЛАЙНА НЕПРИКАСАЕМО: раньше вытеснение брало КЛЮЧИ ПО ПОРЯДКУ ВСТАВКИ,
-     а ядро вставлено первым на install — значит, вылетало ПЕРВЫМ. Дом,
-     походивший по комнатам, терял index.html и движки офлайн — PWA слепла.
-     Теперь выгоняем сначала посещённое (не-ядро), и только если потолок
-     всё равно превышен (не должно: 140 > ядра) — старейшие из ядра.
-   · выселение ДО put (await), а не пожарным порядком: к моменту записи
-     место уже освобождено, и висящего без waitUntil промиса нет. */
+/* R-05 (ЭП-09): './' и './index.html' — один ресурс, один ключ. Канон:
+   путь, кончающийся '/' или 'index.html' (без ?запроса), сводится к корню.
+   Строка-URL годится и ключом put, и поиском match — протухших дублей нет. */
+function нормУрл(урл) {
+  try {
+    var u = new URL(урл, self.location.href);
+    if (u.search) return u.href;                    /* '?пульт=1' — своя запись */
+    var путь = u.pathname;
+    try { путь = decodeURIComponent(путь); } catch (е) {}
+    if (/\/(?:index\.html)?$/i.test(путь)) {
+      u.pathname = путь.replace(/index\.html$/i, '');
+    }
+    return u.href;
+  } catch (е) { return String(урл); }
+}
+
 var S15_CORE_SET = (function () {
   try {
     var s = new Set();
-    S15_CORE.forEach(function (u) { s.add(new URL(u, self.location.href).href); });
+    S15_CORE.forEach(function (u) { s.add(нормУрл(u)); });
     return s;
   } catch (е) { return new Set(); }
 })();
 
+/* R-03: вес записи — content-length (GitHub Pages отдаёт; для gzip-ответов
+   это нижняя оценка — для честного приближения достаточно). Нет заголовка —
+   кламп по умолчанию. Тело в память НЕ читаем: mp3 до 9,2 МБ, страницы 6–15 МБ. */
+function оценитьВес(res) {
+  try {
+    var cl = res && res.headers ? res.headers.get('content-length') : null;
+    if (cl) {
+      var n = parseInt(cl, 10);
+      if (isFinite(n) && n > 0) return n;
+    }
+  } catch (е) {}
+  return S15_ВЕС_ПО_УМОЛЧАНИЮ;
+}
+
+/* честное приближение: суммарный вес не-ядерных записей (по content-length). */
+function весКэша(c) {
+  return c.keys().then(function (ключи) {
+    var чужие = ключи.filter(function (к) {
+      return !(S15_CORE_SET.has(к.url) || S15_CORE_SET.has(нормУрл(к.url)));
+    });
+    return Promise.all(чужие.map(function (к) {
+      return c.match(к).then(function (r) { return r ? оценитьВес(r) : 0; })
+                .catch(function () { return 0; });
+    })).then(function (веса) {
+      var сумма = 0;
+      веса.forEach(function (в) { сумма += в; });
+      return сумма;
+    });
+  }).catch(function () { return 0; });
+}
+
+/* положиВКэш: дверь для обработчиков. Гарды ЭП-09:
+   · F-26 (206-фикс): cache.put(206) бросает TypeError — Range-запросы
+     <audio> Chromium делали минусовки несохраняемыми, catch молчал. При 206
+     перезапрашиваем БЕЗ Range и кладём честный 200; не вышло — стриминг уже
+     едет живым сетевым ответом, ничего не ломаем. Один полный перезапрос
+     на URL за раз (анти-дубль при частых Range-секциях).
+   · статус: в кэш дома ложится ТОЛЬКО честный 200 (404/5xx/3xx — мимо).
+   Тело ответа передаётся уже клонированной копией — оригинал едет странице.
+   ЗАКАЛКА v1.43.0 (кирпичу нет — вторая доска): выселение ДО put — к моменту
+   записи место уже освобождено, и висящего без waitUntil промиса нет. */
 function положиВКэш(req, copy) {
+  if (!copy) return Promise.resolve();
+  if (copy.status === 206) {
+    if (S15_ДОКАТЫВАЕМ[req.url]) return Promise.resolve();
+    S15_ДОКАТЫВАЕМ[req.url] = true;
+    var чистыйЗапрос;
+    try {
+      var чистые = new Headers();
+      copy.headers.forEach(function (v, k) {
+        if (k.toLowerCase() !== 'range') чистые.set(k, v);
+      });
+      чистыйЗапрос = new Request(req.url, { method: 'GET', headers: чистые, credentials: 'same-origin' });
+    } catch (е) {
+      чистыйЗапрос = new Request(req.url, { method: 'GET', credentials: 'same-origin' });
+    }
+    return fetch(чистыйЗапрос).then(function (полный) {
+      delete S15_ДОКАТЫВАЕМ[req.url];
+      if (!полный || полный.status !== 200) return null; /* стриминг не трогаем */
+      return положить200(req.url, полный);
+    }).catch(function () { delete S15_ДОКАТЫВАЕМ[req.url]; });
+  }
+  if (copy.status !== 200) return Promise.resolve();
+  return положить200(req.url, copy).catch(function () { });
+}
+
+/* положить200: кладёт owned 200-ответ под каноническим ключом, с потолками
+   по числу (F-27) и по весу (R-03). ЯДРО ОФЛАЙНА НЕПРИКАСАЕМО (ЗАКАЛКА):
+   выгоняем сначала посещённое (не-ядро), и только если потолок всё равно
+   превышен (не должно: 140 > ядра) — старейшие из ядра. */
+function положить200(урл, res) {
+  var ключСтрокой, ключ;
+  try {
+    ключСтрокой = нормУрл(урл);
+    ключ = new Request(ключСтрокой);
+  } catch (е) { return Promise.resolve(); }
+  var это_ядро = S15_CORE_SET.has(ключСтрокой);
+  var весНового = это_ядро ? 0 : оценитьВес(res);
   return caches.open(S15_CACHE).then(function (c) {
     return c.keys().then(function (ключи) {
-      var выгоняем = [];
-      if (ключи.length >= S15_MAX) {
-        var лишних = ключи.length - S15_MAX;
-        var чужие = ключи.filter(function (к) { return !S15_CORE_SET.has(к.url); });
-        выгоняем = чужие.slice(0, лишних);
-        if (выгоняем.length < лишних) {
-          выгоняем = выгоняем.concat(ключи.filter(function (к) {
-            return S15_CORE_SET.has(к.url);
-          }).slice(0, лишних - выгоняем.length));
-        }
+      var чужие = [], ядровые = [];
+      ключи.forEach(function (к) {
+        var у = нормУрл(к.url);
+        if (у === ключСтрокой || к.url === ключСтрокой) return; /* перезапись — не сосед */
+        (S15_CORE_SET.has(к.url) || S15_CORE_SET.has(у) ? ядровые : чужие).push(к);
+      });
+      /* F-27 (off-by-one): раньше лишних = длина − S15_MAX — при ровно 140
+         выходил ноль, и потолок навсегда держал 141-го. Теперь выгоняем
+         ДО потолка включительно (длина − S15_MAX + 1): после put ровно ≤140. */
+      var надо = Math.max(0, чужие.length + ядровые.length - S15_MAX + 1);
+      var выгоняем = чужие.slice(0, надо);
+      if (выгоняем.length < надо) {
+        выгоняем = выгоняем.concat(ядровые.slice(0, надо - выгоняем.length));
       }
-      return Promise.all(выгоняем.map(function (ст) { return c.delete(ст).catch(function () { }); }));
-    }).then(function () {
-      return c.put(req, copy).catch(function () { /* квота — сеть всё равно жива */ });
+      /* R-03: числа ключей мало — телефон забивают страницы-монолиты 6–15 МБ
+         и mp3 до 9,2 МБ. Ведём приближённый вес не-ядерного кэша; потолок
+         S15_MAX_BYTES; старейшие не-ядерные вытесняются, пока не влезет новый. */
+      var старт = (S15_ВЕС < 0)
+        ? весКэша(c).then(function (в) { S15_ВЕС = в; })
+        : Promise.resolve();
+      return старт.then(function () {
+        var черезКрай = S15_ВЕС + весНового - S15_MAX_BYTES;
+        if (черезКрай <= 0 || чужие.length === 0) return выгоняем;
+        var i = 0;
+        function шаг(осталось) {
+          if (осталось <= 0 || i >= чужие.length) return Promise.resolve();
+          var к = чужие[i++];
+          if (выгоняем.indexOf(к) !== -1) return шаг(осталось);
+          return c.match(к).then(function (стар) {
+            выгоняем.push(к);
+            return шаг(осталось - (стар ? оценитьВес(стар) : S15_ВЕС_ПО_УМОЛЧАНИЮ));
+          }).catch(function () { return шаг(осталось); });
+        }
+        return шаг(черезКрай).then(function () { return выгоняем; });
+      }).then(function (выгоняем) {
+        /* вес выгруженного снимаем со счётчика (честное приближение) */
+        var неядровые = выгоняем.filter(function (к) {
+          return !(S15_CORE_SET.has(к.url) || S15_CORE_SET.has(нормУрл(к.url)));
+        });
+        return Promise.all(неядровые.map(function (к) {
+          return c.match(к).then(function (стар) { return стар ? оценитьВес(стар) : 0; })
+                    .catch(function () { return 0; });
+        })).then(function (веса) {
+          var снято = 0;
+          веса.forEach(function (в) { снято += в; });
+          return Promise.all(выгоняем.map(function (ст) {
+            return c.delete(ст).catch(function () { });
+          })).then(function () {
+            S15_ВЕС = Math.max(0, S15_ВЕС - снято + весНового);
+            return c.put(ключ, res).catch(function () { /* квота — сеть всё равно жива */ });
+          });
+        });
+      });
     });
   }).catch(function () { });
 }
@@ -272,12 +407,29 @@ function оболочка() {
     { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }
 
+/* фолбэк навигации (F-28/ЗАКАЛКА): канон './', на всякий случай
+   './index.html', дальше — честная офлайн-оболочка, не пустота браузера. */
+function фолбэкНавигации() {
+  return caches.match('./').then(function (дом) {
+    if (дом) return дом;
+    return caches.match('./index.html').then(function (старый) {
+      return старый || оболочка();
+    });
+  }).catch(function () { return оболочка(); });
+}
+
 self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(S15_CACHE).then(function (c) {
-      /* добавляем по одному: отсутствие файла не срывает установку */
+      /* добавляем по одному: отсутствие файла не срывает установку.
+         R-05: ключ канонический ('./index.html' → './') — дубликат
+         не качаем по сети второй раз (≈6,7 МБ экономии на install). */
+      var виденные = {};
       return Promise.all(S15_CORE.map(function (u) {
-        return c.add(new Request(u, { cache: 'reload' })).catch(function () { return null; });
+        var канон = нормУрл(u);
+        if (виденные[канон]) return null;
+        виденные[канон] = 1;
+        return c.add(new Request(канон, { cache: 'reload' })).catch(function () { return null; });
       }));
     }).then(function () { return self.skipWaiting(); })
   );
@@ -298,15 +450,21 @@ self.addEventListener('fetch', function (e) {
   if (req.method !== 'GET') return;
   var url = new URL(req.url);
   if (url.origin !== location.origin) return;      /* чужое — мимо кэша */
-  /* минусовки: сеть-первая с кэш-фолбэком (файлы могут добавляться) */
+  /* минусовки (R-04): URL неизменяемы (id источника в имени файла) —
+     cache-first: онлайн-слушатель больше не тянет mp3 каждый визит.
+     Нет в кэше — сеть; кладёт положиВКэш (гарды 200/206 внутри него). */
   var isMinus = /\/minus\/.+\.mp3$/.test(url.pathname);
   if (isMinus) {
     e.respondWith(
-      fetch(req).then(function (res) {
-        положиВКэш(req, res.clone());
-        return res;
-      }).catch(function () {
-        return caches.match(req);
+      caches.match(нормУрл(req.url)).then(function (hit) {
+        if (hit) return hit;
+        return fetch(req).then(function (res) {
+          положиВКэш(req, res.clone());
+          return res;
+        }).catch(function () {
+          return new Response('СИНГУЛЯР: офлайн, этой минусовки нет в кэше дома',
+            { status: 504, statusText: 'SNG offline', headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+        });
       })
     );
     return;
@@ -327,26 +485,40 @@ self.addEventListener('fetch', function (e) {
     );
     return;
   }
-  /* навигация по страницам: сеть-первая, офлайн — кэш, дальше — оболочка */
+  /* навигация по страницам (F-28): сеть-первая С ТАЙМАУТОМ 3 с — дверь на
+     6,7 МБ больше не держит каждый визит на медленной сети. Не успела —
+     отдаём стейл из кэша, а fetch докатывается в фоне и обновляет кэш
+     (stale-while-revalidate гибрид). Стейла нет — ждём сеть, как раньше. */
   if (req.mode === 'navigate') {
     e.respondWith(
-      fetch(req).then(function (res) {
-        положиВКэш(req, res.clone());
-        return res;
-      }).catch(function () {
-        return caches.match(req).then(function (hit) {
-          if (hit) return hit;
-          return caches.match('./index.html').then(function (дом) {
-            return дом || оболочка();
+      caches.match(нормУрл(req.url)).then(function (стейл) {
+        var сеть = fetch(req).then(function (res) {
+          положиВКэш(req, res.clone());
+          return res;
+        }).catch(function () { return null; });
+        var таймер;
+        var гонка = Promise.race([
+          сеть,
+          new Promise(function (решение) {
+            таймер = setTimeout(function () { решение(null); }, S15_ТАЙМАУТ_СЕТИ);
+          })
+        ]);
+        return гонка.then(function (res) {
+          clearTimeout(таймер);
+          if (res) return res;
+          if (стейл) return стейл;                 /* стейл сразу, сеть — в фоне */
+          return сеть.then(function (поздняя) {
+            return поздняя || фолбэкНавигации();
           });
-        }).catch(function () { return оболочка(); });
+        });
       })
     );
     return;
   }
-  /* остальное: кэш-первая, мимо кэша — сеть, без сети — честный 504 */
+  /* остальное: кэш-первая по каноническому ключу (R-05), мимо кэша — сеть,
+     без сети — честный 504 */
   e.respondWith(
-    caches.match(req).then(function (hit) {
+    caches.match(нормУрл(req.url)).then(function (hit) {
       if (hit) return hit;
       return fetch(req).then(function (res) {
         положиВКэш(req, res.clone());
