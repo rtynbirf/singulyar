@@ -288,11 +288,26 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SINGULYAR — Ambient Intent Organism</title>
+<title>СИНГУЛЯР — ДОМ · живой организм намерения · двери · караоке-квартирник</title>
 <meta name="description" content="Смысл один. Представление — твоё. Живой Кристалл-Шар рассыпается на 23 дверей-осколков — куда человек поставил, там и стоит. Один файл · ноль интернета · 100% суверенитет.">
 <meta name="theme-color" content="#0A0A0C">
 <meta name="sng-build" content="v1.49.2 · ОБЩАК ОТКРЫТ · 2026-10-07">
 <meta name="color-scheme" content="dark">
+<!-- OG/Twitter-карточка (R-07, такт v10.20 «ЭТАЛОН»): void #0A0A0C, золото — единственный акцент -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="СИНГУЛЯР">
+<meta property="og:title" content="СИНГУЛЯР — ДОМ дверей · караоке-квартирник">
+<meta property="og:description" content="Живой организм намерения: дом из 23 автономных дверей, караоке-квартирник ·31 и 62 песни фонда. Всё своё — офлайн, ноль интернета, хозяин — человек.">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Тёмная карточка: ДОМА СИНГУЛЯР · СИНГУЛЯР · караоке-квартирник · дверь ·31 · RUVSON">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="СИНГУЛЯР — ДОМ дверей · караоке-квартирник">
+<meta name="twitter:description" content="Живой организм намерения: дом из 23 автономных дверей, караоке-квартирник ·31 и 62 песни фонда. Всё своё — офлайн, ноль интернета.">
+<meta name="twitter:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="favicon.ico" sizes="any">
 <!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда (favicon.svg + ICO для ТВ-Chromium 76) -->
@@ -307,6 +322,8 @@
 <style>
 :root{--bg:#0A0A0C;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
+/* R-08: визуально скрытый заголовок лица — видят только скринридеры/поиск */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif} html{overflow-x:hidden} body{overflow-x:clip}
 a{color:var(--teal);text-decoration:none} a:hover{text-decoration:none}
@@ -416,9 +433,30 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
 <body>
+<h1 class="sr-only">СИНГУЛЯР — ДОМ дверей</h1>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div class="sng-beam" aria-hidden="true"></div>
 <main>
+  <!-- R-26 (такт v10.20): без JS лицо тоже отдаёт двери — основной список видно всегда -->
+  <noscript>
+    <div style="margin:18px auto 0;max-width:680px;padding:16px 18px;border:1px solid rgba(240,240,248,.18);border-radius:14px;background:rgba(18,20,24,.55);text-align:center">
+      <p style="margin:0 0 12px;font-size:15px;color:#F0D78C;letter-spacing:.04em">двери (включи JS для полного дома)</p>
+      <p style="margin:0;display:flex;flex-wrap:wrap;gap:8px 10px;justify-content:center">
+        <a href="СИНГУЛЯР_31_КВАРТИРНИК.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·31</i>КВАРТИРНИК</a>
+        <a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·15</i>ОРКЕСТРАТОР</a>
+        <a href="СИНГУЛЯР_16_СУФЛЁР.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·16</i>СУФЛЁР</a>
+        <a href="СИНГУЛЯР_17_ЗАЛ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·17</i>ЗАЛ</a>
+        <a href="СИНГУЛЯР_18_СОБЫТИЕ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·18</i>СОБЫТИЕ</a>
+        <a href="СИНГУЛЯР_32_СЦЕНА.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·32</i>СЦЕНА</a>
+        <a href="СИНГУЛЯР_23_КРУГ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·23</i>КРУГ</a>
+        <a href="СИНГУЛЯР_24_ПОЧТА.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·24</i>ПОЧТА</a>
+        <a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·27</i>ФУНДАМЕНТ</a>
+        <a href="СИНГУЛЯР_33_ФОНД.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">·33</i>ФОНД</a>
+        <a href="ДОКУМЕНТАЦИЯ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">¶</i>Документация дома</a>
+        <a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" style="display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:6px 13px;text-decoration:none"><i style="font-style:normal;color:#D4AF37;margin-right:6px">¶</i>Инструкция установки</a>
+      </p>
+    </div>
+  </noscript>
   <section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
     <!-- ПУЛЬТ ХОЗЯИНА (v1.45.0 «ХОЗЯИН»): временно, для владельца — клавиши
          музыки над шаром + сквозная навигация. Играет ЛОКАЛЬНЫЙ фонд дома
