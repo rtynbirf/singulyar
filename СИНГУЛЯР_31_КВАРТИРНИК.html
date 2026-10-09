@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.35 «ХИРУРГ» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.34.1 «АРБИТР» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.35 «ХИРУРГ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.34.1 «АРБИТР» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -2668,8 +2668,9 @@ window.__ON_LINE = (i)=>{
     try{
       const w = $("lyricsWrap"), el = lineEls[i];
       if(w && el){ requestAnimationFrame(function(){ try{
-        /* v10.35 «ХИРУРГ»: собственный расчёт (0.6) снят — единая точка T-01 (window.__FITK_REFIT, кламп 0.5–1, коэффициент 0.62); дубль двух писателей в одно свойство закрыт */
-        if(window.__FITK_REFIT) window.__FITK_REFIT();
+        const avail = w.clientHeight||1, need = el.offsetHeight||1;
+        const k = Math.max(0.5, Math.min(1, (avail*0.6)/need));
+        w.style.setProperty("--fitK", k.toFixed(3));
       }catch(e){} }); }
     }catch(e){}
     if(п0) try{ п0(i); }catch(e){}
@@ -6588,7 +6589,7 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
 
 <style id="kv12style">
 /* ── С14 · АРБИТР v10.12 · T-03: шкала слоёв токенами (базовая шкала 10–60; КРЫША 70–90; 0–9 — легальный внутрислоёвой порядок) ── */
-:root{--z-fund:10;--z-scene:20;--z-lines:30;--z-dock:40;--z-cal:45;--z-modal:50;--z-toast:60}
+:root{--z-fund:10;--z-scene:20;--z-lines:30;--z-dock:40;--z-modal:50;--z-toast:60}
 /* ── T-01: единая типографика трёх строк — каждая точка sngAdaptStyle умножает токены на --fitK ── */
 @media (min-width:522px) and (max-width:1260px){.line{font-size:calc(4.6vw*var(--lyrScale,1)*var(--fitK,1))}}
 @media (min-width:1261px){.line{font-size:calc(58px*var(--lyrScale,1)*var(--fitK,1))}}
@@ -6600,8 +6601,8 @@ window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult
 @media (min-width:1280px){body[data-scene="kids"] .line{font-size:calc(64px*var(--lyrScale,1)*var(--fitK,1))}}
 /* T-01: кламп на контейнере, не на слайдерах */
 #lyricsWrap{overflow:hidden}
-/* ЭП-05 C-08: JS-инъекты слоя — классы вместо инлайн-сеттеров (45 — ступень между dock и modal); v10.35 «ХИРУРГ»: последний литерал вне шкалы токенизирован — z-война закончена */
-.z-кал{z-index:var(--z-cal,45)}
+/* ЭП-05 C-08: JS-инъекты слоя — классы вместо инлайн-сеттеров (45 — ступень между dock и modal) */
+.z-кал{z-index:45}
 </style>
 <script id="kv12script">
 /* ── С14 · АРБИТР v10.12 — П0-варка дорожной карты: T-01..T-06 + зерно T-15 ──
@@ -6640,7 +6641,6 @@ function fit(){
     }catch(_){}
   },60);
 }
-window.__FITK_REFIT=fit; /* v10.35 «ХИРУРГ»: точка T-01 — теперь единственный писатель --fitK; хук строки (v10.10) делегирует сюда */
 if(window.ResizeObserver){try{var ro=new ResizeObserver(fit);ro.observe(wrap);ro.observe(ly);}catch(_){}}
 window.addEventListener("resize",fit);
 try{new MutationObserver(fit).observe(root,{attributes:true,attributeFilter:["style"]});}catch(_){}
@@ -7958,7 +7958,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.35', такт:'ХИРУРГ', кэш:'s15-orkestrator-v90', стр:'2026-10-10', ver:'v10.35 «ХИРУРГ»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v90' };
+window.APP = { v:'10.34.1', такт:'АРБИТР', кэш:'s15-orkestrator-v89', стр:'2026-10-10', ver:'v10.34.1 «АРБИТР»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v89' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
