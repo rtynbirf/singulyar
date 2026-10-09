@@ -1,5 +1,5 @@
 /*!
- * SINGULYAR UX ENGINE v9.5 «СПРАВКИ ВЕЗДЕ» · метка сборки такта v1.45.0 «ХОЗЯИН» (суть движка — v9.5)
+ * SINGULYAR UX ENGINE v9.6 «ОДИН ГОЛОС» · метка сборки такта v1.51.0 (суть справок — v9.5)
  * Наследник v9.4 «ПОДСКАЗКИ ВЕЗДЕ» (тот — наследник v9.3 «ТАМ ГДЕ ПОСТАВИЛ»).
  * Главное изменение такта v1.45.0 (слово владельца):
  *   «ПРИ НАВЕДЕНИИ КУРСОРА ОН НЕ ВЫДАЁТ СПРАВКИ!!!
@@ -57,7 +57,7 @@
 
     // ── 0. Защита от повторного подключения ──
     if (window.__SINGULYAR_UX_ENGINE__) return;
-    window.__SINGULYAR_UX_ENGINE__ = 'v9.5-справки-везде';
+    window.__SINGULYAR_UX_ENGINE__ = 'v9.6-один-голос';
 
     // ── 1. Безопасное хранилище (file:// и приватные режимы могут кидать) ──
     var STORE_KEY = 'SINGULYAR_UX_V8';      // ключ прежний — настройки людей не теряются
@@ -315,6 +315,8 @@
         status.style.display = 'block';
         status.className = ошибка ? 'err' : '';
         status.textContent = текст;
+        /* v9.6 «ОДИН ГОЛОС»: меню закрыто — слово всё равно дойдёт, через общую очередь дома */
+        try { if (window.__ALERT && !menu.classList.contains('open')) window.__ALERT(текст, { мирно: true }); } catch (e2) {}
     }
 
     // ── 6. Звук: ленивый AudioContext, только в жесте пользователя ──
@@ -700,10 +702,31 @@
     }
 
     // ── 11. Голос: строго opt-in, честное предупреждение про облако в Chrome ──
+    // v9.6 «ОДИН ГОЛОС» (П2/T-19): микрофон один на страницу. Если голос страницы
+    // (КВАРТИРНИК) уже держит распознаватель — второй SR не рождается: вливаемся
+    // слушателем через брокер __ГОЛОС и разбираем только свои слова.
     var recognition = null;
+    var влитой = false;
+    function м2Слова(t) {
+        if (/(меню|настройк|settings|menu)/.test(t)) { beep('ack'); openMenu(window.innerWidth - 356, 64); }
+        else if (/(закры|close|назад)/.test(t)) { beep('ack'); closeMenu(true); }
+        else if (/(домой|главное|home)/.test(t)) window.location.href = 'index.html';
+        else if (/(нить|двери|дом)/.test(t)) { beep('ack'); поНити(); }
+        else if (/(осколк|кристалл|рассып)/.test(t)) {
+            var д = осколкиДвижок();
+            if (д) { д.переключить(); подписи(); }
+        }
+    }
     function startVoice() {
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SR) { сказать('Голос не поддерживается этим браузером.'); config.voiceOn = false; persist(); подписи(); return; }
+        if (window.__ГОЛОС && window.__ГОЛОС.хост === 'кв') {
+            влитой = true;
+            window.__ГОЛОС.слушать('м2', function (t, поёт) { if (!поёт) м2Слова(t); });
+            сказать('Микрофон один на страницу: слушаю вместе с голосом КВАРТИРНИКА.');
+            return;
+        }
+        if (window.__ГОЛОС) window.__ГОЛОС.занять('м2');
         if (recognition) return;
         try {
             recognition = new SR();
@@ -714,14 +737,8 @@
                 var res = ev.results[ev.results.length - 1];
                 if (!res || !res[0]) return;
                 var t = res[0].transcript.trim().toLowerCase();
-                if (/(меню|настройк|settings|menu)/.test(t)) { beep('ack'); openMenu(window.innerWidth - 356, 64); }
-                else if (/(закры|close|назад)/.test(t)) { beep('ack'); closeMenu(true); }
-                else if (/(домой|главное|home)/.test(t)) window.location.href = 'index.html';
-                else if (/(нить|двери|дом)/.test(t)) { beep('ack'); поНити(); }
-                else if (/(осколк|кристалл|рассып)/.test(t)) {
-                    var д = осколкиДвижок();
-                    if (д) { д.переключить(); подписи(); }
-                }
+                м2Слова(t);
+                if (window.__ГОЛОС) window.__ГОЛОС.раздать(t, false);
             };
             recognition.onerror = function (ev) {
                 if (ev && ev.error === 'not-allowed') {
@@ -742,12 +759,24 @@
             config.voiceOn = false; persist(); подписи();
         }
     }
-    function stopVoice() {
+    function stopVoice(выключить) {
+        if (влитой) {
+            влитой = false;
+            if (window.__ГОЛОС) window.__ГОЛОС.снять('м2');
+            if (выключить) { config.voiceOn = false; persist(); подписи(); }
+            return;
+        }
+        if (window.__ГОЛОС) window.__ГОЛОС.освободить('м2');
         if (!recognition) return;
         var r = recognition; recognition = null;
         r.onend = null; r.onresult = null; r.onerror = null;
         try { r.stop(); } catch (e) {}
     }
+    /* наружу — для брокера «ОДИН ГОЛОС»: preempt уважает выключатель в меню */
+    window.__М2ГОЛОС = {
+        активен: function () { return влитой || !!recognition; },
+        стоп: function () { stopVoice(true); }
+    };
 
     // ── 12. Геймпад: опрос только при подключённом паде ──
     var gamepadTimer = null;
@@ -977,7 +1006,7 @@
 
     // ── 14. Публичный API ──
     window.SingulyarUX = {
-        version: '9.5-справки-везде',
+        version: '9.6-один-голос',
         open: function () { openMenu(window.innerWidth - 356, 64); },
         openAt: openMenu,
         close: function () { closeMenu(true); },
