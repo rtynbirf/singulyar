@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.42 «ГОЛОС» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.43 «ТАКТ» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.42 «ГОЛОС» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.43 «ТАКТ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1007,7 +1007,7 @@ window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   window.TRACK_ERR = (e && e.message) || "не дошло";
   return null;
 });
-window.__BUILD_SHA = "b67ad30aba5f7fd2";
+window.__BUILD_SHA = "31e077f82e1a9f2c";
 /* ── v10.36 «МЕШАНИНА»: ИР-скелет — M-01 timeBase · M-02 origin · M-04 КРУМХАНСЛЬ · M-03 ИР-гейт ──
    Закон хозяина: ЧЕЛОВЕК=МАШИНА=МЕШАНИНА=СМЕСИТЕЛЬ — на входе всё, внутри одна ось, на выходе результат.
    И-07: каждое событие оси может нести {origin, conf} — откуда пришло и сколько доверять. */
@@ -1573,7 +1573,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -4283,6 +4283,79 @@ window.__HEALTH16 = function(){
   return [
     { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+"/42 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
     { sec:"I", n:"голос: мост-факты ходит туда-обратно (адрес↔ящик)", ok: круг }
+  ];
+};
+
+/* ── С28 · ТАКТ v10.43: переселение семьи «такт·пульс·синхрон» (фаза 2, такт 6) ──
+   Обряд тот же (см. С23–С27): снапшот → мост → проба. Шестой ящик комода закрывает
+   семью целиком: хвост «синхро» уже жил в ящике 1 (С23: __SYNCOFF, __OUTLAT,
+   __VISLAT, __SYNC_NUDGE, __SYNC_SET) — теперь переезжает голова «такт·пульс»:
+   такт-курсор (__TAKT: bar/beat/bpm/approx), пульс-экспорт (__PULSE: граны,
+   голоса), подписчики долей (__TAKT_SUBS) и хуки движка (__ON_SECTION,
+   __ON_BRAVO, __ON_BEAT, __ON_LINE) — 7 вещей. Префиксы казначеи __ON_/__SYNC_
+   — не имена, а признаки реестра: рантайм-глобалов с такими буквами нет.
+   Геометрия времени: все семеро строятся выше моста (хуки — «хуки движка»,
+   подписчики — первый push и битовиз, такт/пульс — экспорт движка) — уходят в
+   снапшот по ССЫЛКЕ, копий не делаем: геттеры __TAKT/__PULSE продолжают считать
+   из своих замыканий, __TAKT_SUBS.push после моста кладёт в тот же массив
+   (метод-вызов сеттера не задевает), а явное «= window.__TAKT_SUBS || []»
+   битовиза проходит через мост-сеттер и возвращает массив из ящика. __ON_LINE
+   в доме оборачивается декоратором — мост прозрачен: декоратор читает ссылку
+   из ящика и пишет обёртку обратно в ящик. Записей слота в доме нет, кроме
+   самих членов семьи (0 bare-присвоений, 0 delete, 0 defineProperty, 0 чужих
+   перезаписей) — typeof-пробы и казна-КРИТИЧНО (__TAKT, __PULSE) переживают
+   аксессор. */
+(function(){
+  var К = window.__КОМОД;
+  var такт = {
+    TAKT:        (typeof window.__TAKT==="object" && window.__TAKT)             ? window.__TAKT        : null,
+    PULSE:       (typeof window.__PULSE==="object" && window.__PULSE)           ? window.__PULSE       : null,
+    TAKT_SUBS:   (typeof window.__TAKT_SUBS==="object" && window.__TAKT_SUBS)   ? window.__TAKT_SUBS   : [],
+    ON_SECTION:  (typeof window.__ON_SECTION==="function")                      ? window.__ON_SECTION  : null,
+    ON_BRAVO:    (typeof window.__ON_BRAVO==="function")                        ? window.__ON_BRAVO    : null,
+    ON_BEAT:     (typeof window.__ON_BEAT==="function")                         ? window.__ON_BEAT     : null,
+    ON_LINE:     (typeof window.__ON_LINE==="function")                         ? window.__ON_LINE     : null
+  };
+  function мост(имя, ключ){
+    try{
+      var ст = Object.getOwnPropertyDescriptor(window, имя);
+      if(ст && ст.configurable===false) return false;  /* занято неконфигурируемым — не воюем */
+      if(ст) delete window[имя];                       /* старая полка снята — вешаем мост */
+      Object.defineProperty(window, имя, {
+        get: function(){ return такт[ключ]; },
+        set: function(v){ такт[ключ] = v; },
+        enumerable: false, configurable: false
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var полки = [
+    ["__TAKT","TAKT"], ["__PULSE","PULSE"], ["__TAKT_SUBS","TAKT_SUBS"],
+    ["__ON_SECTION","ON_SECTION"], ["__ON_BRAVO","ON_BRAVO"],
+    ["__ON_BEAT","ON_BEAT"], ["__ON_LINE","ON_LINE"]
+  ].map(function(п){ return мост(п[0], п[1]); });
+  var старЦел = К.цел;
+  К.такт = такт;
+  К.ящики.push("такт·пульс·синхрон");
+  К.вещей += 7;
+  К.мостов += полки.filter(Boolean).length;
+  К.вер = "v10.43 «ТАКТ»";
+  К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
+})();
+window.__HEALTH17 = function(){
+  var К = window.__КОМОД, цел = !!(К && К.такт);
+  var жив = цел && typeof window.__TAKT==="object" && typeof window.__PULSE==="object" &&
+            typeof window.__ON_LINE==="function" && typeof window.__TAKT_SUBS.push==="function";
+  var круг = false;
+  try{
+    var было = window.__ON_BEAT;
+    window.__ON_BEAT = function(){};                     /* WRITE — только на время пробы */
+    круг = (window.__ON_BEAT !== было && К.такт.ON_BEAT === window.__ON_BEAT); /* READ→COMPARE */
+    window.__ON_BEAT = было;                             /* CLEANUP */
+  }catch(e){}
+  return [
+    { sec:"I", n:"такт: семья «такт·пульс·синхрон» переселена — "+(цел ? (К.мостов+"/49 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
+    { sec:"I", n:"такт: мост-хук бита ходит туда-обратно (адрес↔ящик)", ok: круг }
   ];
 };
 
@@ -8413,7 +8486,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.42', такт:'ГОЛОС', кэш:'s15-orkestrator-v97', стр:'2026-10-10', ver:'v10.42 «ГОЛОС»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v97' };
+window.APP = { v:'10.43', такт:'ТАКТ', кэш:'s15-orkestrator-v98', стр:'2026-10-10', ver:'v10.43 «ТАКТ»', build:String(window.__BUILD_SHA||"31e077f82e1a9f2c"), cache:'s15-orkestrator-v98' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
