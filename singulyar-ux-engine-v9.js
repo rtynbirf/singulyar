@@ -619,6 +619,9 @@
             if (hostHotkeysOff) return;
             /* v10.7 закон верхнего слоя: Esc при открытом диалоге (ПУЛЬТ, легенда, языки…) закрывает сам диалог — не ведёт на index */
             if (document.querySelector && document.querySelector('dialog[open]')) return;
+            /* v10.45 «ВЫХОД»: Esc у гостя КРЫШИ закрывает КРЫШУ (ведёт домой), а не уводит на хаб */
+            var гостКрыша = document.getElementById('kv31gExit');
+            if (гостКрыша && !isOpen) { e.preventDefault(); гостКрыша.click(); return; }
             if (!typing) {
                 /* v10.44 «ЛАДОМ»: на ТВ (data-rc=1) законом остаётся двухшаговый выход движка дома —
                    раньше ux-движок навигировал с первого Esc и перебивал закон «BACK два раза — ДОМ» */

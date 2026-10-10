@@ -183,7 +183,7 @@
     "ДОКУМЕНТЫ/СВОД_ЗАКОНОВ.json"
    ],
    "доказательства": [
-    "ИНСТРУМЕНТЫ/test_s31_kvartirnik.py",
+    "ИНСТРУМЕНТЫ/test_s31_ladom.py",
     "ИНСТРУМЕНТЫ/test_svod_zakonov.py"
    ],
    "пункт_ТЗ": "§Parameter Control Subsystem (вливание v1.44.0 «ПОЛИМАТ»)"

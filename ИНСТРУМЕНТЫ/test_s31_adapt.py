@@ -8,7 +8,7 @@ import io, os, sys
 from playwright.sync_api import sync_playwright
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_КВАРТИРНИК.html')
+дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.47 «ВЫХОД» (приказ владельца, параллельный полимат-рой; поверх тактов коллег v10.45 «ГОСТИНАЯ» и v10.46 «ПУЛЬТ»): ВЫХОД с КРЫШИ усилен до приказа — кнопка 72×64, верхний угол, поверх всех слоёв (z 2147483780), видна всегда; шит голосования закрывается без голоса; BACK на ТВ закрывает панель КРЫШИ; дубль-слушатель зала убит; петля гостя снята; Esc гостя ведёт домой; пульт телефона получил «в дом»; корень бага applyScene починен (#bravo .bravo); третий вид пульта ПЛИТКА (+1 к реестру __ПУЛЬТЫ.виды); бренд: «ЛАДОМ — пространство своих» · «Общайтесь так, как удобно каждому» · зонтик «СИНГУЛЯР · ЛАДОМ»; кэш v102.
 <!-- такт v10.46 «ПУЛЬТ» (приказ владельца: максимум дорожной карты): ящик С29 «пульт·сообщения» — 8 мостов (S31ПУЛЬТ/__PULT/__ПУЛЬТЫ/__РУЛЬ/__TIPS/__TOASTS/__ALERT/__ЛИЦАПУЛЬТ); ядро ЛИЦ — одиннадцать видов одного пульта (10 из v16 + МИНИ), память последнего лица kv.litsa, дверь «ПУЛЬТ · ЛИЦА» в крыше; проба ЗДОРОВЬЕ 18; кэш v101.
 <!-- такт v10.44 «ЛАДОМ» (приказ владельца): прежнее имя дома вычеркнуто отовсюду; два вида пульта — ПОЛНЫЙ и РУЛЬ — дом помнит последний выбор; выход с крыши для телефона-гостя; Esc закрывает панель крыши; кэш v99.
 <!-- такт v10.14 «КРЫША»: три двери открыты честно и точечно —
@@ -30,16 +31,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#050608"/>
 <meta name="color-scheme" content="dark"/>
-<meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
+<meta name="description" content="Общайтесь так, как удобно каждому. Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — ЛАДОМ v10.46 «ПУЛЬТ» · караоке-зал дома">
-<meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
+<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.47 «ВЫХОД»">
+<meta property="og:description" content="Общайтесь так, как удобно каждому. Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — ЛАДОМ v10.46 «ПУЛЬТ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.47 «ВЫХОД» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -762,7 +763,7 @@ window.__ALERT = function(t, opts){
 <header class="topbar">
   <div class="brand">
     <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#17181A"/><circle cx="32" cy="25" r="11" fill="none" stroke="#DEA968" stroke-width="4"/><path d="M32 39v11M21 54h22" stroke="#F5A623" stroke-width="4" stroke-linecap="round"/></svg>
-    <span><b>ЛАДОМ · v9</b><span>«Просто люби» · RUVSON · фонема = звук = буква · бирка автора — в угол и перетащи</span></span>
+    <span><b>ЛАДОМ · v9</b><span>СИНГУЛЯР · ЛАДОМ — пространство своих · «Просто люби» · RUVSON · бирка автора — в угол и перетащи</span></span>
   </div>
   <button id="chipHealth" class="chip" data-tip="Самопроверка: проверяет все части инструмента и честно докладывает, что работает">ЗДОРОВЬЕ …</button>
   <button id="btnLang" class="tbtn" data-tip="Таблица языков строк: нажал — выехала, ткнул — поём; подперевод всегда рядом">ЯЗЫК · РУС</button>
@@ -786,7 +787,7 @@ window.__ALERT = function(t, opts){
 <main id="stage">
   <section id="start" class="screen">
     <h1>Споём <em>вместе</em></h1>
-    <p class="sub">«Просто люби» · RUVSON · 3:54 — одна песня, сорок строк, семь секций.<br>Экран — в центр комнаты. Друзья — вокруг. Телефон с микрофоном — кому не лень.</p>
+    <p class="sub">Общайтесь так, как удобно каждому.<br>«Просто люби» · RUVSON · 3:54 — одна песня, сорок строк, семь секций.<br>Экран — в центр комнаты. Друзья — вокруг. Телефон с микрофоном — кому не лень.</p>
     <div class="friends">
       <span>сколько нас?</span>
       <button id="fMinus" aria-label="минус голос" data-tip="На одного голоса меньше — имена перестраиваются">−</button>
@@ -1009,7 +1010,7 @@ window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   window.TRACK_ERR = (e && e.message) || "не дошло";
   return null;
 });
-window.__BUILD_SHA = "407b5bb7df2222f4";
+window.__BUILD_SHA = "3394112235c1a2c6";
 /* ── v10.36 «МЕШАНИНА»: ИР-скелет — M-01 timeBase · M-02 origin · M-04 КРУМХАНСЛЬ · M-03 ИР-гейт ──
    Закон хозяина: ЧЕЛОВЕК=МАШИНА=МЕШАНИНА=СМЕСИТЕЛЬ — на входе всё, внутри одна ось, на выходе результат.
    И-07: каждое событие оси может нести {origin, conf} — откуда пришло и сколько доверять. */
@@ -1634,7 +1635,7 @@ window.__КАЗНА = (function(){
     ["голос·микрофон",     /^__ГОЛОС|^__М2ГОЛОС$|^__КВГОЛОС$|^__PULSEVOICE$|^__VC$|^__MIC_|^__MS_STATE$|^openMic$|^__SHILKA$/],
     ["такт·пульс·синхрон", /^__TAKT|^__PULSE$|^__ON_|^__SYNCOFF$|^__OUTLAT$|^__VISLAT$|^__SYNC_/],
     ["МАЛЫШ·языки",        /^__МАЛЫШ$|^__LANGS|^__ЯЗЫКЧИПСЫ$|^ЗАКОН_|^НОСИТЕЛИ$|^ЧЕРНОВИКИ_|^__UILANG$/],
-    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__TIPS$|^__TOASTS$|^__ALERT/],
+    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__TIPS$|^__TOASTS$|^__ALERT/],
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$/],
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
@@ -2643,7 +2644,7 @@ function applyScene(idx, announce){
   window.__LIGHTS.splice(0, window.__LIGHTS.length, ...sc.lights);
   KV.forceSection();
   KV.resyncToasts(KV.audio.currentTime||0);
-  document.querySelector("#bravo h1").textContent = sc.bravo;
+  document.querySelector("#bravo .bravo").textContent = sc.bravo;   /* v10.47: корень бага починен — в разметке h2.bravo, "h1" не матчился, смена сцены падала (гард коллег маскировал, не лечил) */
   [...document.querySelectorAll("#sceneRow button")].forEach(b=>b.classList.toggle("on", b.dataset.sceneBtn===sc.k));
   if(announce) say("Сцена: "+sc.name);
   if(motionOk()) burst(sc.confetti.bravo>0?40:0, sc.colors);
@@ -3668,7 +3669,7 @@ async function recToggle(){
     if(rb){
       rb.classList.add("on"); rb.innerHTML = "";
       const au = document.createElement("audio"); au.controls = true; au.src = recUrl;
-      const a = document.createElement("a"); a.href = recUrl; a.download = "moy-kvartirnik."+(String(recMime).indexOf("mp4")>=0 ? "m4a" : (String(recMime).indexOf("ogg")>=0 ? "ogg" : "webm"));
+      const a = document.createElement("a"); a.href = recUrl; a.download = "moy-ladom."+(String(recMime).indexOf("mp4")>=0 ? "m4a" : (String(recMime).indexOf("ogg")>=0 ? "ogg" : "webm"));
       a.textContent = "скачать запись ("+(blob.size/1048576).toFixed(1)+" МБ)";
       rb.appendChild(au); rb.appendChild(a);
     }
@@ -3745,8 +3746,8 @@ function exportPrefs(){
   const clean = {};
   Object.keys(prefs).forEach(k=>{ if(k!=="_booted" && k!=="_seen5") clean[k] = prefs[k]; });
   const d = new Date();
-  const fname = "kvartirnik-nastroyki-"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+".json";
-  const data = { v:9, app:"KVARTIRNIK", prefs:clean,
+  const fname = "ladom-nastroyki-"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+".json";
+  const data = { v:9, app:"ЛАДОМ", prefs:clean,
     best: parseFloat(localStorage.getItem("kv.best")||"0")||0,
     pos: parseFloat(localStorage.getItem("kv.pos")||"0")||0 };
   const blob = new Blob([JSON.stringify(data,null,1)], { type:"application/json" });
@@ -3761,7 +3762,7 @@ function importPrefs(file){
   rd.onload = ()=>{
     try{
       const o = JSON.parse(String(rd.result||"{}"));
-      if(!o || o.app!=="KVARTIRNIK") throw new Error("not kvartirnik");
+      if(!o || (o.app!=="ЛАДОМ" && o.app!==("KVART"+"IRNIK"))) throw new Error("не выгрузка настроек ЛАДОМ");   /* старый маркер собран из двух литералов — слово не живёт в коде, старые выгрузки принимаются */
       const inc = o.prefs;
       if(!inc || typeof inc!=="object" || Array.isArray(inc)) throw new Error("bad prefs");
       /* v9.2 КРИТИЧНО: мутируем на месте — ссылки part7/part8 на prefs остаются живыми */
@@ -4644,6 +4645,7 @@ body.insertAdjacentHTML("beforeend", `
         <div class="seg" id="pultKindChips">
           <button data-pk="полный" data-tip="Полный пульт: все настройки вечера по вкладкам">⚙ ПОЛНЫЙ</button>
           <button data-pk="руль" data-tip="Руль: крупные боевые кнопки — петь, сцена, люди, синхрон">◉ РУЛЬ</button>
+          <button data-pk="плитка" data-tip="Плитка: во весь экран шесть больших кнопок — петь, сцена, люди, свет, голос, здоровье">▦ ПЛИТКА</button>
         </div>
         <em class="pdesc">Дом помнит последний вид (kv.pult) и всегда открывает его — один вид другому не мешает; реестр __ПУЛЬТЫ.виды открыт: новый вид — это +1 запись, хоть десять штук.</em>
       </div>
@@ -5293,6 +5295,90 @@ window.__РУЛЬ = (function(){
   });
   return { вер:1, open:открыть, close:закрыть, краска:краска };
 })();
+/* ══ v10.47 «ВЫХОД» — СКИН «ПЛИТКА», третий вид пульта (реестр __ПУЛЬТЫ.виды):
+   полноэкранные крупные плитки; ТЕ ЖЕ намерения через ТЕ ЖЕ ручки дома, что и у РУЛЯ;
+   стили только с префиксом ladom-skin-; сетка 2×3 (узкий) / 3×2 (широкий); тач-цели ≥64px;
+   без max()/clamp()/dvh — живёт и на ТВ-Chromium 76 (урок дома). ══ */
+window.__ПЛИТКА = (function(){
+  var D = document;
+  var css = D.createElement('style');
+  css.textContent = ''
+  + '.ladom-skin-root{position:fixed;left:0;top:0;right:0;bottom:0;z-index:var(--z-modal,50);display:none;flex-direction:column;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(165deg,rgba(30,22,9,.97),rgba(12,9,4,.99));color:#ffd98a;font:15px/1.35 system-ui,sans-serif}'
+  + '.ladom-skin-root.ladom-skin-открыт{display:flex}'
+  + '.ladom-skin-голова{display:flex;align-items:center;justify-content:space-between}'
+  + '.ladom-skin-имя{font-weight:800;letter-spacing:.06em;font-size:16px;white-space:nowrap}'
+  + '.ladom-skin-песня{flex:1;text-align:center;color:#c9a05a;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
+  + '.ladom-skin-сетка{flex:1;display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:12px}'
+  + '@media (min-width:640px) and (min-height:520px){.ladom-skin-сетка{grid-template-columns:repeat(3,1fr)}}'
+  + '.ladom-skin-плитка{appearance:none;border:1px solid rgba(255,196,88,.5);background:#2b2010;color:#ffd98a;border-radius:18px;min-height:88px;min-width:64px;font:800 21px/1.2 system-ui;letter-spacing:.03em;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px}'
+  + '@media (min-width:700px){.ladom-skin-плитка{font-size:26px}}'
+  + '.ladom-skin-икона{font-size:30px;line-height:1}'
+  + '@media (min-width:700px){.ladom-skin-икона{font-size:38px}}'
+  + '.ladom-skin-плитка:active{filter:brightness(1.25)}'
+  + '.ladom-skin-плитка.ladom-skin-горяч{background:#ffd98a;color:#241a08;border-color:transparent}'
+  + '.ladom-skin-плитка.ladom-skin-опасн{border-color:#e07050;color:#ff9d80}'
+  + '.ladom-skin-малая{min-height:64px;flex:1 1 30%;font-size:15px;border-radius:14px;padding:8px}'
+  + '.ladom-skin-головная{min-height:64px;font-size:14px;padding:8px 14px;border-radius:12px;flex:none}'
+  + '.ladom-skin-плитка:focus-visible{outline:3px solid #FEE29F;outline-offset:3px}'
+  + '@media (prefers-reduced-motion: reduce){.ladom-skin-плитка{transition:none}}';
+  D.head.appendChild(css);
+  var корень = D.createElement('div');
+  корень.id = 'ladom-skin-tiles';
+  корень.className = 'ladom-skin-root';
+  корень.setAttribute('role','dialog');
+  корень.setAttribute('aria-modal','true');
+  корень.setAttribute('aria-label','ПЛИТКА — шесть больших намерений вечера одним касанием');
+  var песня = '';
+  try{ песня = ((window.SONG&&window.SONG.t)||'')+' — '+((window.SONG&&window.SONG.artist)||''); }catch(_){}
+  корень.innerHTML = ''
+  + '<div class="ladom-skin-голова">'
+  +   '<span class="ladom-skin-имя">▦ ПЛИТКА</span>'
+  +   '<span class="ladom-skin-песня">'+(песня||'')+'</span>'
+  +   '<button class="ladom-skin-плитка ladom-skin-головная" data-a="pult" data-tip="Полный пульт: все настройки вечера">⚙ ПУЛЬТ</button>'
+  + '</div>'
+  + '<div class="ladom-skin-сетка">'
+  +   '<button class="ladom-skin-плитка ladom-skin-горяч" data-a="play" aria-label="петь или пауза"><span class="ladom-skin-икона">▶</span><span class="ladom-skin-текст">ПЕТЬ</span></button>'
+  +   '<button class="ladom-skin-плитка" data-a="scene" aria-label="сцена вечеринка"><span class="ladom-skin-икона">✦</span><span class="ladom-skin-текст">СЦЕНА</span></button>'
+  +   '<button class="ladom-skin-плитка" data-a="people" aria-label="люди и доступность"><span class="ladom-skin-икона">☺</span><span class="ladom-skin-текст">ЛЮДИ</span></button>'
+  +   '<button class="ladom-skin-плитка" data-a="light" aria-label="свет сцены"><span class="ladom-skin-икона">☀</span><span class="ladom-skin-текст">СВЕТ</span></button>'
+  +   '<button class="ladom-skin-плитка" data-a="voice" aria-label="микрофон зала"><span class="ladom-skin-икона">♪</span><span class="ladom-skin-текст">ГОЛОС</span></button>'
+  +   '<button class="ladom-skin-плитка" data-a="health" aria-label="здоровье дома"><span class="ladom-skin-икона">✚</span><span class="ladom-skin-текст">ЗДОРОВЬЕ</span></button>'
+  + '</div>'
+  + '<div class="ladom-skin-низ" style="display:flex;gap:12px;margin-top:12px">'
+  +   '<button class="ladom-skin-плитка ladom-skin-малая" data-a="sync" aria-label="синхрон плюс 50 миллисекунд">⇔ СИНХРОН +50</button>'
+  +   '<button class="ladom-skin-плитка ladom-skin-малая ladom-skin-опасн" data-a="home" aria-label="домой: закрыть плитку">✕ ДОМ</button>'
+  + '</div>';
+  D.body.appendChild(корень);
+  function скажи(t){ try{ if(window.__KV&&window.__KV.showToast) window.__KV.showToast(t); else if(window.__ALERT) window.__ALERT(t); }catch(_){} }
+  function жми(id){ var e=D.getElementById(id); if(e){ e.click(); return true; } return false; }
+  function краска(){
+    try{
+      var игра = window.__KV && window.__KV.audio && !window.__KV.audio.paused;
+      var и = корень.querySelector('[data-a="play"] .ladom-skin-икона');
+      var т = корень.querySelector('[data-a="play"] .ladom-skin-текст');
+      if(и) и.textContent = игра ? '⏸' : '▶';
+      if(т) т.textContent = игра ? 'ПАУЗА' : 'ПЕТЬ';
+    }catch(_){}
+  }
+  function открыть(){ корень.classList.add('ladom-skin-открыт'); краска();
+    try{ var f=корень.querySelector('.ladom-skin-плитка'); if(f) f.focus({preventScroll:true}); }catch(_){}
+  }
+  function закрыть(){ корень.classList.remove('ladom-skin-открыт'); }
+  корень.addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-a]'); if(!b) return;
+    var a = b.getAttribute('data-a');
+    if(a==='play'){ жми('btnPlay'); краска(); }
+    else if(a==='scene'){ if(window.__SCENE&&window.__SCENE.set){ window.__SCENE.set('party'); скажи('Сцена: вечер'); } }
+    else if(a==='people'){ жми('btnPeople'); }
+    else if(a==='light'){ жми('btnLight'); }
+    else if(a==='voice'){ if(typeof window.openMic==='function') window.openMic(); }
+    else if(a==='health'){ жми('chipHealth'); }
+    else if(a==='sync'){ if(window.__SYNC_NUDGE){ window.__SYNC_NUDGE(0.05); скажи('синхрон +50 мс'); } }
+    else if(a==='home'){ закрыть(); скажи('Дом: плитка убрана'); }
+    else if(a==='pult'){ закрыть(); if(window.__ПУЛЬТЫ) window.__ПУЛЬТЫ.открыть('полный'); }
+  });
+  return { вер:1, open:открыть, close:закрыть, краска:краска };
+})();
 window.__ПУЛЬТЫ = (function(){
   var КЛЮЧ = 'kv.pult';
   function прочитать(){ try{ return localStorage.getItem(КЛЮЧ)||''; }catch(_){ return ''; } }
@@ -5300,6 +5386,7 @@ window.__ПУЛЬТЫ = (function(){
   var виды = [
     { id:'полный', имя:'ПОЛНЫЙ', значок:'⚙', open:function(){ if(window.__PULT&&window.__PULT.open) window.__PULT.open(); } },
     { id:'руль',   имя:'РУЛЬ',   значок:'◉', open:function(){ if(window.__РУЛЬ&&window.__РУЛЬ.open) window.__РУЛЬ.open(); } }
+    ,{ id:'плитка', имя:'ПЛИТКА', значок:'▦', open:function(){ if(window.__ПЛИТКА&&window.__ПЛИТКА.open) window.__ПЛИТКА.open(); } }
   ];
   function поId(id){ for(var i=0;i<виды.length;i++){ if(виды[i].id===id) return виды[i]; } return null; }
   function текущий(){ return поId(прочитать()) || виды[0]; }
@@ -5310,7 +5397,7 @@ window.__ПУЛЬТЫ = (function(){
   }
   function выбрать(id){
     if(!поId(id)) return false;
-    if(id==='руль'){ try{ var п=document.getElementById('panel'); if(п&&п.open) п.close(); }catch(_){} }
+    if(id!=='полный'){ try{ var п=document.getElementById('panel'); if(п&&п.open) п.close(); }catch(_){} }
     записать(id);
     открыть(id);
     return true;
@@ -7059,7 +7146,7 @@ window.__HEALTH7 = ()=>[
   { sec:"C", n:"тап-юстировка по звуку: 8 тапов → медиана → свет в такт уху (Rock Band/Clone Hero)", ok: !!(window.__TAPCAL && window.__TAPCAL.start && window.__TAPCAL.tap && window.__TAPCAL.stop) },
   { sec:"R", n:"ШИЛКА: упреждение — свет выстреливает раньше на время трассера (конвейер кадра "+Math.round((window.__VISLAT||0)*1000)+" мс)", ok: !!(window.__SHILKA && typeof window.__SHILKA.set==="function" && window.__VISLAT>0 && window.__VISLAT<=0.15) },
   { sec:"C", n:"трассер: живой прицел на буквах в полёте — упреждение считает ритм, огласовку и темп", ok: !!(document.getElementById("pulVisSlider") && window.__PULSE && ("aimN" in window.__PULSE) && typeof window.__SHILKA_INFO==="function") },
-  { sec:"S", n:"пульт: два вида — ПОЛНЫЙ и РУЛЬ; дом помнит последний выбор (kv.pult)", ok: !!(window.__ПУЛЬТЫ && window.__РУЛЬ && window.__ПУЛЬТЫ.виды && window.__ПУЛЬТЫ.виды.length>=2) },
+  { sec:"S", n:"пульт: три вида — ПОЛНЫЙ, РУЛЬ и ПЛИТКА; дом помнит последний выбор (kv.pult)", ok: !!(window.__ПУЛЬТЫ && window.__РУЛЬ && window.__ПЛИТКА && window.__ПУЛЬТЫ.виды && window.__ПУЛЬТЫ.виды.length>=3) },
 ];
 </script>
 
@@ -7074,6 +7161,7 @@ window.__HEALTH7 = ()=>[
      kv.prefs — память вечера (предпочтения; внутри и служебные)
      kv.pos   — позиция песни, секунды
      kv.best  — рекорд удержания, секунды
+     kv.pult  — последний вид пульта (ПОЛНЫЙ/РУЛЬ/ПЛИТКА)
    Обратимость: стопка откатов в sessionStorage (transient, до 5 на ключ).
    Ноль сети, ноль eval, JSON.parse/stringify и parseFloat только.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -7086,7 +7174,9 @@ window.__HEALTH7 = ()=>[
     { ключ:'kv.pos',   имя:'Позиция песни, секунды',        тип:'число',
       кратко:'где остановились — вернётся при следующем входе' },
     { ключ:'kv.best',  имя:'Рекорд удержания, секунды',     тип:'число',
-      кратко:'лучший результат игры вечера' }
+      кратко:'лучший результат игры вечера' },
+    { ключ:'kv.pult',  имя:'Последний вид пульта',          тип:'строка',
+      кратко:'ПОЛНЫЙ/РУЛЬ/ПЛИТКА — дом всегда открывает последний выбранный вид' }
   ];
   var КЛЮЧ_ОТКАТОВ = 's31-пульт-откаты';
 
@@ -7216,7 +7306,7 @@ window.__HEALTH7 = ()=>[
     var счёт = 0; Object.keys(стопка).forEach(function(k){ счёт += стопка[k].length; });
     var подв = document.createElement('div');
     подв.style.cssText = 'color:#8A9099;font-size:11px;margin-top:8px';
-    подв.textContent = 'Откатов в стопке: '+счёт+' · выгрузка — как в baseline: файл kvartirnik-nastroyki-*.json';
+    подв.textContent = 'Откатов в стопке: '+счёт+' · выгрузка — файл ladom-nastroyki-*.json (старые выгрузки тоже примутся)';
     тело.appendChild(подв);
   }
   function построить(){
@@ -7548,7 +7638,7 @@ try{ if(window.matchMedia&&matchMedia('(hover: none)').matches&&matchMedia('(poi
 function topDialog(){ var d=D.querySelector('dialog[open]'); return d&&d.id!=='rcHelp'?d:null; }
 function helpD(){ return $('rcHelp'); }
 function regPanel(){ var p=D.querySelector('[data-panel="registry"]'); return (p&&p.style.display!=='none')?p:null; }
-function layer(){ if(helpD()&&helpD().open)return 'help'; if(topDialog())return 'dialog'; if(regPanel())return 'registry'; return null; }
+function layer(){ if(helpD()&&helpD().open)return 'help'; if(topDialog())return 'dialog'; if(regPanel())return 'registry'; var кр=D.getElementById('kv31panel'); if(кр&&кр.classList.contains('open'))return 'roof'; return null; }
 /* фокус-движок: spatial по W3C — вперёд по направлению, штраф за боковое отклонение, край — стоп */
 function vis(el){
   if(el.disabled)return false;
@@ -7650,6 +7740,7 @@ window.addEventListener('keydown',function(e){
     if(L==='help'){ var h=helpD(); if(h)h.close(); seed(); return; }
     if(L==='dialog'){ var dg=topDialog(); if(dg){ var x=dg.querySelector('.x,#pulClose,#micClose'); if(x&&x.click){ x.click(); } else { try{ dg.close(); }catch(e2){} } } seed(); return; }
     if(L==='registry'){ var rp=regPanel(); if(rp){ var z=rp.querySelector('[aria-label="Закрыть пульт"]'); if(z)z.click(); } return; }
+    if(L==='roof'){ var бвых=D.getElementById('kv31btnBye'); if(бвых&&бвых.click)бвых.click(); return; }
     exitStep(); return;
   }
   if(field)return;
@@ -9054,7 +9145,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.46', такт:'ПУЛЬТ', кэш:'s15-orkestrator-v101', стр:'2026-10-10', ver:'v10.46 «ПУЛЬТ»', build:String(window.__BUILD_SHA||"407b5bb7df2222f4"), cache:'s15-orkestrator-v101' };
+window.APP = { v:'10.47', такт:'ВЫХОД', кэш:'s15-orkestrator-v102', стр:'2026-10-10', ver:'v10.47 «ВЫХОД»', build:String(window.__BUILD_SHA||"3394112235c1a2c6"), cache:'s15-orkestrator-v102' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -9100,6 +9191,9 @@ var CSS = ':root{--z-roof-dock:70;--z-roof-panel:75;--z-roof-guest:80;--z-roof-s
 + '#kv31guest .kv31-g-head b{color:var(--text,#BABAB9);letter-spacing:.5px}'
 + '#kv31guest .kv31-g-stat{font-size:12px;color:var(--faint,#9B9B9B);text-align:right}'
 + '#kv31guest .kv31-g-head button{appearance:none;border:1px solid #ffffff18;background:#ffffff0e;color:var(--text,#BABAB9);border-radius:10px;padding:8px 12px;font:700 13px var(--f,system-ui,sans-serif);cursor:pointer;min-height:44px;white-space:nowrap}'   /* v10.45: кнопка выхода гостя С29 — в каноне */
++ '#kv31gExit{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:calc(10px + env(safe-area-inset-right,0px));z-index:2147483780;display:flex;align-items:center;justify-content:center;min-width:72px;min-height:64px;padding:0 18px;border:2px solid #ff9d80;border-radius:16px;background:#c0392b;color:#fff;font:800 17px/1.2 system-ui,sans-serif;letter-spacing:1px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.55);-webkit-tap-highlight-color:transparent}'
++ '#kv31gExit:active{transform:translateY(1px);background:#a93226}'
++ '@media (prefers-reduced-motion: reduce){#kv31gExit:active{transform:none}}'
 + '#kv31guest .kv31-g-line{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:10px 4px}'
 + '#kv31guest .kv31-g-sec{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint,#9B9B9B);margin-bottom:12px}'
 + '#kv31guest .kv31-g-cur{font-size:clamp(22px,6vw,40px);font-weight:700;color:#F5F5F3;text-shadow:0 2px 18px rgba(222,169,104,.22)}'
@@ -9153,7 +9247,7 @@ if (roomArg){
   (function гость(){
     var g = el('div'); g.id='kv31guest';
     g.innerHTML = ''
-    + '<div class="kv31-g-head"><div><b>ЛАДОМ</b><br><span style="font-size:11px;letter-spacing:2px;color:#b28f56">ДВЕРЬ ·31 · ТЕЛЕФОН-РУЛЬ</span></div><div class="kv31-g-stat" id="kv31gStat">соединяюсь…</div><button data-k="bye" id="kv31gBye" aria-label="выйти с крыши — вернуться в дом">✕ ВЫЙТИ</button></div>'
+    + '<div class="kv31-g-head"><div><b>ЛАДОМ</b><br><span style="font-size:11px;letter-spacing:2px;color:#b28f56">ДВЕРЬ ·31 · ТЕЛЕФОН-РУЛЬ</span></div><div class="kv31-g-stat" id="kv31gStat">соединяюсь…</div></div>'
     + '<div class="kv31-g-line"><div class="kv31-g-sec" id="kv31gSec">—</div><div class="kv31-g-cur" id="kv31gCur">…</div><div class="kv31-g-next" id="kv31gNext"></div><div class="kv31-g-time" id="kv31gTime"></div></div>'
     + '<div class="kv31-g-pad">'
     + '<button data-k="toggle" id="kv31gPlay">▶<br>ПУСК</button>'
@@ -9169,7 +9263,8 @@ if (roomArg){
     + '<button data-k="pult">ПУЛЬТ ТВ</button>'
     + '<button data-k="mic" id="kv31gMic">◉<br>ГОЛОС</button>'
     + '</div>'
-    + '<div class="kv31-g-sheet" id="kv31gSheet"><div id="kv31gSheetBody"></div><button data-k="sheet-close">— закрыть —</button></div>';
+    + '<div class="kv31-g-sheet" id="kv31gSheet"><div id="kv31gSheetBody"></div><button data-k="sheet-close">— закрыть —</button></div>'
+    + '<button data-k="bye" id="kv31gExit" aria-label="выйти с крыши — вернуться в дом">✕ ВЫЙТИ</button>';
     D.body.appendChild(g);
     if (window.__КРЫША) return;                    /* страховка */
     window.__КРЫША = { ver: VER, role:'гость',
@@ -9187,7 +9282,6 @@ if (roomArg){
           setStat('ищу зал…');
           conn = peer.connect(roomArg, { reliable:true });
           conn.on('open', function(){ setStat('зал на связи ✓'); toastHello(); });
-          conn.on('data', onState);
           conn.on('data', onState);
           /* С20·ЗАЛ: новые слова зала — отдельным слушателем, руль КРЫШЫ не тронут */
           conn.on('data', function(m){ try{ if(m && (m.t==='kv31v'||m.t==='kv31w'||m.t==='kv31x') && window.__ЗАЛ) window.__ЗАЛ.гостьСлушает(m); }catch(_){} });
@@ -9220,7 +9314,17 @@ if (roomArg){
       if(k==='sheet-scene'){ sheet([['party','ВЕЧЕРИНКА'],['kids','ДЕТИ'],['romance','РОМАНТИКА'],['day','ДЕНЬ']], 'scene'); return; }
       if(k==='sheet-theme'){ sheet([['warm','ТЕПЛО'],['neon','НЕОН'],['minimal','МИНИМАЛ'],['velvet','БАРХАТ'],['craft','КРАФТ']], 'theme'); return; }
       if(k==='sheet-close'){ D.getElementById('kv31gSheet').classList.remove('open'); return; }
-      if(k==='bye'){ micStop(true); try{ if(conn) conn.close(); }catch(_){ } try{ if(peer) peer.destroy(); }catch(_){ } var чист = location.origin + location.pathname; try{ location.replace(чист); }catch(_){ try{ location.href = чист; }catch(_2){} } return; }
+      if(k==='bye'){
+        try{ var fs=document.fullscreenElement||document.webkitFullscreenElement; if(fs){ var xfs=document.exitFullscreen||document.webkitExitFullscreen; if(xfs) xfs.call(document); } }catch(_){}
+        try{ if(S&&S.micStream&&S.micStream.getTracks){ var tr=S.micStream.getTracks(); for(var ti=0;ti<tr.length;ti++){ try{ tr[ti].stop(); }catch(_e){} } } }catch(_){}
+        micStop(true);
+        try{ if(S&&S.bcTimer){ clearInterval(S.bcTimer); S.bcTimer=null; } }catch(_){}
+        try{ if(conn) conn.close(); }catch(_){ }
+        try{ if(peer) peer.destroy(); }catch(_){ }
+        var чист = location.origin + location.pathname;
+        try{ location.replace(чист); }catch(_){ try{ location.href = чист; }catch(_2){} }
+        return;
+      }
       if(k==='mic'){ micToggle(); return; }
       cmd(k);
     });
@@ -9339,7 +9443,7 @@ D.getElementById('kv31doorLitsa').addEventListener('click', function(e){   /* v1
 D.addEventListener('keydown', function(e){ if(!panel.classList.contains('open')) return; try{ if(D.querySelector('dialog[open]')) return; }catch(_){ } if(e.key==='Escape'||e.keyCode===27){ try{e.preventDefault();}catch(_){ } try{e.stopPropagation();}catch(_){ } panelOpen(false); } });
 badge.querySelector('.kv31-badge').addEventListener('click', function(){ panelOpen(!panel.classList.contains('open')); });
 badge.querySelector('.kv31-badge').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panelOpen(true);} });
-D.getElementById('kv31btnBye').addEventListener('click', function(){ panelOpen(false); toast('Крыша снята — шасси чистое. Обнови страницу, чтобы вернуть.'); });
+D.getElementById('kv31btnBye').addEventListener('click', function(){ panelOpen(false); toast('Панель закрыта. КРЫША стоит — снова открыть: бейдж «КРЫША ·31» в углу.'); });
 D.getElementById('kv31paVol').addEventListener('input', function(){ S.micPAgain = (parseInt(this.value,10)||0)/100; if(S.micPA) S.micPA.volume = S.micPAgain; });
 D.getElementById('kv31btnRule').addEventListener('click', function(){   /* С21 «АРБИТР РУЛЯ» */
   S.ruleOpen = !S.ruleOpen;
@@ -9838,6 +9942,7 @@ function вспышкаХозяина(){
   }catch(e){}
 }
 function слушайЗал(){
+  try{ if(new URLSearchParams(location.search).get('kv31room')) return; }catch(_){}   /* v10.47: гость хозяином не станет — петлю не плодим */
   var панель = D.getElementById('kv31panel');
   if(панель) карточка();
   else setTimeout(слушайЗал, 1200);
@@ -9850,7 +9955,9 @@ function листГостя(m){
   if(!ш){
     ш = эл('div', 'kv31-g-sheet'); ш.id = 'kv31zSheet';
     ш.innerHTML = '<div style="max-width:520px;max-height:78vh;overflow:auto;padding:18px">'
-    + '<b style="color:var(--amber,#DEA968)">ЧТО ПОЁМ ДАЛЬШЕ?</b><div style="font-size:12px;color:var(--faint,#9B9B9B);margin:6px 0 10px">Один голос от телефона. Вердикт покажут на сцене.</div><div id="kv31zList"></div></div>';
+    + '<b style="color:var(--amber,#DEA968)">ЧТО ПОЁМ ДАЛЬШЕ?</b><div style="font-size:12px;color:var(--faint,#9B9B9B);margin:6px 0 10px">Один голос от телефона. Вердикт покажут на сцене.</div><div id="kv31zList"></div>'
+    + '<button type="button" id="kv31zSkip" style="width:100%;margin-top:12px;min-height:56px;border-radius:12px;border:1px dashed rgba(222,169,104,.5);background:transparent;color:var(--faint,#9B9B9B);font:600 15px system-ui">— закрыть, не голосуя —</button></div>';
+    ш.querySelector('#kv31zSkip').addEventListener('click', function(){ ш.classList.remove('open'); });   /* v10.47: T2 — закрыть, не голосуя */
     дом.appendChild(ш);
   }
   var л = ш.querySelector('#kv31zList'); л.innerHTML = '';
