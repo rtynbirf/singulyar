@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Испытание S-04 «ХРАН» (storage.persist) — такт v10.49 «СКЛАД» (С31).
+/* Испытание S-04 «ХРАН» (storage.persist) — такт v10.51 «ЯЗЫКИ» (С32; ре-посадка СКЛАД).
    Каркас — домовой стиль test_modules_logic.js: vm + минимальный window/document.
    10 инвариантов ТЗ S-04 §5. node test_s31_khran.js → 0 = зелёный.
    (Проба 19 занята ШИЛКОЙ коллег v10.48 — ХРАН идёт в 20.) */
@@ -125,7 +125,7 @@ function ок(имя, честно) {
     await s.__СКЛАД.библиотека.клади('тест', { x: 1 }); await тик(); await тик();
     ок('6a. reject → "ошибка запроса"', s.window.__ХРАН.статус().закреплено === 'ошибка запроса');
     let проба = null;
-    try { проба = s.window.__HEALTH20(); } catch (e) { }
+    try { проба = s.window.__HEALTH21(); } catch (e) { }
     ок('6b. проба 20 не бросает и даёт warn-строку',
       Array.isArray(проба) && проба.length === 1 && проба[0].warn === true && проба[0].ok === false);
   }
@@ -142,20 +142,20 @@ function ок(имя, честно) {
   {
     const s = собрать({ persisted: true });
     await s.__СКЛАД.готов; await тик(); await тик();
-    let р = null; try { р = s.window.__HEALTH20(); } catch (e) { }
+    let р = null; try { р = s.window.__HEALTH21(); } catch (e) { }
     ок('8a. проба: массив 1, sec:"R", ok=true',
       Array.isArray(р) && р.length === 1 && р[0].sec === 'R' && р[0].ok === true);
     const было = s.window.__ХРАН; s.window.__ХРАН = undefined;
     let р2 = null; let пал = false;
-    try { р2 = s.window.__HEALTH20(); } catch (e) { пал = true; }
+    try { р2 = s.window.__HEALTH21(); } catch (e) { пал = true; }
     ок('8b. без __ХРАН проба не бросает, warn: "склад не поднялся"',
       !пал && р2[0].warn === true && String(р2[0].n).indexOf('склад не поднялся') >= 0);
     s.window.__ХРАН = было;
   }
 
   /* 9. регистрация (статика исходника) */
-  ок('9a. реестр проб зовёт __HEALTH20',
-    src.indexOf('window.__HEALTH19,window.__HEALTH20].forEach') >= 0);
+  ок('9a. реестр проб зовёт __HEALTH21 (и следующие за ней)',
+    /window\.__HEALTH20,window\.__HEALTH21(,window\.__HEALTH\d+)*\]\.forEach/.test(src));
   ок('9b. казначей ведёт __ХРАН (семья «сканер·склад»)',
     /сканер·склад",\s+\/\^__SCAN\|\^__IMPORT\$\|\^__POS\$\|\^__REC\$\|\^__СКЛАД\$\|\^__ХРАН\$\//.test(src));
 
