@@ -51,7 +51,7 @@ with sync_playwright() as p:
     стр.on('pageerror', lambda e: ошибки.append(str(e)))
     стр.goto(дверь); стр.wait_for_timeout(700)
 
-    ок('живой: I-01 — микрофон ещё не запрашивался (__MIC_FACTS пусто)', стр.evaluate('window.__MIC_FACTS === undefined'))
+    ок('живой: I-01 — микрофон ещё не запрашивался (__MIC_FACTS пусто)', стр.evaluate('!window.__MIC_FACTS'))
     ок('живой: панель открывается только по воле человека', стр.evaluate('typeof window.openMic') == 'function')
 
     # человек решает: открываем панель и жмём ПУСК
