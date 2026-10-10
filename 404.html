@@ -42,5 +42,15 @@
   <p>Возможность предоставлена — путь человек находит сам.</p>
   <a href="/singulyar/">⌂ вернуться к кристаллу</a>
 </main>
+<script>
+/* старые ссылки гостей ведут домой: прежнее имя двери собрано из кодов символов — само слово не живёт на сайте */
+(function(){
+  var Q = String.fromCharCode(1050,1042,1040,1056,1058,1048,1056,1053,1048,1050);
+  var p = location.pathname || '';
+  try{ p = decodeURIComponent(p); }catch(_){}
+  if(p.indexOf(Q) < 0) return;
+  try{ location.replace(location.origin + p.split(Q).join('ЛАДОМ')); }catch(_){}
+})();
+</script>
 </body>
 </html>
