@@ -2,12 +2,12 @@
 <html lang="ru" data-motion="on">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' sha256-DT9jVtzhA2NEwPNyBf6i6KydBZqtazfdHqSeXjsY/T8= sha256-asJUuRuYeIX7vNk7Pw/NTsy61H3slK3LPyeeZ/zB03E= sha256-bPZZ4imiavMgmKit+6XyQ6ujjUGpSWbFDYDmw0/LVxo=; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xzqfzm7fQgK+wZSWyVLA7FVfZVBqJQ2q1yQFsro+51s=' 'sha256-asJUuRuYeIX7vNk7Pw/NTsy61H3slK3LPyeeZ/zB03E=' 'sha256-bPZZ4imiavMgmKit+6XyQ6ujjUGpSWbFDYDmw0/LVxo='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ПУЛЬТ ЗАЛА · ЛАДОМ — пространство своих · v10.12</title>
+<title>ПУЛЬТ ЗАЛА · ЛАДОМ — пространство своих · v10.48</title>
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%9B%D0%90%D0%94%D0%9E%D0%9C_%D0%9F%D0%A3%D0%9B%D0%AC%D0%A2_%D0%A2%D0%95%D0%9B%D0%95%D0%A4%D0%9E%D0%9D.html">
 <meta property="og:title" content="ПУЛЬТ ЗАЛА · ЛАДОМ — пространство своих · СИНГУЛЯР · ЛАДОМ">
 <meta property="og:description" content="Пульт зала дома СИНГУЛЯР · ЛАДОМ: общайтесь так, как удобно каждому. Управление вечером с телефона.">
@@ -61,6 +61,7 @@ footer{padding:8px 14px 14px;text-align:center;font:11px/1.5 monospace;color:var
     <button data-cmd="seek+">15 с ⏩</button>
     <button data-cmd="vol-">− звук</button>
     <button data-cmd="vol+">+ звук</button>
+    <button data-cmd="mute" class="warm">◻ ТИШИНА</button>
   </div>
   <h2>БРАВО и сцена</h2>
   <div class="grid g3">
@@ -89,8 +90,9 @@ footer{padding:8px 14px 14px;text-align:center;font:11px/1.5 monospace;color:var
     <button data-cmd="scale" data-arg="sbs" data-delta="-10">строка 3 −</button>
   </div>
 </main>
-<footer>Сцена и пульт должны быть на одном адресе (GitHub Pages).<br>СИНГУЛЯР · ЛАДОМ · v10.12 · канал kv-scene-v1</footer>
+<footer>Сцена и пульт должны быть на одном адресе (GitHub Pages).<br>СИНГУЛЯР · ЛАДОМ · v10.48 · канал kv-scene-v1</footer>
 <div id="flash"></div>
+<div id="live" role="status" aria-live="polite" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden"></div>
 <script>
 (function(){
 "use strict";
@@ -98,10 +100,12 @@ var st=document.getElementById("st"), fl=document.getElementById("flash");
 var bc=null, seen=false, curTheme=null;
 function flash(t){ fl.textContent=t; fl.classList.add("show"); setTimeout(function(){fl.classList.remove("show");},900); }
 function send(cmd,arg,delta){
-  if(!bc){ flash("канала нет — открой сцену на том же адресе"); return; }
+  if(!bc){ flash("канала нет — открой сцену на том же адресе"); live(cmd+" — канала нет"); return; }
   bc.postMessage({t:"kv12r",cmd:cmd,arg:arg,delta:delta});
   flash(cmd+(arg?" "+arg:""));
+  live("пульт: "+cmd+(arg?" "+arg:""));
 }
+function live(t){ var l=document.getElementById("live"); if(!l)return; l.textContent=""; setTimeout(function(){ l.textContent=t; },30); }
 document.addEventListener("click",function(e){
   var b=e.target.closest("button[data-cmd]"); if(!b)return;
   document.querySelectorAll("button.on").forEach(function(x){x.classList.remove("on");});
