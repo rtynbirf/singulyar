@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.49 «СКЛАД» (С31, приказ владельца «полимат — максимум дорожной карты»; поверх v10.48 «ШИЛКА» коллег; ТЗ S-04 рельсы 26-a): ХРАН — дом просит браузер закрепить память navigator.storage.persist() один раз, лениво, при первом импорте в библиотеку IDB «s31-склад»; отказ не поломка: один честный тост за жизнь сессии, правду скажет проба ЗДОРОВЬЕ 20; поле хранилище в health склада; признак __ХРАН в казначее; жив-гард пробы 17 доведён до всех семи имён семьи «такт·пульс·синхрон» (живость + identity полок + push-круг подписок — ghost __ON_BRAVO больше не зелёный); фолбэк TAKT_SUBS [] → null; CSP хаба вылечен (текст в head закрывал голову — meta CSP уезжала в body); кэш v104. -->
 <!-- такт v10.48 «ШИЛКА» (С30, приказ владельца: максимум дорожной карты; поверх v10.47 «ВЫХОД»): ПАСПОРТ ПУЛЬТА — живые числа (трассер Шилки, упреждение, полёт звука, сдвиг, 8-tap, трубы, комод) — кнопка ✎ в пульте ЛИЦ и intent PASSPORT; ТИШИНА — конверт MUTE: шина ЛИЦ + СЛОВАРЬ («тишина/молчим/звук») + кнопка ◻ ТИШИНА во всех лицах + kv12 «mute» + руль зала «mute»; aria-live: шина озвучивает подтверждения (#live polite / #liveAlert assertive — канон v9.7); prep — полоса «ПОДГОТОВКА/вечер идёт» (state.started, без двойного состояния); гость: трансляция кнопок — таблица данных __ГОСТЬ_ТРАНС вместо if-цепочки; пульт телефона: aria-live + ТИШИНА + в пре-кэше SW; К.вер выправлен на текущий такт (долг v10.47); проба ЗДОРОВЬЕ 19; кэш v103.
 <!-- такт v10.47 «ВЫХОД» (приказ владельца, параллельный полимат-рой; поверх тактов коллег v10.45 «ГОСТИНАЯ» и v10.46 «ПУЛЬТ»): ВЫХОД с КРЫШИ усилен до приказа — кнопка 72×64, верхний угол, поверх всех слоёв (z 2147483780), видна всегда; шит голосования закрывается без голоса; BACK на ТВ закрывает панель КРЫШИ; дубль-слушатель зала убит; петля гостя снята; Esc гостя ведёт домой; пульт телефона получил «в дом»; корень бага applyScene починен (#bravo .bravo); третий вид пульта ПЛИТКА (+1 к реестру __ПУЛЬТЫ.виды); бренд: «ЛАДОМ — пространство своих» · «Общайтесь так, как удобно каждому» · зонтик «СИНГУЛЯР · ЛАДОМ»; кэш v102.
 <!-- такт v10.46 «ПУЛЬТ» (приказ владельца: максимум дорожной карты): ящик С29 «пульт·сообщения» — 8 мостов (S31ПУЛЬТ/__PULT/__ПУЛЬТЫ/__РУЛЬ/__TIPS/__TOASTS/__ALERT/__ЛИЦАПУЛЬТ); ядро ЛИЦ — одиннадцать видов одного пульта (10 из v16 + МИНИ), память последнего лица kv.litsa, дверь «ПУЛЬТ · ЛИЦА» в крыше; проба ЗДОРОВЬЕ 18; кэш v101.
@@ -1011,7 +1012,7 @@ window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   window.TRACK_ERR = (e && e.message) || "не дошло";
   return null;
 });
-window.__BUILD_SHA = "3394112235c1a2c6";
+window.__BUILD_SHA = "38ff1f56de4c0304";
 /* ── v10.36 «МЕШАНИНА»: ИР-скелет — M-01 timeBase · M-02 origin · M-04 КРУМХАНСЛЬ · M-03 ИР-гейт ──
    Закон хозяина: ЧЕЛОВЕК=МАШИНА=МЕШАНИНА=СМЕСИТЕЛЬ — на входе всё, внутри одна ось, на выходе результат.
    И-07: каждое событие оси может нести {origin, conf} — откуда пришло и сколько доверять. */
@@ -1577,7 +1578,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19,window.__HEALTH20].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -1637,7 +1638,7 @@ window.__КАЗНА = (function(){
     ["такт·пульс·синхрон", /^__TAKT|^__PULSE$|^__ON_|^__SYNCOFF$|^__OUTLAT$|^__VISLAT$|^__SYNC_/],
     ["МАЛЫШ·языки",        /^__МАЛЫШ$|^__LANGS|^__ЯЗЫКЧИПСЫ$|^ЗАКОН_|^НОСИТЕЛИ$|^ЧЕРНОВИКИ_|^__UILANG$/],
     ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__TIPS$|^__TOASTS$|^__ALERT/],
-    ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$/],
+    ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$|^__ХРАН$/],
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
     ["адапт·конвейер",     /^SNGRC$|^SNGАДАПТ$|^SNG$|^__СЛОИ$|^__КОНВЕЙЕР$|^__СТРОЙ$|^__SYN_PAINT$/],
@@ -4314,7 +4315,7 @@ window.__HEALTH16 = function(){
   var такт = {
     TAKT:        (typeof window.__TAKT==="object" && window.__TAKT)             ? window.__TAKT        : null,
     PULSE:       (typeof window.__PULSE==="object" && window.__PULSE)           ? window.__PULSE       : null,
-    TAKT_SUBS:   (typeof window.__TAKT_SUBS==="object" && window.__TAKT_SUBS)   ? window.__TAKT_SUBS   : [],
+    TAKT_SUBS:   (typeof window.__TAKT_SUBS==="object" && window.__TAKT_SUBS)   ? window.__TAKT_SUBS   : null,
     ON_SECTION:  (typeof window.__ON_SECTION==="function")                      ? window.__ON_SECTION  : null,
     ON_BRAVO:    (typeof window.__ON_BRAVO==="function")                        ? window.__ON_BRAVO    : null,
     ON_BEAT:     (typeof window.__ON_BEAT==="function")                         ? window.__ON_BEAT     : null,
@@ -4348,18 +4349,36 @@ window.__HEALTH16 = function(){
 })();
 window.__HEALTH17 = function(){
   var К = window.__КОМОД, цел = !!(К && К.такт);
-  var жив = цел && typeof window.__TAKT==="object" && typeof window.__PULSE==="object" &&
-            typeof window.__ON_LINE==="function" && typeof window.__TAKT_SUBS.push==="function";
-  var круг = false;
+  var полки = ["TAKT","PULSE","TAKT_SUBS","ON_SECTION","ON_BRAVO","ON_BEAT","ON_LINE"];
+  var жив = цел &&
+    typeof window.__TAKT==="object" && !!window.__TAKT &&
+    typeof window.__PULSE==="object" && !!window.__PULSE &&
+    !!window.__TAKT_SUBS && typeof window.__TAKT_SUBS.push==="function" &&
+    typeof window.__ON_LINE==="function" && typeof window.__ON_BEAT==="function" &&
+    typeof window.__ON_BRAVO==="function" && typeof window.__ON_SECTION==="function";
+  var свои = цел && полки.every(function(к){ return window["__"+к] === К.такт[к]; });
+  var круг = false, пуш = false;
   try{
     var было = window.__ON_BEAT;
     window.__ON_BEAT = function(){};                     /* WRITE — только на время пробы */
     круг = (window.__ON_BEAT !== было && К.такт.ON_BEAT === window.__ON_BEAT); /* READ→COMPARE */
     window.__ON_BEAT = было;                             /* CLEANUP */
   }catch(e){}
+  try{
+    var м = window.__TAKT_SUBS, ящикМ = К && К.такт && К.такт.TAKT_SUBS;
+    if(м && ящикМ && typeof м.push === "function"){
+      var маркер = function(){ };
+      м.push(маркер);                                    /* WRITE — метод-вызов через мост */
+      пуш = (м === ящикМ && ящикМ[ящикМ.length-1] === маркер);   /* READ→COMPARE: записалось в ящик */
+      var idx = ящикМ.indexOf(маркер);
+      if(idx >= 0) ящикМ.splice(idx, 1);                 /* CLEANUP — по identity, не чужое */
+    }
+  }catch(e){}
   return [
-    { sec:"I", n:"такт: семья «такт·пульс·синхрон» переселена — "+(цел ? (К.мостов+"/57 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
-    { sec:"I", n:"такт: мост-хук бита ходит туда-обратно (адрес↔ящик)", ok: круг }
+    { sec:"I", n:"такт: все семь имён живы (TAKT/PULSE/TAKT_SUBS/ON_LINE/ON_BEAT/ON_BRAVO/ON_SECTION)", ok: жив, warn: !жив },
+    { sec:"I", n:"такт: семь полок читаются из ящика №6 (identity адрес↔ящик)", ok: свои, warn: !свои },
+    { sec:"I", n:"такт: подписка долей пишет в тот же массив ящика (push-круг окно↔ящик)", ok: пуш, warn: !пуш },
+    { sec:"I", n:"такт: мост-хук бита ходит туда-обратно (адрес↔ящик) — "+(цел ? (К.мостов+" мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: круг }
   ];
 };
 
@@ -9068,7 +9087,10 @@ function идПоложи(store, ключ, значение){
     if(!ибДоступен){ res(false); return; }
     try{
       var rq = идТх(store, "readwrite").put(значение, ключ);
-      rq.onsuccess = function(){ res(true); };
+      rq.onsuccess = function(){
+        if(store === "библиотека") хранПроси();   /* S-04: появилось долгоживущее — просим persist (один раз) */
+        res(true);
+      };
       rq.onerror = function(){ res(false); };
     }catch(e){ res(false); }
   });
@@ -9082,6 +9104,38 @@ function идВозьми(store, ключ){
       rq.onerror = function(){ res(null); };
     }catch(e){ res(null); }
   });
+}
+
+/* ── S-04 · ХРАН: закрепление памяти (storage.persist) ──
+   Зачем: без persist браузер может выгнать библиотеку (IDB) и офлайн-кэш
+   при нехватке места. Просим один раз — при первом импорте в библиотеку.
+   Честно: отказ ≠ поломка (UNKNOWN ≠ FAIL), правду скажет проба ЗДОРОВЬЯ. */
+var ХРАН_ТОСТ = "s31.хранилище.тост";
+var ХРАН = { спрашивали:false, закреплено:"не спрашивали" };
+function хранСкажи(т){
+  try{ if(window.__KV && window.__KV.showToast) window.__KV.showToast(т); }catch(e){ }
+}
+function хранПроси(){
+  if(ХРАН.спрашивали) return Promise.resolve(ХРАН.закреплено);
+  ХРАН.спрашивали = true;
+  var хр = (typeof navigator !== "undefined") ? navigator.storage : null;
+  if(!хр || typeof хр.persist !== "function"){ ХРАН.закреплено = "нет API в этом браузере"; return Promise.resolve(ХРАН.закреплено); }
+  return хр.persist().then(function(дано){
+    ХРАН.закреплено = дано ? "закреплено" : "отказ браузера";
+    if(!дано && ДОК.данные[ХРАН_ТОСТ] === undefined){
+      хранСкажи("Дом не смог закрепить память: браузер может выгнать библиотеку, когда место кончится. Установи ЛАДОМ как приложение — тогда закрепится.");
+      try{ ДОК.данные[ХРАН_ТОСТ] = true; докСохрани(); }catch(e){ }
+    }
+    return ХРАН.закреплено;
+  }).catch(function(){ ХРАН.закреплено = "ошибка запроса"; return ХРАН.закреплено; });
+}
+function хранПроверь(){   /* старт: что браузер уже решил? */
+  var хр = (typeof navigator !== "undefined") ? navigator.storage : null;
+  if(!хр || typeof хр.persisted !== "function"){
+    if(ХРАН.закреплено === "не спрашивали") ХРАН.закреплено = "нет API в этом браузере";
+    return;
+  }
+  хр.persisted().then(function(уже){ if(уже) ХРАН.закреплено = "закреплено"; }).catch(function(){ });
 }
 
 /* ── миграции: цепочка версий единого дока ── */
@@ -9167,6 +9221,7 @@ window.__СКЛАД = {
       }catch(e){ }
     }
     докСохрани();
+    try{ хранПроверь(); }catch(e){ }
     return ок;
   }),
   читай: function(ключ, дефолт){
@@ -9192,6 +9247,7 @@ window.__СКЛАД = {
     return {
       ok: true,
       idb: ибДоступен ? "да" : "нет (живём на доме)",
+      хранилище: ХРАН.закреплено,
       версия: ДОК.v,
       ключей: п,
       переводов: тр,
@@ -9199,6 +9255,7 @@ window.__СКЛАД = {
     };
   }
 };
+window.__ХРАН = { статус:function(){ return { закреплено: ХРАН.закреплено, спрашивали: ХРАН.спрашивали }; } };
 try{
   if(window.KV12 && KV12.health && !KV12.health.__склад){
     var __kh = KV12.health;
@@ -9211,6 +9268,16 @@ try{
   }
 }catch(e){ }
 })();
+window.__HEALTH20 = function(){   /* S-04: хранилище под закреплением (19 — ШИЛКА коллег) */
+  var х = window.__ХРАН ? window.__ХРАН.статус() : { закреплено:"склад не поднялся" };
+  var ок = х.закреплено === "закреплено";
+  var нетАпи = String(х.закреплено).indexOf("нет API") === 0;
+  return [
+    { sec:"R", n:"хранилище: "+(ок ? "закреплено — браузер обещал не выгонять библиотеку и офлайн-кэш"
+      : х.закреплено+(нетАпи ? " — живём без закрепления (старый браузер)" : " — может выгнать библиотеку при нехватке места; установи дом как приложение")),
+      ok: ок, warn: !ок }
+  ];
+};
 </script>
 
 <script>/* v10.14 «КРЫША» · инлайн-библиотека QR (qrcode-generator 1.4.4, MIT) */
@@ -9288,7 +9355,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.48', такт:'ШИЛКА', кэш:'s15-orkestrator-v103', стр:'2026-10-10', ver:'v10.48 «ШИЛКА»', build:String(window.__BUILD_SHA||"3394112235c1a2c6"), cache:'s15-orkestrator-v103' };
+window.APP = { v:'10.49', такт:'СКЛАД', кэш:'s15-orkestrator-v104', стр:'2026-10-10', ver:'v10.49 «СКЛАД»', build:String(window.__BUILD_SHA||"38ff1f56de4c0304"), cache:'s15-orkestrator-v104' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
