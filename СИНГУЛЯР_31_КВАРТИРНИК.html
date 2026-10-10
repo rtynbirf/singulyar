@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.38 «КОМОД» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.39 «ШКАТУЛКА» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.38 «КОМОД» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.39 «ШКАТУЛКА» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1573,7 +1573,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -4010,6 +4010,65 @@ window.__HEALTH12 = function(){
   return [
     { sec:"I", n:"комод: синхро-семья переселена — "+(цел ? (К.мостов+"/5 мостов, ящик «синхро» жив") : "мост не встал"), ok: жив, warn: !жив },
     { sec:"I", n:"комод: адрес и ящик сходятся (запись через window.* попадает в ящик)", ok: круг }
+  ];
+};
+
+/* ── С24 · ШКАТУЛКА v10.39: переселение семьи «сканер·склад» (фаза 2, такт 2) ──
+   Обряд тот же (см. С23): снапшот → мост → проба. Второй ящик комода: сканер
+   голоса (__SCAN, __SCAN_ACTIVE, __SCAN_SELECT), запись (__REC), позиция вечера
+   (__POS), импорт памяти (__IMPORT) и СКЛАД (__СКЛАД). У семьи смешанный доступ
+   (window.__СКЛАД && __СКЛАД.пиши) — мост прозрачен: bare-имя resolves через
+   тот же глобальный аксессор. СКЛАД строится ниже по файлу — встанет в ящик
+   через мост-сеттер, его «один склад — один хозяин» не обманут. */
+(function(){
+  var К = window.__КОМОД;
+  var сканер = {
+    SCAN:        (typeof window.__SCAN==="object" && window.__SCAN)         ? window.__SCAN        : null,
+    SCAN_ACTIVE: (typeof window.__SCAN_ACTIVE==="boolean")                  ? window.__SCAN_ACTIVE : false,
+    SCAN_SELECT: (typeof window.__SCAN_SELECT==="function")                 ? window.__SCAN_SELECT : null,
+    REC:         (typeof window.__REC==="object" && window.__REC)           ? window.__REC         : null,
+    POS:         (typeof window.__POS==="object" && window.__POS)           ? window.__POS         : null,
+    IMPORT:      (typeof window.__IMPORT==="function")                      ? window.__IMPORT      : null,
+    СКЛАД:       (typeof window.__СКЛАД==="object" && window.__СКЛАД)       ? window.__СКЛАД       : null
+  };
+  function мост(имя, ключ){
+    try{
+      var ст = Object.getOwnPropertyDescriptor(window, имя);
+      if(ст && ст.configurable===false) return false;  /* занято неконфигурируемым — не воюем */
+      if(ст) delete window[имя];                       /* старая полка снята — вешаем мост */
+      Object.defineProperty(window, имя, {
+        get: function(){ return сканер[ключ]; },
+        set: function(v){ сканер[ключ] = v; },
+        enumerable: false, configurable: false
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var полки = [
+    ["__SCAN","SCAN"], ["__SCAN_ACTIVE","SCAN_ACTIVE"], ["__SCAN_SELECT","SCAN_SELECT"],
+    ["__REC","REC"], ["__POS","POS"], ["__IMPORT","IMPORT"], ["__СКЛАД","СКЛАД"]
+  ].map(function(п){ return мост(п[0], п[1]); });
+  var старЦел = К.цел;
+  К.сканер = сканер;
+  К.ящики.push("сканер·склад");
+  К.вещей += 7;
+  К.мостов += полки.filter(Boolean).length;
+  К.вер = "v10.39 «ШКАТУЛКА»";
+  К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
+})();
+window.__HEALTH13 = function(){
+  var К = window.__КОМОД, цел = !!(К && К.сканер);
+  var жив = цел && !!window.__SCAN && typeof window.__IMPORT==="function";
+  var круг = false;
+  try{
+    var было = window.__SCAN_ACTIVE;
+    window.__SCAN_ACTIVE = !было;                        /* WRITE — только на время пробы */
+    круг = (К.сканер.SCAN_ACTIVE === !было);             /* READ→COMPARE */
+    window.__SCAN_ACTIVE = было;                         /* CLEANUP */
+  }catch(e){}
+  return [
+    { sec:"I", n:"шкатулка: семья «сканер·склад» переселена — "+(цел ? (К.мостов+"/12 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
+    { sec:"I", n:"шкатулка: мост-флаг сканера ходит туда-обратно (адрес↔ящик)", ok: круг }
   ];
 };
 
@@ -8140,7 +8199,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.38', такт:'КОМОД', кэш:'s15-orkestrator-v93', стр:'2026-10-10', ver:'v10.38 «КОМОД»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v93' };
+window.APP = { v:'10.39', такт:'ШКАТУЛКА', кэш:'s15-orkestrator-v94', стр:'2026-10-10', ver:'v10.39 «ШКАТУЛКА»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v94' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
