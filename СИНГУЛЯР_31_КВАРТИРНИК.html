@@ -31,13 +31,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.41 «СЦЕНА» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — КВАРТИРНИК v10.42 «ГОЛОС» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9A%D0%92%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%9D%D0%98%D0%9A.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.41 «СЦЕНА» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — КВАРТИРНИК v10.42 «ГОЛОС» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1573,7 +1573,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -4206,6 +4206,83 @@ window.__HEALTH15 = function(){
   return [
     { sec:"I", n:"сцена: семья «сцена·свет» переселена — "+(цел ? (К.мостов+"/32 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
     { sec:"I", n:"сцена: мост-утка ходит туда-обратно (адрес↔ящик)", ok: круг }
+  ];
+};
+
+/* ── С27 · ГОЛОС v10.42: переселение семьи «голос·микрофон» (фаза 2, такт 5) ──
+   Обряд тот же (см. С23–С26): снапшот → мост → проба. Пятый ящик комода:
+   голос-тракт (__ГОЛОС), М2-голос (__М2ГОЛОС), КВ-голос (__КВГОЛОС),
+   пульс-голос (__PULSEVOICE), голос-сканер (__VC), микрофон-факты
+   (__MIC_FACTS), состояния тракта (__MIC_STATE, __MS_STATE), нота (openMic)
+   и шилка (__SHILKA) — 10 вещей. Шилка — трассер буквы: казначей ведёт её
+   в голосе (фонема выстреливает НАОПЕРЕЖЕ звука).
+   Геометрия времени: восемь строятся выше моста — уходят в снапшот:
+   объекты по ССЫЛКЕ (__КВГОЛОС, __PULSEVOICE, __VC, __MIC_FACTS, __SHILKA —
+   замыкания и пульт работают с тем же объектом уже в ящике; копий не делаем),
+   openMic — функция по ссылке, скаляры тракта (__MIC_STATE, __MS_STATE) — по
+   значению: async-присвоения «разрешён/отказ» приходят позже и ложатся в ящик
+   через мост-сеттер, семантика строки не меняется (алиас micS/msS в ЗДОРОВЬЕ
+   читает один раз — как и до моста). Двое — призраки казначеи: __ГОЛОС
+   (43 гардованных чтения «if(window.__ГОЛОС && …)») и __М2ГОЛОС (только
+   реестр) — тракта в файле нет; null моста честно falsy, все ветки живут
+   как раньше, а когда надстройка явится — мост-сеттер примет её в ящик.
+   Записей слота в доме нет, кроме самих членов семьи (тракт ставит
+   «разрешён/отказ»); 0 delete / 0 defineProperty / 0 чужих перезаписей —
+   typeof-проба __SHILKA==="object" и гарды переживают аксессор. */
+(function(){
+  var К = window.__КОМОД;
+  var голос = {
+    ГОЛОС:      (typeof window.__ГОЛОС==="object" && window.__ГОЛОС)           ? window.__ГОЛОС      : null,
+    М2ГОЛОС:    (typeof window.__М2ГОЛОС==="object" && window.__М2ГОЛОС)       ? window.__М2ГОЛОС    : null,
+    КВГОЛОС:    (typeof window.__КВГОЛОС==="object" && window.__КВГОЛОС)       ? window.__КВГОЛОС    : null,
+    PULSEVOICE: (typeof window.__PULSEVOICE==="object" && window.__PULSEVOICE) ? window.__PULSEVOICE : null,
+    VC:         (typeof window.__VC==="object" && window.__VC)                 ? window.__VC         : null,
+    MIC_FACTS:  (typeof window.__MIC_FACTS==="object" && window.__MIC_FACTS)   ? window.__MIC_FACTS  : null,
+    MIC_STATE:  (typeof window.__MIC_STATE==="string")                         ? window.__MIC_STATE  : null,
+    MS_STATE:   (typeof window.__MS_STATE==="string")                          ? window.__MS_STATE   : null,
+    OPENMIC:    (typeof window.openMic==="function")                           ? window.openMic      : null,
+    SHILKA:     (typeof window.__SHILKA==="object" && window.__SHILKA)         ? window.__SHILKA     : null
+  };
+  function мост(имя, ключ){
+    try{
+      var ст = Object.getOwnPropertyDescriptor(window, имя);
+      if(ст && ст.configurable===false) return false;  /* занято неконфигурируемым — не воюем */
+      if(ст) delete window[имя];                       /* старая полка снята — вешаем мост */
+      Object.defineProperty(window, имя, {
+        get: function(){ return голос[ключ]; },
+        set: function(v){ голос[ключ] = v; },
+        enumerable: false, configurable: false
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var полки = [
+    ["__ГОЛОС","ГОЛОС"], ["__М2ГОЛОС","М2ГОЛОС"], ["__КВГОЛОС","КВГОЛОС"],
+    ["__PULSEVOICE","PULSEVOICE"], ["__VC","VC"], ["__MIC_FACTS","MIC_FACTS"],
+    ["__MIC_STATE","MIC_STATE"], ["__MS_STATE","MS_STATE"],
+    ["openMic","OPENMIC"], ["__SHILKA","SHILKA"]
+  ].map(function(п){ return мост(п[0], п[1]); });
+  var старЦел = К.цел;
+  К.голос = голос;
+  К.ящики.push("голос·микрофон");
+  К.вещей += 10;
+  К.мостов += полки.filter(Boolean).length;
+  К.вер = "v10.42 «ГОЛОС»";
+  К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
+})();
+window.__HEALTH16 = function(){
+  var К = window.__КОМОД, цел = !!(К && К.голос);
+  var жив = цел && typeof window.openMic==="function" && !!window.__MIC_FACTS && typeof window.__VC==="object" && !!window.__SHILKA;
+  var круг = false;
+  try{
+    var было = window.__MIC_FACTS;
+    window.__MIC_FACTS = function(){};                   /* WRITE — только на время пробы */
+    круг = (window.__MIC_FACTS !== было && К.голос.MIC_FACTS === window.__MIC_FACTS); /* READ→COMPARE */
+    window.__MIC_FACTS = было;                           /* CLEANUP */
+  }catch(e){}
+  return [
+    { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+"/42 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
+    { sec:"I", n:"голос: мост-факты ходит туда-обратно (адрес↔ящик)", ok: круг }
   ];
 };
 
@@ -8336,7 +8413,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.41', такт:'СЦЕНА', кэш:'s15-orkestrator-v96', стр:'2026-10-10', ver:'v10.41 «СЦЕНА»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v96' };
+window.APP = { v:'10.42', такт:'ГОЛОС', кэш:'s15-orkestrator-v97', стр:'2026-10-10', ver:'v10.42 «ГОЛОС»', build:String(window.__BUILD_SHA||"b67ad30aba5f7fd2"), cache:'s15-orkestrator-v97' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
