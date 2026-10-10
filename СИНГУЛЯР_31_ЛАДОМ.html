@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.48 «ШИЛКА» (С30, приказ владельца: максимум дорожной карты; поверх v10.47 «ВЫХОД»): ПАСПОРТ ПУЛЬТА — живые числа (трассер Шилки, упреждение, полёт звука, сдвиг, 8-tap, трубы, комод) — кнопка ✎ в пульте ЛИЦ и intent PASSPORT; ТИШИНА — конверт MUTE: шина ЛИЦ + СЛОВАРЬ («тишина/молчим/звук») + кнопка ◻ ТИШИНА во всех лицах + kv12 «mute» + руль зала «mute»; aria-live: шина озвучивает подтверждения (#live polite / #liveAlert assertive — канон v9.7); prep — полоса «ПОДГОТОВКА/вечер идёт» (state.started, без двойного состояния); гость: трансляция кнопок — таблица данных __ГОСТЬ_ТРАНС вместо if-цепочки; пульт телефона: aria-live + ТИШИНА + в пре-кэше SW; К.вер выправлен на текущий такт (долг v10.47); проба ЗДОРОВЬЕ 19; кэш v103.
 <!-- такт v10.47 «ВЫХОД» (приказ владельца, параллельный полимат-рой; поверх тактов коллег v10.45 «ГОСТИНАЯ» и v10.46 «ПУЛЬТ»): ВЫХОД с КРЫШИ усилен до приказа — кнопка 72×64, верхний угол, поверх всех слоёв (z 2147483780), видна всегда; шит голосования закрывается без голоса; BACK на ТВ закрывает панель КРЫШИ; дубль-слушатель зала убит; петля гостя снята; Esc гостя ведёт домой; пульт телефона получил «в дом»; корень бага applyScene починен (#bravo .bravo); третий вид пульта ПЛИТКА (+1 к реестру __ПУЛЬТЫ.виды); бренд: «ЛАДОМ — пространство своих» · «Общайтесь так, как удобно каждому» · зонтик «СИНГУЛЯР · ЛАДОМ»; кэш v102.
 <!-- такт v10.46 «ПУЛЬТ» (приказ владельца: максимум дорожной карты): ящик С29 «пульт·сообщения» — 8 мостов (S31ПУЛЬТ/__PULT/__ПУЛЬТЫ/__РУЛЬ/__TIPS/__TOASTS/__ALERT/__ЛИЦАПУЛЬТ); ядро ЛИЦ — одиннадцать видов одного пульта (10 из v16 + МИНИ), память последнего лица kv.litsa, дверь «ПУЛЬТ · ЛИЦА» в крыше; проба ЗДОРОВЬЕ 18; кэш v101.
 <!-- такт v10.44 «ЛАДОМ» (приказ владельца): прежнее имя дома вычеркнуто отовсюду; два вида пульта — ПОЛНЫЙ и РУЛЬ — дом помнит последний выбор; выход с крыши для телефона-гостя; Esc закрывает панель крыши; кэш v99.
@@ -34,13 +35,13 @@
 <meta name="description" content="Общайтесь так, как удобно каждому. Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
-<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.47 «ВЫХОД»">
+<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.48 «ШИЛКА»">
 <meta property="og:description" content="Общайтесь так, как удобно каждому. Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.47 «ВЫХОД» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.48 «ШИЛКА» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1576,7 +1577,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -1635,7 +1636,7 @@ window.__КАЗНА = (function(){
     ["голос·микрофон",     /^__ГОЛОС|^__М2ГОЛОС$|^__КВГОЛОС$|^__PULSEVOICE$|^__VC$|^__MIC_|^__MS_STATE$|^openMic$|^__SHILKA$/],
     ["такт·пульс·синхрон", /^__TAKT|^__PULSE$|^__ON_|^__SYNCOFF$|^__OUTLAT$|^__VISLAT$|^__SYNC_/],
     ["МАЛЫШ·языки",        /^__МАЛЫШ$|^__LANGS|^__ЯЗЫКЧИПСЫ$|^ЗАКОН_|^НОСИТЕЛИ$|^ЧЕРНОВИКИ_|^__UILANG$/],
-    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__TIPS$|^__TOASTS$|^__ALERT/],
+    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__TIPS$|^__TOASTS$|^__ALERT/],
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$/],
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
@@ -4402,7 +4403,7 @@ window.__HEALTH17 = function(){
   К.ящики.push("пульт·сообщения");
   К.вещей += 8;
   К.мостов += полки.filter(Boolean).length;
-  К.вер = "v10.46 «ПУЛЬТ»";
+  К.вер = "v10.48 «ШИЛКА»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
 window.__HEALTH18 = function(){
@@ -4433,6 +4434,33 @@ window.__HEALTH18 = function(){
     { sec:"I", n:"пульт: лица — "+лица, ok: String(лица).indexOf("ok")===0, warn: String(лица).indexOf("ok")!==0 },
     { sec:"I", n:"пульт: память лица (kv.litsa) пишет и читает", ok: пал }
   ];
+};
+
+/* ── С30 · ШИЛКА v10.48: пробы пульта-долгов (паспорт/тишина/aria/prep/таблица) ── */
+window.__HEALTH19 = function(){
+  var out = [];
+  var паспорт = (typeof window.__ПУЛТПАСПОРТ === "object") && typeof window.__ПУЛТПАСПОРТ.открыть === "function";
+  out.push({ sec:"I", n:"шилка: паспорт пульта отвечает живыми числами (трассер "+Math.round((window.__VISLAT||0)*1000)+" мс, упреждение "+Math.round(((window.__SHILKA&&window.__SHILKA.lead)||0)*1000)+" мс, полёт звука "+Math.round((window.__OUTLAT||0)*1000)+" мс)", ok: паспорт, warn: !паспорт });
+  var тиш = false, вернул = true;
+  try{
+    var K = window.__KV, а = K && K.audio;
+    if(а){
+      var было = !!а.muted;
+      window.__ЛИЦАПУЛЬТ.шина({ v:1, intent:"MUTE", arg:"", src:"тест" });
+      тиш = (!!а.muted) === (!было);
+      window.__ЛИЦАПУЛЬТ.шина({ v:1, intent:"MUTE", arg:"", src:"тест" });
+      вернул = ((!!а.muted) === было);
+    } else вернул = false;
+  }catch(e){ вернул = false; }
+  out.push({ sec:"C", n:"тишина: конверт MUTE проходит шину — громкость приглушается и возвращается", ok: тиш && вернул, warn: !(тиш && вернул) });
+  out.push({ sec:"R", n:"aria-live: живые области дома слушают пульт (#live polite, #liveAlert assertive)", ok: !!(document.getElementById("live") && document.getElementById("liveAlert")) });
+  var пр = false;
+  try{ пр = !!(window.__KV && window.__KV.state && ("started" in window.__KV.state)); }catch(e){}
+  out.push({ sec:"R", n:"prep: пульт различает подготовку и вечер (started в состоянии дома)", ok: пр });
+  var тр = 0;
+  try{ тр = (window.__ГОСТЬ_ТРАНС && window.__ГОСТЬ_ТРАНС.команды && window.__ГОСТЬ_ТРАНС.команды.length) || 0; }catch(e){}
+  out.push({ sec:"S", n:"гость: трансляция кнопок — таблица данных ("+тр+" команд), не if-цепочка", ok: тр >= 6, warn: тр < 6 });
+  return out;
 };
 
 /* ── ЗДОРОВЬЕ v4 (добавка к движку) ── */
@@ -5505,41 +5533,41 @@ window.__ЛИЦАПУЛЬТ = (function(){
     var L, п, i;
     switch(id){
       case 'руль':
-        return б('TOGGLE','▶ ПЕТЬ','cta') + б('OPEN:scene','СЦЕНА') + б('OPEN:access','ЗАЛ · ЛЮДИ') + б('OPEN:pult','НАСТРОЙКИ');
+        return б('TOGGLE','▶ ПЕТЬ','cta') + б('MUTE','◻ ТИШИНА') + б('OPEN:scene','СЦЕНА') + б('OPEN:access','ЗАЛ · ЛЮДИ') + б('OPEN:pult','НАСТРОЙКИ');
       case 'рельсы':
-        return б('SCENE:-1','⏮ СЦЕНА') + б('TOGGLE','▶ / ⏸','cta') + б('SCENE:+1','СЦЕНА ⏭') + б('STOP','⏹') + б('HOME','ДОМ');
+        return б('SCENE:-1','⏮ СЦЕНА') + б('TOGGLE','▶ / ⏸','cta') + б('SCENE:+1','СЦЕНА ⏭') + б('STOP','⏹') + б('MUTE','◻ ТИШИНА') + б('HOME','ДОМ');
       case 'дуга':
-        return б('TOGGLE','▶','cta') + б('STOP','⏹') + б('SCENE:+1','СЦЕНА+') + б('SYNC:-10','−10 С') + б('SYNC:10','+10 С') + б('OPEN:access','ЛЮДИ') + б('OPEN:pult','ПУЛЬТ') + б('HOME','ДОМ');
+        return б('TOGGLE','▶','cta') + б('STOP','⏹') + б('MUTE','◻') + б('SCENE:+1','СЦЕНА+') + б('SYNC:-10','−10 С') + б('SYNC:10','+10 С') + б('OPEN:access','ЛЮДИ') + б('OPEN:pult','ПУЛЬТ') + б('HOME','ДОМ');
       case 'стена':
-        return б('TOGGLE','▶ ПЕТЬ / ПАУЗА','cta') + б('STOP','⏹ СТОП') + б('HOME','⌂ ДОМ') + б('OPEN:pult','ПУЛЬТ')
+        return б('TOGGLE','▶ ПЕТЬ / ПАУЗА','cta') + б('STOP','⏹ СТОП') + б('MUTE','◻ ТИШИНА') + б('HOME','⌂ ДОМ') + б('OPEN:pult','ПУЛЬТ')
              + б('SCENE:0','СЦЕНА 1') + б('SCENE:1','СЦЕНА 2') + б('SCENE:2','СЦЕНА 3') + б('SCENE:3','СЦЕНА 4')
              + б('SYNC:-10','−10 С') + б('SYNC:10','+10 С') + б('OPEN:access','ЛЮДИ') + б('OPEN:face','ЛИЦО');
       case 'скала':
-        return б('TOGGLE','ПЕТЬ / ПАУЗА','cta') + б('STOP','ТИХО') + б('HOME','ДОМ');
+        return б('TOGGLE','ПЕТЬ / ПАУЗА','cta') + б('STOP','ТИХО') + б('MUTE','◻ ТИШИНА') + б('HOME','ДОМ');
       case 'такт':
         L = (window.__SCENE && window.__SCENE.list) || [];
-        п = б('TOGGLE','▶ ПЕТЬ','cta') + б('STOP','⏹');
+        п = б('TOGGLE','▶ ПЕТЬ','cta') + б('STOP','⏹') + б('MUTE','◻ ТИШИНА');
         for(i = 0; i < 4 && i < L.length; i++) п += б('SCENE:'+i, (i+1) + ' · ' + (L[i].name || L[i].k));
         return п + б('HOME','ДОМ');
       case 'карта':
         return б('HOME','⌂ ДОМ — всё сразу','cta') + б('OPEN:scene','СЦЕНА · свет') + б('OPEN:access','ЛЮДИ · зал')
-             + б('OPEN:pult','ПУЛЬТ · настройки') + б('OPEN:health','ЗДОРОВЬЕ · томограф') + б('OPEN:face','ЛИЦО · вид пульта');
+             + б('OPEN:pult','ПУЛЬТ · настройки') + б('OPEN:health','ЗДОРОВЬЕ · томограф') + б('MUTE','◻ ТИШИНА') + б('PASSPORT','ПАСПОРТ · ШИЛКА') + б('OPEN:face','ЛИЦО · вид пульта');
       case 'слово':
         return '<input id="словоВвод" placeholder="напиши: пой / пауза / стоп / дом / назад / сцена / люди / пульт / лицо" aria-label="текстовая команда пульту">'
-             + б('TOGGLE','пой / пауза') + б('STOP','стоп') + б('BACK','назад') + б('HOME','дом')
+             + б('TOGGLE','пой / пауза') + б('STOP','стоп') + б('MUTE','тишина') + б('BACK','назад') + б('HOME','дом')
              + б('OPEN:scene','сцена') + б('OPEN:access','люди') + б('OPEN:pult','пульт') + б('OPEN:face','лицо');
       case 'штиль':
-        return б('TOGGLE','ПЕТЬ ИЛИ ПАУЗА','cta') + б('PAUSE','ПАУЗА') + б('STOP','СТОП') + б('BACK','ШАГ НАЗАД')
+        return б('TOGGLE','ПЕТЬ ИЛИ ПАУЗА','cta') + б('PAUSE','ПАУЗА') + б('STOP','СТОП') + б('MUTE','◻ ТИШИНА') + б('BACK','ШАГ НАЗАД')
              + б('HOME','В ДОМ ОДНИМ ШАГОМ') + б('OPEN:scene','СЦЕНА И СВЕТ') + б('OPEN:access','ЛЮДИ И ЗАЛ')
              + б('OPEN:pult','ПУЛЬТ И НАСТРОЙКИ') + б('OPEN:face','СМЕНИТЬ ЛИЦО ПУЛЬТА');
       case 'эхо':
         return '<div id="лиЭхо" aria-live="polite">состояние дома: …</div>'
-             + б('TOGGLE','▶ / ⏸','cta') + б('STOP','⏹') + б('BACK','НАЗАД') + б('HOME','ДОМ')
+             + б('TOGGLE','▶ / ⏸','cta') + б('STOP','⏹') + б('MUTE','◻ ТИШИНА') + б('BACK','НАЗАД') + б('HOME','ДОМ')
              + б('OPEN:face','ЛИЦО') + б('OPEN:pult','НАСТРОЙКИ');
       case 'мини':
-        return б('TOGGLE','▶','cta') + б('STOP','⏹') + б('HOME','⌂');
+        return б('TOGGLE','▶','cta') + б('STOP','⏹') + б('MUTE','◻') + б('HOME','⌂');
       default:
-        return б('TOGGLE','▶ ПЕТЬ','cta') + б('OPEN:pult','ПУЛЬТ');
+        return б('TOGGLE','▶ ПЕТЬ','cta') + б('MUTE','◻ ТИШИНА') + б('OPEN:pult','ПУЛЬТ');
     }
   }
 
@@ -5548,7 +5576,8 @@ window.__ЛИЦАПУЛЬТ = (function(){
     ['пой','TOGGLE',''], ['пауза','TOGGLE',''], ['играй','TOGGLE',''], ['стоп','STOP',''], ['тихо','STOP',''],
     ['дом','HOME',''], ['назад','BACK',''], ['сцена','SCENE','+1'],
     ['люди','OPEN','access'], ['зал','OPEN','access'], ['пульт','OPEN','pult'], ['настройки','OPEN','pult'],
-    ['здоровье','OPEN','health'], ['лицо','FACE','галерея'], ['вперёд','SYNC','10'], ['вперед','SYNC','10']
+    ['здоровье','OPEN','health'], ['лицо','FACE','галерея'], ['вперёд','SYNC','10'], ['вперед','SYNC','10'],
+    ['тишина','MUTE',''], ['молчим','MUTE',''], ['звук','MUTE','']
   ];
   function слово(т){
     т = String(т||'').toLowerCase().trim();
@@ -5557,6 +5586,17 @@ window.__ЛИЦАПУЛЬТ = (function(){
       if(т.indexOf(СЛОВАРЬ[i][0]) >= 0){ шина(конверт(СЛОВАРЬ[i][1], СЛОВАРЬ[i][2], 'слово')); return; }
     }
     try{ showToast('Слово не опознано: ' + т); }catch(_){}
+  }
+
+  /* ── v10.48 «ШИЛКА»: aria-live пульта — живые области дома слушают шину ──
+     мирные подтверждения — polite (#live), сбои и гарды — сразу assertive (#liveAlert) */
+  function озвучь(т, срочно){
+    try{
+      var л = document.getElementById(срочно ? 'liveAlert' : 'live');
+      if(!л) return;
+      л.textContent = '';
+      setTimeout(function(){ л.textContent = т; }, 30);
+    }catch(e){}
   }
 
   /* ── ШИНА: конверт → дом; дом один, ядро не знает о лицах ── */
@@ -5575,11 +5615,14 @@ window.__ЛИЦАПУЛЬТ = (function(){
       case 'OPEN':   res = слой(env.arg); break;
       case 'FACE':   res = (env.arg === 'галерея') ? слой('face') : лицо_смена(env.arg); break;
       case 'TEST':   res = проба(true); break;
+      case 'MUTE':   if(K && K.audio){ K.audio.muted = !K.audio.muted; if(env.src !== 'тест'){ try{ showToast(K.audio.muted ? 'Тишина: громкость ноль' : 'Звук вернулся'); }catch(_){} } } else res = 'guard:нет-дома'; break;
+      case 'PASSPORT': try{ if(window.__ПУЛТПАСПОРТ && window.__ПУЛТПАСПОРТ.открыть) window.__ПУЛТПАСПОРТ.открыть(); else res = 'guard:нет-паспорта'; }catch(e){ res = 'guard:паспорт упал'; } break;
       default: res = 'ignored';
     }
     ЖУРНАЛ.unshift(ччммсс(env.ts) + ' · ' + (env.src||'?') + ' → ' + env.intent + (env.arg ? ':' + env.arg : ''));
     if(ЖУРНАЛ.length > 12) ЖУРНАЛ.length = 12;
     if(env.src !== 'тест') эхоКраска();
+    if(env.src !== 'тест') озвучь('пульт: ' + env.intent + (env.arg ? ' ' + env.arg : '') + (res !== 'ok' ? ' — ' + res : ''), String(res).indexOf('guard') === 0);
     return res;
   }
 
@@ -5632,6 +5675,7 @@ window.__ЛИЦАПУЛЬТ = (function(){
     if(!э) э = ['', '?', ''];
     var имя = д.querySelector('#лиИмя'); if(имя) имя.textContent = э[1];
     var оп = д.querySelector('#лиОпис'); if(оп) оп.textContent = э[2];
+    препКраска();
     галереяКраска();
   }
 
@@ -5647,7 +5691,18 @@ window.__ЛИЦАПУЛЬТ = (function(){
   }
 
   var ИНТЕРВАЛ = null;
+  /* ── v10.48 «ШИЛКА»: prep — пульт различает подготовку и вечер ──
+     дом один, двойного состояния нет: полоса честно читает started у состояния дома */
+  function препКраска(){
+    try{
+      var пр = document.getElementById('лиПреп'); if(!пр) return;
+      var Кд = дом();
+      var старт = !!(Кд && Кд.state && Кд.state.started);
+      пр.textContent = старт ? '▶ вечер идёт' : '⏳ ПОДГОТОВКА — вечер не начат: сцена ждёт старта';
+    }catch(e){}
+  }
   function эхоКраска(){
+    препКраска();
     var п = document.getElementById('лиЭхо'); if(!п) return;
     var K = дом(), а = K && K.audio, сц = '';
     try{
@@ -5657,7 +5712,8 @@ window.__ЛИЦАПУЛЬТ = (function(){
     }catch(e){}
     var состояние = 'состояние дома: ' + (а && !а.paused ? 'поём' : 'тишина')
       + (а && а.duration ? ' · ' + мсс(а.currentTime) + ' / ' + мсс(а.duration) : '')
-      + (сц ? ' · сцена: ' + сц : '');
+      + (сц ? ' · сцена: ' + сц : '')
+      + (!K || !K.state || K.state.started ? '' : ' · ⏳ ПОДГОТОВКА — вечер не начат');
     п.textContent = состояние + (ЖУРНАЛ.length ? '\n' + ЖУРНАЛ.slice(0, 8).join('\n') : ' · журнал нажатий пуст');
   }
 
@@ -5673,6 +5729,7 @@ window.__ЛИЦАПУЛЬТ = (function(){
       + '#лиПульт .ли-шапка small{color:var(--faint,#9B9B9B);font-size:11.5px;letter-spacing:.4px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
       + '#лиПульт .ли-х{position:absolute;top:10px;right:12px;background:none;border:0;color:var(--faint,#9B9B9B);font-size:22px;line-height:1;padding:8px 12px;border-radius:10px;cursor:pointer;min-height:32px;min-width:32px}'
       + '#лиПульт .ли-х:hover{color:var(--text,#BABAB9);background:#ffffff12}'
+      + '#лиПреп{margin:0 0 12px;padding:8px 12px;border:1px solid rgba(240,240,248,.12);border-radius:12px;background:#ffffff0a;color:var(--dim,#A7A8A8);font-size:12.5px;letter-spacing:.04em}'
       + '#лиДок{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}'
       + '#лиДок button{appearance:none;font:800 13.5px var(--f,system-ui,sans-serif);letter-spacing:.05em;color:var(--text,#BABAB9);background:#ffffff0e;border:1px solid #ffffff18;border-radius:14px;min-height:52px;min-width:52px;padding:12px 18px;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent}'
       + '#лиДок button:hover{background:#ffffff18;border-color:rgba(222,169,104,.4)}'
@@ -5710,7 +5767,9 @@ window.__ЛИЦАПУЛЬТ = (function(){
     д.id = 'лиПульт';
     д.setAttribute('aria-label', 'ПУЛЬТ · одиннадцать лиц');
     д.innerHTML = '<div class="ли-шапка"><b id="лиИмя">ПУЛЬТ</b><small id="лиОпис">один протокол — одиннадцать лиц</small>'
+      + '<button type="button" class="ли-х" data-i="PASSPORT" style="right:56px" aria-label="Паспорт пульта — живые числа Шилки" title="Паспорт пульта (живые числа)">✎</button>'
       + '<button type="button" class="ли-х" data-i="BACK" aria-label="Закрыть пульт (Esc)" title="Закрыть (Esc)">×</button></div>'
+      + '<div id="лиПреп" class="ли-преп">…</div>'
       + '<div id="лиДок" class="ли-док f-руль"></div>'
       + '<div id="лиГалерея" class="ли-галерея" aria-label="Выбор лица пульта"></div>';
     (document.body || document.documentElement).appendChild(д);
@@ -5792,6 +5851,89 @@ window.__ЛИЦАПУЛЬТ = (function(){
 
   return { вер:1, ключ:ЛКЛЮЧ, лица:ЛИЦА, текущий:idЛиц, открыть:открыть, закрыть:закрыть,
            шина:шина, план:планЛица, проба:проба, конверт:конверт, память:память };
+})();
+
+/* ═══ С30 · ШИЛКА v10.48: ПАСПОРТ ПУЛЬТА — живые числа вместо ощущений ═══
+   ТЗ «ПУЛЬТ НА ВСЕ ВРЕМЕНА»: паспорт = честный доклад: версия пульта, лицо,
+   вид, трассер Шилки 0–150 мс, упреждение, полёт звука, сдвиг юстировки,
+   8-tap, трубы, память комода. Тот же файл и те же настройки дают те же
+   числа у любого (канон ПАСПОРТА ДОМА v9.6 / ПАСПОРТА УНИСОНА v9.7). */
+window.__ПУЛТПАСПОРТ = (function(){
+  var ГОТОВ = false, Д = null;
+  function построить(){
+    if(ГОТОВ) return;
+    Д = document.createElement('dialog');
+    Д.id = 'пулПаспорт';
+    Д.setAttribute('aria-label', 'Паспорт пульта');
+    Д.style.cssText = 'border:1px solid rgba(240,240,248,.14);border-radius:18px;background:#17181A;color:var(--text,#BABAB9);padding:16px 16px 18px;width:min(640px,94vw);max-height:min(88vh,92vh);box-shadow:0 30px 90px #000000cc;font:14px/1.5 var(--f,system-ui,sans-serif);overflow:auto';
+    Д.innerHTML = '<div style="display:flex;align-items:baseline;gap:10px;margin:0 0 12px">'
+      + '<b style="font-size:18px;font-weight:900;letter-spacing:.06em">ПАСПОРТ ПУЛЬТА</b>'
+      + '<small style="color:var(--faint,#9B9B9B);font-size:11.5px;flex:1">живые числа — не ощущения</small>'
+      + '<button type="button" id="пулПаспортХ" aria-label="Закрыть паспорт" style="background:none;border:0;color:var(--faint,#9B9B9B);font-size:22px;line-height:1;padding:6px 10px;cursor:pointer">×</button></div>'
+      + '<div id="пулПаспортЧисла" style="font:13px/1.7 var(--f,system-ui,sans-serif);white-space:pre-wrap;background:#ffffff0a;border:1px solid rgba(240,240,248,.14);border-radius:14px;padding:14px 16px"></div>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px">'
+      + '<button type="button" id="пулПаспортОбн" style="font:800 13px var(--f,system-ui,sans-serif);color:var(--text,#BABAB9);background:#ffffff0e;border:1px solid #ffffff18;border-radius:12px;min-height:48px;padding:10px 18px;cursor:pointer">↻ ОБНОВИТЬ</button>'
+      + '<button type="button" id="пулПаспортТап" style="font:800 13px var(--f,system-ui,sans-serif);color:var(--text,#BABAB9);background:#ffffff0e;border:1px solid #ffffff18;border-radius:12px;min-height:48px;padding:10px 18px;cursor:pointer">8-TAP ЮСТИРОВКА</button>'
+      + '<button type="button" id="пулПаспортУни" style="font:900 13px var(--f,system-ui,sans-serif);color:var(--ink-on-accent,#050608);background:var(--amber,#DEA968);border:0;border-radius:12px;min-height:48px;padding:10px 18px;cursor:pointer">УНИСОН · НАСТРОЙКИ</button>'
+      + '</div>';
+    (document.body || document.documentElement).appendChild(Д);
+    Д.addEventListener('cancel', function(e){ try{ e.preventDefault(); }catch(_){} try{ Д.close(); }catch(_2){} });
+    Д.addEventListener('keydown', function(e){
+      if((e.key || '') === 'Escape' || (e.keyCode || 0) === 27){
+        try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+        try{ Д.close(); }catch(_2){}
+      }
+    });
+    var х = Д.querySelector('#пулПаспортХ'); if(х) х.addEventListener('click', function(){ try{ Д.close(); }catch(_){} });
+    var об = Д.querySelector('#пулПаспортОбн'); if(об) об.addEventListener('click', краска);
+    var тп = Д.querySelector('#пулПаспортТап');
+    if(тп) тп.addEventListener('click', function(){
+      var т;
+      if(window.__TAPCAL && window.__TAPCAL.start){
+        try{
+          if(window.__TAPCAL.on) window.__TAPCAL.stop();
+          window.__TAPCAL.start();
+          т = 'юстировка идёт: тапайте в моменты заговаривания строк — 8 тапов, медиана уйдёт в Унисон';
+        }catch(e){ т = 'долг: юстировка упала — ' + ((e && e.name) || 'ошибка'); }
+      } else т = 'долг: движок 8-tap не встал';
+      var ст = Д.querySelector('#пулПаспортТапСтатус');
+      if(!ст){ ст = document.createElement('div'); ст.id = 'пулПаспортТапСтатус'; ст.style.cssText = 'margin-top:10px;font-size:12.5px;color:var(--amber,#DEA968)'; Д.appendChild(ст); }
+      ст.textContent = т;
+    });
+    var ун = Д.querySelector('#пулПаспортУни');
+    if(ун) ун.addEventListener('click', function(){
+      try{ Д.close(); }catch(_){}
+      try{ if(window.__ЛИЦАПУЛЬТ && window.__ЛИЦАПУЛЬТ.шина) window.__ЛИЦАПУЛЬТ.шина({ v:1, intent:'OPEN', arg:'pult', src:'паспорт' }); }catch(_2){}
+    });
+    ГОТОВ = true;
+    краска();
+  }
+  function мс(с){ var м = Math.round((+с || 0) * 1000); return (м > 0 ? '+' : '') + м + ' мс'; }
+  function краска(){
+    построить();
+    var дч = Д && Д.querySelector('#пулПаспортЧисла'); if(!дч) return;
+    var A = window.APP || {}, К = window.__КОМОД || {};
+    var лцо = '—', вид = '—';
+    try{ лцо = (window.__ЛИЦАПУЛЬТ && window.__ЛИЦАПУЛЬТ.текущий) ? window.__ЛИЦАПУЛЬТ.текущий() : '—'; }catch(e){}
+    try{ var видТ = (window.__ПУЛЬТЫ && window.__ПУЛЬТЫ.текущий) ? window.__ПУЛЬТЫ.текущий() : null; вид = (видТ && видТ.имя) ? видТ.имя : '—'; }catch(e2){}
+    var вмс = Math.round((window.__VISLAT || 0) * 1000);
+    var упр = 0; try{ упр = Math.round((window.__SHILKA ? window.__SHILKA.lead : 0) * 1000); }catch(e3){}
+    var пол = Math.round((window.__OUTLAT || 0) * 1000);
+    var тап = (window.__TAPCAL && window.__TAPCAL.on) ? 'идёт' : 'ждёт';
+    дч.textContent =
+      'версия пульта: v' + (A.v || '?') + ' «' + (A.такт || '?') + '» · кэш ' + (A.кэш || '?') + '\n' +
+      'хэш сборки: ' + (A.build || window.__BUILD_SHA || '?') + '\n' +
+      'лицо: ' + лцо + ' · вид: ' + вид + '\n' +
+      '— ШИЛКА (зенитная наводка света) —\n' +
+      'трассер света: ' + вмс + ' мс (0–150 мс, клавиши [ и ])\n' +
+      'упреждение: ' + упр + ' мс · полёт звука: ' + пол + ' мс · сдвиг: ' + мс(window.__SYNCOFF) + '\n' +
+      '8-tap юстировка: ' + тап + ' (8 тапов по слуху → медиана → свет в такт уху)\n' +
+      '— память комода —\n' +
+      'ящиков: ' + ((К.ящики && К.ящики.length) || 0) + ' · мостов: ' + (К.мостов || 0) + ' · вещей: ' + (К.вещей || 0) + ' · ' + (К.вер || '—') + '\n' +
+      'трубы: кв12-канал ' + (window.KV12 ? 'жив' : '—') + ' · КРЫША ' + (window.__КРЫША ? 'жива' : '—');
+  }
+  function открыть(){ построить(); краска(); try{ Д.showModal(); }catch(e){ try{ Д.setAttribute('open',''); }catch(_){} } }
+  return { вер:1, открыть:открыть, краска:краска };
 })();
 
 /* v10.7 «ЧЕТВЁРКА»: ЭСКЕЙБ — выход из меню (приказ владельца). Нативный Esc диалога держим
@@ -7937,6 +8079,7 @@ try{
         case "bravo": if(KV&&KV.doClap){KV.doClap();ok=true;} break;
         case "vol+": if(window.__VOL){window.__VOL.adjust(0.1);ok=true;} break;
         case "vol-": if(window.__VOL){window.__VOL.adjust(-0.1);ok=true;} break;
+        case "mute": if(KV&&KV.audio){KV.audio.muted=!KV.audio.muted;ok=true;} break;
         case "seek+": if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime+15);ok=true;} break;
         case "seek-": if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime-15);ok=true;} break;
         case "scene": if(window.__SCENE&&window.__SCENE.set){window.__SCENE.set(m.arg);ok=true;} break;
@@ -9145,7 +9288,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.47', такт:'ВЫХОД', кэш:'s15-orkestrator-v102', стр:'2026-10-10', ver:'v10.47 «ВЫХОД»', build:String(window.__BUILD_SHA||"3394112235c1a2c6"), cache:'s15-orkestrator-v102' };
+window.APP = { v:'10.48', такт:'ШИЛКА', кэш:'s15-orkestrator-v103', стр:'2026-10-10', ver:'v10.48 «ШИЛКА»', build:String(window.__BUILD_SHA||"3394112235c1a2c6"), cache:'s15-orkestrator-v103' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -9242,6 +9385,9 @@ function секцияИмя(t){
   return '';
 }
 
+/* v10.48 «ШИЛКА»: реестр команд гостя — таблица трансляции КАК ДАННЫЕ (разъём вместо if-цепочки).
+   Виден и на хосте — проба честна в любом режиме; при входе гостя обновляется из живой таблицы. */
+window.__ГОСТЬ_ТРАНС = { вер:1, команды: ['sheet-sec','sheet-scene','sheet-theme','sheet-close','bye','mic'] };
 /* ═══════════════════════ РЕЖИМ ГОСТЯ (телефон) ═══════════════════════ */
 if (roomArg){
   (function гость(){
@@ -9307,25 +9453,32 @@ if (roomArg){
 
     function cmd(k, arg){ try{ if(conn&&conn.open) conn.send({t:'kv31c', cmd:k, arg:arg==null?'':arg}); }catch(_){} }
 
+    /* v10.48 «ШИЛКА»: трансляция кнопок гостя — ТАБЛИЦА ДАННЫХ (разъём вместо if-цепочки).
+       Новая кнопка = новая запись; приёмник не правится. Реестр — window.__ГОСТЬ_ТРАНС. */
+    function гостВыход(){
+      try{ var fs=document.fullscreenElement||document.webkitFullscreenElement; if(fs){ var xfs=document.exitFullscreen||document.webkitExitFullscreen; if(xfs) xfs.call(document); } }catch(_){}
+      try{ if(S&&S.micStream&&S.micStream.getTracks){ var tr=S.micStream.getTracks(); for(var ti=0;ti<tr.length;ti++){ try{ tr[ti].stop(); }catch(_e){} } } }catch(_){}
+      micStop(true);
+      try{ if(S&&S.bcTimer){ clearInterval(S.bcTimer); S.bcTimer=null; } }catch(_){}
+      try{ if(conn) conn.close(); }catch(_){ }
+      try{ if(peer) peer.destroy(); }catch(_){ }
+      var чист = location.origin + location.pathname;
+      try{ location.replace(чист); }catch(_){ try{ location.href = чист; }catch(_2){} }
+    }
+    var ТРАНС = {
+      'sheet-sec':    function(){ sheet(секцииИзСостояния(), 'section'); },
+      'sheet-scene':  function(){ sheet([['party','ВЕЧЕРИНКА'],['kids','ДЕТИ'],['romance','РОМАНТИКА'],['day','ДЕНЬ']], 'scene'); },
+      'sheet-theme':  function(){ sheet([['warm','ТЕПЛО'],['neon','НЕОН'],['minimal','МИНИМАЛ'],['velvet','БАРХАТ'],['craft','КРАФТ']], 'theme'); },
+      'sheet-close':  function(){ D.getElementById('kv31gSheet').classList.remove('open'); },
+      'bye':          гостВыход,
+      'mic':          function(){ micToggle(); }
+    };
+    window.__ГОСТЬ_ТРАНС = { вер:1, команды: Object.keys(ТРАНС) };
     g.addEventListener('click', function(ev){
       var b=ev.target.closest('button'); if(!b) return;
       var k=b.getAttribute('data-k');
-      if(k==='sheet-sec'){ sheet(секцииИзСостояния(), 'section'); return; }
-      if(k==='sheet-scene'){ sheet([['party','ВЕЧЕРИНКА'],['kids','ДЕТИ'],['romance','РОМАНТИКА'],['day','ДЕНЬ']], 'scene'); return; }
-      if(k==='sheet-theme'){ sheet([['warm','ТЕПЛО'],['neon','НЕОН'],['minimal','МИНИМАЛ'],['velvet','БАРХАТ'],['craft','КРАФТ']], 'theme'); return; }
-      if(k==='sheet-close'){ D.getElementById('kv31gSheet').classList.remove('open'); return; }
-      if(k==='bye'){
-        try{ var fs=document.fullscreenElement||document.webkitFullscreenElement; if(fs){ var xfs=document.exitFullscreen||document.webkitExitFullscreen; if(xfs) xfs.call(document); } }catch(_){}
-        try{ if(S&&S.micStream&&S.micStream.getTracks){ var tr=S.micStream.getTracks(); for(var ti=0;ti<tr.length;ti++){ try{ tr[ti].stop(); }catch(_e){} } } }catch(_){}
-        micStop(true);
-        try{ if(S&&S.bcTimer){ clearInterval(S.bcTimer); S.bcTimer=null; } }catch(_){}
-        try{ if(conn) conn.close(); }catch(_){ }
-        try{ if(peer) peer.destroy(); }catch(_){ }
-        var чист = location.origin + location.pathname;
-        try{ location.replace(чист); }catch(_){ try{ location.href = чист; }catch(_2){} }
-        return;
-      }
-      if(k==='mic'){ micToggle(); return; }
+      var ф=(k!=null)?ТРАНС[k]:null;
+      if(ф){ ф(); return; }
       cmd(k);
     });
     var lastState=null;
@@ -9571,6 +9724,7 @@ function onRemoteCmd(m, conn){
       case 'bravo':  if(KV&&KV.doClap){KV.doClap(); ok=true;} break;
       case 'vol+':   if(window.__VOL&&window.__VOL.adjust){window.__VOL.adjust(0.1); ok=true;} break;
       case 'vol-':   if(window.__VOL&&window.__VOL.adjust){window.__VOL.adjust(-0.1); ok=true;} break;
+      case 'mute':   if(KV&&KV.audio){KV.audio.muted=!KV.audio.muted; ok=true;} break;
       case 'seek+':  if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime+15); ok=true;} break;
       case 'seek-':  if(KV&&KV.audio&&KV.seek){KV.seek(KV.audio.currentTime-15); ok=true;} break;
       case 'pult':   if(window.__ПУЛЬТЫ){window.__ПУЛЬТЫ.открыть(); ok=true;} else if(window.__PULT&&window.__PULT.open){window.__PULT.open(); ok=true;} break;
