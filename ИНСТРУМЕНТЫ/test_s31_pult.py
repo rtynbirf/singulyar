@@ -7,7 +7,7 @@ import io, os, sys
 from playwright.sync_api import sync_playwright
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_КВАРТИРНИК.html')
+дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))
@@ -82,7 +82,7 @@ with sync_playwright() as p:
     vol1 = стр.evaluate("window.__VOL.get()")
     ок('VOL− убрал громкость (' + str(vol0) + ' → ' + str(vol1) + ')', vol1 < vol0)
     стр.evaluate(JS_КЛЮЧ, [415, 'MediaPlay']); стр.wait_for_timeout(300)
-    ок('медиа-ПУСК не роняет страницу', 'КВАРТИРНИК' in стр.title() or 'СИНГУЛЯР' in стр.title())
+    ок('медиа-ПУСК не роняет страницу', 'ЛАДОМ' in стр.title() or 'СИНГУЛЯР' in стр.title())
 
     # 10. двухшаговый выход: предупреждение, снятие взвода, и сам выход
     стр.evaluate(JS_КЛЮЧ, [10009, 'GoBack']); стр.wait_for_timeout(200)

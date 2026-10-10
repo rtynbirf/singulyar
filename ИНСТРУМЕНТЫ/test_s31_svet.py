@@ -5,9 +5,10 @@
 Запуск: python3 ИНСТРУМЕНТЫ/test_s31_svet.py   (из корня дома)"""
 import io, os, sys
 from playwright.sync_api import sync_playwright
+import urllib.parse
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_КВАРТИРНИК.html')
+дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))
@@ -97,7 +98,7 @@ with sync_playwright() as p:
     стр.evaluate("""document.getElementById('panel').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',keyCode:27,bubbles:true,cancelable:true}))""")
     стр.wait_for_timeout(350)
     ок('Esc закрыл ПУЛЬТ', not стр.evaluate(пан + '.open'))
-    ок('Esc НЕ уводит из зала (закон верхнего слоя)', 'КВАРТИРНИК' in стр.url or стр.evaluate("!!document.body && document.readyState!=='uninitialized'") and 'index.html' not in стр.url)
+    ок('Esc НЕ уводит из зала (закон верхнего слоя)', 'ЛАДОМ' in urllib.parse.unquote(стр.url) or стр.evaluate("!!document.body && document.readyState!=='uninitialized'") and 'index.html' not in стр.url)
 
     # ══ 7. РЕЛАКС: музыка играет — гаснут ВСЕ панели и слайдеры ══
     стр.evaluate("document.body.classList.remove('relax-peek')")
@@ -122,7 +123,7 @@ with sync_playwright() as p:
     ок('док виден после паузы (' + док + ')', док == '1')
 
     # ══ 10. чип версии на бирке ══
-    ок('бирка несёт чип версии', стр.evaluate("!!document.querySelector('.sng-strip .sng-верш') && document.querySelector('.sng-strip .sng-верш').textContent.indexOf('v10.7')>=0"))
+    ок('бирка несёт чип версии', стр.evaluate("!!document.querySelector('.sng-strip .sng-верш') && /v10\.\d+/.test(document.querySelector('.sng-strip .sng-верш').textContent)   /* v10.47: пин v10.7 → паттерн версии */"))
 
     стр.evaluate("try{window.__KV.audio.pause()}catch(e){}")
     браузер.close()

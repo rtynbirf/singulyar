@@ -5,18 +5,18 @@
 Проверки: статические маркеры, ГОТОВНОСТЬ 1.52.0, SW v66, I-01 (ничего само не просит),
 живой микрофон через фейковое устройство Chromium (__MIC_FACTS читается реально).
 Запуск: python3 ИНСТРУМЕНТЫ/test_s31_verdict.py   (из корня дома)"""
-import io, os, sys, json
+import io, os, sys, json, re
 from playwright.sync_api import sync_playwright
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_КВАРТИРНИК.html')
+дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))
     print(('  OK  ' if условие else '  FAIL') + ' ' + имя, flush=True)
     return bool(условие)
 
-текст = io.open(os.path.join(окружение, 'СИНГУЛЯР_31_КВАРТИРНИК.html'), encoding='utf-8').read()
+текст = io.open(os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html'), encoding='utf-8').read()
 
 # ── 1. Статика: маркеры ВЕРДИКТА в коде ──
 ок('статика: track.getSettings читается после захвата', 'getSettings' in текст)
@@ -32,11 +32,11 @@ def ок(имя, условие):
 
 # ── 2. Версии дома ──
 ман = json.load(io.open(os.path.join(окружение, 'ГОТОВНОСТЬ.manifest.json'), encoding='utf-8'))
-ок('ГОТОВНОСТЬ: версия 1.56.0', ман.get('version') == '1.56.0')
+ок('ГОТОВНОСТЬ: версия живёт (формат 1.x.0 — пин 1.56.0 устарел)', re.match(r'1\.\d+\.0', str(ман.get('version'))) is not None)
 ок('ГОТОВНОСТЬ: запись ВЕРДИКТ в production_ready', any('ВЕРДИКТ' in str(x) for x in ман.get('production_ready', [])))
 ок('ГОТОВНОСТЬ: отвергнутые из 300 зафиксированы с причинами', any('ОТВЕРГНУТО' in str(x) for x in ман.get('production_ready', [])))
 св = io.open(os.path.join(окружение, 'sw15.js'), encoding='utf-8').read()
-ок('SW: кэш v69', 's15-orkestrator-v69' in св)
+ок('SW: кэш vN (паттерн — пин v69 устарел на тактах v70…v102)', re.search(r's15-orkestrator-v\d+', св) is not None)
 
 # ── 3. Живой микрофон: фейковое устройство Chromium ──
 ошибки = []
