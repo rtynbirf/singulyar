@@ -32,13 +32,13 @@
 <meta name="description" content="Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
-<meta property="og:title" content="СИНГУЛЯР ·31 — ЛАДОМ v10.44 «ЛАДОМ» · караоке-зал дома">
+<meta property="og:title" content="СИНГУЛЯР ·31 — ЛАДОМ v10.45 «ГОСТИНАЯ» · караоке-зал дома">
 <meta property="og:description" content="Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>СИНГУЛЯР ·31 — ЛАДОМ v10.44 «ЛАДОМ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
+<title>СИНГУЛЯР ·31 — ЛАДОМ v10.45 «ГОСТИНАЯ» · караоке-зал дома — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -4340,7 +4340,7 @@ window.__HEALTH16 = function(){
   К.ящики.push("такт·пульс·синхрон");
   К.вещей += 7;
   К.мостов += полки.filter(Boolean).length;
-  К.вер = "v10.44 «ЛАДОМ»";
+  К.вер = "v10.45 «ГОСТИНАЯ»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
 window.__HEALTH17 = function(){
@@ -5160,17 +5160,17 @@ window.__РУЛЬ = (function(){
   var D = document;
   var css = D.createElement('style');
   css.textContent = ''
-  + '#руль{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-modal,50);display:none;flex-direction:column;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,rgba(28,21,8,.96),rgba(13,10,4,.98));border-top:1px solid rgba(255,196,88,.45);box-shadow:0 -12px 44px rgba(0,0,0,.6);font:14px/1.35 system-ui,sans-serif}'
-  + '#руль.открыт{display:flex}'
-  + '#руль .руль-ряд{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#ffd98a}'
-  + '#руль .руль-имя{font-weight:700;letter-spacing:.5px;white-space:nowrap}'
-  + '#руль .руль-песня{color:#c9a05a;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:center}'
-  + '#руль .руль-сетка{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}'
-  + '#руль button{appearance:none;border:1px solid rgba(255,196,88,.45);background:#2b2010;color:#ffd98a;border-radius:14px;padding:14px 4px;font:700 14px system-ui;cursor:pointer;min-height:56px;-webkit-tap-highlight-color:transparent}'
-  + '#руль button:active{transform:translateY(1px)}'
-  + '#руль button.горяч{background:#ffd98a;color:#241a08}'
-  + '#руль button.опасн{border-color:#e07050;color:#ff9d80}'
-  + '@media (prefers-reduced-motion: reduce){#руль button:active{transform:none}}';
+  + '#руль{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-modal,50);display:none;flex-direction:column;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,rgba(16,17,19,.96),rgba(5,6,8,.98));border-top:1px solid rgba(240,240,248,.14);box-shadow:0 -12px 44px rgba(0,0,0,.6);font:14px/1.35 var(--f,system-ui,sans-serif)}'
++ '#руль.открыт{display:flex}'
++ '#руль .руль-ряд{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--text,#BABAB9)}'
++ '#руль .руль-имя{font-weight:700;letter-spacing:.5px;white-space:nowrap}'
++ '#руль .руль-песня{color:var(--faint,#9B9B9B);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:center}'
++ '#руль .руль-сетка{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}'
++ '#руль button{appearance:none;border:1px solid #ffffff18;background:#ffffff0e;color:var(--text,#BABAB9);border-radius:14px;padding:14px 4px;font:700 14px var(--f,system-ui,sans-serif);cursor:pointer;min-height:56px;-webkit-tap-highlight-color:transparent}'   /* v10.45: канон дома, тач-цели ≥56px сохранены */
++ '#руль button:active{transform:translateY(1px)}'
++ '#руль button.горяч{background:var(--amber,#DEA968);color:var(--ink-on-accent,#050608)}'
++ '#руль button.опасн{border-color:rgba(255,138,60,.45);color:var(--red,#FF8A3C)}'
++ '@media (prefers-reduced-motion: reduce){#руль button:active{transform:none}}';
   D.head.appendChild(css);
   var корень = D.createElement('div');
   корень.id = 'руль';
@@ -8590,7 +8590,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.44', такт:'ЛАДОМ', кэш:'s15-orkestrator-v99', стр:'2026-10-10', ver:'v10.44 «ЛАДОМ»', build:String(window.__BUILD_SHA||"407b5bb7df2222f4"), cache:'s15-orkestrator-v99' };
+window.APP = { v:'10.45', такт:'ГОСТИНАЯ', кэш:'s15-orkestrator-v100', стр:'2026-10-10', ver:'v10.45 «ГОСТИНАЯ»', build:String(window.__BUILD_SHA||"407b5bb7df2222f4"), cache:'s15-orkestrator-v100' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -8606,47 +8606,55 @@ function norm(s){ try{ return String(s||'').toLowerCase().replace(/ё/g,'е').re
 
 /* ─────────────────────────── СТИЛИ КУЗОВА ─────────────────────────── */
 var CSS = ':root{--z-roof-dock:70;--z-roof-panel:75;--z-roof-guest:80;--z-roof-sheet:85;--z-roof-plashka:90}'
-+ '#kv31roof{position:fixed;right:14px;bottom:14px;z-index:var(--z-roof-dock,70);display:flex;flex-direction:column;align-items:flex-end;gap:8px;font:14px/1.35 system-ui,sans-serif}'
-+ '#kv31roof .kv31-badge{cursor:pointer;border:1px solid rgba(255,196,88,.55);border-radius:14px 4px 14px 14px;background:linear-gradient(135deg,#241a08,#3a2a10);color:#ffd98a;padding:9px 14px;font-weight:700;letter-spacing:.4px;box-shadow:0 4px 18px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent}'
-+ '#kv31roof .kv31-badge small{display:block;font-weight:400;color:#c9a05a;font-size:10px;letter-spacing:1px}'
-+ '#kv31panel{position:fixed;inset:auto 12px 64px 12px;left:12px;margin:0 auto;max-width:560px;max-height:calc(100vh - 90px);overflow:auto;z-index:var(--z-roof-panel,75);border:1px solid rgba(255,196,88,.4);border-radius:18px;background:linear-gradient(160deg,#1c1508ee,#0d0a04f2);color:#f5e7c8;padding:18px 18px 20px;box-shadow:0 12px 44px rgba(0,0,0,.6);display:none;font:14px/1.5 system-ui,sans-serif;-webkit-overflow-scrolling:touch}'
++ '#kv31roof{position:fixed;right:14px;bottom:14px;z-index:var(--z-roof-dock,70);display:flex;flex-direction:column;align-items:flex-end;gap:8px;font:14px/1.35 var(--f,system-ui,sans-serif)}'
++ '#kv31roof .kv31-badge{cursor:pointer;border:1px solid rgba(167,168,168,.24);border-radius:14px;background:rgba(23,24,26,.88);color:var(--text,#BABAB9);padding:9px 14px;font-weight:800;letter-spacing:.1em;box-shadow:0 4px 18px rgba(0,0,0,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-tap-highlight-color:transparent;transition:.2s}'
++ '#kv31roof .kv31-badge:hover{border-color:rgba(222,169,104,.45);color:var(--amber,#DEA968)}'
++ '#kv31roof .kv31-badge small{display:block;font-weight:400;color:var(--faint,#9B9B9B);font-size:10px;letter-spacing:1px}'
++ '#kv31panel{position:fixed;inset:auto 12px 64px 12px;left:12px;margin:0 auto;max-width:560px;max-height:calc(100vh - 90px);overflow:auto;z-index:var(--z-roof-panel,75);border:1px solid rgba(240,240,248,.14);border-radius:18px;background:#17181A;background:color-mix(in srgb,var(--panel) 94%,transparent);color:var(--text,#BABAB9);padding:18px 18px 20px;box-shadow:inset 0 1px 0 rgba(240,240,248,.08),0 30px 90px #000000cc;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:none;font:14px/1.5 var(--f,system-ui,sans-serif);-webkit-overflow-scrolling:touch}'
 + '#kv31panel.open{display:block}'
-+ '#kv31panel h3{margin:0 0 2px;font-size:17px;color:#ffd98a;letter-spacing:.5px}'
-+ '#kv31panel .kv31-sub{color:#b28f56;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px}'
-+ '#kv31panel .kv31-card{border:1px solid rgba(255,196,88,.22);border-radius:12px;padding:12px 12px 13px;margin:10px 0;background:rgba(255,196,88,.05)}'
-+ '#kv31panel .kv31-card b{color:#ffd98a}'
-+ '#kv31panel button{appearance:none;border:1px solid rgba(255,196,88,.45);background:#2b2010;color:#ffd98a;border-radius:10px;padding:9px 13px;font:600 13.5px system-ui;cursor:pointer;margin:4px 6px 2px 0}'
++ '#kv31panel h3{margin:0 0 2px;font-size:20px;font-weight:900;letter-spacing:.06em;color:var(--text,#BABAB9)}'
++ '#kv31panel .kv31-sub{color:var(--faint,#9B9B9B);font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px}'
++ '#kv31panel .kv31-x{position:absolute;top:12px;right:14px;background:none;border:0;color:var(--faint,#9B9B9B);font-size:22px;line-height:1;padding:8px 12px;border-radius:10px;cursor:pointer;min-height:32px;min-width:32px}'
++ '#kv31panel .kv31-x:hover{color:var(--text,#BABAB9);background:#ffffff12}'
++ '#kv31panel .kv31-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;padding-right:44px}'
++ '#kv31panel .kv31-nav a{display:inline-flex;align-items:center;min-height:24px;padding:7px 12px;border-radius:12px;background:#ffffff0c;border:1px solid #ffffff14;color:var(--dim,#A7A8A8);font-weight:800;font-size:11.5px;letter-spacing:.08em;text-decoration:none;transition:.2s}'
++ '#kv31panel .kv31-nav a:hover{color:var(--text,#BABAB9);background:#ffffff17;border-color:rgba(222,169,104,.4)}'
++ '#kv31panel .kv31-nav a:focus-visible{outline:2px solid var(--amber,#DEA968);outline-offset:2px}'
++ '#kv31panel .kv31-card{border:1px solid #ffffff14;border-radius:12px;padding:12px 12px 13px;margin:10px 0;background:#ffffff0c}'
++ '#kv31panel .kv31-card b{color:var(--amber,#DEA968)}'
++ '#kv31panel button{appearance:none;border:1px solid #ffffff18;background:#ffffff0e;color:var(--text,#BABAB9);border-radius:14px;padding:9px 15px;font:800 12.5px var(--f,system-ui,sans-serif);letter-spacing:.08em;cursor:pointer;margin:4px 6px 2px 0;transition:.2s}'
++ '#kv31panel button:hover{background:#ffffff18}'
 + '#kv31panel button:active{transform:translateY(1px)}'
-+ '#kv31panel button.kv31-on{background:#ffd98a;color:#241a08}'
-+ '#kv31panel button.kv31-danger{border-color:#e07050;color:#ff9d80}'
-+ '#kv31panel input[type=range]{width:100%;accent-color:#ffd98a}'
-+ '#kv31panel select{background:#2b2010;color:#ffd98a;border:1px solid rgba(255,196,88,.45);border-radius:8px;padding:6px 8px;font:600 13px system-ui}'
-+ '#kv31panel .kv31-log{color:#cbb astone} #kv31panel .kv31-log{color:#cbb98e;font-size:12.5px;white-space:pre-wrap;margin-top:6px}'
++ '#kv31panel button.kv31-on{background:var(--amber,#DEA968);color:var(--ink-on-accent,#050608);border-color:transparent}'
++ '#kv31panel button.kv31-danger{border-color:rgba(255,138,60,.45);color:var(--red,#FF8A3C)}'
++ '#kv31panel input[type=range]{width:100%;accent-color:var(--amber,#DEA968)}'
++ '#kv31panel select{background:#101113;color:var(--text,#BABAB9);border:1px solid #ffffff1c;border-radius:8px;padding:6px 8px;font:600 13px var(--f,system-ui,sans-serif)}'
++ '#kv31panel .kv31-log{color:var(--dim,#A7A8A8);font-size:12.5px;white-space:pre-wrap;margin-top:6px}'
 + '#kv31qr{background:#fff;border-radius:10px;padding:10px;display:inline-block;margin:6px 0}'
-+ '#kv31guest{position:fixed;inset:0;z-index:var(--z-roof-guest,80);background:radial-gradient(120% 90% at 50% 0%,#241a08 0%,#0d0a04 70%);color:#f5e7c8;display:flex;flex-direction:column;font:16px/1.4 system-ui,sans-serif;padding:14px;box-sizing:border-box}'
-+ '#kv31guest .kv31-g-head{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid rgba(255,196,88,.3);padding-bottom:10px}'
-+ '#kv31guest .kv31-g-head b{color:#ffd98a;letter-spacing:.5px}'
-+ '#kv31guest .kv31-g-stat{font-size:12px;color:#c9a05a;text-align:right}'
++ '#kv31guest{position:fixed;inset:0;z-index:var(--z-roof-guest,80);background:radial-gradient(120% 90% at 50% 0%,#101113 0%,#050608 70%);color:var(--text,#BABAB9);display:flex;flex-direction:column;font:16px/1.4 var(--f,system-ui,sans-serif);padding:14px;box-sizing:border-box}'
++ '#kv31guest .kv31-g-head{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid rgba(240,240,248,.14);padding-bottom:10px}'
++ '#kv31guest .kv31-g-head b{color:var(--text,#BABAB9);letter-spacing:.5px}'
++ '#kv31guest .kv31-g-stat{font-size:12px;color:var(--faint,#9B9B9B);text-align:right}'
++ '#kv31guest .kv31-g-head button{appearance:none;border:1px solid #ffffff18;background:#ffffff0e;color:var(--text,#BABAB9);border-radius:10px;padding:8px 12px;font:700 13px var(--f,system-ui,sans-serif);cursor:pointer;min-height:44px;white-space:nowrap}'   /* v10.45: кнопка выхода гостя С29 — в каноне */
 + '#kv31guest .kv31-g-line{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:10px 4px}'
-+ '#kv31guest .kv31-g-sec{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:#b28f56;margin-bottom:12px}'
-+ '#kv31guest .kv31-g-cur{font-size:clamp(22px,6vw,40px);font-weight:700;color:#ffe9b8;text-shadow:0 2px 18px rgba(255,196,88,.25)}'
-+ '#kv31guest .kv31-g-next{font-size:clamp(14px,3.6vw,20px);color:#8f7448;margin-top:14px;min-height:1.4em}'
-+ '#kv31guest .kv31-g-time{font-size:12px;color:#c9a05a;margin-top:10px}'
++ '#kv31guest .kv31-g-sec{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint,#9B9B9B);margin-bottom:12px}'
++ '#kv31guest .kv31-g-cur{font-size:clamp(22px,6vw,40px);font-weight:700;color:#F5F5F3;text-shadow:0 2px 18px rgba(222,169,104,.22)}'
++ '#kv31guest .kv31-g-next{font-size:clamp(14px,3.6vw,20px);color:var(--faint,#9B9B9B);margin-top:14px;min-height:1.4em}'
++ '#kv31guest .kv31-g-time{font-size:12px;color:var(--faint,#9B9B9B);margin-top:10px}'
 + '#kv31guest .kv31-g-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding-top:8px}'
-+ '#kv31guest .kv31-g-pad button{appearance:none;border:1px solid rgba(255,196,88,.45);background:#2b2010;color:#ffd98a;border-radius:14px;padding:16px 4px;font:700 15px system-ui;cursor:pointer;min-height:54px}'
-+ '#kv31guest .kv31-g-pad button:active{transform:translateY(1px);background:#3a2a10}'
-+ '#kv31guest .kv31-g-pad button.kv31-hot{background:#ffd98a;color:#241a08}'
-+ '#kv31guest .kv31-g-pad button.kv31-mic-on{background:#c0392b;border-color:#ff9d80;color:#fff}'
-+ '#kv31guest .kv31-g-head button{appearance:none;border:1px solid rgba(255,196,88,.45);background:#2b2010;color:#ffd98a;border-radius:10px;padding:8px 12px;font:700 13px system-ui;cursor:pointer;min-height:44px;white-space:nowrap}'
-+ '#kv31guest .kv31-g-sheet{position:fixed;inset:0;background:rgba(13,10,4,.94);z-index:var(--z-roof-sheet,85);display:none;flex-direction:column;padding:18px;overflow:auto}'
++ '#kv31guest .kv31-g-pad button{appearance:none;border:1px solid #ffffff18;background:#ffffff0e;color:var(--text,#BABAB9);border-radius:14px;padding:16px 4px;font:700 15px var(--f,system-ui,sans-serif);cursor:pointer;min-height:54px;transition:.2s}'
++ '#kv31guest .kv31-g-pad button:active{transform:translateY(1px);background:#ffffff18}'
++ '#kv31guest .kv31-g-pad button.kv31-hot{background:var(--amber,#DEA968);color:var(--ink-on-accent,#050608);border-color:transparent}'
++ '#kv31guest .kv31-g-pad button.kv31-mic-on{background:var(--red,#FF8A3C);color:var(--ink-on-accent,#050608);border-color:transparent}'
++ '#kv31guest .kv31-g-sheet{position:fixed;inset:0;background:rgba(16,17,19,.94);z-index:var(--z-roof-sheet,85);display:none;flex-direction:column;padding:18px;overflow:auto}'
 + '#kv31guest .kv31-g-sheet.open{display:flex}'
-+ '#kv31guest .kv31-g-sheet button{display:block;width:100%;text-align:left;margin:6px 0;padding:14px;border-radius:12px;border:1px solid rgba(255,196,88,.4);background:#241a08;color:#ffe9b8;font:600 16px system-ui}'
-+ '#kv31plashka{position:fixed;inset:0;z-index:var(--z-roof-plashka,90);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(120% 100% at 50% 10%,#2b2010 0%,#0d0a04 75%);color:#ffd98a;font:16px/1.5 system-ui,sans-serif;text-align:center;transition:opacity .7s ease}'
++ '#kv31guest .kv31-g-sheet button{display:block;width:100%;text-align:left;margin:6px 0;padding:14px;border-radius:12px;border:1px solid #ffffff18;background:#ffffff0c;color:var(--text,#BABAB9);font:600 16px var(--f,system-ui,sans-serif)}'
++ '#kv31plashka{position:fixed;inset:0;z-index:var(--z-roof-plashka,90);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(120% 100% at 50% 10%,#17181A 0%,#050608 75%);color:var(--text,#BABAB9);font:16px/1.5 var(--f,system-ui,sans-serif);text-align:center;transition:opacity .7s ease}'
 + '#kv31plashka.kv31-bye{opacity:0;pointer-events:none}'
-+ '#kv31plashka .kv31-p-door{font-size:12px;letter-spacing:5px;color:#b28f56;text-transform:uppercase}'
-+ '#kv31plashka .kv31-p-big{font-size:clamp(30px,7vw,58px);font-weight:800;letter-spacing:1px;text-shadow:0 3px 30px rgba(255,196,88,.3)}'
-+ '#kv31plashka .kv31-p-song{font-size:clamp(15px,3.6vw,21px);color:#e8c98a}'
-+ '#kv31plashka .kv31-p-tag{font-size:12px;letter-spacing:2px;color:#8f7448;margin-top:16px}'
++ '#kv31plashka .kv31-p-door{font-size:12px;letter-spacing:5px;color:var(--faint,#9B9B9B);text-transform:uppercase}'
++ '#kv31plashka .kv31-p-big{font-family:Georgia,"Palatino Linotype","Book Antiqua","Times New Roman",serif;font-size:clamp(30px,7vw,58px);font-weight:700;letter-spacing:.06em;background:linear-gradient(180deg,#F5F5F3 0%,#C9C9C7 46%,#9B9B9B 72%,#E6E6E4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}'
++ '#kv31plashka .kv31-p-song{font-size:clamp(15px,3.6vw,21px);color:var(--dim,#A7A8A8)}'
++ '#kv31plashka .kv31-p-tag{font-size:12px;letter-spacing:2px;color:var(--faint,#9B9B9B);margin-top:16px}'
 + '@media (prefers-reduced-motion: reduce){#kv31plashka{transition:none}}';
 D.head.appendChild(el('style', null, CSS));
 
@@ -8823,9 +8831,17 @@ badge.innerHTML = '<div class="kv31-badge" role="button" tabindex="0" aria-label
 D.body.appendChild(badge);
 
 var panel = el('div'); panel.id='kv31panel';
-panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Крыша двери 31');
+panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Крыша двери 31'); panel.setAttribute('tabindex','-1');   /* v10.45: фокус в панель при открытии */
 panel.innerHTML = ''
++ '<button type="button" class="kv31-x" id="kv31btnX" aria-label="Закрыть крышу" title="Закрыть (Esc)">×</button>'
 + '<h3>КРЫША ·31</h3><div class="kv31-sub">кузов и руль наши — шасси не тронуто</div>'
++ '<nav class="kv31-nav" aria-label="Навигация по дому">'
++   '<a href="./index.html?v=111">ДОМ</a>'
++   '<a href="./ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">ПУЛЬТ ТЕЛЕФОНА</a>'
++   '<a href="./ДОКУМЕНТАЦИЯ.html">ДОКУМЕНТАЦИЯ</a>'
++   '<a href="./ИНСТРУКЦИЯ_ДОМА.html">ИНСТРУКЦИЯ</a>'
++   '<a href="./ШТАБ_РЕВИЗИИ_31.html">ШТАБ РЕВИЗИИ</a>'
++ '</nav>'
 + '<div class="kv31-card"><b>ТЕЛЕФОНЫ ПО WI-FI</b> — зал берёт руль и голос<br>'
 +   '<button id="kv31btnHall">СОБРАТЬ ЗАЛ</button>'
 +   '<button id="kv31btnHallOff" class="kv31-danger">ЗАКРЫТЬ ЗАЛ</button>'
@@ -8848,7 +8864,8 @@ panel.innerHTML = ''
 + '<div style="text-align:right"><button id="kv31btnBye">СНЯТЬ КРЫШУ</button></div>';
 D.body.appendChild(panel);
 
-function panelOpen(o){ panel.classList.toggle('open', !!o); if(o){ try{badge.style.display='none';}catch(_){}} else { try{badge.style.display='';}catch(_){}} }
+function panelOpen(o){ var былВнутри = false; try{ былВнутри = panel.contains(D.activeElement); }catch(_){} panel.classList.toggle('open', !!o); if(o){ try{badge.style.display='none';}catch(_){} try{panel.focus();}catch(_){}} else { try{badge.style.display='';}catch(_){} if(былВнутри){ try{ badge.querySelector('.kv31-badge').focus(); }catch(_){}} } }   /* v10.45: фокус замеряется ДО скрытия и возвращается КНОПКЕ бейджа (контейнер не фокусируем) */
+D.getElementById('kv31btnX').addEventListener('click', function(){ panelOpen(false); });   /* v10.45: × в шапке */
 D.addEventListener('keydown', function(e){ if(!panel.classList.contains('open')) return; try{ if(D.querySelector('dialog[open]')) return; }catch(_){ } if(e.key==='Escape'||e.keyCode===27){ try{e.preventDefault();}catch(_){ } try{e.stopPropagation();}catch(_){ } panelOpen(false); } });
 badge.querySelector('.kv31-badge').addEventListener('click', function(){ panelOpen(!panel.classList.contains('open')); });
 badge.querySelector('.kv31-badge').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panelOpen(true);} });
@@ -8899,7 +8916,7 @@ function hostStart(){
     hallLog('Зал открыт. Телефон в тот же Wi-Fi → камера на QR:');
     var qrHolder = el('div'); qrHolder.id='kv31qr'; hallBox.appendChild(qrHolder);
     drawQR(u, qrHolder);
-    var linkLine = el('div'); linkLine.innerHTML = 'или ссылка: <a href="'+esc(u)+'" style="color:#ffd98a;word-break:break-all">'+esc(u)+'</a>';
+    var linkLine = el('div'); linkLine.innerHTML = 'или ссылка: <a href="'+esc(u)+'" style="color:var(--amber,#DEA968);word-break:break-all">'+esc(u)+'</a>';
     hallBox.appendChild(linkLine);
   });
   peer.on('connection', function(conn){
@@ -9270,14 +9287,14 @@ function карточка(){
   var к = эл('div', 'kv31-card'); к.id = 'kv31zalCard';
   к.innerHTML = ''
   + '<b>С20 · ЗАЛ '+VER+'</b> — голосование и волна зала<br>'
-  + '<span style="font-size:12px;color:#c9a05a">Плеер дома держит одну песню — зал голосует, что ставить следующим. Каталог фонда: '+КАТАЛОГ.length+' песен.</span>'
+  + '<span style="font-size:12px;color:var(--faint,#9B9B9B)">Плеер дома держит одну песню — зал голосует, что ставить следующим. Каталог фонда: '+КАТАЛОГ.length+' песен.</span>'
   + '<div style="display:flex;gap:8px;margin:8px 0 4px;flex-wrap:wrap">'
   + '<button type="button" id="kv31zOpen">ГОЛОСОВАНИЕ · ОТКРЫТЬ</button>'
   + '<button type="button" id="kv31zWave">БРАВО-ВОЛНА</button>'
   + '<button type="button" id="kv31zClose">ВЕРДИКТ</button>'
   + '</div>'
   + '<div id="kv31zTally" class="kv31-log">Голосование не открыто.</div>'
-  + '<div id="kv31zWin" style="display:none;margin-top:8px"><button type="button" id="kv31zPlay">ПОСЛУШАТЬ МИНУСОВКУ ПОБЕДИТЕЛЯ</button> <span id="kv31zPlayStat" style="font-size:12px;color:#c9a05a"></span></div>'   /* v10.29 «ОЧЕРЕДЬ» */;
+  + '<div id="kv31zWin" style="display:none;margin-top:8px"><button type="button" id="kv31zPlay">ПОСЛУШАТЬ МИНУСОВКУ ПОБЕДИТЕЛЯ</button> <span id="kv31zPlayStat" style="font-size:12px;color:var(--faint,#9B9B9B)"></span></div>'   /* v10.29 «ОЧЕРЕДЬ» */;
   панель.appendChild(к);
   D.getElementById('kv31zOpen').addEventListener('click', открыть);
   D.getElementById('kv31zWave').addEventListener('click', волна);
@@ -9363,7 +9380,7 @@ function листГостя(m){
   if(!ш){
     ш = эл('div', 'kv31-g-sheet'); ш.id = 'kv31zSheet';
     ш.innerHTML = '<div style="max-width:520px;max-height:78vh;overflow:auto;padding:18px">'
-    + '<b style="color:#ffd98a">ЧТО ПОЁМ ДАЛЬШЕ?</b><div style="font-size:12px;color:#c9a05a;margin:6px 0 10px">Один голос от телефона. Вердикт покажут на сцене.</div><div id="kv31zList"></div></div>';
+    + '<b style="color:var(--amber,#DEA968)">ЧТО ПОЁМ ДАЛЬШЕ?</b><div style="font-size:12px;color:var(--faint,#9B9B9B);margin:6px 0 10px">Один голос от телефона. Вердикт покажут на сцене.</div><div id="kv31zList"></div></div>';
     дом.appendChild(ш);
   }
   var л = ш.querySelector('#kv31zList'); л.innerHTML = '';
@@ -9381,8 +9398,8 @@ function листГостя(m){
 }
 function волнаГостя(){
   try{ if(navigator.vibrate) navigator.vibrate([60,80,60]); }catch(e){}
-  var ф = эл('div'); ф.id = 'kv31zSplash'; ф.style.cssText = 'position:fixed;inset:0;z-index:2147483770;background:radial-gradient(90% 70% at 50% 100%,rgba(255,217,138,.5),transparent 75%);pointer-events:none;display:flex;align-items:flex-end;justify-content:center;transition:opacity .7s';
-  ф.innerHTML = '<div style="font-size:12vw;font-weight:800;color:#ffd98a;text-shadow:0 4px 30px rgba(0,0,0,.6);padding-bottom:18vh">БРАВО!</div>';
+  var ф = эл('div'); ф.id = 'kv31zSplash'; ф.style.cssText = 'position:fixed;inset:0;z-index:2147483770;background:radial-gradient(90% 70% at 50% 100%,rgba(222,169,104,.45),transparent 75%);pointer-events:none;display:flex;align-items:flex-end;justify-content:center;transition:opacity .7s';   /* v10.45: свечение БРАВО — янтарь дома */
+  ф.innerHTML = '<div style="font-size:12vw;font-weight:800;color:#F5F5F3;text-shadow:0 4px 30px rgba(0,0,0,.6),0 2px 18px rgba(222,169,104,.35);padding-bottom:18vh">БРАВО!</div>';
   D.body.appendChild(ф);
   setTimeout(function(){ ф.style.opacity = '0'; }, 700);
   setTimeout(function(){ ф.remove(); }, 1500);
