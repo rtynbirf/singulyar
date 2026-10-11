@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Хеттский (нешили) · КОД: hit · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 18 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: клинопись передана латинской транслитерацией (ḫ→х; цифра 1 = «один», как в опоре); язык мёртв — современность описательно на аттестованных корнях; корни и формы сверены с опорой песни 1 (kuwapi, kuit, ēšzi, meḫur, nekuz meḫur, kir, hamešḫa, šiuat/šiuaš, nepis wātar, tarnummen, munnawen, tuppi, šāk-, tē, akk-); туман — слово дождя опоры + tepu «малый»; лёд и иней — gimant (зима/стужа, одно слово); тень, пепел, душа — описательно (šiuaš lē kuit, tuḫḫui, kir); формы предположительны.
+
+01. Nekuz meḫur — per ekuwanzi. Nepis wātar tepu per tarnai. Peda peda pāimi: kuwapi šāktar kir arḫa pāizzi, kuwapi hamešḫa aššuli gimant kir tiyazzi.
+[некуз мэхур — пер экуванзи. непис ватар тэпу пер тарнай. пэда пэда пайми: кувапи шактар кир арха паиззи, кувапи хамешха ашшули гимант кир тияззи.]
+
+02. Meḫur hūwāizzi arḫa tarnummen — kuwat ēšumeni, šāk lē; guškin munnawen, meḫur=ma parā ēšzi: uettar parā ištamašzi.
+[мэхур хувайззи арха тарнуммен — куват эшумени, шак лэ; гушкин муннавен, мэхур=ма пара эшци: уэддар пара иштамашзи.]
+
+03. Meḫur kuitkki lē pai — tarnummar lē; imma gimant kir tiyazzi.
+[мэхур куйткки лэ пай — тарнуммар лэ; имма гимант кир тияззи.]
+
+04. Kuwapi lāumeni, aššul šāumeni — per piran kuitkki šiuat akki. Eruwa barzilaš arḫa pāntari tarnummen, taruppar mugāumeni.
+[кувапи лаумени, ашшул шаумени — пер пиран куйткки шиуат акки. эрува барзилаш арха пантари тарнуммен, таруппар мугаумени.]
+
+05. Kuwapi gimant tiyazzi, aššul kir tiyawen — keššara tuḫḫui ēšzi, barzil lē. Mān šāumeni: watkuššar kir tiyazzi.
+[кувапи гимант тияззи, ашшул кир тиявэн — кешшара туххуй эшци, барзил лэ. ман шаумени: ваткушшар кир тияззи.]
+
+06. Uettar lē tarnawen, kittā lē tarnawen, meḫur lē ēšta — uettar=ma anda ēšzi. Kuitkki meḫur tarnawen: kir anda lē tiyawen.
+[уэддар лэ тарнавен, китта лэ тарнавен, мэхур лэ эшта — уэддар=ма анда эшци. куйткки мэхур тарнавен: кир анда лэ тиявэн.]
+
+07. Šiuat lē kuit hanti paweni, kuitkki tepu anda akkumeni; gimant tiyazzi — šakuwa lē aušzi.
+[шиуат лэ куйт ханти павени, куйткки тэпу анда аккумени; гимант тияззи — шакува лэ аушци.]
+
+08. Assu lē tuppi šiuaš, lē=ma guškin; assu=ma aššul uettar, kir aššuli ḫuwantazšša.
+[ассу лэ туппи шиуаш, лэ=ма гушкин; ассу=ма ашшул уэддар, кир ашшули хуванташша.]
+
+09. Kuit arḫa lē tarnummen, kuit=ma kir tiyawen; parā paweni mekki, uettar lē ēšzi.
+[куйт арха лэ тарнуммен, куйт=ма кир тиявэн; пара павени мекки, уэддар лэ эшци.]
+
+10. Šuhhaš peda pāi, uettar tē, kittā; kir hūwāi kuwapi. Watkuššar arḫa pāitu — nu mugāḫḫi kāša.
+[шуххаш пэда пай, уэддар тэ, китта; кир хувай кувапи. ваткушшар арха паиту — ну мугаххи каша.]
+
+11. Uettar tarnummar 1 ēšzi: šāktari kittāweni, kuis šāk lē.
+[уэддар тарнуммар иа эшци: шактари киттавени, куис шак лэ.]
+
+12. Kuit ēšzi kir tiyawen, tarnummen lē — kuwapi kāša wēš, kuwapi kir parā lē hūwāi.
+[куйт эшци кир тиявэн, тарнуммен лэ — кувапи каша веш, кувапи кир пара лэ хувай.]
+
+───
+
+СЛОВАРЬ МАЛЫША (hit, 12 слов + фраза):
+время → meḫur (время/час; в опоре: nekuz meḫur — вечер) [мэхур]
+туман → nepis wātar tepu (малая небесная вода — слово дождя из опоры + tepu «малый») [непис ватар тэпу]
+воспоминание → šāktar (то, что держит душа; от šāk- «знать») [шактар]
+весна → hamešḫa (форма опоры песни 1) [хамешха]
+свет → šiuat (день/свет; в опоре: tuppi šiuaš — свет таблички) [шиуат]
+поезд → eruwa barzilaš (железная колесница; barzil — железо) [эрува барзилаш]
+ответ → taruppar (от-говор) [таруппар]
+сердце → kir [кир]
+лёд → gimant (зима/стужа) [гимант]
+печаль → watkuššar (тоска-тревога сердца) [ваткушшар]
+иней → gimant (зимняя изморозь; одно слово со льдом) [гимант]
+пульс → kir hūwāi (сердце бежит) [кир хувай]
+ФРАЗА: «когда теряем?» → Kuwapi lāumeni? [кувапи лаумени?]
