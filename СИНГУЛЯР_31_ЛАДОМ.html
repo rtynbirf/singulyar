@@ -2,6 +2,7 @@
 <html lang="ru" data-motion="on">
 <head>
 <!-- такт v10.54 «КОДЕКС» (С35, приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ — ТАМ УЖЕ ЧАСТЬ ГОТОВА; МАЛЫША НАУКИВАЙ»; поверх v10.53 «ОРГАНИЗМ» коллег): документация двух треков влита в паблик — ДОКУМЕНТЫ/ТРЕКИ/HARMONIA (адаптивные события, профиль доступности harm-profile/0.1, формат .harm — «партитура намерений», модель угроз, MIT/CC BY 4.0) и ДОКУМЕНТЫ/ТРЕКИ/HIR (Human Intent Runtime: PersonRef/Intent/MeaningEnvelope/RepresentationPreference, честные статусы «сохранено ≠ доставлено», CLAIM→CODE→SPEC→TEST→RESULT→VERDICT); синтез всех ТЗ и дорожных карт с домом — ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md (карта соответствий: ~70% контрактов HIR дом уже исполняет); прототипы треков подняты в двери ·40 ГАРМОНИЯ и ·41 НАМЕРЕНИЕ (фасет lab); Малыш доучен v0.8: правило 15 ТРЕКИ ДОМА, карта дома ·40/·41, фразы «открой гармонию/намерение», гейт версий правил в освежитьПравила (апстрим singulyar-llm не откатывает доучку); хвост R-13 закрыт: журнал README и летопись versions.json дописаны (10.20…10.53 восстановлены из git-истории); найдена и выровнена регрессия коллег: титул дома висел v10.52 при воркере v108; кэш v109. -->
+<!-- такт v10.55 «СЛОВО» (С36, приказ владельца «РАБОТАЙ СОГЛАСНО ЛОГИКЕ ВНОВЬ ОТКРЫВШИХСЯ ОБСТОЯТЕЛЬСТВ… ВСЕ ЛУЧШИЕ МИРОВЫЕ ТРЕНДЫ ПРАКТИК ИССЛЕДУЙ, ИММЕРДЖЕНТНОЕ СИНГУЛЯРНОЕ, ЧТОБ СТАЛО НАШИМ»; поверх v10.54 «КОДЕКС/АТЛАС»): (1) __ХАРМ — партитура слова в формате .harm/0.1 трека HARMONIA (КОДЕКС §4.2: формат трека — транспортный формат дома): валидатор по правилам 07_HARM_FORMAT (alt у каждого text, альтернатива жеста у prompt, отказ более новой мажорной версии), встроенный документ «Просто люби» с ручной разметкой куплета 1 и финала — слоги с длительностями в долях (bpm 104); подсветка текст-пульса на размеченных строках идёт по ЧЕСТНЫМ маркерным весам вместо эвристики букв (гард data-харм), остальные строки честно фолбэкают; (2) __ПРОФИЛЬ — профиль доступности harm-profile/0.1 как единый объект (КОДЕКС §4.1): десять осей поверх уже живущих рулей дома — двусторонняя связь, БЕЗ второго хранилища (kv.* помнит дом как раньше), пресеты без медицинских терминов («минимум стимулов», «читаю медленно», «только текст и вибро»), клампа импорта к ближайшему допустимому (правило 3), экспорт/импорт файла по явному действию, честный отказ формату новее дома; ось offset −300…+300 мс через __SYNC_SET (сетка 5 мс — юстировка дома), ось tempo — playbackRate с сохранением тона (preservesPitch, MDN), ось haptic — сила __VIB_K и масштаб пульса гостей этого устройства; вкладка «ПРОФИЛЬ» в ПУЛЬТе (цели ≥44px, клавиатура, поиск наследуется); голосовые команды «профиль», «минимум стимулов», «читаю медленно»; ящик «слово·профиль» (обряд С23–С29: 2 вещи — __ХАРМ, __ПРОФИЛЬ), семья в КАЗНЕ, проба ЗДОРОВЬЕ 25; Малыш v0.9 (правило 16 ПРОФИЛЬ ДОСТУПНОСТИ + 6 фраз); ШТАБ +4 тренд-карточки (TTML-слоги Apple Sing/AMLL, preservesPitch, профили доступности ОС, калибровка offset в руках зрителя); кэш v110→v111 -->
 <!-- такт v10.53 «ОБЕРЕГ» (С34, приказ владельца «ДОДЕЛЫВАЙ ВСЕ ХВОСТЫ ПО ДОРОЖНОЙ КАРТЕ… ЭРГОНОМИКА ПРИВАТНОСТЬ КОНФИДЕНЦИАЛЬНОСТЬ ЮЗОБИЛИТИ СТОЯТ ВО ГЛАВЕ УГЛА — ЭТО ЗАКОН СИНГУЛЯРА»; поверх v10.52 «ЧУВСТВА»/«ПРОЁМ» коллег): (1) ЩИТ ПРИВАТНОСТИ — честная точка микрофона по паттерну Apple (оранжевая = микрофон живёт) + plain language «СВОЁ · 0 облаков»; драйвер — обёртка над существующим трактом-брокером «ОДИН МИКРОФОН» __ГОЛОС.тракт (нота/запись/зал не переписаны), своего RAF нет, DOM пишется только на смене состояния; (2) честное приглашение зала — крупная кнопка «СКОПИРОВАТЬ ССЫЛКУ» (clipboard + фолбэк, ≥44px — WCAG 2.2) и слова правды о сигналинге PeerJS (звук и слова — напрямую между устройствами); (3) ТИХО — calm-час дома (IDEO 2025: «проектируй для 99% времени»): 40 с без касаний рубашки присыпаются, строка песни не гаснет никогда, под паузой дом не спит, касание пробуждает; (4) АУРА theme-aware — цвета дыхания читают токены темы (--amber/--lilac/--coral, фолбэки честные, пересчёт на смене темы, не в кадре); (5) строка-герой для глаз пожилых — активная строка scale 1.045 (Hou 2022, Vision Australia: крупное, контрастное, без курсива); ящик «оберег·щит» (обряд С23–С29: 2 вещи — __ЩИТ, __ТИХО), семья в КАЗНЕ, проба ЗДОРОВЬЕ 24; кэш v108. -->
 <!-- такт v10.52 «ЧУВСТВА» (С33, приказ владельца «лучшие мировые тренды — иммерсивное, чтобы стало нашим»; поверх v10.51 «ЯЗЫКИ»): три чувства дома по трендам 2025–2026 — (1) АУРА — живой фон за строками дышит басом (calm technology: осознанность через периферию; свой Uint8Array у существующего __KV.an, шаг в общем конвейере С19 — нового RAF нет; канвас живёт внутри #sngbg и честно гаснет в kids/day/kraft/hc; гарды data-motion off/calm и prefers-reduced-motion); (2) ПУЛЬС ГОСТЯМ — бит уходит по мосту КРЫШИ ({t:'kv31b'} на каждой доле __TAKT_SUBS), телефон-гость вибрирует телом ритма (тренд haptic-rhythm: VibeSync/dual-band 2026); тумблер в руле гостя, память kv31gpuls, тумблер хозяина в панели КРЫШИ, память kv31puls; (3) ЭХО ЗАЛА — реверб микрофона зала через ConvolverNode (процедурный импульс 1.8 с, тренд singer-tools: HARMAN Sing Drive 2026); Web Audio граф с «трубой»-элементом (разблокировка удалённого потока в Chrome), dry/wet, ползунок в панели, память kv31echo, фолбэк на старый srcObject-путь; попутно закрыты живые П1 из реестра штаба: F-03 (гонка панели «ДЕРЖИ НОТУ» — стрим глушится, если игра закрыли пока ждали разрешение) и F-04 (гонка записи — recBusy не пускает второй тап в окно await); ящик «чувства·аура» (обряд С23–С29: 3 вещи — __АУРА/__ЭХОЗАЛА/__ПУЛЬСЗАЛА), семья в КАЗНЕ, проба ЗДОРОВЬЕ 23; долги версий: титул выровнен (С32) и VER зала динамический от APP (долг F-19); кэш v107. -->
 <!-- такт v10.51 «ЯЗЫКИ» (С32, приказ владельца «полимат — максимум дорожной карты»; поверх v10.50 «РОЛИ» коллег): ре-посадка дельт такта v10.49 «СКЛАД», потерянных в байте при перенумерации коллег (их резка шла с базы ШИЛКИ; летопись СКЛАД коллеги честно восстановили, но код уехал) — S-04 storage.persist (ХРАН), жив-гард пробы 17 до 7 имён, фолбэк TAKT_SUBS null, проба ЗДОРОВЬЕ 21; плюс восьмой ящик комода — семья «МАЛЫШ·языки» (обряд С23–С29, 8 вещей, мост-до-рождения для поздних LANGSHEET/ЯЗЫКЧИПСЫ по образцу __ЛИЦАПУЛЬТ С29), 65 мостов, проба ЗДОРОВЬЕ 22; кэш v106. -->
@@ -46,7 +47,7 @@
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.54 «КОДЕКС» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.55 «СЛОВО» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -1609,7 +1610,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19,window.__HEALTH20,window.__HEALTH21,window.__HEALTH22,window.__HEALTH23,window.__HEALTH24].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19,window.__HEALTH20,window.__HEALTH21,window.__HEALTH22,window.__HEALTH23,window.__HEALTH24,window.__HEALTH25].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -1672,6 +1673,7 @@ window.__КАЗНА = (function(){
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$|^__ХРАН$/],
     ["чувства·аура",       /^__АУРА$|^__ЭХОЗАЛА$|^__ПУЛЬСЗАЛА$/],
     ["оберег·щит",         /^__ЩИТ$|^__ТИХО$|^__КАЛМТОЧКА$/],   /* С34 */
+    ["слово·профиль",      /^__ХАРМ$|^__ПРОФИЛЬ$/],   /* С36 */ (такт v10.55 «СЛОВО» (С36): __ХАРМ — партитура слова .harm/0.1 (валидатор формата по 07_HARM_FORMAT: alt у text, альтернатива жеста у prompt, отказ новой мажорной версии; встроенный документ «Просто люби» — куплет 1 и финал размечены слогами в долях, 7 строк / 59 слогов, bpm 104); мост в __PULSE: подсветка на размеченных строках идёт маркерными весами вместо эвристики букв (гард data-харм), линейный такт — из CUES, ось tempo не рвёт синхрон; __ПРОФИЛЬ — профиль доступности harm-profile/0.1: 10 осей поверх рулей дома (двусторонняя связь, без второго хранилища), пресеты без диагнозов («минимум стимулов», «читаю медленно», «только текст и вибро»), клампа импорта к ближайшему допустимому, экспорт/импорт по явному действию, честный отказ формату новее; оси offset ±300 мс (__SYNC_SET, сетка 5 мс), tempo (preservesPitch), haptic (__VIB_K + масштаб пульса гостей); вкладка ПУЛЬТа «ПРОФИЛЬ» (≥44px, поиск наследуется); голосовые команды «профиль», «минимум стимулов», «читаю медленно»; ящик «слово·профиль» (обряд С23–С29: 11-й ящик, 2 вещи, 72 моста), семья в КАЗНЕ, проба ЗДОРОВЬЕ 25; Малыш v0.9 (правило 16 ПРОФИЛЬ ДОСТУПНОСТИ + 6 фраз, маркер «ВЕРСИЯ ПРАВИЛ: v0.9»); ШТАБ +4 тренд-карточки (TTML-слоги Apple Sing/AMLL, preservesPitch, профили доступности ОС, калибровка offset); ИНСТРУМЕНТЫ/harm_validate.mjs (автономный валидатор, demo.harm.json — ЗАЧЁТ); оракул test_s31_slovo.js 58/58; верификация: new Function 27/27, node --check свисток, смоук браузером: APP 10.55, ЗДОРОВЬЕ 153/153, партитурная подсветка куплета вживую (data-харм, 9 слогов), пресет 70%/140%/word, консоль 0 ошибок)
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
     ["адапт·конвейер",     /^SNGRC$|^SNGАДАПТ$|^SNG$|^__СЛОИ$|^__КОНВЕЙЕР$|^__СТРОЙ$|^__SYN_PAINT$/],
@@ -2890,6 +2892,10 @@ function vcHandle(text){
   else if(has("слог")){ if(window.__PULSE) window.__PULSE.set("syl"); }
   else if(has("пословн","по словам","словам","слово")){ if(window.__PULSE) window.__PULSE.set("word"); }
   else if(has("строкой","целиком")){ if(window.__PULSE) window.__PULSE.set("line"); }
+  /* С36 «СЛОВО»: профиль доступности — голосом */
+  else if(has("минимум стимулов")){ if(window.__ПРОФИЛЬ) window.__ПРОФИЛЬ.применитьПресет("минимум стимулов"); }
+  else if(has("читаю медленно","читать медленно")){ if(window.__ПРОФИЛЬ) window.__ПРОФИЛЬ.применитьПресет("читаю медленно"); }
+  else if(has("профиль")){ if(window.__ПРОФИЛЬ) window.__ПРОФИЛЬ.открой(); }
   else if(has("английск")){ window.__LANGS.setKey("en"); }
   else if(has("испанс")){ window.__LANGS.setKey("es"); }
   else if(has("транслит")){ say("Транскрипция кириллицей — вторая строка «как звучит», живёт на экране сама."); }
@@ -2913,7 +2919,7 @@ function vcStart(){
   };
   rec.onerror = (e)=>{ if(e.error==="not-allowed"||e.error==="service-not-allowed"){ vcStat.textContent = "Нет доступа к микрофону для команд. Караоке-микрофон и клавиатура продолжают работать."; vcOn=false; vcGo.classList.remove("on"); } };
   rec.onend = ()=>{ if(vcOn){ try{ rec.start(); }catch(e){} } };
-  try{ rec.start(); vcOn = true; vcGo.classList.add("on"); vcStat.textContent = "Слушаю: «запусти», «стоп», «хлопок», «дети», «романтика», «день», «свет», «дальше», «назад», «английский», «транслит», «заново», «буквы», «слоги», «по словам», «лампа», «запиши», «тихий вечер», «пульт», «джокер», «ещё», «верни палитру», «фото», «конструктор», «пульс по голосу», «бирка», «тише», «громче»."; }
+  try{ rec.start(); vcOn = true; vcGo.classList.add("on"); vcStat.textContent = "Слушаю: «запусти», «стоп», «хлопок», «дети», «романтика», «день», «свет», «дальше», «назад», «английский», «транслит», «заново», «буквы», «слоги», «по словам», «лампа», «запиши», «тихий вечер», «пульт», «джокер», «ещё», «верни палитру», «фото», «конструктор», «пульс по голосу», «бирка», «профиль», «тише», «громче»."; }
   catch(e){ vcStat.textContent = "Браузер не дал запустить распознавание."; }
 }
 function vcStop(){
@@ -3133,6 +3139,7 @@ function resetLine(i){
   const txt=el.querySelector(".txt");
   if(txt && txt.dataset.src!=null){ txt.textContent=txt.dataset.src; txt.removeAttribute("data-src"); }
   el.classList.remove("tok");
+  el.removeAttribute("data-харм");
 }
 function rebuild(i){
   if(curLine>=0 && curLine!==i) resetLine(curLine);
@@ -3143,6 +3150,9 @@ function rebuild(i){
   const text=txt.textContent;
   txt.dataset.src=text;
   toks=tokenize(text,GRANS[granIdx].k);
+  var hТок=null;   /* С36 «СЛОВО»: маркерные веса .harm — ритм автора вместо эвристики */
+  try{ if(window.__ХАРМ&&window.__ХАРМ.токены) hТок=window.__ХАРМ.токены(text,GRANS[granIdx].k); }catch(e){}
+  if(hТок&&hТок.length){ toks=hТок; el.setAttribute("data-харм","1"); } else { el.removeAttribute("data-харм"); }
   let acc=0;
   const frag=document.createDocumentFragment();
   toks.forEach(t=>{
@@ -3377,6 +3387,113 @@ window.__PULSE={ list:GRANS, get gran(){ return GRANS[granIdx].k; }, set:setGran
   get tempo(){ const c=CUES[curLine]; if(curLine<0||!c||!spans.length) return {bps:0,n:0}; const d=Math.max(0.25,(c.b||c.a+4)-c.a); return {bps:spans.length/d, n:spans.length}; },
   get lead(){ return Math.max(0,(window.__VISLAT||0)-(window.__SYNCOFF||0)); } };
 window.__TAKT={ get bar(){ return barN; }, get beat(){ return beatN?((beatN-1)%4)+1:0; }, get bpm(){ return bpm; }, get approx(){ return approx; } };
+})();
+</script>
+
+<script>
+/* ═══════════════ С36 · СЛОВО v10.55: __ХАРМ — партитура слова (.harm/0.1) ═══════════════
+   Формат трека HARMONIA становится транспортным форматом дома (КОДЕКС §4.2):
+   документ — данные, не код. Валидатор по правилам 07_HARM_FORMAT: правило 1 —
+   у каждого text расшифровка alt; правило 2 — у каждого prompt альтернатива
+   жесту (кнопка/клавиша); правило 3 — нет кода; правило 5 — отказ более новой
+   мажорной версии схемы. Время в долях (beat): bpm документа — лишь множитель
+   перевода в секунды. Подсветка берёт из маркеров ОТНОСИТЕЛЬНЫЙ ритм строки,
+   а линейный такт — из CUES дома: смена темпа (ось tempo профиля) не ломает
+   синхронизацию — то самое обещание формата. Строки без маркеров честно идут
+   фолбэком — эвристикой фонаемного веса (data-харм на строке = партия есть). */
+(function(){
+"use strict";
+var ДОК = {"schema":"harm/0.1","title":"Просто люби","author":"ЛАДОМ · ручная разметка куплета 1 и финала (С36)","license":"MIT","bpm":104,"timeline":[{"beat":0.0,"type":"scene","data":{"scene":"party"},"alt":"Вечеринка — свет дома"},{"beat":41.184,"type":"text","data":{"words":[[["Мы",0.6586]],[["бе",0.6586],["жим",0.9879]],[["за",0.3293]],[["све",0.9879],["том",0.6586]],[["при",0.6586],["зрач",0.9879],["ным",0.659]]]},"alt":"Мы бежим за светом призрачным,"},{"beat":47.77,"type":"text","data":{"words":[[["и",0.6272],["щем",0.6272]],[["про",0.9409],["сты",0.9409],["е",0.6272]],[["от",0.9409],["ве",0.9409],["ты",0.941]]]},"alt":"ищем простые ответы."},{"beat":54.356,"type":"text","data":{"words":[[["го",0.6256],["ро",0.6256],["да",0.9385]],[["за",0.3128]],[["ок",0.6256],["на",0.9385],["ми",0.6256]],[["мок",0.9385],["ры",0.6256],["ми",0.626]]]},"alt":"Города за окнами мокрыми"},{"beat":61.238,"type":"text","data":{"words":[[["у",0.2034],["ле",0.4067],["та",0.6101],["ют",0.4067]],[["за",0.2034],["ка",0.6101],["ты",0.4067]],[["где",0.6101],["то",0.407]]]},"alt":"улетают закаты где-то."},{"beat":65.102,"type":"text","data":{"words":[[["Но",0.7489]],[["ког",0.7489],["да",1.1233]],[["шум",0.7489]],[["до",0.7489],["рог",1.1233]],[["за",0.7489],["ти",0.7489],["ха",1.4978],["ет",1.123]]]},"alt":"Но когда шум дорог затихает,"},{"beat":74.463,"type":"text","data":{"words":[[["всё",0.814]],[["лиш",1.221],["не",0.814],["е",0.814]],[["вдруг",0.814]],[["ис",0.814],["че",1.221],["за",1.628],["ет",1.221]]]},"alt":"всё лишнее вдруг исчезает."},{"beat":394.299,"type":"text","data":{"words":[[["Про",1.3961],["сто",1.3961]],[["лю",1.8614],["би",1.861]]]},"alt":"Просто люби."}]};
+function норм(т){ return String(т||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]/g,""); }
+function проверь(док){
+  var ош=[], пред=[];
+  if(!док||typeof док!=="object"||Array.isArray(док)) return { ok:false, errors:["документ не объект"], warnings:пред };
+  var м = /^harm\/(\d+)\.(\d+)$/.exec(String(док.schema||""));
+  if(!м) ош.push("schema: нет harm/x.y");
+  else if(+м[1]>0) ош.push("schema: мажорная версия новее дома ("+док.schema+") — отказ по правилу 5");
+  if(!док.title||typeof док.title!=="string") ош.push("title: пусто");
+  if(typeof док.bpm!=="number"||!(док.bpm>=30&&док.bpm<=240)) ош.push("bpm: вне 30–240");
+  var tl = док.timeline, i, j, k;
+  if(!Array.isArray(tl)||!tl.length) ош.push("timeline: пусто");
+  else for(i=0;i<tl.length;i++){
+    var m=tl[i], п="маркер "+i;
+    if(typeof m.beat!=="number"||!(m.beat>=0)) ош.push(п+": beat не число или отрицателен");
+    if(["text","accent","scene","prompt","pause"].indexOf(m.type)<0) ош.push(п+": неизвестный тип "+m.type);
+    if(!m.data||typeof m.data!=="object"){ ош.push(п+": нет data"); continue; }
+    if(m.type==="text"){
+      if(typeof m.alt!=="string"||!m.alt.trim()) ош.push(п+": text без расшифровки alt (правило 1)");
+      var сл=m.data.words;
+      if(!Array.isArray(сл)||!сл.length) ош.push(п+": text без words");
+      else{
+        var сч=String(m.alt||"").split(/\s+/).filter(Boolean).length;
+        if(сч!==сл.length) ош.push(п+": слов в alt ("+сч+") не равно слов в words ("+сл.length+")");
+        for(j=0;j<сл.length;j++){
+          var w=сл[j];
+          if(!Array.isArray(w)||!w.length){ ош.push(п+": слово "+j+" пусто"); continue; }
+          for(k=0;k<w.length;k++){
+            var s=w[k];
+            if(!Array.isArray(s)||!s[0]||typeof s[1]!=="number"||!(s[1]>0)) ош.push(п+": слово "+j+", слог "+k+" — не пара [слог, длительность>0]");
+          }
+        }
+      }
+    }
+    if(m.type==="prompt"){
+      if(typeof m.alt!=="string"||!m.alt.trim()) ош.push(п+": prompt без alt (правило 2)");
+      if(!(m.data.keyboardAlt||(Array.isArray(m.data.options)&&m.data.options.length))) ош.push(п+": prompt без альтернативы жесту — кнопка/клавиша (правило 2)");
+    }
+  }
+  for(i=1;i<(tl||[]).length;i++) if(tl[i].beat<tl[i-1].beat){ пред.push("timeline не отсортирован по beat"); break; }
+  return { ok:ош.length===0, errors:ош, warnings:пред };
+}
+/* карта строк: норм(alt) → { слова, веса, плоско, пробел } */
+var КАРТА={}, РАЗМЕТКА=0, СЛОГОВ=0;
+(function собрать(){
+  if(!ДОК||!Array.isArray(ДОК.timeline)) return;
+  ДОК.timeline.forEach(function(m){
+    if(m.type!=="text"||!m.alt) return;
+    var слова=String(m.alt).split(/\s+/).filter(Boolean);
+    var w=m.data&&m.data.words;
+    if(!Array.isArray(w)||w.length!==слова.length) return;   /* невалидное не берём */
+    var плоско=[], веса=[], сл=0;
+    w.forEach(function(слово,i){
+      var вес=0;
+      слово.forEach(function(s,k){
+        var д=+s[1]; if(!(д>0)) return;
+        плоско.push({ с:String(s[0]), д:д, новое:(k===0) });
+        вес+=д; сл+=д; СЛОГОВ++;
+      });
+      веса.push(вес);
+    });
+    if(!плоско.length||!(сл>0)) return;
+    КАРТА[норм(m.alt)]={ слова:слова, веса:веса, плоско:плоско, пробел:+(0.4*сл/плоско.length).toFixed(3) };
+    РАЗМЕТКА++;
+  });
+})();
+function токены(текст, гран){
+  if(гран==="line"||гран==="char") return null;   /* строка — дом сам; буквы — честная эвристика */
+  var м=КАРТА[норм(текст)]; if(!м) return null;
+  var out=[], i;
+  if(гран==="word"){
+    for(i=0;i<м.слова.length;i++){
+      if(i) out.push({ s:" ", w:м.пробел, sp:true });
+      out.push({ s:м.слова[i], w:м.веса[i]||м.пробел, sp:false });
+    }
+    return out;
+  }
+  for(i=0;i<м.плоско.length;i++){
+    var т=м.плоско[i];
+    if(т.новое&&i) out.push({ s:" ", w:м.пробел, sp:true });
+    out.push({ s:т.с, w:т.д, sp:false });
+  }
+  return out.length?out:null;
+}
+var в = проверь(ДОК);
+window.__ХАРМ = {
+  ver:"v10.55 «СЛОВО»", схема:"harm/0.1",
+  док:ДОК, проверь:проверь, токены:токены, карта:КАРТА,
+  размечено:РАЗМЕТКА, слогов:СЛОГОВ,
+  вердикт:{ ok:в.ok, ошибок:в.errors.length, предупреждений:в.warnings.length }
+};
 })();
 </script>
 
@@ -4830,6 +4947,7 @@ body.insertAdjacentHTML("beforeend", `
     <button role="tab" id="ptab-sound" data-pt="sound" aria-selected="false" aria-controls="ppanel-sound" tabindex="-1">ЗВУК</button>
     <button role="tab" id="ptab-fx" data-pt="fx" aria-selected="false" aria-controls="ppanel-fx" tabindex="-1">ЭФФЕКТЫ</button>
     <button role="tab" id="ptab-people" data-pt="people" aria-selected="false" aria-controls="ppanel-people" tabindex="-1">ЛЮДИ</button>
+    <button role="tab" id="ptab-prof" data-pt="prof" aria-selected="false" aria-controls="ppanel-prof" tabindex="-1">ПРОФИЛЬ</button>
     <button role="tab" id="ptab-data" data-pt="data" aria-selected="false" aria-controls="ppanel-data" tabindex="-1">ДАННЫЕ</button>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 14px 0;padding:7px 12px;border:1px solid rgba(212,175,55,.3);border-radius:12px;background:rgba(212,175,55,.07);color:#D4AF37;font:600 11.5px/1.2 var(--f,system-ui,sans-serif);letter-spacing:.04em" title="Закон СИНГУЛЯРА: эргономика, приватность, конфиденциальность, юзабилити. Данные не покидают дом: настройки, нить вечера, память Малыша, кэш — всё живёт в этом браузере. Ноль счётчиков, ноль слежки.">
@@ -5049,6 +5167,76 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
 
+    <div class="ptab" role="tabpanel" id="ppanel-prof" aria-labelledby="ptab-prof" tabindex="0" data-ptab="prof">
+      <div class="prow2"><span class="plab2">ПРЕСЕТЫ · БЕЗ ДИАГНОЗОВ</span>
+        <div class="seg">
+          <button id="profP1" data-tip="Движение выключено, вибро тихое, звук 40%, высокий контраст — минимум того, что мелькает и звенит">минимум стимулов</button>
+          <button id="profP2" data-tip="Подсветка по словам, темп 70%, крупный текст — строка читается спокойно">читаю медленно</button>
+          <button id="profP3" data-tip="Песня беззвучна, вибро держит долю — текст и ритм в руке (поёт внутренним голосом)">только текст и вибро</button>
+          <button id="profP0" data-tip="Вернуть все оси профиля к заводским значениям дома">сброс</button>
+        </div>
+        <em class="pdesc">Профиль доступности harm-profile/0.1 (трек HARMONIA, дверь ·40): десять осей одним объектом. Оси — не ярлыки, а рули дома; пресет лишь заполняет оси. Профиль живёт на устройстве — наружу уезжает только то, что сам вывез экспортом.</em>
+      </div>
+      <div class="prow2"><span class="plab2">ДВИЖЕНИЕ</span>
+        <div class="seg" id="profMotion">
+          <button data-mk="full">ПОЛНЫЕ</button>
+          <button data-mk="soft">РАЗМЕРЕННЫЕ</button>
+          <button data-mk="none">ВЫКЛ</button>
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">ТОЧНОСТЬ ТЕКСТА</span>
+        <div class="seg" id="profGran">
+          <button data-gk="line">СТРОКА</button>
+          <button data-gk="word">СЛОВО</button>
+          <button data-gk="syl">СЛОГ</button>
+          <button data-gk="char">БУКВА</button>
+        </div>
+        <em class="pdesc">Одна ось с вкладкой ТЕКСТ — крути там или здесь, дом увидит оба руля. В доме по умолчанию СЛОВО: глазу спокойнее, чем слогу.</em>
+      </div>
+      <div class="prow2"><span class="plab2">РАЗМЕР ТЕКСТА · <b id="profSizeVal">100%</b></span>
+        <div class="sldrow">
+          <input type="range" id="profSize" min="100" max="200" step="5" value="100" aria-label="размер текста, проценты" data-tip="Ось size 1.0–2.0: руль ведет ту же строку, что слайдер на вкладке ВИД">
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">КОНТРАСТ</span>
+        <div class="swrow"><button class="sw" id="profHc" role="switch" aria-checked="false" data-tip="Чёрный фон, белые строки, контраст 4.5:1+ — тот же тумблер, что в ЛЮДЯХ"></button><span class="swlab">высокий контраст (максимум)</span></div>
+      </div>
+      <div class="prow2"><span class="plab2">ТЕМП ПЕСНИ · <b id="profRateVal">100%</b></span>
+        <div class="sldrow">
+          <input type="range" id="profRate" min="50" max="150" step="5" value="100" aria-label="темп песни, проценты" data-tip="Тон не плывёт: браузер сам держит высоту (preservesPitch). Партитура .harm ведёт подсветку в долях — смена темпа не рвёт синхрон">
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">ГРОМКОСТЬ · <b id="profVolVal">100%</b></span>
+        <div class="sldrow">
+          <input type="range" id="profVol" min="0" max="100" step="5" value="100" aria-label="громкость, проценты">
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">ВИБРО · <b id="profVibVal">—</b></span>
+        <div class="sldrow">
+          <input type="range" id="profVib" min="0" max="100" step="10" value="100" aria-label="сила вибро, проценты" data-tip="0 — бит не трогает руку; иначе — сила вибро-доли и пульса гостей этого устройства">
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">СДВИГ СИНХРОНА · <b id="profOffVal">0 мс</b></span>
+        <div class="sldrow">
+          <input type="range" id="profOff" min="-300" max="300" step="5" value="0" aria-label="сдвиг подсветки относительно звука, миллисекунды" data-tip="Ось offset из спецификации: минус — свет раньше звука, плюс — позже. Та же юстировка, что УНИСОН, в пределах ±300 мс, сетка 5 мс">
+        </div>
+      </div>
+      <div class="prow2"><span class="plab2">ВВОД / ВЫВОД — честно</span>
+        <b id="profIO" style="font-weight:600;color:var(--dim);font-size:12.5px;line-height:1.6;letter-spacing:.02em;display:block">ввод: касание · клавиатура · голос · хлопок — живы в доме; switch — честно нет. вывод: свет · звук · вибро — живы; брайль — честно нет.</b>
+        <em class="pdesc">Оси ввода/вывода хранят выбор человека и ждут своей механики — дом не притворяется, что умеет больше (UNKNOWN ≠ FAIL).</em>
+      </div>
+      <div class="prow2"><span class="plab2">ПАРТИТУРА СЛОВА (.harm)</span>
+        <b id="profHarm" style="font-weight:600;color:var(--dim);font-size:12.5px;line-height:1.6;letter-spacing:.02em;display:block">…</b>
+        <em class="pdesc">Формат трека HARMONIA — транспорт дома: на размеченных строках подсветка бежит по слогам с длительностями в долях (ручная разметка автора), на остальных — честный фолбэк. Валидатор проверяет документ при каждом старте.</em>
+      </div>
+      <div class="prow2"><span class="plab2">ПРОФИЛЬ ПЕРЕЕЗЖАЕТ</span>
+        <div class="seg">
+          <button id="profExport" data-tip="Десять осей — в маленький json по схеме harm-profile/0.1">профиль → файл</button>
+          <button id="profImport" data-tip="Вернуть профиль из файла: схема проверяется, значения вне диапазона — к ближайшему допустимому">файл → профиль</button>
+          <input type="file" id="profImportFile" accept="application/json,.json" style="display:none">
+        </div>
+      </div>
+    </div>
     <div class="ptab" role="tabpanel" id="ppanel-data" aria-labelledby="ptab-data" tabindex="0" data-ptab="data">
       <div class="prow2"><span class="plab2">ПАМЯТЬ ВЕЧЕРА</span>
         <em class="pdesc">Сцена, язык, подача, громкость, синхрон и место песни помнятся сами. Продолжить с места — кнопка на старт-экране.</em>
@@ -9980,7 +10168,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.54', такт:'КОДЕКС', кэш:'s15-orkestrator-v110', стр:'2026-10-11', ver:'v10.54 «КОДЕКС»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v110' };
+window.APP = { v:'10.55', такт:'СЛОВО', кэш:'s15-orkestrator-v111', стр:'2026-10-11', ver:'v10.55 «СЛОВО»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v111' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -10132,7 +10320,7 @@ if (roomArg){
           conn.on('data', function(m){ try{ if(m && (m.t==='kv31v'||m.t==='kv31w'||m.t==='kv31x') && window.__ЗАЛ) window.__ЗАЛ.гостьСлушает(m); }catch(_){} });
           conn.on('data', function(m){ try{ if(m && m.t==='kv31a' && m.ok===false && m.why) setStat(m.why+' — голосование и БРАВО работают'); }catch(_){} });   /* С21: честный ответ руля */
           /* v10.52 «ЧУВСТВА»: пульс бита — хост шлёт kv31b на каждой доле, тело держит ритм вместе с залом */
-          conn.on('data', function(m){ try{ if(m && m.t==='kv31b' && pulsOn && navigator.vibrate){ navigator.vibrate(m.a ? [70,50,70] : [26]); } }catch(_){} });
+          conn.on('data', function(m){ try{ if(m && m.t==='kv31b' && pulsOn && navigator.vibrate){ var В=(window.__ПРОФИЛЬ&&window.__ПРОФИЛЬ.вибра)?window.__ПРОФИЛЬ.вибра:function(x){return x;}; var п=В(m.a?70:26); if(п>0){ if(m.a) navigator.vibrate([п,50,п]); else navigator.vibrate([п]); } } }catch(_){} });   /* С36: ось haptic профиля масштабирует пульс в ладони */
           conn.on('close', function(){ micStop(true); setStat('зал ушёл'); });   /* F-10 */
         });
         peer.on('error', function(e){ micStop(true); setStat('нет связи: '+e.type); });   /* F-10 */
@@ -10894,6 +11082,243 @@ window.__HEALTH24 = function(){
   out.push({ sec:"S", n:"АУРА theme-aware — дыхание читает токены темы (--amber/--lilac/--coral, фолбэки честные), смена темы пересчитывает цвета не в кадре", ok: !!(window.__АУРА && typeof window.__АУРА.цвета === "function" && /^\d+,\d+,\d+\|/.test(window.__АУРА.цвета() || "")) });
   return out;
 };
+
+/* ── С36 · СЛОВО v10.55: __ПРОФИЛЬ — профиль доступности harm-profile/0.1 ──
+   Профиль живёт на устройстве (правило 1 спецификации HARMONIA 04_PROFILE_SPEC).
+   Оси — единая рамка НАД рулями дома: дом помнит kv.* как раньше, профиль не
+   заводит второго хранилища, а сводит/разводит значения и честно клампит
+   импорт к ближайшему допустимому (правило 3). Экспорт — только по явному
+   действию (HIR). Формат новее дома — честный отказ (правило 5 формата). */
+(function(){
+"use strict";
+var СХЕМА="harm-profile/0.1";
+var ДИАП={ motion:["full","soft","none"], gran:["letter","syllable","word","line"],
+  size:[1,2], contrast:["normal","high"], tempo:[0.5,1.5], sound:[0,1],
+  haptic:[0,1], offset:[-300,300],
+  input:["touch","keyboard","voice","clap","switch"],
+  output:["visual","audio","haptic","braille","visual+audio","haptic+visual"] };
+var ДЕФ={ motion:"full", gran:"word", size:1, contrast:"normal", tempo:1, sound:1, haptic:1, offset:0, input:"touch", output:"visual+audio" };
+var ПРЕСЕТЫ={
+  "минимум стимулов":{ motion:"none", haptic:0, sound:0.4, contrast:"high" },
+  "читаю медленно":{ gran:"word", tempo:0.7, size:1.4 },
+  "только текст и вибро":{ sound:0, haptic:0.8, output:"haptic+visual" }
+};
+var ВВОД=ДЕФ.input, ВЫВОД=ДЕФ.output;
+try{ var сП=JSON.parse(localStorage.getItem("kv.harmprofile")||"null");
+  if(сП&&сП.schema===СХЕМА&&сП.profile){ if(ДИАП.input.indexOf(сП.profile.input)>=0) ВВОД=сП.profile.input; if(ДИАП.output.indexOf(сП.profile.output)>=0) ВЫВОД=сП.profile.output; }
+}catch(e){}
+function помниВводВывод(){ try{ localStorage.setItem("kv.harmprofile", JSON.stringify({schema:СХЕМА, profile:{input:ВВОД, output:ВЫВОД}})); }catch(e){} }
+function клампа(ось,v){
+  var д=ДИАП[ось]; if(!д) return v;
+  if(typeof д[0]==="number"){ v=+v; if(isNaN(v)) v=ДЕФ[ось]; return Math.min(д[1],Math.max(д[0],v)); }
+  return (д.indexOf(v)>=0)?v:ДЕФ[ось];   /* строка мимо списка — к заводскому значению оси */
+}
+var $=function(id){ return document.getElementById(id); };
+function получи(ось){
+  try{
+    switch(ось){
+      case "motion": { var m=document.documentElement.getAttribute("data-motion"); return m==="off"?"none":(m==="calm"?"soft":"full"); }
+      case "gran": { var g=(window.__PULSE&&window.__PULSE.gran)||"word"; return g==="char"?"letter":(g==="syl"?"syllable":g); }
+      case "size": { var s=$("lyrSlider"); return s?Math.min(2,Math.max(1,(parseInt(s.value,10)||100)/100)):1; }
+      case "contrast": return document.body.classList.contains("hc")?"high":"normal";
+      case "tempo": { var a=window.__KV&&window.__KV.audio; return a?(+a.playbackRate||1):1; }
+      case "sound": { return window.__VOL?(+window.__VOL.get()||0):0.7; }
+      case "haptic": { var b=$("vibGo"); if(!b||!b.classList.contains("on")) return 0; return (typeof window.__VIB_K==="number")?Math.min(1,Math.max(0,window.__VIB_K)):1; }
+      case "offset": return Math.round((window.__SYNCOFF||0)*1000);
+      case "input": return ВВОД;
+      case "output": return ВЫВОД;
+    }
+  }catch(e){}
+  return ДЕФ[ось];
+}
+function темп(v){
+  v=клампа("tempo",v);
+  try{ var a=window.__KV&&window.__KV.audio; if(a){ a.playbackRate=v; try{ a.preservesPitch=true; }catch(e){} try{ a.webkitPreservesPitch=true; }catch(e){} } }catch(e){}
+  document.querySelectorAll('#rateChips .pbtn, #rateChips2 button').forEach(function(x){
+    var xv=parseFloat(x.getAttribute("data-rate")||x.getAttribute("data-rk"));
+    x.classList.toggle("on", Math.abs(xv-v)<0.001);
+  });
+  var э=$("profRate"); if(э&&document.activeElement!==э) э.value=String(Math.round(v*100));
+  var в3=$("profRateVal"); if(в3) в3.textContent=Math.round(v*100)+"%";
+  return v;
+}
+function поставь(ось,v){
+  v=клампа(ось,v);
+  try{
+    switch(ось){
+      case "motion": { var k={full:"on",soft:"calm",none:"off"}[v]; var b=document.querySelector('#motionChips button[data-mk="'+k+'"]'); if(b&&!b.classList.contains("on")) b.click(); var пм=$("profMotion"); if(пм) пм.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-mk")===k); }); break; }
+      case "gran": { var к2={letter:"char",syllable:"syl",word:"word",line:"line"}[v]; if(window.__PULSE&&window.__PULSE.set&&window.__PULSE.gran!==к2) window.__PULSE.set(к2); var пг=$("profGran"); if(пг) пг.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-gk")===v); }); break; }
+      case "size": { var s=$("lyrSlider"); if(s){ s.value=String(Math.round(v*100)); s.dispatchEvent(new Event("input",{bubbles:true})); } var эс=$("profSize"); if(эс&&document.activeElement!==эс) эс.value=String(Math.round(v*100)); var вс2=$("profSizeVal"); if(вс2) вс2.textContent=Math.round(v*100)+"%"; break; }
+      case "contrast": { var нужно=(v==="high"), сейчас=document.body.classList.contains("hc"); if(нужно!==сейчас){ var h=$("swHc"); if(h) h.click(); } var phc=$("profHc"); if(phc){ phc.setAttribute("aria-checked", нужно?"true":"false"); phc.classList.toggle("on", нужно); } break; }
+      case "tempo": темп(v); break;
+      case "sound": { var vo=$("volSlider"); if(vo){ vo.value=String(Math.round(v*100)); vo.dispatchEvent(new Event("input",{bubbles:true})); } var пвс=$("profVol"); if(пвс&&document.activeElement!==пвс) пвс.value=String(Math.round(v*100)); var зв=$("profVolVal"); if(зв) зв.textContent=Math.round(v*100)+"%"; break; }
+      case "haptic": { var vb=$("vibGo"); var вкл=vb&&vb.classList.contains("on"); if(v<=0){ if(вкл&&vb) vb.click(); } else { if(!вкл&&vb) vb.click(); window.__VIB_K=v; } var плс=$("profVib"); if(плс&&document.activeElement!==плс) плс.value=String(Math.round(v*100)); var плв=$("profVibVal"); if(плв) плв.textContent=Math.round(v*100)+"%"; break; }
+      case "offset": { if(window.__SYNC_SET) window.__SYNC_SET(Math.round(v)/1000); var пос=$("profOff"); if(пос&&document.activeElement!==пос) пос.value=String(Math.round(v)); var пов=$("profOffVal"); if(пов) пов.textContent=Math.round(v)+" мс"; break; }
+      case "input": ВВОД=клампа("input",v); помниВводВывод(); break;
+      case "output": ВЫВОД=клампа("output",v); помниВводВывод(); break;
+    }
+  }catch(e){}
+  return получи(ось);
+}
+function экспорт(){
+  return JSON.stringify({ schema:СХЕМА, profile:{
+    motion:получи("motion"), gran:получи("gran"), size:+(+получи("size")).toFixed(2),
+    contrast:получи("contrast"), tempo:+(+получи("tempo")).toFixed(2), sound:+(+получи("sound")).toFixed(2),
+    haptic:+(+получи("haptic")).toFixed(2), offset:получи("offset"),
+    input:ВВОД, output:ВЫВОД } });
+}
+function импорт(строка){
+  var док;
+  try{ док=JSON.parse(строка); }catch(e){ return { ok:false, отказ:["файл не JSON"] }; }
+  if(!док||typeof док!=="object"||!док.profile) return { ok:false, отказ:["нет profile"] };
+  var м=/^harm-profile\/(\d+)\.(\d+)$/.exec(String(док.schema||""));
+  if(!м) return { ok:false, отказ:["schema: нет harm-profile/x.y"] };
+  if(+м[1]>0) return { ok:false, отказ:["формат новее дома ("+док.schema+") — честный отказ"] };
+  var применено=[], отказ=[];
+  Object.keys(док.profile).forEach(function(ось){
+    if(!ДИАП[ось]){ отказ.push(ось+": неизвестная ось"); return; }
+    try{ поставь(ось, док.profile[ось]); применено.push(ось); }catch(e){ отказ.push(ось+": не применилась"); }
+  });
+  крась();
+  return { ok:применено.length>0, применено:применено, отказ:отказ };
+}
+function пресет(имя){
+  var п=ПРЕСЕТЫ[имя]; if(!п) return false;
+  Object.keys(п).forEach(function(ось){ поставь(ось, п[ось]); });
+  try{ var л=document.getElementById("live"); if(л){ л.textContent=""; setTimeout(function(){ л.textContent="Пресет профиля: "+имя; },30); } }catch(e){}
+  крась();
+  return true;
+}
+function сброс(){ Object.keys(ДЕФ).forEach(function(ось){ поставь(ось, ДЕФ[ось]); }); крась(); }
+function вибра(мс){ var h=получи("haptic"); if(!(h>0)) return 0; return Math.max(1, Math.round(мс*(0.4+0.6*h))); }
+function открой(){
+  try{ var b=document.getElementById("btnPanel"); if(b) b.click(); }catch(e){}
+  setTimeout(function(){ var t=document.querySelector('.p-tabs button[data-pt="prof"]'); if(t) t.click(); },80);
+}
+function крась(){
+  try{
+    var м={full:"on",soft:"calm",none:"off"}[получи("motion")];
+    var пм=$("profMotion"); if(пм) пм.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-mk")===м); });
+    var гр=получи("gran");
+    var пг=$("profGran"); if(пг) пг.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x.getAttribute("data-gk")===гр); });
+    var р=Math.round(получи("size")*100);
+    var пс=$("profSize"); if(пс&&document.activeElement!==пс) пс.value=String(р);
+    var псв=$("profSizeVal"); if(псв) псв.textContent=р+"%";
+    var hc=получи("contrast")==="high";
+    var phc=$("profHc"); if(phc){ phc.setAttribute("aria-checked",hc?"true":"false"); phc.classList.toggle("on",hc); }
+    var тм=Math.round(получи("tempo")*100);
+    var пр=$("profRate"); if(пр&&document.activeElement!==пр) пр.value=String(тм);
+    var прв=$("profRateVal"); if(прв) прв.textContent=тм+"%";
+    var гл=Math.round(получи("sound")*100);
+    var пв=$("profVol"); if(пв&&document.activeElement!==пв) пв.value=String(гл);
+    var пвв=$("profVolVal"); if(пвв) пвв.textContent=гл+"%";
+    var х=Math.round(получи("haptic")*100);
+    var пл=$("profVib"); if(пл&&document.activeElement!==пл) пл.value=String(х);
+    var плв=$("profVibVal"); if(плв) плв.textContent=(получи("haptic")<=0)?"выкл":х+"%";
+    var оф=Math.round(получи("offset"));
+    var пос=$("profOff"); if(пос&&document.activeElement!==пос) пос.value=String(оф);
+    var пов=$("profOffVal"); if(пов) пов.textContent=оф+" мс";
+    var ио=$("profIO");
+    if(ио) ио.textContent="ввод: касание · клавиатура · голос · хлопок — живы в доме; switch — честно нет. вывод: свет · звук · вибро — живы; брайль — честно нет. выбор: "+ВВОД+" → "+ВЫВОД+".";
+    var ха=$("profHarm");
+    if(ха){ var Х=window.__ХАРМ;
+      ха.textContent = Х ? ("документ «"+Х.док.title+"»: валидатор "+(Х.вердикт.ok?"принял":"ОТКЛОНИЛ")+" · размечено строк: "+Х.размечено+" · слогов: "+Х.слогов+" · bpm "+Х.док.bpm)
+                         : "партитура не поднялась — подсветка идёт честной эвристикой (UNKNOWN ≠ FAIL)";
+    }
+  }catch(e){}
+}
+function проводи(){
+  var пм=$("profMotion"); if(пм) пм.querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){ поставь("motion", b.getAttribute("data-mk")); }); });
+  var пг=$("profGran"); if(пг) пг.querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){ поставь("gran", b.getAttribute("data-gk")); }); });
+  var пс=$("profSize"); if(пс) пс.addEventListener("input",function(){ поставь("size",(parseInt(пс.value,10)||100)/100); });
+  var ph=$("profHc"); if(ph) ph.addEventListener("click",function(){ поставь("contrast", document.body.classList.contains("hc")?"normal":"high"); });
+  var пр=$("profRate"); if(пр) пр.addEventListener("input",function(){ поставь("tempo",(parseInt(пр.value,10)||100)/100); });
+  var пв=$("profVol"); if(пв) пв.addEventListener("input",function(){ поставь("sound",(parseInt(пв.value,10)||100)/100); });
+  var пл=$("profVib"); if(пл) пл.addEventListener("input",function(){ поставь("haptic",(parseInt(пл.value,10)||100)/100); });
+  var пос=$("profOff"); if(пос) пос.addEventListener("input",function(){ поставь("offset",parseInt(пос.value,10)||0); });
+  var п1=$("profP1"); if(п1) п1.addEventListener("click",function(){ пресет("минимум стимулов"); });
+  var п2=$("profP2"); if(п2) п2.addEventListener("click",function(){ пресет("читаю медленно"); });
+  var п3=$("profP3"); if(п3) п3.addEventListener("click",function(){ пресет("только текст и вибро"); });
+  var п0=$("profP0"); if(п0) п0.addEventListener("click",сброс);
+  var эк=$("profExport"); if(эк) эк.addEventListener("click",function(){
+    try{
+      var блоб=new Blob([экспорт()],{type:"application/json"});
+      var a=document.createElement("a"); a.href=URL.createObjectURL(блоб);
+      a.download="ЛАДОМ-профиль.harm-profile.json"; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },400);
+    }catch(e){}
+  });
+  var им=$("profImport"); if(им) им.addEventListener("click",function(){ var f=$("profImportFile"); if(f) f.click(); });
+  var ф=$("profImportFile"); if(ф) ф.addEventListener("change",function(){
+    var файл=ф.files&&ф.files[0]; if(!файл) return;
+    var чтец=new FileReader();
+    чтец.onload=function(){ var р=импорт(String(чтец.result||""));
+      try{ var л=document.getElementById("live"); if(л){ л.textContent="";
+        setTimeout(function(){ л.textContent = р.ok ? ("Профиль применился: "+(р.применено||[]).join(", ")+((р.отказ&&р.отказ.length)?(" · мимо: "+р.отказ.join(", ")):""))
+                                                    : ("Профиль не принят: "+(р.отказ||[]).join("; ")); },30); } }catch(e){}
+      ф.value=""; крась();
+    };
+    чтец.readAsText(файл);
+  });
+  var тб=document.getElementById("ptab-prof"); if(тб) тб.addEventListener("click",крась);
+  крась();
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",проводи); else проводи();
+window.__ПРОФИЛЬ = {
+  ver:"v10.55 «СЛОВО»", схема:СХЕМА,
+  оси:Object.keys(ДИАП), диапазоны:ДИАП, пресеты:Object.keys(ПРЕСЕТЫ),
+  получи:получи, поставь:поставь, клампа:клампа,
+  применитьПресет:пресет, сброс:сброс,
+  экспорт:экспорт, импорт:импорт,
+  открой:открой, крась:крась, вибра:вибра
+};
+})();
+
+/* ── С36 · ящик «слово·профиль» — 2 вещи (обряд С23–С29: снапшот → мост → проба) ──
+   __ХАРМ (партитура слова .harm) и __ПРОФИЛЬ (профиль доступности). Мосты
+   вешаются ПОСЛЕ рождения вещей — обе определены выше по файлу. */
+(function(){
+  var К = window.__КОМОД; if(!К) return;
+  var слово = {
+    ХАРМ:    (typeof window.__ХАРМ==="object" && window.__ХАРМ)       ? window.__ХАРМ    : null,
+    ПРОФИЛЬ: (typeof window.__ПРОФИЛЬ==="object" && window.__ПРОФИЛЬ) ? window.__ПРОФИЛЬ : null
+  };
+  function мост(имя, ключ){
+    try{
+      var ст = Object.getOwnPropertyDescriptor(window, имя);
+      if(ст && ст.configurable===false) return false;
+      if(ст) delete window[имя];
+      Object.defineProperty(window, имя, {
+        get: function(){ return слово[ключ]; },
+        set: function(v){ слово[ключ] = v; },
+        enumerable: false, configurable: false
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var полки = [
+    ["__ХАРМ","ХАРМ"], ["__ПРОФИЛЬ","ПРОФИЛЬ"]
+  ].map(function(п){ return мост(п[0], п[1]); });
+  var старЦел = К.цел;
+  К.слово = слово;
+  К.ящики.push("слово·профиль");
+  К.вещей += 2;
+  К.мостов += полки.filter(Boolean).length;
+  К.вер = "v10.55 «СЛОВО»";
+  К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
+})();
+
+/* ── С36 · проба ЗДОРОВЬЕ 25 — партитура слова и профиль доступности ── */
+window.__HEALTH25 = function(){
+  var out = [];
+  var Х = window.__ХАРМ, П = window.__ПРОФИЛЬ;
+  out.push({ sec:"S", n:"ПАРТИТУРА СЛОВА — .harm/0.1 документ в доме, валидатор принял (размечено строк: "+(Х?Х.размечено:0)+", слогов: "+(Х?Х.слогов:0)+")", ok: !!(Х && Х.ver && Х.вердикт && Х.вердикт.ok) });
+  out.push({ sec:"S", n:"Валидатор .harm честен: битый документ (text без расшифровки) отклонён по правилу 1 формата", ok: (function(){ try{ if(!Х||typeof Х.проверь!=="function") return false; var б=Х.проверь({schema:"harm/0.1",title:"битое",bpm:100,timeline:[{beat:0,type:"text",data:{words:[[["а",1]]]}}]}); return б.ok===false && б.errors.length>0; }catch(e){ return false; } })() });
+  out.push({ sec:"S", n:"Маркерные веса живут: куплет 1 даёт слоги с длительностями > 0 — подсветка по партитуре, не эвристикой", ok: (function(){ try{ if(!Х||typeof Х.токены!=="function") return false; var т=Х.токены("Мы бежим за светом призрачным,","syl"); if(!т||!т.length) return false; var сл=0; for(var i=0;i<т.length;i++){ if(т[i].sp) continue; if(!(т[i].w>0)) return false; сл++; } return сл>=8; }catch(e){ return false; } })() });
+  out.push({ sec:"S", n:"ПРОФИЛЬ — harm-profile/0.1 жив: 10 осей, клампа к ближайшему допустимому (правило 3: 9999 мс → +300)", ok: (function(){ try{ if(!П||!П.оси||П.оси.length!==10) return false; var было=П.получи("offset"); var п=П.поставь("offset",9999); var ок=(п===300); П.поставь("offset",было); return ок; }catch(e){ return false; } })() });
+  out.push({ sec:"S", n:"Экспорт профиля по схеме harm-profile/0.1 — 10 осей одним объектом; наружу только по явному действию", ok: (function(){ try{ if(!П||typeof П.экспорт!=="function") return false; var э=JSON.parse(П.экспорт()); return э.schema==="harm-profile/0.1" && Object.keys(э.profile).length===10; }catch(e){ return false; } })() });
+  return out;
+};
 </script>
 <script id="zalScript">
 /* ═══════════════════════════════════════════════════════════════════════
@@ -10913,7 +11338,7 @@ window.__HEALTH24 = function(){
 "use strict";
 if (window.__ЗАЛ) return;
 var D = document;
-var VER = (window.APP && window.APP.ver) || "v10.52 «ЧУВСТВА»";   /* ЭП-06: одна версия дома; долг F-19 закрыт (v10.52 «ЧУВСТВА»); С20: вердикт помнит победителя, предпрослушка минусовки */
+var VER = (window.APP && window.APP.ver) || "v10.55 «СЛОВО»";   /* ЭП-06: одна версия дома; долг F-19 закрыт (v10.52 «ЧУВСТВА»); С20: вердикт помнит победителя, предпрослушка минусовки */
 
 /* ── каталог фонда: 61 песня канала RUVSON (офлайн, вшито из ДАННЫЕ) ── */
 var КАТАЛОГ = [{"t": "Где настоящее", "v": "shs0TiOwx-M"}, {"t": "Свет в темноте ‣ Песня для тех кому сейчас тяжело", "v": "KFnJwNv008s"}, {"t": "Крик в тишине ‣ (Remix 2026) 🔉", "v": "KvzORszfsg8"}, {"t": "Цени моменты ‣ (Remix 2026) 🔉", "v": "EFaMUciH3Do"}, {"t": "А что если ДА ‣ (Remix 2026) 🔉", "v": "t9h3cCPCKoo"}, {"t": "А что если да", "v": "VfnGUIhaK2Y"}, {"t": "Я сам себе враг | Песня о внутренней борьбе", "v": "z3RcsfHajP8"}, {"t": "Живи как умеешь", "v": "Y7Wy_JBkz7A"}, {"t": "Когда ты удобен", "v": "X_-M_cjCFVg"}, {"t": "О чём мечтаешь ты", "v": "_gNbMCINv1Y"}, {"t": "В чём смысл - Трек который меняет взгляд на жизнь", "v": "n5IFJ-g1Rtc"}, {"t": "Там где ты - Трек о безусловной любви", "v": "vUb40twffCI"}, {"t": "Живи сейчас - Трек о жизни которую мы откладываем на по", "v": "fJwb931iJVg"}, {"t": "Твоё плавание не вечно (Official Music Video)", "v": "V-IaCbDUKao"}, {"t": "Меня не сломать — Песня о свободе духа в мире лжи", "v": "TkmSZp1dfBE"}, {"t": "Не спеши осуждать (Official Music Video)", "v": "pervLR9m-vk"}, {"t": "Нас учат потери — Трек о том, что делает нас Сильнее", "v": "pv3GAlLG9Lk"}, {"t": "Не вам жить мою жизнь (Official Music Video)", "v": "2g5n6B0bc2Q"}, {"t": "Сборник Музыки со Смыслом 🎶 песни, в которых узнаешь себ", "v": "Qb8xb0vUYDg"}, {"t": "Я сам себе судья", "v": "1BZs_wUPn1s"}, {"t": "Тень ушедших - Трек о тех кто не с нами (Lyric Video)", "v": "lkXLeITEtGA"}, {"t": "Вне зоны доступа - Песня о внутренней пустоте и одиночес", "v": "eA-fyeSkavI"}, {"t": "Не теряй шанс — Трек о упущенных моментах и времени кото", "v": "WMU46n--Z-s"}, {"t": "Действуй сейчас - Трек который заставит тебя НАЧАТЬ", "v": "LCADfnI8F-s"}, {"t": "Просто люби - Песня о том что делает нас настоящими", "v": "9ys_TVEtda8"}, {"t": "Код перемен - Трек о реальности которая ломает правила", "v": "eOMrrezWEZM"}, {"t": "Компас на Дом (Official Audio)", "v": "JRTUNak53nU"}, {"t": "Начать сначала - Трек который мотивирует не сдаваться", "v": "ahmGGM-P0CA"}, {"t": "Остаться человеком (Remix Version)", "v": "PIyWwF0t4wQ"}, {"t": "Ангел без крыльев (Lyric Video)", "v": "kziwaat2nu4"}, {"t": "Всё начинается с тебя (Official Audio)", "v": "_PCJ6fMfeRM"}, {"t": "Оставайся молодым - Песня-послание именно для тебя", "v": "POiQQ21I5n0"}, {"t": "Разгадка в небесах ‣ Песня о вопросах на которые нет отв", "v": "6woWDYcu1QY"}, {"t": "А время капает (Remix) ‣ Музыка со смыслом", "v": "HupAWAt7CmQ"}, {"t": "Время как вода - Песня о ценности времени", "v": "YaY-ZJVXFjI"}, {"t": "Не играй в любовь ‣ Песня о том как игра в любовь разруш", "v": "8zG2LBAn1AI"}, {"t": "Цени моменты - трек который заставляет задуматься | Музы", "v": "R0SOJreGbhM"}, {"t": "Когда погаснут огни - Трек о том что важно в жизни", "v": "X90mDPOhvKc"}, {"t": "Смысл жизни прост - Песня о смысле жизни и ценности кажд", "v": "KfKHWdiX3S4"}, {"t": "Пленники прошлого ‣ Песня о том как прошлое влияет на на", "v": "yK2aPehxmK8"}, {"t": "Гордость нас убивает - Песня о гордости которая разрушае", "v": "GB31hcDi3lo"}, {"t": "Не жди завтра - Песня о жизни которую мы откладываем", "v": "d2b72nYLiT8"}, {"t": "Одиночество среди людей ‣ Песня о внутреннем одиночестве", "v": "LqMrrKqK3AE"}, {"t": "Вера остаётся ‣ Песня о вере живущей внутри нас", "v": "G7L2d0Z5xfY"}, {"t": "Суть проста ‣ Песня о том что важно в жизни", "v": "8RRRYysSIHg"}, {"t": "Страх не слабость ‣ Песня о принятии страха", "v": "WIrhIrDQvwY"}, {"t": "Когда Теряем - трек о настоящих ценностях", "v": "TRcxZ7jfPsA"}, {"t": "Остаться человеком ‣ Песня о человечности", "v": "TobJGYOPlnw"}, {"t": "Ты одна дала - Песня о настоящей любви", "v": "_KwlGQNmC1Q"}, {"t": "Ты Главный игрок ‣ Песня о жизни без иллюзий", "v": "b_36rlzEIKk"}, {"t": "Жизнь не прощает - Песня о суровой правде жизни", "v": "QpeYJU83XiQ"}, {"t": "Неудача — не конец ‣ Песня о тех кто не сдался", "v": "q57MLk0Uf9c"}, {"t": "Не тех мы ценим ‣ Песня о тех кто рядом", "v": "cFHsQ-LP3ns"}, {"t": "Время покажет ‣ Музыка для размышлений", "v": "gMASVVNFr_A"}, {"t": "Тишина спасает ‣ Музыка для души", "v": "_E91VEQ-8lM"}, {"t": "Бой с собой - RUVSON | Музыка для души", "v": "ugjp6iaNplo"}, {"t": "Сердце в Огне ‣ Музыка для души", "v": "VwoK5U0qOys"}, {"t": "Дорога мой Учитель - Трек который вдохновляет | Музыка ", "v": "OHaRQj9PLUY"}, {"t": "Не Угасай — трек который цепляет | Музыка для души", "v": "MSqK5ig-alE"}, {"t": "Люди в Масках - Песня о фальшивых людях  | Музыка для ду", "v": "M9o3ZIlhHrU"}, {"t": "Цени время — трек который заставляет задуматься | Музыка", "v": "pP3Kk2_FHbE"}];
