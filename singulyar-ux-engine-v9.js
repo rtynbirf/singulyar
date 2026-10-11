@@ -106,8 +106,8 @@
 
     // ── 3. Стили (скоуп по id-префиксу; кристалл: стекло·серебро·золото) ──
     var css = [
-        ':root[data-sux-theme="contrast"]{--sux-fg:#ffe680;--sux-accent:#ffd700;--sux-border:#fff;--sux-panel:#000;}',
-        ':root[data-sux-theme="light"]{--sux-fg:#101418;--sux-accent:#7a5b10;--sux-border:rgba(0,0,0,.35);--sux-panel:#fff;}',
+        ':root[data-sux-theme="contrast"]{--sux-fg:#fff;--sux-accent:#D4AF37;--sux-hi:#F0D78C;--sux-border:#fff;--sux-panel:#000;}',
+        ':root[data-sux-theme="light"]{--sux-fg:#241F14;--sux-accent:#A67C00;--sux-hi:#8F6A00;--sux-border:rgba(166,124,0,.45);--sux-panel:rgba(246,242,232,.97);}',
         ':root:not([data-sux-theme="contrast"]):not([data-sux-theme="light"]){--sux-fg:#C0C8D0;--sux-accent:#D4AF37;--sux-hi:#F0D78C;--sux-border:rgba(240,240,248,.22);--sux-panel:rgba(10,12,16,.94);}',
 
         '#sux-menu{position:fixed;z-index:40;width:min(calc(100vw - 20px),340px);',
@@ -123,6 +123,13 @@
           'font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--sux-hi,#F0D78C)}',
         '#sux-menu .sux-head::after{content:"";flex:1;height:1px;',
           'background:linear-gradient(90deg,rgba(212,175,55,.45),transparent)}',
+        '#sux-двери{display:block;max-height:min(44vh,320px);overflow:auto;margin:2px 0 4px;  padding:0 2px;scrollbar-width:thin;}',
+        '#sux-двери .сук-дверка{display:flex;align-items:center;gap:8px;width:100%;text-align:left;  margin:1px 0;padding:7px 10px;border-radius:8px;border:1px solid transparent;  background:transparent;color:inherit;font:inherit;font-size:12.5px;cursor:pointer;  text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+        '#sux-двери .сук-дверка:hover,#sux-двери .сук-дверка:focus-visible{background:rgba(212,175,55,.10);border-color:rgba(212,175,55,.30)}',
+        '#sux-двери .сук-дверка[aria-current="true"]{background:rgba(212,175,55,.14);border-color:rgba(212,175,55,.45);color:var(--sux-hi,#F0D78C)}',
+        '#sux-двери .сук-дверка .н{flex:0 0 auto;font-weight:600;letter-spacing:.4px;color:var(--sux-accent,#D4AF37);font-size:11px}',
+        '#sux-двери .сук-дверка .и{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis}',
+        '#sux-двери-пусто{padding:8px 10px;color:var(--sux-accent,#D4AF37);font-size:12px;letter-spacing:.2em}',
         '.sux-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;',
           'margin:1px 0;padding:10px 11px;border-radius:9px;border:1px solid transparent;',
           'background:transparent;color:inherit;font:inherit;cursor:pointer}',
@@ -198,6 +205,38 @@
     var head = el('div', { class: 'sux-head', 'aria-hidden': 'true' }, '⬢ Меню дома');
     menu.appendChild(head);
 
+    /* ── НАВИГАЦИЯ (такт v10.52 «ПРОЁМ»): все двери дома — прямо в меню ── */
+    var дверки = el('div', { id: 'sux-двери', role: 'group', 'aria-label': 'Двери дома: переход в любую комнату' });
+    var дверкиГолова = el('div', { class: 'sux-head', 'aria-hidden': 'true' }, 'Двери дома');
+    дверки.appendChild(дверкиГолова);
+    menu.appendChild(дверки);
+    var дверкиСобраны = false;
+    function собратьДвери() {
+        /* каждый opening — свежий список: дом вырос — меню знает (ноль innerHTML) */
+        while (дверки.childNodes.length > 1) дверки.removeChild(дверки.childNodes[1]);
+        var сп = null;
+        try { сп = (window.SNG && window.SNG.модуль) ? window.SNG.модуль : null; } catch (е) { сп = null; }
+        if (!сп || !сп.length) {
+            var п = el('div', { id: 'sux-двери-пусто' }, 'нить ведёт на лицо дома');
+            дверки.appendChild(п);
+            return;
+        }
+        var здесь = null;
+        try { здесь = window.SNG.текущий ? window.SNG.текущий() : null; } catch (е) { здесь = null; }
+        сп.forEach(function (м) {
+            var файл = м.файл || (м.id === 'хаб' ? 'index.html' : null);
+            if (!файл) return;
+            var a = el('a', { class: 'сук-дверка', role: 'menuitem', tabindex: '-1', href: файл });
+            a.appendChild(el('span', { class: 'н', 'aria-hidden': 'true' }, м.номер || '··'));
+            a.appendChild(el('span', { class: 'и' }, м.имя || м.id));
+            if (здесь && здесь.id === м.id) a.setAttribute('aria-current', 'true');
+            a.title = 'Дверь ' + (м.номер || '') + ' ' + (м.имя || м.id) + ' — открыть комнату';
+            a.addEventListener('click', function () { closeMenu(true); });
+            дверки.appendChild(a);
+        });
+        дверкиСобраны = true;
+    }
+
     var status = el('div', { id: 'sux-status', role: 'status', 'aria-live': 'polite' });
     var items = [];   // [{кнопка, действие, глиф, подписка?}]
 
@@ -235,7 +274,7 @@
             window.location.href = 'index.html#модули';
         }
     }
-    item('⌇', 'Нить Ариадны · дом 19 дверей', поНити, { клавиша: 'N' });
+    item('⌇', 'Нить Ариадны · дом ' + (function(){ try { return window.SNG && window.SNG.модуль ? (window.SNG.модуль.length - 1) : 27; } catch (е) { return 27; } })() + ' дверей', поНити, { клавиша: 'N' });
 
     // — осколки: только там, где живёт кристалл (лицо) —
     function осколкиДвижок() { return (window.SNG && window.SNG.осколкиДвижок) ? window.SNG.осколкиДвижок : null; }
@@ -280,7 +319,7 @@
         try { window.__SUX_NAVIGATING__ = { to: 'ДОКУМЕНТАЦИЯ.html', at: Date.now() }; } catch (e) {}
         window.location.href = 'ДОКУМЕНТАЦИЯ.html';
     });
-    item('·', 'сборка v1.49.0 · ОДНА КНОПКА', function () {}, { мертв: true });
+    item('·', 'сборка ' + (function(){ try { var м = document.querySelector('meta[name="sng-build"]'); return (м && м.content ? м.content.split('·')[0].trim() : (window.SNG && window.SNG.версия ? 'v' + window.SNG.версия : '')); } catch (е) { return ''; } })() + ' · ОДНА КНОПКА', function () {}, { мертв: true });
 
     menu.appendChild(status);
     document.body.appendChild(menu);
@@ -381,6 +420,7 @@
         if (isOpen) { place(x, y); return; }
         isOpen = true;
         подписи();
+        try { собратьДвери(); } catch (е) {}
         menu.classList.add('open');
         status.style.display = 'none';
         place(x, y);
