@@ -4315,7 +4315,11 @@ window.__HEALTH15 = function(){
 })();
 window.__HEALTH16 = function(){
   var К = window.__КОМОД, цел = !!(К && К.голос);
-  var жив = цел && typeof window.openMic==="function" && !!window.__MIC_FACTS && typeof window.__VC==="object" && !!window.__SHILKA;
+  /* С34 «ОБЕРЕГ» (хвост F-Г1): __MIC_FACTS рождается при первом запросе микрофона — холодный старт
+     не вина дома; мост обязан быть честным (геттер↔ящик синхронны), truthy не требуем — UNKNOWN ≠ FAIL */
+  var мостЧестен = false;
+  try{ var дМ = Object.getOwnPropertyDescriptor(window, "__MIC_FACTS"); мостЧестен = !!(дМ && дМ.get && К.голос.MIC_FACTS === window.__MIC_FACTS); }catch(e){}
+  var жив = цел && typeof window.openMic==="function" && мостЧестен && typeof window.__VC==="object" && !!window.__SHILKA;
   var круг = false;
   try{
     var было = window.__MIC_FACTS;
@@ -4324,7 +4328,7 @@ window.__HEALTH16 = function(){
     window.__MIC_FACTS = было;                           /* CLEANUP */
   }catch(e){}
   return [
-    { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+"/42 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
+    { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+" мостов (мост честен: "+мостЧестен+"), ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
     { sec:"I", n:"голос: мост-факты ходит туда-обратно (адрес↔ящик)", ok: круг }
   ];
 };
@@ -9527,6 +9531,12 @@ var ХРАН = { спрашивали:false, закреплено:"не спра
 function хранСкажи(т){
   try{ if(window.__KV && window.__KV.showToast) window.__KV.showToast(т); }catch(e){ }
 }
+/* С34 «ОБЕРЕГ» (хвост F-Г2): просим закрепление при первом касании — не ждать импорта;
+   persist() в большинстве браузеров молчит, отказ честно скажет проба ЗДОРОВЬЯ */
+try{
+  var хранЖест = function(){ try{ document.removeEventListener('pointerdown', хранЖест, true); хранПроси(); }catch(e){} };
+  document.addEventListener('pointerdown', хранЖест, true);
+}catch(e){}
 function хранПроси(){
   if(ХРАН.спрашивали) return Promise.resolve(ХРАН.закреплено);
   ХРАН.спрашивали = true;
@@ -9687,7 +9697,8 @@ window.__HEALTH21 = function(){   /* S-04: хранилище под закре�
   return [
     { sec:"R", n:"хранилище: "+(ок ? "закреплено — браузер обещал не выгонять библиотеку и офлайн-кэш"
       : х.закреплено+(нетАпи ? " — живём без закрепления (старый браузер)" : " — может выгнать библиотеку при нехватке места; установи дом как приложение")),
-      ok: ок, warn: !ок }
+      ok: ок || нетАпи || х.закреплено === "не спрашивали",   /* С34: UNKNOWN ≠ FAIL — честный жёлтый вместо лживого красного */
+      warn: !ок }
   ];
 };
 </script>
@@ -9767,7 +9778,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.53', такт:'ОБЕРЕГ', кэш:'s15-orkestrator-v108', стр:'2026-10-11', ver:'v10.53 «ОБЕРЕГ»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v108' };
+window.APP = { v:'10.53', такт:'ОБЕРЕГ', кэш:'s15-orkestrator-v109', стр:'2026-10-11', ver:'v10.53 «ОБЕРЕГ»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v109' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
