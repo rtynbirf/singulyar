@@ -1,0 +1,48 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: Novial (новиаль)
+ISO: nov | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. Nov vespre in kafeyo; densi nebulo disfasa domes.
+    [кириллицей на слух]: нов веспре ин кафейо; денси небуло дисфаса домес
+02. Me vagera tra quarters, u memorias fae insanitá.
+    [кириллицей на слух]: ме вагера тра куартерс, у мемориас фае инсанита
+03. U varm primavere shada animale kalotes.
+    [кириллицей на слух]: у варм примавере шада анимале калотес
+04. La vive fluga qual flache — preter dates, preter nus.
+    [кириллицей на слух]: ла виве флуга квал флаче — претер датес, претер нус
+05. Nus kolekte papier-mone, obliviant pro quo nus viva.
+    [кириллицей на слух]: нус колектe папье-моне, облiviaнt про кво нус вива
+06. La tempe presta nulo in debte — kold gladio sur kore kada.
+    [кириллицей на слух]: ла темпe преста нулo ин дебте — колд гладио сур коре када
+07. Nus lerna aprecia quando nus perde: ante porte alqui lume extincte.
+    [кириллицей на слух]: нус лерна апреция куандо нус перде: анте портe алки луме екстинкте
+08. Nus saluta trenes forvada, implorante de pasate un responda.
+    [кириллицей на слух]: нус салюта тренес форвада, имплоранте де пасате ун респонда
+09. Nus lerna ama quando frigidesk: in palmas cendre, ne stal.
+    [кириллицей на слух]: нус лерна ама куандо фригидеск: ин палмас цендре, не сталь
+10. Si save ante omno — qual dole in anime ti klar tristeso.
+    [кириллицей на слух]: си савe анте омно — квал долe ин анимe ти клар тристосо
+11. Ne disd, ne embras, ne finsk — eterna motivo; omno reservat pos, kore ne apertat por altri.
+    [кириллицей на слух]: не дисд, не эмбрас, не финск — этерна мотиво; омно резерват пос, корe не апертат пор алтри
+12. Feliso ne in vitrines brilo, ma in kyet veritá de proksimi; nus valua solmen to kel ja ne revenabl.
+    [кириллицей на слух]: фелисо не в витринес брило, ма ин кет верита де проксими; нус валюа солмен то кель я не ревенабль
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, не буквы):
+- «копили бумажки» → «kolekte papier-mone» (моне = деньги): копили ДЕНЬГИ-бумажки;
+  в новиале «mone» родное слово, «papier» уточняет форму: деньги, не листы.
+- «впереди ещё звучит до» → в Novial ноты: do re mi fa sol la si (романский
+  фонд): «do» = нота. Передаём смыслом: «musike ankore sona in futur» — музыка
+  ещё звучит в будущем.
+- «туман растворяет дома» → «disfasa domes» (делает неясными силуэты домов) —
+  не стены химически.
+- «прозрачная печаль» → «klar tristeso» (ясная, просвечивающая) — о чувстве.
+- «остыло» → «frigidesk» (о чувстве остывшем) — не физическое.
+- «вымолить у прошлого ответ» → «implorante de pasate un responda» (умоляя у
+  прошлого ответа) — молитвенный тон сохранён.
+- «сердце для других не отворил» → «kore ne apertat por altri» (сердце не открыл
+  другим) — про людей.
+АККОРДЫ (местные имена): Am=la minore; Dm=re minore; G=sol majore; C=do majore; F=fa majore; E7=mi septime
+ИГРА (местные слова): глушить=silensia (kordes silensia); баррэ=barre; перебор=arpegio; бой=bata
+НОТЫ (местная система, 7 ступеней от A): A=la B=si C=do D=re E=mi F=fa G=sol
+СИСТЕМА НОТ: родная романская сольмизация (do-re-mi-fa-sol-la-si) — Novial
+унаследовал её из латинского фонда (Jespersen, 1928).
