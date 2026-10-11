@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Котава · КОД: avk · ГРУППА 7 · язык 18 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: опора — словарь kotava.org: miel (ночь), awalt (день), tanoy (один), min (мы), me (не), tir/tid (есть/суть), tiyir (был), koe, va, kan, ta, re, bat/ban, lize, anton, ota, teza, vala, bera, eama, boza, koyar, betar, gruper, renar, vestar, siki, kitapek, edje, Marsa (имя собств.). Современные термины — описательно из этих корней: нейросети — siki, метавселенная — taw koe siki, бетон — azilafa taw (azil «железо»), весна — berafa barda, трава — eama («растение»), дождь — vala («вода»), уведомление — gluyasava, пароль — rekesa ava, расстояния — remo taw. «Настоящее» — reaf (нынешнее, от re «сейчас»); одиночество — tanoynuca; счастье — renuca. Продуктивная морфология Kotava: -af (прил.), -uca (состояние), -sa/-ena (прич.). Часть корней дана описательно — точный аттестованный эквивалент нами не гарантируется.
+
+01. Reafa blira tid zolonaf: siki koe Marsa, taw koe siki, bera me miel kan tanoy kenta, kotcoba re. Batcoba rotir.
+[реафа блира тид золонаф: сики куэ Марса, тау куэ сики, бэра мэ миэль кан таной кэнта, котцоба ре. батцоба ротир]
+
+02. Min tid teza ke renara — taw me tauza, kotcoba re.
+[мин тид тэза кэ ренара — тау ме тауза, котцоба ре]
+
+03. Kotcoba tid lo lize, lo koef — a koe min, miel.
+[котцоба тид ло лизэ, ло куэф — а куэ мин, миэль]
+
+04. Koyara is betara va rekesa ava; lizukaf mukot tid me grupena.
+[койара ис бэтара ва рэкэса ава; лизукаф мукот тид мэ груупэна]
+
+05. Rin, ta jin, kan bat kitapek: reaf tir koe tokcoba xo re?
+[рин, та джин, кан бат китапек: реаф тир куэ токцоба ксо ре?]
+
+06. Koe bat taw ik koe ban taw — vala, eama, berafa barda? Reaf me tir anton koe boza.
+[куэ бат тау ик куэ бан тау — вала, эама, бэрафа барда? реаф мэ тир антон куэ боза]
+
+07. Min tid grupesik va kotcoba — a reaf tir koe tokcoba xo? Vestara?
+[мин тид груупэсик ва котцоба — а реаф тир куэ токцоба ксо? вэстара]
+
+08. Berafa barda re tid koe azilafa taw — blira tid ota ke gluyasava.
+[бэрафа барда ре тид куэ азилафа тау — блира тид ота кэ глуясаава]
+
+09. Kan kitapek miel, kan kitapek awalt — koyara ke siki va min.
+[кан китапек миэль, кан китапек авальт — койара кэ сики ва мин]
+
+10. Betara va remo taw tid grupena — a tanoynuca tid me grupena; lavara tid lo mielafa.
+[бэтара ва рэмо тау тид груупэна — а танойнуца тид мэ груупэна; лавара тид ло миэльафа]
+
+11. Miel tiyir miel; lavar me tiyir; renuca me tiyir koe siki.
+[миэль тийир миэль; лавар мэ тийир; рэнуца мэ тийир куэ сики]
+
+12. Edje kitapek me tir — ava ta jin: reaf tir koe tokcoba xo? Koe bat taw ik koe ban taw?
+[эджэ китапек мэ тир — ава та джин: реаф тир куэ токцоба ксо? куэ бат тау ик куэ бан тау?]
+
+───
+СЛОВАРЬ МАЛЫША (avk):
+настоящее → reaf (нынешний; от re «сейчас») [реаф]
+экран → kitapek [китапек]
+дождь → vala (вода; описательно) [вала]
+весна → berafa barda (тёплое время года; описательно) [бэрафа барда]
+трава → eama (растение; описательно) [эама]
+бетон → azilafa taw (железная земля; описательно) [азилафа тау]
+уведомление → gluyasava (связующее слово; описательно) [глуясаава]
+пароль → rekesa ava (слово-хранитель; описательно) [рэкэса ава]
+ночь → miel [миэль]
+одиночество → tanoynuca (состояние «один»; от tanoy + -uca) [танойнуца]
+счастье → renuca (состояние любви; от renar) [рэнуца]
+где? → koe tokcoba xo? (в каком месте) [куэ токцоба ксо?]
+где настоящее? → reaf tir koe tokcoba xo? [реаф тир куэ токцоба ксо?]
