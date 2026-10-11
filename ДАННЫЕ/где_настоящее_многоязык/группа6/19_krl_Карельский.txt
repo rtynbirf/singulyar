@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Карельский · КОД: krl · ГРУППА 6 · язык 19 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: латынь, северная (собственно-карельская) норма; «настоящее» — aido (истинный), «экран» — näyttö, «одиночество» — yksinäizys.
+
+01. Jo, tämä on askel eterpäin: rakendammo dumuverkot, tukikohtu Marsal, elämmö toizes ilmas, avvammo iäkkähän kevätty yhel kosketuksel, saammo kaiken yht'aikah. Voldammo sen.
+[йо, тэмма эс аскель этэрпайн: ракэндаммо думувэркот, тукихохту Марсаль, элэммё тойзэс илмас, авваммо иэккяхэн кэвяттю йхэль кокскетуксэль, сааммо кайкен юхтайках. вольдаммо сэн]
+
+02. Tulimmo tahtoloppussah — ilmas taukotta da kauvuttа.
+[тулиммо татолоппуссах — илмас таукотта да каувутта]
+
+03. Kaik tuli lähembäh da kiirehmbä, a sisäl tuli hil'embä.
+[кайк тули ляхэмбях да кийрэхмбя, а сисяль тули хильэмбя]
+
+04. Lennämmö kiirehmbä da kiirehmbä, salasanoidu vaihtaten; my iče unhtimmo omii tehtävii.
+[лэнняммо кийрэхмбя да кийрэхмбя, саласанойду вайхтатэн; ми ичэ унхтиммо оми техтявий]
+
+05. Vastua minule, katuaten tädä näyttöä: kus nygy on aido?
+[вастуа минуле, катуатэн тядя нэюттёя: кус нюгю он айдо?]
+
+06. Tä vai tuvvol — kus sadan tuohu, kus heinä kevähäl? Aido ei vaiku piäs.
+[тяй вай туввол — кус садан туоху, кус хэйна кэвяхяль? айдо эй вайку пияс]
+
+07. Tiädämmö milmoi kaik, minkä voi tiädä. A kus on aido? Kus sidä ekata?
+[тиядяммо мильмой кайк, минкя вой тиядя. а кус он айдо? кус сиядя эката?]
+
+08. Kaik, mi tuohi kevättä, upottih betonah; elo mittammo tiädutuksien lugul.
+[кайк, ми туохи кэвяття, употтих бэтонах; эло миттаммо тиэдутуксиэн лугуль]
+
+09. Näyttön kel nengimmo, sen kel herämmö; jähmimmo iččeajavan kehäs.
+[нэюттон кель нэнгиммо, сэн кель хэряммё; jяхмиммо иччэайаван кэхяс]
+
+10. Oppimmo hävittäh kauvuksii, a yksinäizystä ei; kuulammo toine toistu harvembah da harvembah.
+[оппиммо хявиттях каувуксий, а юксиняйзюстя эй; кууламмо тойнэ тойсту харвэмбах да харвэмбах]
+
+11. Muista, konzu yö oli yö, my vain vaikenimmo, onnisto ei tarvinnuh tuua failannu?
+[муиста, конзу йо оли йо, ми вайн вайкениммо, оннисто эй тарвиннух тууа failанну?]
+
+12. Ja ku yhtenä päivännä näytön valgei sammuu — sano minule: kus on aido? Tä vai tuvvol?
+[йа ку юхтяня пяйвяння нэюттон вальгэй саммуу — сано минуле: кус он айдо? тяй вай туввол?]
+
+───
+СЛОВАРЬ МАЛЫША (krl):
+настоящее → aido (истинный) [айдо]
+экран → näyttö [нэюттё]
+дождь → sada [сада]
+весна → kevät [кэвят]
+трава → heinä [хэйна]
+бетон → betona [бэтона]
+уведомление → tiädutuskseh (извещение) [тиэдутуксэх]
+пароль → salasana (тайное слово) [саласана]
+ночь → yö [йо]
+одиночество → yksinäizys [юксиняйзюс]
+счастье → onnisto [оннисто]
+где? → kus [кус]
+где настоящее? → kus on aido? [кус он айдо?]

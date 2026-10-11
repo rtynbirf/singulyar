@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Готский · КОД: got · ГРУППА 6 · язык 01 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: реконструкция на грамматике Вульфилы (IV в.); skaja «экран» — позднегерм. заимствование.
+
+01. Nu sai, þata framgagg ist: timram naþ mitaþe, hus ana Marta, libam in anþaramma fairhwau, usluktam aiwein bloma ainamma sloha jah nimam allata suns. Magum þata.
+[ну сай, тата фрамгагг ист: тимрам нат митатэ, хус ана марта, лимам ин антарамма фаирхвау, услуктам айвейн блома айнамма слоха йах нимам аллата сунс. магум тата]
+
+02. Qemum du anda lustuwe — in fairhwau inuh andane jah inuh fairraþjo.
+[квемум ду анда лустуве — ин фаирхвау инух андане йах инух фаирратхьё]
+
+03. Allata warþ nahwiza jah sprauto, ak innapro warþ stilatoza.
+[аллата варт нахвиза йах спрауто, ак иннапро варт стилатоза]
+
+04. Fliugam sintein sprautozo, baugjandans runis; weis silbans fralusnom þizo seinizo dailom.
+[флиугам синтейн спраутозо, баугьянданс рунис; веис силбанс фралусном тхизо сейнисо дайлом]
+
+05. Ak andahaf mis, saihwands du þamma skaja: hwar nu þata sunjata?
+[ак андахаф мис, сайхвандс ду тамма скайя: хвар ну тата суньята?]
+
+06. Her aiþþau jain: hwar ahma rignis, hwar gras in mela blomis? Ni ainammei in haubida ist þata sunjata.
+[хер айттау джайн: хвар ахма ригнис, хвар грас ин мела бломис? ни айнаммей ин хаубида ист тата суньята]
+
+07. Kunnum filu allis þis ei mag kunnan. Ak hwar þata sunjata? Hwar sokjam þata?
+[куннум филу аллис тис эй маг куннан. ак хвар тата суньята? хвар сокьям тата?]
+
+08. Allata warþ stain þatei habaida ahman blomis, jah rahnjam laifain rahnjais taikne.
+[аллата варт стайн татэй хабайда ахман бломис, йах рахньям лайфайн рахньяйс тайкнэ]
+
+09. Slepam miþ skaja jah urrisam miþ imma. Fastai sijum in hwairneinai silbintaujins.
+[слепам мит скайя йах уррисам мит имма. фастай сиюм ин хваирнэйнай силбинтауинс]
+
+10. Magum niman fairraþjo, ak ainakosain ni magum usniman — jah sintein unsar hausjan misso gaswindid.
+[магум ниман фаирратхьё, ак айнакосайн ни магум усниман — йах синтейн унсар хаусьян миссо гасвиндит]
+
+11. Munais, hwan nahts was nahts, weis þahaidai wesum, jah audagi ni qam melida bokom?
+[мунайс, хван нахтс вас нахтс, веис тахайдай весум, йах аудаги ни квам мелида боком?]
+
+12. Jah jabai ains dags liuhath in skajai gaswindid — qiþ mis: hwar þata sunjata? Her aiþþau jain?
+[йах яйбай айнс дагс лиухат ин скайяй гасвиндит — квид мис: хвар тата суньята? хер айттау джайн?]
+
+───
+СЛОВАРЬ МАЛЫША (got):
+настоящее → þata sunjata (истинное) [тата суньята]
+экран → skaja [скайя]
+дождь → rign [ригн]
+весна → mel blomis (время цветения) [мел бломис]
+трава → gras [грас]
+бетон → stain (камень) [стайн]
+уведомление → taikn (знак) [тайкн]
+пароль → runa (тайна) [руна]
+ночь → nahts [нахтс]
+одиночество → ainakosain [айнакосайн]
+счастье → audagi [аудаги]
+где? → hwar [хвар]
+где настоящее? → hwar þata sunjata? [хвар тата суньята?]
