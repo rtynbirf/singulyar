@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Корнский · КОД: kw · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 01 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: Standard Written Form (SWF, 2008); язык возрождения Корнуолла; современная лексика (кофейня, бумажки, витрина, купюры, поезд, пульс) — описательно на аттестованных корнях с пометами в скобках.
+
+01. Gorthugher nowydh yn chi koffi (кофейня — «дом кофе», описательно). Yma niwl gwag ow teudhi chiow. Yth esof vy ow kerdhes dre'n trevyow, ple ma kovyow ow terri an penn (сводят с ума — «ломают голову»), ple ma gwav ow kudha an ene yn gwenton toemm.
+[Гортухер новидх ин чи кофи. Има ниул гуаг о тэудхи чиоу. Ит эзов ви о керхес дрен тревиоу, плэ ма ковиоу о терри ан пэнн, плэ ма гуав о кудха ан энэ ин гуэнтон тоэмм.]
+
+02. Ple nyas an bewnans avel saeth hebi an dedhydhow (даты — dedhydh, сверяй), hebi nei. Ny a guntellas paperyow (бумажки — paper «бумага»), heb perthi kov prag yth eson ni ow bywa; hag y hevis bepres: «do» hwath ow kortos a-rag.
+[Плэ ниас ан бэунанс ауэл саэт хэби ан дэдхидхоу, хэби нэй. Ни а гунтеллас папэриоу, хэб пэртхи ков праг ит эзон ни о буа; хаг и хэвис бэпрес: «до» уат о кортос а-раг.]
+
+03. Amser hepken ny ev travydh yn damkans (в долг — «в заём»; damkans «заём», сверяй). Hag y kev rew oer an kolon.
+[Амзэр хэпкэн ни эв травидх ин дамканс. Хаг и кэв рэу эр ан колон.]
+
+04. Ny a dysk prisya (ценим — от pris «цена») pan gollon ni — pan verwel golow nebonan a-dhelergh an daras. Ny a gri (машем вслед — «кричим», описательно) orth an trenow ethys (поезда — tren, заимствование), ow assaya pygy gorthyp dhyworth an termyn kyns.
+[Ни а диск прися пан голлон ни — пан вэрвэл голов нэбонан а-дхелерх ан дарас. Ни а гри орт ан трэноу этис, о ассая пиги гортип дхиуорт ан тэрмин кинс.]
+
+05. Ny a dysk karout pan eyn — pan vo loskvenydh yn agan lef, heb stal. O, godhvos kyns fatla wra an truedh tew ma (прозрачная — «тонкая», описательно) poenia (ныть — poen «боль», сверяй) yn agan ene.
+[Ни а диск караут пан эйн — пан во лосквенидх ин аган лэф, хэб стал. О, годхвос кинс фатла ура ан труэдх тэу ма поэниа ин аган энэ.]
+
+06. Ny leveris, ny kemmeris dorn yn dorn (не обнял — «рука к руке», описательно) — re dhiwedhes (не успел — «слишком поздно»); kan heb diwedh yw henna. My a withis oll dhe'n termyn a dheu; ny ygerys an kolon dhe dus erel.
+[Ни левэрис, ни кэммэрис орн ин орн — рэ дхиуэдхес; кан хэб диуэдх ю хэнна. Ми а уитис ол дэн тэрмин а дэу; ни игэрис ан колон дэ дус эрэл.]
+
+07. Ny a stryv gans an skeus, ny a lesk yn traow gwag munys; hag ny weler fatla rew a esedh war agan skoyf (иней — «мороз», описательно).
+[Ни а стрив ганс ан скэус, ни а лэск ин траоу гуаг мунис; хаг ни узэл фатла рэу а эсэдх уар аган скойф.]
+
+08. Nyn yw loweneth yn splann fenester an shoppa (витрина — «окно лавки»; shoppa «лавка», заимствование), ny yn paket mona (пачка купюр — «пачка денег», описательно) — mes yn gwiryoneth kosel an kerens, yn aga dommder yn mysk an gwyow.
+[Нин ю ловэнэдх ин спланн фэнэстэр ан шоппа, ни ин пакэт мона — мэс ин гуирионэт козэл ан кэрэнс, ин ага доммдэр ин миск ан гуиоу.]
+
+09. Mes ny a bris hepken an traow na yll bos dehwelys — ow pesya agan fordh hir, pub prys heb styryans (часто бессмысленный — «каждый раз без смысла», описательно).
+[Мэс ни а брис хэпкэн ан траоу на ил бос дэуэлис — о пэся аган фордх хир, пуб прис хэб стирианс.]
+
+10. Gel dhe'n dus goth (старикам — «старым людям»); kemmer dorn yn dorn (обними — описательно), der an termyn may lemma an kolon (пульс — «kolon a lemma»: сердце стучит). Re dremen an gassow (обиды — kas, сверяй) — my a pyg hedhyw rag henna.
+[Гэл дэн дус гот; кэммэр орн ин орн, дэр ан тэрмин май лэмма ан колон. Рэ дрэмен ан гассоу — ми а пик хэдхиу раг хэнна.]
+
+11. Rag unn yw diwedh oll an kanow: ny a trig yn kov, avel son an kovyow kollis (эхом забытых — «звуком потерянных воспоминаний», описательно), esedhys.
+[Раг ун ю диуэдх ол ан каноу: ни а триг ин ков, ауэл сон ан ковиоу колис, эсэдхис.]
+
+12. Dylsen ni witha an tra eus genen — hwath eson ni omma, kyns an ene dhe nya (улетела — «полетит», сверяй) dhe ves, pel.
+[Дилсэн ни уита ан тра эус гэнэн — уат эзон ни омма, кинс ан энэ дэ ниа дэ вэс, пэл.]
+
+───
+
+СЛОВАРЬ МАЛЫША (kw · 12 слов + фраза):
+время → amser / termyn [амзэр · тэрмин]
+туман → niwl [ниул]
+воспоминание → kov; fy kov (моя память); мн. ч. kovyow [ков · фи ков · ковиоу]
+весна → gwenton [гуэнтон]
+свет → golow; goloweth [голов · головэт]
+поезд → tren; честно описательно: car war an hyns-horn (повозка на рельсах) [трен · кар уар ан хинс-хорн]
+ответ → gorthyp [гортип]
+сердце → kolon [колон]
+лёд → rew [реу]
+печаль → truedh [трюэдх]
+иней → честно: rew gwynn («белый мороз», описательно) [реу гуинн]
+пульс → описательно: kolon a lemma («сердце стучит»; lemma «биться», сверяй) [колон а лэмма]
+когда теряем? → pan gollon ni? (из блока 04; koll «терять», 1 л. мн. ч.) [пан голлон ни]
