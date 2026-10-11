@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Водский · КОД: vot · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 20 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: vad'd'a keel — водь (Ленинградская область, сёла Краколье/Лужицы); крайне малодокументированный язык (единицы носителей), новая орфография с 2004 г. (Arvo Survo, M. Heinsoo). Перевод — наилучшее доступное приближение: опора на достоверно известные водские слова (aig, usva, talvi, kevat, jää, südäi, maa), современное — описательными оборотами из аттестованной лексики, спорные формы честно помечены в СЛОВАРЕ МАЛЫША.
+
+01. Uuze ilta juomamajas. Tühjä usva sulattap majad. Minä kvartalil rändan, kus vanad mõttud hullutavad miäd, kus lämmäl kevatel talvi südämmä kattap.
+[у:зе ильта йуомамаяс. тюхья усва суллаттап маяд. миня кварталил рянтан, кус ванад мыттуд хуллутавад мияд, кус ляммяль кеватель талви сюдяммя каттап]
+
+02. Kus elu lendas noolena päivist ja miist mööda. Mii paperirahha kokku kogozimma, unustades milleks mii elamma, — ja tunduz: alati veel edellä «do» kõlap.
+[кус элу лендас ноолена пяйвист я мийст мёёда. мии паперирахха кокку когозимма, унустадес миллэкс мии эламма, — я тундуз: алати веель эдэля «до» кыляп]
+
+03. Vain aig laenul evä anna mitte midagi. Ja äkki kylmä jää südämmäle laskep.
+[ваин аиг ляэнуль эвя анна митте мидаги. я якки тюльмя йяэ сюдяммяле ласкеп]
+
+04. Mii õppimma hinnatama, kui mii midagi kadotamma, — kui kellegi valgea uksel taga kustup. Mii lehvitamma lahkunud raudtee-vankreile järele, püüdes minevikult vastust saada.
+[мии ыппимма хиннатама, куи мии мидаги кадотамма, — куи келлеги вальгеа уккель тага куступ. мии лехвитамма ляхкунуд раудтее-ванкрейле йяэреле, пююдес миневикульт вастуст саада]
+
+05. Mii õppimma armastama, kui se külmup, — kui käel tuhk, mitte teras. Oo, kui mii teadamma ette, kuidas valutap südämmäs see selge kurbus.
+[мии ыппимма армастама, куи се тюльмуп, — куи кяэль тухк, митте терас. оо, куи мии теадамма этте, куйдас валутап сюдяммяс сее сельге курбус]
+
+06. Evä ütelnud, evä kallistanud, evä jõudnud — se om igavene motiiv. Kõik säästin hiljemaks, südämmä teiste jaoks evä avanud.
+[эвя ютельнуд, эвя каллистануд, эвя йыуднуд — се ом игавене мотив. кыик сяэстин хильемакс, сюдяммя теисте йаокс эвя авануд]
+
+07. Mii võitlemma varjoga, põlemma tühjis pikis asjois, ja evä näge, kuis halli istup mii õlgile.
+[мии выйтлемма варйога, пыляемма тюхьис пикис асйоис, я эвя няэге, куис халли иступ мии ылгиле]
+
+08. Vain õnn evä ole vitriini säras, evä ole paperirahha hunnikus, vaid omade vaiki tões, niide lämmes tormu keskel.
+[ваин ынн эвя оле витриини сярас, эвя оле паперирахха хунникус, ваид омаде ваики тыэс, нийде ляммес торму кескель]
+
+09. Aga mii hinnatamma ainult sedä, mida jo evä saa tagasi tuua, jätkades oma pikkа ja sageli mõttetut teed.
+[ага мии хиннатамма айнульт седя, мида йо эвя саа тагаси тууа, йяткадес ома пикка я сагели мыттетут теед]
+
+10. Vädä vanoile, kallista, kuni südäi veel lööp. Las pahad tunded mööduvad — minä palvetan selle eest tännään.
+[вядя ваноиле, каллиста, кунни сюдяи веель лёёп. лас пахад тундед мёёдувад — миня палветан селле ээст тянянян]
+
+11. Sest et kõigil lauludel lõpp lõpuks üks om: mii jäämmä muistusses, unustatud kajana, istumma.
+[сест эт кыигиль лаулюдель лыпп лыпукс юкс ом: мии йяяммя муистуссес, унустатуд кайана, истумма]
+
+12. Hoiaks sedä, mi om — kuni mii siäl olemma, kuni heng evä lenda kaugele.
+[хоикс седя, ми ом — кунни мии сияэль олемма, кунни хенг эвя ленда каугеле]
+
+───
+
+СЛОВАРЬ МАЛЫША (vot · 12 слов + фраза):
+время → aig [аиг] (сверяй: часть. aigo «айго»; эст. aeg)
+туман → usva [усва] (эст./вод. совпадает)
+воспоминание → muistus? [муистус] (сверяй; в блоке 01 описательно «vanad mõttud» [ванад мыттуд] — «старые мысли»)
+весна → kevat [кеват] (водская форма; эст. kevad, фин. kevät)
+свет → valgea [вальгеа] (сверяй: от valge «белый» — свечение; ср. эст. valgus)
+поезд → raudtee-vankri [раудтее-ванкри] (описательно «железный экипаж»; водского слова нет, ср. фин. juna)
+ответ → vastus [вастус] (сверяй: эстонский тип; водская форма не аттестована)
+сердце → südäi [сюдяи] (сверяй: часть. südämmä [сюдяммя], род. südämen [сюдямен]; ср. фин. sydän)
+лёд → jää [йяэ] (общефиннское)
+печаль → kurbus [курбус] (эстонский тип; ср. фин. ikävä)
+иней → halli [халли] (эст. hall, фин. halli; сверяй)
+пульс → описательно: südäi lööp [сюдяи лёёп] — «сердце бьётся» (блок 10)
+когда теряем? → Kui mii kadotamma? [куи мии кадотамма?] (фраза из блока 04)

@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Восточнофризский · КОД: stq · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 08 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: сатерландский фризский (Seeltersk), Земерланд (Нижняя Саксония) — последний живой восточнофризский идиом (~2 тыс. носителей); орфография Pyt Kramer (диграфы au/ie/uu/ou, äi), лексика сверена по Kruuswordenbouk, спорное помечено честно. Современное — описательно: кофейня = Koffjehuus («дом кофе»), поезд = die Boan («железная дорога», мн. do Boane), витрина = groot Finster fon n Winkel («большое окно лавки»), купюры = Jäild-Papiere («денежные бумаги»); воспоминание = Gedanke an Fröier («мысль о былом», единого слова не аттестую; Uutgong — это «исход/финал», блок 11); ценить = wäid hoolde («ценным держать»); прозрачная = glääse («стеклянная»); обиды = dät Böse fon fröier («злое из прошлого»); вымолить = beedje uum (молить о). Транскрипция: ie→и, uu→у, oo→о, ou→оу, ai/äi→ай, sk→ск, j→й.
+
+01. Näi Äiwend in dät Koffjehuus. Doister ferslikt do Huuse. Iek swärmje truch do frömde Sträiten, wier mien Gedanken mie dool moakje, wier in dät warme Foarjier die Winter mien Siele bedäkt.
+[най айвенд ин эт коффйехус. доистер ферсликт до хузэ. иек свайрме трух до фрёмдэ штрайтен, виер миен геданке ми дол моакье, виер ин эт варме фоарйер ди винтер миен сиеле бэдэкт]
+
+02. Die Lieuwend geen gauer as n Piel uur do Doatoome hen, uur uus hen. Wie spoarjeden Jäild-Papiere, ferjeeten wourom wie lieuwje — un dät waas, as dät „do“ foar uus fääre altied noch klingt.
+[ди лиовенд ген гауэр ас н пиел ур до доатоомэ хен, ур ус хен. вие шпоарйеден йайлд-папирэ, ферйеетен воуром вие лиовье — ун эт вас ас эт «до» фоар ус фэре айтиед нох клинт]
+
+03. Die Tied gift ap Skould goarniks. Un ap een Moal kumt kold Äis ap dät Haat.
+[ди тиед гифт ап скоулд гоарникс. ун ап ен моал кумт колд айс ап эт хат]
+
+04. Wie lieere, wan wie ferliese, wät wäid tou hooljen is — wan achter ju Döäre een Ljucht uutgungt. Wie winke ätter do Boane, do al geen, un beedje uum n Oantwoud fon ju oolde Tied.
+[вие лиере, ван вие ферлиезе, вэт вайд то холйен ис — ван ахтер ю дёре ен люхт утгунгт. вие винке эттер до боане, до ал ген, ун беедье ум н оантвоуд фон ю оолдэ тиед]
+
+05. Wie lieere liäwen, wan ju Lääfskup kold wäd — wan in do Hounde Äske is un naan Stoal. O, wüste iek al, ho ju glääse Traurigaid in ju Siele sit.
+[вие лиере лиэвен, ван ю лэфскуп колд вэд — ван ин до хоундэ эске ис ун нан стоал. о, вюсте иек ал, хо ю глэзе трауригайд ин ю сиеле сит]
+
+06. Ik hääb nit kweeden, nit uumsleeten, nit ap Tied ween — dät is altied ju sälge Wiese. Aal hiede iek spoarjed foar späider, dät Haat foar uur Ljuude hiede iek nit eepend.
+[ик хэб нит квиеден, нит умслеетен, нит ап тиед виен — эт ис айтиед ю сэльге виезе. ал хиеде иек шпоарйед фоар шпайдер, эт хат фоар ур люеде хиеде иек нит еепенд]
+
+07. Wie fiuchte juun dän Skeede, verbrennje in do läige litje Sääkke, un wie sjo nit, as die Riep sik ap uus Skouldere lait.
+[вие фиухте юн дэн скиеде, фербренье ин до лайге литье сэкке, ун вие сйо нит, ас ди риеп сик ап ус скоулдере лайт]
+
+08. Gluuk is nit in dän Glans fon dät grote Finster fon n Winkel, nit in n Böndel Jäild-Papiere — man in ju stilke Woarhaid fon do naaste Ljuude, in hiere Woarmte unner do Stuurme.
+[глук ис нит ин дэн гланз фон эт гротэ финстер фон н винкел, нит ин н бёндел йайлд-папирэ — ман ин ю стилке воархайд фон до наастэ люеде, ин хиере воармте уннер до стуурмэ]
+
+09. Man wie hoolde eerst wät foar wäid, wan dät nit moor tourääch kon, un gunge fääre ap uus long Paad, oafter sinloos.
+[ман вие холдэ ерст вэт фоар вайд, ван эт нит мор тоарэх кон, ун гунге фэре ап ус лонг пат, оафтер синлос]
+
+10. Roup do Oolde ap, hoold jo fääste, as die Puls noch gungt. Moge dät Böse fon fröier ferjeete wäide — deeruum beedje iek däälich.
+[роуп до оолдэ ап, холд йо фэстэ, ас ди пульс нох гунгт. могэ эт бёзе фон фрёйер ферйеетэ вайдэ — деерум беедье иек дэалих]
+
+11. Deeruum, dät aal Liede tou dän Leetsten dän sälgen Uutgong hääbe: wie blieuwe as Äko fon do ferjeetene in do Gedanken sitten.
+[деерум, эт ал лидэ то дэн летстен дэн сэльген утгонг хэбэ: вие блиовье ас эко фон до ферйеетэне ин до геданке ситтен]
+
+12. Bewaare, wät wie hääbe — as long as wie hier sunt, eer ju Siele wied fääre fljucht.
+[бэвааре, вэт вие хэбэ — ас лонг ас вие хиер сунт, ер ю сиеле виед фэре флюхт]
+
+───
+
+СЛОВАРЬ МАЛЫША (stq · 12 слов + фраза):
+время → Tied [тиед]
+туман → Doister [доистер]
+воспоминание → Gedanke an Fröier («мысль о былом»; описательно) [геданке ан фрёйер]
+весна → Foarjier [фоарйер]
+свет → Ljucht [люхт]
+поезд → die Boan (железная дорога; описательно) [ди боан]
+ответ → Oantwoud [оантвоуд]
+сердце → Haat [хат]
+лёд → Äis [айс]
+печаль → Traurigaid [трауригайд]
+иней → Riep [риеп]
+пульс → Puls [пульс]
+когда теряем? → Wan wie ferliese? (из блока 04) [ван вие ферлиезе]

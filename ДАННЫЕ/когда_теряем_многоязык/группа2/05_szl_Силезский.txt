@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Силезский · КОД: szl · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 05 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: ślōnski, Верхняя Силезия (Польша/Чехия), норма Ślabikŏrzowy szrajbōnek; современная лексика (кофейня, купюры, поезд, пульс) — описательно.
+
+01. Nowy wieczōr w kafejce. Pustŏ mjgła rozpuszczŏ domy. Błōndzōm po dzielniach, kaj przypōminania mŏtajōm pedno, kaj ciepłōm wiosnōm zima przikrywŏ duszã.
+[новы вечор в кафейцэ. пуста мгва розпушчо домы. блондзом по дельнях, кай пшипоминанья мотайом пэдно, кай цэплом виосном зима пшикрыво душон]
+
+02. Kaj życie lecŏło jak strzała mimo datōw, mimo nŏs. Kopili my papjerki, zŏpōminajōnc, po co żyjymy, — i wydŏwoło siy: zawdy przod nŏs jesce gra „do".
+[кай жыцэ лецоло як стржала мимо датув, мимо нос. копили мы паперки, зопоминайонц, по цо жыйимы, — и выдоворо сэ: завды пшод нос есце гра „до"]
+
+03. Inym czas na dług nicego niy dŏwŏ. A nagle na serce zasiydo zimny lōd.
+[иным час на дуг ницэго ни дово. а нагле на сэрцэ засидо зимны лод]
+
+04. Uczōmy siy cenić, kej tracōmy, — kej za drzwiami gaśnie czyjs światło. Mŏchōmy rōnkami za ôdeszłymy pociōngami, prōbujōnc wymôdlić ôdpowiyd ôd przeszłości.
+[учомы сэ цэнич, кей трацомы, — кей за дрзвями гасне чыйс швятло. мохомы ронками за одешлымы поцонгами, пробуйонц вымодлич отповыд од пшешлосци]
+
+05. Uczōmy siy kochać, kej styngŏ, — kej na dōniach popioł, a niy stal. Ô, gdyby wiedzieć zawczasu, kaj bydzie jykać w duszy ten przeziyrny smutek.
+[учомы сэ кохач, кей стынго, — кей на донях попиол, а ны стал. о, гдыбы ведзеч завчасу, кай быдзе йыкач в душы тэн пшезирны смутэк]
+
+06. Niy przawił, niy przitulił, niy zdōm — to wieczny mōtyw. Wszytko chował na potym, serce dla innych niy ôtworzył.
+[ны пшавил, ны пшитулил, ны здом — то вечный мотыф. фшытко ховал на потым, сэрцэ для инных ны отворзил]
+
+07. Walczōmy z ciniym, palōmy siy w pustych drobnostkach, a niy widać, jak szron siydŏ siy na ôuralach.
+[валцомы з циным, паломы сэ в пустых дробностках, а ны видач, як шрон сидо сэ на оуралах]
+
+08. Inym szczynście niy je w blasku witryny, niy we papjerkach, ale w cichyj prawdzie swojich, w ich cieple postrōd wicherōw.
+[иным шчынсче ны е в бласку витрыны, ны вэ паперках, але в цыхый правдзе свойих, в их цэпле построд вичеров]
+
+09. Ale cynōmy inym to, cego już niy idzie ôddać, toczōnc dalij swōjōm dugōm i nierŏz bez sensu cestã.
+[але цыномы иным то, цэго юж ны идзе оддач, тоцонц далий свойом дугом и нероз без сенсу цэстон]
+
+10. Zadzwōń do stŏrych, przituli, dopōki bije puls. Nych krywdy minōm — jōm za to dziyś we mōdlytwie.
+[задзвонь до сторых, пшитули, допоки бие пульс. ных крывды мином — йом за то дзись вэ модлытве]
+
+11. Bo kōniec wszytkich piosynek na kōniec je inym jedyn: ôstŏwŏmy we pamiyńci, jako echō zŏbytych, siedzōmy.
+[бо конец фшытких пиосынек на конец е иным едын: остовомы вэ паминци, яко эхо зобытых, сидзомы]
+
+12. Trza by chrowić to, co je, — dopōki jysmy tu, zanim dusza uleci dŏleko.
+[тша бы хрович то, цо е, — допоки йисмы ту, заним душа улеци далеко]
+
+───
+
+СЛОВАРЬ МАЛЫША (szl · 12 слов + фраза):
+время → czas [час]
+туман → mjgła [мгва] (рядом вариант mgła)
+воспоминание → przypōminanie [пшипоминанэ]
+весна → wiosna [виосна]
+свет → światło [швятло]
+поезд → pociōng [поцонг] (заимств., аттестовано в силезском; блок 04: pociōngami)
+ответ → ôdpowiyd [отповыд]
+сердце → serce [сэрцэ]
+лёд → lōd [лод]
+печаль → smutek [смутэк]
+иней → szron [шрон] (Ślabikŏrzowy szrajbōnek)
+пульс → puls [пульс] (заимств.; блок 10: dopōki bije puls)
+когда теряем? → kej tracōmy? (вопрос к блоку 04) [кей трацомы?]
