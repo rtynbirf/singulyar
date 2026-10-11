@@ -1,0 +1,40 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: sicilianu (сицилийский)
+ISO: scn | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. Nu siru novu ntô bar: a calìa sfuma li cunturni dî casi.
+    [кириллицей на слух]: ну си́ру но́ву нто бар — а кали́я сфу́ма ли кунту́рни ди ка́зи
+02. Vagabbia pi li quartieri unni li ricordi ti fannu pèrdiri lu scantu.
+    [кириллицей на слух]: вага́ббиа пи ли куартиэ́ри у́нни ли рико́рди ти фа́нну пэрди́ри лу ска́нту
+03. Unni a vitti è caura ma l'invernu si curca supra l'arma.
+    [кириллицей на слух]: у́нни а ви́ти э ка́ура, ма линвэ́рну си ку́рка су́пра ла́рма
+04. A vita svulò comu na frècciula — pî dati, pî nuàutri.
+    [кириллицей на слух]: а ви́та свуло́ ко́му на фрэ́ччула — пи да́ти, пи нуа́утри
+05. Ammassàmu surdi, amminticànnu pirchì semu vivi.
+    [кириллицей на слух]: аммаса́му су́рди, амминтика́нну пирки́ сэ́му ви́ви
+06. Lu tempu nenti dà a prèstitu — supra lu cori si curca lu ghiaccu friddu.
+    [кириллицей на слух]: лу тэ́мпу нэ́нти да апрэ́ститу — су́пра лу ко́ри си ку́рка лу дьа́кку фри́дду
+07. Amparamu ad apprizzari quannu pèrdimu: darreri a la porta stuta la luci di quarchidunu.
+    [кириллицей на слух]: ампара́му ад апицца́ри куа́нну пэрду́му: даррэ́ри а ла по́рта сту́та ла лу́чи ди куаркиду́ну
+08. Salutamu li treni ca si nnì jìru, priènnu a lu passatu na rispusta.
+    [кириллицей на слух]: салута́му ли трэ́ни ка си нни йи́ру, приэ́нну а лу пасса́ту на ризпу́ста
+09. Amparamu ad amari quannu l'amuri si raffruddau: nî palmi c'è cìnniri, no àceli.
+    [кириллицей на слух]: ампара́му ад амари́ куа́нну ламу́ри си раффру́ддау: ни па́льми че чи́ннири, но а́чэли
+10. Si lu sapìssi prima, comu duvìa fèriri nî cori chidda tristezza chiara e calma.
+    [кириллицей на слух]: си лу сапи́сси при́ма, ко́му дуви́а фэ́рири ни ко́ри ки́дда тристэ́цца киа́ра э ка́льма
+11. Nenti dittu, nenti abbracciatu, nenti fattu 'n tempu — mutivu di sempri: lassava tuttu a dumani, lu cori nun l'aprìu a l'àutri.
+    [кириллицей на слух]: нэ́нти ди́тту, нэ́нти аббра́ччату, нэ́нти фа́тту н тэ́мпу — мути́ву ди сэ́мпри: ласса́ва ту́тту а дума́ни, лу ко́ри нун лапри́у а ла́утри
+12. L'aligrìa nun è ntô lustru dâ vitrina, ma ntâ verità cheta di li nostri cari; apprizzamu sulu chiddu ca nun torna cchiù.
+    [кириллицей на слух]: лалгри́а нун э нто лю́стру да витри́на, ма нта верита́ кэ́та ди ли но́стри ка́ри; апицца́му су́лу ки́дду ка нун то́рна кью
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, 3–6 примечаний):
+- «копили бумажки» → ammassàmu surdi: surdi = ДЕНЬГИ (медяки, от «сольдо»); ammassàmu = сгребали в кучу, копили. Никаких «собранных бумажек».
+- «впереди ещё звучит до» → nnanti ancora suna a nota do: у сицилийцев сольмизация do re mi fa sol la si, «do» здесь — нота, не глагол (делать = fari). Метафора «всё ещё впереди» цела, ловушка №1 обойдена.
+- «туман растворяет дома» → a calìa sfuma li cunturni dî casi: туман «сдувается-размывает» очертания домов (sfumari — как размыв в живописи), не сами дома.
+- «машем вслед поездам» → salutamu li treni ca si nnì jìru: кланяемся тем поездам, что ушли насовсем — прощание с упущенным.
+- «вымаливая» → priènnu: от priari (молить) — выпрашиваем молитвой ответ у прошлого.
+- «остыло» → l'amuri si raffruddau: любовь остыла, как остывает суп — о чувстве, не о теле.
+АККОРДЫ (местные имена; игровой свод дома для пения, не транскрипция оригинала): Am=La minore; Dm=Re minore; G=Sol maggiore; C=Do maggiore; F=Fa maggiore; E7=Mi settima (Mi7)
+ИГРА (местные слова): глушить=suffucari (li cordi); баррэ=capu; перебор=pizzicari; бой='a sbattuta
+НОТЫ (местная система, 7 ступеней от A): A=la; B=si; C=do; D=re; E=mi; F=fa; G=sol
+СИСТЕМА НОТ: сольмизация do re mi fa sol la si — нота «до» = do, аккорды зовутся по сольмизации (La minore).

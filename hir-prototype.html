@@ -22,4 +22,6 @@ $('export').onclick=()=>{const u=URL.createObjectURL(new Blob([JSON.stringify({e
 $('clear').onclick=()=>{if(!confirm('Удалить локальные контакты, сообщения и настройки прототипа?'))return;localStorage.removeItem(K);s=JSON.parse(JSON.stringify(defaults));$('repr').value='text';$('rate').value='1';$('hc').checked=false;$('lt').checked=false;document.body.classList.remove('hc');peers();messages();save();say('Данные прототипа очищены.')};
 $('repr').value=s.prefs.repr;$('rate').value=s.prefs.rate;$('hc').checked=s.prefs.hc;$('lt').checked=s.prefs.lt;document.body.classList.toggle('hc',s.prefs.hc);peers();messages();
 })();
-</script></body></html>
+</script>
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v10.64 «СМЫСЛ»</span></nav>
+</body></html>
