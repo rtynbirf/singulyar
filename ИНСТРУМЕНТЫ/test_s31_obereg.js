@@ -16,7 +16,7 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* титул и версии */
 чек("титул дома — v10.53 «ОБЕРЕГ»", raw.includes("<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.53 «ОБЕРЕГ»"));
-чек("window.APP штамп: v/такт/кэш/стр", raw.includes("v:'10.53', такт:'ОБЕРЕГ'") && raw.includes("s15-orkestrator-v108") && raw.includes("стр:'2026-10-11'"));
+чек("window.APP штамп: v/такт/кэш/стр", raw.includes("v:'10.53', такт:'ОБЕРЕГ'") && raw.includes("s15-orkestrator-v109") && raw.includes("стр:'2026-10-11'"));
 чек("шапка-комментарий С34 на месте", raw.includes("такт v10.53 «ОБЕРЕГ» (С34") && raw.includes("ЗАКОН СИНГУЛЯРА"));
 
 /* ЩИТ */
@@ -65,12 +65,12 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* sw15 */
 const sw = fs.readFileSync(path.join(__dirname, "..", "sw15.js"), "utf8");
-чек("sw15: кэш v108", sw.includes("s15-orkestrator-v108") && !sw.includes("s15-orkestrator-v107';"));
+чек("sw15: кэш v109", sw.includes("s15-orkestrator-v109") && !sw.includes("s15-orkestrator-v108';"));
 чек("sw15: летопись такта в комментарии", sw.includes("Такт v10.53 «ОБЕРЕГ»"));
 
 /* versions.json */
 const vj = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versions.json"), "utf8"));
-чек("versions.json: штамп 10.53/ОБЕРЕГ/v108", vj.дом.версия === "10.53" && vj.дом.такт === "ОБЕРЕГ" && vj.дом.поколение_кэша === "v108");
+чек("versions.json: штамп 10.53/ОБЕРЕГ/v109", vj.дом.версия === "10.53" && vj.дом.такт === "ОБЕРЕГ" && vj.дом.поколение_кэша === "v109");
 чек("versions.json: летопись С34 в голове, С33 следом", vj.летопись[0].такт === "ОБЕРЕГ" && (vj.летопись[1].такт === "ПРОЁМ" || vj.летопись[1].такт === "ЧУВСТВА"));
 чек("versions.json: летопись 20 записей", vj.летопись.length === 20);
 
