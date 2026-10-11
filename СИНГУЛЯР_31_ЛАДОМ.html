@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.54 «КОДЕКС» (С35, приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ — ТАМ УЖЕ ЧАСТЬ ГОТОВА; МАЛЫША НАУКИВАЙ»; поверх v10.53 «ОРГАНИЗМ» коллег): документация двух треков влита в паблик — ДОКУМЕНТЫ/ТРЕКИ/HARMONIA (адаптивные события, профиль доступности harm-profile/0.1, формат .harm — «партитура намерений», модель угроз, MIT/CC BY 4.0) и ДОКУМЕНТЫ/ТРЕКИ/HIR (Human Intent Runtime: PersonRef/Intent/MeaningEnvelope/RepresentationPreference, честные статусы «сохранено ≠ доставлено», CLAIM→CODE→SPEC→TEST→RESULT→VERDICT); синтез всех ТЗ и дорожных карт с домом — ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md (карта соответствий: ~70% контрактов HIR дом уже исполняет); прототипы треков подняты в двери ·40 ГАРМОНИЯ и ·41 НАМЕРЕНИЕ (фасет lab); Малыш доучен v0.8: правило 15 ТРЕКИ ДОМА, карта дома ·40/·41, фразы «открой гармонию/намерение», гейт версий правил в освежитьПравила (апстрим singulyar-llm не откатывает доучку); хвост R-13 закрыт: журнал README и летопись versions.json дописаны (10.20…10.53 восстановлены из git-истории); найдена и выровнена регрессия коллег: титул дома висел v10.52 при воркере v108; кэш v109. -->
+<!-- такт v10.53 «ОБЕРЕГ» (С34, приказ владельца «ДОДЕЛЫВАЙ ВСЕ ХВОСТЫ ПО ДОРОЖНОЙ КАРТЕ… ЭРГОНОМИКА ПРИВАТНОСТЬ КОНФИДЕНЦИАЛЬНОСТЬ ЮЗОБИЛИТИ СТОЯТ ВО ГЛАВЕ УГЛА — ЭТО ЗАКОН СИНГУЛЯРА»; поверх v10.52 «ЧУВСТВА»/«ПРОЁМ» коллег): (1) ЩИТ ПРИВАТНОСТИ — честная точка микрофона по паттерну Apple (оранжевая = микрофон живёт) + plain language «СВОЁ · 0 облаков»; драйвер — обёртка над существующим трактом-брокером «ОДИН МИКРОФОН» __ГОЛОС.тракт (нота/запись/зал не переписаны), своего RAF нет, DOM пишется только на смене состояния; (2) честное приглашение зала — крупная кнопка «СКОПИРОВАТЬ ССЫЛКУ» (clipboard + фолбэк, ≥44px — WCAG 2.2) и слова правды о сигналинге PeerJS (звук и слова — напрямую между устройствами); (3) ТИХО — calm-час дома (IDEO 2025: «проектируй для 99% времени»): 40 с без касаний рубашки присыпаются, строка песни не гаснет никогда, под паузой дом не спит, касание пробуждает; (4) АУРА theme-aware — цвета дыхания читают токены темы (--amber/--lilac/--coral, фолбэки честные, пересчёт на смене темы, не в кадре); (5) строка-герой для глаз пожилых — активная строка scale 1.045 (Hou 2022, Vision Australia: крупное, контрастное, без курсива); ящик «оберег·щит» (обряд С23–С29: 2 вещи — __ЩИТ, __ТИХО), семья в КАЗНЕ, проба ЗДОРОВЬЕ 24; кэш v108. -->
 <!-- такт v10.52 «ЧУВСТВА» (С33, приказ владельца «лучшие мировые тренды — иммерсивное, чтобы стало нашим»; поверх v10.51 «ЯЗЫКИ»): три чувства дома по трендам 2025–2026 — (1) АУРА — живой фон за строками дышит басом (calm technology: осознанность через периферию; свой Uint8Array у существующего __KV.an, шаг в общем конвейере С19 — нового RAF нет; канвас живёт внутри #sngbg и честно гаснет в kids/day/kraft/hc; гарды data-motion off/calm и prefers-reduced-motion); (2) ПУЛЬС ГОСТЯМ — бит уходит по мосту КРЫШИ ({t:'kv31b'} на каждой доле __TAKT_SUBS), телефон-гость вибрирует телом ритма (тренд haptic-rhythm: VibeSync/dual-band 2026); тумблер в руле гостя, память kv31gpuls, тумблер хозяина в панели КРЫШИ, память kv31puls; (3) ЭХО ЗАЛА — реверб микрофона зала через ConvolverNode (процедурный импульс 1.8 с, тренд singer-tools: HARMAN Sing Drive 2026); Web Audio граф с «трубой»-элементом (разблокировка удалённого потока в Chrome), dry/wet, ползунок в панели, память kv31echo, фолбэк на старый srcObject-путь; попутно закрыты живые П1 из реестра штаба: F-03 (гонка панели «ДЕРЖИ НОТУ» — стрим глушится, если игра закрыли пока ждали разрешение) и F-04 (гонка записи — recBusy не пускает второй тап в окно await); ящик «чувства·аура» (обряд С23–С29: 3 вещи — __АУРА/__ЭХОЗАЛА/__ПУЛЬСЗАЛА), семья в КАЗНЕ, проба ЗДОРОВЬЕ 23; долги версий: титул выровнен (С32) и VER зала динамический от APP (долг F-19); кэш v107. -->
 <!-- такт v10.51 «ЯЗЫКИ» (С32, приказ владельца «полимат — максимум дорожной карты»; поверх v10.50 «РОЛИ» коллег): ре-посадка дельт такта v10.49 «СКЛАД», потерянных в байте при перенумерации коллег (их резка шла с базы ШИЛКИ; летопись СКЛАД коллеги честно восстановили, но код уехал) — S-04 storage.persist (ХРАН), жив-гард пробы 17 до 7 имён, фолбэк TAKT_SUBS null, проба ЗДОРОВЬЕ 21; плюс восьмой ящик комода — семья «МАЛЫШ·языки» (обряд С23–С29, 8 вещей, мост-до-рождения для поздних LANGSHEET/ЯЗЫКЧИПСЫ по образцу __ЛИЦАПУЛЬТ С29), 65 мостов, проба ЗДОРОВЬЕ 22; кэш v106. -->
 <!-- такт v10.50 «РОЛИ» (С31, приказ владельца: максимум дорожной карты; поверх v10.48 «ШИЛКА»; номер 10.50 — после столкновения с тактом коллег 10.49 «СКЛАД», СТОП-ГОРН разрулил): РОЛЬ — четвёртая ось пульта, фильтр шины намерений: реестр-данные window.__РОЛИ (ведущий/техник — вся сила; гость — зал без сцен и настроек; ребёнок — петь и тихо), память kv.rol, гард «роль не ведает intent» до switch, intent РОЛЬ всегда проходит (мета-действие; ось — режим устройства, без тупиков — смена свободная); выбор роли — кнопки в ПАСПОРТЕ ПУЛЬТА (aria-pressed, подсказка ведаемых); проба ЗДОРОВЬЕ 20 (реестр/гард ребёнка/гард смены под гостем/память/доклад паспорта); арбитр гостя крыши (С20) не тронут — свои гарды; кэш v104.
@@ -44,7 +46,7 @@
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.52 «ЧУВСТВА» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.54 «КОДЕКС» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -237,11 +239,27 @@ body[data-theme="kraft"] #start h1 em,body.hc #start h1 em{
   font-weight:var(--lyrW,800);line-height:var(--lyrLH,1.18);letter-spacing:var(--lyrLS,-.01em);color:var(--lyr);opacity:.74;/* v10.10: стол текста читается, не мозолит */
   transition:color .35s,opacity .35s,transform .35s;cursor:pointer}
 .line.done{opacity:.22}
-.line.on{color:var(--lyrOn,var(--text));opacity:1;transform:scale(1.02)}
+.line.on{color:var(--lyrOn,var(--text));opacity:1;transform:scale(1.045)}/* С34 «ОБЕРЕГ»: строка-герой — глаза пожилых ловят её без усилия (Hou 2022, Vision Australia) */
 .line .bar{position:absolute;left:24px;top:16px;bottom:16px;width:7px;border-radius:99px;background:#ffffff12;transition:.3s}
 .line .who{position:absolute;top:-7px;left:52px;font-size:10.5px;font-weight:900;letter-spacing:.16em;
   color:var(--faint);opacity:0;transition:.3s;white-space:nowrap}
 .line.on .who{opacity:1;color:inherit}
+/* ── С34 · ОБЕРЕГ v10.53: щит приватности + тихий час (эргономика · приватность · юзабилити — закон СИНГУЛЯРА) ── */
+.shield{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;background:#ffffff0c;border:1px solid #ffffff14;color:var(--faint,#9aa3ad);font-size:11px;font-weight:800;letter-spacing:.14em;white-space:nowrap;pointer-events:auto}
+.shield i{width:9px;height:9px;border-radius:50%;background:#5f6b76;flex:0 0 auto;transition:background .3s,box-shadow .3s}
+.shield.жив i{background:#FF8A3C;box-shadow:0 0 10px rgba(255,138,60,.55)}
+.shield.жив{color:var(--amber,#DEA968);border-color:rgba(255,138,60,.4)}
+html[data-motion="on"] .shield.жив i{animation:shPulse 1.6s ease-in-out infinite}
+@keyframes shPulse{0%,100%{box-shadow:0 0 6px rgba(255,138,60,.45)}50%{box-shadow:0 0 14px rgba(255,138,60,.8)}}
+@media (prefers-reduced-motion: reduce){.shield.жив i{animation:none}}
+/* ТИХО — спокойствие дома: рубашки присыпаются, строка песни и щит не гаснут; касание/фокус пробуждают */
+.topbar,#sceneRow{transition:opacity 1.2s ease}
+body.тихо .topbar,body.тихо #sceneRow{opacity:.26}
+.topbar:focus-within{opacity:1}
+/* честное приглашение зала: слова правды + крупная кнопка копирования (≥44px — WCAG 2.2 Target Size) */
+.kv31-честно{color:var(--dim,#A7A8A8);font-size:12px;line-height:1.5;margin-top:6px;white-space:pre-wrap}
+#kv31copy{min-height:44px;padding:12px 18px;margin-top:8px;border-radius:12px;border:1px solid rgba(222,169,104,.4);background:rgba(222,169,104,.12);color:var(--amber,#DEA968);font:inherit;font-weight:800;letter-spacing:.1em;cursor:pointer}
+#kv31copy:hover,#kv31copy:focus-visible{background:rgba(222,169,104,.2)}
 body[data-mode="all"] .line{cursor:default}
 .line[data-own="all"] .bar{background:linear-gradient(var(--amber),var(--coral))}
 .line[data-own="s0"] .bar{background:var(--s0)} .line[data-own="s0"] .who{color:var(--s0)}
@@ -779,6 +797,7 @@ window.__ALERT = function(t, opts){
     <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#17181A"/><circle cx="32" cy="25" r="11" fill="none" stroke="#DEA968" stroke-width="4"/><path d="M32 39v11M21 54h22" stroke="#F5A623" stroke-width="4" stroke-linecap="round"/></svg>
     <span><b>ЛАДОМ · v9</b><span>СИНГУЛЯР · ЛАДОМ — пространство своих · «Просто люби» · RUVSON · бирка автора — в угол и перетащи</span></span>
   </div>
+  <span id="shield" class="shield" aria-live="polite" data-tip="Щит дома: всё своё — 0 облаков, 0 счётчиков; оранжевая точка вспыхивает, когда живёт микрофон (запись, нота, зал)"><i aria-hidden="true"></i><b id="shTxt">СВОЁ</b></span>
   <button id="chipHealth" class="chip" data-tip="Самопроверка: проверяет все части инструмента и честно докладывает, что работает">ЗДОРОВЬЕ …</button>
   <button id="btnLang" class="tbtn" data-tip="Таблица языков строк: нажал — выехала, ткнул — поём; подперевод всегда рядом">ЯЗЫК · РУС</button>
   <button id="btnPeople" class="tbtn on" data-tip="Доступность: голосовые команды, озвучка, вибро, одна кнопка, гигант, контраст">ЛЮДИ</button>
@@ -1590,7 +1609,7 @@ function health(){
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
     ];
   };
-  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19,window.__HEALTH20,window.__HEALTH21,window.__HEALTH22,window.__HEALTH23].forEach(fn=>{
+  [window.__HEALTH2,window.__HEALTH3,window.__HEALTH4,window.__HEALTH5,window.__HEALTH6,window.__HEALTH7,window.__HEALTH8,window.__HEALTH10,window.__HEALTH11,window.__HEALTH12,window.__HEALTH13,window.__HEALTH14,window.__HEALTH15,window.__HEALTH16,window.__HEALTH17,window.__HEALTH18,window.__HEALTH19,window.__HEALTH20,window.__HEALTH21,window.__HEALTH22,window.__HEALTH23,window.__HEALTH24].forEach(fn=>{
     if(typeof fn!=="function") return;
     try{ const ext=fn(); if(Array.isArray(ext)) ext.forEach(x=>r.push(x)); }
     catch(e){ r.push({ sec:"I", n:"проба не сошлась: "+(e && e.name ? e.name : "ошибка"), ok:true, warn:true }); }
@@ -1652,6 +1671,7 @@ window.__КАЗНА = (function(){
     ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__РОЛИ$|^__TIPS$|^__TOASTS$|^__ALERT/],
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$|^__ХРАН$/],
     ["чувства·аура",       /^__АУРА$|^__ЭХОЗАЛА$|^__ПУЛЬСЗАЛА$/],
+    ["оберег·щит",         /^__ЩИТ$|^__ТИХО$/],   /* С34 */
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
     ["адапт·конвейер",     /^SNGRC$|^SNGАДАПТ$|^SNG$|^__СЛОИ$|^__КОНВЕЙЕР$|^__СТРОЙ$|^__SYN_PAINT$/],
@@ -4301,7 +4321,11 @@ window.__HEALTH15 = function(){
 })();
 window.__HEALTH16 = function(){
   var К = window.__КОМОД, цел = !!(К && К.голос);
-  var жив = цел && typeof window.openMic==="function" && !!window.__MIC_FACTS && typeof window.__VC==="object" && !!window.__SHILKA;
+  /* С34 «ОБЕРЕГ» (хвост F-Г1): __MIC_FACTS рождается при первом запросе микрофона — холодный старт
+     не вина дома; мост обязан быть честным (геттер↔ящик синхронны), truthy не требуем — UNKNOWN ≠ FAIL */
+  var мостЧестен = false;
+  try{ var дМ = Object.getOwnPropertyDescriptor(window, "__MIC_FACTS"); мостЧестен = !!(дМ && дМ.get && К.голос.MIC_FACTS === window.__MIC_FACTS); }catch(e){}
+  var жив = цел && typeof window.openMic==="function" && мостЧестен && typeof window.__VC==="object" && !!window.__SHILKA;
   var круг = false;
   try{
     var было = window.__MIC_FACTS;
@@ -4310,7 +4334,7 @@ window.__HEALTH16 = function(){
     window.__MIC_FACTS = было;                           /* CLEANUP */
   }catch(e){}
   return [
-    { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+"/42 мостов, ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
+    { sec:"I", n:"голос: семья «голос·микрофон» переселена — "+(цел ? (К.мостов+" мостов (мост честен: "+мостЧестен+"), ящиков в комоде: "+К.ящики.length) : "ящик не встал"), ok: жив, warn: !жив },
     { sec:"I", n:"голос: мост-факты ходит туда-обратно (адрес↔ящик)", ok: круг }
   ];
 };
@@ -8575,9 +8599,25 @@ var cx = cv.getContext('2d');
 if(!cx) return;
 cv.width = 256; cv.height = 144;
 var fa = null, E = 0, фаза = 0;
+/* С34 · ОБЕРЕГ: theme-aware — цвета дыхания читают токены темы (--amber/--lilac/--coral);
+   пересчёт — на смене темы/сцены (дешёвый ключ-сравнение), НЕ в кадре рисования; фолбэки честные */
+var кешТемы = '', ЦВ = null;
+function цвет(токен, фолбэк){
+  try{
+    var v = getComputedStyle(document.body).getPropertyValue(токен).trim();
+    if(/^#[0-9a-fA-F]{6}$/.test(v)) return [parseInt(v.slice(1,3),16), parseInt(v.slice(3,5),16), parseInt(v.slice(5,7),16)].join(',');
+  }catch(e){}
+  return фолбэк;
+}
+function обновиЦвета(){
+  ЦВ = [ цвет('--amber','222,169,104'), цвет('--lilac','110,150,210'), цвет('--coral','186,138,88') ];
+}
+обновиЦвета();
 function шаг(now){
   try{
     if(document.hidden) return;                       /* вкладка спит — аура тоже */
+    var темКлюч = (корень.getAttribute('data-theme')||'')+'|'+(document.body.getAttribute('data-theme')||'')+'|'+(document.body.getAttribute('data-scene')||'')+(document.body.classList.contains('hc')?'|hc':'');
+    if(темКлюч !== кешТемы){ кешТемы = темКлюч; обновиЦвета(); }   /* С34: тема сменилась — цвета пересчитаны */
     var корень = document.documentElement;
     var режим = корень.getAttribute('data-motion');
     if(режим === 'off'){ cx.clearRect(0,0,cv.width,cv.height); window.__АУРА.жив = false; return; }
@@ -8604,9 +8644,9 @@ function рисуй(ампл){
   if(ампл <= 0.02) return;
   var w = cv.width, h = cv.height;
   /* три круга дыхания — периферия кадра, центр строки не забираем */
-  круг(w*0.28, h*(0.62 + Math.sin(фаза)*0.06),     w*0.34*(0.75+ампл*0.5), '222,169,104', 0.16*ампл);
-  круг(w*0.74, h*(0.50 + Math.cos(фаза*0.8)*0.07), w*0.30*(0.75+ампл*0.6), '110,150,210', 0.12*ампл);
-  круг(w*0.50, h*(0.96 + Math.sin(фаза*0.6)*0.03), w*0.45*(0.70+ампл*0.4), '186,138,88',  0.10*ампл);
+  круг(w*0.28, h*(0.62 + Math.sin(фаза)*0.06),     w*0.34*(0.75+ампл*0.5), ЦВ[0], 0.16*ампл);
+  круг(w*0.74, h*(0.50 + Math.cos(фаза*0.8)*0.07), w*0.30*(0.75+ампл*0.6), ЦВ[1], 0.12*ампл);
+  круг(w*0.50, h*(0.96 + Math.sin(фаза*0.6)*0.03), w*0.45*(0.70+ампл*0.4), ЦВ[2], 0.10*ампл);
 }
 function круг(x,y,r,rgb,a){
   if(r < 8) r = 8;
@@ -8616,13 +8656,125 @@ function круг(x,y,r,rgb,a){
   cx.fillStyle = g;
   cx.beginPath(); cx.arc(x,y,r,0,6.2832); cx.fill();
 }
-window.__АУРА = { ver:'v10.52', жив:false,
+window.__АУРА = { ver:'v10.53', жив:false,
+  цвета: function(){ return (ЦВ||[]).join('|'); },   /* С34: theme-aware — три цвета дыхания токенами темы */
   гард: function(){ return document.documentElement.getAttribute('data-motion') !== 'off'; } };
 if(window.__КОНВЕЙЕР && typeof window.__КОНВЕЙЕР.поставь === 'function'){
   window.__КОНВЕЙЕР.поставь(шаг, 'аура');
 } else {
   requestAnimationFrame(function л(){ шаг(performance.now()); requestAnimationFrame(л); });
 }
+})();
+</script>
+<script id="shieldScript">
+/* ── С34 · ЩИТ ПРИВАТНОСТИ v10.53 «ОБЕРЕГ» — честная точка микрофона ──
+   Паттерн Apple (оранжевая точка = микрофон живёт) + plain language: «СВОЁ».
+   Драйвер — СУЩЕСТВУЮЩИЙ брокер «ОДИН МИКРОФОН» (__ГОЛОС.тракт): обёртка над
+   занять/освободить — ни один потребитель тракта (нота/запись/зал) не переписан.
+   Своего RAF нет: DOM пишется только на смене состояния. Копия приглашения —
+   крупная кнопка (≥44px, WCAG 2.2), честные слова о сигналинге PeerJS. */
+(function(){
+"use strict";
+if(window.__ЩИТ) return;
+var el = document.getElementById('shield');
+function обнови(){
+  try{
+    var держ = null;
+    try{ держ = (window.__ГОЛОС && window.__ГОЛОС.тракт && window.__ГОЛОС.тракт.держатель) ? window.__ГОЛОС.тракт.держатель() : null; }catch(e){ держ = null; }
+    var жив = !!держ;
+    if(el){
+      el.classList.toggle('жив', жив);
+      var txt = document.getElementById('shTxt');
+      if(txt) txt.textContent = жив ? 'МИКРОФОН' : 'СВОЁ';
+      el.setAttribute('aria-label', жив
+        ? 'Щит приватности: микрофон живёт ('+держ+') — звук уходит только туда, куда вы сами позвали; всё остальное своё'
+        : 'Щит приватности: микрофон спит, всё своё — ноль облаков, ноль счётчиков');
+    }
+    window.__ЩИТ.жив = жив; window.__ЩИТ.кто = держ || null;
+  }catch(e){}
+}
+function копируй(текст, удача){
+  function фолбэк(){
+    var р = false;
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = текст; ta.setAttribute('readonly','');
+      ta.style.position = 'fixed'; ta.style.top = '-1000px';
+      document.body.appendChild(ta); ta.select();
+      try{ р = document.execCommand('copy'); }catch(e){}
+      ta.remove();
+    }catch(e){}
+    if(р && typeof удача === 'function') удача();
+    return р;
+  }
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(текст).then(function(){ if(typeof удача==='function') удача(); }, фолбэк);
+      return true;
+    }
+  }catch(e){}
+  return фолбэк();
+}
+window.__ЩИТ = { ver:'v10.53', жив:false, кто:null, обнови:обнови, копируй:копируй };
+(function подвяжи(){
+  var попыток = 0;
+  function шаг(){
+    try{
+      var Т = (window.__ГОЛОС && window.__ГОЛОС.тракт) ? window.__ГОЛОС.тракт : null;
+      if(Т && typeof Т.занять === 'function' && !Т.__щитОбёрнут){
+        var занять = Т.занять, освободить = Т.освободить;
+        Т.занять = function(){ var р = занять.apply(this, arguments); setTimeout(обнови, 0); return р; };
+        Т.освободить = function(){ var р = освободить.apply(this, arguments); setTimeout(обнови, 0); return р; };
+        Т.__щитОбёрнут = true;
+        обнови();
+        return true;
+      }
+    }catch(e){}
+    return false;
+  }
+  if(шаг()) return;
+  /* модули ядра идут с defer — тракт рождается позже inline-скрипта:
+     ждём честно (DOMContentLoaded + тик до ~20 с), RAF не заводим, DOM не дёргаем */
+  document.addEventListener('DOMContentLoaded', function(){ шаг(); });
+  var тик = setInterval(function(){ if(шаг() || ++попыток > 200) clearInterval(тик); }, 100);
+})();
+})();
+</script>
+<script id="calmScript">
+/* ── С34 · ТИХО v10.53 «ОБЕРЕГ» — спокойный час дома (calm technology) ──
+   IDEO 2025: «проектируй для 99% времени, когда технология работает рядом».
+   40 с без касаний — рубашки дома (шапка, ряд сцены) присыпаются; строка песни,
+   щит и док не гаснут никогда. Любое касание/клавиша/фокус пробуждают.
+   Честные гарды: под паузой дом не засыпает (человек собирается нажать);
+   трек кончился/встал на паузу — дом просыпается сам (capture у документа).
+   Присыпание — покой, а не движение: data-motion не судья этого сна. */
+(function(){
+"use strict";
+if(window.__ТИХО) return;
+var ПАУЗА = 40000, т = null;
+function играет(){
+  try{ var a = window.__KV && window.__KV.audio; return !!(a && !a.paused && !a.ended); }catch(e){ return false; }
+}
+function усни(){
+  т = null;
+  if(!играет()){ т = setTimeout(усни, ПАУЗА); return; }
+  document.body.classList.add('тихо');
+  window.__ТИХО.спит = true;
+}
+function бодри(){
+  if(document.body.classList.contains('тихо')){ document.body.classList.remove('тихо'); window.__ТИХО.спит = false; }
+  if(т){ clearTimeout(т); т = null; }
+  т = setTimeout(усни, ПАУЗА);
+}
+['pointermove','pointerdown','keydown','wheel','touchstart','focusin'].forEach(function(ev){
+  window.addEventListener(ev, бодри, { passive:true });
+});
+try{
+  document.addEventListener('pause', бодри, true);   /* медиа-события не всплывают, но капчат — дом просыпается */
+  document.addEventListener('ended', бодри, true);
+}catch(e){}
+window.__ТИХО = { ver:'v10.53', спит:false, ПАУЗА:ПАУЗА, бодри:бодри };
+бодри();
 })();
 </script>
 <script id="strojScript">
@@ -9579,6 +9731,12 @@ var ХРАН = { спрашивали:false, закреплено:"не спра
 function хранСкажи(т){
   try{ if(window.__KV && window.__KV.showToast) window.__KV.showToast(т); }catch(e){ }
 }
+/* С34 «ОБЕРЕГ» (хвост F-Г2): просим закрепление при первом касании — не ждать импорта;
+   persist() в большинстве браузеров молчит, отказ честно скажет проба ЗДОРОВЬЯ */
+try{
+  var хранЖест = function(){ try{ document.removeEventListener('pointerdown', хранЖест, true); хранПроси(); }catch(e){} };
+  document.addEventListener('pointerdown', хранЖест, true);
+}catch(e){}
 function хранПроси(){
   if(ХРАН.спрашивали) return Promise.resolve(ХРАН.закреплено);
   ХРАН.спрашивали = true;
@@ -9739,7 +9897,8 @@ window.__HEALTH21 = function(){   /* S-04: хранилище под закре�
   return [
     { sec:"R", n:"хранилище: "+(ок ? "закреплено — браузер обещал не выгонять библиотеку и офлайн-кэш"
       : х.закреплено+(нетАпи ? " — живём без закрепления (старый браузер)" : " — может выгнать библиотеку при нехватке места; установи дом как приложение")),
-      ok: ок, warn: !ок }
+      ok: ок || нетАпи || х.закреплено === "не спрашивали",   /* С34: UNKNOWN ≠ FAIL — честный жёлтый вместо лживого красного */
+      warn: !ок }
   ];
 };
 </script>
@@ -9819,7 +9978,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.52', такт:'ЧУВСТВА', кэш:'s15-orkestrator-v107', стр:'2026-10-11', ver:'v10.52 «ЧУВСТВА»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v107' };
+window.APP = { v:'10.54', такт:'КОДЕКС', кэш:'s15-orkestrator-v109', стр:'2026-10-11', ver:'v10.54 «КОДЕКС»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v109' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -10250,6 +10409,21 @@ function hostStart(){
     drawQR(u, qrHolder);
     var linkLine = el('div'); linkLine.innerHTML = 'или ссылка: <a href="'+esc(u)+'" style="color:var(--amber,#DEA968);word-break:break-all">'+esc(u)+'</a>';
     hallBox.appendChild(linkLine);
+    var чест = el('div'); чест.className = 'kv31-честно';   /* С34: приватность на витрине — plain language */
+    чест.textContent = 'Честно: адрес зала ведёт через облако-телефонист PeerJS — без него телефоны не найдут друг друга. Звук и слова идут напрямую между вашими устройствами, дом их не хранит.';
+    hallBox.appendChild(чест);
+    var коп = el('button'); коп.id = 'kv31copy'; коп.type = 'button';   /* С34: ≥44px — WCAG 2.2 Target Size */
+    коп.textContent = 'СКОПИРОВАТЬ ССЫЛКУ';
+    коп.setAttribute('aria-label', 'Скопировать ссылку приглашения в зал');
+    коп.addEventListener('click', function(){
+      var ок = function(){ toast('Ссылка на зал скопирована — отправьте её письмом или сообщением'); коп.textContent = 'СКОПИРОВАНО ✓'; setTimeout(function(){ коп.textContent = 'СКОПИРОВАТЬ ССЫЛКУ'; }, 2500); };
+      if(window.__ЩИТ && typeof window.__ЩИТ.копируй === 'function'){ window.__ЩИТ.копируй(u, ок); }
+      else{
+        try{ var ta = el('textarea'); ta.value = u; ta.style.position='fixed'; ta.style.top='-1000px'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); ок(); }
+        catch(e){ toast('Скопировать не вышло — выделите ссылку выше и скопируйте руками'); }
+      }
+    });
+    hallBox.appendChild(коп);
   });
   peer.on('connection', function(conn){
     conn.on('open', function(){
@@ -10642,6 +10816,40 @@ window.__КРЫША = {
   К.вер = "v10.52 «ЧУВСТВА»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
+
+/* ── С34 · ОБЕРЕГ v10.53: ящик «оберег·щит» — 2 вещи (обряд С23–С29: снапшот → мост → проба) ──
+   __ЩИТ (shieldScript) и __ТИХО (calmScript). Мосты вешаются ПОСЛЕ рождения вещей —
+   обе определены выше по файлу. */
+(function(){
+  var К = window.__КОМОД; if(!К) return;
+  var оберег = {
+    ЩИТ:  (typeof window.__ЩИТ==="object" && window.__ЩИТ)  ? window.__ЩИТ  : null,
+    ТИХО: (typeof window.__ТИХО==="object" && window.__ТИХО) ? window.__ТИХО : null
+  };
+  function мост(имя, ключ){
+    try{
+      var ст = Object.getOwnPropertyDescriptor(window, имя);
+      if(ст && ст.configurable===false) return false;
+      if(ст) delete window[имя];
+      Object.defineProperty(window, имя, {
+        get: function(){ return оберег[ключ]; },
+        set: function(v){ оберег[ключ] = v; },
+        enumerable: false, configurable: false
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var полки = [
+    ["__ЩИТ","ЩИТ"], ["__ТИХО","ТИХО"]
+  ].map(function(п){ return мост(п[0], п[1]); });
+  var старЦел = К.цел;
+  К.оберег = оберег;
+  К.ящики.push("оберег·щит");
+  К.вещей += 2;
+  К.мостов += полки.filter(Boolean).length;
+  К.вер = "v10.53 «ОБЕРЕГ»";
+  К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
+})();
 window.__HEALTH23 = function(){
   var out = [];
   var А = window.__АУРА, Э = window.__ЭХОЗАЛА, П = window.__ПУЛЬСЗАЛА;
@@ -10669,6 +10877,19 @@ window.__HEALTH23 = function(){
     out.push({ sec:"S", n:"ПУЛЬС В ЛАДОНЬ — тумблер в руле гостя с памятью (kv31gpuls, вибро по долям kv31b)", ok: !!(П && П.роль==='гость' && document.getElementById('kv31gPuls')) });
     out.push({ sec:"S", n:"ЭХО ЗАЛА — не гостево: реверб живёт у хозяина в колонках, руль телефона честно без него", ok: !!(Э && Э.роль==='гость') });
   }
+  return out;
+};
+
+/* ── С34 · ОБЕРЕГ v10.53: проба ЗДОРОВЬЕ 24 — щит, тихий час, честное приглашение, аура theme-aware ── */
+window.__HEALTH24 = function(){
+  var out = [];
+  var Щ = window.__ЩИТ, Т = window.__ТИХО;
+  var ш = document.getElementById("shield");
+  out.push({ sec:"S", n:"ЩИТ ПРИВАТНОСТИ — честная точка микрофона в шапке: элемент в доме, экспорт жив, обнови отвечает", ok: !!(Щ && Щ.ver && ш && typeof Щ.обнови === "function") });
+  out.push({ sec:"S", n:"ЩИТ говорит правду: держатель тракта пуст — точка спит «СВОЁ» (обёртка над брокером «ОДИН МИКРОФОН», без RAF)", ok: (function(){ try{ var д = (window.__ГОЛОС && window.__ГОЛОС.тракт && window.__ГОЛОС.тракт.держатель) ? window.__ГОЛОС.тракт.держатель() : null; if(д) return true; return !!(ш && !ш.classList.contains("жив")); }catch(e){ return false; } })() });
+  out.push({ sec:"S", n:"Честное приглашение зала: правда о сигналинге PeerJS на витрине + копия ссылки крупной кнопкой (≥44px, WCAG 2.2)", ok: !!(Щ && typeof Щ.копируй === "function") });
+  out.push({ sec:"S", n:"ТИХО — спокойный час: 40 с без касаний рубашки присыпаются, строка песни не гаснет; под паузой дом не спит; касание пробуждает", ok: !!(Т && Т.ver && typeof Т.бодри === "function" && !document.body.classList.contains("тихо")) });
+  out.push({ sec:"S", n:"АУРА theme-aware — дыхание читает токены темы (--amber/--lilac/--coral, фолбэки честные), смена темы пересчитывает цвета не в кадре", ok: !!(window.__АУРА && typeof window.__АУРА.цвета === "function" && /^\d+,\d+,\d+\|/.test(window.__АУРА.цвета() || "")) });
   return out;
 };
 </script>

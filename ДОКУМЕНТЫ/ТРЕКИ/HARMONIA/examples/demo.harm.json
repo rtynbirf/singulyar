@@ -1,0 +1,16 @@
+{
+  "schema": "harm/0.1",
+  "title": "Просто люби (демо)",
+  "author": "HARMONIA demo",
+  "license": "CC-BY-4.0",
+  "bpm": 96,
+  "beatsPerLine": 4,
+  "timeline": [
+    { "beat": 0,  "type": "scene",  "data": { "scene": "romantic" }, "alt": "Мягкая сцена" },
+    { "beat": 0,  "type": "text",   "data": { "words": [[["Про",1],["сто",1]],[["лю",1],["би",1]]] }, "alt": "Просто люби" },
+    { "beat": 4,  "type": "text",   "data": { "words": [[["Дом",1]],[["где",1]],[["те",0.5],["бя",0.5]],[["ждут",1]]] }, "alt": "Дом, где тебя ждут" },
+    { "beat": 16, "type": "accent", "data": { "strength": 0.8 }, "alt": "Акцент: руки вверх" },
+    { "beat": 20, "type": "prompt", "data": { "action": "clap", "keyboardAlt": "Space" }, "alt": "Хлопните или нажмите пробел" },
+    { "beat": 28, "type": "text",   "data": { "words": [[["Про",1],["сто",1]],[["лю",1],["би",1]]] }, "alt": "Просто люби" }
+  ]
+}
