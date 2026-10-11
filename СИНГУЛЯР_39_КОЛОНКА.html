@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<!-- такт v10.58 «ВАЛЬС» (С39): дверь ·42 КОЛОНКА — трек «УМНАЯ КОЛОНКА» (OMNISPEAKER-1 v0.4.0) влит в дом СИНГУЛЯР:
+     живой DAG-оркестратор + Policy Gate (PIN-подтверждение critical), hash-chain аудит на настоящем SHA-256,
+     аппаратная приватность (2-полюсный микрик микрофона + механическая шторка камеры), VLAN-матрица,
+     IaC-конфиги из дистрибутива КОЛОНКА/, карта 13 недель, пробы ЗДОРОВЬЕ, память выбора в localStorage.
+     Приказ владельца: «В ТОМ ЖЕ ДУХЕ — СОСТАВЬ ПЛАН ДОРОЖНУЮ КАРТУ И РЕАЛИЗУЙ СОГЛАСНО ЛОГИКИ».
+     Поверх v10.57 «ПЁРЫШКИ» (мобайл-фикс кнопок). Дистрибутив трека: КОЛОНКА/ -->
+<html lang="ru" data-motion="on">
+<head>
+<!--СНГ:КОРД--><!-- страховочный корд дома — общий файл --><script src="./cord.js"></script><!--/СНГ:КОРД-->
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР ·42 КОЛОНКА — умная колонка дома · offline-first</title>
+<meta name="description" content="Дверь ·42 КОЛОНКА дома СИНГУЛЯР: трек OMNISPEAKER-1 — автономная умная колонка с DAG-оркестратором, Policy Gate, hash-chain аудитом и аппаратной приватностью. Абсолютный offline-first, ноль сети.">
+<meta name="theme-color" content="#0B0D10">
+<style>
+/* ═══ С39·КОЛОНКА · закон дома: эргономика, приватность, конфиденциальность, юзабилити ═══ */
+:root{
+  --bg:#0B0D10; --панель:rgba(18,20,24,.55); --поверх:#121418; --грань:rgba(240,240,248,.18);
+  --грань-мягк:rgba(240,240,248,.12); --золото:#D4AF37; --золото-бледн:#F0D78C; --текст:#E8EAF0;
+  --сирень:#C0C8D0; --приглуш:#8A9099; --ок:#6EE7B7; --тревога:#F87171; --предупр:#F0B45C;
+  --моно:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark}
+body{font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--текст);min-height:100dvh}
+.wrap{max-width:1080px;margin:0 auto;padding:18px 16px 56px}
+a{color:var(--золото-бледн)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* шапка-лицо двери */
+.шапка{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px}
+.бренд{display:flex;align-items:center;gap:10px;margin-right:auto}
+.бренд .номер{color:var(--золото);font-family:var(--моно);font-size:15px}
+.бренд .имя{font-size:19px;font-weight:800;letter-spacing:.03em}
+.бренд .подзаг{color:var(--приглуш);font-size:12.5px;margin-top:2px}
+.бейдж{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--грань);background:var(--панель);color:var(--сирень);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.бейдж.жив{color:var(--ок);border-color:rgba(110,231,183,.35)}
+.дверь{display:inline-block;font-size:13.5px;color:#C0C8D0;border:1px solid var(--грань);border-radius:999px;padding:6px 13px;text-decoration:none;background:var(--панель);cursor:pointer}
+.дверь:hover,.дверь:focus-visible{border-color:var(--золото);color:var(--золото-бледн);outline:none}
+.дверь i{font-style:normal;color:var(--золото);margin-right:6px}
+
+/* вкладки */
+.вкладки{display:flex;gap:8px;border-bottom:1px solid var(--грань-мягк);padding-bottom:10px;margin:16px 0 18px;overflow-x:auto;scrollbar-width:thin}
+.вкладка{font:inherit;font-size:14px;font-weight:700;color:var(--сирень);background:var(--панель);border:1px solid var(--грань);border-radius:12px;padding:9px 15px;cursor:pointer;white-space:nowrap}
+.вкладка:hover{border-color:rgba(212,175,55,.5)}
+.вкладка[aria-selected="true"]{color:var(--золото-бледн);border-color:var(--золото);background:rgba(212,175,55,.08)}
+.страница{display:none}
+.страница.видна{display:block;animation:появ .25s ease}
+@keyframes появ{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.страница.видна{animation:none}}
+
+/* карточки */
+.карта{background:var(--поверх);border:1px solid var(--грань);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.карта>h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--приглуш);margin-bottom:12px}
+.карта p.примеч{color:var(--приглуш);font-size:12.5px;margin-top:10px}
+.сетка{display:flex;flex-wrap:wrap;gap:8px}
+
+/* кнопки-организмы */
+.кнопка{font:inherit;font-size:14px;font-weight:700;color:var(--текст);background:rgba(240,240,248,.07);border:1px solid var(--грань);border-radius:10px;padding:9px 16px;cursor:pointer}
+.кнопка:hover,.кнопка:focus-visible{border-color:var(--золото);color:var(--золото-бледн);outline:none}
+.кнопка.главная{background:var(--золото);color:#221A05;border-color:var(--золото)}
+.кнопка.главная:hover{background:var(--золото-бледн)}
+.кнопка.стоп{color:var(--тревога);border-color:rgba(248,113,113,.4)}
+.кнопка:disabled{opacity:.45;cursor:not-allowed}
+.чип{font:inherit;font-size:13px;color:var(--текст);background:rgba(240,240,248,.06);border:1px solid var(--грань-мягк);border-radius:999px;padding:6px 13px;cursor:pointer}
+.чип:hover,.чип:focus-visible{border-color:var(--золото);color:var(--золото-бледн);outline:none}
+.ввод{width:100%;font:inherit;font-size:15px;color:var(--текст);background:var(--панель);border:1px solid var(--грань);border-radius:12px;padding:11px 13px;margin:10px 0}
+.ввод:focus{outline:none;border-color:var(--золото)}
+
+/* DAG-шаги */
+.шаги{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.шаг{display:grid;grid-template-columns:14px 1fr auto;gap:8px 10px;align-items:center;background:rgba(0,0,0,.25);border:1px solid var(--грань-мягк);border-radius:10px;padding:9px 12px}
+.шаг .точка{width:10px;height:10px;border-radius:50%;background:#3a4048}
+.шаг.ожидание .точка{background:#3a4048}
+.шаг.исполнение .точка{background:var(--золото);animation:пульс .8s infinite}
+.шаг.готов .точка{background:var(--ок)}
+.шаг.отказ .точка{background:var(--тревога)}
+.шаг.ждёт .точка{background:var(--предупр)}
+@keyframes пульс{50%{opacity:.35}}
+@media (prefers-reduced-motion: reduce){.шаг.исполнение .точка{animation:none}}
+.шаг .инструмент{font-family:var(--моно);font-size:12.5px;color:var(--текст);word-break:break-all}
+.шаг .описание{grid-column:2/4;color:var(--приглуш);font-size:12px}
+.риск{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid}
+.риск.safe,.риск.low{color:var(--ок);border-color:rgba(110,231,183,.4)}
+.риск.medium,.риск.high{color:var(--предупр);border-color:rgba(240,180,92,.45)}
+.риск.critical{color:var(--тревога);border-color:rgba(248,113,113,.5)}
+.шаг .действия{display:flex;gap:6px}
+.шаг .кнопка{padding:5px 11px;font-size:12.5px}
+
+/* журнал аудита */
+.журнал{font-family:var(--моно);font-size:11.5px;color:var(--сирень);background:rgba(0,0,0,.32);border:1px solid var(--грань-мягк);border-radius:10px;padding:11px;max-height:190px;overflow:auto;line-height:1.55}
+.журнал .хэш{color:var(--золото)}
+.журнал .время{color:var(--приглуш)}
+.журнал .верdict-ok{color:var(--ок)}
+.журнал .вердикт-стоп{color:var(--тревога)}
+
+/* модал PIN */
+.вуаль{position:fixed;inset:0;background:rgba(4,6,9,.72);display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
+.вуаль.видна{display:flex}
+.модал{background:var(--поверх);border:1px solid var(--золото);border-radius:16px;max-width:380px;width:100%;padding:20px}
+.модал h3{font-size:16px;margin-bottom:6px}
+.модал .инструмент-имя{font-family:var(--моно);font-size:12px;color:var(--предупр);margin-bottom:10px;word-break:break-all}
+.модал .честно{color:var(--приглуш);font-size:12px;margin-top:10px}
+.модал .пин{font-family:var(--моно);font-size:22px;letter-spacing:.4em;text-align:center;width:100%;color:var(--текст);background:var(--панель);border:1px solid var(--грань);border-radius:10px;padding:10px 0 10px .4em;margin:10px 0}
+.модал .ряд{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
+/* тумблер + LED */
+.тумблер-ряд{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--грань-мягк)}
+.тумблер-ряд:last-child{border-bottom:none}
+.тумблер{position:relative;width:52px;height:28px;flex:none;cursor:pointer}
+.тумблер input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+.тумблер .трек{position:absolute;inset:0;border-radius:999px;background:#2a2f36;border:1px solid var(--грань);transition:background .2s;pointer-events:none}
+.тумблер .ручка{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#7b828c;transition:left .2s,background .2s;pointer-events:none}
+.тумблер input:checked ~ .трек{background:rgba(110,231,183,.22);border-color:rgba(110,231,183,.5)}
+.тумблер input:checked ~ .ручка{left:27px;background:var(--ок)}
+.тумблер input:focus-visible ~ .трек{outline:2px solid var(--золото);outline-offset:2px}
+.led{width:9px;height:9px;border-radius:50%;flex:none}
+.led.зелёный{background:var(--ок);box-shadow:0 0 8px rgba(110,231,183,.7)}
+.led.красный{background:var(--тревога);box-shadow:0 0 8px rgba(248,113,113,.7)}
+.тумблер-ряд .подпись b{display:block;font-size:14px}
+.тумблер-ряд .подпись span{color:var(--приглуш);font-size:12.5px}
+.тумблер-ряд .статус-текст{margin-left:auto;font-size:12.5px;color:var(--приглуш);text-align:right}
+
+/* шторка камеры */
+.глазок{position:relative;width:190px;height:120px;border-radius:12px;border:1px solid var(--грань);background:linear-gradient(135deg,#141a22,#0d1013);overflow:hidden;flex:none}
+.глазок .линза{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#4a5563;font-size:12px;font-family:var(--моно)}
+.шторка{position:absolute;left:0;right:0;height:50%;background:linear-gradient(180deg,#23282f,#191d23);transition:transform .3s ease}
+.шторка.верх{top:0;border-bottom:2px solid var(--золото)}
+.шторка.низ{bottom:0;border-top:2px solid var(--золото)}
+@media (prefers-reduced-motion: reduce){.шторка{transition:none}}
+
+/* VLAN матрица */
+.влан-таблица{width:100%;border-collapse:collapse;font-size:12.5px}
+.влан-таблица th{color:var(--приглуш);text-transform:uppercase;font-size:10.5px;letter-spacing:.08em;text-align:left;padding:7px 9px;border-bottom:1px solid var(--грань-мягк)}
+.влан-таблица td{padding:8px 9px;border-bottom:1px solid var(--грань-мягк);font-family:var(--моно);font-size:12px}
+.влан-таблица tbody tr{cursor:pointer}
+.влан-таблица tbody tr:hover td,.влан-таблица tbody tr.выбран td{background:rgba(212,175,55,.07)}
+.влан-таблица .да{color:var(--ок)} .влан-таблица .нет{color:var(--тревога)}
+.влан-деталь{margin-top:10px;font-size:13px;color:var(--сирень);background:rgba(0,0,0,.25);border:1px solid var(--грань-мягк);border-radius:10px;padding:10px 12px;min-height:44px}
+
+/* конфиги */
+.подвкладки{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.подвкладка{font:inherit;font-size:12.5px;font-family:var(--моно);color:var(--сирень);background:rgba(240,240,248,.05);border:1px solid var(--грань-мягк);border-radius:8px;padding:5px 10px;cursor:pointer}
+.подвкладка[aria-selected="true"]{color:var(--золото-бледн);border-color:var(--золото)}
+.конфиг-вью{font-family:var(--моño,ui-monospace);font-family:var(--моно);font-size:11.5px;color:var(--сирень);background:rgba(0,0,0,.32);border:1px solid var(--грань-мягк);border-radius:10px;padding:12px;overflow:auto;max-height:330px;white-space:pre;line-height:1.5}
+
+/* карта фаз */
+.фаза{border:1px solid var(--грань-мягк);border-radius:12px;margin-bottom:8px;background:rgba(0,0,0,.2)}
+.фаза>button{width:100%;display:flex;align-items:center;gap:10px;background:none;border:none;color:var(--текст);font:inherit;font-size:14px;font-weight:700;padding:12px 14px;cursor:pointer;text-align:left}
+.фаза>button:hover{color:var(--золото-бледн)}
+.фаза .недели{margin-left:auto;font-size:11.5px;font-family:var(--моно);color:var(--золото);white-space:nowrap}
+.фаза .тело{display:none;padding:0 14px 12px;color:var(--сирень);font-size:13px}
+.фаза.раскрыта .тело{display:block}
+.фаза.раскрыта{border-color:rgba(212,175,55,.4)}
+.фаза .тело li{margin:5px 0 5px 18px}
+.фаза .стрелка{display:inline-block;transition:transform .2s}
+.фаза.раскрыта .стрелка{transform:rotate(90deg)}
+
+/* пробы здоровья */
+.проба-ряд{display:grid;grid-template-columns:14px 1fr auto auto;gap:10px;align-items:center;padding:8px 10px;border-bottom:1px dashed var(--грань-мягк);font-size:13px}
+.проба-ряд:last-child{border-bottom:none}
+.проба-ряд .точка{width:9px;height:9px;border-radius:50%;background:#3a4048}
+.проба-ряд.жив .точка{background:var(--ок);box-shadow:0 0 7px rgba(110,231,183,.6)}
+.проба-ряд.мёртв .точка{background:var(--тревога);box-shadow:0 0 7px rgba(248,113,113,.6)}
+.проба-ряд .мс{font-family:var(--моно);font-size:11.5px;color:var(--приглуш);min-width:64px;text-align:right}
+.проба-ряд .кнопка{padding:4px 10px;font-size:12px}
+.сводка-здоровья{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.сводка-здоровья .счёт{font-family:var(--моно);font-size:15px;color:var(--ок)}
+
+/* акустика: канвас и ручки */
+.акустика-ряд{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+#холстКорпуса{background:rgba(0,0,0,.28);border:1px solid var(--грань-мягк);border-radius:12px;max-width:100%}
+.ручки{flex:1;min-width:230px}
+.ручка-ряд{margin:10px 0}
+.ручка-ряд label{display:flex;justify-content:space-between;font-size:13px;color:var(--сирень);margin-bottom:5px}
+.ручка-ряд label output{font-family:var(--моно);color:var(--золото-бледн)}
+.ручка-ряд input[type=range]{width:100%;accent-color:var(--золото)}
+.спека{font-family:var(--моно);font-size:11.5px;color:var(--приглуш);margin-top:8px;line-height:1.6}
+
+/* подвал-двери */
+.подвал{margin-top:26px;padding-top:14px;border-top:1px solid var(--грань-мягк);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.подвал .заметка{margin-left:auto;color:var(--приглуш);font-size:12px}
+
+/* мобайл (урок v10.57: топбар не переполнять, кнопки ≥44px) */
+@media (max-width:720px){
+  .wrap{padding:14px 12px 48px}
+  .шапка{gap:8px}
+  .бренд{width:100%;margin-right:0}
+  .бейдж{font-size:11px;padding:4px 9px}
+  .кнопка{min-height:44px}
+  .чип{min-height:40px}
+  .вкладка{padding:10px 13px}
+  .шаг{grid-template-columns:12px 1fr;grid-auto-rows:auto}
+  .шаг .риск{justify-self:start}
+  .шаг .действия{grid-column:1/3}
+  .акустика-ряд{flex-direction:column}
+  #холстКорпуса{width:100%;height:auto}
+}
+</style>
+</head>
+<body>
+<h1 class="sr-only">СИНГУЛЯР ·42 КОЛОНКА — автономная умная колонка дома</h1>
+<div class="wrap">
+  <header class="шапка">
+    <div class="бренд">
+      <span class="номер">·42</span>
+      <div>
+        <div class="имя">КОЛОНКА</div>
+        <div class="подзаг">OMNISPEAKER-1 · умная колонка дома · абсолютный offline-first</div>
+      </div>
+    </div>
+    <span class="бейдж жив" id="бейджОффлайн">● Offline-first: ENFORCED</span>
+    <span class="бейдж">Matter 1.6</span>
+    <span class="бейдж">VLAN 10–50</span>
+    <a class="дверь" href="index.html"><i>⌂</i>хаб</a>
+  </header>
+
+  <nav class="вкладки" role="tablist" aria-label="Органы колонки">
+    <button class="вкладка" role="tab" id="вк-мозг" aria-controls="стр-мозг" aria-selected="true">Мозг · DAG</button>
+    <button class="вкладка" role="tab" id="вк-акустика" aria-controls="стр-акустика" aria-selected="false">Акустика · CAD</button>
+    <button class="вкладка" role="tab" id="вк-приват" aria-controls="стр-приват" aria-selected="false">Приватность</button>
+    <button class="вкладка" role="tab" id="вк-сеть" aria-controls="стр-сеть" aria-selected="false">Сеть · IaC</button>
+    <button class="вкладка" role="tab" id="вк-карта" aria-controls="стр-карта" aria-selected="false">Карта 13 недель</button>
+    <button class="вкладка" role="tab" id="вк-здоровье" aria-controls="стр-здоровье" aria-selected="false">Здоровье</button>
+  </nav>
+
+  <!-- ═══ ВКЛАДКА 1: МОЗГ ═══ -->
+  <section class="страница видна" id="стр-мозг" role="tabpanel" aria-labelledby="вк-мозг">
+    <div class="карта">
+      <h2>Сформулируйте цель — оркестратор построит DAG-план</h2>
+      <div class="сетка" role="group" aria-label="Готовые цели">
+        <button class="чип" data-цель="Подготовь квартиру к возвращению в 19:00: свет на кухне, 22°C, джаз, напомни купить молоко">Возвращение домой</button>
+        <button class="чип" data-цель="Обнаружено падение в спальне — запусти протокол безопасности">Тревога: падение (mmWave)</button>
+        <button class="чип" data-цель="Разблокируй входную дверь">Замок (critical risk)</button>
+        <button class="чип" data-цель="Проверь микроклимат и качество воздуха в доме">Микроклимат</button>
+      </div>
+      <input class="ввод" id="полеЦели" type="text" value="Подготовь квартиру к возвращению в 19:00: свет на кухне, 22°C, джаз, напомни купить молоко" aria-label="Цель пользователя" placeholder="Опиши цель своими словами…">
+      <div class="сетка">
+        <button class="кнопка главная" id="кнПланировать">Спланировать и исполнить</button>
+        <button class="кнопка стоп" id="кнСтоп" disabled>■ Стоп</button>
+        <span class="бейдж" id="бейджУхо" title="состояние голосового входа">ухо: слушает</span>
+        <span class="бейдж жив" title="честный счётчик исходящего трафика">в облако ушло байт: <b id="счётEgress">0</b></span>
+      </div>
+      <p class="примеч">Router Agent (SLM 1.5B) разбирает намерение → Planner (LLM 7B) строит DAG → каждый шаг проходит Policy Engine. Риск medium/high — подтверждение голосом или кнопкой; critical — PIN. Замок: policy требует 2FA — демо показывает честный конвейер.</p>
+    </div>
+    <div class="карта">
+      <h2>DAG-план & Policy Check</h2>
+      <div class="шаги" id="контейнерШагов"><p class="примеч">План появится здесь. Каждая строка — шаг с риском и вердиктом политики.</p></div>
+    </div>
+    <div class="карта">
+      <h2>Hash-Chain аудит · SHA-256 (настоящий crypto.subtle)</h2>
+      <div class="журнал" id="журналАудита" aria-live="polite">цепь пуста — живи, и она запишет</div>
+      <div class="сетка" style="margin-top:10px">
+        <button class="кнопка" id="кнКопироватьАудит">Скопировать цепь</button>
+        <button class="кнопка" id="кнОчиститьАудит">Стереть цепь</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ВКЛАДКА 2: АКУСТИКА ═══ -->
+  <section class="страница" id="стр-акустика" role="tabpanel" aria-labelledby="вк-акустика">
+    <div class="карта">
+      <h2>Параметрический корпус · omnispeaker_shell.scad (живой чертёж)</h2>
+      <div class="акустика-ряд">
+        <canvas id="холстКорпуса" width="460" height="320" aria-label="Чертёж корпуса колонки"></canvas>
+        <div class="ручки">
+          <div class="ручка-ряд">
+            <label for="ручкаОбъём">Объём герметичной камеры <output id="выхОбъём">0.80 L</output></label>
+            <input type="range" id="ручкаОбъём" min="0.5" max="1.2" step="0.01" value="0.8">
+          </div>
+          <div class="ручка-ряд">
+            <label for="ручкаВысота">Высота корпуса <output id="выхВысота">210 мм</output></label>
+            <input type="range" id="ручкаВысота" min="170" max="250" step="1" value="210">
+          </div>
+          <div class="сетка">
+            <label class="чип" style="display:inline-flex;align-items:center;gap:8px"><input type="checkbox" id="чекКонус" checked style="accent-color:var(--золото)"> лучи 360°</label>
+            <label class="чип" style="display:inline-flex;align-items:center;gap:8px"><input type="checkbox" id="чекМики" checked style="accent-color:var(--золото)"> массив 8 микрофонов</label>
+            <button class="кнопка" id="кнПробаЗвука">Проба звука (58→180 Гц)</button>
+            <button class="кнопка" id="кнСбросКорпуса">Сброс параметров</button>
+          </div>
+          <p class="спека" id="спекаАкустики">камера 0.80 L · пассивный излучатель TPU 85 мм · настройка ≈ 58 Гц · PETG 35% gyroid</p>
+        </div>
+      </div>
+      <p class="примеч">Честно: чертёж — 2D-проекция модели из cad/omnispeaker_shell.scad; «проба звука» — синтез браузера через WebAudio (демо тона), а не динамик колонки. Аппроксимация настройки излучателя: f ≈ 58·√(0.8/V) Гц.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ВКЛАДКА 3: ПРИВАТНОСТЬ ═══ -->
+  <section class="страница" id="стр-приват" role="tabpanel" aria-labelledby="вк-приват">
+    <div class="карта">
+      <h2>Аппаратная приватность · рубильники физического мира</h2>
+      <div class="тумблер-ряд">
+        <span class="led зелёный" id="ледМик"></span>
+        <label class="тумблер"><input type="checkbox" id="микрик" checked aria-label="Питание микрофонов"><span class="трек"></span><span class="ручка"></span></label>
+        <div class="подпись"><b>Микрофоны · 2-полюсный микрик</b><span>обесточивает 8-микрофонную решётку физически — не программно</span></div>
+        <span class="статус-текст" id="текстМик">питание есть · 8 миков в строю</span>
+      </div>
+      <div class="тумблер-ряд" style="align-items:flex-start">
+        <span class="led красный" id="ледКам"></span>
+        <label class="тумблер"><input type="checkbox" id="камШторка" aria-label="Механическая шторка камеры"><span class="трек"></span><span class="ручка"></span></label>
+        <div class="подпись"><b>Камера · механическая шторка PETG</b><span>шторка двигается вручную на корпусе — глаз закрыт железом</span></div>
+        <div class="глазок" aria-hidden="true">
+          <span class="линза">объектив</span>
+          <div class="шторка верх" id="шторкаВерх"></div>
+          <div class="шторка низ" id="шторкаНиз"></div>
+        </div>
+      </div>
+      <p class="примеч">Когда микрик выключен, голосовые шаги DAG-планов помечаются в аудите как «ухо обесточено» — конвейер честно показывает, что слуха нет. Шторка закрыта — бейдж камеры красный.</p>
+    </div>
+    <div class="карта">
+      <h2>VLAN-матрица · OpenWrt / OPNsense nftables</h2>
+      <table class="влан-таблица">
+        <thead><tr><th>откуда</th><th>куда</th><th>порты</th><th>вердикт</th></tr></thead>
+        <tbody id="телоВлан"></tbody>
+      </table>
+      <div class="влан-деталь" id="вланДеталь">Нажми на строку — покажу правило и почему оно такое.</div>
+    </div>
+  </section>
+
+  <!-- ═══ ВКЛАДКА 4: СЕТЬ · IaC ═══ -->
+  <section class="страница" id="стр-сеть" role="tabpanel" aria-labelledby="вк-сеть">
+    <div class="карта">
+      <h2>Конфиги из дистрибутива КОЛОНКА/ · настоящие файлы</h2>
+      <div class="подвкладки" role="tablist" aria-label="Файлы конфигурации">
+        <button class="подвкладка" data-конфиг="compose" aria-selected="true">docker-compose.yml</button>
+        <button class="подвкладка" data-конфиг="policy" aria-selected="false">policy_rules.json</button>
+        <button class="подвкладка" data-конфиг="firewall" aria-selected="false">openwrt firewall</button>
+        <button class="подвкладка" data-конфиг="terraform" aria-selected="false">main.tf</button>
+        <button class="подвкладка" data-конфиг="ansible" aria-selected="false">playbook_node.yml</button>
+      </div>
+      <div class="конфиг-вью" id="вьюКонфига">…</div>
+      <div class="сетка" style="margin-top:10px">
+        <button class="кнопка" id="кнКопироватьКонфиг">Скопировать файл</button>
+        <span class="бейдж">источник: КОЛОНКА/config · automation</span>
+      </div>
+      <p class="примеч">Это те самые файлы, что лежат в репе рядом (КОЛОНКА/): policy_rules.json — таблица рисков Policy Engine; docker-compose — контейнерный стек (Whisper, Piper, Core) с OFFLINE_MODE=true; OpenWrt — nftables-изоляция VLAN 20 от интернета.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ВКЛАДКА 5: КАРТА ═══ -->
+  <section class="страница" id="стр-карта" role="tabpanel" aria-labelledby="вк-карта">
+    <div class="карта">
+      <h2>Дорожная карта трека · фазы 0–5, 13 недель</h2>
+      <div id="контейнерФаз"></div>
+      <p class="примеч">Полная версия с шагами и чек-листами — <a href="КОЛОНКА/README.md">дистрибутив КОЛОНКА/</a> (docs/07_DETAILED_ROADMAP.md).</p>
+    </div>
+  </section>
+
+  <!-- ═══ ВКЛАДКА 6: ЗДОРОВЬЕ ═══ -->
+  <section class="страница" id="стр-здоровье" role="tabpanel" aria-labelledby="вк-здоровье">
+    <div class="карта">
+      <h2>Пробы ЗДОРОВЬЕ · организм ·42</h2>
+      <div class="сводка-здоровья">
+        <span class="счёт" id="счётЗдоровья">— / —</span>
+        <button class="кнопка" id="кнПробаВсех">Проба всех органов</button>
+        <button class="кнопка" id="кнЗабытьВсё">Забыть мои выборы (localStorage)</button>
+      </div>
+      <div id="таблицаПроб"></div>
+      <p class="примеч">Каждый орган — вещь из window.КОЛОНКА. Проба = вызов безопасной функции органа и замер времени. Мёртвый орган краснеет сразу: деклараций дом не держит.</p>
+    </div>
+  </section>
+
+  <footer class="подвал">
+    <a class="дверь" href="hir-prototype.html"><i>·41</i>НАМЕРЕНИЕ</a>
+    <span class="дверь" aria-disabled="true"><i>·42</i>КОЛОНКА</span>
+    <a class="дверь" href="index.html"><i>⌂</i>хаб</a>
+    <a class="дверь" href="КОЛОНКА/README.md"><i>¶</i>дистрибутив трека</a>
+    <span class="заметка">СИНГУЛЯР ·42 · такт v10.58 «ВАЛЬС» · ноль сети · ноль слежки</span>
+  </footer>
+</div>
+
+<!-- модал PIN -->
+<div class="вуаль" id="вуальПин" role="dialog" aria-modal="true" aria-labelledby="заголовокПин">
+  <div class="модал">
+    <h3 id="заголовокПин">Критический шаг: подтверждение</h3>
+    <div class="инструмент-имя" id="имяИнструментаПин">—</div>
+    <input class="пин" id="полеПин" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" aria-label="PIN-код, четыре цифры">
+    <div class="ряд">
+      <button class="кнопка" id="кнПинОтмена">Отмена</button>
+      <button class="кнопка главная" id="кнПинОк">Подтвердить</button>
+    </div>
+    <p class="честно">Демо-режим: любой 4-значный PIN принимается — железо ещё не собрано. В боевом колонке здесь voice_prompt_pin + pwa_2fa по policy_rules.json.</p>
+  </div>
+</div>
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════
+   ЯЩИК С39·КОЛОНКА — комод-архитектура дома СИНГУЛЯР
+   ящик (изолированный модуль) → мост (delete + defineProperty) → вещь
+   Закон: ни одной декларации — каждая кнопка привязана к живой функции.
+   ═══════════════════════════════════════════════════════════════════ */
+const __С39_КОЛОНКА = (function(){
+  const $  = (s)=>document.querySelector(s);
+  const $$ = (s)=>Array.from(document.querySelectorAll(s));
+  const КЛЮЧ_ПАМЯТИ = 's39-колонка-память';
+  const уменьшить = (n)=>String(n).padStart(2,'0');
+  const сейчас = ()=>{ const d=new Date(); return уменьшить(d.getHours())+':'+уменьшить(d.getMinutes())+':'+уменьшить(d.getSeconds()); };
+
+  /* ─── память: дом помнит последний выбор человека ─── */
+  const память = {
+    прочесть(){ try{ return JSON.parse(localStorage.getItem(КЛЮЧ_ПАМЯТИ)||'{}'); }catch(e){ return {}; } },
+    сохранить(кусок){
+      try{ const всё=Object.assign(this.прочесть(),кусок); localStorage.setItem(КЛЮЧ_ПАМЯТИ,JSON.stringify(всё)); return true; }catch(e){ return false; }
+    },
+    забыть(){ try{ localStorage.removeItem(КЛЮЧ_ПАМЯТИ); return true; }catch(e){ return false; } }
+  };
+
+  /* ─── аудит: настоящая hash-chain на SHA-256 (crypto.subtle) ─── */
+  const аудит = {
+    цепь: [],
+    последнийХэш: '',
+    async _sha256(строка){
+      const байты = new TextEncoder().encode(строка);
+      const буфер = await crypto.subtle.digest('SHA-256', байты);
+      return Array.from(new Uint8Array(буфер)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    },
+    async генезис(){
+      this.последнийХэш = await this._sha256('С39·КОЛОНКА·генеzis·'+Date.now());
+      this.цепь = [{время:сейчас(), событие:'генеzis', хэш:this.последнийХэш.slice(0,16)}];
+      this.нарисовать();
+    },
+    async записать(инструмент, вердикт, деталь){
+      const запись = {время:сейчас(), инструмент, вердикт, деталь:деталь||'', prev:this.последнийХэш.slice(0,24)};
+      const хэш = await this._sha256(this.последнийХэш + JSON.stringify(запись));
+      this.последнийХэш = хэш;
+      this.цепь.push(Object.assign(запись,{хэш:хэш.slice(0,16)}));
+      if(this.цепь.length>60) this.цепь.splice(1, this.цепь.length-60);
+      this.нарисовать();
+    },
+    нарисовать(){
+      const окно = $('#журналАудита'); if(!окно) return;
+      окно.innerHTML = this.цепь.slice(-14).map(з=>{
+        const класс = /отказ|стоп|блок/.test(з.вердикт||з.событие) ? 'вердикт-стоп' : 'вердикт-ok';
+        const стр = з.инструмент ? (з.инструмент+' · <span class="'+класс+'">'+з.вердикт+'</span>'+(з.деталь?' · '+з.деталь:'')) : з.событие;
+        return '<div><span class="время">'+з.время+'</span>  '+стр+'  <span class="хэш">#'+з.хэш+'</span></div>';
+      }).join('') || 'цепь пуста — живи, и она запишет';
+      окно.scrollTop = окно.scrollHeight;
+    },
+    стереть(){ this.цепь=[]; this.последнийХэш=''; this.нарисовать(); return this.генезис(); },
+    текст(){ return JSON.stringify(this.цепь, null, 2); }
+  };
+
+  /* ─── политика: детерминированный барьер из policy_rules.json ─── */
+  const политика = {
+    таблица: {
+      'tts.speak':'safe','media.play':'safe','sensors.read':'safe',
+      'lights.set_state':'low','climate.set_temperature':'low',
+      'lights.set_scene':'medium','reminders.create':'medium',
+      'security.arm_system':'high','calendar.delete':'high',
+      'security.unlock_door':'critical','health.emergency_contact':'critical'
+    },
+    вердикт(инструмент){ return this.таблица[инструмент] || 'deny'; }
+  };
+
+  /* ─── планировщик: DAG-планы по намерению + конвейер исполнения ─── */
+  const планировщик = {
+    бежит: false,
+    прервать: false,
+    ожидание: null, /* resolve кнопки «подтвердить» */
+    шаблоны: [
+      {когда:/паден|тревог|спальн/i, шаги:[
+        ['sensors.read','safe','mmWave HLK-LD2450: поза и движение в комнате'],
+        ['tts.speak','safe','вслух спрашивает: «Всё в порядке?» — окно 20 секунд'],
+        ['health.emergency_contact','critical','звонок доверенному контакту']
+      ]},
+      {когда:/замок|разблок|дверь/i, шаги:[
+        ['sensors.read','safe','состояние входной двери через Matter 1.6'],
+        ['security.unlock_door','critical','policy_rules: требует voice_prompt_pin + 2FA']
+      ]},
+      {когда:/микроклимат|воздух|климат/i, шаги:[
+        ['sensors.read','safe','BME688: температура, влажность, VOC, eCO2'],
+        ['climate.set_temperature','low','доводит до 22°C'],
+        ['tts.speak','safe','человеческим голосом докладывает индекс воздуха']
+      ]},
+      {когда:/./i, шаги:[ /* возвращение домой и всё остальное */
+        ['sensors.read','safe','радар подтверждает: квартиры нет дома'],
+        ['lights.set_state','low','кухня: свет к приходу'],
+        ['climate.set_temperature','low','22°C — комфорт'],
+        ['media.play','safe','джаз из локального фонда дома'],
+        ['reminders.create','medium','напоминание: купить молоко']
+      ]}
+    ],
+    построить(цель){
+      const ш = this.шаблоны.find(t=>t.когда.test(цель));
+      return ш.шаги.map(s=>({инструмент:s[0], риск:политика.вердикт(s[0]), опис:s[2], статус:'ожидание'}));
+    },
+    нарисовать(шаги){
+      const окно = $('#контейнерШагов');
+      окно.innerHTML = шаги.map((ш,i)=>
+        '<div class="шаг '+ш.статус+'" data-шаг="'+i+'">'+
+        '<span class="точка"></span>'+
+        '<span class="инструмент">'+ш.инструмент+' <span class="риск '+ш.риск+'">'+ш.риск+'</span></span>'+
+        '<span class="действия">'+(ш.статус==='ждёт'?'<button class="кнопка" data-подтвердить="'+i+'">подтвердить</button>':'')+'</span>'+
+        '<span class="описание">'+ш.опис+'</span>'+
+        '</div>').join('');
+      $$('[data-подтвердить]').forEach(к=>к.addEventListener('click',()=>{
+        const i = +к.getAttribute('data-подтвердить');
+        if(this.ожидание && this.ожидание.i===i){ this.ожидание.resolve(true); this.ожидание=null; }
+      }));
+    },
+    сон(мс){ return new Promise(р=>setTimeout(р,мс)); },
+    подтвердитьКнопкой(i){
+      return new Promise(р=>{ this.ожидание={i,resolve:р}; });
+    },
+    пин(инструмент, опис){
+      return new Promise(р=>{
+        $('#имяИнструментаПин').textContent = инструмент+' — '+опис;
+        $('#полеПин').value='';
+        $('#вуальПин').classList.add('видна');
+        $('#полеПин').focus();
+        this._пинResolve = р;
+      });
+    },
+    закрытьПин(да){
+      $('#вуальПин').classList.remove('видна');
+      if(this._пинResolve){ const р=this._пинResolve; this._пинResolve=null; р(да); }
+    },
+    async исполнить(шаги){
+      this.бежит=true; this.прервать=false;
+      $('#кнСтоп').disabled=false; $('#кнПланировать').disabled=true;
+      for(let i=0;i<шаги.length;i++){
+        const ш=шаги[i];
+        if(this.прервать){ ш.статус='отказ'; ш.опис+=' — остановлено человеком'; this.нарисовать(шаги); continue; }
+        const верд = политика.вердикт(ш.инструмент);
+        if(верд==='deny'){
+          ш.статус='отказ'; this.нарисовать(шаги);
+          await аудит.записать(ш.инструмент,'отказ','нет в policy_rules.json — default_action: deny');
+          continue;
+        }
+        if(верд==='medium'||верд==='high'){
+          ш.статус='ждёт'; this.нарисовать(шаги);
+          const да = await this.подтвердитьКнопкой(i);
+          if(!да || this.прервать){ ш.статус='отказ'; ш.опис+=' — человек отменил'; this.нарисовать(шаги); await аудит.записать(ш.инструмент,'отказ','подтверждение не дано'); continue; }
+        }
+        if(верд==='critical'){
+          ш.статус='ждёт'; this.нарисовать(шаги);
+          const да = await this.пин(ш.инструмент, ш.опис);
+          if(!да || this.прервать){ ш.статус='отказ'; ш.опис+=' — PIN не подтверждён'; this.нарисовать(шаги); await аудит.записать(ш.инструмент,'отказ','PIN не подтверждён'); continue; }
+        }
+        ш.статус='исполнение'; this.нарисовать(шаги);
+        await this.сон(650);
+        ш.статус='готов'; this.нарисовать(шаги);
+        await аудит.записать(ш.инструмент, 'исполнено', ш.риск+' · оффлайн');
+      }
+      this.бежит=false;
+      $('#кнСтоп').disabled=true; $('#кнПланировать').disabled=false;
+      await аудит.записать('конвейер','завершён','байт в облако: 0');
+    },
+    стоп(){ if(this.бежит){ this.прервать=true; if(this.ожидание){ this.ожидание.resolve(false); this.ожидание=null; } } }
+  };
+
+  /* ─── акустика: живой чертёж корпуса + проба звука WebAudio ─── */
+  const акустика = {
+    холст:null, контекст:null, играет:false, пульс:0,
+    параметры(){ return {
+      объём:+($('#ручкаОбъём')?.value||0.8),
+      высота:+($('#ручкаВысота')?.value||210),
+      конус:$('#чекКонус')?.checked!==false,
+      мики:$('#чекМики')?.checked!==false
+    };},
+    настроитьИзлучателя(объём){ return Math.round(58*Math.sqrt(0.8/объём)); },
+    нарисовать(){
+      if(!this.холст) return;
+      const к=this.холст.getContext('2d'), ш=this.холст.width, в=this.холст.height;
+      const п=this.параметры();
+      к.clearRect(0,0,ш,в);
+      const множВ = п.высота/210;
+      const телоШ=170, телоВ=270*множВ, x0=(ш-телоШ)/2, y0=(в-телоВ)/2;
+      const камШ = телоШ-52*Math.sqrt(п.объём/0.8), камВ=телоВ-110;
+      /* корпус */
+      к.strokeStyle='#8A9099'; к.lineWidth=2;
+      к.beginPath(); к.roundRect(x0,y0,телоШ,телоВ,16); к.stroke();
+      к.fillStyle='rgba(212,175,55,.05)'; к.fill();
+      /* герметичная камера */
+      const кx=x0+(телоШ-камШ)/2, кy=y0+42, кh=камВ;
+      к.strokeStyle='rgba(110,231,183,.55)'; к.setLineDash([6,4]); к.lineWidth=1.4;
+      к.beginPath(); к.roundRect(кx,кy,камШ,кh,10); к.stroke(); к.setLineDash([]);
+      /* драйвер 3" снизу */
+      к.fillStyle='#1c2128'; к.strokeStyle='#D4AF37'; к.lineWidth=2;
+      к.beginPath(); к.arc(ш/2, y0+телоВ-24, 26, 0, Math.PI*2); к.fill(); к.stroke();
+      к.strokeStyle='rgba(212,175,55,.35)';
+      к.beginPath(); к.arc(ш/2, y0+телоВ-24, 16, 0, Math.PI*2); к.stroke();
+      /* пассивный излучатель 85мм сзади */
+      к.strokeStyle='#6EE7B7'; к.lineWidth=2.2;
+      к.beginPath(); к.arc(x0+18, кy+кh*0.55, 30+this.пульс*6, -Math.PI/2, Math.PI/2); к.stroke();
+      /* конус 360 */
+      if(п.конус){
+        к.strokeStyle='rgba(240,215,140,'+(0.30+this.пульс*0.3)+')'; к.lineWidth=1;
+        for(let а=-70; а<=70; а+=17.5){
+          const рад=а*Math.PI/180;
+          к.beginPath(); к.moveTo(ш/2, y0+телоВ-24);
+          к.lineTo(ш/2+Math.cos(рад)*150, y0+телоВ-24+Math.sin(рад)*150*(телоВ/280));
+          к.stroke();
+        }
+      }
+      /* массив 8 микрофонов сверху */
+      if(п.мики){
+        к.fillStyle='#F0D78C';
+        for(let i=0;i<8;i++){
+          const мx=x0+22+i*(телоШ-44)/7;
+          к.beginPath(); к.arc(мx, y0+18, 3.4+this.пульс*1.6, 0, Math.PI*2); к.fill();
+        }
+      }
+      /* подписи */
+      к.fillStyle='#8A9099'; к.font='10px ui-monospace,monospace';
+      к.fillText('камера '+п.объём.toFixed(2)+' L герметичная', кx, кy-6);
+      к.fillText('драйвер 3" 20 Вт', ш/2+34, y0+телоВ-20);
+      к.fillText('ПИ 85 мм · '+this.настроитьИзлучателя(п.объём)+' Гц', x0+56, кy+кh*0.55+4);
+      if(п.мики) к.fillText('8× MEMS · виброразвязка O-ring', x0+22, y0+8);
+      /* спека строкой */
+      const сп=$('#спекаАкустики');
+      if(сп) сп.textContent='камера '+п.объём.toFixed(2)+' L · высота '+п.высота+' мм · ПИ TPU 85 мм · настройка ≈ '+this.настроитьИзлучателя(п.объём)+' Гц · PETG 35% gyroid';
+    },
+    async пробаЗвука(){
+      try{
+        this.контекст = this.контекст || new (window.AudioContext||window.webkitAudioContext)();
+        const ак=this.контекст;
+        if(ак.state==='suspended') await ак.resume();
+        const осц=ак.createOscillator(), гейн=ак.createGain();
+        осц.type='sine';
+        const f0=this.настроитьИзлучателя(this.параметры().объём);
+        осц.frequency.setValueAtTime(f0, ак.currentTime);
+        осц.frequency.exponentialRampToValueAtTime(180, ак.currentTime+1.1);
+        гейн.gain.setValueAtTime(0.0001, ак.currentTime);
+        гейн.gain.exponentialRampToValueAtTime(0.12, ак.currentTime+0.06);
+        гейн.gain.exponentialRampToValueAtTime(0.0001, ак.currentTime+1.2);
+        осц.connect(гейн); гейн.connect(ак.destination);
+        осц.start(); осц.stop(ак.currentTime+1.25);
+        this.играет=true;
+        const старт=performance.now();
+        const аним=()=>{
+          this.пульс = 0.5+0.5*Math.sin((performance.now()-старт)/90);
+          this.нарисовать();
+          if(performance.now()-старт<1250){ requestAnimationFrame(аним); }
+          else { this.играет=false; this.пульс=0; this.нарисовать(); }
+        };
+        аним();
+        await аудит.записать('audio.probe','исполнено','свип '+f0+'→180 Гц · локальный синтез');
+        return true;
+      }catch(e){ await аудит.записать('audio.probe','отказ',String(e).slice(0,40)); return false; }
+    },
+    сброс(){
+      $('#ручкаОбъём').value=0.8; $('#ручкаВысота').value=210;
+      $('#чекКонус').checked=true; $('#чекМики').checked=true;
+      this.нарисовать(); память.сохранить({объём:0.8,высота:210});
+      return true;
+    }
+  };
+
+  /* ─── приватность: железные рубильники + VLAN-матрица ─── */
+  const приватность = {
+    микВкл(){ return $('#микрик')?.checked!==false; },
+    шторкаЗакрыта(){ return $('#камШторка')?.checked!==false; },
+    применить(){
+      const мик=this.микВкл(), шторка=this.шторкаЗакрыта();
+      const лм=$('#ледМик'), лк=$('#ледКам');
+      if(лм) лм.className='led '+(мик?'зелёный':'красный');
+      if(лк) лк.className='led '+(шторка?'красный':'зелёный');
+      const тм=$('#текстМик');
+      if(тм) тм.textContent = мик ? 'питание есть · 8 миков в строю' : 'ОБЕСТОЧЕНО · 2-полюсный разрыв';
+      const б=$( '#бейджУхо');
+      if(б) б.textContent = мик ? 'ухо: слушает' : 'ухо: обесточено (микрик)';
+      const св=$('#шторкаВерх'), сн=$('#шторкаНиз');
+      if(св&&сн){
+        св.style.transform = шторка ? 'translateY(0)' : 'translateY(-100%)';
+        сн.style.transform = шторка ? 'translateY(0)' : 'translateY(100%)';
+      }
+      память.сохранить({мик, шторка});
+      return мик;
+    },
+    влан: [
+      {от:'VLAN 10 · TRUSTED', куда:'VLAN 20 · OMNI', порты:'TCP 80,443,8123 · UDP 5353', верд:'ALLOW', класс:'да',
+       дет:'Человек управляет колонкой: панель Home Assistant (8123), веб-интерфейс (80/443), mDNS отражается Avahi между сегментами.'},
+      {от:'VLAN 20 · OMNI', куда:'VLAN 10 · TRUSTED', порты:'established / related', верд:'ALLOW', класс:'да',
+       дет:'Только ответы на исходящие запросы. Инициатива всегда у человека — колонка сама никого не зовёт.'},
+      {от:'VLAN 20 · OMNI', куда:'INTERNET (WAN)', порты:'любые', верд:'DROP', класс:'нет',
+       дет:'Absolute Offline Enforcement: правило Block-OMNISPEAKER-WAN в nftables. Ноль байт в облако — счётчик на вкладке «Мозг» навсегда ноль.'},
+      {от:'VLAN 20 · OMNI', куда:'VLAN 50 · PROXY', порты:'TCP 443 gated', верд:'ALLOW strict', класс:'да',
+       дет:'Единственная контролируемая дверь наружу: только одобренные домены OTA-обновлений через явный прокси.'},
+      {от:'VLAN 30 · CAMERAS', куда:'ANY', порты:'любые', верд:'DROP', класс:'нет',
+       дет:'Камеры — изолированные свидетели: им нечего делать в остальном доме, и они об этом не пожалеют.'}
+    ],
+    нарисоватьВлан(){
+      const т=$('#телоВлан'); if(!т) return;
+      т.innerHTML=this.влан.map((п,i)=>'<tr data-влан="'+i+'" tabindex="0"><td>'+п.от+'</td><td>'+п.куда+'</td><td>'+п.порты+'</td><td class="'+п.класс+'">'+п.верд+'</td></tr>').join('');
+      $$('[data-влан]').forEach(стр=>{
+        const открыть=()=>{
+          $$('[data-влан]').forEach(s=>s.classList.remove('выбран'));
+          стр.classList.add('выбран');
+          $('#вланДеталь').textContent = this.влан[+стр.getAttribute('data-влан')].дет;
+        };
+        стр.addEventListener('click',открыть);
+        стр.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); открыть(); } });
+      });
+    }
+  };
+
+  /* ─── сеть · IaC: настоящие файлы дистрибутива ─── */
+  const сеть = {
+    файлы: {
+      compose: {имя:'config/docker-compose.yml', текст:
+"version: '3.8'\n\nservices:\n  omnispeaker-core:\n    image: omnispeaker/core:v0.4.0\n    container_name: omnispeaker_core\n    restart: unless-stopped\n    network_mode: host\n    environment:\n      - OFFLINE_MODE=true\n      - NPU_DEVICE=/dev/rknn_app\n    volumes:\n      - ./policy_rules.json:/etc/omnispeaker/policy_rules.json:ro\n      - audit_logs:/var/log/omnispeaker\n    devices:\n      - /dev/rknn_app:/dev/rknn_app\n      - /dev/snd:/dev/snd\n\n  faster-whisper:\n    image: omnispeaker/whisper-npu:v1.2\n    container_name: omnispeaker_asr\n    restart: unless-stopped\n    ports:\n      - \"127.0.0.1:9000:9000\"\n\n  piper-tts:\n    image: omnispeaker/piper-tts:v1.0\n    container_name: omnispeaker_tts\n    restart: unless-stopped\n    ports:\n      - \"127.0.0.1:9001:9001\"\n\nvolumes:\n  audit_logs:\n"},
+      policy: {имя:'config/policy_rules.json', текст:
+"{\n  \"version\": \"0.4.0\",\n  \"default_action\": \"deny\",\n  \"risk_levels\": {\n    \"safe\": [\"tts.speak\", \"media.play\", \"sensors.read\"],\n    \"low\": [\"lights.set_state\", \"climate.set_temperature\"],\n    \"medium\": [\"lights.set_scene\", \"reminders.create\"],\n    \"high\": [\"security.arm_system\", \"calendar.delete\"],\n    \"critical\": [\"security.unlock_door\", \"health.emergency_contact\"]\n  },\n  \"confirmation_channels\": {\n    \"high\": [\"voice_prompt\", \"pwa_push\"],\n    \"critical\": [\"voice_prompt_pin\", \"pwa_2fa\"]\n  }\n}\n"},
+      firewall: {имя:'config/net/openwrt_firewall.etc.config', текст:
+"config defaults\n\toption syn_flood '1'\n\toption input 'ACCEPT'\n\toption output 'ACCEPT'\n\toption forward 'REJECT'\n\nconfig zone\n\toption name 'lan'\n\tlist network 'lan'\n\toption input 'ACCEPT'\n\toption output 'ACCEPT'\n\toption forward 'ACCEPT'\n\nconfig zone\n\toption name 'vlan20_omni'\n\tlist network 'vlan20_omnispeaker'\n\toption input 'REJECT'\n\toption output 'ACCEPT'\n\toption forward 'REJECT'\n\n# Allow LAN (VLAN 10) to access OMNISPEAKER (VLAN 20)\nconfig forwarding\n\toption src 'lan'\n\toption dest 'vlan20_omni'\n\n# Block VLAN 20 from accessing WAN/Internet (Absolute Offline Enforcement)\nconfig rule\n\toption name 'Block-OMNISPEAKER-WAN'\n\toption src 'vlan20_omni'\n\toption dest 'wan'\n\toption target 'REJECT'\n"},
+      terraform: {имя:'automation/terraform/main.tf', текст:
+"# Terraform Configuration for OMNISPEAKER-1 Infrastructure Deployment\n\nterraform {\n  required_version = \">= 1.5.0\"\n  required_providers {\n    docker = {\n      source  = \"kreuzwerker/docker\"\n      version = \"~> 3.0.0\"\n    }\n  }\n}\n\nprovider \"docker\" {\n  host = \"unix:///var/run/docker.sock\"\n}\n\n# Network setup for local isolated container environment\nresource \"docker_network\" \"omnispeaker_vlan20\" {\n  name   = \"omnispeaker_vlan20_net\"\n  driver = \"bridge\"\n  ipam_config {\n    subnet  = \"192.168.20.0/24\"\n    gateway = \"192.168.20.1\"\n  }\n}\n\n# Volume for persistent Redis Audit Trail and Vector DB\nresource \"docker_volume\" \"audit_data\" {\n  name = \"omnispeaker_audit_data\"\n}\n\n# Container for OMNISPEAKER Core Service\nresource \"docker_container\" \"omnispeaker_core\" {\n  name  = \"omnispeaker_core_node\"\n  image = \"omnispeaker/core:latest\"\n\n  networks_advanced {\n    name         = docker_network.omnispeaker_vlan20.name\n    ipv4_address = \"192.168.20.10\"\n  }\n\n  volumes {\n    volume_name    = docker_volume.audit_data.name\n    container_path = \"/var/log/omnispeaker/audit\"\n  }\n\n  env = [\n    \"OFFLINE_MODE=true\",\n    \"POLICY_ENGINE_STRICT=true\",\n    \"LOG_LEVEL=info\"\n  ]\n\n  restart = \"unless-stopped\"\n}\n"},
+      ansible: {имя:'automation/ansible/playbook_omnispeaker_node.yml', текст:
+"---\n- name: Provision OMNISPEAKER Node on RK3588 (Armbian)\n  hosts: omnispeaker_nodes\n  become: yes\n  tasks:\n    - name: Ensure required packages are installed\n      apt:\n        name:\n          - docker.io\n          - docker-compose-plugin\n          - pipewire\n          - python3-pip\n        state: present\n        update_cache: yes\n\n    - name: Create OMNISPEAKER application directory\n      file:\n        path: /opt/omnispeaker\n        state: directory\n        owner: armbian\n        group: armbian\n        mode: '0755'\n\n    - name: Copy Docker Compose file\n      copy:\n        src: ../../config/docker-compose.yml\n        dest: /opt/omnispeaker/docker-compose.yml\n        owner: armbian\n        mode: '0644'\n\n    - name: Copy Policy Engine Rules\n      copy:\n        src: ../../config/policy_rules.json\n        dest: /opt/omnispeaker/policy_rules.json\n        owner: armbian\n        mode: '0644'\n\n    - name: Start OMNISPEAKER Docker Stack\n      shell: docker compose up -d\n      args:\n        chdir: /opt/omnispeaker\n"}
+    },
+    текущий: 'compose',
+    показать(ключ){
+      if(!this.файлы[ключ]) return false;
+      this.текущий=ключ;
+      $('#вьюКонфига').textContent = this.файлы[ключ].текст;
+      $$('.подвкладка').forEach(к=>к.setAttribute('aria-selected', String(к.getAttribute('data-конфиг')===ключ)));
+      return true;
+    },
+    скопировать(){
+      const текст=this.файлы[this.текущий].текст;
+      const готово=(ок)=>{ const к=$('#кнКопироватьКонфиг'); const старое=к.textContent; к.textContent=ок?'скопировано ✓':'не вышло'; setTimeout(()=>к.textContent=старое,1200); };
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(текст).then(()=>готово(true),()=>готово(this._фолбэк(текст))); }
+      else готово(this._фолбэк(текст));
+      return true;
+    },
+    _фолбэк(текст){
+      const та=document.createElement('textarea'); та.value=текст; та.style.position='fixed'; та.style.opacity='0';
+      document.body.appendChild(та); та.select();
+      let ок=false; try{ ок=document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(та); return ок;
+    }
+  };
+
+  /* ─── карта: фазы 0–5 трека ─── */
+  const карта = {
+    фазы: [
+      {н:'Фаза 0 · Платформа и базовая ОС', нед:'недели 1–2', шаги:['закупка по BOM: Radxa ROCK 5B (RK3588), XMOS XU316, HLK-LD2450, nRF52840, BME688','Armbian Linux Kernel 6.1 LTS ARM64 на NVMe 256 ГБ','драйверы RKNN-RT v2.x + PipeWire для 8-канального аудио','Docker Engine 26.0 + Compose, LVM/Btrfs снапшоты']},
+      {н:'Фаза 1 · Голосовой стек', нед:'недели 3–4', шаги:['OpenWakeWord: модель «Эй, Омни», точность >98%','XMOS XU316: аппаратное AEC + beamforming','Faster-Whisper (small.ru) на NPU','Piper TTS с локальной моделью речи']},
+      {н:'Фаза 2 · Оркестратор и Policy Engine', нед:'недели 5–7', шаги:['SLM-роутер Qwen2.5-1.5B-Instruct: классификация намерений','DAG-планировщик Qwen2.5-7B AWQ по JSON Schema','Policy Engine на Python из policy_rules.json','Hash-Chain Audit Log: SHA-256 на каждый вызов инструмента']},
+      {н:'Фаза 3 · Умный дом: Matter и Thread', нед:'недели 8–9', шаги:['nRF52840 → OpenThread Border Router (RCP)','Matter Server + Home Assistant Core + Zigbee2MQTT','связка MCP-серверов с API HA и Matter Controller','проверка сценариев при физическом разрыве интернета']},
+      {н:'Фаза 4 · Сенсоры и алгоритмы заботы', нед:'недели 10–11', шаги:['HLK-LD2450 по UART: координаты людей в комнате','детекция падений с 20-секундным окном подтверждения','BME688 по I2C: индекс качества воздуха IAQ и VOC']},
+      {н:'Фаза 5 · Изоляция, CAD и ПСИ', нед:'недели 12–13', шаги:['OpenWrt/OPNsense: VLAN 10, 20, 30, 50','3D-печать корпуса PETG/TPU: герметичная каверна 0.8 L','ПСИ по чек-листу полного оффлайна']}
+    ],
+    нарисовать(){
+      const окно=$('#контейнерФаз'); if(!окно) return;
+      окно.innerHTML=this.фазы.map((ф,i)=>
+        '<div class="фаза" id="фаза-'+i+'"><button aria-expanded="false"><span class="стрелка">▸</span>'+ф.н+'<span class="недели">'+ф.нед+'</span></button><div class="тело"><ul>'+ф.шаги.map(с=>'<li>'+с+'</li>').join('')+'</ul></div></div>').join('');
+      $$('.фаза>button').forEach(к=>к.addEventListener('click',()=>{
+        const ф=к.parentNode, открыто=ф.classList.toggle('раскрыта');
+        к.setAttribute('aria-expanded', String(открыто));
+      }));
+    }
+  };
+
+  /* ─── здоровье: пробы каждого органа ─── */
+  const здоровье = {
+    органы: [],
+    зарегистрировать(имя, проба){ this.органы.push({имя, проба}); },
+    async прогнать(один){
+      const список = один ? this.органы.filter(o=>o.имя===один) : this.органы;
+      const результаты=[];
+      for(const орган of список){
+        const т0=performance.now();
+        let жив=false;
+        try{ жив = !!(await орган.проба()); }catch(e){ жив=false; }
+        результаты.push({имя:орган.имя, жив, мс:Math.round(performance.now()-т0)});
+      }
+      if(!один) this.нарисовать(результаты, true); else this.дорисовать(результаты);
+      return результаты;
+    },
+    дорисовать(результаты){
+      результаты.forEach(р=>{
+        const ряд=$('[data-орган="'+р.имя+'"]');
+        if(!ряд) return;
+        ряд.className='проба-ряд '+(р.жив?'жив':'мёртв');
+        ряд.querySelector('.мс').textContent=(р.жив?'':'✕ ')+р.мс+' мс';
+      });
+      this.сводка();
+    },
+    нарисовать(результаты){
+      const окно=$('#таблицаПроб'); if(!окно) return;
+      окно.innerHTML=this.органы.map(о=>{
+        const р=результаты.find(x=>x.имя===о.имя)||{жив:null,мс:'—'};
+        return '<div class="проба-ряд '+(р.жив===null?'':(р.жив?'жив':'мёртв'))+'" data-орган="'+о.имя+'">'+
+          '<span class="точка"></span><span>'+о.имя+'</span>'+
+          '<span class="мс">'+(р.жив===null?'—':((р.жив?'':'✕ ')+р.мс+' мс'))+'</span>'+
+          '<button class="кнопка" data-проба="'+о.имя+'">проба</button></div>';
+      }).join('');
+      $$('[data-проба]').forEach(к=>к.addEventListener('click',()=>{ this.прогнать(к.getAttribute('data-проба')); }));
+      this.сводка();
+    },
+    сводка(){
+      const ряды=$$('#таблицаПроб .проба-ряд');
+      const живы=ряды.filter(р=>р.classList.contains('жив')).length;
+      const с=$('#счётЗдоровья');
+      if(с){ с.textContent=живы+' / '+ряды.length+(живы===ряды.length?' · жив':' · есть раненые'); с.style.color=живы===ряды.length?'var(--ок)':'var(--тревога)'; }
+    },
+    забытьВсё(){
+      const ок=память.забыть();
+      const к=$('#кнЗабытьВсё'); const старое=к.textContent;
+      к.textContent=ок?'выборы забыты ✓':'не вышло'; setTimeout(()=>к.textContent=старое,1400);
+      return ок;
+    }
+  };
+
+  /* ─── вкладки + сборка лица ─── */
+  const лицо = {
+    вкладки:['мозг','акустика','приват','сеть','карта','здоровье'],
+    открыть(имя){
+      if(!this.вкладки.includes(имя)) имя='мозг';
+      $$('.вкладка').forEach(к=>к.setAttribute('aria-selected', String(к.id==='вк-'+имя)));
+      $$('.страница').forEach(с=>с.classList.toggle('видна', с.id==='стр-'+имя));
+      память.сохранить({вкладка:имя});
+      if(имя==='акустика') акустика.нарисовать();
+      if(имя==='здоровье') здоровье.прогнать();
+      return true;
+    },
+    собрать(){
+      $$('.вкладка').forEach(к=>к.addEventListener('click',()=>this.открыть(к.id.replace('вк-',''))));
+      document.addEventListener('keydown',e=>{
+        if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+        const н=+e.key;
+        if(н>=1 && н<=6) this.открыть(this.вкладки[н-1]);
+        if(e.key==='Escape' && планировщик._пинResolve) планировщик.закрытьПин(false);
+      });
+    }
+  };
+
+  /* ─── инициализация и проводка каждой кнопки ─── */
+  async function инициализировать(){
+    лицо.собрать();
+    приватность.нарисоватьВлан();
+    карта.нарисовать();
+    сеть.показать('compose');
+
+    /* мозг */
+    $$('.чип[data-цель]').forEach(ч=>ч.addEventListener('click',()=>{
+      $('#полеЦели').value=ч.getAttribute('data-цель');
+      память.сохранить({цель:ч.getAttribute('data-цель')});
+    }));
+    $('#кнПланировать').addEventListener('click',async ()=>{
+      const цель=$('#полеЦели').value.trim()||'Возвращение домой';
+      память.сохранить({цель});
+      const шаги=планировщик.построить(цель);
+      планировщик.нарисовать(шаги);
+      await аудит.записать('intent.read','принято','«'+цель.slice(0,48)+(цель.length>48?'…':'')+'»');
+      await планировщик.исполнить(шаги);
+    });
+    $('#кнСтоп').addEventListener('click',()=>планировщик.стоп());
+    $('#кнКопироватьАудит').addEventListener('click',()=>{
+      const к=$('#кнКопироватьАудит'); const старое=к.textContent;
+      const готово=(ок)=>{ к.textContent=ок?'скопировано ✓':'не вышло'; setTimeout(()=>к.textContent=старое,1200); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(аудит.текст()).then(()=>готово(true),()=>готово(false));
+      else готово(false);
+    });
+    $('#кнОчиститьАудит').addEventListener('click',()=>аудит.стереть());
+
+    /* PIN-модал */
+    $('#кнПинОк').addEventListener('click',()=>{
+      const пин=$('#полеПин').value;
+      if(/^\d{4}$/.test(пин)) планировщик.закрытьПин(true);
+      else { $('#полеПин').value=''; $('#полеПин').focus(); }
+    });
+    $('#кнПинОтмена').addEventListener('click',()=>планировщик.закрытьПин(false));
+    $('#полеПин').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#кнПинОк').click(); });
+
+    /* акустика */
+    акустика.холст=$('#холстКорпуса');
+    $('#ручкаОбъём').addEventListener('input',()=>{ $('#выхОбъём').textContent=(+$('#ручкаОбъём').value).toFixed(2)+' L'; акустика.нарисовать(); память.сохранить({объём:+$('#ручкаОбъём').value}); });
+    $('#ручкаВысота').addEventListener('input',()=>{ $('#выхВысота').textContent=$('#ручкаВысота').value+' мм'; акустика.нарисовать(); память.сохранить({высота:+$('#ручкаВысота').value}); });
+    $('#чекКонус').addEventListener('change',()=>акустика.нарисовать());
+    $('#чекМики').addEventListener('change',()=>акустика.нарисовать());
+    $('#кнПробаЗвука').addEventListener('click',()=>акустика.пробаЗвука());
+    $('#кнСбросКорпуса').addEventListener('click',()=>акустика.сброс());
+
+    /* приватность */
+    $('#микрик').addEventListener('change',async ()=>{
+      const мик=приватность.применить();
+      await аудит.записать('privacy.mic', мик?'включён':'обесточен', '2-полюсный микрик');
+    });
+    $('#камШторка').addEventListener('change',async ()=>{
+      приватность.применить();
+      await аудит.записать('privacy.shutter', приватность.шторкаЗакрыта()?'закрыта':'открыта', 'механическая шторка PETG');
+    });
+
+    /* сеть */
+    $$('.подвкладка').forEach(к=>к.addEventListener('click',()=>сеть.показать(к.getAttribute('data-конфиг'))));
+    $('#кнКопироватьКонфиг').addEventListener('click',()=>сеть.скопировать());
+
+    /* здоровье */
+    $('#кнПробаВсех').addEventListener('click',()=>здоровье.прогнать());
+    $('#кнЗабытьВсё').addEventListener('click',()=>здоровье.забытьВсё());
+
+    /* регистрация проб */
+    здоровье.зарегистрировать('память (localStorage)', async ()=>{ память.сохранить({тик:Date.now()}); return память.прочесть().тик>0; });
+    здоровье.зарегистрировать('аудит (SHA-256)', async ()=>{ const х=аудит.последнийХэш; await аудит.записать('health.probe','исполнено','самопроба цепи'); return аудит.последнийХэш!==х; });
+    здоровье.зарегистрировать('политика (policy)', async ()=>планировщик.шаблоны.every(ш=>ш.шаги.every(s=>политика.вердикт(s[0])!=='deny')));
+    здоровье.зарегистрировать('планировщик (DAG)', async ()=>Array.isArray(планировщик.построить('тест микроклимат')) && планировщик.построить('тест').length>0);
+    здоровье.зарегистрировать('акустика (чертёж)', async ()=>{ акустика.нарисовать(); return !!акустика.холст; });
+    здоровье.зарегистрировать('приватность (рубильники)', async ()=>{ приватность.применить(); return document.getElementById('микрик')!==null; });
+    здоровье.зарегистрировать('сеть (конфиги)', async ()=>сеть.показать(сеть.текущий) && Object.keys(сеть.файлы).length===5);
+    здоровье.зарегистрировать('карта (фазы)', async ()=>document.querySelectorAll('#контейнерФаз .фаза').length===6);
+    здоровье.зарегистрировать('вкладки (лицо)', async ()=>Array.isArray(лицо.вкладки) && лицо.вкладки.length===6 && document.querySelectorAll('.вкладка').length===6);
+    здоровье.зарегистрировать('звук (WebAudio)', async ()=>!!(window.AudioContext||window.webkitAudioContext));
+
+    /* восстановить выбор человека */
+    const п=память.прочесть();
+    if(п.цель) $('#полеЦели').value=п.цель;
+    if(п.объём){ $('#ручкаОбъём').value=п.объём; $('#выхОбъём').textContent=(+п.объём).toFixed(2)+' L'; }
+    if(п.высота){ $('#ручкаВысота').value=п.высота; $('#выхВысота').textContent=п.высота+' мм'; }
+    if(typeof п.мик==='boolean') $('#микрик').checked=п.мик;
+    if(typeof п.шторка==='boolean') $('#камШторка').checked=п.шторка;
+    приватность.применить();
+    акустика.нарисовать();
+
+    await аудит.генезис();
+    лицо.открыть(п.вкладка && лицо.вкладки.includes(п.вкладка) ? п.вкладка : 'мозг');
+    здоровье.прогнать();
+    return true;
+  }
+
+  return {аудит, политика, планировщик, акустика, приватность, сеть, карта, здоровье, память, лицо, инициализировать};
+})();
+
+/* ═══ МОСТ: ящик → вещь window.КОЛОНКА (канон дома: delete + defineProperty) ═══ */
+delete window.КОЛОНКА;
+Object.defineProperty(window,'КОЛОНКА',{
+  value:Object.freeze(__С39_КОЛОНКА),
+  writable:false, configurable:false, enumerable:true
+});
+window.КОЛОНКА.инициализировать();
+</script>
+</body>
+</html>
