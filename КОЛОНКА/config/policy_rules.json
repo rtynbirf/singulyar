@@ -1,0 +1,15 @@
+{
+  "version": "0.4.0",
+  "default_action": "deny",
+  "risk_levels": {
+    "safe": ["tts.speak", "media.play", "sensors.read"],
+    "low": ["lights.set_state", "climate.set_temperature"],
+    "medium": ["lights.set_scene", "reminders.create"],
+    "high": ["security.arm_system", "calendar.delete"],
+    "critical": ["security.unlock_door", "health.emergency_contact"]
+  },
+  "confirmation_channels": {
+    "high": ["voice_prompt", "pwa_push"],
+    "critical": ["voice_prompt_pin", "pwa_2fa"]
+  }
+}
