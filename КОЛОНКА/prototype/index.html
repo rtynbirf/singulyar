@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>OMNISPEAKER-1 — Ultimate Multi-Agent Prototype v0.4.0</title>
+  <link rel="stylesheet" href="../assets/tokens.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 48px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.02em; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      font-size: 12px; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--panel);
+      color: var(--muted); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .badge.on { color: var(--accent); border-color: rgba(110,231,183,0.35); background: var(--accent-dim); }
+
+    /* Nav Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--accent-dim);
+      border-color: rgba(110,231,183,0.4);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .card h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--faint);
+      margin-bottom: 12px;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .chip {
+      padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--panel); color: var(--muted); cursor: pointer; font-size: 13px;
+    }
+    .chip:hover, .chip.active { color: var(--text); border-color: rgba(110,231,183,0.4); background: var(--accent-dim); }
+
+    .goal-input {
+      width: 100%; padding: 12px 14px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--panel);
+      color: var(--text); font-size: 15px; margin-bottom: 12px;
+    }
+
+    .actions { display: flex; gap: 8px; }
+    .btn {
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: #042f1a; }
+    .btn-ghost { background: var(--panel); color: var(--text); border: 1px solid var(--border); }
+
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 32px; text-align: center; font-size: 12px; color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>OMNISPEAKER-1 · Ultimate Hub v0.4.0</h1>
+        <p class="sub">Полиматическая ИИ-система · Абсолютный Offline-First · Полный дистрибутив</p>
+      </div>
+      <div class="badges">
+        <span class="badge on">Offline-first: ENFORCED</span>
+        <span class="badge">VLAN 10-50</span>
+        <span class="badge">Matter 1.6</span>
+      </div>
+    </header>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('agent')">1. ИИ-Агент & DAG</button>
+      <button class="tab-btn" onclick="switchTab('cad')">2. 3D CAD & Акустика</button>
+      <button class="tab-btn" onclick="switchTab('net')">3. Сетевой Фаервол</button>
+      <button class="tab-btn" onclick="switchTab('iac')">4. IaC (Terraform/Ansible)</button>
+      <button class="tab-btn" onclick="switchTab('roadmap')">5. Дорожная Карта</button>
+    </nav>
+
+    <!-- TAB 1: AGENT -->
+    <div id="tab-agent" class="tab-content active">
+      <div class="card">
+        <h2>Сформулируйте цель пользователя</h2>
+        <div class="chips">
+          <button class="chip" onclick="setGoal('Подготовь квартиру к возвращению в 19:00: свет на кухне, 22°C, джаз, напомни купить молоко')">Возвращение домой</button>
+          <button class="chip" onclick="setGoal('Обнаружено падение в спальне — запусти протокол безопасности')">Тревога: падение (mmWave)</button>
+          <button class="chip" onclick="setGoal('Разблокируй входную дверь')">Замок (Critical Risk)</button>
+        </div>
+        <input type="text" id="goal" class="goal-input" value="Подготовь квартиру к возвращению в 19:00: свет на кухне, 22°C, джаз, напомни купить молоко" />
+        <div class="actions">
+          <button class="btn btn-primary" onclick="runSimulation()">Спланировать и Исполнить</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Результат генерации DAG-плана & Policy Check</h2>
+        <pre id="outputLog">Нажмите «Спланировать и Исполнить» для симуляции работы NPU-оркестратора.</pre>
+      </div>
+    </div>
+
+    <!-- TAB 2: CAD -->
+    <div id="tab-cad" class="tab-content">
+      <div class="card">
+        <h2>Параметрический корпус OpenSCAD (omnispeaker_shell.scad)</h2>
+        <pre>
+// 0.8L Sealed Acoustic Chamber & 360 dispersion cone
+body_h = 210; body_d = 120; chamber_h = 135;
+- Material: PETG (4 walls, 35% Gyroid infill)
+- Passive Radiator: Custom 85mm TPU 95A membrane (58 Hz tune)
+- Mic Array Isolation: 8x Silicone O-ring vibration dampening
+- Thermal Vents: Bottom-to-top chimney effect for RK3588 NPU
+        </pre>
+      </div>
+    </div>
+
+    <!-- TAB 3: NETWORK -->
+    <div id="tab-net" class="tab-content">
+      <div class="card">
+        <h2>Матрица сегментации VLAN (OpenWrt / OPNsense nftables)</h2>
+        <pre>
+[VLAN 10: TRUSTED]    --> [VLAN 20: OMNISPEAKER] (TCP 80/8123/5353) ALLOW
+[VLAN 20: OMNISPEAKER]--> [INTERNET/WAN]                 REJECT (Strict Offline)
+[VLAN 30: SENSORS]    --> [ANY]                          DROP
+mDNS Reflector: Avahi enabled across eth0.10 and eth0.20
+        </pre>
+      </div>
+    </div>
+
+    <!-- TAB 4: IAC -->
+    <div id="tab-iac" class="tab-content">
+      <div class="card">
+        <h2>Infrastructure as Code (Terraform + Ansible)</h2>
+        <pre>
+$ terraform init && terraform apply
+$ ansible-playbook -i automation/ansible/inventory.ini automation/ansible/playbook_openwrt.yml
+$ ansible-playbook -i automation/ansible/inventory.ini automation/ansible/playbook_omnispeaker_node.yml
+        </pre>
+      </div>
+    </div>
+
+    <!-- TAB 5: ROADMAP -->
+    <div id="tab-roadmap" class="tab-content">
+      <div class="card">
+        <h2>Дорожная карта реализации (Фазы 0..5 — 13 Недель)</h2>
+        <pre>
+Фаза 0: Подготовка Armbian ARM64, RK3588 NPU драйверов (Недели 1-2)
+Фаза 1: Голосовой стек Faster-Whisper + Piper + OpenWakeWord (Недели 3-4)
+Фаза 2: Оркестратор SLM/LLM, Policy Engine, Hash-Chain Audit (Недели 5-7)
+Фаза 3: Matter 1.6 Controller, OpenThread Border Router (Недели 8-9)
+Фаза 4: mmWave радар HLK-LD2450, детекция падений (Недели 10-11)
+Фаза 5: CAD 3D-печать корпуса, VLAN изоляция, ПСИ (Недели 12-13)
+        </pre>
+      </div>
+    </div>
+
+    <footer>
+      OMNISPEAKER-1 Master Distribution v0.4.0 · Все документы, CAD, IaC и конфигурации в архиве Студии.
+    </footer>
+  </div>
+
+  <script>
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    function setGoal(txt) {
+      document.getElementById('goal').value = txt;
+    }
+
+    function runSimulation() {
+      const g = document.getElementById('goal').value;
+      const log = document.getElementById('outputLog');
+      log.textContent = `[Intent Received]: "${g}"
+`;
+      log.textContent += `[NPU Router (SLM 1.5B)]: Analyzing intent complexity...
+`;
+      log.textContent += `[NPU Planner (LLM 7B AWQ)]: Generating DAG Plan...
+
+`;
+
+      if (g.includes("паден")) {
+        log.textContent += `DAG Step 1: sensors.read_presence (Risk: safe) -> ALLOW
+`;
+        log.textContent += `DAG Step 2: voice.prompt_confirm ("Всё в порядке?") (Risk: low) -> ALLOW
+`;
+        log.textContent += `DAG Step 3: health.emergency_contact (Risk: critical) -> REQUIRES USER CONFIRMATION
+`;
+      } else if (g.includes("замок") || g.includes("Разблок")) {
+        log.textContent += `DAG Step 1: security.get_lock_state (Risk: low) -> ALLOW
+`;
+        log.textContent += `DAG Step 2: security.unlock_door (Risk: critical) -> BLOCKED BY POLICY (Requires PIN/2FA)
+`;
+      } else {
+        log.textContent += `DAG Step 1: lights.set_state (kitchen, state: on) (Risk: low) -> ALLOW
+`;
+        log.textContent += `DAG Step 2: climate.set_temperature (22 C) (Risk: low) -> ALLOW
+`;
+        log.textContent += `DAG Step 3: media.play (Jazz playlist) (Risk: safe) -> ALLOW
+`;
+        log.textContent += `DAG Step 4: reminders.create ("Купить молоко") (Risk: safe) -> ALLOW
+`;
+      }
+
+      log.textContent += `
+[Hash-Chain Audit Log]: SHA-256 block sealed: 8f9a2e...4b1c
+`;
+      log.textContent += `[Status]: Execution Completed Offline. Zero bytes egressed to Internet.`;
+    }
+  </script>
+</body>
+</html>
