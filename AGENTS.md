@@ -5,7 +5,7 @@
 
 ## Что это за репа
 
-`rtynbirf/singulyar` — публичный репозиторий дома СИНГУЛЯР 31 КВАРТИРНИК: PWA-караоке-вселенная RUVSON, деплой на GitHub Pages (`https://rtynbirf.github.io/singulyar/`), ветка `main`, без сборщика (ноль node_modules в рантайме). Апстрим мозгов Малыша: `rtynbirf/singulyar-llm`.
+`rtynbirf/singulyar` — публичный репозиторий дома СИНГУЛЯР · ЛАДОМ: PWA-караоке-вселенная RUVSON, деплой на GitHub Pages (`https://rtynbirf.github.io/singulyar/`), ветка `main`, без сборщика (ноль node_modules в рантайме). Апстрим мозгов Малыша: `rtynbirf/singulyar-llm`.
 
 ## Незыблемое (не ломать)
 
