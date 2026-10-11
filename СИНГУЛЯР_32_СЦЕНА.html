@@ -177,7 +177,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var
   </section>
 
   <section class="panel" aria-label="Фонд песен дома">
-    <label class="lbl" for="поиск" style="display:block;margin-bottom:8px">ФОНД ДОМА · 62 песни · найди свою</label>
+    <label class="lbl" for="поиск" style="display:block;margin-bottom:8px" id="лейблФонда">ФОНД ДОМА · 62 песни · найди свою</label>
     <input type="search" id="поиск" placeholder="название или номер…" aria-label="Поиск песни по фонду">
     <ul class="фонд-список" id="списокПесен"></ul>
   </section>
@@ -685,6 +685,13 @@ window.S32_ЯДРО = (function () {
       ул.appendChild(ли);
     }
     $('счётФонда').textContent = String(ПЕСНИ.length);
+          /* v10.55 «ПОТОК»: лейбл поиска — та же правда, что и lead (один факт — одно место) */
+          var лейбл = $('лейблФонда');
+          if (лейбл) {
+            var н = ПЕСНИ.length;
+            var слово = ((н % 10 === 1) && (н % 100 !== 11)) ? 'песня' : (((н % 10 >= 2) && (н % 10 <= 4) && !((н % 100 >= 12) && (н % 100 <= 14))) ? 'песни' : 'песен');
+            лейбл.textContent = 'ФОНД ДОМА · ' + н + ' ' + слово + ' · найди свою';
+          }
   }
   function списокОтметка() {
     var кнопки = $('списокПесен').querySelectorAll('button');
