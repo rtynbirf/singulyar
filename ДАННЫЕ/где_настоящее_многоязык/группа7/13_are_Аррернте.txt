@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Аррернте (восточный) · КОД: are · ГРУППА 7 · язык 13 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: латиница, восточноаррернтская норма (Алис-Спрингс, Mparntwe); «настоящее» — rile (арандаизир. англ. real), «экран» — skwine, «одиночество» — alone-arenye (суффикс -arenye «обладающий свойством»); базовая лексика: iperte (дождь), tyeme (ночь), kwele (где), nhenhe (здесь); совр. термины — английские заимствования реальной речи Алис-Спрингс, формы упрощены поэтически.
+
+01. Marle — arre mpwareme niweral-netweke, bese Marsa-nge, anneme mitawerse-nge, swipe-nge may olweyse-arenye, kenhe swifte. Arre mpwareme.
+[марле — арре мпуарэмэ ниуэрал-нетвеке, бэсэ Марса-нгэ, анэмэ митауэрсэ-нгэ, свайп-нгэ май олуэйсэ-арэнйе, кенхе суифтэ. арре мпуарэмэ]
+
+02. Arre petyeke kenhe arre wanteme — pmere-nge mpwele pause, mpwele distense.
+[арре петьекэ кенхе арре уантэмэ — пмерэ-нгэ мпулэ позэ, мпулэ дистэнсэ]
+
+03. Kenhe petyeke klose, swifte — bate insayde kwaiyete-ke.
+[кенхе петьекэ клосэ, суифтэ — батэ инсайдэ куайетэ-кэ]
+
+04. Arre anheme swifte-kenhe, paswede cenjime-me. Arre-selfe foseteke role-kenhe.
+[арре анхэмэ суифтэ-кенхе, пасуэдэ сенджимэ-мэ. арре-сэлфэ фосэтэкэ ролэ-кенхе]
+
+05. Bate ilheme ayeke, skwine nhe areme: kwele rile nau?
+[батэ илхэмэ айкэ, скуайнэ нхэ арэмэ: квеле рилэ нау?]
+
+06. Nhenhe ore nhake — kwele iperte smelle, kwele grasse pringe-nge? Rile mpwele hede-nge onle — nhenhe, pmere-nge.
+[нхенхе орэ нхаке — квеле ипэртэ смэллэ, квеле грассэ прингэ-нгэ? рилэ мпулэ хэдэ-нгэ онлэ — нхенхе, пмерэ-нгэ]
+
+07. Arre noweme kenhe nowe-arenye. Bate kwele rile? Kwele fayndeme re?
+[арре ноуэмэ кенхе ноуэ-арэнйе. батэ квеле рилэ? квеле файндэмэ рэ?]
+
+08. Kongkrite-nge kovereke kenhe pringe-smelle; arre konte lefe notifikesyone-kenhe.
+[конгкритэ-нгэ ковэрэкэ кенхе прингэ-смэллэ; арре контэ лэфэ нотификесьонэ-кенхе]
+
+09. Utyerre-me skwine withe, weykape skwine withe. Arre stuke lupe-nge otopaylote-nge.
+[утьеррэмэ скуайнэ уитэ, уэйкапэ скуайнэ уитэ. арре стукэ лупэ-нгэ отопайлотэ-нгэ]
+
+10. Arre mpwareke distense klineme, mpwele alone-arenye klineme — arre areme lesse-lesse.
+[арре мпуарэкэ дистэнсэ клинэмэ, мпулэ алон-арэнйе клинэмэ — арре арэмэ лэссэ-лэссэ]
+
+11. Unte renembeme — tyeme tyeme-arenye kanhe, arre mpwele ilheme, hape-arenye mpwele daunlode fayile-nge?
+[унтэ ренэмбэмэ — тьемэ тьемэ-арэнйе канхе, арре мпулэ илхэмэ, хапэ-арэнйе мпулэ даунлодэ файилэ-нгэ?]
+
+12. Wan daye skwine tyeme-arenye-ke — ilheme ayeke: kwele rile? Nhenhe ore nhake?
+[уан дайэ скуайнэ тьемэ-арэнйе-кэ — илхэмэ айкэ: квеле рилэ? нхенхе орэ нхаке?]
+
+───
+СЛОВАРЬ МАЛЫША (are):
+настоящее → rile (арандаизир. англ. real) [рилэ]
+экран → skwine (англ. screen) [скуайнэ]
+дождь → iperte [ипэртэ]
+весна → pringe (англ. spring, заимств.) [прингэ]
+трава → grasse (англ. grass, заимств.) [грассэ]
+бетон → kongkrite (англ. concrete) [конгкритэ]
+уведомление → notifikesyone (англ. notification) [нотификесьонэ]
+пароль → paswede (англ. password) [пасуэдэ]
+ночь → tyeme [тьемэ]
+одиночество → alone-arenye (англ. alone + -arenye) [алон-арэнйе]
+счастье → hape-arenye (англ. happy + -arenye) [хапэ-арэнйе]
+где? → kwele [квеле]
+где настоящее? → kwele rile? [квеле рилэ?]
