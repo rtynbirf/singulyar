@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HARMONIA · прототип 0.1</title>
+<style>
+:root{--bg:#EEF1F5;--fg:#142033;--ac:#1F5FBF;--ac2:#B34700;--panel:rgba(20,32,51,.07);--size:1;--pulse:0;
+font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;box-sizing:border-box}
+:root[data-scene=party]{--bg:#1B0B2E;--fg:#FFF3FB;--ac:#FF3D8B;--ac2:#00E0FF;--panel:rgba(255,255,255,.09)}
+:root[data-scene=kids]{--bg:#FFF1B8;--fg:#3A2A00;--ac:#D9480F;--ac2:#1864AB;--panel:rgba(58,42,0,.08)}
+:root[data-scene=romantic]{--bg:#2B1220;--fg:#FFE8EF;--ac:#FF8FAB;--ac2:#FFC8A2;--panel:rgba(255,255,255,.08)}
+:root[data-contrast=high]{--bg:#000;--fg:#fff;--ac:#FFE600;--ac2:#7FDBFF;--panel:#1a1a1a}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--fg);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);line-height:1.5;transition:background .4s}
+:root[data-motion=none] *{transition:none!important;animation:none!important}
+a,button,input,select,summary{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:16px;display:grid;gap:16px}
+@media(min-width:900px){.wrap{grid-template-columns:1.4fr 1fr;align-items:start}.full{grid-column:1/-1}}
+header h1{margin:0;font:700 1.4rem/1.2 Georgia,"Iowan Old Style",serif}
+header p{margin:.2rem 0 0;opacity:.8;max-width:60ch}
+.card{background:var(--panel);border-radius:14px;padding:16px}
+h2{font:700 1.05rem/1.3 Georgia,serif;margin:0 0 10px}
+.stage{min-height:300px;display:grid;align-content:center;gap:14px;text-align:center;position:relative;outline:3px solid transparent;outline-offset:-3px;outline-color:color-mix(in srgb,var(--ac) calc(var(--pulse)*100%),transparent)}
+.line{font:700 calc(clamp(1.8rem,6vw,3.2rem)*var(--size))/1.15 Georgia,"Iowan Old Style",serif;overflow-wrap:anywhere}
+.next{opacity:.55;font-size:calc(1.1rem*var(--size))}
+.w{display:inline-block;white-space:nowrap;margin:0 .22em}
+.c{opacity:.45;transition:opacity .08s,color .08s}
+.c.on{opacity:1;color:var(--ac)}
+.c.done{opacity:.9}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button,.btn{min-height:44px;min-width:44px;padding:8px 16px;border-radius:10px;border:2px solid var(--fg);background:transparent;cursor:pointer}
+button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+button.go{background:var(--ac);border-color:var(--ac);color:var(--bg);font-weight:700}
+label{display:grid;gap:4px;margin:8px 0}
+select,input[type=range]{width:100%;min-height:44px;background:transparent;border:2px solid var(--fg);border-radius:10px;padding:4px 8px}
+input[type=range]{padding:0;accent-color:var(--ac)}
+output{opacity:.8;font-variant-numeric:tabular-nums}
+ul.log{list-style:none;margin:0;padding:0;max-height:240px;overflow:auto;font-size:.9rem}
+ul.log li{padding:6px 0;border-bottom:1px solid var(--panel)}
+small{opacity:.8}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="full">
+<h1>HARMONIA · прототип 0.1</h1>
+<p>Одно событие, подстроенное под каждого. Всё работает в этом файле: без сервера, без сети, без трекеров. Музыка синтезируется прямо в браузере.</p>
+</header>
+
+<main class="card stage" id="stage" aria-label="Сцена события">
+<div class="line" id="cur" aria-hidden="true">Нажмите «Играть»</div>
+<div class="next" id="nxt" aria-hidden="true"></div>
+<div class="row" style="justify-content:center">
+<button class="go" id="play" aria-pressed="false">Играть</button>
+<button id="mic" aria-pressed="false">Хлопки: выкл</button>
+<span id="claps" role="status">Хлопков: 0</span>
+</div>
+<details><summary>Полный текст (для скринридера и чтения без темпа)</summary><p id="tr"></p></details>
+</main>
+
+<aside class="card" aria-label="Настройки">
+<h2>Сцена</h2>
+<div class="row" id="scenes" role="group" aria-label="Выбор сцены"></div>
+<h2 style="margin-top:18px">Мой профиль</h2>
+<label>Движение
+<select id="motion"><option value="full">Полное</option><option value="soft">Только плавное появление</option><option value="none">Без анимации и без вспышек</option></select></label>
+<label>Подсветка текста
+<select id="gran"><option value="letter">По буквам</option><option value="syllable">По слогам</option><option value="word">По словам</option><option value="line">Строка целиком</option></select></label>
+<label>Контраст
+<select id="contrast"><option value="normal">Обычный</option><option value="high">Высокий</option></select></label>
+<label>Размер текста <output id="o_size"></output><input type="range" id="size" min="1" max="2" step="0.1"></label>
+<label>Темп <output id="o_tempo"></output><input type="range" id="tempo" min="0.5" max="1.5" step="0.05"></label>
+<label>Громкость <output id="o_sound"></output><input type="range" id="sound" min="0" max="1" step="0.05"></label>
+<label>Вибро / световой пульс <output id="o_haptic"></output><input type="range" id="haptic" min="0" max="1" step="0.05"></label>
+<label>Сдвиг синхронизации, мс <output id="o_offset"></output><input type="range" id="offset" min="-300" max="300" step="10"></label>
+<small id="hch"></small>
+<div class="row" style="margin-top:10px">
+<button id="exp">Скачать профиль</button>
+<label class="btn" style="margin:0;display:inline-grid;align-items:center">Загрузить профиль<input type="file" id="imp" accept="application/json" class="sr"></label>
+<button id="reset">Сбросить</button>
+</div>
+</aside>
+
+<section class="card full" aria-label="Журнал доступа">
+<h2>Журнал доступа: что приложение делало на этом устройстве</h2>
+<p><small>Каждое обращение к звуку, микрофону, вибро и хранилищу записывается здесь. Ничего не отправляется в сеть.</small></p>
+<ul class="log" id="log"></ul>
+<button id="clr" style="margin-top:8px">Очистить журнал</button>
+</section>
+</div>
+
+<script>
+"use strict";
+/* ---------- Событие (формат .harm, упрощённо): текст-маркеры по долям ---------- */
+const EVENT={schema:"harm/0.1",title:"Просто люби",bpm:96,beatsPerLine:4,lines:[
+[[["Про",1],["сто",1]],[["лю",1],["би",1]]],
+[[["Дом",1]],[["где",1]],[["те",.5],["бя",.5]],[["ждут",1]]],
+[[["Ти",.5],["хо",.5]],[["как",.5]],[["тёп",.5],["лый",.5]],[["хлеб",1.5]]],
+[[["Мы",.5]],[["ря",.5],["дом",1]],[["мы",.5]],[["сво",.5],["и",1]]],
+[[["Ру",.5],["ки",.5]],[["вверх",1]],[["и",.5]],[["такт",1.5]]],
+[[["Хло",.5],["пок",1]],[["раз",1]],[["и",.5]],[["два",1]]],
+[[["Ты",.5],["не",.5]],[["о",.5],["дин",1]],[["ты",.5]],[["здесь",1]]],
+[[["Про",1],["сто",1]],[["лю",1],["би",1]]]]};
+const BPL=EVENT.beatsPerLine,LOOP_BEATS=BPL*EVENT.lines.length;
+const SCENES={day:"День",party:"Вечеринка",kids:"Дети",romantic:"Романтика"};
+const DEF={scene:"day",motion:"soft",gran:"syllable",contrast:"normal",size:1,tempo:1,sound:.7,haptic:.5,offset:0};
+let P={...DEF};
+const $=id=>document.getElementById(id),root=document.documentElement;
+/* ---------- Журнал доступа ---------- */
+const LOG=[];
+function log(what){const d=new Date();LOG.unshift(d.toLocaleTimeString()+" · "+what);if(LOG.length>60)LOG.pop();
+$("log").innerHTML=LOG.map(s=>"<li>"+s+"</li>").join("")}
+/* ---------- Профиль: хранение только локально ---------- */
+const KEY="harmonia.profile.v1";
+function save(){try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}}
+function load(){try{const s=localStorage.getItem(KEY);if(s){P={...DEF,...JSON.parse(s)};log("Хранилище устройства: прочитан профиль")}else{
+ log("Хранилище устройства: профиль не найден, использованы значения по умолчанию");
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)P.motion="none";
+ if(matchMedia("(prefers-contrast: more)").matches)P.contrast="high"}}catch(e){log("Хранилище устройства недоступно: профиль не сохранится")}}
+function apply(){
+root.dataset.scene=P.scene;root.dataset.contrast=P.contrast;root.dataset.motion=P.motion;root.style.setProperty("--size",P.size);
+for(const k of["motion","gran","contrast"])$(k).value=P[k];
+for(const k of["size","tempo","sound","haptic","offset"]){$(k).value=P[k];$("o_"+k).textContent=k==="offset"?P[k]+" мс":k==="size"||k==="tempo"?"×"+(+P[k]).toFixed(2):Math.round(P[k]*100)+"%"}
+document.querySelectorAll("#scenes button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===P.scene));
+if(master)master.gain.value=P.sound}
+/* ---------- Вибро: честный выбор канала ---------- */
+const hasVib=typeof navigator.vibrate==="function";
+$("hch").textContent=hasVib?"Канал вибро: вибромотор устройства + световой пульс.":"Вибромотора в этом браузере нет (так на iPhone и ноутбуках): пульс идёт светом.";
+function buzz(ms){if(P.haptic<=0)return;
+if(hasVib&&navigator.vibrate(Math.max(8,Math.round(ms*P.haptic)))){}
+if(P.motion!=="none"){root.style.setProperty("--pulse",P.haptic);setTimeout(()=>root.style.setProperty("--pulse",0),90)}}
+/* ---------- Звук: часы = AudioContext.currentTime ---------- */
+let ctx=null,master=null,playing=false,t0=0,nextT=0,beatIdx=0,timer=0,raf=0,lastBeatShown=-1,noiseBuf=null;
+const BASS=[110,110,87.31,98,110,87.31,82.41,110];
+function beatDur(){return 60/(EVENT.bpm*P.tempo)}
+function ensureAudio(){if(ctx)return;ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=P.sound;master.connect(ctx.destination);
+noiseBuf=ctx.createBuffer(1,ctx.sampleRate*.1,ctx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+log("Звук: создан аудиоконтекст (синтез в браузере, без загрузки файлов)")}
+function env(g,t,a,peak,dec){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec)}
+function schedBeat(i,t){
+const k=ctx.createOscillator(),kg=ctx.createGain();k.frequency.setValueAtTime(130,t);k.frequency.exponentialRampToValueAtTime(42,t+.12);env(kg,t,.003,.9,.22);k.connect(kg).connect(master);k.start(t);k.stop(t+.3);
+const h=ctx.createBufferSource(),hf=ctx.createBiquadFilter(),hg=ctx.createGain();h.buffer=noiseBuf;hf.type="highpass";hf.frequency.value=7000;env(hg,t+beatDur()/2,.002,.25,.05);h.connect(hf).connect(hg).connect(master);h.start(t+beatDur()/2);
+if(i%BPL===0){const f=BASS[(i/BPL)%8],b=ctx.createOscillator(),bg=ctx.createGain();b.type="triangle";b.frequency.value=f;env(bg,t,.02,.5,beatDur()*3.6);b.connect(bg).connect(master);b.start(t);b.stop(t+beatDur()*4);
+for(const m of[2,2.4,3]){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f*m*2;env(g,t,.15,.07,beatDur()*3.5);o.connect(g).connect(master);o.start(t);o.stop(t+beatDur()*4)}}}
+function scheduler(){while(nextT<ctx.currentTime+.12){schedBeat(beatIdx%LOOP_BEATS,nextT);nextT+=beatDur();beatIdx++}}
+function start(){ensureAudio();ctx.resume();log("Звук: воспроизведение запущено");playing=true;beatIdx=0;lastBeatShown=-1;nextT=t0=ctx.currentTime+.1;scheduler();timer=setInterval(scheduler,25);
+$("play").textContent="Стоп";$("play").setAttribute("aria-pressed",true);raf=requestAnimationFrame(frame)}
+function stop(){playing=false;clearInterval(timer);cancelAnimationFrame(raf);if(ctx)ctx.suspend();$("play").textContent="Играть";$("play").setAttribute("aria-pressed",false);if(navigator.vibrate)navigator.vibrate(0)}
+/* ---------- Текст-пульс ---------- */
+const lineHTML=[];const lineTimes=[];
+EVENT.lines.forEach((words,li)=>{let b=li*BPL,h="",ws=[];words.forEach((syls,wi)=>{h+='<span class="w">';syls.forEach(([s,d])=>{h+='<span class="s" data-w="'+wi+'" data-b="'+b+'" data-d="'+d+'">'+[...s].map(c=>'<span class="c">'+c+'</span>').join("")+"</span>";b+=d});h+="</span>"});lineHTML.push(h)});
+$("tr").textContent=EVENT.lines.map(w=>w.map(s=>s.map(x=>x[0]).join("")).join(" ")).join(" / ");
+let shownLine=-1;
+function frame(){if(!playing)return;
+const lat=(ctx.outputLatency||ctx.baseLatency||0);
+const sec=ctx.currentTime-t0-lat-P.offset/1000;
+const pos=sec/beatDur();if(pos<0){raf=requestAnimationFrame(frame);return}
+const lb=pos%LOOP_BEATS,li=Math.floor(lb/BPL),bi=Math.floor(pos);
+if(li!==shownLine){shownLine=li;$("cur").innerHTML=lineHTML[li];$("nxt").textContent=EVENT.lines[(li+1)%EVENT.lines.length].map(w=>w.map(s=>s[0]).join("")).join(" ")}
+const g=P.gran,ss=$("cur").querySelectorAll(".s");let activeW=-1;
+ss.forEach(s=>{const b=+s.dataset.b,d=+s.dataset.d,a=lb>=b&&lb<b+d;if(a)activeW=+s.dataset.w});
+ss.forEach(s=>{const b=+s.dataset.b,d=+s.dataset.d,cs=s.children,n=cs.length;
+for(let i=0;i<n;i++){let st="";const past=lb>=b+d,cur=lb>=b&&lb<b+d;
+if(g==="line")st="on";else if(g==="word")st=+s.dataset.w===activeW?"on":(+s.dataset.w<activeW?"done":"");
+else if(g==="syllable")st=cur?"on":(past?"done":"");
+else{const frac=(lb-b)/d;st=past?"done":(cur&&i<=Math.floor(frac*n)?"on":"")}
+cs[i].className="c "+st}});
+if(bi!==lastBeatShown){lastBeatShown=bi;buzz(bi%BPL===0?60:25)}
+raf=requestAnimationFrame(frame)}
+/* ---------- Хлопки: onset 1–4 кГц, только локально ---------- */
+let mStream=null,mRaf=0,flux={prev:0,hist:[],last:0},claps=0;
+async function micOn(){try{mStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}catch(e){log("Микрофон: доступ отклонён или недоступен");return}
+ensureAudio();await ctx.resume();const src=ctx.createMediaStreamSource(mStream),an=ctx.createAnalyser();an.fftSize=1024;src.connect(an);
+log("Микрофон: включён для поиска хлопков (сырой звук не сохраняется и не передаётся)");
+const bins=new Uint8Array(an.frequencyBinCount),hz=ctx.sampleRate/an.fftSize,lo=Math.floor(1000/hz),hi=Math.floor(4000/hz);
+$("mic").setAttribute("aria-pressed",true);$("mic").textContent="Хлопки: вкл";
+const loop=()=>{if(!mStream)return;an.getByteFrequencyData(bins);let e=0;for(let i=lo;i<=hi;i++)e+=bins[i];e/=(hi-lo+1);
+const f=Math.max(0,e-flux.prev);flux.prev=e;flux.hist.push(f);if(flux.hist.length>60)flux.hist.shift();
+const m=flux.hist.reduce((a,b)=>a+b,0)/flux.hist.length,sd=Math.sqrt(flux.hist.reduce((a,b)=>a+(b-m)**2,0)/flux.hist.length),now=performance.now();
+if(f>m+4*sd&&f>18&&now-flux.last>150){flux.last=now;claps++;$("claps").textContent="Хлопков: "+claps;buzz(30)}
+mRaf=requestAnimationFrame(loop)};loop()}
+function micOff(){if(mStream){mStream.getTracks().forEach(t=>t.stop());mStream=null;cancelAnimationFrame(mRaf);log("Микрофон: выключен")}$("mic").setAttribute("aria-pressed",false);$("mic").textContent="Хлопки: выкл"}
+/* ---------- Привязки ---------- */
+Object.entries(SCENES).forEach(([k,v])=>{const b=document.createElement("button");b.textContent=v;b.dataset.s=k;b.onclick=()=>{P.scene=k;apply();save();log("Сцена: "+v)};$("scenes").appendChild(b)});
+for(const k of["motion","gran","contrast","size","tempo","sound","haptic","offset"])$(k).oninput=e=>{const v=e.target.value;P[k]=isNaN(+v)||e.target.tagName==="SELECT"?v:+v;apply();save();if(k==="tempo"&&playing){stop();start()}};
+$("play").onclick=()=>playing?stop():start();
+$("mic").onclick=()=>mStream?micOff():micOn();
+$("exp").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({schema:"harm-profile/0.1",profile:P},null,2)],{type:"application/json"}));a.download="harmonia-profile.json";a.click();log("Профиль: экспортирован в файл на устройстве")};
+$("imp").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.schema==="harm-profile/0.1"){P={...DEF,...j.profile};apply();save();log("Профиль: загружен из файла")}else log("Профиль: файл не подходит")}catch(x){log("Профиль: не удалось прочитать файл")}};
+$("reset").onclick=()=>{P={...DEF};apply();save();log("Профиль: сброшен")};
+$("clr").onclick=()=>{LOG.length=0;$("log").innerHTML=""};
+addEventListener("visibilitychange",()=>{if(document.hidden&&playing)stop()});
+load();apply();log("Сеть: запросов нет, трекеров нет");
+</script>
+</body>
+</html>

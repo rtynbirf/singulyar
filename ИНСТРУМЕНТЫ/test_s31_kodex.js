@@ -1,0 +1,115 @@
+/* Оракул такта v10.54 «КОДЕКС» (С35) — байт-проверка дома.
+   Приказ владельца: «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ
+   КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ; МАЛЫША НАУКИВАЙ».
+   Несёт: треки в паблик, двери ·40/·41, Малыш v0.8, ОБЕРЕГ-фичи живы
+   (ре-посадка), горячий хвост F-Г1/F-Г2 жив, летопись/README (R-13 закрыт),
+   ШТАБ-тренды. Запуск: node ИНСТРУМЕНТЫ/test_s31_kodex.js */
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const R = path.join(__dirname, '..');
+const read = f => fs.readFileSync(path.join(R, f), 'utf8');
+let ok = 0, bad = 0;
+function чек(имя, cond) {
+  if (cond) { ok++; console.log('  ✓ ' + имя); }
+  else { bad++; console.log('  ✗ ' + имя); }
+}
+console.log('=== ОРАКУЛ v10.54 «КОДЕКС» ===');
+
+const raw = read('СИНГУЛЯР_31_ЛАДОМ.html');
+const sw = read('sw15.js');
+const mod = read('singulyar-modules.js');
+const idx = read('index.html');
+const f404 = read('404.html');
+const vj = JSON.parse(read('data/versions.json'));
+const rd = read('README.md');
+
+/* ── 1. Штампы такта ── */
+чек('титул дома — v10.54 «КОДЕКС»', raw.includes('<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.54 «КОДЕКС»'));
+чек('window.APP штамп: v/такт/кэш', raw.includes("v:'10.54', такт:'КОДЕКС'") && raw.includes('s15-orkestrator-v109'));
+чек('шапка-комментарий С35 на месте', raw.includes('такт v10.54 «КОДЕКС» (С35'));
+чек('летопись ОБЕРЕГа в шапке сохранена', raw.includes('такт v10.53 «ОБЕРЕГ» (С34'));
+
+/* ── 2. ОБЕРЕГ-фичи живы (ре-посадка после перезаписи коллег) ── */
+чек('ЩИТ: оранжевая точка Apple жива', raw.includes('.shield.жив i{background:#FF8A3C'));
+чек('ЩИТ: plain language «СВОЁ»/«МИКРОФОН»', raw.includes("жив ? 'МИКРОФОН' : 'СВОЁ'"));
+чек('ЩИТ: гарда двойной обёртки', raw.includes('Т.__щитОбёрнут'));
+чек('строка-герой 1.045 жива', raw.includes('1.045'));
+чек('ТИХО: спокойный час жив', (raw.match(/ТИХО/g) || []).length >= 10);
+чек('АУРА жива (auraScript + вер v10.53)', raw.includes('<script id="auraScript">') && raw.includes("__АУРА = { ver:'v10.53'"));
+чек('ящик «оберег·щит» в комоде', raw.includes('К.ящики.push("оберег·щит")'));
+чек('проба ЗДОРОВЬЕ 24 в реестре', raw.includes('window.__HEALTH23,window.__HEALTH24]') || raw.includes('__HEALTH24]'));
+
+/* ── 3. Горячий хвост F-Г1/F-Г2 жив ── */
+чек('F-Г1: мост честен (геттер↔ящик)', raw.includes('мостЧестен'));
+чек('F-Г2: persist при первом касании', raw.includes('хранЖест'));
+чек('F-Г2: UNKNOWN ≠ FAIL', raw.includes('UNKNOWN ≠ FAIL'));
+
+/* ── 4. Двери ·40/·41 ── */
+чек('ядро: s40 ГАРМОНИЯ с файлом', mod.includes("id: 's40'") && mod.includes("файл: 'harmonia-prototype.html'"));
+чек('ядро: s41 НАМЕРЕНИЕ с файлом', mod.includes("id: 's41'") && mod.includes("файл: 'hir-prototype.html'"));
+чек('ядро: версия v1.19.0', mod.includes('ЯДРО МОДУЛЕЙ v1.19.0'));
+чек('АРИАДНА: s40/s41 на лице дома', idx.includes("ид:'s40'") && idx.includes("ид:'s41'"));
+чек('404: 30 дверей', f404.includes('30 дверей'));
+чек('sw15: прототипы треков в пре-кэше', sw.includes("'./harmonia-prototype.html'") && sw.includes("'./hir-prototype.html'"));
+чек('sw15: КОДЕКС в пре-кэше', sw.includes("'./ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md'"));
+чек('прототип HARMONIA на месте и без сети', fs.existsSync(path.join(R, 'harmonia-prototype.html')) && !/src\s*=\s*["']https?:/.test(read('harmonia-prototype.html')));
+чек('прототип HIR на месте и без сети', fs.existsSync(path.join(R, 'hir-prototype.html')) && !/src\s*=\s*["']https?:/.test(read('hir-prototype.html')));
+
+/* ── 5. Треки в паблике ── */
+const harmDocs = ['00_SYNTHESIS.md','01_TZ.md','02_ROADMAP.md','03_ARCHITECTURE.md','04_PROFILE_SPEC.md','05_PRIVACY_THREAT_MODEL.md','06_QA_PLAN.md','07_HARM_FORMAT.md','08_BEST_PRACTICES_SOURCES.md','09_FORECAST_2026_2036.md','10_CORRECTIONS.md'];
+чек('HARMONIA: 11 документов в паблике', harmDocs.every(d => fs.existsSync(path.join(R, 'ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/docs', d))));
+чек('HARMONIA: лицензия MIT/CC BY внутри', fs.existsSync(path.join(R, 'ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/LICENSE')));
+const schema = JSON.parse(read('ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/schema/harm.schema.json'));
+чек('harm.schema.json валиден', !!schema && (schema.$schema || schema.title));
+JSON.parse(read('ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/examples/demo.harm.json'));
+чек('demo.harm.json валиден', true);
+чек('HIR: ТЗ в паблике', fs.existsSync(path.join(R, 'ДОКУМЕНТЫ/ТРЕКИ/HIR/docs/TZ.md')));
+чек('HIR: SHA256SUMS в паблике', fs.existsSync(path.join(R, 'ДОКУМЕНТЫ/ТРЕКИ/HIR/SHA256SUMS.txt')));
+const kodex = read('ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md');
+чек('КОДЕКС-синтез: закон СИНГУЛЯРА внутри', kodex.includes('эргономика') && kodex.includes('MeaningEnvelope') && kodex.includes('harm-profile'));
+чек('ТРЕКИ/README: происхождение с хэшами', read('ДОКУМЕНТЫ/ТРЕКИ/README.md').includes('16e7fbb8eb93922c') && read('ДОКУМЕНТЫ/ТРЕКИ/README.md').includes('1152e2fbb682fe49'));
+
+/* ── 6. Малыш v0.8 ── */
+const llm = read('БИБЛИОТЕКИ/adapter-os/llm.mjs');
+чек('СЛОВАРЬ_ВЕРСИЯ v0.8', llm.includes("СЛОВАРЬ_ВЕРСИЯ = 'v0.8'"));
+чек('правило 15 ТРЕКИ ДОМА', llm.includes('15. ТРЕКИ ДОМА'));
+чек('маркер ВЕРСИЯ ПРАВИЛ: v0.8', llm.includes('ВЕРСИЯ ПРАВИЛ: v0.8'));
+чек('гейт версий правил', llm.includes('версияПравил') && llm.includes('>= версияПравил(ПРАВИЛА_ТЕКСТ)'));
+чек('карта дома: гармония/намерение', llm.includes("'harmonia-prototype.html'") && llm.includes("'hir-prototype.html'"));
+чек('фразы треков (открой гармонию)', llm.includes("фраза: 'открой гармонию'") && llm.includes("фраза: 'открой намерение'"));
+чек('старое имя вычещено из Малыша', !llm.includes('квартирник'));
+чек('30 дверей в правиле 13', llm.includes('Дом — это 30 дверей'));
+
+/* ── 7. Летопись и README (R-13 закрыт) ── */
+чек('versions.json: штамп 10.54/КОДЕКС/v109', vj.дом.версия === '10.54' && vj.дом.такт === 'КОДЕКС' && vj.дом.поколение_кэша === 'v109');
+чек('versions.json: 30 дверей', vj.счётчики.дверей === 30);
+чек('versions.json: летопись ≥41, [0]=КОДЕКС', vj.летопись.length >= 41 && vj.летопись[0].такт === 'КОДЕКС');
+чек('versions.json: ОБЕРЕГ и ОРГАНИЗМ в летописи', vj.летопись.some(e => e.такт === 'ОБЕРЕГ') && vj.летопись.some(e => e.такт === 'ОРГАНИЗМ'));
+чек('README: строка КОДЕКС в журнале', rd.includes('| v10.54 | «КОДЕКС» |'));
+чек('README: журнал полон (≥50 строк)', (rd.match(/^\| v10\./gm) || []).length >= 50);
+чек('README: сноска R-13 про 10.31/10.32', rd.includes('Примечание (R-13)'));
+
+/* ── 8. sw15 летопись восстановлена ── */
+чек('sw15: такт КОДЕКС в летописи', sw.includes('Такт v10.54 «КОДЕКС»'));
+чек('sw15: ОБЕРЕГ и ЧУВСТВА в летописи', sw.includes('Такт v10.53 «ОБЕРЕГ»') && sw.includes('Такт v10.52 «ЧУВСТВА»'));
+чек('sw15: кэш v109', sw.includes("S15_CACHE = 's15-orkestrator-v109'"));
+
+/* ── 9. ШТАБ: тренды ── */
+const shtab = read('ШТАБ_РЕВИЗИИ_31.html');
+чек('ШТАБ: EAA-тренд-карточка', shtab.includes('EAA — закон, а не лозунг'));
+чек('ШТАБ: ISO 40500:2026 карточка', shtab.includes('ISO/IEC 40500:2026'));
+чек('ШТАБ: слово-подсветка мейнстрим', shtab.includes('Слово-за-словом подсветка — мейнстрим'));
+
+/* ── 10. CSP ШТАБа: хэши В КАВЫЧКАХ (грамматика CSP!) и = текущим скриптам ──
+   Латентный баг найден тактом КОДЕКС: хэши без кавычек = невалидные источники,
+   главный скрипт доски молча не исполнялся (M undefined, тренды не рендерились). */
+const inline = [...shtab.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)]
+  .map(m => 'sha256-' + crypto.createHash('sha256').update(m[2], 'utf8').digest('base64'));
+const cspSrc = (shtab.match(/script-src[^;]*/) || [''])[0];
+const quoted = inline.every(h => cspSrc.includes("'" + h + "'"));
+чек('ШТАБ: CSP-хэши закавычены и точны (' + inline.length + ' блоков)', quoted && !/[^']sha256-/.test(cspSrc.replace(/'sha256-/g, '')));
+
+/* ── ИТОГ ── */
+console.log(`=== ИТОГ: ${ok} зелёных, ${bad} красных ===`);
+process.exit(bad === 0 ? 0 : 1);
