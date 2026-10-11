@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.66 «ПОЛЮСА» (приказ владельца «ПОСТАВЬ СПЕРВА ВСЕ ТРЕКИ ЧТОБ ОНИ ВСЕ ЗВУЧАЛИ, ЗАЛЕЙ И МАХ И МИН, КНОПКУ СДЕЛАЙ КАКОЙ ИГРАТЬ МАКС ИЛИ МИН»; поверх v10.63 «ТРАНСПОРТ»): (1) ДВА ПОЛЮСА у всех 62 песен — МАКС: наилучший имеющийся мастер (61 mp3 minus/{id}.mp3 + настоящий webm-мастер «Просто люби» minus/prosto-lubi.max.webm, Opus 510k stereo с mp4-источника); МИН: Opus 24 kbps mono 48 kHz minus/min/{id}.webm (61 файл) и настоящий minus/prosto-lubi.min.webm для караоке-дома — чистый голос и гармония на слабом железе (паспорт конвейера); (2) КНОПКА ПОЛЮС в доке (МАКС/МИН): переключает звук на лету с сохранением позиции песни и состояния игра/пауза (практика переключения качества без сброса таймлайна), память kv31.pol, по умолчанию МАКС; тач ≥44px, aria-pressed честные; (3) КЛАВИША V (и «м» русской раскладки) — конфликтов нет (V свободна: K/L/M/R/N/P/S/B заняты); (4) ГОЛОС: «макс», «мин», «полюс», «качество»; (5) ЧЕСТНЫЙ ФОЛБЭК: файла МИН нет рядом — тост, играет МАКС, дом остаётся рабочим на любой копии; ошибка МИН не открывает подхват файла (его открывает только ошибка МАКС); (6) караоке-дом «Просто люби» — блоб на каждый полюс: МАКС из TRACK_BUF (TRACK_URL поднят на настоящий мастер minus/prosto-lubi.max.webm), МИН — fetchом при выборе, кэш в памяти; трек и полюс не «уезжают» под асинхронным блобом (сторож pole/idx); (7) MediaSession album показывает полюс; ЗДОРОВЬЕ: строка «полюс качества». Минусовки по-прежнему вне пре-кэша (закон SW) — МИН кэшируется рантаймом при первом проигрыше. Такт перенумерован по канону дома (коллеги успели 10.64–10.65; СТОП-ГОРН не понадобился — поверх их байта). Кэш v120→v121 (sw15.js тоже). -->
 <!-- такт v10.63 «ТРАНСПОРТ» (С41, приказ владельца «В ЛАДОМ ДОБАВЬ КНОПКИ УПРАВЛЕНИЯ КАК В ЛУЧШИХ ПЛЕЕРАХ ТРЕНД ПРАКТИК ПУСК ПАУЗА СЛЕДУЮЩАЯ НАЗАД РЕПИТ СЛУЧАЙНО»; поверх v10.62 «ЖЕСТ»): (1) ПЛЕЙЛИСТ ЗАЛА — 62 песни фонда вшиты честно (minus/ = 62 mp3 + webm-ремастер «Просто люби»; все 62 id сверены с реестром ПЕСНИ двери ·00); караоке-трек дома — «Просто люби» (blob из minus/prosto-lubi.webm — храним и возвращаем честно), остальные треки — концертный режим: караоке-строки, секции и отсчёт прячутся, честная плашка ведёт в дверь ·32 СЦЕНА за полными текстами; (2) ТРАНСПОРТ в доке — ⏮ НАЗАД (практика Spotify/YouTube: прошло >3 с — сначала честная перемотка в начало), ▶/⏸ ПУСК/ПАУЗА (существующий btnPlay не тронут), ⏭ СЛЕДУЮЩАЯ, 🔀 СЛУЧАЙНО (без повтора текущего), 🔁 РЕПИТ (выкл → весь список → одна песня — практика repeat off/all/one); память kv31.trk/rep/shf; тач-цели ≥44px (закон v10.57), aria-pressed + aria-label честные; (3) КЛАВИАТУРА N/P/S/B — конфликтов нет (Space=хлопок, ←/→=±5 с, K/L/M/R заняты); стрелки и клик по шкале перематывают по РЕАЛЬНОЙ длительности трека (был жёсткий DUR 234 с); (4) ГОЛОС: «следующая», «предыдущая», «перемешай», «повторяй» — слова «дальше/назад» не отобраны (остались ±5 с); (5) РУЛЬ телефона: +4 кнопки (⏮ ⏭ 🔁 🔀) той же сеткой 4×N; (6) MediaSession: nexttrack/previoustrack + метаданные трека (экран блокировки, MDN); (7) ТВ-пульт: MediaTrackNext/MediaTrackPrevious; (8) ЗДОРОВЬЕ: строка «плейлист зала: 62 песни minus/»; экспорт window.__ТРАНСПОРТ и __KV.тр; ошибка mp3 — честный тост + локальный подхват файла. Кэш v117→v118. -->
 <!-- такт v10.54 «КОДЕКС» (С35, приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ — ТАМ УЖЕ ЧАСТЬ ГОТОВА; МАЛЫША НАУКИВАЙ»; поверх v10.53 «ОРГАНИЗМ» коллег): документация двух треков влита в паблик — ДОКУМЕНТЫ/ТРЕКИ/HARMONIA (адаптивные события, профиль доступности harm-profile/0.1, формат .harm — «партитура намерений», модель угроз, MIT/CC BY 4.0) и ДОКУМЕНТЫ/ТРЕКИ/HIR (Human Intent Runtime: PersonRef/Intent/MeaningEnvelope/RepresentationPreference, честные статусы «сохранено ≠ доставлено», CLAIM→CODE→SPEC→TEST→RESULT→VERDICT); синтез всех ТЗ и дорожных карт с домом — ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md (карта соответствий: ~70% контрактов HIR дом уже исполняет); прототипы треков подняты в двери ·40 ГАРМОНИЯ и ·41 НАМЕРЕНИЕ (фасет lab); Малыш доучен v0.8: правило 15 ТРЕКИ ДОМА, карта дома ·40/·41, фразы «открой гармонию/намерение», гейт версий правил в освежитьПравила (апстрим singulyar-llm не откатывает доучку); хвост R-13 закрыт: журнал README и летопись versions.json дописаны (10.20…10.53 восстановлены из git-истории); найдена и выровнена регрессия коллег: титул дома висел v10.52 при воркере v108; кэш v109. -->
 <!-- такт v10.62 «ЖЕСТ» (С41-ре-посадка; СТОП-ГОРН: столкновение с тактом v10.61 «РУЧКИ» коллег (С41, PAT №12) — их ход первым: карточки Малыша (`__РУЧКИ`) в калм-карте зала ·31 приняты без дубля (казна «оберег·щит», паспорт, проба 26, МАЛЫШ часть 9); наша дельта — второй хост той же строки карты «Генеративные карточки-действия»: полоса «РУКИ ДОМА · КАРТОЧКИ» в ПУЛЬТе (зал и пульт — разные руки одного дома, дубля нет): (1) __ЖЕСТ — дом собирает типовые карточки из живого контекста (пауза/продолжить, тишина/звук, свет следующей сцены, отскок ⏪/⏩ по песне, слой сцены «открыть дверь», закрыть пульт; в личной ветке — лицо пульта, люди·зал; старт-жест остаётся чутью — один жест одно место); после нажатия карточка держит честную «↩ отменить» там, где обратный ход достижим (закон I-11 REVERSIBLE): отскоки и лицо считаются из живого состояния — дельта отскока вычисляется в момент отмены (играющая песня уезжает — обещание «на место» обязано быть точным); закрытие пульта уходит вместе с пультом — обещаний без дела ноль; роль-гард (канон РОЛЕЙ), ветка-гард (зал — общий руль, лицо — личный); карточки честно регенерируют из контекста — без kv; исполнение через единую шину намерений (src «жест»/«жест-откат»); (2) проба ЗДОРОВЬЕ жестов; (3) казначей: __ЖЕСТ в семье «пульт·сообщения»; (4) паспорт пульта: строка жестов под строкой ручек коллег; кэш v116→v117 -->
@@ -48,13 +49,13 @@
 <meta name="description" content="Общайтесь так, как удобно каждому. Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
-<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.65 «НАВИГАТОР»">
+<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.66 «ПОЛЮСА»">
 <meta property="og:description" content="Общайтесь так, как удобно каждому. Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.65 «НАВИГАТОР» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.66 «ПОЛЮСА» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -901,7 +902,8 @@ window.__ALERT = function(t, opts){
 /* ── такт v10.63 «ТРАНСПОРТ»: кнопки плейлиста зала (тач ≥44px — закон дома) ── */
 .dock .round.тран{font-size:19px}
 .dock .round.on{border-color:rgba(212,175,55,.78);color:#F0D78C;background:rgba(212,175,55,.14);box-shadow:0 0 0 2px rgba(212,175,55,.22)}
-#концертПлашка{display:none;position:absolute;inset:0;z-index:1;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:28px}
+.dock .round.полюс{font-size:12px;letter-spacing:.05em;font-weight:700} /* v10.66 */
+#концертПлашка{display:none;position:absolute;inset:0 0 calc(var(--sng-dockH,84px) + 8px) 0;z-index:1;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:28px} /* v10.66: плашка не заходит на территорию дока — кнопки зала всегда под рукой */
 #концертПлашка b{font-size:34px;letter-spacing:.04em}
 #концертПлашка small{color:var(--dim,#9aa3ad);max-width:640px;line-height:1.55}
 @media (min-width:700px){#концертПлашка b{font-size:46px}}
@@ -915,6 +917,7 @@ body.концерт #lyricsWrap,body.концерт .songhead,body.концер�
   <button id="btnRestart" class="round" aria-label="Заново с начала (R)" data-tip="Заново с начала (R)">↻</button>
   <button id="btnShuffle" class="round тран" aria-pressed="false" aria-label="Случайный порядок (S)" data-tip="СЛУЧАЙНО (S): перемешать плейлист зала; текущая песня повторяться не будет">🔀</button>
   <button id="btnRepeat" class="round тран" aria-pressed="false" aria-label="Повтор: выключен (B)" data-tip="РЕПИТ (B): выкл → весь список → одна песня">🔁</button>
+  <button id="btnPole" class="round тран полюс" aria-pressed="false" aria-label="Полюс качества: МАКС — полнота звука (V)" data-tip="ПОЛЮС (V): МАКС — наилучший имеющийся мастер (61 mp3 + webm-мастер «Просто люби»); МИН — Opus 24 кбит/с моно, играет на любом железе. Место песни и игра/пауза не сбрасываются, выбор помнится">МАКС</button>
   <div class="tlwrap">
     <div id="tlBar" class="tlbar" data-tip="Клик — перемотка; цветные отрезки — секции песни"><div id="tlFill"></div></div>
     <div id="tlSecs" class="tlsecs"></div>
@@ -1071,9 +1074,9 @@ body.концерт #lyricsWrap,body.концерт .songhead,body.концер�
 
 <script>
 window.SONG = {"i": "01", "t": "Просто люби", "sub": "Песня о том, что делает нас настоящими", "artist": "RUVSON", "dur": 234.141, "vec": "просто люби — и всё встаёт на места", "sections": [{"n": "Вступление", "a": 0.0, "b": 23.76}, {"n": "Куплет 1", "a": 23.76, "b": 48.36}, {"n": "Припев", "a": 48.36, "b": 87.28}, {"n": "Куплет 2", "a": 87.28, "b": 118.12}, {"n": "Припев ×2", "a": 118.12, "b": 157.64}, {"n": "Бридж", "a": 157.64, "b": 189.8}, {"n": "Финал", "a": 189.8, "b": 234.141}], "cues": [{"a": 23.76, "b": 27.5595, "t": "Мы бежим за светом призрачным,"}, {"a": 27.5595, "b": 31.359, "t": "ищем простые ответы."}, {"a": 31.359, "b": 35.329499999999996, "t": "Города за окнами мокрыми"}, {"a": 35.329499999999996, "b": 37.559, "t": "улетают закаты где-то."}, {"a": 37.559, "b": 42.9595, "t": "Но когда шум дорог затихает,"}, {"a": 42.9595, "b": 48.36, "t": "всё лишнее вдруг исчезает."}, {"a": 48.36, "b": 53.879, "t": "Кто любил, тот по-настоящему жил."}, {"a": 53.879, "b": 57.12, "t": "Это вечный закон."}, {"a": 57.12, "b": 60.68, "t": "Это истина света."}, {"a": 60.68, "b": 65.64, "t": "Сердце открыл,"}, {"a": 65.64, "b": 67.04, "t": "и ты больше не один."}, {"a": 67.04, "b": 72.62, "t": "Слышишь любовь ответным."}, {"a": 72.62, "b": 74.32, "t": "Это где-то —"}, {"a": 74.32, "b": 80.92, "t": "кто любил, тот по-настоящему жил."}, {"a": 80.92, "b": 86.515, "t": "Просто верь, и душа твоя взлетит."}, {"a": 87.28, "b": 93.6795, "t": "В этом мире мы тепло в себе храним,"}, {"a": 93.6795, "b": 100.07900000000001, "t": "и любовь в нас всех живёт."}, {"a": 100.439, "b": 106.399, "t": "И любовь в нас всех живёт."}, {"a": 106.399, "b": 110.399, "t": "Ни в блеске золота, ни в громкой славе"}, {"a": 110.399, "b": 112.0, "t": "мы не найдём свой главный путь."}, {"a": 112.0, "b": 116.62, "t": "Смысл в тепле, что мы другим оставили —"}, {"a": 116.62, "b": 118.119, "t": "умение и прощать, и жить любя."}, {"a": 118.119, "b": 124.68, "t": "Кто любил, тот по-настоящему жил."}, {"a": 124.68, "b": 127.92, "t": "Это вечный закон."}, {"a": 127.92, "b": 131.4, "t": "Это истина света."}, {"a": 131.4, "b": 134.16, "t": "Сердце открыл,"}, {"a": 134.16, "b": 137.68, "t": "и ты больше не один."}, {"a": 137.68, "b": 143.18, "t": "Слышишь любовь ответным."}, {"a": 143.18, "b": 144.959, "t": "Это где-то?"}, {"a": 144.959, "b": 151.4, "t": "Кто любил, тот по-настоящему жил."}, {"a": 151.4, "b": 157.56, "t": "Просто верь, и душа твоя взлетит."}, {"a": 157.64, "b": 164.0, "t": "В этом мире мы тепло в себе храним,"}, {"a": 164.239, "b": 170.36, "t": "и любовь в нас всех живёт."}, {"a": 189.799, "b": 195.247, "t": "И любовь в нас всех живёт."}, {"a": 196.07999999999998, "b": 202.452, "t": "Сквозь года, через терни к звёздам"}, {"a": 202.56, "b": 208.347, "t": "мы по кругу идём за мечтой."}, {"a": 209.439, "b": 214.897, "t": "Понимаю, пока ещё не поздно."}, {"a": 215.76, "b": 221.2235, "t": "Мир вращается только тобой и мной."}, {"a": 221.2235, "b": 226.687, "t": "Любовь ведёт нас сквозь мглу."}, {"a": 227.48, "b": 231.239, "t": "Просто люби."}], "res":[], "l": "Мы бежим за светом призрачным,\nищем простые ответы.\nГорода за окнами мокрыми\nулетают закаты где-то.\nНо когда шум дорог затихает,\nвсё лишнее вдруг исчезает.\nКто любил, тот по-настоящему жил.\nЭто вечный закон.\nЭто истина света.\nСердце открыл,\nи ты больше не один.\nСлышишь любовь ответным.\nЭто где-то —\nкто любил, тот по-настоящему жил.\nПросто верь, и душа твоя взлетит.\nВ этом мире мы тепло в себе храним,\nи любовь в нас всех живёт.\nИ любовь в нас всех живёт.\nНи в блеске золота, ни в громкой славе\nмы не найдём свой главный путь.\nСмысл в тепле, что мы другим оставили —\nумение и прощать, и жить любя.\nКто любил, тот по-настоящему жил.\nЭто вечный закон.\nЭто истина света.\nСердце открыл,\nи ты больше не один.\nСлышишь любовь ответным.\nЭто где-то?\nКто любил, тот по-настоящему жил.\nПросто верь, и душа твоя взлетит.\nВ этом мире мы тепло в себе храним,\nи любовь в нас всех живёт.\nИ любовь в нас всех живёт.\nСквозь года, через терни к звёздам\nмы по кругу идём за мечтой.\nПонимаю, пока ещё не поздно.\nМир вращается только тобой и мной.\nЛюбовь ведёт нас сквозь мглу.\nПросто люби."};
-window.TRACK_URL = "./minus/prosto-lubi.webm";
-/* трек живёт отдельным файлом: страница легче на 5,4 МБ, сервис-воркер
-   держит его в ядре офлайна (S15_CORE, v83). Скачался — байты в шасси. */
+window.TRACK_URL = "./minus/prosto-lubi.max.webm"; /* v10.66: дом получает настоящий МАКС-мастер */
+/* трек живёт отдельным файлом (v10.66: МАКС-мастер 14,6 МБ грузится в фоне,
+   МИН-полюс 0,8 МБ подгружается по выбору полюса). Скачался — байты в шасси. */
 window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   if (!r.ok) throw new Error("HTTP " + r.status);
   return r.arrayBuffer();
@@ -1085,7 +1088,7 @@ window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   window.TRACK_ERR = (e && e.message) || "не дошло";
   return null;
 });
-window.__BUILD_SHA = "f57baf3662869118";
+window.__BUILD_SHA = "163773c518450ad6"; /* v10.66 ПОЛЮСА */
 /* ── v10.36 «МЕШАНИНА»: ИР-скелет — M-01 timeBase · M-02 origin · M-04 КРУМХАНСЛЬ · M-03 ИР-гейт ──
    Закон хозяина: ЧЕЛОВЕК=МАШИНА=МЕШАНИНА=СМЕСИТЕЛЬ — на входе всё, внутри одна ось, на выходе результат.
    И-07: каждое событие оси может нести {origin, conf} — откуда пришло и сколько доверять. */
@@ -1187,6 +1190,7 @@ if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
   if (buf && !audio.src) audio.src = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
 });
 audio.addEventListener("error", ()=>{ try{
+  if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.минОтвал && window.__ТРАНСПОРТ.минОтвал()) return; /* v10.66: МИН не нашёлся — транспорт сам честно поднял МАКС */
   if(window.__ТРАНСПОРТ && document.body.classList.contains("концерт")){
     showToast("Файл ./minus/ не открылся (треку нужен файл рядом) — подними его вручную");
     if(window.__ПОДНЯТЬ_ЗВУК) window.__ПОДНЯТЬ_ЗВУК();
@@ -1504,7 +1508,7 @@ function startShow(){
       inp.click();
     }catch(e){ showToast("Выбор файла не открылся: "+((e&&e.message)||e)); }
   };
-  showToast("Аудио не нашлось: "+(window.TRACK_ERR||"файл повреждён?")+" · выбери файл песни — рядом должен лежать minus/prosto-lubi.webm");
+  showToast("Аудио не нашлось: "+(window.TRACK_ERR||"файл повреждён?")+" · выбери файл песни — рядом должен лежать minus/prosto-lubi.max.webm");
   window.__ПОДНЯТЬ_ЗВУК();
   return;
 }
@@ -1552,7 +1556,9 @@ audio.addEventListener("ended", ()=>{
 
 /* ── такт v10.63 «ТРАНСПОРТ»: плейлист зала + кнопки лучших плееров ──
    62 песни minus/ (сверено с реестром ·00); караоке дома — «Просто люби».
-   Практика: Spotify/YouTube (⏮>3с → начало), repeat off/all/one, shuffle без повтора. */
+   Практика: Spotify/YouTube (⏮>3с → начало), repeat off/all/one, shuffle без повтора.
+   v10.66 «ПОЛЮСА»: МАКС/МИН у всех 62 песен (МАКС — мастер, МИН — opus 24k mono minus/min/),
+   кнопка МАКС/МИН в доке, клавиша V, голос «макс/мин/полюс», kv31.pol, честный фолбэк МИН→МАКС. */
 window.__ТРАНСПОРТ = (function(){
   const КАРАОКЕ_ID = "9ys_TVEtda8";
   const ПЕСНИ = [
@@ -1620,15 +1626,56 @@ window.__ТРАНСПОРТ = (function(){
     ["z3RcsfHajP8", "Я сам себе враг"]
   ];
   const B = document.body, N = ПЕСНИ.length;
-  let караокеSrc = "";
+  let pole = store.get("kv31.pol")==="мин" ? "мин" : "макс"; /* v10.66: полюс качества, по умолчанию МАКС */
+  let караокеБлобы = {};  /* v10.66: blob «Просто люби» на каждый полюс */
+  let текущийПуть = "";   /* v10.66: путь текущего файла — для честного фолбэка МИН */
   let idx = parseInt(store.get("kv31.trk")||"0",10)||0;
   if(!(idx>=0&&idx<N)) idx = 0;
   let repeat = store.get("kv31.rep")||"off"; if(!["off","all","one"].includes(repeat)) repeat="off";
   let shuffle = store.get("kv31.shf")==="1";
-  const btnPrev = $("btnPrev"), btnNext = $("btnNext"), btnRepeat = $("btnRepeat"), btnShuffle = $("btnShuffle");
+  const btnPrev = $("btnPrev"), btnNext = $("btnNext"), btnRepeat = $("btnRepeat"), btnShuffle = $("btnShuffle"), btnPole = $("btnPole");
   const plateName = document.getElementById("концертИмя");
 
-  function src(i){ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : "./minus/"+ПЕСНИ[i][0]+".mp3"; }
+  /* v10.66 «ПОЛЮСА»: путь файла текущего полюса; null — караоке-дом (блоб) */
+  function src(i){ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (pole==="мин" ? "./minus/min/"+ПЕСНИ[i][0]+".webm" : "./minus/"+ПЕСНИ[i][0]+".mp3"); }
+  function караокеПуть(){ return pole==="мин" ? "./minus/prosto-lubi.min.webm" : "./minus/prosto-lubi.max.webm"; }
+
+  function playСейчас(){
+    state.started = true;
+    if(B.dataset.mode!=="sing") B.dataset.mode = "sing";
+    if(ac && ac.state==="suspended"){ const rr=ac.resume(); if(rr&&rr.catch) rr.catch(()=>{}); }
+    const p = audio.play();
+    if(p && p.catch) p.catch(()=>showToast("Браузер не дал звук — нажми ▶ ещё раз"));
+    btnPlay.textContent = "⏸";
+  }
+
+  /* честный блоб полюса, если он уже в шасси (готов(url)); false — нужно сncать */
+  function карaokeБлоб(p, готов){
+    if(караокеБлобы[p]){ готов(караокеБлобы[p]); return true; }
+    if(p==="макс" && window.TRACK_BUF){
+      караокеБлобы[p] = URL.createObjectURL(new Blob([window.TRACK_BUF], { type: "audio/webm" }));
+      готов(караокеБлобы[p]); return true;
+    }
+    if(p==="макс" && window.TRACK_READY && !window.TRACK_ERR){
+      window.TRACK_READY.then(function(buf){
+        if(buf && ПЕСНИ[idx][0]===КАРАОКЕ_ID && pole==="макс"){
+          караокеБлобы["макс"] = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
+          готов(караокеБлобы["макс"]);
+        }
+      });
+      return true;
+    }
+    return false;
+  }
+  function карaokeСеть(p, готов, фиаско){
+    fetch(караокеПуть()).then(function(r){
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      return r.arrayBuffer();
+    }).then(function(buf){
+      караокеБлобы[p] = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
+      if(ПЕСНИ[idx][0]===КАРАОКЕ_ID && pole===p) готов(караокеБлобы[p]); /* сторож: трек/полюс не уехали */
+    }).catch(фиаско||function(){});
+  }
 
   function load(i, autoplay){
     idx = ((i%N)+N)%N;
@@ -1637,24 +1684,71 @@ window.__ТРАНСПОРТ = (function(){
     state.ended = false;
     state.cueIdx = -1; state.secIdx = -1; state.toastIdx = 0;
     const s = src(idx);
-    if(s === null){ /* караоке-трек: возвращаем честно сохранённый blob/URL */
-      if(!караокеSrc) караокеSrc = audio.src||"";
-      if(караокеSrc) audio.src = караокеSrc;
+    if(s === null){ /* v10.66: караоке-дом — блоб своего полюса */
+      const p = pole;
+      const применить = function(u){
+        if(ПЕСНИ[idx][0]!==КАРАОКЕ_ID || pole!==p) return;
+        audio.src = u; текущийПуть = u;
+        краска();
+        if(autoplay) playСейчас();
+        else if(!state.started) showToast("Выбрано: "+ПЕСНИ[idx][1]+" — пуск кнопкой ▶");
+      };
+      if(!карaokeБлоб(p, применить)){
+        if(p==="мин") showToast("МИН-полюс «Просто люби» подгружается…");
+        карaokeСеть(p, применить, function(){
+          if(pole==="мин"){
+            showToast("МИН-полюса нет рядом — играет МАКС");
+            pole="макс"; store.set("kv31.pol","макс"); краска();
+            if(!карaokeБлоб("макс", применить)) showToast("Треку нужен файл minus/prosto-lubi.max.webm рядом");
+          } else showToast("Трек «Просто люби» не открылся — нужен minus/prosto-lubi.max.webm рядом");
+        });
+      }
     } else {
-      if(!караокеSrc) караокеSrc = audio.src||"";
-      audio.src = s;
+      audio.src = s; текущийПуть = s;
+      краска();
+      if(autoplay) playСейчас();
+      else if(!state.started) showToast("Выбрано: "+ПЕСНИ[idx][1]+" — пуск кнопкой ▶");
     }
+  }
+
+  /* v10.66: смена полюса на лету — место песни и игра/пауза не сбрасываются */
+  function setPole(p, молча){
+    if((p!=="макс"&&p!=="мин") || p===pole) return pole;
+    pole = p; store.set("kv31.pol", p);
     краска();
-    if(autoplay){
-      state.started = true;
-      if(B.dataset.mode!=="sing") B.dataset.mode = "sing";
-      if(ac && ac.state==="suspended"){ const rr=ac.resume(); if(rr&&rr.catch) rr.catch(()=>{}); }
-      const p = audio.play();
-      if(p && p.catch) p.catch(()=>showToast("Браузер не дал звук — нажми ▶ ещё раз"));
-      btnPlay.textContent = "⏸";
-    } else if(!state.started){
-      showToast("Выбрано: "+ПЕСНИ[idx][1]+" — пуск кнопкой ▶");
+    if(!молча) showToast(p==="мин" ? "Полюс МИН — Opus 24 кбит/с моно, играет на любом железе" : "Полюс МАКС — полнота звука, наилучший мастер");
+    const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
+    const вставить = function(u){
+      audio.src = u; текущийПуть = u;
+      if(t>0 || играл){
+        audio.addEventListener("loadedmetadata", function once(){
+          try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
+          audio.removeEventListener("loadedmetadata", once);
+        });
+      }
+      if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
+    };
+    if(ПЕСНИ[idx][0]!==КАРАОКЕ_ID){ вставить(src(idx)); return pole; }
+    if(!карaokeБлоб(p, вставить)){
+      if(p==="мин") showToast("МИН-полюс «Просто люби» подгружается…");
+      карaokeСеть(p, вставить, function(){ if(pole==="мин") showToast("МИН-полюса нет рядом — играет МАКС"); });
     }
+    return pole;
+  }
+  function togglePole(молча){ return setPole(pole==="макс" ? "мин" : "макс", молча); }
+
+  /* v10.66: честный фолбэк МИН→МАКС, если файла min/ нет рядом (старая копия дома) */
+  function минОтвал(){
+    if(pole!=="мин" || !текущийПуть || текущийПуть.indexOf("./minus/min/")!==0) return false;
+    showToast("МИН-полюс не нашёлся рядом — играет МАКС");
+    const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
+    audio.src = "./minus/"+ПЕСНИ[idx][0]+".mp3"; текущийПуть = audio.src;
+    audio.addEventListener("loadedmetadata", function once(){
+      try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
+      audio.removeEventListener("loadedmetadata", once);
+    });
+    if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
+    return true;
   }
 
   function next(manual){
@@ -1700,6 +1794,12 @@ window.__ТРАНСПОРТ = (function(){
       B.classList.add("концерт");
       if(plateName) plateName.textContent = (idx+1)+" / "+N+" · "+ПЕСНИ[idx][1];
     } else B.classList.remove("концерт");
+    if(btnPole){ /* v10.66 */
+      btnPole.textContent = pole==="мин" ? "МИН" : "МАКС";
+      btnPole.classList.toggle("on", pole==="мин");
+      btnPole.setAttribute("aria-pressed", pole==="мин" ? "true" : "false");
+      btnPole.setAttribute("aria-label", "Полюс качества: "+(pole==="мин" ? "МИН — минимальный битрейт, играет на любом железе" : "МАКС — полнота звука")+" (V)");
+    }
     if(btnRepeat){
       btnRepeat.textContent = repeat==="one" ? "🔂" : "🔁";
       btnRepeat.classList.toggle("on", repeat!=="off");
@@ -1712,7 +1812,7 @@ window.__ТРАНСПОРТ = (function(){
     }
     try{
       if("mediaSession" in navigator){
-        navigator.mediaSession.metadata = new MediaMetadata({ title: ПЕСНИ[idx][1], artist: "RUVSON", album: "СИНГУЛЯР · ЛАДОМ" });
+        navigator.mediaSession.metadata = new MediaMetadata({ title: ПЕСНИ[idx][1], artist: "RUVSON", album: "СИНГУЛЯР · ЛАДОМ · "+(pole==="мин"?"МИН":"МАКС") });
         navigator.mediaSession.setActionHandler("nexttrack", function(){ next(true); });
         navigator.mediaSession.setActionHandler("previoustrack", function(){ prev(); });
       }
@@ -1722,9 +1822,11 @@ window.__ТРАНСПОРТ = (function(){
   btnNext.addEventListener("click", ()=>next(true));
   btnRepeat.addEventListener("click", cycleRepeat);
   btnShuffle.addEventListener("click", toggleShuffle);
-  if(idx!==0) load(idx, false); else краска();
+  btnPole.addEventListener("click", ()=>togglePole()); /* v10.66 ПОЛЮСА */
+  if(idx!==0 || pole==="мин") load(idx, false); else краска(); /* v10.66: помнённый МИН применяем и дома */
   return { next:next, prev:prev, toggleShuffle:toggleShuffle, cycleRepeat:cycleRepeat,
-           onEnded:onEnded, краска:краска, вер:"v10.63",
+           setPole:setPole, togglePole:togglePole, полюс:function(){ return pole; }, минОтвал:минОтвал,
+           onEnded:onEnded, краска:краска, вер:"v10.66",
            список:function(){ return ПЕСНИ.slice(); }, текущая:function(){ return idx; } };
 })();
 
@@ -1785,6 +1887,7 @@ window.addEventListener("keydown",(e)=>{
   else if(k==="p"){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.prev(); }
   else if(k==="s"){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.toggleShuffle(); }
   else if(k==="b"){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.cycleRepeat(); }
+  else if(k==="v"||k==="V"||k==="м"||k==="М"){ if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.togglePole) window.__ТРАНСПОРТ.togglePole(); } /* v10.66 ПОЛЮСА */
   else if(e.key==="?" && !$("help").open) $("help").showModal();
   else if(e.key==="Escape"){
     if(body.classList.contains("biglyrics")) toggleBig();
@@ -1802,7 +1905,8 @@ function health(){
   const r = [
     { n:"данные: "+CUES.length+" строк с таймингами", ok: CUES.length===40 },
     { n:"секции: "+SECS.length, ok: SECS.length===7 },
-    { n:"аудио в шасси: minus/prosto-lubi.webm", ok: !!window.TRACK_BUF },
+    { n:"аудио в шасси: minus/prosto-lubi.max.webm (МАКС-мастер)", ok: !!window.TRACK_BUF },
+    { n:"полюс качества: "+((window.__ТРАНСПОРТ&&window.__ТРАНСПОРТ.полюс&&window.__ТРАНСПОРТ.полюс())||"макс")+" — МАКС/МИН, кнопка в доке, клавиша V", ok: !!(window.__ТРАНСПОРТ&&window.__ТРАНСПОРТ.setPole) }, /* v10.66 */
     { n:"плейлист зала: "+((window.__ТРАНСПОРТ&&window.__ТРАНСПОРТ.список().length)||0)+" песен minus/ (караоке — «Просто люби»)", ok: !!(window.__ТРАНСПОРТ&&window.__ТРАНСПОРТ.список().length===62) },
     { n:"длительность: "+fmt(audio.duration||0), ok: !!(audio.duration>230) },
     { sec:"C", n:"синтез аплодисментов", ok: Applause.ok || !!(window.AudioContext||window.webkitAudioContext) },
@@ -3107,6 +3211,9 @@ function vcHandle(text){
   else if(has("предыдущ","прошлую песню")){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.prev(); say("Предыдущая песня"); }
   else if(has("перемешай","вперемешку","случайн","шафл")){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.toggleShuffle(); say("Случайный порядок переключён"); }
   else if(has("повторяй","повтор","репит")){ if(window.__ТРАНСПОРТ) window.__ТРАНСПОРТ.cycleRepeat(); say("Повтор переключён"); }
+  else if(has("макс","максимал")){ if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.setPole) window.__ТРАНСПОРТ.setPole("макс"); say("Полюс МАКС"); } /* v10.66 */
+  else if(has("мин","минимал")){ if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.setPole) window.__ТРАНСПОРТ.setPole("мин"); say("Полюс МИН"); } /* v10.66 */
+  else if(has("полюс","качество")){ if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.togglePole) window.__ТРАНСПОРТ.togglePole(); say("Полюс переключён"); } /* v10.66 */
   else if(has("хлопок","хлопай","хлоп")){ KV.doClap(); }
   else if(has("лампа","светильник","ночник")){ if(window.__LAMP) window.__LAMP.toggle(); }
   else if(has("запиши","запись")){ if(window.__REC) window.__REC.toggle(); }
@@ -4828,7 +4935,7 @@ window.__HEALTH17 = function(){
   К.ящики.push("пульт·сообщения");
   К.вещей += 8;
   К.мостов += полки.filter(Boolean).length;
-  К.вер = "v10.63 «ТРАНСПОРТ»";
+  К.вер = "v10.66 «ПОЛЮСА»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
 window.__HEALTH18 = function(){
@@ -10833,7 +10940,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.65', такт:'НАВИГАТОР', кэш:'s15-orkestrator-v120', стр:'2026-10-12', ver:'v10.65 «НАВИГАТОР»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v120' };
+window.APP = { v:'10.66', такт:'ПОЛЮСА', кэш:'s15-orkestrator-v121', стр:'2026-10-12', ver:'v10.66 «ПОЛЮСА»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v121' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
