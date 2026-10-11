@@ -2,6 +2,7 @@
 <html lang="ru" data-motion="on">
 <head>
 <!-- такт v10.54 «КОДЕКС» (С35, приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ — ТАМ УЖЕ ЧАСТЬ ГОТОВА; МАЛЫША НАУКИВАЙ»; поверх v10.53 «ОРГАНИЗМ» коллег): документация двух треков влита в паблик — ДОКУМЕНТЫ/ТРЕКИ/HARMONIA (адаптивные события, профиль доступности harm-profile/0.1, формат .harm — «партитура намерений», модель угроз, MIT/CC BY 4.0) и ДОКУМЕНТЫ/ТРЕКИ/HIR (Human Intent Runtime: PersonRef/Intent/MeaningEnvelope/RepresentationPreference, честные статусы «сохранено ≠ доставлено», CLAIM→CODE→SPEC→TEST→RESULT→VERDICT); синтез всех ТЗ и дорожных карт с домом — ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md (карта соответствий: ~70% контрактов HIR дом уже исполняет); прототипы треков подняты в двери ·40 ГАРМОНИЯ и ·41 НАМЕРЕНИЕ (фасет lab); Малыш доучен v0.8: правило 15 ТРЕКИ ДОМА, карта дома ·40/·41, фразы «открой гармонию/намерение», гейт версий правил в освежитьПравила (апстрим singulyar-llm не откатывает доучку); хвост R-13 закрыт: журнал README и летопись versions.json дописаны (10.20…10.53 восстановлены из git-истории); найдена и выровнена регрессия коллег: титул дома висел v10.52 при воркере v108; кэш v109. -->
+<!-- такт v10.58 «ВАЛЬС» (С38): их ход первым — дверь ·42 КОЛОНКА (СИНГУЛЯР_39_КОЛОНКА.html) и дистрибутив КОЛОНКА/ (34 файла) влиты коллегами; СТОП-ГОРН разрулил столкновение тактов (дельта ОМНИ не пушнулась поверх). Ре-посадка дельт на их байт: СКИН ПУЛЬТА «ОМНИ» — пятый вид (кольцо 360° колонки, omni-skin-*, память kv.pult, тач ≥64px, ТВ-Chromium 76); МАЛЫШ часть 7 «Уроки КОЛОНКИ»; честность: титул дома поднят до ВАЛЬСА (был ПЁРЫШКИ), versions.json кэш-поле v112→v113 (sw15 реально v113), летопись С37 восстановлена и С38 записана, версия манифеста выровнена по их заявке v1.20.0. Кэш v113. -->
 <!-- такт v10.57 «ПЁРЫШКИ» (С37, приказ владельца «ПРОВЕРИТЬ КАЖДУЮ КНОПКУ НА КЛИКАБЕЛЬНОСТЬ И ПРИВЯЗАННОСТЬ К КАЖДОЙ КОНКРЕТНОЙ ФУНКЦИИ... ЕСТЬ КОСЯКИ НЕ ВСЁ КЛИКАЕТСЯ И ОТЗЫВАЕТСЯ, ПРОСТО ДЕКЛАРАЦИЯ А НЕ ОРГАНИЗМ»): полный организм-аудит 500+ кликабельных (десктоп 1380px: 34 видимых + 285 через 10 шторок-диалогов + 219 шоу-потока; мобайл 390px touch: 30 видимых) — шпионы на EventTarget.addEventListener, клик каждого, сверка реального эффекта (сцены, голоса, старт, плеер, хлопки, режимы, вкладки ПУЛЬТа, языки, люди, здоровье, свобода, лампа, РУЛЬ, ЛИЦА, паспорт, роли, двери — все 200 OK). ВЕРДИКТ: организм жив; найдено 2 мобильных косяка — (1) топбар переполнен (≈573px в 390px): «⚙ ПУЛЬТ» обрезан, «?» целиком за краем экрана (x=438) — кнопка-декларация для пальца; фикс: brand-имя → в стип, щит → живая точка, ДОМ скрыт (дубли «⌂ хаб»+«⌂» на экране), кнопки сжаты, тач ≥44px; (2) QR-бирка автора наезжала на старт-контент (голоса, «Начать вечер») — нижняя подушка старта поднята под бирку. Десктоп не тронут. кэш v112→v113 -->
 <!-- такт v10.56 «СЛОВО» (С36, перенумерация по канону 10.49→10.50 после СТОП-ГОРНа: коллеги толкнули свой v10.55 «ПОТОК» первым — им 10.55/v111, этот такт 10.56/v112; приказ владельца «РАБОТАЙ СОГЛАСНО ЛОГИКЕ ВНОВЬ ОТКРЫВШИХСЯ ОБСТОЯТЕЛЬСТВ… ВСЕ ЛУЧШИЕ МИРОВЫЕ ТРЕНДЫ ПРАКТИК ИССЛЕДУЙ, ИММЕРДЖЕНТНОЕ СИНГУЛЯРНОЕ, ЧТОБ СТАЛО НАШИМ»; поверх v10.55 «ПОТОК» коллег (стриминг Малыша, калм-точка, правило 16): (1) __ХАРМ — партитура слова в формате .harm/0.1 трека HARMONIA (КОДЕКС §4.2: формат трека — транспортный формат дома): валидатор по правилам 07_HARM_FORMAT (alt у каждого text, альтернатива жеста у prompt, отказ более новой мажорной версии), встроенный документ «Просто люби» с ручной разметкой куплета 1 и финала — слоги с длительностями в долях (bpm 104); подсветка текст-пульса на размеченных строках идёт по ЧЕСТНЫМ маркерным весам вместо эвристики букв (гард data-харм), остальные строки честно фолбэкают; (2) __ПРОФИЛЬ — профиль доступности harm-profile/0.1 как единый объект (КОДЕКС §4.1): десять осей поверх уже живущих рулей дома — двусторонняя связь, БЕЗ второго хранилища (kv.* помнит дом как раньше), пресеты без медицинских терминов («минимум стимулов», «читаю медленно», «только текст и вибро»), клампа импорта к ближайшему допустимому (правило 3), экспорт/импорт файла по явному действию, честный отказ формату новее дома; ось offset −300…+300 мс через __SYNC_SET (сетка 5 мс — юстировка дома), ось tempo — playbackRate с сохранением тона (preservesPitch, MDN), ось haptic — сила __VIB_K и масштаб пульса гостей этого устройства; вкладка «ПРОФИЛЬ» в ПУЛЬТе (цели ≥44px, клавиатура, поиск наследуется); голосовые команды «профиль», «минимум стимулов», «читаю медленно»; ящик «слово·профиль» (обряд С23–С29: 2 вещи — __ХАРМ, __ПРОФИЛЬ), семья в КАЗНЕ, проба ЗДОРОВЬЕ 25; Малыш v0.9 (правило 16 ПРОФИЛЬ ДОСТУПНОСТИ + 6 фраз); ШТАБ +4 тренд-карточки (TTML-слоги Apple Sing/AMLL, preservesPitch, профили доступности ОС, калибровка offset в руках зрителя); кэш v110→v111 -->
 <!-- такт v10.53 «ОБЕРЕГ» (С34, приказ владельца «ДОДЕЛЫВАЙ ВСЕ ХВОСТЫ ПО ДОРОЖНОЙ КАРТЕ… ЭРГОНОМИКА ПРИВАТНОСТЬ КОНФИДЕНЦИАЛЬНОСТЬ ЮЗОБИЛИТИ СТОЯТ ВО ГЛАВЕ УГЛА — ЭТО ЗАКОН СИНГУЛЯРА»; поверх v10.52 «ЧУВСТВА»/«ПРОЁМ» коллег): (1) ЩИТ ПРИВАТНОСТИ — честная точка микрофона по паттерну Apple (оранжевая = микрофон живёт) + plain language «СВОЁ · 0 облаков»; драйвер — обёртка над существующим трактом-брокером «ОДИН МИКРОФОН» __ГОЛОС.тракт (нота/запись/зал не переписаны), своего RAF нет, DOM пишется только на смене состояния; (2) честное приглашение зала — крупная кнопка «СКОПИРОВАТЬ ССЫЛКУ» (clipboard + фолбэк, ≥44px — WCAG 2.2) и слова правды о сигналинге PeerJS (звук и слова — напрямую между устройствами); (3) ТИХО — calm-час дома (IDEO 2025: «проектируй для 99% времени»): 40 с без касаний рубашки присыпаются, строка песни не гаснет никогда, под паузой дом не спит, касание пробуждает; (4) АУРА theme-aware — цвета дыхания читают токены темы (--amber/--lilac/--coral, фолбэки честные, пересчёт на смене темы, не в кадре); (5) строка-герой для глаз пожилых — активная строка scale 1.045 (Hou 2022, Vision Australia: крупное, контрастное, без курсива); ящик «оберег·щит» (обряд С23–С29: 2 вещи — __ЩИТ, __ТИХО), семья в КАЗНЕ, проба ЗДОРОВЬЕ 24; кэш v108. -->
@@ -42,13 +43,13 @@
 <meta name="description" content="Общайтесь так, как удобно каждому. Караоке-вечер дома СИНГУЛЯР: «Просто люби» (RUVSON) — зал голосует и пускает волну. Инклюзивные режимы для глухих, незрячих и стесняющихся. Работает без сети.">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
-<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.57 «ПЁРЫШКИ»">
+<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.58 «ВАЛЬС»">
 <meta property="og:description" content="Общайтесь так, как удобно каждому. Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.57 «ПЁРЫШКИ» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.58 «ВАЛЬС» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -3508,7 +3509,7 @@ function токены(текст, гран){
 }
 var в = проверь(ДОК);
 window.__ХАРМ = {
-  ver:"v10.57 «ПЁРЫШКИ»", схема:"harm/0.1",
+  ver:"v10.58 «ВАЛЬС»", схема:"harm/0.1",
   док:ДОК, проверь:проверь, токены:токены, карта:КАРТА,
   размечено:РАЗМЕТКА, слогов:СЛОГОВ,
   вердикт:{ ok:в.ok, ошибок:в.errors.length, предупреждений:в.warnings.length }
@@ -4606,7 +4607,7 @@ window.__HEALTH17 = function(){
   К.ящики.push("пульт·сообщения");
   К.вещей += 8;
   К.мостов += полки.filter(Boolean).length;
-  К.вер = "v10.57 «ПЁРЫШКИ»";
+  К.вер = "v10.58 «ВАЛЬС»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
 window.__HEALTH18 = function(){
@@ -5701,6 +5702,104 @@ window.__РУЛЬ = (function(){
   });
   return { вер:1, open:открыть, close:закрыть, краска:краска };
 })();
+/* ══ v10.58 «ВАЛЬС» (дельта ОМНИ после СТОП-ГОРНа) — СКИН «ОМНИ», пятый вид пульта (реестр __ПУЛЬТЫ.виды):
+   кольцо 360° в честь трека ОМНИ (OMNISPEAKER-1): намерения вечера вокруг центра;
+   ТЕ ЖЕ намерения через ТЕ ЖЕ ручки дома, что и у ПЛИТКИ/РУЛЯ; дом помнит последний
+   выбор (kv.pult — реестр сам); стили только с префиксом omni-skin-; тач-цели ≥64px;
+   без max()/clamp()/dvh — живёт и на ТВ-Chromium 76 (урок дома). ══ */
+window.__ОМНИ = (function(){
+  var D = document;
+  var css = D.createElement('style');
+  css.textContent = ''
+  + '.omni-skin-root{position:fixed;left:0;top:0;right:0;bottom:0;z-index:var(--z-modal,50);display:none;flex-direction:column;align-items:center;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 50% 42%,#241b09 0%,#120d04 62%,#0a0703 100%);color:#ffd98a;font:15px/1.35 system-ui,sans-serif}'
+  + '.omni-skin-root.omni-skin-открыт{display:flex}'
+  + '.omni-skin-голова{width:100%;display:flex;align-items:center;justify-content:space-between}'
+  + '.omni-skin-имя{font-weight:800;letter-spacing:.06em;font-size:16px;white-space:nowrap}'
+  + '.omni-skin-песня{flex:1;text-align:center;color:#c9a05a;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 10px}'
+  + '.omni-skin-кольцо{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;min-height:0}'
+  + '.omni-skin-диск{position:relative;width:min(78vw,420px);height:min(78vw,420px);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:8px;padding:14px}'
+  + '.omni-skin-орбита{position:absolute;left:2%;top:2%;right:2%;bottom:2%;border:1px dashed rgba(255,196,88,.38);border-radius:50%;pointer-events:none}'
+  + '.omni-skin-орбита2{position:absolute;left:12%;top:12%;right:12%;bottom:12%;border:1px solid rgba(255,196,88,.16);border-radius:50%;pointer-events:none}'
+  + '.omni-skin-плитка{appearance:none;border:1px solid rgba(255,196,88,.5);background:rgba(43,32,16,.92);color:#ffd98a;border-radius:50%;min-width:64px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px;font-size:12.5px;font-weight:700;letter-spacing:.03em}'
+  + '.omni-skin-икона{font-size:24px;line-height:1}'
+  + '.omni-skin-плитка:active{filter:brightness(1.3)}'
+  + '.omni-skin-плитка.omni-skin-горяч{background:linear-gradient(135deg,#d4af37,#ffe9ad);color:#241a08;border-color:transparent}'
+  + '.omni-skin-плитка.omni-skin-опасн{border-color:#e07050;color:#ff9d80}'
+  + '.omni-skin-центр{border-radius:50%;background:linear-gradient(135deg,#d4af37,#ffe9ad);color:#241a08;border:0;font-weight:900;font-size:15px;letter-spacing:.06em;min-width:96px;min-height:96px;justify-self:center;align-self:center;box-shadow:0 0 0 6px rgba(212,175,55,.14),0 0 34px rgba(212,175,55,.25)}'
+  + '.omni-skin-плитка:focus-visible{outline:3px solid #FEE29F;outline-offset:3px}'
+  + '.omni-skin-центр:focus-visible{outline:3px solid #fff;outline-offset:4px}'
+  + '.omni-skin-низ{width:100%;display:flex;gap:12px;justify-content:center;margin-top:10px}'
+  + '.omni-skin-малая{min-height:64px;flex:0 1 200px;font-size:15px;border-radius:14px;padding:8px 12px;border:1px solid rgba(255,196,88,.5);background:rgba(43,32,16,.92);color:#ffd98a;font-weight:700}'
+  + '.omni-skin-малая.omni-skin-опасн{border-color:#e07050;color:#ff9d80}'
+  + '@media (prefers-reduced-motion: reduce){.omni-skin-плитка,.omni-skin-центр{transition:none}}';
+  D.head.appendChild(css);
+  var корень = D.createElement('div');
+  корень.id = 'omni-skin-root';
+  корень.className = 'omni-skin-root';
+  корень.setAttribute('role','dialog');
+  корень.setAttribute('aria-modal','true');
+  корень.setAttribute('aria-label','Пульт ОМНИ: кольцо намерений вечера');
+  корень.innerHTML = '<div class="omni-skin-голова">'
+    + '<span class="omni-skin-имя">◎ ОМНИ</span>'
+    + '<span class="omni-skin-песня">'+(песня||'')+'</span>'
+    + '<button class="omni-skin-плитка omni-skin-головная" data-a="pult" data-tip="Полный пульт: все настройки вечера" aria-label="Полный пульт">⚙ ПУЛЬТ</button>'
+    + '</div>'
+    + '<div class="omni-skin-кольцо">'
+    + '<div class="omni-skin-диск">'
+    + '<div class="omni-skin-орбита" aria-hidden="true"></div><div class="omni-skin-орбита2" aria-hidden="true"></div>'
+    + '<button class="omni-skin-плитка" data-a="scene" aria-label="сцена вечеринка"><span class="omni-skin-икона">✦</span>СЦЕНА</button>'
+    + '<button class="omni-skin-плитка" data-a="people" aria-label="люди и доступность"><span class="omni-skin-икона">☺</span>ЛЮДИ</button>'
+    + '<button class="omni-skin-плитка" data-a="light" aria-label="свет сцены"><span class="omni-skin-икона">☀</span>СВЕТ</button>'
+    + '<button class="omni-skin-плитка" data-a="voice" aria-label="микрофон зала"><span class="omni-skin-икона">♪</span>ГОЛОС</button>'
+    + '<button class="omni-skin-центр omni-skin-горяч" data-a="play" aria-label="петь или пауза"><span class="omni-skin-икона" style="font-size:30px">◉</span><span class="omni-skin-текст">ПЕТЬ</span></button>'
+    + '<button class="omni-skin-плитка" data-a="health" aria-label="здоровье дома"><span class="omni-skin-икона">✚</span>ЗДОРОВЬЕ</button>'
+    + '<button class="omni-skin-плитка" data-a="sync" aria-label="синхрон плюс 50 миллисекунд"><span class="omni-skin-икона">⇔</span>СИНХРОН</button>'
+    + '<button class="omni-skin-плитка" data-a="stats" aria-label="числа вечера"><span class="omni-skin-икона">⌗</span>ЧИСЛА</button>'
+    + '<button class="omni-skin-плитка omni-skin-опасн" data-a="home" aria-label="домой: закрыть кольцо"><span class="omni-skin-икона">✕</span>ДОМ</button>'
+    + '</div></div>'
+    + '<div class="omni-skin-низ">'
+    + '<button class="omni-skin-малая" data-a="sync" aria-label="синхрон плюс 50 миллисекунд">⇔ СИНХРОН +50</button>'
+    + '<button class="omni-skin-малая omni-skin-опасн" data-a="home" aria-label="домой: закрыть кольцо">✕ ДОМ</button>'
+    + '</div>';
+  D.body.appendChild(корень);
+  var песня = '';
+  function скажи(текст){ try{ if(window.__ALERT) window.__ALERT('Пульт ОМНИ: ' + текст); }catch(_){} }
+  function жми(id){ try{ var b=D.getElementById(id); if(b) b.click(); }catch(_){} }
+  function краска(){
+    var игра = false;
+    try{ игра = !!(window.__KV && window.__KV.audio && !window.__KV.audio.paused); }catch(_){}
+    var и = корень.querySelector('[data-a="play"] .omni-skin-икона');
+    var т = корень.querySelector('[data-a="play"] .omni-skin-текст');
+    if(и) и.textContent = игра ? '⏸' : '◉';
+    if(т) т.textContent = игра ? 'ПАУЗА' : 'ПЕТЬ';
+    try{ песня = (window.__KV && window.__KV.песня) || (window.APP && window.APP.песня) || песня; }catch(_){}
+    var п = корень.querySelector('.omni-skin-песня');
+    if(п) п.textContent = песня || '';
+  }
+  function открыть(){
+    краска();
+    корень.classList.add('omni-skin-открыт');
+    try{ var f=корень.querySelector('.omni-skin-центр'); if(f) f.focus({preventScroll:true}); }catch(_){}
+  }
+  function закрыть(){ корень.classList.remove('omni-skin-открыт'); }
+  корень.addEventListener('click', function(ev){
+    var b = ev.target.closest('[data-a]');
+    if(!b) return;
+    var a = b.getAttribute('data-a');
+    if(a==='play'){ жми('btnPlay'); краска(); }
+    else if(a==='scene'){ жми('btnScene'); }
+    else if(a==='people'){ жми('btnPeople'); }
+    else if(a==='light'){ жми('btnLight'); }
+    else if(a==='voice'){ if(typeof window.openMic==='function') window.openMic(); }
+    else if(a==='health'){ жми('chipHealth'); }
+    else if(a==='stats'){ жми('btnStats'); }
+    else if(a==='sync'){ if(window.__SYNC_NUDGE){ window.__SYNC_NUDGE(0.05); скажи('синхрон +50 мс'); } }
+    else if(a==='home'){ закрыть(); скажи('Дом: кольцо убрано'); }
+    else if(a==='pult'){ закрыть(); if(window.__ПУЛЬТЫ) window.__ПУЛЬТЫ.открыть('полный'); }
+  });
+  корень.addEventListener('keydown', function(ev){ if(ev.key==='Escape'){ закрыть(); } });
+  return { вер:1, open:открыть, close:закрыть, краска:краска };
+})();
 /* ══ v10.47 «ВЫХОД» — СКИН «ПЛИТКА», третий вид пульта (реестр __ПУЛЬТЫ.виды):
    полноэкранные крупные плитки; ТЕ ЖЕ намерения через ТЕ ЖЕ ручки дома, что и у РУЛЯ;
    стили только с префиксом ladom-skin-; сетка 2×3 (узкий) / 3×2 (широкий); тач-цели ≥64px;
@@ -5983,6 +6082,7 @@ window.__ПУЛЬТЫ = (function(){
     { id:'руль',   имя:'РУЛЬ',   значок:'◉', open:function(){ if(window.__РУЛЬ&&window.__РУЛЬ.open) window.__РУЛЬ.open(); } }
     ,{ id:'плитка', имя:'ПЛИТКА', значок:'▦', open:function(){ if(window.__ПЛИТКА&&window.__ПЛИТКА.open) window.__ПЛИТКА.open(); } }
     ,{ id:'команда', имя:'КОМАНДА', значок:'⌘', open:function(){ if(window.__КОМАНДА&&window.__КОМАНДА.open) window.__КОМАНДА.open(); } }
+    ,{ id:'омни', имя:'ОМНИ', значок:'◎', open:function(){ if(window.__ОМНИ&&window.__ОМНИ.open) window.__ОМНИ.open(); } }
   ];
   function поId(id){ for(var i=0;i<виды.length;i++){ if(виды[i].id===id) return виды[i]; } return null; }
   function текущий(){ return поId(прочитать()) || виды[0]; }
@@ -7932,7 +8032,7 @@ window.__HEALTH7 = ()=>[
   { sec:"C", n:"тап-юстировка по звуку: 8 тапов → медиана → свет в такт уху (Rock Band/Clone Hero)", ok: !!(window.__TAPCAL && window.__TAPCAL.start && window.__TAPCAL.tap && window.__TAPCAL.stop) },
   { sec:"R", n:"ШИЛКА: упреждение — свет выстреливает раньше на время трассера (конвейер кадра "+Math.round((window.__VISLAT||0)*1000)+" мс)", ok: !!(window.__SHILKA && typeof window.__SHILKA.set==="function" && window.__VISLAT>0 && window.__VISLAT<=0.15) },
   { sec:"C", n:"трассер: живой прицел на буквах в полёте — упреждение считает ритм, огласовку и темп", ok: !!(document.getElementById("pulVisSlider") && window.__PULSE && ("aimN" in window.__PULSE) && typeof window.__SHILKA_INFO==="function") },
-  { sec:"S", n:"пульт: три вида — ПОЛНЫЙ, РУЛЬ и ПЛИТКА; дом помнит последний выбор (kv.pult)", ok: !!(window.__ПУЛЬТЫ && window.__РУЛЬ && window.__ПЛИТКА && window.__ПУЛЬТЫ.виды && window.__ПУЛЬТЫ.виды.length>=3) },
+  { sec:"S", n:"пульт: пять видов — ПОЛНЫЙ, РУЛЬ, ПЛИТКА, КОМАНДА и ОМНИ; дом помнит последний выбор (kv.pult)", ok: !!(window.__ПУЛЬТЫ && window.__РУЛЬ && window.__ПЛИТКА && window.__ОМНИ && window.__ПУЛЬТЫ.виды && window.__ПУЛЬТЫ.виды.length>=5) },
 ];
 </script>
 
@@ -7947,7 +8047,7 @@ window.__HEALTH7 = ()=>[
      kv.prefs — память вечера (предпочтения; внутри и служебные)
      kv.pos   — позиция песни, секунды
      kv.best  — рекорд удержания, секунды
-     kv.pult  — последний вид пульта (ПОЛНЫЙ/РУЛЬ/ПЛИТКА)
+     kv.pult  — последний вид пульта (ПОЛНЫЙ/РУЛЬ/ПЛИТКА/КОМАНДА/ОМНИ)
    Обратимость: стопка откатов в sessionStorage (transient, до 5 на ключ).
    Ноль сети, ноль eval, JSON.parse/stringify и parseFloat только.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -7962,7 +8062,7 @@ window.__HEALTH7 = ()=>[
     { ключ:'kv.best',  имя:'Рекорд удержания, секунды',     тип:'число',
       кратко:'лучший результат игры вечера' },
     { ключ:'kv.pult',  имя:'Последний вид пульта',          тип:'строка',
-      кратко:'ПОЛНЫЙ/РУЛЬ/ПЛИТКА — дом всегда открывает последний выбранный вид' }
+      кратко:'ПОЛНЫЙ/РУЛЬ/ПЛИТКА/КОМАНДА/ОМНИ — дом всегда открывает последний выбранный вид' }
   ];
   var КЛЮЧ_ОТКАТОВ = 's31-пульт-откаты';
 
@@ -10187,7 +10287,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.57', такт:'ПЁРЫШКИ', кэш:'s15-orkestrator-v113', стр:'2026-10-11', ver:'v10.57 «ПЁРЫШКИ»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v113' };
+window.APP = { v:'10.58', такт:'ВАЛЬС', кэш:'s15-orkestrator-v113', стр:'2026-10-11', ver:'v10.58 «ВАЛЬС»', build:String(window.__BUILD_SHA||"fe2f7f6119e81e31"), cache:'s15-orkestrator-v113' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -11284,7 +11384,7 @@ function проводи(){
 }
 if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",проводи); else проводи();
 window.__ПРОФИЛЬ = {
-  ver:"v10.57 «ПЁРЫШКИ»", схема:СХЕМА,
+  ver:"v10.58 «ВАЛЬС»", схема:СХЕМА,
   оси:Object.keys(ДИАП), диапазоны:ДИАП, пресеты:Object.keys(ПРЕСЕТЫ),
   получи:получи, поставь:поставь, клампа:клампа,
   применитьПресет:пресет, сброс:сброс,
@@ -11323,7 +11423,7 @@ window.__ПРОФИЛЬ = {
   К.ящики.push("слово·профиль");
   К.вещей += 2;
   К.мостов += полки.filter(Boolean).length;
-  К.вер = "v10.57 «ПЁРЫШКИ»";
+  К.вер = "v10.58 «ВАЛЬС»";
   К.цел = function(){ return старЦел.call(К) && полки.every(Boolean); };
 })();
 
@@ -11357,7 +11457,7 @@ window.__HEALTH25 = function(){
 "use strict";
 if (window.__ЗАЛ) return;
 var D = document;
-var VER = (window.APP && window.APP.ver) || "v10.57 «ПЁРЫШКИ»";   /* ЭП-06: одна версия дома; долг F-19 закрыт (v10.52 «ЧУВСТВА»); С20: вердикт помнит победителя, предпрослушка минусовки */
+var VER = (window.APP && window.APP.ver) || "v10.58 «ВАЛЬС»";   /* ЭП-06: одна версия дома; долг F-19 закрыт (v10.52 «ЧУВСТВА»); С20: вердикт помнит победителя, предпрослушка минусовки */
 
 /* ── каталог фонда: 61 песня канала RUVSON (офлайн, вшито из ДАННЫЕ) ── */
 var КАТАЛОГ = [{"t": "Где настоящее", "v": "shs0TiOwx-M"}, {"t": "Свет в темноте ‣ Песня для тех кому сейчас тяжело", "v": "KFnJwNv008s"}, {"t": "Крик в тишине ‣ (Remix 2026) 🔉", "v": "KvzORszfsg8"}, {"t": "Цени моменты ‣ (Remix 2026) 🔉", "v": "EFaMUciH3Do"}, {"t": "А что если ДА ‣ (Remix 2026) 🔉", "v": "t9h3cCPCKoo"}, {"t": "А что если да", "v": "VfnGUIhaK2Y"}, {"t": "Я сам себе враг | Песня о внутренней борьбе", "v": "z3RcsfHajP8"}, {"t": "Живи как умеешь", "v": "Y7Wy_JBkz7A"}, {"t": "Когда ты удобен", "v": "X_-M_cjCFVg"}, {"t": "О чём мечтаешь ты", "v": "_gNbMCINv1Y"}, {"t": "В чём смысл - Трек который меняет взгляд на жизнь", "v": "n5IFJ-g1Rtc"}, {"t": "Там где ты - Трек о безусловной любви", "v": "vUb40twffCI"}, {"t": "Живи сейчас - Трек о жизни которую мы откладываем на по", "v": "fJwb931iJVg"}, {"t": "Твоё плавание не вечно (Official Music Video)", "v": "V-IaCbDUKao"}, {"t": "Меня не сломать — Песня о свободе духа в мире лжи", "v": "TkmSZp1dfBE"}, {"t": "Не спеши осуждать (Official Music Video)", "v": "pervLR9m-vk"}, {"t": "Нас учат потери — Трек о том, что делает нас Сильнее", "v": "pv3GAlLG9Lk"}, {"t": "Не вам жить мою жизнь (Official Music Video)", "v": "2g5n6B0bc2Q"}, {"t": "Сборник Музыки со Смыслом 🎶 песни, в которых узнаешь себ", "v": "Qb8xb0vUYDg"}, {"t": "Я сам себе судья", "v": "1BZs_wUPn1s"}, {"t": "Тень ушедших - Трек о тех кто не с нами (Lyric Video)", "v": "lkXLeITEtGA"}, {"t": "Вне зоны доступа - Песня о внутренней пустоте и одиночес", "v": "eA-fyeSkavI"}, {"t": "Не теряй шанс — Трек о упущенных моментах и времени кото", "v": "WMU46n--Z-s"}, {"t": "Действуй сейчас - Трек который заставит тебя НАЧАТЬ", "v": "LCADfnI8F-s"}, {"t": "Просто люби - Песня о том что делает нас настоящими", "v": "9ys_TVEtda8"}, {"t": "Код перемен - Трек о реальности которая ломает правила", "v": "eOMrrezWEZM"}, {"t": "Компас на Дом (Official Audio)", "v": "JRTUNak53nU"}, {"t": "Начать сначала - Трек который мотивирует не сдаваться", "v": "ahmGGM-P0CA"}, {"t": "Остаться человеком (Remix Version)", "v": "PIyWwF0t4wQ"}, {"t": "Ангел без крыльев (Lyric Video)", "v": "kziwaat2nu4"}, {"t": "Всё начинается с тебя (Official Audio)", "v": "_PCJ6fMfeRM"}, {"t": "Оставайся молодым - Песня-послание именно для тебя", "v": "POiQQ21I5n0"}, {"t": "Разгадка в небесах ‣ Песня о вопросах на которые нет отв", "v": "6woWDYcu1QY"}, {"t": "А время капает (Remix) ‣ Музыка со смыслом", "v": "HupAWAt7CmQ"}, {"t": "Время как вода - Песня о ценности времени", "v": "YaY-ZJVXFjI"}, {"t": "Не играй в любовь ‣ Песня о том как игра в любовь разруш", "v": "8zG2LBAn1AI"}, {"t": "Цени моменты - трек который заставляет задуматься | Музы", "v": "R0SOJreGbhM"}, {"t": "Когда погаснут огни - Трек о том что важно в жизни", "v": "X90mDPOhvKc"}, {"t": "Смысл жизни прост - Песня о смысле жизни и ценности кажд", "v": "KfKHWdiX3S4"}, {"t": "Пленники прошлого ‣ Песня о том как прошлое влияет на на", "v": "yK2aPehxmK8"}, {"t": "Гордость нас убивает - Песня о гордости которая разрушае", "v": "GB31hcDi3lo"}, {"t": "Не жди завтра - Песня о жизни которую мы откладываем", "v": "d2b72nYLiT8"}, {"t": "Одиночество среди людей ‣ Песня о внутреннем одиночестве", "v": "LqMrrKqK3AE"}, {"t": "Вера остаётся ‣ Песня о вере живущей внутри нас", "v": "G7L2d0Z5xfY"}, {"t": "Суть проста ‣ Песня о том что важно в жизни", "v": "8RRRYysSIHg"}, {"t": "Страх не слабость ‣ Песня о принятии страха", "v": "WIrhIrDQvwY"}, {"t": "Когда Теряем - трек о настоящих ценностях", "v": "TRcxZ7jfPsA"}, {"t": "Остаться человеком ‣ Песня о человечности", "v": "TobJGYOPlnw"}, {"t": "Ты одна дала - Песня о настоящей любви", "v": "_KwlGQNmC1Q"}, {"t": "Ты Главный игрок ‣ Песня о жизни без иллюзий", "v": "b_36rlzEIKk"}, {"t": "Жизнь не прощает - Песня о суровой правде жизни", "v": "QpeYJU83XiQ"}, {"t": "Неудача — не конец ‣ Песня о тех кто не сдался", "v": "q57MLk0Uf9c"}, {"t": "Не тех мы ценим ‣ Песня о тех кто рядом", "v": "cFHsQ-LP3ns"}, {"t": "Время покажет ‣ Музыка для размышлений", "v": "gMASVVNFr_A"}, {"t": "Тишина спасает ‣ Музыка для души", "v": "_E91VEQ-8lM"}, {"t": "Бой с собой - RUVSON | Музыка для души", "v": "ugjp6iaNplo"}, {"t": "Сердце в Огне ‣ Музыка для души", "v": "VwoK5U0qOys"}, {"t": "Дорога мой Учитель - Трек который вдохновляет | Музыка ", "v": "OHaRQj9PLUY"}, {"t": "Не Угасай — трек который цепляет | Музыка для души", "v": "MSqK5ig-alE"}, {"t": "Люди в Масках - Песня о фальшивых людях  | Музыка для ду", "v": "M9o3ZIlhHrU"}, {"t": "Цени время — трек который заставляет задуматься | Музыка", "v": "pP3Kk2_FHbE"}];
