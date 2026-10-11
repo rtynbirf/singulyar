@@ -704,10 +704,13 @@ try {
     const лог = б('div', { id: 'мозг-лог', 'aria-live': 'polite', style: 'margin-top:10px' });
 
     function логМозг(от, текст) {
-      лог.prepend(б('div', { class: 'msg' },
+      /* v10.55 «ПОТОК»: возвращает пузырь — стриминг вливает токены в .txt по кадрам */
+      const пузырь = б('div', { class: 'msg' },
         б('div', { class: 'who', text: от }),
-        б('div', { class: 'txt', text: String(текст == null ? '' : текст).slice(0, 2000) })));
+        б('div', { class: 'txt', text: String(текст == null ? '' : текст).slice(0, 2000) }));
+      лог.prepend(пузырь);
       while (лог.children.length > 8) лог.removeChild(лог.lastChild);
+      return пузырь;
     }
     function статус(т) { статусЛиния.textContent = String(т == null ? '' : т); }
     function говорить(т) { try { if (typeof speak === 'function' && т) speak(String(т)); } catch (e) { /* без голоса — текст остаётся */ } }
@@ -778,6 +781,10 @@ try {
     };
 
     const слой = мозгМодуль.создатьПравилоСлой(исполнитель);
+    /* v10.55 «ПОТОК»: стриминг ответа — токены вливаются в живой пузырь по кадрам
+       (rAF-троттлинг, канон Chrome DevRel/Upstash 2025); кнопка «■ стоп» гасит
+       генерацию в любой миг; правило-слой живёт как жил — «стоп» проходит всегда */
+    var занятМозг = false, остановлено = false, стопКнопка = null;
     async function обработать(фраза) {
       фраза = String(фраза == null ? '' : фраза).trim();
       if (!фраза) { статус('скажи или напиши команду — словарь ' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ); return; }
@@ -791,15 +798,40 @@ try {
         return;
       }
       if (llm.status().state === 'READY') {
+        if (занятМозг) { статус('мозг ещё отвечает — «■ стоп» прервёт, или подожди'); return; }
+        занятМозг = true; остановлено = false;
+        if (стопКнопка) стопКнопка.hidden = false;
         статус('думаю…');
+        const пузырь = логМозг('мозг · локальная модель', '');
+        const тхт = пузырь.querySelector('.txt');
+        let полный = '', кадр = 0;
+        const слить = function (финал) {
+          /* DOM не чаще одного раза на кадр; финал — мгновенный догоняющий слив */
+          if (финал) { if (кадр) { cancelAnimationFrame(кадр); кадр = 0; } тхт.textContent = полный.slice(0, 2000) || '…'; return; }
+          if (кадр) return;
+          кадр = requestAnimationFrame(function () { кадр = 0; тхт.textContent = (полный.slice(0, 2000) + ' ▌') || '…'; });
+        };
         try {
-          const ответ = await llm.generate(фраза);
+          const ответ = await llm.generate(фраза, { onToken: function (кусок, текущий) {
+            полный = String(текущий != null ? текущий : (полный + кусок));
+            слить(false);
+          } });
+          полный = String(ответ == null ? полный : ответ) || '(пустой ответ)';
+          слить(true);
+          if (остановлено) тхт.textContent = полный.slice(0, 2000) + ' · остановлено';
           try { os.bus.publish('meaning.21.инструкция', { фраза: фраза.slice(0, 300), намерение: 'llm', via: 'llm.local' }); } catch (e) {}
-          логМозг('мозг · локальная модель', ответ || '(пустой ответ)');
-          говорить(ответ);
+          const эйр = document.getElementById('aria');
+          if (эйр) эйр.textContent = 'Мозг ответил: ' + полный.slice(0, 300);
+          говорить(полный);
+          if (!остановлено) статус('ответила локальная модель — поток был живым, «■ стоп» работал');
         } catch (о) {
+          слить(true);
           логМозг('мозг · ошибка', String((о && о.message) || о));
-        } finally { статусыОбновить(); }
+        } finally {
+          занятМозг = false;
+          if (стопКнопка) стопКнопка.hidden = true;
+          статусыОбновить();
+        }
       } else {
         const честно = 'Свободная речь, но модель не загружена. Скажи «загрузи модель» — качается ≈469 МБ один раз, дальше из кэша браузера. Команды словаря работают уже сейчас.';
         try { os.bus.publish('meaning.21.инструкция', { фраза: фраза.slice(0, 300), намерение: 'llm', via: 'none', модель: 'не загружена' }); } catch (e) {}
@@ -839,6 +871,12 @@ try {
     const сказать = б('button', { id: 'мозг-сказать', class: 'btn', type: 'button', text: 'сказать', onclick: function () { обработать(ввод.value); ввод.value = ''; } });
     ввод.addEventListener('keydown', function (e) { if (e.key === 'Enter') { обработать(ввод.value); ввод.value = ''; } });
     const загрузить = б('button', { id: 'мозг-загрузить', class: 'btn gray', type: 'button', text: 'загрузить модель (≈469 МБ, один раз)', onclick: function () { начатьЗагрузку(); } });
+    стопКнопка = б('button', { id: 'мозг-стоп', class: 'btn gray', type: 'button', text: '■ стоп', hidden: '', title: 'Прервать генерацию: уже сказанное останется, пометка «остановлено» будет честной', onclick: function () {
+      остановлено = true;
+      try { speechSynthesis.cancel(); } catch (e) {}
+      llm.abort();
+      статус('остановлено');
+    } });
     const микрофон = б('button', { id: 'мозг-микрофон', class: 'btn gray', type: 'button', text: '◉ голос', onclick: function () {
       логМозг('микрофон', 'слушаю…');
       речь.listen({ onResult: function (т) { ввод.value = т; обработать(т); }, onError: function (о) { логМозг('микрофон', String(о)); } });
@@ -847,9 +885,9 @@ try {
     const mainEl = document.querySelector('main.wrap') || document.body;
     mainEl.appendChild(б('section', { class: 'panel', id: 'мозг-панель' },
       б('h2', null, 'МОЗГ · голосовое управление ', б('em', { text: 'ЛОКАЛЬНАЯ МОДЕЛЬ' })),
-      б('p', { class: 'hint', text: 'Команды словаря (' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ + ') исполняет правило-слой — без модели; голосом можно ходить по страницам: «открой зал». Свободную речь отвечает локальная модель Qwen2.5-0.5B из репы rtynbirf/singulyar-llm: шесть частей ≈469 МБ качаются один раз и живут в кэше браузера. Распознавание голоса — Web Speech API браузера; в Chrome звук уходит на серверы Google — сказано прямо.' }),
+      б('p', { class: 'hint', text: 'Команды словаря (' + мозгМодуль.СЛОВАРЬ_ВЕРСИЯ + ') исполняет правило-слой — без модели; голосом можно ходить по страницам: «открой зал». Свободную речь отвечает локальная модель Qwen2.5-0.5B из репы rtynbirf/singulyar-llm: шесть частей ≈469 МБ качаются один раз и живут в кэше браузера. Распознавание голоса — Web Speech API браузера; в Chrome звук уходит на серверы Google — сказано прямо. Ответ печатается живым потоком токенов; «■ стоп» прерывает в любой миг — уже сказанное останется.' }),
       статусЛиния, прогресс,
-      б('div', { class: 'row', style: 'margin-top:12px;display:flex;gap:8px;flex-wrap:wrap' }, ввод, сказать, микрофон),
+      б('div', { class: 'row', style: 'margin-top:12px;display:flex;gap:8px;flex-wrap:wrap' }, ввод, сказать, стопКнопка, микрофон),
       б('div', { class: 'row', style: 'margin-top:8px' }, загрузить),
       лог));
 

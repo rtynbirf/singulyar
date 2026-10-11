@@ -1671,7 +1671,7 @@ window.__КАЗНА = (function(){
     ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__РОЛИ$|^__TIPS$|^__TOASTS$|^__ALERT/],
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$|^__ХРАН$/],
     ["чувства·аура",       /^__АУРА$|^__ЭХОЗАЛА$|^__ПУЛЬСЗАЛА$/],
-    ["оберег·щит",         /^__ЩИТ$|^__ТИХО$/],   /* С34 */
+    ["оберег·щит",         /^__ЩИТ$|^__ТИХО$|^__КАЛМТОЧКА$/],   /* С34 */
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
     ["адапт·конвейер",     /^SNGRC$|^SNGАДАПТ$|^SNG$|^__СЛОИ$|^__КОНВЕЙЕР$|^__СТРОЙ$|^__SYN_PAINT$/],
@@ -6364,6 +6364,7 @@ window.__ПУЛТПАСПОРТ = (function(){
       '8-tap юстировка: ' + тап + ' (8 тапов по слуху → медиана → свет в такт уху)\n' +
       '— память комода —\n' +
       'ящиков: ' + ((К.ящики && К.ящики.length) || 0) + ' · мостов: ' + (К.мостов || 0) + ' · вещей: ' + (К.вещей || 0) + ' · ' + (К.вер || '—') + '\n' +
+      'точка присутствия: ' + (window.__КАЛМТОЧКА ? 'дышит на левом краю (молчит, пока не позовут)' : '—') + '\n' +
       'трубы: кв12-канал ' + (window.KV12 ? 'жив' : '—') + ' · КРЫША ' + (window.__КРЫША ? 'жива' : '—');
     краскиРоли();
   }
@@ -6472,6 +6473,7 @@ window.__HEALTH3 = ()=>[
   { n:"пульс по голосу: фонема = звук = буква", ok: !!(window.__PULSEVOICE && window.__PULSE && window.__PULSE.voiceChar && window.__PULSE.voiceStart) },
   { n:"бирка автора: перетаскивается и помнит место", ok: !!(window.__AUTHOR && window.__AUTHOR.draggable && $("authorTag")) },
   { n:"сброс к заводским: 2 шага", ok: !!$("pulReset") },
+  { n:"калм-точка присутствия: дышит, по умолчанию молчит (v10.55)", ok: !!(window.__КАЛМТОЧКА && $("калмТочка")), warn: !window.__КАЛМТОЧКА },
 ];
 })();
 </script>
@@ -9986,7 +9988,7 @@ try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } ca
 /* ─────────────────────────── УТИЛИТЫ ─────────────────────────── */
 function el(tag, cls, html){ var e=D.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function say(t){ try{ if(window.__KV&&window.__KV.showToast) window.__KV.showToast(t); else if(window.__ALERT) window.__ALERT(t);}catch(_){} }
+function say(t){ try{ if(window.__KV&&window.__KV.showToast) window.__KV.showToast(t); else if(window.__ALERT) window.__ALERT(t);}catch(_){} try{ if(window.__КАЛМТОЧКА&&window.__КАЛМТОЧКА.вспышка) window.__КАЛМТОЧКА.вспышка(); }catch(_){} }
 function toast(t){ say(t); }
 function clampi(v,lo,hi){ v=parseInt(v,10)||0; return v<lo?lo:(v>hi?hi:v); }
 function med(a){ var b=a.slice().sort(function(x,y){return x-y;}); var n=b.length; return n? (n%2? b[(n-1)/2] : (b[n/2-1]+b[n/2])/2) : 0; }
@@ -11122,6 +11124,84 @@ try{
 })();
 </script>
 
+<style id="калмСтиль">
+/* ═══ v10.55 «ПОТОК» · КАЛМ-ТОЧКА ПРИСУТСТВИЯ МАЛЫША (С34 «оберег·щит») ═══
+   Паттерны calmtech.com (Эмбер Кейс): периферия живёт на краю зрения и молчит,
+   дышит 4 с, раскрывается ТОЛЬКО по зову; порог внимания не пробует сама.
+   Канон дома: золото #D4AF37/#DEA968, стекло, z-закон (—z-cal=45 < toast 60 < КРЫША 70). */
+#калмТочка{position:fixed;left:14px;bottom:calc(var(--sng-dockH,84px) + 14px);z-index:var(--z-cal,45);width:44px;height:44px;border-radius:50%;border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;margin:0;font:800 12px/1 var(--f,system-ui,sans-serif);letter-spacing:.08em;color:#F0D78C;box-shadow:0 4px 18px rgba(0,0,0,.35);opacity:.55;transition:opacity .3s ease}
+#калмТочка i{width:9px;height:9px;border-radius:50%;background:#5f6b76;animation:калмДыхание 4s ease-in-out infinite}
+#калмТочка.дышит i{background:#DEA968;opacity:1;transform:scale(1.15)}
+#калмТочка.думает i{background:#DEA968;animation:калмПульс 1.4s ease-in-out infinite}
+#калмТочка:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+@keyframes калмДыхание{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.65;transform:scale(1.15)}}
+@keyframes калмПульс{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+#калмКарта{position:fixed;left:14px;bottom:calc(var(--sng-dockH,84px) + 66px);z-index:var(--z-cal,45);width:min(272px,calc(100vw - 28px));border-radius:14px;border:1px solid rgba(240,240,248,.16);background:rgba(23,24,26,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:14px 16px;color:#F0D78C;font:12.5px/1.7 var(--f,system-ui,sans-serif);display:none;box-shadow:0 8px 30px rgba(0,0,0,.45)}
+#калмКарта.открыта{display:block;animation:калмЯвь .25s ease}
+@keyframes калмЯвь{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* двойной гард движения — канон дома: media + data-motion */
+html[data-motion="off"] #калмТочка i,html[data-motion="off"] #калмКарта.открыта{animation:none}
+@media (prefers-reduced-motion: reduce){#калмТочка i,#калмКарта.открыта{animation:none}}
+body.тихо #калмТочка{opacity:.26}
+</style>
+<script>
+/* ═══ v10.55 «ПОТОК» · КАЛМ-ТОЧКА ПРИСУТСТВИЯ (С34 оберег·щит) ═══
+   Тихая периферийная точка-дыхание в зале: по умолчанию МОЛЧИТ (карточка закрыта),
+   дышит 4 с; раскрывается только по клику (живые числа дома, I-11: обнаружим/объясним/
+   управляем/обратим); Esc/клик-вне закрывают; одна вспышка 600 мс, когда Малыш сказал
+   слово. Закон: ноль innerHTML, только createElement/textContent. */
+(function(){
+  "use strict";
+  try{
+    if(document.getElementById("калмТочка")) return; /* идемпотентный страж */
+    function б(т,ат){var el=document.createElement(т);if(ат)for(var k in ат){if(k==="text")el.textContent=ат[k];else if(k==="class")el.className=ат[k];else el.setAttribute(k,ат[k]);}return el;}
+    var готово=false, тайм=null;
+    var карта=б("div",{id:"калмКарта",role:"status"});
+    var кнопка=б("button",{id:"калмТочка",type:"button","aria-expanded":"false","aria-controls":"калмКарта","aria-label":"Тихая точка присутствия: Малыш дышит. Нажми — расскажу о доме"});
+    кнопка.appendChild(б("i",{"aria-hidden":"true"}));
+    function строкиДома(){
+      var А=window.APP||{};
+      var малыш="—";
+      try{ if(window.__МАЛЫШ) малыш="на месте ("+String(window.__МАЛЫШ.версия||"обработчик v2")+")"; }catch(е){}
+      var вечер="—";
+      try{ if(window.SONG&&window.SONG.cues) вечер=window.SONG.cues.length+" строк на оси смысла"; }catch(е2){}
+      return ["дом: v"+(А.v||"?")+" «"+(А.такт||"?")+"» · кэш "+(А.кэш||"?"),
+              "малыш: "+малыш,
+              "вечер: "+вечер,
+              "своё: всё в доме, ноль облаков",
+              "(точка живёт на краю зрения и молчит, пока не позовут)"];
+    }
+    function крась(){
+      try{
+        while(карта.firstChild) карта.removeChild(карта.firstChild);
+        var стр=строкиДома();
+        for(var i=0;i<стр.length;i++){
+          var д=стр[i].split(": ");
+          var p=document.createElement("div");
+          if(д.length>1){ var b=б("b",{text:д[0]+": "}); p.appendChild(b); p.appendChild(document.createTextNode(д.slice(1).join(": "))); }
+          else p.appendChild(document.createTextNode(стр[i]));
+          карта.appendChild(p);
+        }
+      }catch(е){}
+    }
+    function закрыть(){ карта.classList.remove("открыта"); кнопка.setAttribute("aria-expanded","false"); }
+    function открыть(){ крась(); карта.classList.add("открыта"); кнопка.setAttribute("aria-expanded","true"); }
+    кнопка.addEventListener("click",function(e){ try{ e.stopPropagation(); }catch(е){} if(карта.classList.contains("открыта")) закрыть(); else открыть(); });
+    document.addEventListener("click",function(e){ try{ if(!карта.classList.contains("открыта"))return; if(e.target===карта||карта.contains(e.target))return; закрыть(); }catch(е){} });
+    document.addEventListener("keydown",function(e){ try{ if((e.key||"")==="Escape") закрыть(); }catch(е){} });
+    window.addEventListener("resize",закрыть);
+    document.body.appendChild(кнопка); document.body.appendChild(карта);
+    готово=true;
+    window.__КАЛМТОЧКА={
+      вер:"v10.55",
+      вспышка:function(){ try{ кнопка.classList.add("дышит"); if(тайм)clearTimeout(тайм); тайм=setTimeout(function(){ кнопка.classList.remove("дышит"); },600); }catch(е){} },
+      думает:function(){ try{ кнопка.classList.add("думает"); }catch(е){} },
+      молчи:function(){ try{ кнопка.classList.remove("думает"); }catch(е){} },
+      здоровье:function(){ return { точка:готово, карта:!!карта }; }
+    };
+  }catch(калмОшибка){ try{ console.warn("калм-точка не собралась:",калмОшибка); }catch(е){} }
+})();
+</script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
