@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!--СНГ:КОРД--> страховочный корд дома — общий файл: <script src="./cord.js"></script><!--/СНГ:КОРД-->
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' sha256-0PuBhyv6A4c35JL6RngM4FOcZCH6bsQjt8SChC4LI5w= sha256-bPZZ4imiavMgmKit+6XyQ6ujjUGpSWbFDYDmw0/LVxo=; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
@@ -86,6 +86,38 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;colo
       <a class="строка" href="СИНГУЛЯР_38_ПУЛЬС.html" title="Пульс дома: версии, кэши, AI на устройстве — живая диагностика"><b>СИНГУЛЯР_38_ПУЛЬС.html</b><span>·38 ПУЛЬС — здоровье дома: версии, кэши, AI, живая диагностика</span></a>
     </div>
   </details>
+
+  <!--СНГ:АТЛАС-START-->
+  <h2>ТЗ · живое техническое задание <em>обещания дома человеку</em></h2>
+  <details><summary>docs/ТЗ.md — что дом обещает <small>10 историй с критериями приёмки; чекбокс снимается проверкой</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/ТЗ.md" title="Живое ТЗ: US-01 офлайн · US-02 приватность · US-03 навигация · US-04 караоке · US-05 Малыш · US-06 пульт · US-07 человек в центре · US-08 знания открыты · US-09 фонд · US-10 треки"><b>docs/ТЗ.md</b><span>живое задание: user stories + Gherkin-критерии, закон СИНГУЛЯРА над всеми приоритетами</span></a>
+      <a class="строка" href="docs/ДОРОЖНАЯ_КАРТА.md" title="Дорожная карта: сделано за всё время и что предстоит — 🚧 в работе, 📋 запланировано"><b>docs/ДОРОЖНАЯ_КАРТА.md</b><span>дорога: иммерсивное (точка присутствия, стриминг Малыша) → пёрышки → дальняя карта</span></a>
+      <a class="строка" href="CHANGELOG.md" title="Летопись тактов по Keep a Changelog: Added / Changed / Fixed, свежее сверху"><b>CHANGELOG.md</b><span>летопись тактов: v10.54 «АТЛАС» → v10.52 «ПРОЁМ» → вся история</span></a>
+    </div>
+  </details>
+
+  <h2>Как устроено и как выпускается <em>комод и ритуал</em></h2>
+  <details><summary>docs/ — архитектура и ритуал такта <small>объяснение «почему так» + инструкция 8 стадий</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/АРХИТЕКТУРА.md" title="Комод: ящики (С23–С29) → мост (delete + defineProperty) → вещи (window-глобали); кэш-поколения; CSP-шрам v10.52"><b>docs/АРХИТЕКТУРА.md</b><span>комод-архитектура: 65 мостов / 65 вещей, память kv.*, мозги на устройстве</span></a>
+      <a class="строка" href="docs/РИТУАЛ_ТАКТА.md" title="Ритуал такта: досье → патчер → vm-тест → цех → пушер со СТОП-ГОРНОМ → отрез → ЭП-06 → журнал"><b>docs/РИТУАЛ_ТАКТА.md</b><span>8 стадий такта, чек-лист, ловушки (CSP, кэш, анкоры, Git Data API)</span></a>
+      <a class="строка" href="docs/adr/0001-изоляция-ящиков.md" title="ADR-0001: изоляция семей ящиками (script-блоки) — MADR"><b>adr/0001-изоляция-ящиков.md</b><span>почему ящики: конфликт глобалей структурно невозможен</span></a>
+      <a class="строка" href="docs/adr/0002-мост-delete-defineproperty.md" title="ADR-0002: мост через delete + defineProperty — вещи иммутабельны"><b>adr/0002-мост-delete-defineproperty.md</b><span>65 мостов = 65 вещей: стираем и закрепляем</span></a>
+      <a class="строка" href="docs/adr/0003-pwa-без-сборщика.md" title="ADR-0003: PWA без сборщика — исходник = изделие"><b>adr/0003-pwa-без-сборщика.md</b><span>ноль билд-степов; дисциплина пре-кэша на такте</span></a>
+      <a class="строка" href="docs/README.md" title="Карта документации: какой файл о чём и для кого"><b>docs/README.md</b><span>карта docs/: типы знаний, правила папки, соседи</span></a>
+    </div>
+  </details>
+
+  <h2>Наставления агентам <em>Малыш и братья</em></h2>
+  <details><summary>docs/МАЛЫШ.md + AGENTS.md + llms.txt <small>дом читаем человеком и машиной</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/МАЛЫШ.md" title="Наставления младшему агенту: карта дома, как дом дышит тактами, ловушки, FAQ жильца"><b>docs/МАЛЫШ.md</b><span>учебник Малыша: карта 28 дверей, шрамы (CSP, кэш, патчи), частые вопросы</span></a>
+      <a class="строка" href="AGENTS.md" title="Правила для AI-агентов: незыблемое (закон, комод, CSP, кэш, Git Data API), команды, конвенции"><b>AGENTS.md</b><span>свод правил агентов: что не ломать, как тестировать, где истина</span></a>
+      <a class="строка" href="docs/llms.txt" title="Машинная карта знаний дома: секции для LLM + как отвечать"><b>docs/llms.txt</b><span>карта знаний для LLM: факты атомами, числа из data/versions.json</span></a>
+    </div>
+  </details>
+  <!--СНГ:АТЛАС-END-->
 
   <h2>Архитектура и модули <em>как устроено внутри</em></h2>
   <details><summary>Документы об устройстве дома <small>17 документов — от модулей до угроз</small></summary>
