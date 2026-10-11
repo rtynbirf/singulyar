@@ -1,0 +1,33 @@
+# СИНГУЛЯР
+
+> Офлайн-вселенная караоке RUVSON: PWA-дом без сервера, без слежки, без рекламы. 28 дверей, 62 песни, 157 языков одной песни, локальный AI-помощник «Малыш» (Qwen2.5-0.5B, wasm). Один файл = вся платформа. Закон дома: эргономика, приватность, конфиденциальность, юзабилити во главе угла.
+
+## Карта знаний
+
+### Для человека
+- [README.md](https://github.com/rtynbirf/singulyar/blob/main/README.md): лицо репозитория, быстрый старт, блок «одна правда»
+- [ДОКУМЕНТАЦИЯ.html](https://rtynbirf.github.io/singulyar/%D0%94%D0%9E%D0%9A%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%90%D0%A6%D0%98%D0%AF.html): все знания дома в человеческом виде
+- [docs/ТЗ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ТЗ.md): живое техническое задание, 10 user stories с критериями приёмки
+- [docs/ДОРОЖНАЯ_КАРТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ДОРОЖНАЯ_КАРТА.md): сделано за всё время и что предстоит
+- [docs/АРХИТЕКТУРА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/АРХИТЕКТУРА.md): комод — ящики → мост → вещи; шрамы CSP
+- [docs/РИТУАЛ_ТАКТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/РИТУАЛ_ТАКТА.md): как выпускается версия, 8 стадий
+- [CHANGELOG.md](https://github.com/rtynbirf/singulyar/blob/main/CHANGELOG.md): летопись тактов по Keep a Changelog
+- [docs/adr/](https://github.com/rtynbirf/singulyar/blob/main/docs/adr/): архитектурные решения (MADR)
+- [СИНГУЛЯР_36_СЛОВАРЬ.html](https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_36_%D0%A1%D0%9B%D0%9E%D0%92%D0%90%D0%A0%D0%AC.html): глоссарий дома
+- [СИНГУЛЯР_35_ВОПРОСЫ.html](https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_35_%D0%92%D0%9E%D0%9F%D0%A0%D0%9E%D0%A1%D0%AB.html): частые вопросы
+
+### Для агентов и LLM
+- [AGENTS.md](https://github.com/rtynbirf/singulyar/blob/main/AGENTS.md): свод правил для AI-агентов, работающих с репой
+- [docs/МАЛЫШ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/МАЛЫШ.md): наставления младшему агенту дома (карта, ловушки, FAQ)
+- [data/versions.json](https://github.com/rtynbirf/singulyar/blob/main/data/versions.json): машина-читаемая истина: версия, такт, счётчики, двери, AI
+- [ОБУЧЕНИЕ/ПРАВИЛА_СИНГУЛЯРА.txt](https://github.com/rtynbirf/singulyar-llm/blob/main/ОБУЧЕНИЕ/ПРАВИЛА_СИНГУЛЯРА.txt) в репо rtynbirf/singulyar-llm: 15 правил Малыша
+- [ОБУЧЕНИЕ/ПРИМЕРЫ_КОМАНД.jsonl](https://github.com/rtynbirf/singulyar-llm/blob/main/ОБУЧЕНИЕ/ПРИМЕРЫ_КОМАНД.jsonl): фразы жильца → намерение → действие
+
+### Данные
+- [ДАННЫЕ/флагман_157_языков/INDEX.md](https://github.com/rtynbirf/singulyar/blob/main/ДАННЫЕ/флагман_157_языков/INDEX.md): индекс корпуса 157 языков
+- [ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md](https://github.com/rtynbirf/singulyar/blob/main/ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md): устройство мультиязыка
+- [ДОКУМЕНТЫ/](https://github.com/rtynbirf/singulyar/tree/main/ДОКУМЕНТЫ): архив протоколов, отчётов, законов (I-01..I-11)
+
+## Как отвечать (для LLM)
+
+Отвечай по-русски, простыми словами, без канцелярита. Один факт — один буллет, ≤20 слов. Не выдумывай дверей и функций: если чего-то нет — скажи честно и укажи дверь из карты. Числа дверей и версий бери из data/versions.json. Приватность — абсолют: не предлагай «отправить на сервер». Свежесть: сверяйся с data/versions.json и CHANGELOG.md.
