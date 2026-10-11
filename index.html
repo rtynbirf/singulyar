@@ -10,10 +10,10 @@
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР — суверенный караоке-дом · поёт без сети</title>
-<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: 27 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
+<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: 28 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/">
 <meta property="og:title" content="СИНГУЛЯР — суверенный караоке-дом">
-<meta property="og:description" content="27 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек.">
+<meta property="og:description" content="28 дверей, 62 песни, 157 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
@@ -88,7 +88,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.45))}
 .нить[open] .нить-слово{color:var(--dim)}
 @keyframes нить-пульс{0%,100%{opacity:.55;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
-/* ── ДОМ (внутри нити): 27 дверей ── */
+/* ── ДОМ (внутри нити): 28 дверей (·39 ОРГАНИЗМ с такта v10.53) ── */
 #дом{padding:6px 0 26px;text-align:center;animation:дом-явь .5s ease both}
 @keyframes дом-явь{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #дом h2{font-size:19px;margin:0 0 8px;border:0}
@@ -157,6 +157,11 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .ариадна-чипы{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .ариадна-чип{font:inherit;font-size:13px;color:#E8EAF0;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.16);border-radius:999px;padding:5px 12px;cursor:pointer}
 .ариадна-чип:hover,.ариадна-чип:focus-visible{border-color:#D4AF37;color:#F0D78C;outline:none}
+  /* v10.53 «ОРГАНИЗМ»: комнатные переходы дома — кросс-документные View Transitions
+     (Chrome 126+); где движения просить нельзя — их нет (закон дома). */
+  @media (prefers-reduced-motion: no-preference){
+    @view-transition { navigation: auto; }
+  }
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
 </head>
@@ -194,11 +199,11 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
         <input type="search" id="ариаднаВвод" class="ариадна-ввод" placeholder="спроси дом: дверь, песня, слово"
                aria-label="Поиск по дому: дверь, песня, документ" enterkeyhint="search"
                autocomplete="off" spellcheck="false">
-        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — из 27 дверей, 62 песен фонда и документов. Ноль сети, ответ мгновенный и местный.">⌕</button>
+        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — из 28 дверей, 62 песен фонда и документов. Ноль сети, ответ мгновенный и местный.">⌕</button>
       </span>
       <span class="пульт-разделитель" aria-hidden="true"></span>
       <span class="пульт-группа" role="group" aria-label="Сквозная навигация по дому">
-        <button type="button" id="пультНить" data-справка="Нить Ариадны: показать все двери дома одной страницей — сквозной путь через весь дом.">⌇ нить</button>
+        <button type="button" id="пультНить" aria-expanded="false" aria-controls="модули" data-справка="Нить Ариадны: показать все двери дома одной страницей — сквозной путь через весь дом.">⌇ нить</button>
         <a class="пульт-ссылка" href="ДОКУМЕНТАЦИЯ.html" data-справка="Документация дома: инварианты I-01…I-11 с тестами, открытый код, данные и языки.">¶ доки</a>
       </span>
       <span class="пульт-трек" id="ариаднаСтрока" aria-live="polite">АРИАДНА: спроси дом — веду к двери · ноль сети</span>
@@ -215,7 +220,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
     <p class="aio-sub">Ambient Intent Organism</p>
     <div class="подчерк" aria-hidden="true"><i></i></div>
     <p class="motto">Смысл один. Представление — твоё.</p>
-    <p class="тихо-подсказка" style="margin-top:2px">27 дверей · 62 песни · 157 языков</p>
+    <p class="тихо-подсказка" style="margin-top:2px">28 дверей · 62 песни · 157 языков</p>
     <div class="obj-row">
       <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
       <a class="obj-chip" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">◇ Установить дом — 2 минуты</a>
@@ -239,12 +244,12 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   
 
   <details id="модули" class="нить" hidden>
-    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 27 дверей">
+    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 28 дверей">
       <span class="нить-линия" aria-hidden="true"></span>
       <span class="нить-слово">⌇ нить Ариадны</span>
     </summary>
     <div id="дом">
-      <h2>Дом <em>27 дверей · каждая автономна</em></h2>
+      <h2>Дом <em>28 дверей · каждая автономна</em></h2>
       <p class="дом-тихо">Возможность предоставлена — путь человек находит сам. Дверь открывается по нити, не по указанию.</p>
       <nav id="двери" class="двери" aria-label="Двери дома СИНГУЛЯР"></nav>
     </div>
@@ -372,7 +377,7 @@ try{
    СДЕЛАЙ ВМЕСТО ПРОИГРЫВАТЕЛЯ ПОИСКОВУЮ СТРОКУ И НАУЧИ НАШЕГО ПОДОПЕЧНОГО
    ЕЁ ЮЗАТЬ». Эмерджентный синтез мировых практик поиска (намерение →
    источники → честная неопределённость) с канонами дома: ищет ПО ДОМУ —
-   27 дверей, 62 песни фонда, документы. Ноль сети, ноль innerHTML,
+   28 дверей, 62 песни фонда, документы. Ноль сети, ноль innerHTML,
    ноль эмодзи; всё в try — АРИАДНА не имеет права уронить лицо.
    Музыка никуда не ушла: она живёт в дверях ·15 ·16 ·18 ·32. */
 (function(){
@@ -410,7 +415,8 @@ try{
     { ид:'s35', номер:'·35', имя:'ВОПРОСЫ', файл:'СИНГУЛЯР_35_ВОПРОСЫ.html' },
     { ид:'s36', номер:'·36', имя:'СЛОВАРЬ', файл:'СИНГУЛЯР_36_СЛОВАРЬ.html' },
     { ид:'s37', номер:'·37', имя:'О ДОМЕ', файл:'СИНГУЛЯР_37_О_ДОМЕ.html' },
-    { ид:'s38', номер:'·38', имя:'ПУЛЬС', файл:'СИНГУЛЯР_38_ПУЛЬС.html' }
+    { ид:'s38', номер:'·38', имя:'ПУЛЬС', файл:'СИНГУЛЯР_38_ПУЛЬС.html' },
+    { ид:'s39', номер:'·39', имя:'ОРГАНИЗМ', файл:'organism-living-prototype.html' }
     ];
     var ПЕСНИ=[
     ["1BZs_wUPn1s","Я сам себе судья"],
@@ -503,7 +509,8 @@ try{
       s35:['вопрос','вопросы','ответы','faq','спросить','частые вопросы','как установить','почему'],
       s36:['словарь','глоссарий','термин','термины','что такое','значение','определение'],
       s37:['о доме','о проекте','что это','для кого','объясни','введение','с чего начать','попробовать'],
-      s38:['пульс','версии','реестр','кэш','обновление','статус','здоровье дома','диагностика дома']
+      s38:['пульс','версии','реестр','кэш','обновление','статус','здоровье дома','диагностика дома'],
+      s39:['организм','живой интерфейс','колония','частицы','геном','мутация','эволюция','лаборатория','прототип','поколение']
     };
     var ДОКИ=[
       {файл:'ДОКУМЕНТАЦИЯ.html',номер:'¶',имя:'Документация дома',ключи:['документация','инварианты','доки','тесты','код','i-01','i-11']},
@@ -645,5 +652,27 @@ try{
 })();
 </script>
 <script defer src="./singulyar-modules.js"></script>
-<script defer src="./singulyar-ux-engine-v9.js"></script></body>
+<script defer src="./singulyar-ux-engine-v9.js"></script>
+<script id="нитевой-жгут">
+/* v10.53 «ОРГАНИЗМ»: мёртвая кнопка «⌇ нить» воскресла — нить Ариадны
+   открывается одной кнопкой: раскрыть, доскроллить, отдать фокус. */
+(function(){
+  var кн = document.getElementById('пультНить');
+  if(!кн || кн.getAttribute('data-жгут')) return;
+  кн.setAttribute('data-жгут', '1');
+  кн.addEventListener('click', function(){
+    var нить = document.getElementById('модули');
+    if(!нить) return;
+    var плавно = true;
+    try { плавно = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(_){}
+    if(нить.tagName === 'DETAILS' && !нить.open) нить.open = true;
+    try { нить.scrollIntoView({behavior: плавно ? 'smooth' : 'auto', block: 'start'}); }
+    catch(_) { try { нить.scrollIntoView(); } catch(_2){} }
+    кн.setAttribute('aria-expanded', 'true');
+    var заг = нить.querySelector('summary');
+    if(заг){ try { заг.focus({preventScroll:true}); } catch(_){ заг.focus(); } }
+  });
+})();
+</script>
+</body>
 </html>
