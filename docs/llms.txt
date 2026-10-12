@@ -11,7 +11,7 @@
 - [docs/СИНТЕЗ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/СИНТЕЗ.md): дом одним взглядом — синтез ТЗ, дороги и архитектуры; с этого начинай
 - [ДОКУМЕНТАЦИЯ.html](https://rtynbirf.github.io/singulyar/%D0%94%D0%9E%D0%9A%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%90%D0%A6%D0%98%D0%AF.html): все знания дома в человеческом виде
 - [docs/ТЗ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ТЗ.md): живое техническое задание, 10 user stories с критериями приёмки
-- [docs/ДОРОЖНАЯ_КАРТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ДОРОЖНАЯ_КАРТА.md): сделано за всё время и что предстоит
+- [docs/ДОРОЖНАЯ_КАРТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ДОРОЖНАЯ_КАРТА.md): ЕДИНАЯ ДОРОЖНАЯ КАРТА — все карты дома сведены, весь открытый фронт со статусами и критериями закрытия
 - [docs/АРХИТЕКТУРА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/АРХИТЕКТУРА.md): комод — ящики → мост → вещи; шрамы CSP
 - [docs/РИТУАЛ_ТАКТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/РИТУАЛ_ТАКТА.md): как выпускается версия, 8 стадий
 - [CHANGELOG.md](https://github.com/rtynbirf/singulyar/blob/main/CHANGELOG.md): летопись тактов по Keep a Changelog

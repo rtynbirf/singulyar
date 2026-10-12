@@ -14,7 +14,20 @@
    — на file:// module-import блокируется браузером → страницы работают
      как раньше, OS честно сообщает state:'unavailable'.
 
-   0 innerHTML · 0 сети · 0 телеметрии · ядро из архива не изменено
+   СРЕЗ 6 (v10.73 «СВОД») — роутер подключён к шине смыслов (смешение
+   кандидатов, закрытие открытой границы среза 2):
+   — os.routeMixed(meaning, {preferred, target}): несколько кандидатов
+     претендуют на один смысл → MeaningRouter выбирает РОВНО ОДНОГО
+     (политика: preferred ·19 > capability-full > priority > id), доставка
+     — выбранному адаптеру через render, только если передан target;
+   — след честный: конверт meaning.router {via:'router', selected,
+     candidates, policy, delivered, reason} — и в возврате, и в bus.log();
+   — отказ честный: нет готового адаптера → selected:null, delivered:false,
+     render не зовётся ни разу, никаких выдуманных доставок.
+   Правка src/core.mjs — минимальная (только политика выбора в
+   MeaningRouter.route), все прежние тесты зелёные; ядра страниц не тронуты.
+
+   0 innerHTML · 0 сети · 0 телеметрии · ядра страниц ·19/·21/·22 не изменены
    ═══════════════════════════════════════════════════════════════════════ */
 
 const BUS_KEY = 'singulyar.meaningbus.v1';
@@ -120,6 +133,30 @@ export async function bootAdapterOS(opts) {
         registerAdapter: function (a) { registry.register(a); return a; },
         routeOut: function (meaning, preferred) {
             return router.route(meaning, { direction: 'output', preferred: preferred || [] });
+        },
+        routeMixed: function (meaning, opts) {
+            /* Срез 6: смешение кандидатов на один смысл. Роутер выбирает
+               ровно одного (политика: preferred ·19 > capability-full >
+               priority > id), конверт честного следа публикуется в шину.
+               Отказ честный: никого → selected:null, delivered:false. */
+            opts = opts || {};
+            const р = router.route(meaning, { direction: 'output', preferred: opts.preferred || [] });
+            const выбран = р.selected ? registry.get(р.selected) : null;
+            let доставлено = false;
+            if (выбран && typeof выбран.render === 'function' && opts.target) {
+                выбран.render(meaning, opts.target);
+                доставлено = true;
+            }
+            const отказ = р.selected ? null : 'no-usable-adapter';
+            const конверт = bus.publish('meaning.router', {
+                via: 'router',
+                selected: р.selected,
+                candidates: р.candidates,
+                policy: 'preferred(·19) > capability-full > priority > id',
+                delivered: доставлено,
+                reason: отказ
+            });
+            return { selected: р.selected, adapter: выбран || null, delivered: доставлено, envelope: конверт, candidates: р.candidates, reason: отказ };
         },
         statuses: function () { return registry.statuses(); }
     };
