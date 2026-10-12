@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.89 «АДАПТЕР» («THE ADAPTER») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.89.1 «ЛАТКА УУП» («THE UUP PATCH») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -27,7 +27,7 @@ Each map stays where it lives (no duplicates); its **open lines** are consolidat
 | 9 | HARMONIA track | `ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/` + `ОТЧЁТ_ФАЗА_2.md` | phase 1 ✅ (v10.72), phase 2 ✅ (machine part; live-drift measurement — Г2 👤); phase 3 — Г1 ✅ v10.77, Г3 open |
 | 10 | LADOM_SINGULAR track (emergent composition) | `ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/` | P0 + P0.1 ✅ (v10.74); P1.1/P2/P2.1 ✅ (v10.78–v10.80); P3 sync ✅ (v10.82); P3.1 ✅ (v10.84); P4 ✅ (v10.81+v10.85); P4.1 ✅ (v10.89) — line Л5 closed in full; open — Л1 (token 👤), Л6 (runs 👤) |
 | 11 | ЖИВОЙ КОНТУР track (learning layer) | `ДОКУМЕНТЫ/ТРЕКИ/ЖИВОЙ_КОНТУР/` | Stage 0 ✅, Stage 1 ✅ (v10.74/10.75), Stage 2 ✅ (v10.77), Stage 3 ✅ (v10.78 «СЛОГ»); Stages 4–5 — line Ж4 |
-| 12 | КОЛОНКА track (OMNISPEAKER-1) | `КОЛОНКА/` + `ДОКУМЕНТЫ/ТРЕКИ/OMNISPEAKER-1/` | merged into door ·42 (v10.57); **v10.87 «УУП»: redefined by the owner — ANY speaker, hardware not needed**; OMNISPEAKER-1 = reference hardware project; **v10.88 «КАНОН»: УУП — the seventh kind of remote in hall ·31 + canon `src/uup-core.js` (tests 17/17 node:vm)** |
+| 12 | КОЛОНКА track (OMNISPEAKER-1) | `КОЛОНКА/` + `ДОКУМЕНТЫ/ТРЕКИ/OMNISPEAKER-1/` | merged into door ·42 (v10.57); **v10.87 «УУП»: redefined by the owner — ANY speaker, hardware not needed**; OMNISPEAKER-1 = reference hardware project; **v10.88 «КАНОН»: УУП — the seventh kind of remote in hall ·31 + canon `src/uup-core.js` (tests 17/17 node:vm)**; **v10.89.1 «ЛАТКА УУП»: decoded by the owner — «Устройство Управления Приёмника» (the receiver control device)** |
 | 13 | SEARCH track (SINGULYAR-SEARCH) | `ДОКУМЕНТЫ/ТРЕКИ/SINGULYAR-SEARCH/` + root prototype | merged (v10.71); service backbone — П1 |
 | 14 | HIR track (Human Intent Runtime) | `ДОКУМЕНТЫ/ТРЕКИ/HIR/` | research track; feeds door ·41 |
 | 15 | Reve SDK Engineering Kit | `ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/reve_sdk_delivery/` | audit/TZ/acceptance of the adapter — basis of line Л1 |
