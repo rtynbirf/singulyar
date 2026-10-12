@@ -1,11 +1,12 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.86 «ОТВЕТ» («THE ANSWER») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.88 «КАНОН» («THE CANON») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
 > **Rule of the road:** the roadmap is about the future (🚧 in progress · 📋 backlog · 👤 waits for the owner · 🌐 outside GitHub Pages). Everything shipped is a fact and lives in [CHANGELOG.md](../CHANGELOG.md) («one fact — one place»). Promises to a human — in [ТЗ.md](ТЗ.md) (Russian); the house itself — in [СИНТЕЗ_EN.md](СИНТЕЗ_EN.md).
+> **Owner's laws (2026-10-13, defaults for everyone):** (1) **Any speaker the client already has** — it connects to our УУП (the Control Node); Малыш announces the weather, sets alarms and does everything proper; no dedicated hardware is purchased (К1/К2 сняты владельцем). (2) **Delegation by benchmarks**: on every matter not named personally by the owner, the agents decide — benchmarked against industrial standards and specifications. (3) **Tuning by default**: everyone gets the ability to tune things to their own needs (РУЧКИ · ПРОФИЛЬ · ЛАДОНЬ · ЯЩИКИ · УУП).
 
 ---
 
@@ -71,8 +72,8 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 
 ### Line КОЛОНКА · ·42 / OMNISPEAKER-1
 
-- **К1** · 👤 **Hardware: phases 0–5** (`КОЛОНКА/docs/07_DETAILED_ROADMAP.md`) — BOM purchasing, voice stack, Matter/Thread, mmWave care, ПСИ of full offline. *Closure:* the physical world, one phase at a time.
-- **К2** · 🌐 **Phase 8: pilot and certification** (CRA/RED/Matter/SBOM). *Closed when:* engineering samples pass a pilot in 5–10 homes.
+- ✅ **К1 removed by the owner (2026-10-13)** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.88]` (decision: «any speaker the client already has — it simply connects to our УУП»; no dedicated hardware is purchased). Instead — **УУП in hall ·31 (v10.88 «КАНОН»)**: any speaker (test tone, honest note about the system-level device choice), local offline alarm, weather via open-meteo/WMO 4677; canon `ДОКУМЕНТЫ/ТРЕКИ/OMNISPEAKER-1/src/uup-core.js` (uup-core/0.1, tests 17/17 node:vm).
+- ✅ **К2 removed by the owner (2026-10-13)** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.88]` (pilot and certification of dedicated hardware are not needed: the client's speaker is already in their hands; owner's laws — in the map header).
 
 ### Line SEARCH · SINGULYAR-SEARCH
 
@@ -87,6 +88,13 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 ---
 
 ## 3 · CLOSED BY TACTS (recent)
+
+**Tact v10.88 «КАНОН» («THE CANON») (2026-10-13, С63; СТОП-ГОРН: their v10.87 «УУП» (С62) accepted in full — their move first, door ·42 untouched; push follows a fresh owner key — the previous one answered 401):**
+
+- **Owner's order fulfilled by deed (second storey of the same order)**: the seventh pult face «◈ УУП» (Control Node) in hall ·31 — any speaker (connects to the device audio output; test tone), ALARM (local offline: day dedup, one-shot self-disables, works in RELAX, honest note «wakes while the tab is open», ceiling 8), WEATHER (open-meteo without keys, WMO 4677; network only via the explicit button; offline — last remembered or an honest refusal; Малыш speaks it).
+- **OMNISPEAKER-1 canon**: `src/uup-core.js` (uup-core/0.1) — 0 network · 0 document · 0 localStorage · 0 eval · 0 Date (time is passed in from outside); tests 17/17 node:vm on the same file; lazy load like the КАРАОКЕ axes + pre-cache v143.
+- **Owner's laws recorded** (map header RU/EN, ТЗ US-11 rewritten + US-21/US-22, Малыш textbook Part 7): any speaker + УУП; delegation by industrial benchmarks; tuning to one's own needs — defaults for everyone.
+- KАЗНА: family «малыш·ууп»; ЗДОРОВЬЕ `__HEALTH32` (7 probes); kv.ууп.* (СКЛАД); DOM-screen (law v10.86).
 
 **Tact v10.86 «ОТВЕТ» («THE ANSWER», 2026-10-13, С61, owner's PAT; STOP-HORN: their v10.85 «АРХИТЕКТОР» accepted whole — my parallel tact honestly renumbered):**
 
