@@ -330,6 +330,17 @@ kbd {
     <div id="autosaveStatus" class="small" role="status" aria-live="polite"></div>
   </section>
 
+  <section class="panel" aria-label="Намерение → черновик регионов (P1.1, офлайн-правила)">
+    <h2 style="font-size:15px;margin:0 0 8px">Намерение → черновик <span class="badge">P1.1 · офлайн-правила</span></h2>
+    <p class="hint" style="margin:0 0 8px">Опиши сцену словами — студия соберёт черновик регионов без сети. Лексикон: фон, заголовок, текст, свет, герой, логотип, люди, декор; позиции (слева / справа / вверху / внизу / в центре); размеры (на весь экран / большой / маленький / полоса). Чего не понял — честно покажет списком.</p>
+    <textarea id="intentText" rows="3" style="width:100%;box-sizing:border-box;background:var(--panel,#141414);color:var(--fg,#eee);border:1px solid #333;border-radius:8px;padding:8px;font:inherit" aria-label="Текстовое описание сцены (намерение)" placeholder="Например: фон — мягкий градиент, заголовок вверху, большой герой справа, полоса текста внизу, логотип маленький в углу"></textarea>
+    <div class="toolbar" style="margin-top:8px">
+      <button class="primary" id="btnIntentDraft" type="button">Собрать черновик</button>
+      <button id="btnIntentAdd" type="button">Добавить в проект</button>
+    </div>
+    <div id="intentOut" class="small" role="status" aria-live="polite" style="margin-top:8px;white-space:pre-wrap">Черновика пока нет — опиши намерение и нажми «Собрать черновик».</div>
+  </section>
+
   <aside class="panel" aria-label="Свойства, список, история">
     <div class="tabs" role="tablist" aria-label="Панели">
       <button type="button" class="active" data-tab="props" id="tabProps" role="tab" aria-selected="true" aria-controls="panelProps">Свойства</button>
@@ -538,6 +549,116 @@ kbd {
     return errs;
   }
   // VALIDATOR-END
+
+  // INTENT-SEED-BEGIN (P1.1 · Intent → region seed · офлайн-правила, LLM опционально позже; такт v10.78 «ОТКЛИК».
+  // Чистые функции без DOM и сети: блок вырезается node-тестом и исполняется в node:vm.
+  // Детерминизм: одинаковый текст → одинаковый черновик (0 случайности, 0 часов, 0 сети).
+  // Честность: нераспознанные фразы НЕ молча мапятся — попадают в unrecognized; плейсмент 3×3
+  // без пересечений; фон — под всем (zIndex 0, разрешённое перекрытие); всё проходит validateLayout.)
+  const INTENT_MAX_REGIONS = 9; // 3×3 — больше честно не влезает
+  const INTENT_LEX = [
+    { kind: 'фон',       re: /фон|градиент|подложк|текстур|заливк/i },
+    { kind: 'заголовок', re: /заголовок|название|титул|шапк/i },
+    { kind: 'текст',     re: /текст|цитат|подпис|строка|слова/i },
+    { kind: 'свет',      re: /свет|прожектор|луч|свечен|блик/i },
+    { kind: 'герой',     re: /герой|портрет|фото|изображен|объект|лицо|силуэт|картин/i },
+    { kind: 'логотип',   re: /логотип|эмблем|знак|штамп|печать/i },
+    { kind: 'люди',      re: /люд|публик|зрител|толп|хор/i },
+    { kind: 'декор',     re: /декор|орнамент|узор|рамк|виньетк/i }
+  ];
+  const INTENT_POS = [
+    { re: /слева|левее|лев/i,        col: 0, row: null },
+    { re: /справа|правее|прав/i,     col: 2, row: null },
+    { re: /вверху|сверху|верхн|наверху/i, row: 0, col: null },
+    { re: /внизу|снизу|нижн|пониже/i,     row: 2, col: null },
+    { re: /в центре|по центру|центральн/i, row: 1, col: 1 }
+  ];
+  const INTENT_SIZE = [
+    { re: /на весь экран|во весь кадр|весь кадр|во всю|заполняет/i, w: 0.92, h: 0.82 },
+    { re: /полос|лент|во всю ширин|широк/i,                          w: 0.92, h: 0.14 },
+    { re: /больш|крупн|масштабн/i,                                   w: 0.50, h: 0.45 },
+    { re: /маленьк|небольш|компактн|крошечн/i,                       w: 0.26, h: 0.20 }
+  ];
+  const INTENT_CELL = { w: 0.30, h: 0.30, dx: 0.33, dy: 0.33, ox: 0.025, oy: 0.025 };
+
+  function intentSplit(text) {
+    return String(text || '')
+      .split(/[,;.!?]+|\n+|\s+и\s+/)
+      .map((p) => p.trim())
+      .filter((p) => p.length > 0);
+  }
+  function intentCellBbox(col, row) {
+    return { x: +(INTENT_CELL.ox + col * INTENT_CELL.dx).toFixed(4),
+             y: +(INTENT_CELL.oy + row * INTENT_CELL.dy).toFixed(4),
+             width: INTENT_CELL.w, height: INTENT_CELL.h };
+  }
+  function intentClamp01(v) { return Math.min(1, Math.max(0, v)); }
+  // Клетка 3×3: занятость честная (фон не занимает клеток — он под всем)
+  function intentPlace(bboxes, preferCol, preferRow) {
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        if (preferCol !== null && preferCol !== undefined && c !== preferCol) continue;
+        if (preferRow !== null && preferRow !== undefined && r !== preferRow) continue;
+        const cell = intentCellBbox(c, r);
+        const занято = bboxes.some((b) =>
+          !(cell.x + cell.width <= b.x + 0.001 || b.x + b.width <= cell.x + 0.001 ||
+            cell.y + cell.height <= b.y + 0.001 || b.y + b.height <= cell.y + 0.001));
+        if (!занято) return cell;
+      }
+    }
+    return null;
+  }
+  function ladomIntentSeed(text) {
+    const фразы = intentSplit(text);
+    const trace = [], unrecognized = [], notes = [], regions = [];
+    if (!фразы.length) return { ok: false, regions, trace, unrecognized, notes: ['намерение пустое — черновика нет'] };
+    const занято = []; // bbox занятых клеток (фон не считается)
+    for (const ф of фразы) {
+      const лекс = INTENT_LEX.find((l) => l.re.test(ф));
+      if (!лекс) { unrecognized.push(ф); continue; }
+      const почему = [лекс.kind];
+      let bbox, zIndex = 10, locked = false;
+      if (лекс.kind === 'фон') {
+        bbox = { x: 0, y: 0, width: 1, height: 1 };
+        zIndex = 0;
+      } else {
+        const поз = INTENT_POS.find((p) => p.re.test(ф));
+        if (поз) почему.push('позиция');
+        const разм = INTENT_SIZE.find((p) => p.re.test(ф));
+        if (разм) {
+          почему.push('размер');
+          const п = intentPlace(занято, поз ? поз.col : null, поз ? поз.row : null);
+          if (!п) { notes.push('полотно 3×3 заполнено — «' + ф + '» не влез'); continue; }
+          // размер поверх клетки: якорим в клетке, растим в пределах кадра
+          let w = разм.w, h = разм.h;
+          let x = поз && поз.col !== null && поз.col !== undefined ? (поз.col === 0 ? 0.02 : поз.col === 2 ? 1 - w - 0.02 : (1 - w) / 2) : п.x;
+          let y = поз && поз.row !== null && поз.row !== undefined ? (поз.row === 0 ? 0.02 : поз.row === 2 ? 1 - h - 0.02 : (1 - h) / 2) : п.y;
+          bbox = { x: +intentClamp01(x).toFixed(4), y: +intentClamp01(y).toFixed(4), width: w, height: h };
+        } else {
+          const п = intentPlace(занято, поз ? поз.col : null, поз ? поз.row : null);
+          if (!п) { notes.push('полотно 3×3 заполнено — «' + ф + '» не влез'); continue; }
+          bbox = п;
+        }
+        занято.push(bbox);
+      }
+      const регион = {
+        id: 'intent-' + (regions.length + 1),
+        label: лекс.kind + ' · из намерения',
+        prompt: ф,
+        bbox,
+        zIndex,
+        locked,
+        source: 'intent'
+      };
+      regions.push(регион);
+      trace.push({ фраза: ф, почему, bbox });
+    }
+    if (!regions.length) {
+      notes.push('ни одна фраза не распознана — черновик пуст; лексикон: фон, заголовок, текст, свет, герой, логотип, люди, декор + позиции (слева/справа/вверху/внизу/в центре) + размеры (на весь экран/большой/маленький/полоса)');
+    }
+    return { ok: regions.length > 0, regions, trace, unrecognized, notes };
+  }
+  // INTENT-SEED-END
 
   const MAX_FILE = 1024 * 1024;
 
@@ -931,6 +1052,48 @@ kbd {
       }
     });
   }
+
+  // ——— Intent → черновик (P1.1, такт v10.78 «ОТКЛИК») ———
+  let intentDraft = null;
+  function renderIntentOut(r) {
+    const out = $('intentOut');
+    if (!out) return;
+    if (!r.ok) {
+      out.textContent = 'Черновик не собран: ' + (r.notes.join(' · ') || 'причин нет') + (r.unrecognized.length ? '\nНе распознано: ' + r.unrecognized.join(' | ') : '');
+      return;
+    }
+    const строки = r.regions.map((g, i) =>
+      (i + 1) + '. ' + g.label + ' — bbox ' + g.bbox.x + ',' + g.bbox.y + ' ' + g.bbox.width + '×' + g.bbox.height + ' (z' + g.zIndex + ') — «' + g.prompt + '»');
+    if (r.unrecognized.length) строки.push('Не распознано (честно, не добавлено): ' + r.unrecognized.join(' | '));
+    if (r.notes.length) строки.push('Заметки: ' + r.notes.join(' · '));
+    out.textContent = 'Черновик: регионов ' + r.regions.length + '\n' + строки.join('\n');
+  }
+  $('btnIntentDraft').addEventListener('click', () => {
+    intentDraft = ladomIntentSeed($('intentText').value);
+    renderIntentOut(intentDraft);
+    say(intentDraft.ok
+      ? 'Черновик: регионов ' + intentDraft.regions.length + (intentDraft.unrecognized.length ? ', не распознано ' + intentDraft.unrecognized.length : '')
+      : 'Черновик не собран — см. отчёт');
+  });
+  $('btnIntentAdd').addEventListener('click', () => {
+    if (!intentDraft || !intentDraft.ok) { say('Сначала собери черновик — «Собрать черновик»'); return; }
+    pushUndo();
+    intentDraft.regions.forEach((g) => {
+      project.regions.push({
+        id: uid(),
+        label: g.label,
+        prompt: g.prompt,
+        bbox: { x: g.bbox.x, y: g.bbox.y, width: g.bbox.width, height: g.bbox.height },
+        zIndex: g.zIndex,
+        locked: false
+      });
+    });
+    intentDraft = null;
+    $('intentOut').textContent = 'Черновик добавлен в проект — повторное добавление защищено (дублей нет).';
+    takeSnapshot();
+    renderAll();
+    say('Черновик добавлен: регионы прошли валидатор');
+  });
 
   // ——— Events ———
   $('btnAdd').addEventListener('click', () => {
