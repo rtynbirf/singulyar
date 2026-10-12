@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.82 «СХОДИМОСТЬ» («CONVERGENCE») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.86 «ОТВЕТ» («THE ANSWER») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -87,6 +87,11 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 ---
 
 ## 3 · CLOSED BY TACTS (recent)
+
+**Tact v10.86 «ОТВЕТ» («THE ANSWER», 2026-10-13, С61, owner's PAT; STOP-HORN: their v10.85 «АРХИТЕКТОР» accepted whole — my parallel tact honestly renumbered):**
+
+- **Answer to the colleague's SECURITY.md (ladom-prototype v0.1 + ladom-v2 v0.2.0)**: all 8 claims byte-checked against the home v10.84 — 2 confirmed (CSP loosening = deliberate Posture A, scars v10.52/v10.54; monolith 1.97 MB), 4 refuted (eval=0; SRI not applicable — zero external `<script src>`; localStorage — СКЛАД v10.16 with prefs v2 + IDB + migrations; «dev diary in UI» — 0), 2 partial (innerHTML=86 — every tenant-data path is covered: textContent/esc/hex-guard; CDN — optional features only). Full fact-check: `ОТВЕТ_НА_SECURITY_v0.2.md` in the track.
+- **Deeds, not words**: both prototypes accepted into the root byte-for-byte (`ladom-prototype/`, `ladom-v2/`, live on Pages); timeline sections moved to DOM-escaping (createElement+textContent) in two places; takt test 17/17.
 
 Facts live in [CHANGELOG.md](../CHANGELOG.md); only the trail is kept here so map lines do not dangle:
 

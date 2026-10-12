@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="description" content="ЛАДОМ — пространство своих. Споём вместе.">
+  <title>ЛАДОМ · Просто люби</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">ЛАДОМ</div>
+      <div class="version">v0.1 · прототип</div>
+    </header>
+
+    <!-- Main stage -->
+    <main class="stage">
+      <h1 class="title">Споём <span>вместе</span></h1>
+      <p class="subtitle">«Просто люби» · RUVSON · 3:54</p>
+
+      <!-- Voices control -->
+      <div class="voices">
+        <span>сколько нас?</span>
+        <button id="voice-minus" class="btn-circle" aria-label="Убрать голос">−</button>
+        <span id="voice-count" class="voice-num">3</span>
+        <button id="voice-plus" class="btn-circle" aria-label="Добавить голос">+</button>
+      </div>
+
+      <div id="voice-pills" class="voice-pills"></div>
+
+      <!-- Mode switcher -->
+      <div class="modes">
+        <button class="mode active" data-mode="together">Все вместе</button>
+        <button class="mode" data-mode="relay">Эстафета</button>
+        <button class="mode" data-mode="canon">Канон</button>
+      </div>
+
+      <!-- Lyrics area -->
+      <div id="lyrics" class="lyrics" aria-live="polite">
+        <div class="line placeholder">Нажми «Начать вечер»</div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <div class="time-row">
+        <span id="time-current">0:00</span>
+        <span id="time-total">3:54</span>
+      </div>
+    </main>
+
+    <!-- Controls -->
+    <footer class="controls">
+      <button id="btn-play" class="btn-play" aria-label="Пуск / Пауза">▶</button>
+      <button id="btn-restart" class="btn-icon" aria-label="Заново">↻</button>
+      <button id="btn-clap" class="btn-clap" aria-label="Хлопок">ХЛОП! <span id="clap-count">0</span></button>
+      <button id="btn-start" class="btn-start">Начать вечер</button>
+    </footer>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
