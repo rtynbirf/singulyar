@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<!-- такт v10.84 «КРУГ СВОИХ» (С59; приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): Л5-P3.1 — локальные профили отношений и согласия, общая с ·23. Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js (krug-profiles/0.1; тесты 22/22 зовут тот же файл через node:vm; 0 сети · 0 document · 0 eval — хранилище снаружи адаптером). Первый контакт — как было: QR/код, рукопожатие HELLO по открытому каналу P2P записывает профиль (первая/последняя встреча, встреч, согласие «спрошено»). Повторный контакт — без повторного QR: зал держит рендеву krug-<ключ> (детерминирован от ключа устройства) — мост вкладок того же браузера (чистый офлайн) + комната Nostr-релеев между устройствами (как звонки ·23; релеям нужен интернет — честная пометка, сам контакт остаётся P2P); через рендеву зал доставляет СВЕЖИЙ оффер WebRTC — канал встаёт как при QR. Закон согласия одинаков на обеих сторонах: «разрешено» — без вопроса; «спрошено»/незнакомец — вопрос человеку; «запрещено» — честный отказ, не молчание; «забыть» удаляет профиль по-настоящему. STATE/CMD/Синхрон не тронуты -->
 <!-- такт v10.82 «СХОДИМОСТЬ» (С57; приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): Л5-P3 multi-device sync — очередь событий + CRDT, общая с залом ·17. Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js (GSet/ORSet/LWW + SyncPeer; тесты 18/18 в треке) — тот же файл, что гоняют тесты: грузится классическим script-тегом, работает и на https, и на file://. Панель «Синхрон»: 👏 хлопки (GSet), ★ метки «вернусь» — тумблер (ORSet), ♪ просьба следующей (LWW) — сходятся во всех окнах через транспорт ver:1 (дедуп src:seq на приёмнике + свой у реплики), опоздавшее окно догоняет снимком (CRDTHI→CRDTSNAP), офлайн-окно доотправляет из журнала при встрече (online/visibility); повторы доставки не меняют результат (идемпотентные слияния); журнал живёт в памяти окна — честно. STATE/CMD/WebRTC не тронуты -->
 <!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
@@ -208,6 +209,24 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
     что гоняют тесты трека (18/18). Существующий STATE/CMD не тронут.</p>
   </div>
 
+  <h2>Круг своих <em>локальные профили · согласие · повторный контакт без QR</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <span class="p2p-state open" id="krugState">круг: …</span>
+      <button class="btn ghost" id="btnKrugСлушать">◉ слушать круг</button>
+    </div>
+    <div id="krugСписок" aria-live="polite"></div>
+    <p class="hint">Первый контакт — по-прежнему QR/код (физика air-gapped WebRTC: SDP свеж при каждой
+    встрече); рукопожатие по открытому каналу записывает профиль в круг. Повторный контакт — по памяти
+    круга, без повторного QR: зал держит рендеву <code>krug-ключ</code> — мост вкладок того же браузера
+    (чистый офлайн) и комната Nostr-релеев между устройствами (как звонки ·23; релеям нужен интернет —
+    честная пометка, сам контакт остаётся P2P). Через рендеву зал доставляет свежий оффер WebRTC — канал
+    встаёт как при QR. Согласие живёт только на твоём устройстве: «разрешено» впускает без вопроса,
+    «спрошено» спрашивает, «запрещено» — честный отказ, «забыть» удаляет профиль. Канон:
+    <code>ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js</code> — тот же файл, что гоняют тесты
+    трека (22/22).</p>
+  </div>
+
   <footer>СИНГУЛЯР ·17 «ЗАЛ» · KARAOKE_TREND.txt «Подсистема 1: Бессерверный P2P-экран зала» (BroadcastChannel + Air-Gapped QR/WebRTC) ·
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
 </main>
@@ -246,6 +265,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
 </div>
 
 <script src="ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js"></script>
+<script src="ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js"></script>
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -762,6 +782,7 @@ class HallApp {
         this.bindUI();
         this.initP2P();
         this.initSync();
+        this.initKrug();
         this.loop = this.loop.bind(this);
         requestAnimationFrame(this.loop);
         this.helloTimer = setInterval(() => {
@@ -849,6 +870,8 @@ class HallApp {
             onOpen: () => {
                 setSt('канал: ● телефон подключён', 'open');
                 document.getElementById('phStatus').textContent = 'связь есть';
+                /* КРУГ (v10.84): рукопожатие записывает профиль — первая встреча круга */
+                this.krugЗдравствуйте(this.p2p.role === 'host' ? 'зал' : 'телефон');
                 /* хост шлёт компактный STATE телефону 4 Гц */
                 this.p2pTimer = setInterval(() => {
                     const s = this.state;
@@ -893,6 +916,7 @@ class HallApp {
         if (m) this.phoneMode(decodeURIComponent(m[1]));
     }
     onP2pMsg(m) {
+        if (m && m.t === 'HELLO') { this.krugВстретил(m.d); return; }   /* КРУГ v10.84 */
         if (this.p2p.role !== 'host') {   /* телефон: STATE от зала */
             if (m.t === 'STATE') this.phoneApply(m.d || {});
             return;
@@ -939,6 +963,277 @@ class HallApp {
         let p = document.getElementById('p2pScanHint');
         if (!p) { p = document.createElement('p'); p.id = 'p2pScanHint'; p.className = 'hint'; box.appendChild(p); }
         p.textContent = msg;
+    }
+    /* ── 4e. КРУГ СВОИХ (v10.84, Л5-P3.1): локальные профили отношений и согласия ──
+       Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js (тесты 22/22). Первый
+       контакт — QR/код как было (HELLO по каналу P2P). Повторный — без QR: рендеву
+       krug-<ключ зала> по мосту вкладок (тот же браузер, офлайн) и/или комнате релеев
+       (между устройствами, как звонки ·23); зал выносит через рендеву СВЕЖИЙ оффер
+       WebRTC. Согласие: разрешено → без вопроса; спросено/незнакомец → вопрос; запрещено
+       → честный отказ; забыть → настоящее удаление. Синхрон (4d) и P2P (4b) не тронуты. */
+    initKrug() {
+        const К = window.КругПрофили;
+        const st = document.getElementById('krugState');
+        const say = (txt, cls) => { if (st) { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); } };
+        if (!К || !К.встреча) { say('круг: модуль не встал — зал работает как раньше'); return; }
+        try {
+            this.krugАдаптер = {
+                load: () => { try { return JSON.parse(localStorage.getItem('krug.profiles.v1') || 'null'); } catch (e) { return null; } },
+                save: (с) => { try { localStorage.setItem('krug.profiles.v1', JSON.stringify(с)); } catch (e) { /* честно: сессия */ } }
+            };
+            const ран = (typeof crypto !== 'undefined' && crypto.getRandomValues)
+                ? () => { const а = new Uint8Array(1); crypto.getRandomValues(а); return а[0] / 256; }
+                : undefined;
+            this.krugМой = К.устройство(this.krugАдаптер, ран);
+            this.krugСлушает = false;
+            this.krugТихо = {};      /* ключ → «до-какого-мс молчим» — двойная доставка (мост+релеи) */
+            this.krugОжидают = {};   /* ключ → { имя, роль } — зов, ждущий решения человека */
+            this.krugСети = [];      /* мост вкладок: BroadcastChannel-ы рендеву */
+            this.krugРелейПочта = null; this.krugРелейКомната = null;
+            this.krugЖдуЗала = null; this.krugДелегат = false; this.krugТик = null;
+            say('круг: мой ключ ' + String(this.krugМой.key).slice(0, 8) + '…', 'open');
+            document.getElementById('btnKrugСлушать').addEventListener('click', () => this.krugСлушатьToggle());
+            const список = document.getElementById('krugСписок');
+            список.addEventListener('click', (е) => {
+                const т = е.target.closest('[data-действие]');
+                if (!т) return;
+                const д = т.getAttribute('data-действие'), к = т.getAttribute('data-ключ');
+                this.krugКнопка(д, к);
+            });
+            this.krugДелегат = true;
+            this.krugКраска();
+        } catch (e) { say('круг: честный отказ — ' + String((e && e.message) || 'неизвестно')); }
+    }
+    krugКнопка(действие, ключ) {
+        const К = window.КругПрофили;
+        if (!К || !ключ) return;
+        try {
+            if (действие === 'разрешить') { К.согласие(this.krugАдаптер, ключ, 'разрешено'); this.krugКраска(); }
+            else if (действие === 'запретить') { К.согласие(this.krugАдаптер, ключ, 'запрещено'); this.krugКраска(); }
+            else if (действие === 'забыть') { К.забыть(this.krugАдаптер, ключ); this.krugКраска(); }
+            else if (действие === 'принять') {
+                delete this.krugОжидают[ключ];
+                К.согласие(this.krugАдаптер, ключ, 'разрешено');
+                this.krugКраска();
+                this.krugВышлиОффер(ключ);
+            } else if (действие === 'нет') {
+                delete this.krugОжидают[ключ];   /* честно: не запрещаем навсегда — просто не впустили сейчас */
+                this.krugКраска();
+            } else if (действие === 'вернуться') {
+                const п = К.профиль(this.krugАдаптер, ключ);
+                this.krugВернуться(ключ, п ? п.имя : 'зал');
+            }
+        } catch (e) { const st = document.getElementById('krugState'); if (st) st.textContent = 'круг: ' + String(e.message || e); }
+    }
+    krugКраска() {
+        const К = window.КругПрофили;
+        if (!К || !this.krugДелегат) return;
+        const коробка = document.getElementById('krugСписок');
+        if (!коробка) return;
+        let хтмл = '';
+        Object.keys(this.krugОжидают).forEach((к) => {
+            const з = this.krugОжидают[к];
+            хтмл += '<div class="row"><span class="p2p-state wait">зовёт: ' + (з.имя || 'устройство') +
+                ' (' + String(к).slice(0, 8) + '…)</span>' +
+                '<button class="btn ghost" data-действие="принять" data-ключ="' + к + '">принять</button>' +
+                '<button class="btn gray" data-действие="нет" data-ключ="' + к + '">нет</button></div>';
+        });
+        let список = [];
+        try { список = К.список(this.krugАдаптер); } catch (e) { список = []; }
+        список.forEach((п) => {
+            хтмл += '<div class="row"><span class="p2p-state open">' +
+                (п.имя || 'устройство') + ' · ' + (п.роль || '—') + ' · встреч ' + п.встреч +
+                ' · ' + п.согласие + ' · ' + String(п.key).slice(0, 8) + '…</span>' +
+                '<button class="btn ghost" data-действие="разрешить" data-ключ="' + п.key + '">✓ разрешить</button>' +
+                '<button class="btn gray" data-действие="запретить" data-ключ="' + п.key + '">✕ запретить</button>' +
+                '<button class="btn gray" data-действие="забыть" data-ключ="' + п.key + '">забыть</button>' +
+                (п.роль === 'зал' && п.согласие !== 'запрещено'
+                    ? '<button class="btn ghost" data-действие="вернуться" data-ключ="' + п.key + '">↩ вернуться в зал</button>'
+                    : '') +
+                '</div>';
+        });
+        if (!хтмл) хтмл = '<p class="hint">пока пусто: круг наполнится после первого рукопожатия (QR/код — как было)</p>';
+        коробка.innerHTML = хтмл;
+        const б = document.getElementById('btnKrugСлушать');
+        if (б) б.textContent = this.krugСлушает ? '◉ слушаю круг (нажми — закрыть)' : '◉ слушать круг';
+    }
+    krugРазошли(сообщение) {
+        (this.krugСети || []).forEach((с) => { try { с.канал.postMessage(сообщение); } catch (e) { /* канал закрылся */ } });
+        if (this.krugРелейПочта) { try { this.krugРелейПочта.send(сообщение); } catch (e) { /* релеи отстали */ } }
+    }
+    krugСлушатьToggle() {
+        if (this.krugСлушает) { this.krugСлушаниеЗакрой('круг закрыт'); return; }
+        const К = window.КругПрофили;
+        if (!К || !this.krugАдаптер) return;
+        try {
+            const имяРендеву = К.рендеву(this.krugМой.key);
+            this.krugСети = [];
+            try {
+                const бч = new BroadcastChannel(имяРендеву);
+                бч.onmessage = (е) => this.krugПриём(е.data, 'мост');
+                this.krugСети.push({ имя: 'мост', канал: бч });
+            } catch (e) { /* нет BroadcastChannel — останутся релеи */ }
+            this.krugСлушает = true;
+            this.krugРелеиВступи(имяРендеву);
+            this.krugКраска();
+        } catch (e) {
+            this.krugСлушаниеЗакрой('круг: честный отказ — ' + String(e.message || e));
+        }
+    }
+    async krugРелеиВступи(имяРендеву) {
+        let тр = null;
+        try { тр = await import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs'); } catch (e) { тр = null; }
+        if (!тр || !this.krugСлушает || !this.krugСети) return;   /* слушание уже закрыто — честно уходим */
+        try {
+            const комната = тр.joinRoom(
+                { appId: 'singular-krug-v1',
+                  relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+                  rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] } },
+                имяРендеву);
+            const почта = комната.makeAction('круг');
+            почта.onMessage = (д) => this.krugПриём(д, 'релеи');
+            this.krugРелейКомната = комната; this.krugРелейПочта = почта;
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: слушаю — мост вкладок + релеи (сигналинг через интернет, контакт P2P)'; st.className = 'p2p-state open'; }
+        } catch (e) {
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: слушаю — мост вкладок (релеи не встали: ' + String(e.message || e).slice(0, 60) + ')'; st.className = 'p2p-state open'; }
+        }
+    }
+    krugСлушаниеЗакрой(текст) {
+        this.krugСлушает = false;
+        (this.krugСети || []).forEach((с) => { try { с.канал.close(); } catch (e) {} });
+        this.krugСети = [];
+        if (this.krugРелейКомната) { try { this.krugРелейКомната.leave(); } catch (e) {} }
+        this.krugРелейКомната = null; this.krugРелейПочта = null;
+        this.krugОжидают = {};
+        if (this.krugТик) { clearTimeout(this.krugТик); this.krugТик = null; }
+        const st = document.getElementById('krugState');
+        if (st && текст) { st.textContent = 'круг: ' + текст; st.className = 'p2p-state wait'; }
+        this.krugКраска();
+    }
+    async krugВернуться(ключ, имя) {
+        const К = window.КругПрофили;
+        if (!К || !this.krugАдаптер) return;
+        const р = К.повторныйКонтакт(this.krugАдаптер, ключ);
+        if (р.причина === 'запрещено') {
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: зал «' + имя + '» у тебя под запретом — сними запрет в списке круга'; st.className = 'p2p-state wait'; }
+            return;
+        }
+        if (р.вопрос) {
+            const ок = window.confirm('Круг: вернуться в зал «' + имя + '»? Согласие этому кругу ещё не дано.');
+            if (!ок) return;
+            try { К.согласие(this.krugАдаптер, ключ, 'разрешено'); } catch (e) { /* не бывает — профиль есть */ }
+        }
+        if (!р.ok || !р.рендеву) {   /* незнакомец — вернуться некуда, честно */
+            const st = document.getElementById('krugState');
+            if (st) st.textContent = 'круг: профиль исчез — первый контакт заново (QR)';
+            this.krugКраска();
+            return;
+        }
+        try {
+            this.krugЖдуЗала = { ключ: ключ, имя: имя };
+            this.krugСети = [];
+            try {
+                const бч = new BroadcastChannel(р.рендеву);
+                бч.onmessage = (е) => this.krugПриём(е.data, 'мост');
+                this.krugСети.push({ имя: 'мост', канал: бч });
+            } catch (e) { /* останутся релеи */ }
+            const st = document.getElementById('krugState');
+            const скажу = (т, к) => { if (st) { st.textContent = т; st.className = 'p2p-state ' + (к || 'wait'); } };
+            скажу('круг: зову зал «' + имя + '» по рендеву (без QR)…');
+            try { const тр = await import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs');
+                const комната = тр.joinRoom(
+                    { appId: 'singular-krug-v1',
+                      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+                      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] } },
+                    р.рендеву);
+                const почта = комната.makeAction('круг');
+                почта.onMessage = (д) => this.krugПриём(д, 'релеи');
+                this.krugРелейКомната = комната; this.krugРелейПочта = почта;
+            } catch (е) { /* релеи не встали — мост вкладок остаётся */ }
+            this.krugРазошли({ t: 'КРУГ_ЗОВ', key: this.krugМой.key, имя: 'телефон', роль: 'телефон' });
+            this.krugТик = setTimeout(() => {
+                if (this.krugЖдуЗала) {
+                    this.krugЖдуЗала = null;
+                    this.krugСлушаниеЗакрой('зал молчит — он должен держать «слушать круг» включённым');
+                }
+            }, 20000);
+        } catch (e) {
+            this.krugЖдуЗала = null;
+            this.krugСлушаниеЗакрой('круг: честный отказ — ' + String(e.message || e));
+        }
+    }
+    krugПриём(д, откуда) {
+        const К = window.КругПрофили;
+        if (!К || !д || typeof д !== 'object' || !д.t) return;
+        if (String(д.key) === (this.krugМой && this.krugМой.key)) return;   /* своё эхо не едят */
+        const st = document.getElementById('krugState');
+        if (д.t === 'КРУГ_ЗОВ') {
+            if (!this.krugСлушает) return;   /* зал не слушает — зовы честно мимо */
+            const до = this.krugТихо[д.key] || 0;
+            if (до > Date.now()) return;     /* двойная доставка (мост+релеи) уже обработана */
+            this.krugТихо[д.key] = Date.now() + 30000;
+            try { К.встреча(this.krugАдаптер, { key: String(д.key), имя: String(д.имя || '').slice(0, 40), роль: String(д.роль || 'телефон').slice(0, 12) }, Date.now()); } catch (e) { return; }
+            const п = К.профиль(this.krugАдаптер, String(д.key));
+            if (п && п.согласие === 'разрешено') { this.krugВышлиОффер(String(д.key)); }
+            else if (п && п.согласие === 'запрещено') {
+                this.krugРазошли({ t: 'КРУГ_ОТКАЗ', key: this.krugМой.key, причина: 'запрещено' });
+            } else {
+                this.krugОжидают[String(д.key)] = { имя: String(д.имя || 'устройство'), роль: String(д.роль || 'телефон') };
+                if (st) { st.textContent = 'круг: зов от «' + (д.имя || 'устройства') + '» — жмёт ли он «принять» — решаешь ты'; st.className = 'p2p-state wait'; }
+            }
+            this.krugКраска();
+        } else if (д.t === 'КРУГ_ОФФЕР') {
+            if (!this.krugЖдуЗала || String(д.key) !== this.krugЖдуЗала.ключ) return;
+            if (this.krugТихо['о:' + д.key] > Date.now()) return;
+            this.krugТихо['о:' + д.key] = Date.now() + 30000;
+            const з = this.krugЖдуЗала;
+            (async () => {
+                try {
+                    const ответ = await this.p2p.clientJoin(String(д.код || ''));
+                    this.krugРазошли({ t: 'КРУГ_ОТВЕТ', key: this.krugМой.key, код: ответ });
+                    if (st) { st.textContent = 'круг: ответ ушёл — канал встаёт (без QR)'; st.className = 'p2p-state wait'; }
+                    this.krugТик = setTimeout(() => { if (this.krugЖдуЗала) { this.krugЖдуЗала = null; this.krugСлушаниеЗакрой('круг: зал не подтвердил'); } }, 20000);
+                } catch (е) {
+                    this.krugЖдуЗала = null;
+                    this.krugСлушаниеЗакрой('круг: оффер не взялся — ' + String(е.message || е));
+                }
+            })();
+        } else if (д.t === 'КРУГ_ОТВЕТ') {
+            (async () => {
+                try {
+                    await this.p2p.hostAccept(String(д.код || ''));
+                    if (st) { st.textContent = 'круг: связываемся…'; st.className = 'p2p-state wait'; }
+                } catch (е) { if (st) { st.textContent = 'круг: плохой ответ — ' + String(е.message || е); st.className = 'p2p-state wait'; } }
+            })();
+        } else if (д.t === 'КРУГ_ОТКАЗ') {
+            this.krugЖдуЗала = null;
+            this.krugСлушаниеЗакрой('зал ответил: ' + String(д.причина || 'отказ'));
+        }
+    }
+    async krugВышлиОффер(ключГостя) {
+        const st = document.getElementById('krugState');
+        try {
+            if (this.p2p && this.p2p.pc) this.p2p.close();
+            const код = await this.p2p.hostCreate();
+            this.krugРазошли({ t: 'КРУГ_ОФФЕР', key: this.krugМой.key, код: код });
+            if (st) { st.textContent = 'круг: оффер ушёл через рендеву (без QR) — жду ответ'; st.className = 'p2p-state wait'; }
+        } catch (e) { if (st) { st.textContent = 'круг: оффер не собрался — ' + String(e.message || e); st.className = 'p2p-state wait'; } }
+    }
+    krugЗдравствуйте(роль) {
+        if (!this.p2p || !this.krugМой) return;
+        try { this.p2p.send('HELLO', { key: this.krugМой.key, имя: роль === 'зал' ? 'зал ·17' : 'телефон', роль: роль }); } catch (e) { /* канал ещё не открыт */ }
+    }
+    krugВстретил(д) {
+        const К = window.КругПрофили;
+        if (!К || !д || !this.krugАдаптер || !this.krugМой) return;
+        if (String(д.key) === this.krugМой.key) return;   /* сам себя не записывают */
+        try {
+            К.встреча(this.krugАдаптер, { key: String(д.key), имя: String(д.имя || '').slice(0, 40), роль: String(д.роль || '').slice(0, 12) }, Date.now());
+            this.krugКраска();
+        } catch (e) { /* битый hello — честно игнор */ }
     }
     /* ── 4c. РЕЖИМ ТЕЛЕФОНА: #join=<оффер> — микрофон + пульт ── */
     async phoneMode(offerCode) {
