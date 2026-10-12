@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.78 «СЛОГ» («SYLLABLE») · **Updated:** 2026-10-12 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.82 «СХОДИМОСТЬ» («CONVERGENCE») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -62,7 +62,7 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 - **Л2** · 📋 **P1.1: Intent → region seed** — offline rules first, LLM optional. *Closed when:* a text description yields a region draft without any network.
 - **Л3** · 📋 **P2: QA metrics** (OCR/entity recall/spatial error + experiment ledger) per `08_EXPERIMENT_PLAN_RU.md`. *Closed when:* metrics measured on a fixed corpus of scenes.
 - **Л4** · 📋 **P2.1: Web Audio / AudioWorklet** — the music region becomes a real track, not a label. *Closed when:* the loop lives in the beat without network.
-- **Л5** · 📋 **P3–P4: multi-device sync** (shared with hall ·17: event queue/CRDT), **«Circle of our own»** (shared with ·23), **masked repair**, **local open-model adapter**. *Closure:* one at a time, each with its own test.
+- **Л5** · 📋 **P3–P4: multi-device sync** — ✅ **P3 closed by tact v10.82 «СХОДИМОСТЬ»** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.82]` (event queue + CRDT shared with hall ·17: canon `src/sync-crdt.js` — GSet/ORSet/LWW + SyncPeer with outbox, dedup and latecomer snapshot; hall ·17 — «Синхрон» panel: claps/mark-toggle/next-request converge in all windows; tests 18/18). P4 (masked repair) — [10.81] «ЛАТКА» reported closure, wave2 rolled the canon file back from main — kept open until the canon lands. *The rest one by one, each with its own test:* «Circle of our own» (shared with ·23), masked repair (canon to be returned), local open-model adapter. *Closure:* one at a time, each with its own test.
 - **Л6** · 👤 **Live runs with SR/NVDA/VoiceOver and real browsers** for P0.1 — static self-tests (80/80) do not replace people and screen readers.
 
 ### Line ЖИВОЙ КОНТУР (the living contour · learning layer)
