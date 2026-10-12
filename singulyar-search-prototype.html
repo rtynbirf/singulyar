@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SINGULYAR SEARCH · Карта всех каналов v2.0 — без исключений</title>
+<style>
+:root {
+  --bg:#0a0e14; --panel:#12181f; --border:#2a3340; --text:#e8eef4;
+  --muted:#8b9aab; --accent:#5b9fd4; --green:#3ecf8e; --red:#f07178;
+  --yellow:#e6b450; --purple:#c792ea; --orange:#ff9e64; --cyan:#7fdbca;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:ui-sans-serif,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+header h1{font-size:1.1rem;font-weight:700}
+.badge{font-size:.65rem;padding:.2rem .5rem;border-radius:999px;background:var(--orange);color:#111;font-weight:700}
+.badge2{background:var(--cyan);color:#111}
+main{display:grid;grid-template-columns:1.1fr 1fr;gap:.85rem;padding:.85rem;max-width:1500px;margin:0 auto}
+@media(max-width:960px){main{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:.9rem}
+.panel h2{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.6rem}
+input[type=text]{width:100%;padding:.65rem .8rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem}
+button{cursor:pointer;padding:.5rem .85rem;border-radius:7px;border:none;font-weight:600;font-size:.85rem}
+.btn-primary{background:var(--accent);color:#0a0e14}
+.btn-sec{background:var(--border);color:var(--text)}
+.btn-warn{background:var(--orange);color:#111}
+.channels{display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0}
+.ch{font-size:.68rem;padding:.25rem .45rem;border-radius:5px;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;user-select:none}
+.ch.on{border-color:var(--cyan);color:var(--cyan);background:rgba(127,219,202,.08)}
+.ch.off{opacity:.35;text-decoration:line-through}
+.claim{border-left:3px solid var(--muted);padding:.5rem .65rem;margin:.4rem 0;font-size:.82rem;background:var(--bg);border-radius:0 6px 6px 0}
+.claim.official{border-left-color:var(--accent)}
+.claim.academic{border-left-color:var(--purple)}
+.claim.p2p{border-left-color:var(--orange)}
+.claim.forum{border-left-color:var(--yellow)}
+.claim.minority{border-left-color:var(--cyan)}
+.claim.erroneous{border-left-color:var(--red);background:rgba(240,113,120,.06)}
+.claim .meta{font-size:.7rem;color:var(--muted);margin-top:.25rem}
+.tag{display:inline-block;font-size:.62rem;padding:.1rem .35rem;border-radius:3px;margin-right:.25rem}
+.tag-err{background:rgba(240,113,120,.25);color:var(--red)}
+.tag-ok{background:rgba(62,207,142,.2);color:var(--green)}
+.tag-unk{background:rgba(230,180,80,.2);color:var(--yellow)}
+.tag-ch{background:rgba(91,159,212,.2);color:var(--accent)}
+.principle{font-size:.78rem;color:var(--muted);border:1px dashed var(--border);padding:.6rem;border-radius:8px;margin-bottom:.6rem}
+.principle strong{color:var(--orange)}
+.log{font-family:ui-monospace,monospace;font-size:.7rem;color:var(--muted);max-height:160px;overflow-y:auto;white-space:pre-wrap}
+.state-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0;font-size:.75rem}
+.state-row span{background:var(--bg);border:1px solid var(--border);padding:.3rem .5rem;border-radius:5px}
+.verdict{padding:.7rem;border-radius:8px;margin-top:.5rem;font-weight:600;font-size:.9rem}
+.verdict.map{background:rgba(127,219,202,.12);color:var(--cyan);border:1px solid rgba(127,219,202,.35)}
+footer{text-align:center;padding:.8rem;color:var(--muted);font-size:.7rem;border-top:1px solid var(--border);margin-top:.5rem}
+.steps{display:flex;flex-wrap:wrap;gap:.3rem;margin:.5rem 0}
+.step{font-size:.68rem;padding:.25rem .45rem;border-radius:4px;border:1px solid var(--border);color:var(--muted)}
+.step.on{border-color:var(--accent);color:var(--accent)}
+.step.done{border-color:var(--green);color:var(--green)}
+</style>
+</head>
+<body>
+<header>
+  <h1>SINGULYAR · Карта всех каналов</h1>
+  <span class="badge">v2.0 БЕЗ ИСКЛЮЧЕНИЙ</span>
+  <span class="badge2">ошибочное ≠ невидимое</span>
+  <span style="color:var(--muted);font-size:.75rem">территория, не декларация</span>
+</header>
+<main>
+  <div class="panel">
+    <h2>Запрос · все каналы включены по умолчанию</h2>
+    <div class="principle">
+      <strong>Принцип:</strong> ни одно мнение не вырезается. Ошибочное помечается как ошибочное — и остаётся на карте.
+      На ошибках учатся. «Официальное» — один канал среди равных, не судья остальных.
+    </div>
+    <input type="text" id="query" value="Совместимы ли Tech A и Tech B?">
+    <div style="margin-top:.55rem;display:flex;gap:.4rem;flex-wrap:wrap">
+      <button class="btn-primary" onclick="runAll()">▶ Карта по всем каналам</button>
+      <button class="btn-sec" onclick="resetAll()">Сброс</button>
+      <button class="btn-warn" onclick="toggleAll(true)">Вкл. всё</button>
+      <button class="btn-sec" onclick="toggleAll(false)">Выкл. всё</button>
+    </div>
+    <h2 style="margin-top:.85rem">Каналы (клик = вкл/выкл; по умолчанию ВСЕ вкл.)</h2>
+    <div class="channels" id="channels"></div>
+    <div class="steps" id="steps">
+      <span class="step" data-s="1">1. Намерение</span>
+      <span class="step" data-s="2">2. Федерация каналов</span>
+      <span class="step" data-s="3">3. Сбор без фильтра истины</span>
+      <span class="step" data-s="4">4. Метки (в т.ч. ошибка)</span>
+      <span class="step" data-s="5">5. Карта, не вердикт-монополия</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Состояние карты</h2>
+    <div class="state-row" id="state"></div>
+    <h2 style="margin-top:.7rem">Журнал</h2>
+    <div class="log" id="log"></div>
+  </div>
+
+  <div class="panel" style="grid-column:1/-1">
+    <h2>Все найденные мнения / утверждения (включая помеченные как ошибочные)</h2>
+    <div id="claims"></div>
+    <div id="verdictBox"></div>
+  </div>
+</main>
+<footer>
+  SINGULYAR v2.0 · объектная карта каналов · P2P/форум/миноритарное/ошибочное не вырезаются ·
+  это учебный прототип карты, не живой краулер всего интернета и не клиент пиратства
+</footer>
+<script>
+/* Каналы — равны. Ни один не «главный». */
+const CHANNEL_DEFS = [
+  {id:'official',  label:'Официальный / институциональный', color:'official'},
+  {id:'academic',  label:'Академический / рецензируемый', color:'academic'},
+  {id:'news',      label:'СМИ / пресс-релизы', color:'official'},
+  {id:'p2p',       label:'P2P / торрент-метаданные / DHT-каталоги', color:'p2p'},
+  {id:'forum',     label:'Форумы / Q&A / пользовательский опыт', color:'forum'},
+  {id:'minority',  label:'Миноритарное / спорное мнение', color:'minority'},
+  {id:'archive',   label:'Архивы / зеркала / Wayback-слой', color:'academic'},
+  {id:'erroneous', label:'Заведомо оспариваемое / ошибочное (учимся)', color:'erroneous'},
+];
+
+/* Учебный корпус: одна тема — много каналов, включая ошибочное */
+const CORPUS = [
+  {id:'c1', channel:'official',  text:'Tech A совместим с Tech B согласно спецификации v2.0 (Doc_2023).', source:'Official Spec v2.0', truth:'supported', note:'институциональный документ'},
+  {id:'c2', channel:'academic',  text:'В лабораторных тестах 2023 интеграция A+B проходила в 94% сценариев.', source:'Lab Report 2023', truth:'supported', note:'рецензируемый отчёт'},
+  {id:'c3', channel:'news',      text:'Компания заявила о полной совместимости A и B на презентации.', source:'Press Wire', truth:'supported', note:'пресс-релиз = заявление, не независимый тест'},
+  {id:'c4', channel:'p2p',       text:'В раздачах и описаниях сборок пользователи кладут патч «A-B bridge»; в README — «работает после патча».', source:'P2P catalog meta', truth:'unknown', note:'метаданные сообщества; не первоисточник спецификации'},
+  {id:'c5', channel:'forum',     text:'У меня на проде A+B падает раз в неделю. Совместимость на бумаге ≠ в бою.', source:'Ops Forum thread', truth:'conflict', note:'живой опыт; единичный, но не вырезан'},
+  {id:'c6', channel:'minority',  text:'Совместимость — маркетинг. Реально нужен форк ядра B.', source:'Independent analyst blog', truth:'conflict', note:'миноритарная позиция'},
+  {id:'c7', channel:'archive',   text:'В спецификации 2015 (архив) A и B были помечены как несовместимые.', source:'Archive 2015 manual', truth:'conflict', note:'устаревшая версия — важна для истории ошибок'},
+  {id:'c8', channel:'erroneous', text:'Tech A всегда был совместим с чем угодно, это закон природы.', source:'Viral post 2021', truth:'erroneous', note:'фактически ложно; оставлено на карте как урок'},
+  {id:'c9', channel:'p2p',       text:'Магнит-ссылки на «полный дамп доков A/B» — в описании указан mirror академического PDF.', source:'Tracker description', truth:'unknown', note:'P2P как канал доставки уже известного документа'},
+  {id:'c10',channel:'forum',     text:'После обновления B 3.1 всё сломалось. Откатил — снова ок.', source:'User report 2024', truth:'conflict', note:'регрессия; не «официально», но на территории'},
+];
+
+let enabled = {};
+CHANNEL_DEFS.forEach(c => enabled[c.id] = true);
+
+function log(m){
+  const el = document.getElementById('log');
+  const t = new Date().toISOString().slice(11,19);
+  el.textContent += `[${t}] ${m}\n`;
+  el.scrollTop = el.scrollHeight;
+}
+function setStep(n){
+  document.querySelectorAll('.step').forEach(s=>{
+    const sn = +s.dataset.s;
+    s.classList.remove('on','done');
+    if(sn < n) s.classList.add('done');
+    if(sn === n) s.classList.add('on');
+  });
+}
+function renderChannels(){
+  const box = document.getElementById('channels');
+  box.innerHTML = '';
+  CHANNEL_DEFS.forEach(c=>{
+    const d = document.createElement('div');
+    d.className = 'ch ' + (enabled[c.id] ? 'on' : 'off');
+    d.textContent = c.label;
+    d.onclick = ()=>{ enabled[c.id] = !enabled[c.id]; renderChannels(); };
+    box.appendChild(d);
+  });
+}
+function toggleAll(v){ CHANNEL_DEFS.forEach(c=>enabled[c.id]=v); renderChannels(); }
+function truthTag(t){
+  if(t==='erroneous') return '<span class="tag tag-err">ОШИБОЧНОЕ / УЧИМСЯ</span>';
+  if(t==='supported') return '<span class="tag tag-ok">согласуется с частью источников</span>';
+  if(t==='conflict') return '<span class="tag tag-unk">спор / конфликт</span>';
+  return '<span class="tag tag-unk">не проверено</span>';
+}
+function chTag(ch){
+  const def = CHANNEL_DEFS.find(x=>x.id===ch);
+  return `<span class="tag tag-ch">${def?def.label:ch}</span>`;
+}
+function runAll(){
+  const q = document.getElementById('query').value.trim();
+  if(!q) return;
+  document.getElementById('log').textContent = '';
+  document.getElementById('claims').innerHTML = '';
+  document.getElementById('verdictBox').innerHTML = '';
+  document.getElementById('state').innerHTML = '';
+
+  setStep(1); log('НАМЕРЕНИЕ: '+q);
+  setTimeout(()=>{
+    setStep(2);
+    const on = CHANNEL_DEFS.filter(c=>enabled[c.id]).map(c=>c.label);
+    log('ФЕДЕРАЦИЯ: каналы = ['+on.join(' | ')+']');
+    if(!on.length){ log('Нет включённых каналов — карта пуста (это тоже честный исход).'); setStep(5); return; }
+
+    setTimeout(()=>{
+      setStep(3);
+      // Простейший отбор по словам + ВСЕ включённые каналы; ничего не выкидываем по «истинности»
+      const words = new Set(q.toLowerCase().split(/\s+/).filter(w=>w.length>2));
+      let hits = CORPUS.filter(item => enabled[item.channel]);
+      // лёгкий lexical boost, но не фильтр истины
+      hits = hits.map(h=>{
+        const tw = h.text.toLowerCase();
+        let score = 0;
+        words.forEach(w=>{ if(tw.includes(w)) score++; });
+        return {...h, score};
+      }).sort((a,b)=>b.score-a.score);
+
+      log('СБОР: '+hits.length+' утверждений со всех включённых каналов (ошибочные НЕ удалены)');
+
+      setTimeout(()=>{
+        setStep(4);
+        const box = document.getElementById('claims');
+        if(!hits.length){
+          box.innerHTML = '<p style="color:var(--yellow)">По включённым каналам совпадений нет. Это UNKNOWN по покрытию, не «правды нет».</p>';
+        } else {
+          hits.forEach(h=>{
+            const cls = 'claim '+ (CHANNEL_DEFS.find(c=>c.id===h.channel)||{}).color;
+            box.innerHTML += `<div class="${cls}">
+              ${chTag(h.channel)} ${truthTag(h.truth)}
+              <div>${h.text}</div>
+              <div class="meta">${h.source} · ${h.note}</div>
+            </div>`;
+          });
+        }
+
+        const byCh = {};
+        hits.forEach(h=>{ byCh[h.channel]=(byCh[h.channel]||0)+1; });
+        const nErr = hits.filter(h=>h.truth==='erroneous').length;
+        const nConf = hits.filter(h=>h.truth==='conflict').length;
+        const nSup = hits.filter(h=>h.truth==='supported').length;
+        const nP2p = hits.filter(h=>h.channel==='p2p').length;
+
+        document.getElementById('state').innerHTML = `
+          <span>всего на карте: <b>${hits.length}</b></span>
+          <span>офиц/акад/сми: <b>${(byCh.official||0)+(byCh.academic||0)+(byCh.news||0)}</b></span>
+          <span>P2P: <b>${nP2p}</b></span>
+          <span>форум/минорит.: <b>${(byCh.forum||0)+(byCh.minority||0)}</b></span>
+          <span style="color:var(--red)">помечено ошибочным: <b>${nErr}</b></span>
+          <span>конфликт: <b>${nConf}</b></span>
+          <span>согласуется: <b>${nSup}</b></span>
+        `;
+        log('МЕТКИ: ошибочных='+nErr+' конфликт='+nConf+' support-like='+nSup+' p2p='+nP2p);
+
+        setTimeout(()=>{
+          setStep(5);
+          const vb = document.getElementById('verdictBox');
+          vb.innerHTML = `<div class="verdict map">
+            РЕЗУЛЬТАТ = КАРТА, НЕ МОНОПОЛЬНЫЙ ПРИГОВОР<br>
+            <span style="font-weight:400;font-size:.82rem;color:var(--muted)">
+            Показаны все включённые каналы. Ошибочное мнение (c8) не скрыто — оно на карте с меткой «ОШИБОЧНОЕ / УЧИМСЯ».
+            P2P и форумы не вырезаны. «Официальный» канал не отменяет остальные.
+            Решение, чему верить, — у человека. Система не подменяет территорию декларацией.
+            </span>
+          </div>
+          <p style="margin-top:.5rem;font-size:.75rem;color:var(--muted)">
+            Limitations: учебный корпус · не живой обход всех трекеров мира · P2P здесь как тип канала (метаданные/описания), не как пиратский клиент ·
+            «включить всё» в реальном вебе = отдельная федерация коннекторов с политикой права и этики на стороне оператора.
+          </p>`;
+          log('КАРТА ГОТОВА: ни одно мнение из включённых каналов не вырезано по признаку «неофициально» или «ошибочно».');
+        }, 350);
+      }, 400);
+    }, 350);
+  }, 250);
+}
+function resetAll(){
+  document.getElementById('claims').innerHTML='';
+  document.getElementById('verdictBox').innerHTML='';
+  document.getElementById('state').innerHTML='';
+  document.getElementById('log').textContent='';
+  setStep(0);
+  CHANNEL_DEFS.forEach(c=>enabled[c.id]=true);
+  renderChannels();
+}
+renderChannels();
+</script>
+</body>
+</html>
