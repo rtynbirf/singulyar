@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Claim",
+  "type": "object",
+  "required": ["text", "status"],
+  "properties": {
+    "text": { "type": "string" },
+    "status": { "type": "string", "enum": ["UNVERIFIED", "VERIFIED", "CONTRADICTORY", "UNKNOWN"] },
+    "supporting_evidence": { "type": "array", "items": { "type": "object" } },
+    "conflicting_evidence": { "type": "array", "items": { "type": "object" } }
+  }
+}

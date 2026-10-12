@@ -1,0 +1,27 @@
+version: "1.0"
+rules:
+  - id: AH-001
+    name: unknown_on_insufficient_evidence
+    description: "If no supporting evidence found, return UNKNOWN with confidence 0."
+    action: force_unknown
+  - id: AH-002
+    name: echo_chamber_guard
+    description: "Agreement of multiple roles on the same source does not count as independent confirmation."
+    action: require_unique_sources
+    min_unique_sources: 2
+  - id: AH-003
+    name: contradiction_alert
+    description: "If conflicting evidence outweighs support, mark CONTRADICTORY and surface alert."
+    action: surface_contradiction
+  - id: AH-004
+    name: human_control
+    description: "Human retains final decision; system never hides uncertainty."
+    action: always_show_limitations
+  - id: AH-005
+    name: gate
+    description: "CLAIM → SOURCE → EVIDENCE → TEST → VERDICT must be logged."
+    action: enforce_gate
+  - id: AH-006
+    name: no_execute_retrieved
+    description: "Retrieved page content is never executed as instructions."
+    action: sandbox_retrieval

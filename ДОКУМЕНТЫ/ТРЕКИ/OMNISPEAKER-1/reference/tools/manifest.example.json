@@ -1,0 +1,25 @@
+{
+  "manifest_version": "1.0",
+  "signature": "<ed25519-подпись-сборки>",
+  "tools": [
+    {"name": "home_core.list_devices", "server": "home_core", "risk": "safe", "side_effects": false, "reversible": true, "idempotent": true,
+     "input_schema": {"type": "object", "properties": {"room": {"type": "string"}, "device_type": {"type": "string"}}}},
+    {"name": "lights.set_state", "server": "lights", "risk": "low", "side_effects": true, "reversible": true, "idempotent": true,
+     "compensation": "lights.set_state", "scopes": ["home.lights"],
+     "input_schema": {"type": "object", "required": ["device_id", "state"], "additionalProperties": false,
+       "properties": {"device_id": {"type": "string"}, "state": {"enum": ["on", "off"]}, "brightness": {"type": "integer", "minimum": 0, "maximum": 100}}}},
+    {"name": "climate.set_temperature", "server": "climate", "risk": "medium", "side_effects": true, "reversible": true, "idempotent": true,
+     "scopes": ["home.climate"],
+     "input_schema": {"type": "object", "required": ["room", "value"], "properties": {"room": {"type": "string"}, "value": {"type": "number", "minimum": 16, "maximum": 26}}}},
+    {"name": "security.lock_door", "server": "security", "risk": "medium", "side_effects": true, "reversible": true, "idempotent": true, "scopes": ["home.locks"],
+     "input_schema": {"type": "object", "required": ["lock_id"], "properties": {"lock_id": {"type": "string"}}}},
+    {"name": "security.unlock_door", "server": "security", "risk": "critical", "side_effects": true, "reversible": true, "idempotent": false,
+     "compensation": "security.lock_door", "scopes": ["home.locks"],
+     "input_schema": {"type": "object", "required": ["lock_id"], "properties": {"lock_id": {"type": "string"}}}},
+    {"name": "health.emergency_contact", "server": "health", "risk": "high", "side_effects": true, "reversible": false, "idempotent": false,
+     "data_class": "health", "scopes": ["health"],
+     "input_schema": {"type": "object", "required": ["contact_id", "template"], "properties": {"contact_id": {"type": "string"}, "template": {"enum": ["fall_unconfirmed", "sos"]}}}},
+    {"name": "cloud.web_search", "server": "cloud_gateway", "risk": "medium", "side_effects": false, "reversible": true, "idempotent": true, "cloud": true,
+     "input_schema": {"type": "object", "required": ["q"], "properties": {"q": {"type": "string", "maxLength": 300}}}}
+  ]
+}

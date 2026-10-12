@@ -1,0 +1,41 @@
+# РЕФЕРЕНСНЫЙ стенд для Фазы 1–2 (рабочая станция / SBC с NPU). Версии образов — закрепить дайджестами перед использованием.
+# Не продуктовая конфигурация: в продукте сервисы идут как подписанные rootless-контейнеры/WASM под системным supervisor'ом.
+name: omni-ref
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    volumes: ["./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro", "./certs:/mosquitto/certs:ro", "mq-data:/mosquitto/data"]
+    ports: ["8883:8883"]
+    restart: unless-stopped
+  matter-server:
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    network_mode: host                 # Matter: mDNS + IPv6 link-local требуют L2-доступа
+    security_opt: ["apparmor=unconfined"]   # требование BLE-коммишининга; в продукте — собственный профиль
+    volumes: ["matter-data:/data", "/run/dbus:/run/dbus:ro"]
+    command: ["--storage-path", "/data", "--paa-root-cert-dir", "/data/credentials"]
+    restart: unless-stopped
+  otbr:
+    image: openthread/otbr:latest      # закрепить конкретный тег/дайджест
+    network_mode: host
+    privileged: true                   # доступ к радиомодулю RCP; в продукте — выделенный сервис
+    environment: ["RADIO_URL=spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=460800", "BACKBONE_INTERFACE=eth0"]
+    devices: ["/dev/ttyACM0"]
+    restart: unless-stopped
+  wakeword:
+    image: rhasspy/wyoming-openwakeword:latest
+    command: ["--preload-model", "ok_nabu"]    # замените на собственное имя (кастомная модель)
+    ports: ["10400:10400"]
+  stt:
+    image: rhasspy/wyoming-whisper:latest
+    command: ["--model", "small-int8", "--language", "ru"]
+    ports: ["10300:10300"]
+    volumes: ["stt-data:/data"]
+  # TTS: Piper-репозиторий архивирован (2026) — зафиксируйте форк/альтернативу (Kokoro и т.п.) и оцените лицензии голосов.
+  agent:
+    build: ../agent_core                # ядро omni_core + ваши адаптеры
+    network_mode: host
+    read_only: true
+    cap_drop: ["ALL"]
+    volumes: ["agent-data:/var/lib/omni", "../policy:/etc/omni/policy:ro", "../tools:/etc/omni/tools:ro"]
+    depends_on: [mosquitto, matter-server]
+volumes: {mq-data: {}, matter-data: {}, stt-data: {}, agent-data: {}}

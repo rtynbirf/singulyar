@@ -1,0 +1,25 @@
+risks:
+  - id: R-01
+    name: echo_chamber
+    severity: high
+    mitigation: unique_sources_check
+  - id: R-02
+    name: outdated_version
+    severity: medium
+    mitigation: timestamp_and_version_fields
+  - id: R-03
+    name: false_premise
+    severity: high
+    mitigation: challenge_agent
+  - id: R-04
+    name: prompt_injection_in_content
+    severity: high
+    mitigation: sandbox_retrieval_no_execution
+  - id: R-05
+    name: resource_exhaustion
+    severity: medium
+    mitigation: step_budget_and_cost_limit
+  - id: R-06
+    name: overconfident_generation
+    severity: high
+    mitigation: unknown_policy_and_gate
