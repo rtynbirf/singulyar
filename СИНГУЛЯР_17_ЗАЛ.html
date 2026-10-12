@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<!-- такт v10.82 «СХОДИМОСТЬ» (С57; приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): Л5-P3 multi-device sync — очередь событий + CRDT, общая с залом ·17. Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js (GSet/ORSet/LWW + SyncPeer; тесты 18/18 в треке) — тот же файл, что гоняют тесты: грузится классическим script-тегом, работает и на https, и на file://. Панель «Синхрон»: 👏 хлопки (GSet), ★ метки «вернусь» — тумблер (ORSet), ♪ просьба следующей (LWW) — сходятся во всех окнах через транспорт ver:1 (дедуп src:seq на приёмнике + свой у реплики), опоздавшее окно догоняет снимком (CRDTHI→CRDTSNAP), офлайн-окно доотправляет из журнала при встрече (online/visibility); повторы доставки не меняют результат (идемпотентные слияния); журнал живёт в памяти окна — честно. STATE/CMD/WebRTC не тронуты -->
 <!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
 <meta charset="utf-8">
@@ -180,9 +181,32 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
   </div>
 
   <h2>Протокол <em>открытый, версионированный</em></h2>
-  <p class="hint">Канал <code>singulyar-hall</code>, пакеты <code>{ver:1, t:HELLO|STATE|CMD|BYE, src, seq, ts, v:значение для seek, …}</code>.
+  <p class="hint">Канал <code>singulyar-hall</code>, пакеты <code>{ver:1, t:HELLO|STATE|CMD|BYE|CRDT|CRDTHI|CRDTSNAP, src, seq, ts, v:значение для seek, …}</code>.
   Транспорт-двойник: BroadcastChannel + localStorage-события, дедуп по <code>src:seq</code>. Зал — только
-  рендер и пульт; аудио всегда живёт в окне сцены (·16).</p>
+  рендер и пульт; аудио всегда живёт в окне сцены (·16). CRDT-конверты несут свой <code>src</code> реплики —
+  транспорт их не перезаписывает.</p>
+
+  <h2>Синхрон <em>CRDT · сходится во всех окнах</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <button class="btn ghost" id="btnClapSync">👏 хлопок</button>
+      <button class="btn ghost" id="btnMarkSync">★ метка «вернусь»</button>
+      <button class="btn ghost" id="btnReqSync">♪ просить следующей</button>
+    </div>
+    <div class="row">
+      <span class="p2p-state open" id="syncClaps">👏 0</span>
+      <span class="p2p-state open" id="syncMarks">★ 0</span>
+      <span class="p2p-state open" id="syncReq">♪ —</span>
+      <span class="p2p-state wait" id="syncState">синхрон: …</span>
+    </div>
+    <p class="hint">Очередь событий + CRDT (GSet / ORSet / LWW-регистр): каждое окно — своя реплика,
+    сходятся к одному значению без ведущего. ★ — тумблер: второе нажатие снимает метку (OR-set —
+    снимаются наблюдённые теги, новая метка возвращает песню). ♪ — последнее слово побеждает
+    детерминированно (лэмпорт + src). Опоздавшее окно догоняет снимком; офлайн-окно доотправляет
+    журнал при встрече; повторная доставка не меняет результат. Журнал живёт в памяти окна —
+    честно. Канон: <code>ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js</code> — тот же файл,
+    что гоняют тесты трека (18/18). Существующий STATE/CMD не тронут.</p>
+  </div>
 
   <footer>СИНГУЛЯР ·17 «ЗАЛ» · KARAOKE_TREND.txt «Подсистема 1: Бессерверный P2P-экран зала» (BroadcastChannel + Air-Gapped QR/WebRTC) ·
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
@@ -221,6 +245,7 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
   <div class="row" style="margin-top:20px"><button class="btn gray" id="phExit">✕ отключиться</button></div>
 </div>
 
+<script src="ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js"></script>
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -736,6 +761,7 @@ class HallApp {
         this.renderer.transport = this.transport;
         this.bindUI();
         this.initP2P();
+        this.initSync();
         this.loop = this.loop.bind(this);
         requestAnimationFrame(this.loop);
         this.helloTimer = setInterval(() => {
@@ -746,6 +772,9 @@ class HallApp {
         this.renderer.msgCount++;
         if (msg.t === 'STATE') this.state.apply(msg);
         else if (msg.t === 'HELLO') this.state.hello = Date.now();
+        else if (msg.t === 'CRDT' && this.sync) { if (this.sync.recv(msg)) this.renderSync(); }
+        else if (msg.t === 'CRDTHI' && this.sync) { try { this.transport.send({ t: 'CRDTSNAP', d: this.sync.snapshot() }); } catch (_) {} }
+        else if (msg.t === 'CRDTSNAP' && this.sync) { try { this.sync.mergeSnapshot(msg.d); } catch (_) {} }
     }
     sendCmd(cmd, v) {
         this.transport.send({ t: 'CMD', cmd, v });
@@ -759,6 +788,58 @@ class HallApp {
         document.getElementById('cmdFwd').addEventListener('click', () => this.sendCmd('seek', 5));
         document.getElementById('btnDemo').addEventListener('click', () => this.demoOn());
         document.getElementById('btnDemoOff').addEventListener('click', () => this.demoOff());
+    }
+    /* ── 4d. СИНХРОН (v10.82 «СХОДИМОСТЬ», Л5-P3): очередь событий + CRDT ──
+       Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js. Конверты
+       {ver:1,t:'CRDT',src,seq,d} идут через транспорт зала (дедуп src:seq и на
+       приёмнике, и в реплике — двойная защита). Реплика сессионная (id случаен
+       на окно — два окна одного происхождения иначе делили бы один id); журнал
+       в памяти окна; опоздавшие догоняют снимком CRDTHI→CRDTSNAP. */
+    initSync() {
+        const st = document.getElementById('syncState');
+        const say = (txt, cls) => { if (st) { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); } };
+        if (!window.SyncCRDT || !window.SyncCRDT.SyncPeer) { say('синхрон: модуль не встал — зал работает как раньше'); return; }
+        try {
+            const rid = 'r-' + Math.random().toString(36).slice(2, 10);
+            this.sync = new window.SyncCRDT.SyncPeer({
+                id: rid,
+                send: (env) => this.transport.send(env),
+                onRemote: () => this.renderSync()
+            });
+            const bClap = document.getElementById('btnClapSync');
+            const bMark = document.getElementById('btnMarkSync');
+            const bReq  = document.getElementById('btnReqSync');
+            if (bClap) bClap.addEventListener('click', () => { this.sync.op('ginc', { key: 'claps', by: 1 }); this.renderSync(); });
+            if (bMark) bMark.addEventListener('click', () => {
+                const song = String((this.state && this.state.song) || 'без песни').slice(0, 80);
+                const live = this.sync.members('marks').indexOf(song) !== -1;
+                this.sync.op(live ? 'orrem' : 'oradd', { key: 'marks', el: song });   /* тумблер честный */
+                this.renderSync();
+            });
+            if (bReq) bReq.addEventListener('click', () => {
+                const song = String((this.state && this.state.song) || 'любую').slice(0, 80);
+                this.sync.op('lww', { key: 'req', v: song });
+                this.renderSync();
+            });
+            const flush = () => { if (this.sync) { this.sync.flush(); this.renderSync(); } };
+            window.addEventListener('online', flush);
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) flush(); });
+            setTimeout(() => { try { this.transport.send({ t: 'CRDTHI' }); } catch (_) {} flush(); }, 700);
+            say('синхрон: жив', 'open');
+        } catch (e) { this.sync = null; say('синхрон: честный отказ — ' + String((e && e.message) || 'неизвестно')); }
+        this.renderSync();
+    }
+    renderSync() {
+        if (!this.sync) return;
+        let s = null; try { s = this.sync.stats(); } catch (_) { return; }
+        const c = document.getElementById('syncClaps'), m = document.getElementById('syncMarks'), q = document.getElementById('syncReq');
+        if (c) c.textContent = '👏 ' + (this.sync.value('claps') || 0);
+        const mm = this.sync.members('marks') || [];
+        if (m) m.textContent = '★ ' + mm.length + (mm.length ? ' · ' + String(mm[mm.length - 1]).slice(0, 18) : '');
+        const req = this.sync.value('req');
+        if (q) q.textContent = '♪ ' + (req === null || req === undefined || req === '' ? '—' : String(req).slice(0, 18));
+        const st = document.getElementById('syncState');
+        if (st) st.textContent = 'синхрон: ' + s.id + ' · лэмпорт ' + s.lamport + ' · журнал ' + s.pending + ' · принято ' + s.applied + ' · транспорт ' + (this.transport ? this.transport.mode : '—');
     }
     /* ── 4b. P2P: хост-экран + телефон-микрофон (air-gapped WebRTC) ── */
     initP2P() {
