@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- такт v10.58 «ВАЛЬС» (С39): дверь ·42 КОЛОНКА — трек «УМНАЯ КОЛОНКА» (OMNISPEAKER-1 v0.4.0) влит в дом СИНГУЛЯР:
+<!-- такт v10.87 «УУП» (С62): приказ владельца «КОЛОНКА ЛЮБАЯ У КЛИЕНТА КАКАЯ ЕСТЬ!!! ОН ПРОСТО ПОДКЛЮЧАЕТ К НАШЕМУ УУП!!! И УЖЕ НАШ МАЛЫШ ВСЁ ДЕЛАЕТ ГОВОРИТ ПОГОДУ СТАВИТ БУДИЛЬНИК И ВСЁ ЧТО ПОЛОЖЕНО… КАЖДОМУ НАДО ПРОСТО ДАТЬ ВОЗМОЖНОСТЬ ТЮНИНГОВАТЬ ПОД СВОИ ПОТРЕБНОСТИ!!!» — новая вкладка «УУП · МАЛЫШ»: подключение ЛЮБОЙ колонки клиента (Bluetooth/AUX/HDMI — она остаётся у клиента), голос МАЛЫША (родной синтез речи), ПОГОДА (Open-Meteo без ключа, запрос только по кнопке, честный офлайн-кэш), БУДИЛЬНИК (голос МАЛЫША + гонг через выбранную колонку, офлайн, дом помнит); всё тюнится под свои потребности и помнится домом. OMNISPEAKER-1 сохранён как эталонный проект железа (вкладки ниже). Поверх v10.58 «ВАЛЬС» (С39): дверь ·42 КОЛОНКА — трек «УМНАЯ КОЛОНКА» (OMNISPEAKER-1 v0.4.0) влит в дом СИНГУЛЯР:
      живой DAG-оркестратор + Policy Gate (PIN-подтверждение critical), hash-chain аудит на настоящем SHA-256,
      аппаратная приватность (2-полюсный микрик микрофона + механическая шторка камеры), VLAN-матрица,
      IaC-конфиги из дистрибутива КОЛОНКА/, карта 13 недель, пробы ЗДОРОВЬЕ, память выбора в localStorage.
@@ -9,13 +9,13 @@
 <head>
 <!--СНГ:КОРД--><!-- страховочный корд дома — общий файл --><script src="./cord.js"></script><!--/СНГ:КОРД-->
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://api.open-meteo.com">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>СИНГУЛЯР ·42 КОЛОНКА — умная колонка дома · offline-first</title>
-<meta name="description" content="Дверь ·42 КОЛОНКА дома СИНГУЛЯР: трек OMNISPEAKER-1 — автономная умная колонка с DAG-оркестратором, Policy Gate, hash-chain аудитом и аппаратной приватностью. Абсолютный offline-first, ноль сети.">
+<title>СИНГУЛЯР ·42 КОЛОНКА — УУП · любая колонка + МАЛЫШ · offline-first</title>
+<meta name="description" content="Дверь ·42 КОЛОНКА дома СИНГУЛЯР: УУП — подключи ЛЮБУЮ свою колонку (Bluetooth/AUX/HDMI), а МАЛЫШ делает всё: говорит погоду, ставит будильник; всё тюнится под свои потребности. OMNISPEAKER-1 — эталонный проект железа. Offline-first.">
 <meta name="theme-color" content="#0B0D10">
 <style>
 /* ═══ С39·КОЛОНКА · закон дома: эргономика, приватность, конфиденциальность, юзабилити ═══ */
@@ -204,24 +204,26 @@ a{color:var(--золото-бледн)}
 </style>
 </head>
 <body>
-<h1 class="sr-only">СИНГУЛЯР ·42 КОЛОНКА — автономная умная колонка дома</h1>
+<h1 class="sr-only">СИНГУЛЯР ·42 КОЛОНКА — УУП: любая колонка клиента + МАЛЫШ</h1>
 <div class="wrap">
   <header class="шапка">
     <div class="бренд">
       <span class="номер">·42</span>
       <div>
         <div class="имя">КОЛОНКА</div>
-        <div class="подзаг">OMNISPEAKER-1 · умная колонка дома · абсолютный offline-first</div>
+        <div class="подзаг">УУП · КОЛОНКА ЛЮБАЯ: подключай свою — МАЛЫШ делает всё · offline-first</div>
       </div>
     </div>
     <span class="бейдж жив" id="бейджОффлайн">● Offline-first: ENFORCED</span>
+    <span class="бейдж жив">УУП: ЛЮБАЯ колонка</span>
     <span class="бейдж">Matter 1.6</span>
     <span class="бейдж">VLAN 10–50</span>
     <a class="дверь" href="index.html"><i>⌂</i>хаб</a>
   </header>
 
   <nav class="вкладки" role="tablist" aria-label="Органы колонки">
-    <button class="вкладка" role="tab" id="вк-мозг" aria-controls="стр-мозг" aria-selected="true">Мозг · DAG</button>
+    <button class="вкладка" role="tab" id="вк-ууп" aria-controls="стр-ууп" aria-selected="true">УУП · МАЛЫШ</button>
+    <button class="вкладка" role="tab" id="вк-мозг" aria-controls="стр-мозг" aria-selected="false">Мозг · DAG</button>
     <button class="вкладка" role="tab" id="вк-акустика" aria-controls="стр-акустика" aria-selected="false">Акустика · CAD</button>
     <button class="вкладка" role="tab" id="вк-приват" aria-controls="стр-приват" aria-selected="false">Приватность</button>
     <button class="вкладка" role="tab" id="вк-сеть" aria-controls="стр-сеть" aria-selected="false">Сеть · IaC</button>
@@ -229,8 +231,77 @@ a{color:var(--золото-бледн)}
     <button class="вкладка" role="tab" id="вк-здоровье" aria-controls="стр-здоровье" aria-selected="false">Здоровье</button>
   </nav>
 
+  <!-- ═══ ВКЛАДКА 0: УУП·МАЛЫШ — такт v10.87 «УУП» (С62) ═══ -->
+  <section class="страница видна" id="стр-ууп" role="tabpanel" aria-labelledby="вк-ууп">
+    <div class="карта">
+      <h2>Приказ владельца: КОЛОНКА ЛЮБАЯ — подключай к УУП, МАЛЫШ делает всё</h2>
+      <p class="примеч">У клиента уже есть колонка — любая: Bluetooth, AUX, смарт-колонка, телевизор, Hi-Fi. Она остаётся у клиента — покупать нечего. Клиент подключает её к нашему УУП (узел управления подключения) — по Bluetooth, AUX-проводу или HDMI — и наш МАЛЫШ сразу делает всё, что положено: говорит погоду, ставит будильник и будит голосом через выбранную колонку. Всё в этой вкладке тюнится под свои потребности — каждое значение дом помнит.</p>
+      <p class="примеч">Честно про звук: голос МАЛЫША идёт в системный вывод операционной системы — сделай свою колонку выводом по умолчанию (Bluetooth/AUX), и всё зазвучит из неё. Если браузер умеет выбирать выход напрямую (Chrome/Edge умеют), УУП переключит выход прямо здесь, списком ниже; гонг будильника и проба-тон играют через выбранный выход. OMNISPEAKER-1 (вкладки ниже) остаётся эталонным проектом «железной» колонки — для работы дома он теперь не нужен.</p>
+    </div>
+
+    <div class="карта">
+      <h2>УУП · подключение колонки</h2>
+      <div class="сетка">
+        <span class="бейдж" id="уупСтатус">выходы: проверяю…</span>
+        <span class="бейдж" id="уупСинк">переключение выхода: —</span>
+      </div>
+      <label class="примеч" for="уупВыход" style="display:block;margin-top:10px">Аудио-выход (колонка):</label>
+      <select class="ввод" id="уупВыход" aria-label="Аудио-выход: колонка"></select>
+      <div class="сетка">
+        <button class="кнопка главная" id="кнУупПроба">Проверить колонку (тон)</button>
+        <button class="кнопка" id="кнУупОбновить">Обновить список</button>
+      </div>
+      <p class="примеч">Колонку, подключённую Bluetooth'ом или AUX'ом к компьютеру/телефону, система сама сделает доступной — УУП покажет её в списке. Тон-проба играет 3 секунды через выбранную колонку; выбор дом помнит.</p>
+    </div>
+
+    <div class="карта">
+      <h2>МАЛЫШ · голос</h2>
+      <div class="тумблер-ряд">
+        <label class="тумблер"><input type="checkbox" id="уупГолосВкл" checked aria-label="Голос МАЛЫША включён"><span class="трек"></span><span class="ручка"></span></label>
+        <div class="подпись"><b>Голос МАЛЫША</b><span>говорит погоду, будильники и подтверждения</span></div>
+        <span class="статус-текст" id="уупГолосСтатус">—</span>
+      </div>
+      <label class="примеч" for="уупГолосСписок" style="display:block;margin-top:6px">Голос:</label>
+      <select class="ввод" id="уупГолосСписок" aria-label="Голос синтеза речи"></select>
+      <div class="сетка">
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--приглуш)">Скорость <output id="уупСкорВых">1.00×</output><input type="range" id="уупСкор" min="0.7" max="1.4" step="0.05" value="1" style="accent-color:var(--золото)"></label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--приглуш)">Высота <output id="уупТонВых">1.00</output><input type="range" id="уупТон" min="0.7" max="1.3" step="0.05" value="1" style="accent-color:var(--золото)"></label>
+        <label style="display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--приглуш)">Громкость <output id="уупГромкВых">90%</output><input type="range" id="уупГромк" min="0.1" max="1" step="0.05" value="0.9" style="accent-color:var(--золото)"></label>
+      </div>
+      <input class="ввод" id="уупСкажи" type="text" value="Привет! Я МАЛЫШ. Колонка подключена — я на связи." aria-label="Что сказать МАЛЫШу">
+      <div class="сетка">
+        <button class="кнопка главная" id="кнУупСкажи">Скажи</button>
+      </div>
+      <p class="примеч">Речь — родной синтез браузера, голоса системы; офлайн работает. Голос, скорость, высота и громкость тюнуются и помнятся.</p>
+    </div>
+
+    <div class="карта">
+      <h2>ПОГОДА · говорит МАЛЫШ</h2>
+      <input class="ввод" id="уупГород" type="text" placeholder="Город: Москва, Санкт-Петербург, Казань…" aria-label="Город для погоды">
+      <div class="сетка">
+        <button class="кнопка" id="кнУупГео">Моё место</button>
+        <button class="кнопка главная" id="кнУупПогода">Погода</button>
+        <button class="кнопка" id="кнУупСказатьПогоду">МАЛЫШ, скажи погоду</button>
+      </div>
+      <div id="уупПогодаВыдача" class="примеч" aria-live="polite" style="white-space:pre-line">Погода появится здесь. Последний ответ дом помнит и покажет даже офлайн — с честной датой замера.</div>
+      <p class="примеч">Источник — Open-Meteo: без ключа, без аккаунта, без слежки; запрос уходит ТОЛЬКО по нажатию кнопки — дом сам погоду не таскает. Без сети — честный кэш: «данные от …».</p>
+    </div>
+
+    <div class="карта">
+      <h2>БУДИЛЬНИК · МАЛЫШ разбудит через колонку</h2>
+      <div class="сетка">
+        <input class="ввод" id="уупБудВремя" type="time" aria-label="Время будильника" style="margin:0">
+        <input class="ввод" id="уупБудТекст" type="text" placeholder="Подпись: «Подъём», «Квартирник в 19:00»…" aria-label="Подпись будильника" style="margin:0">
+        <button class="кнопка главная" id="кнУупБудДобавить">Поставить будильник</button>
+        <label class="чип" style="display:inline-flex;align-items:center;gap:8px"><input type="checkbox" id="уупБудУведом" style="accent-color:var(--золото)">разрешить системное уведомление</label>
+      </div>
+      <div id="уупБудСписок" class="примеч">Будильников нет. Добавь время и подпись — МАЛЫШ разбудит голосом через выбранную колонку. Работает офлайн; дом помнит будильники.</div>
+      <p class="примеч">Честная граница браузера: дверь должна быть открытой (дом открыт в фоне — это нормально для дома), иначе вкладку усыпит система, и МАЛЫШ про это скажет прямо, без обещаний.</p>
+    </div>
+  </section>
+
   <!-- ═══ ВКЛАДКА 1: МОЗГ ═══ -->
-  <section class="страница видна" id="стр-мозг" role="tabpanel" aria-labelledby="вк-мозг">
+  <section class="страница" id="стр-мозг" role="tabpanel" aria-labelledby="вк-мозг">
     <div class="карта">
       <h2>Сформулируйте цель — оркестратор построит DAG-план</h2>
       <div class="сетка" role="group" aria-label="Готовые цели">
@@ -758,6 +829,267 @@ const __С39_КОЛОНКА = (function(){
     }
   };
 
+  /* ─── УУП (такт v10.87 «УУП», С62): КОЛОНКА ЛЮБАЯ — клиент подключает любую
+     свою колонку к нашему УУП, а МАЛЫШ делает всё: говорит погоду, ставит
+     будильник, тюнуется под потребности. Закон: честные границы браузера. ─── */
+  const ууп = {
+    ctx: null,
+    таймер: null,
+    _минута: '',
+    КЛЮЧ_ПОГОДЫ: 's39-ууп-погода',
+    КЛЮЧ_БУД: 's39-ууп-будильники',
+
+    /* память УУП — общая память ящика (ключи ууп_*) */
+    читай(ключ, умолч){ const п=память.прочесть(); return (п['ууп_'+ключ]!==undefined)?п['ууп_'+ключ]:умолч; },
+    пиши(ключ, значение){ память.сохранить({['ууп_'+ключ]:значение}); },
+
+    /* ── выход: список аудио-устройств + setSinkId где умеется ── */
+    async выходы(){
+      const sel=$('#уупВыход'); if(!sel) return false;
+      let список=[];
+      try{
+        if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices){
+          список=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='audiooutput');
+        }
+      }catch(e){}
+      sel.innerHTML='';
+      const умолч=document.createElement('option');
+      умолч.value=''; умолч.textContent='вывод системы (колонка по умолчанию)';
+      sel.appendChild(умолч);
+      список.forEach((d,i)=>{
+        const o=document.createElement('option');
+        o.value=d.deviceId; o.textContent=(d.label||('колонка '+(i+1)));
+        sel.appendChild(o);
+      });
+      const умеет=!!(window.AudioContext&&AudioContext.prototype.setSinkId);
+      const б=$('#уупСинк'); if(б) б.textContent='переключение выхода: '+(умеет?'умеет (setSinkId)':'системный вывод (ОС)');
+      sel.value=this.читай('выход','');
+      sel.disabled=(список.length===0);
+      const с=$('#уупСтатус');
+      if(с) с.textContent='выходы: '+Math.max(список.length,1);
+      return true;
+    },
+    async тон(){
+      try{
+        if(!this.ctx) this.ctx=new (window.AudioContext||window.webkitAudioContext)();
+        if(this.ctx.state==='suspended'){ try{ await this.ctx.resume(); }catch(e){} }
+        const sel=$('#уупВыход');
+        const id=sel?sel.value:'';
+        let честно='';
+        if(id && AudioContext.prototype.setSinkId){
+          try{ await this.ctx.setSinkId(id); честно='через выбранную колонку'; }
+          catch(e){ честно='вывод системы (выбранный выход недоступен: '+String(e).slice(0,32)+')'; }
+        } else {
+          честно='вывод системы (браузер не умеет setSinkId — выбери колонку в системе)';
+        }
+        const osc=this.ctx.createOscillator(), ус=this.ctx.createGain();
+        osc.frequency.setValueAtTime(440,this.ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(660,this.ctx.currentTime+2.4);
+        ус.gain.setValueAtTime(0.0001,this.ctx.currentTime);
+        ус.gain.exponentialRampToValueAtTime(Math.max(0.01,this.читай('громк',0.9)*0.5),this.ctx.currentTime+0.08);
+        ус.gain.exponentialRampToValueAtTime(0.0001,this.ctx.currentTime+2.6);
+        osc.connect(ус); ус.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime+2.7);
+        await аудит.записать('ууп.тон','исполнено',честно);
+        return true;
+      }catch(e){ await аудит.записать('ууп.тон','отказ',String(e).slice(0,40)); return false; }
+    },
+
+    /* ── голос МАЛЫША: родной синтез речи ── */
+    голоса: [],
+    нарисоватьГолоса(){
+      const sel=$('#уупГолосСписок'); if(!sel) return false;
+      if(!('speechSynthesis' in window)){
+        sel.innerHTML=''; const o=document.createElement('option');
+        o.value=''; o.textContent='синтеза речи нет в этом браузере'; sel.appendChild(o);
+        const с=$('#уупГолосСтатус'); if(с) с.textContent='недоступно';
+        return false;
+      }
+      this.голоса=speechSynthesis.getVoices()||[];
+      const рус=this.голоса.filter(v=>/^ru/i.test(v.lang));
+      const список=рус.length?рус.concat(this.голоса.filter(v=>!/^ru/i.test(v.lang))):this.голоса;
+      sel.innerHTML='';
+      if(!список.length){
+        const o=document.createElement('option'); o.value='';
+        o.textContent='голоса системы подгружаются при первом визите…'; sel.appendChild(o);
+      } else {
+        список.forEach(v=>{
+          const o=document.createElement('option');
+          o.value=String(this.голоса.indexOf(v));
+          o.textContent=v.name+' · '+v.lang+(рус.indexOf(v)>=0?' · русский':'');
+          sel.appendChild(o);
+        });
+        const сохран=this.читай('голос','');
+        if(сохран!=='' && this.голоса[+сохран]) sel.value=сохран;
+      }
+      const с=$('#уупГолосСтатус'); if(с) с.textContent=this.голоса.length+' голос(ов) системы';
+      return true;
+    },
+    сказать(текст){
+      const вк=$('#уупГолосВкл');
+      if(вк && !вк.checked) return false;
+      if(!('speechSynthesis' in window)) return false;
+      try{
+        speechSynthesis.cancel();
+        const выск=new SpeechSynthesisUtterance(String(текст||'').slice(0,300));
+        const idx=+(($('#уупГолосСписок')&&$('#уупГолосСписок').value)||-1);
+        if(this.голоса[idx]) выск.voice=this.голоса[idx];
+        выск.rate=this.читай('скор',1);
+        выск.pitch=this.читай('тон',1);
+        выск.volume=this.читай('громк',0.9);
+        speechSynthesis.speak(выск);
+        return true;
+      }catch(e){ return false; }
+    },
+
+    /* ── погода: Open-Meteo, запрос только по кнопке, честный кэш ── */
+    кодПогоды(код){
+      const т={0:'ясно',1:'в основном ясно',2:'переменная облачность',3:'пасмурно',
+        45:'туман',48:'изморозь',51:'морось',53:'морось',55:'морось',
+        56:'ледяная морось',57:'ледяная морось',61:'небольшой дождь',63:'дождь',
+        65:'сильный дождь',66:'ледяной дождь',67:'ледяной дождь',
+        71:'небольшой снег',73:'снег',75:'сильный снег',77:'снежные зёрна',
+        80:'ливень',81:'ливень',82:'сильный ливень',85:'снежный ливень',86:'снежный ливень',
+        95:'гроза',96:'гроза с градом',99:'гроза с градом'};
+      return т[код]||('погода, код '+код);
+    },
+    погодаКэш(){ try{ const с=localStorage.getItem(this.КЛЮЧ_ПОГОДЫ); return с?JSON.parse(с):null; }catch(e){ return null; } },
+    async погодаПо(шир,долг,место){
+      const выдача=$('#уупПогодаВыдача'); if(!выдача) return false;
+      try{
+        const отв=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+шир+'&longitude='+долг+
+          '&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m'+
+          '&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=3');
+        if(!отв.ok) throw new Error('прогноз HTTP '+отв.status);
+        const j=await отв.json();
+        const пакет={когда:new Date().toISOString(), место:место||'моё место', ток:j};
+        try{ localStorage.setItem(this.КЛЮЧ_ПОГОДЫ,JSON.stringify(пакет)); }catch(e){}
+        this.погодаНарисовать(пакет,false);
+        return true;
+      }catch(e){
+        const кэш=this.погодаКэш();
+        if(кэш){ выдача.textContent='сети нет ('+String(e).slice(0,40)+') — показываю честный кэш:'; this.погодаНарисовать(кэш,true); }
+        else выдача.textContent='сети нет и кэша нет: '+String(e).slice(0,60)+'. Погода честно подождёт.';
+        return false;
+      }
+    },
+    async погодаЗапрос(){
+      const город=($('#уупГород')&&$('#уупГород').value||'').trim();
+      const выдача=$('#уупПогодаВыдача'); if(!выдача) return false;
+      if(!город){ выдача.textContent='Напиши город — МАЛЫШ спросит у Open-Meteo только по нажатию кнопки.'; return false; }
+      выдача.textContent='спрашиваю погоду: '+город+' …';
+      try{
+        const гео=await fetch('https://api.open-meteo.com/v1/geocoding?language=ru&count=1&name='+encodeURIComponent(город));
+        if(!гео.ok) throw new Error('геокодинг HTTP '+гео.status);
+        const геоj=await гео.json();
+        const м=геоj.results&&геоj.results[0];
+        if(!м) throw new Error('город не найден');
+        this.пиши('город',город);
+        const ок=await this.погодаПо(м.latitude,м.longitude,(м.name||город)+(м.country?', '+м.country:''));
+        if(ок) this.сказать('Погода: '+(($('#уупПогодаВыдача')||{}).textContent||'').slice(0,180));
+        return ок;
+      }catch(e){
+        const кэш=this.погодаКэш();
+        if(кэш){ выдача.textContent='сети нет ('+String(e).slice(0,40)+') — показываю честный кэш:'; this.погодаНарисовать(кэш,true); }
+        else выдача.textContent='сети нет и кэша нет: '+String(e).slice(0,60)+'. Погода честно подождёт.';
+        return false;
+      }
+    },
+    погодаНарисовать(пакет, изКэша){
+      const выдача=$('#уупПогодаВыдача'); if(!выдача||!пакет||!пакет.ток) return;
+      const j=пакет.ток, т=j.current||{};
+      const когда=new Date(пакет.когда);
+      const дата=когда.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+      let строка=(изКэша?'(кэш, данные от '+дата+') ':'')+(пакет.место||'')+
+        ' · сейчас '+(т.temperature_2m!=null?Math.round(т.temperature_2m):'—')+'°C, '+
+        this.кодПогоды(т.weather_code)+', ветер '+Math.round(т.wind_speed_10m||0)+' км/ч, ощущается '+
+        (т.apparent_temperature!=null?Math.round(т.apparent_temperature):'—')+'°C';
+      if(j.daily&&j.daily.time){
+        const дни=j.daily.time.map((д,i)=>
+          д.slice(8)+'.'+д.slice(5,7)+': '+Math.round(j.daily.temperature_2m_min[i])+'…'+
+          Math.round(j.daily.temperature_2m_max[i])+'°C, '+this.кодПогоды(j.daily.weather_code[i]));
+        строка+='\n'+дни.join(' · ');
+      }
+      выдача.textContent=строка;
+    },
+
+    /* ── будильник: офлайн, голос МАЛЫША + гонг через выбранный выход ── */
+    будильники(){ try{ const с=localStorage.getItem(this.КЛЮЧ_БУД); const а=с?JSON.parse(с):[]; return Array.isArray(а)?а:[]; }catch(e){ return []; } },
+    будильникиСохранить(а){ try{ localStorage.setItem(this.КЛЮЧ_БУД,JSON.stringify(а.slice(0,24))); return true; }catch(e){ return false; } },
+    будильникДобавить(){
+      const поле=$('#уупБудВремя'), тт=$('#уупБудТекст');
+      const время=поле&&поле.value;
+      if(!время) return false;
+      const текст=(тт&&тт.value||'').trim()||'Подъём';
+      const а=this.будильники();
+      а.push({время, текст, поставлено:new Date().toISOString()});
+      this.будильникиСохранить(а);
+      this.будильникиНарисовать();
+      аудит.записать('будильник.создан','принято',время+' «'+текст.slice(0,32)+'»');
+      const чек=$('#уупБудУведом');
+      if(чек&&чек.checked&&'Notification' in window&&Notification.permission==='default'){
+        try{ Notification.requestPermission(); }catch(e){}
+      }
+      this.сказать('Будильник на '+время+' поставлен.');
+      return true;
+    },
+    будильникУдалить(i){
+      const а=this.будильники();
+      if(i<0||i>=а.length) return false;
+      const убр=а.splice(i,1)[0];
+      this.будильникиСохранить(а);
+      this.будильникиНарисовать();
+      аудит.записать('будильник.снят','исполнено',убр.время+' «'+String(убр.текст||'').slice(0,32)+'»');
+      return true;
+    },
+    будильникиНарисовать(){
+      const окно=$('#уупБудСписок'); if(!окно) return false;
+      const а=this.будильники();
+      окно.textContent='';
+      if(!а.length){
+        окно.textContent='Будильников нет. Добавь время и подпись — МАЛЫШ разбудит голосом через выбранную колонку. Работает офлайн; дом помнит будильники.';
+        return true;
+      }
+      а.forEach((б,i)=>{
+        const ряд=document.createElement('div');
+        ряд.style.cssText='display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dashed rgba(240,240,248,.12)';
+        const вр=document.createElement('b'); вр.textContent=б.время;
+        const тт=document.createElement('span'); тт.textContent='«'+(б.текст||'Подъём')+'»';
+        тт.style.color='var(--приглуш)';
+        const кн=document.createElement('button'); кн.className='кнопка'; кн.textContent='снять';
+        кн.style.padding='4px 10px';
+        кн.setAttribute('aria-label','Снять будильник '+б.время);
+        кн.addEventListener('click',()=>this.будильникУдалить(i));
+        ряд.appendChild(вр); ряд.appendChild(тт); ряд.appendChild(кн);
+        окно.appendChild(ряд);
+      });
+      return true;
+    },
+    будильникТик(){
+      const д=new Date();
+      const мм=уменьшить(д.getHours())+':'+уменьшить(д.getMinutes());
+      if(мм===this._минута) return;
+      this._минута=мм;
+      const а=this.будильники();
+      а.forEach(б=>{
+        if(б.время===мм && б.сработал!==мм){
+          б.сработал=мм;
+          this.будильникиСохранить(а);
+          this.сказать(String(б.текст||'Подъём')+'. Время '+мм+'. МАЛЫШ разбудил.');
+          this.тон();
+          if('Notification' in window && Notification.permission==='granted'){
+            try{ new Notification('МАЛЫШ · будильник '+мм,{body:String(б.текст||'Подъём')}); }catch(e){}
+          }
+          аудит.записать('будильник.звонок','исполнено',мм+' «'+String(б.текст||'').slice(0,32)+'»');
+        }
+      });
+    },
+    пуск(){
+      if(this.таймер) return;
+      this.таймер=setInterval(()=>this.будильникТик(),1000);
+    }
+  };
+
   /* ─── здоровье: пробы каждого органа ─── */
   const здоровье = {
     органы: [],
@@ -811,7 +1143,7 @@ const __С39_КОЛОНКА = (function(){
 
   /* ─── вкладки + сборка лица ─── */
   const лицо = {
-    вкладки:['мозг','акустика','приват','сеть','карта','здоровье'],
+    вкладки:['ууп','мозг','акустика','приват','сеть','карта','здоровье'],
     открыть(имя){
       if(!this.вкладки.includes(имя)) имя='мозг';
       $$('.вкладка').forEach(к=>к.setAttribute('aria-selected', String(к.id==='вк-'+имя)));
@@ -826,7 +1158,7 @@ const __С39_КОЛОНКА = (function(){
       document.addEventListener('keydown',e=>{
         if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
         const н=+e.key;
-        if(н>=1 && н<=6) this.открыть(this.вкладки[н-1]);
+        if(н>=1 && н<=7) this.открыть(this.вкладки[н-1]);
         if(e.key==='Escape' && планировщик._пинResolve) планировщик.закрытьПин(false);
       });
     }
@@ -893,6 +1225,29 @@ const __С39_КОЛОНКА = (function(){
     $$('.подвкладка').forEach(к=>к.addEventListener('click',()=>сеть.показать(к.getAttribute('data-конфиг'))));
     $('#кнКопироватьКонфиг').addEventListener('click',()=>сеть.скопировать());
 
+    /* УУП (v10.87 «УУП»: КОЛОНКА ЛЮБАЯ — МАЛЫШ делает всё) */
+    $('#кнУупПроба').addEventListener('click',()=>ууп.тон());
+    $('#кнУупОбновить').addEventListener('click',()=>ууп.выходы());
+    $('#уупВыход').addEventListener('change',()=>ууп.пиши('выход',$('#уупВыход').value));
+    $('#уупГолосВкл').addEventListener('change',()=>ууп.пиши('голосВкл',$('#уупГолосВкл').checked));
+    $('#уупГолосСписок').addEventListener('change',()=>ууп.пиши('голос',$('#уупГолосСписок').value));
+    $('#уупСкор').addEventListener('input',()=>{ $('#уупСкорВых').textContent=(+$('#уупСкор').value).toFixed(2)+'×'; ууп.пиши('скор',+$('#уупСкор').value); });
+    $('#уупТон').addEventListener('input',()=>{ $('#уупТонВых').textContent=(+$('#уупТон').value).toFixed(2); ууп.пиши('тон',+$('#уупТон').value); });
+    $('#уупГромк').addEventListener('input',()=>{ $('#уупГромкВых').textContent=Math.round(+$('#уупГромк').value*100)+'%'; ууп.пиши('громк',+$('#уупГромк').value); });
+    $('#кнУупСкажи').addEventListener('click',()=>ууп.сказать($('#уупСкажи').value));
+    $('#уупГород').addEventListener('change',()=>ууп.пиши('город',$('#уупГород').value));
+    $('#кнУупГео').addEventListener('click',()=>{
+      if(!navigator.geolocation){ $('#уупПогодаВыдача').textContent='Геолокации нет в этом браузере — напиши город словами.'; return; }
+      $('#уупПогодаВыдача').textContent='смотрю, где мы…';
+      navigator.geolocation.getCurrentPosition(
+        п=>ууп.погодаПо(п.coords.latitude,п.coords.longitude,'моё место'),
+        о=>{ $('#уупПогодаВыдача').textContent='Место не дал(а): '+о.message+' — напиши город словами.'; },
+        {timeout:8000});
+    });
+    $('#кнУупПогода').addEventListener('click',()=>ууп.погодаЗапрос());
+    $('#кнУупСказатьПогоду').addEventListener('click',()=>{ const т=$('#уупПогодаВыдача').textContent; ууп.сказать(т.slice(0,280)); });
+    $('#кнУупБудДобавить').addEventListener('click',()=>ууп.будильникДобавить());
+
     /* здоровье */
     $('#кнПробаВсех').addEventListener('click',()=>здоровье.прогнать());
     $('#кнЗабытьВсё').addEventListener('click',()=>здоровье.забытьВсё());
@@ -906,8 +1261,12 @@ const __С39_КОЛОНКА = (function(){
     здоровье.зарегистрировать('приватность (рубильники)', async ()=>{ приватность.применить(); return document.getElementById('микрик')!==null; });
     здоровье.зарегистрировать('сеть (конфиги)', async ()=>сеть.показать(сеть.текущий) && Object.keys(сеть.файлы).length===5);
     здоровье.зарегистрировать('карта (фазы)', async ()=>document.querySelectorAll('#контейнерФаз .фаза').length===6);
-    здоровье.зарегистрировать('вкладки (лицо)', async ()=>Array.isArray(лицо.вкладки) && лицо.вкладки.length===6 && document.querySelectorAll('.вкладка').length===6);
+    здоровье.зарегистрировать('вкладки (лицо)', async ()=>Array.isArray(лицо.вкладки) && лицо.вкладки.length===7 && document.querySelectorAll('.вкладка').length===7);
     здоровье.зарегистрировать('звук (WebAudio)', async ()=>!!(window.AudioContext||window.webkitAudioContext));
+    здоровье.зарегистрировать('УУП (выходы)', async ()=>ууп.выходы());
+    здоровье.зарегистрировать('МАЛЫШ-голос', async ()=>{ ууп.нарисоватьГолоса(); return ('speechSynthesis' in window); });
+    здоровье.зарегистрировать('УУП (погода-кэш)', async ()=>{ const к=ууп.погодаКэш(); return к===null||!!к.ток; });
+    здоровье.зарегистрировать('УУП (будильники)', async ()=>{ ууп.будильникиНарисовать(); return Array.isArray(ууп.будильники()); });
 
     /* восстановить выбор человека */
     const п=память.прочесть();
@@ -919,13 +1278,33 @@ const __С39_КОЛОНКА = (function(){
     приватность.применить();
     акустика.нарисовать();
 
+    /* УУП: восстановить выбор человека (всё тюнится, дом помнит) */
+    const голосВкл=ууп.читай('голосВкл',true);
+    const тумблерГол=$('#уупГолосВкл'); if(тумблерГол) тумблерГол.checked=!!голосВкл;
+    const скорУуп=ууп.читай('скор',1), тонУуп=ууп.читай('тон',1), громкУуп=ууп.читай('громк',0.9);
+    $('#уупСкор').value=скорУуп; $('#уупСкорВых').textContent=(+скорУуп).toFixed(2)+'×';
+    $('#уупТон').value=тонУуп;  $('#уупТонВых').textContent=(+тонУуп).toFixed(2);
+    $('#уупГромк').value=громкУуп; $('#уупГромкВых').textContent=Math.round(+громкУуп*100)+'%';
+    const городУуп=ууп.читай('город','');
+    if(городУуп) $('#уупГород').value=городУуп;
+    ууп.нарисоватьГолоса();
+    if('speechSynthesis' in window){ try{ speechSynthesis.onvoiceschanged=()=>ууп.нарисоватьГолоса(); }catch(e){} }
+    ууп.выходы();
+    if(navigator.mediaDevices && navigator.mediaDevices.addEventListener){
+      try{ navigator.mediaDevices.addEventListener('devicechange',()=>ууп.выходы()); }catch(e){}
+    }
+    const кэшПогоды=ууп.погодаКэш();
+    if(кэшПогоды) ууп.погодаНарисовать(кэшПогоды,true);
+    ууп.будильникиНарисовать();
+    ууп.пуск();
+
     await аудит.генезис();
-    лицо.открыть(п.вкладка && лицо.вкладки.includes(п.вкладка) ? п.вкладка : 'мозг');
+    лицо.открыть(п.вкладка && лицо.вкладки.includes(п.вкладка) ? п.вкладка : 'ууп');
     здоровье.прогнать();
     return true;
   }
 
-  return {аудит, политика, планировщик, акустика, приватность, сеть, карта, здоровье, память, лицо, инициализировать};
+  return {аудит, политика, планировщик, акустика, приватность, сеть, карта, здоровье, память, лицо, ууп, инициализировать};
 })();
 
 /* ═══ МОСТ: ящик → вещь window.КОЛОНКА (канон дома: delete + defineProperty) ═══ */
