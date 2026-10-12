@@ -9,7 +9,7 @@
 ### Для человека
 - [README.md](https://github.com/rtynbirf/singulyar/blob/main/README.md): лицо репозитория, быстрый старт, блок «одна правда»
 - [docs/СИНТЕЗ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/СИНТЕЗ.md): дом одним взглядом — синтез ТЗ, дороги и архитектуры; с этого начинай
-- [docs/README_EN.md](https://github.com/rtynbirf/singulyar/blob/main/docs/README_EN.md): карта документации на английском — где что лежит, правила папки, законы перевода (Д7, v10.82)
+- [docs/README_EN.md](https://github.com/rtynbirf/singulyar/blob/main/docs/README_EN.md): карта документации на английском — где что лежит, правила папки, законы перевода (Д7)
 - [ДОКУМЕНТАЦИЯ.html](https://rtynbirf.github.io/singulyar/%D0%94%D0%9E%D0%9A%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%90%D0%A6%D0%98%D0%AF.html): все знания дома в человеческом виде
 - [docs/ТЗ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ТЗ.md): живое техническое задание, 10 user stories с критериями приёмки
 - [docs/ДОРОЖНАЯ_КАРТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ДОРОЖНАЯ_КАРТА.md): ЕДИНАЯ ДОРОЖНАЯ КАРТА — все карты дома сведены, весь открытый фронт со статусами и критериями закрытия
@@ -89,3 +89,4 @@
 - Скин пульта «ОМНИ» — пятый вид (`__ПУЛЬТЫ.виды`, память kv.pult): кольцо 360°.
 - Уроки для Малыша: docs/МАЛЫШ.md → часть 7; дорога: docs/ДОРОЖНАЯ_КАРТА.md.
 docs/АРХИТЕКТУРА_EN.md — English translation of the house architecture doc (v10.80); canonical RU wins.
+docs/README_EN.md — English mirror of the documentation map (v10.81); canonical RU wins.

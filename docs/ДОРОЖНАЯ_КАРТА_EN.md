@@ -24,7 +24,7 @@ Each map stays where it lives (no duplicates); its **open lines** are consolidat
 | 7 | House ТЗ (user stories) | `docs/ТЗ.md` (RU) · `docs/ТЗ_EN.md` (EN, v10.77) | promises US-01–US-16; reconciled with the canon |
 | 8 | ADAPTER OS (slices) | `ДОКУМЕНТЫ/ADAPTER_OS.md` | slices 1–6 ✅; model contracts — line А3 |
 | 9 | HARMONIA track | `ДОКУМЕНТЫ/ТРЕКИ/HARMONIA/` + `ОТЧЁТ_ФАЗА_2.md` | phase 1 ✅ (v10.72), phase 2 ✅ (machine part; live-drift measurement — Г2 👤); phase 3 — Г1 ✅ v10.77, Г3 open |
-| 10 | LADOM_SINGULAR track (emergent composition) | `ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/` | P0 + P0.1 ✅; P1–P4 — lines Л1–Л5 |
+| 10 | LADOM_SINGULAR track (emergent composition) | `ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/` | P0 + P0.1 ✅ (v10.74); P1.1/P2/P2.1 ✅ (v10.78–v10.80); P3 multi-device sync ✅ (v10.82); P4 masked repair ✅ (v10.81); open — lines Л1–Л5 |
 | 11 | ЖИВОЙ КОНТУР track (learning layer) | `ДОКУМЕНТЫ/ТРЕКИ/ЖИВОЙ_КОНТУР/` | Stage 0 ✅, Stage 1 ✅ (v10.74/10.75), Stage 2 ✅ (v10.77), Stage 3 ✅ (v10.78 «СЛОГ»); Stages 4–5 — line Ж4 |
 | 12 | КОЛОНКА track (OMNISPEAKER-1) | `КОЛОНКА/` + `ДОКУМЕНТЫ/ТРЕКИ/OMNISPEAKER-1/` | merged into door ·42 (v10.57); hardware phases 0–5 — К1 |
 | 13 | SEARCH track (SINGULYAR-SEARCH) | `ДОКУМЕНТЫ/ТРЕКИ/SINGULYAR-SEARCH/` + root prototype | merged (v10.71); service backbone — П1 |
@@ -45,7 +45,7 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 - **Д3** · 👤 **Owner verdicts on the 1–373 registry** (KEEP / TWEAK) — the КОЛЛЕГА map. *Closed when:* the owner marks the registry; unmarked positions are never chased.
 - **Д4** · 👤 **Real keys of the repertoire** — from the owner; АВТОАКОРД defaults bend to life. *Closed when:* keys are merged into the corpus and АВТОАКОРД verifies against them.
 - **Д6** · 👤 **CSP hashes** — only if the owner decides to bring pinning back; the auto-stamp sha256 in the tact shop is ready (lesson of v10.54: hashes without quotes = invalid source). *Closed when:* the owner speaks the decision and it is written down.
-- **Д7** · 📋 **Translating the documentation** — `docs/СИНТЕЗ_EN.md` (v10.62), `docs/ТЗ_EN.md` (v10.77), `docs/ДОРОЖНАЯ_КАРТА_EN.md` (v10.78, this file); the work stays open: any document is next. *Closure:* process-based — one document per tact.
+- **Д7** · 📋 **Translating the documentation** — `docs/СИНТЕЗ_EN.md` (v10.62), `docs/ТЗ_EN.md` (v10.77), `docs/РИТУАЛ_ТАКТА_EN.md` (v10.78), `docs/ДОРОЖНАЯ_КАРТА_EN.md` (v10.79, this file), `docs/АРХИТЕКТУРА_EN.md` (v10.80), `docs/README_EN.md` (v10.81); the work stays open: any document next. *Closing:* process-based — one document per tact.
 
 ### Line HARMONIA · track ·40
 
@@ -62,7 +62,7 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 - **Л2** · 📋 **P1.1: Intent → region seed** — offline rules first, LLM optional. *Closed when:* a text description yields a region draft without any network.
 - **Л3** · 📋 **P2: QA metrics** (OCR/entity recall/spatial error + experiment ledger) per `08_EXPERIMENT_PLAN_RU.md`. *Closed when:* metrics measured on a fixed corpus of scenes.
 - **Л4** · 📋 **P2.1: Web Audio / AudioWorklet** — the music region becomes a real track, not a label. *Closed when:* the loop lives in the beat without network.
-- **Л5** · 📋 **P3–P4: multi-device sync** — ✅ **P3 closed by tact v10.82 «СХОДИМОСТЬ»** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.82]` (event queue + CRDT shared with hall ·17: canon `src/sync-crdt.js` — GSet/ORSet/LWW + SyncPeer with outbox, dedup and latecomer snapshot; hall ·17 — «Синхрон» panel: claps/mark-toggle/next-request converge in all windows; tests 18/18). P4 (masked repair) — [10.81] «ЛАТКА» reported closure, wave2 rolled the canon file back from main — kept open until the canon lands. *The rest one by one, each with its own test:* «Circle of our own» (shared with ·23), masked repair (canon to be returned), local open-model adapter. *Closure:* one at a time, each with its own test.
+- **Л5** · 📋 **P3–P4: one by one** — **P4 (first two items: masked repair · batch experiments) closed by tact v10.81 «ЛАТКА»** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.81]` (`src/masked-repair.mjs`: targeted region repair without full regeneration — plan `ladom.repair.v1`, heuristic mask planner by overlaps (not an agent!), kept regions guaranteed untouched byte-for-byte, honest kept/blocked, deterministic byte-for-byte without clocks, offline baseline `baselineDerive` — the basis of P4.1; 24/24, track 146/146); **P3 multi-device sync closed by tact v10.82 «СХОДИМОСТЬ»** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.82]` (event queue + CRDT shared with hall ·17: canon `src/sync-crdt.js` — GSet/ORSet/LWW + SyncPeer with outbox, dedup and latecomer snapshot; hall ·17 — «Синхрон» panel: claps/mark-toggle/next-request converge in all windows; tests 18/18). The rest of the line stays open one by one: **P3.1** «Circle of our own» (shared with ·23), **P4 (remainder)** agentic repair planner, **P4.1** local open-model adapter. *Closing:* one by one, each with its own test. *Closure:* one at a time, each with its own test.
 - **Л6** · 👤 **Live runs with SR/NVDA/VoiceOver and real browsers** for P0.1 — static self-tests (80/80) do not replace people and screen readers.
 
 ### Line ЖИВОЙ КОНТУР (the living contour · learning layer)
