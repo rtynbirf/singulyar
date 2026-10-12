@@ -37,19 +37,37 @@ export class AdapterRegistry {
 export class MeaningRouter {
   constructor({ capabilities, registry }) { this.capabilities = capabilities; this.registry = registry; }
 
+  /* Срез 6 «СВОД»: смешение кандидатов на один смысл. Политика выбора —
+     предпочтение человека (preferred, правило ·19) выше автоматики; среди
+     остального: capability-full (canUse объявлен и вернул истину) >
+     приоритет (больше) > стабильный tiebreak — лексикографически по id
+     (возрастание). Сортировка тотальная → выбор детерминирован при
+     одинаковых входах и не зависит от порядка регистрации. canUse зовётся
+     ровно один раз на адаптера. Форма ответа прежняя
+     (message/selected/candidates); поле match в candidates — добавочное
+     (0 — generic, 1 — полное совпадение). */
   route(message, { direction = 'output', preferred = [] } = {}) {
-    const candidates = this.registry.all().filter(a => a.kind === direction);
+    const caps = this.capabilities;
+    const scored = this.registry.all()
+      .filter(a => a.kind === direction)
+      .map(a => {
+        const match = (typeof a.canUse === 'function' && a.canUse(message, caps)) ? 1 : 0;
+        return { a, match };
+      });
     const explicit = new Set(preferred);
-    const ranked = [...candidates].sort((a, b) => score(b) - score(a));
-    const usable = ranked.filter(a => {
-      const s = a.status();
-      return s.state === STATUS.READY && (!a.canUse || a.canUse(message, this.capabilities));
-    });
+    scored.sort((x, y) =>
+      y.match - x.match ||
+      score(y.a) - score(x.a) ||
+      (x.a.id < y.a.id ? -1 : x.a.id > y.a.id ? 1 : 0));
+    const usable = scored.filter(x => {
+      const s = x.a.status();
+      return s.state === STATUS.READY && (!x.a.canUse || x.match === 1);
+    }).map(x => x.a);
     const selected = usable.find(a => explicit.has(a.id)) || usable[0] || null;
     return {
       message,
       selected: (selected && selected.id) || null,
-      candidates: ranked.map(a => ({ id: a.id, state: a.status().state }))
+      candidates: scored.map(x => ({ id: x.a.id, state: x.a.status().state, match: x.match }))
     };
   }
 }
