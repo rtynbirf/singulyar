@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
+<!-- такт v10.67 «ГОЛОС» (приказ владельца «ГДЕ САМИ ТРЕКИ? ПОЧЕМУ НЕ ИГРАЮТ ПЕСНИ? ПОЧЕМУ НЕ ПОЁТ АВТОР? ВОТ ТАК СДЕЛАЙ АБСОЛЮТНО ВСЕ ПЕСНИ ЧТОБ АНАЛОГИЧНО ПРОСТО ЛЮБИ БЫЛИ И ИГРАЛИ»; поверх v10.66 «ПОЛЮСА»): (1) у всех 62 песен настоящие МАКС-мастера minus/{id}.max.webm — Opus стерео 510k (256k у моно-источника), ГОЛОС АВТОРА, источник — оригиналы mp4 Drive (62 файла), флагман «Когда теряем» — свой AAC-мастер, вшитый в воротах ·01; «Просто люби» — свой настоящий мастер minus/prosto-lubi.max.webm; (2) МИН-полюса minus/min/{id}.webm пересобраны из ТЕХ ЖЕ исходников с голосом (старые были из безголосых минусовок); (3) честный фолбэк МАКС→mp3: мастера нет рядом — играет минус, место песни не сбрасывается; mp3-минусовки остаются в minus/ — караоке поверх минуса никуда не делось; (4) два исключения честно помечены в метаданных: «Сборник Музыки со Смыслом» и «Где настоящее» пока играют минус — голосовых исходников нет (файл «03» на Drive битый — 0.5 с), положи файлы — конвейер пересоберёт за минуту. Кэш v121→v122. -->
 <!-- такт v10.66 «ПОЛЮСА» (приказ владельца «ПОСТАВЬ СПЕРВА ВСЕ ТРЕКИ ЧТОБ ОНИ ВСЕ ЗВУЧАЛИ, ЗАЛЕЙ И МАХ И МИН, КНОПКУ СДЕЛАЙ КАКОЙ ИГРАТЬ МАКС ИЛИ МИН»; поверх v10.63 «ТРАНСПОРТ»): (1) ДВА ПОЛЮСА у всех 62 песен — МАКС: наилучший имеющийся мастер (61 mp3 minus/{id}.mp3 + настоящий webm-мастер «Просто люби» minus/prosto-lubi.max.webm, Opus 510k stereo с mp4-источника); МИН: Opus 24 kbps mono 48 kHz minus/min/{id}.webm (61 файл) и настоящий minus/prosto-lubi.min.webm для караоке-дома — чистый голос и гармония на слабом железе (паспорт конвейера); (2) КНОПКА ПОЛЮС в доке (МАКС/МИН): переключает звук на лету с сохранением позиции песни и состояния игра/пауза (практика переключения качества без сброса таймлайна), память kv31.pol, по умолчанию МАКС; тач ≥44px, aria-pressed честные; (3) КЛАВИША V (и «м» русской раскладки) — конфликтов нет (V свободна: K/L/M/R/N/P/S/B заняты); (4) ГОЛОС: «макс», «мин», «полюс», «качество»; (5) ЧЕСТНЫЙ ФОЛБЭК: файла МИН нет рядом — тост, играет МАКС, дом остаётся рабочим на любой копии; ошибка МИН не открывает подхват файла (его открывает только ошибка МАКС); (6) караоке-дом «Просто люби» — блоб на каждый полюс: МАКС из TRACK_BUF (TRACK_URL поднят на настоящий мастер minus/prosto-lubi.max.webm), МИН — fetchом при выборе, кэш в памяти; трек и полюс не «уезжают» под асинхронным блобом (сторож pole/idx); (7) MediaSession album показывает полюс; ЗДОРОВЬЕ: строка «полюс качества». Минусовки по-прежнему вне пре-кэша (закон SW) — МИН кэшируется рантаймом при первом проигрыше. Такт перенумерован по канону дома (коллеги успели 10.64–10.65; СТОП-ГОРН не понадобился — поверх их байта). Кэш v120→v121 (sw15.js тоже). -->
 <!-- такт v10.63 «ТРАНСПОРТ» (С41, приказ владельца «В ЛАДОМ ДОБАВЬ КНОПКИ УПРАВЛЕНИЯ КАК В ЛУЧШИХ ПЛЕЕРАХ ТРЕНД ПРАКТИК ПУСК ПАУЗА СЛЕДУЮЩАЯ НАЗАД РЕПИТ СЛУЧАЙНО»; поверх v10.62 «ЖЕСТ»): (1) ПЛЕЙЛИСТ ЗАЛА — 62 песни фонда вшиты честно (minus/ = 62 mp3 + webm-ремастер «Просто люби»; все 62 id сверены с реестром ПЕСНИ двери ·00); караоке-трек дома — «Просто люби» (blob из minus/prosto-lubi.webm — храним и возвращаем честно), остальные треки — концертный режим: караоке-строки, секции и отсчёт прячутся, честная плашка ведёт в дверь ·32 СЦЕНА за полными текстами; (2) ТРАНСПОРТ в доке — ⏮ НАЗАД (практика Spotify/YouTube: прошло >3 с — сначала честная перемотка в начало), ▶/⏸ ПУСК/ПАУЗА (существующий btnPlay не тронут), ⏭ СЛЕДУЮЩАЯ, 🔀 СЛУЧАЙНО (без повтора текущего), 🔁 РЕПИТ (выкл → весь список → одна песня — практика repeat off/all/one); память kv31.trk/rep/shf; тач-цели ≥44px (закон v10.57), aria-pressed + aria-label честные; (3) КЛАВИАТУРА N/P/S/B — конфликтов нет (Space=хлопок, ←/→=±5 с, K/L/M/R заняты); стрелки и клик по шкале перематывают по РЕАЛЬНОЙ длительности трека (был жёсткий DUR 234 с); (4) ГОЛОС: «следующая», «предыдущая», «перемешай», «повторяй» — слова «дальше/назад» не отобраны (остались ±5 с); (5) РУЛЬ телефона: +4 кнопки (⏮ ⏭ 🔁 🔀) той же сеткой 4×N; (6) MediaSession: nexttrack/previoustrack + метаданные трека (экран блокировки, MDN); (7) ТВ-пульт: MediaTrackNext/MediaTrackPrevious; (8) ЗДОРОВЬЕ: строка «плейлист зала: 62 песни minus/»; экспорт window.__ТРАНСПОРТ и __KV.тр; ошибка mp3 — честный тост + локальный подхват файла. Кэш v117→v118. -->
 <!-- такт v10.54 «КОДЕКС» (С35, приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ ДОКУМЕНТАЦИЮ С ТЗ И ДОРОЖНОЙ КАРТОЙ В ПАБЛИК В РЕПУ; ПОДКЛЮЧАЙ И ДРУГИЕ ТРЕКИ — ТАМ УЖЕ ЧАСТЬ ГОТОВА; МАЛЫША НАУКИВАЙ»; поверх v10.53 «ОРГАНИЗМ» коллег): документация двух треков влита в паблик — ДОКУМЕНТЫ/ТРЕКИ/HARMONIA (адаптивные события, профиль доступности harm-profile/0.1, формат .harm — «партитура намерений», модель угроз, MIT/CC BY 4.0) и ДОКУМЕНТЫ/ТРЕКИ/HIR (Human Intent Runtime: PersonRef/Intent/MeaningEnvelope/RepresentationPreference, честные статусы «сохранено ≠ доставлено», CLAIM→CODE→SPEC→TEST→RESULT→VERDICT); синтез всех ТЗ и дорожных карт с домом — ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md (карта соответствий: ~70% контрактов HIR дом уже исполняет); прототипы треков подняты в двери ·40 ГАРМОНИЯ и ·41 НАМЕРЕНИЕ (фасет lab); Малыш доучен v0.8: правило 15 ТРЕКИ ДОМА, карта дома ·40/·41, фразы «открой гармонию/намерение», гейт версий правил в освежитьПравила (апстрим singulyar-llm не откатывает доучку); хвост R-13 закрыт: журнал README и летопись versions.json дописаны (10.20…10.53 восстановлены из git-истории); найдена и выровнена регрессия коллег: титул дома висел v10.52 при воркере v108; кэш v109. -->
@@ -55,9 +56,7 @@
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.68 «ПРОВОДКА» — «Просто люби» (RUVSON)</title>
-<!-- такт v10.68 «ПРОВОДКА» (С46, PAT №7; приказ владельца «ВСЕ ДОРОЖНЫЕ КАРТЫ ДОДЕЛЫВАЙТЕ… ВНЕДРЯЙТЕ ВСЕ ЛУЧШИЕ ПРАКТИКИ»; поверх v10.67 «КОМПАС»): (1) ADAPTER-OS МОСТ В ЛАДОМ — присутствие МОЗГА в зале без дублирования весов: зал не запускает второй wllama и не качает веса — датчик кэша singular-llm-parts-v1 считает части честно (0 сети), присутствие по шине смыслов BroadcastChannel: зал публикует «зал-31-дышит», живой МОЗГ отвечает «мозг-жив» (доучка llm v0.11, слушает только после READY — спящий не притворяется живым), адаптер presence.31-мозг в реестре window.SingulyarOS, строка «мозг» в калм-карте через MutationObserver без переписывания ядра калм-точки (без циклов: текст сравнивается перед мутацией), казна: семья «адаптер·ос (С46)», проба ЗДОРОВЬЕ моста; file:// — честный state:'unavailable'; (2) МАЛЫШ-АВТОНОМИЯ: «Просто люби» (9ys_TVEtda8) 6/12→12/12 — ja ko zh ar hi uk смысловым переводом по протоколу СМЫСЛ (ось 34 строки родных таймингов ru-orig, верифицировано), пары 228→234 из 732, полных наборов 3→4, ИНДЕКС_МУЛЬТИЯЗЫК и МАЛЫШ_ПЛАН честно подняты; (3) ЗАЛ ·17 P2P: живой прогон двойного экрана — демо-источник зала и команды пульта прошли транспорт дома (BroadcastChannel+localStorage, дедуп src:seq) на стенде двух окон; кэш v123→v124 -->
-<!-- такт v10.67 «КОМПАС» (С45, шестая смена PAT; приказы владельца: «ОПЯТЬ ПРОБЛЕМЫ С НАВИГАЦИЕЙ В ПУЛЬТУ И ВЫХОДАМИ… ИЗ ПОДМЕНЮ ПРОПУЩЕНО, И ИЗ ПОДМЕНЮ ПОДМЕНЮ ПРОПУЩЕНО… ЧТОБ НА ШАГ НАЗАД ОТКАТИТЬСЯ БЫЛО ВСЕГДА» · «УБЕРИ КРЫШУ И ДРУГИЕ НАСТРОЙКИ С ГЛАВНОГО ЭКРАНА ВО ВНУТРЬ В ПУЛЬТ МЕСТО ЗАХЛАМЛЯЕТ» · «ПУЛЬТ… СДЕЛАЙ СВОЙ ЭМЕРДЖЕНТНЫЙ СИНГУЛЯРНЫЙ… ВПИХНИ НЕВПИХУЕМОЕ ЧТОБ ЮЗОБИЛИТИ И ЭРГОНОМИЧНО… НАСТРОЙКИ БЫЛИ СО ВСЕМИ СПРАВКАМИ ПРИ НАВЕДЕНИИ НА НИХ КУРСОРА ИЛИ СТАЙЛУСА»): (1) НАВИГАТОР-выходы: шестое лицо «ЛИЦА» встало в реестр __ПУЛЬТЫ.виды — чип больше не тупик; РУЛЬ и ПЛИТКА закрылись по Esc (BACK на ТВ — то же); КРЫША открылась из пульта честным шагом назад — закрытие панели возвращает в пульт на вкладку «КРЫША»; «СНЯТЬ КРЫШУ» переименована в честную «ГОТОВО · ЗАКРЫТЬ»; OPEN:access лиц идёт по API window.__КРЫША.открыть(true); проба ЗДОРОВЬЕ С45; (2) ГЛАВНЫЙ ЭКРАН ЧИСТЫЙ: бейдж «КРЫША ·31» снят с угла, из шапки ушли ЗДОРОВЬЕ/ЯЗЫК/ЛЮДИ/СВЕТ/ТОСТЫ/ДВИЖ и ряд сцен — канонические кнопки живы (id целы, клики и голос работают), живут быстрыми ручками в шапке пульта (практика single source of truth); (3) ПУЛЬТ-ПЕРЕКРОЙ по лучшим компоновкам 2025-26: вертикальная рейка разделов-иконок (VS Code Activity Bar) — 10 вкладок ВИД·ТЕКСТ·ЗВУК·ЭФФЕКТЫ·ЛЮДИ·ПРОФИЛЬ·ДАННЫЕ·РУКИ·ЧУТЬЁ·КРЫША + ЛАБ; полотно ручек в две колонки на широких (впихнутое без тупиков); постоянный столб справки __СПРАВКА — полная справка ручки при наведении курсора или стилуса, фокусе с клавиатуры (WCAG 1.4.13), на пальце — удержание 420 мс; закон дома — дефолт столба; полосы ЧУТЬЁ и РУКИ ДОМА переехали с шапки пульта в свои вкладки; ШТАБ +5 тренд-карточек (Activity Bar, progressive disclosure по Apple Settings, help-pane VS Code, predictive back Android 15, стилус-hover Apple Pencil); кэш v121→v122 -->
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.67 «ГОЛОС» — «Просто люби» (RUVSON)</title>
 <style>
 /* v9.6 «ПАСПОРТ ДОМА»: палитра сверена с техническим разбором рендера дома [изм.]
    (singulyar_render_spec.png; метод: хэш + measure_render.py → одинаковые числа у любого):
@@ -646,68 +645,6 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:4p
 .pfoot{padding:10px 22px calc(14px + var(--sng-sb,0px));border-top:1px solid #ffffff12;
   display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;color:var(--faint);flex-wrap:wrap}
 
-/* ═══ v10.67 «КОМПАС» (guard=КОМПАС) — пульт-перекрой по приказу владельца ═══
-   «УБЕРИ КРЫШУ И ДРУГИЕ НАСТРОЙКИ С ГЛАВНОГО ЭКРАНА ВО ВНУТРЬ В ПУЛЬТ»
-   «ВПИХНИ НЕВПИХУЕМОЕ ЧТОБ ЮЗОБИЛИТИ И ЭРГОНОМИЧНО»
-   Композиция лучших компоновщиков: рейка разделов-иконок (VS Code Activity Bar),
-   полотно ручек в две колонки на широких (впихнутое без тупиков),
-   постоянный столб справки (VS Code Settings help-pane, WCAG 1.4.13). */
-
-/* 1. ГЛАВНЫЙ ЭКРАН ЧИСТЫЙ: настройки живут в пульте — один раз настроил, зал дышит.
-   Канонические кнопки не убиты: id живы, клики работают (зеркала и голос), они просто
-   больше не занимают экран. КРЫША-бейдж снят с угла — крыша открывается из пульта. */
-#chipHealth,#btnLang,#btnPeople,#btnLight,#btnToasts,#btnMotion,#sceneRow{display:none!important}
-#kv31roof{display:none!important}   /* бейдж снят: панель крыши открывается из ПУЛЬТА → вкладка «КРЫША» */
-
-/* 2. Сетка пульта: шапка → рейка | полотно | справка → футер */
-dialog#panel{display:grid;grid-template-columns:118px minmax(0,1fr) 292px;
-  grid-template-rows:auto minmax(0,1fr) auto;
-  grid-template-areas:"head head head" "rail body help" "foot foot foot"}
-dialog#panel .p-head{grid-area:head}
-dialog#panel .p-tabs{grid-area:rail;display:flex;flex-direction:column;gap:2px;
-  padding:10px 8px;border-right:1px solid #ffffff12;overflow-y:auto;scrollbar-width:none}
-dialog#panel .p-tabs::-webkit-scrollbar{display:none}
-dialog#panel .p-tabs button{border-radius:12px;min-height:50px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:3px;padding:6px 4px;font-size:10.5px;
-  letter-spacing:.07em;border-bottom:none;text-align:center;width:100%}
-dialog#panel .p-tabs button .tab-ico{font-size:17px;line-height:1}
-dialog#panel .p-tabs button.on{box-shadow:none;
-  background:linear-gradient(90deg,rgba(212,175,55,.22),rgba(212,175,55,.04))}
-dialog#panel .p-body{grid-area:body;padding:10px 20px 26px}
-dialog#panel .p-справка{grid-area:help;border-left:1px solid #ffffff12;padding:14px 16px 18px;
-  overflow-y:auto;min-width:0;scrollbar-width:none}
-dialog#panel .p-справка::-webkit-scrollbar{display:none}
-dialog#panel .p-справка b{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--amber);margin-bottom:8px}
-dialog#panel .p-справка p{margin:0 0 10px;font-size:12.5px;line-height:1.6;color:var(--text,#BABAB9)}
-dialog#panel .p-справка .pdesc{display:block;font-size:11px;color:var(--faint)}
-dialog#panel .pfoot{grid-area:foot}
-/* быстрые ручки шапки пульта — переехали с главного экрана */
-.p-quick{display:flex;gap:6px;flex-wrap:nowrap}
-.p-quick .qbtn{width:38px;height:38px;min-width:38px;border-radius:11px;background:#ffffff0e;
-  border:1px solid #ffffff18;color:var(--text);font-size:15px;cursor:pointer;transition:.15s;
-  display:flex;align-items:center;justify-content:center;padding:0}
-.p-quick .qbtn:hover{color:var(--amber);border-color:rgba(222,169,104,.45);background:#ffffff18}
-.p-quick .qbtn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-/* впихнутое: полотно ручек в две колонки на широких экранах, строки не рвутся */
-dialog#panel .p-body .ptab.on{column-count:2;column-gap:20px}
-dialog#panel .p-body .ptab.on>.prow2,dialog#panel .p-body .ptab.on>.pdanger{break-inside:avoid}
-dialog#panel .p-body .ptab.on>pempty{column-span:all}
-dialog#panel .p-body .prow2{padding:11px 0}
-/* узкие экраны: рейка сверху горизонтально, справка — нижняя полоса */
-@media (max-width:940px){
-  dialog#panel{grid-template-columns:1fr;
-    grid-template-rows:auto auto minmax(0,1fr) auto auto;
-    grid-template-areas:"head" "rail" "body" "help" "foot"}
-  dialog#panel .p-tabs{flex-direction:row;overflow-x:auto;border-right:none;
-    border-bottom:1px solid #ffffff12;padding:6px 10px;gap:4px}
-  dialog#panel .p-tabs button{flex:none;flex-direction:row;min-height:40px;
-    padding:8px 12px;gap:6px;width:auto}
-  dialog#panel .p-body .ptab.on{column-count:1}
-  dialog#panel .p-справка{max-height:24vh;border-left:none;border-top:1px solid #ffffff12}
-  .p-quick{display:none}
-}
-
 /* ───── v5 · СПРАВКА-ВКЛАДКИ ───── */
 #help{max-width:640px}/* v10.1: min() мёртв на chrome76 — рост в sngAdaptStyle */
 .htabs{display:flex;gap:5px;flex-wrap:wrap;margin:14px 0 2px}
@@ -981,7 +918,7 @@ body.концерт #lyricsWrap,body.концерт .songhead,body.концер�
   <button id="btnRestart" class="round" aria-label="Заново с начала (R)" data-tip="Заново с начала (R)">↻</button>
   <button id="btnShuffle" class="round тран" aria-pressed="false" aria-label="Случайный порядок (S)" data-tip="СЛУЧАЙНО (S): перемешать плейлист зала; текущая песня повторяться не будет">🔀</button>
   <button id="btnRepeat" class="round тран" aria-pressed="false" aria-label="Повтор: выключен (B)" data-tip="РЕПИТ (B): выкл → весь список → одна песня">🔁</button>
-  <button id="btnPole" class="round тран полюс" aria-pressed="false" aria-label="Полюс качества: МАКС — полнота звука (V)" data-tip="ПОЛЮС (V): МАКС — наилучший имеющийся мастер (61 mp3 + webm-мастер «Просто люби»); МИН — Opus 24 кбит/с моно, играет на любом железе. Место песни и игра/пауза не сбрасываются, выбор помнится">МАКС</button>
+  <button id="btnPole" class="round тран полюс" aria-pressed="false" aria-label="Полюс качества: МАКС — полнота звука (V)" data-tip="ПОЛЮС (V): МАКС — webm-мастер с голосом автора у всех 62 песен (как у «Просто люби»); МИН — Opus 24 кбит/с моно, играет на любом железе. Место песни и игра/пауза не сбрасываются, выбор помнится">МАКС</button>
   <div class="tlwrap">
     <div id="tlBar" class="tlbar" data-tip="Клик — перемотка; цветные отрезки — секции песни"><div id="tlFill"></div></div>
     <div id="tlSecs" class="tlsecs"></div>
@@ -1152,7 +1089,7 @@ window.TRACK_READY = fetch(window.TRACK_URL).then(function (r) {
   window.TRACK_ERR = (e && e.message) || "не дошло";
   return null;
 });
-window.__BUILD_SHA = "163773c518450ad6"; /* v10.66 ПОЛЮСА */
+window.__BUILD_SHA = "e88dfd8d4b994230"; /* v10.67 ГОЛОС */
 /* ── v10.36 «МЕШАНИНА»: ИР-скелет — M-01 timeBase · M-02 origin · M-04 КРУМХАНСЛЬ · M-03 ИР-гейт ──
    Закон хозяина: ЧЕЛОВЕК=МАШИНА=МЕШАНИНА=СМЕСИТЕЛЬ — на входе всё, внутри одна ось, на выходе результат.
    И-07: каждое событие оси может нести {origin, conf} — откуда пришло и сколько доверять. */
@@ -1255,6 +1192,7 @@ if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
 });
 audio.addEventListener("error", ()=>{ try{
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.минОтвал && window.__ТРАНСПОРТ.минОтвал()) return; /* v10.66: МИН не нашёлся — транспорт сам честно поднял МАКС */
+  if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.максОтвал && window.__ТРАНСПОРТ.максОтвал()) return; /* v10.67: МАКС-мастера нет рядом — транспорт сам честно поднял mp3-минус */
   if(window.__ТРАНСПОРТ && document.body.classList.contains("концерт")){
     showToast("Файл ./minus/ не открылся (треку нужен файл рядом) — подними его вручную");
     if(window.__ПОДНЯТЬ_ЗВУК) window.__ПОДНЯТЬ_ЗВУК();
@@ -1701,7 +1639,7 @@ window.__ТРАНСПОРТ = (function(){
   const plateName = document.getElementById("концертИмя");
 
   /* v10.66 «ПОЛЮСА»: путь файла текущего полюса; null — караоке-дом (блоб) */
-  function src(i){ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (pole==="мин" ? "./minus/min/"+ПЕСНИ[i][0]+".webm" : "./minus/"+ПЕСНИ[i][0]+".mp3"); }
+  function src(i){ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (pole==="мин" ? "./minus/min/"+ПЕСНИ[i][0]+".webm" : "./minus/"+ПЕСНИ[i][0]+".max.webm"); } /* v10.67 ГОЛОС: МАКС = настоящий webm-мастер */
   function караокеПуть(){ return pole==="мин" ? "./minus/prosto-lubi.min.webm" : "./minus/prosto-lubi.max.webm"; }
 
   function playСейчас(){
@@ -1804,7 +1742,23 @@ window.__ТРАНСПОРТ = (function(){
   /* v10.66: честный фолбэк МИН→МАКС, если файла min/ нет рядом (старая копия дома) */
   function минОтвал(){
     if(pole!=="мин" || !текущийПуть || текущийПуть.indexOf("./minus/min/")!==0) return false;
-    showToast("МИН-полюс не нашёлся рядом — играет МАКС");
+    showToast("МИН-полюс не нашёлся рядом — играет МАКС-мастер");
+    const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
+    pole = "макс"; try{ store.set("kv31.pol", "макс"); }catch(e){}
+    audio.src = "./minus/"+ПЕСНИ[idx][0]+".max.webm"; текущийПуть = audio.src;
+    краска();
+    audio.addEventListener("loadedmetadata", function once(){
+      try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
+      audio.removeEventListener("loadedmetadata", once);
+    });
+    if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
+    return true;
+  }
+
+  /* v10.67 «ГОЛОС»: честный фолбэк МАКС→mp3, если мастера {id}.max.webm нет рядом (старая копия дома) */
+  function максОтвал(){
+    if(pole!=="макс" || !текущийПуть || текущийПуть.indexOf(".max.webm")<0) return false;
+    showToast("МАКС-мастера нет рядом — играет минус (mp3)");
     const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
     audio.src = "./minus/"+ПЕСНИ[idx][0]+".mp3"; текущийПуть = audio.src;
     audio.addEventListener("loadedmetadata", function once(){
@@ -1862,7 +1816,7 @@ window.__ТРАНСПОРТ = (function(){
       btnPole.textContent = pole==="мин" ? "МИН" : "МАКС";
       btnPole.classList.toggle("on", pole==="мин");
       btnPole.setAttribute("aria-pressed", pole==="мин" ? "true" : "false");
-      btnPole.setAttribute("aria-label", "Полюс качества: "+(pole==="мин" ? "МИН — минимальный битрейт, играет на любом железе" : "МАКС — полнота звука")+" (V)");
+      btnPole.setAttribute("aria-label", "Полюс качества: "+(pole==="мин" ? "МИН — минимальный битрейт, играет на любом железе" : "МАКС — голос автора")+" (V)");
     }
     if(btnRepeat){
       btnRepeat.textContent = repeat==="one" ? "🔂" : "🔁";
@@ -1889,8 +1843,8 @@ window.__ТРАНСПОРТ = (function(){
   btnPole.addEventListener("click", ()=>togglePole()); /* v10.66 ПОЛЮСА */
   if(idx!==0 || pole==="мин") load(idx, false); else краска(); /* v10.66: помнённый МИН применяем и дома */
   return { next:next, prev:prev, toggleShuffle:toggleShuffle, cycleRepeat:cycleRepeat,
-           setPole:setPole, togglePole:togglePole, полюс:function(){ return pole; }, минОтвал:минОтвал,
-           onEnded:onEnded, краска:краска, вер:"v10.66",
+           setPole:setPole, togglePole:togglePole, полюс:function(){ return pole; }, минОтвал:минОтвал, максОтвал:максОтвал,
+           onEnded:onEnded, краска:краска, вер:"v10.67",
            список:function(){ return ПЕСНИ.slice(); }, текущая:function(){ return idx; } };
 })();
 
@@ -2005,7 +1959,6 @@ function health(){
       { sec:"I", n:"ЧИСТЫЙ СВЕТ: светлые комнаты закреплены инлайном на html+body, тёмным заливкам вход в светлое закрыт", ok: (function(){ try{ return !!(window.__СВЕТЛЫЕ_КОМНАТЫ && window.__ЗАКРЕПИСВЕТ); }catch(e){ return false; } })() },
       { sec:"S", n:"РЕЛАКС: "+(рел ? "вкл — при пении гаснут ВСЕ панели и слайдеры, касание возвращает" : "выкл — панели всегда видны")+" (выбор помнится)", ok: (function(){ try{ var з=window.__РЕЛАКС, а=document.querySelector("audio"); if(!з||typeof з.примени!=="function")return false; if(а&&!а.paused&&з.вкл)return document.body.classList.contains("relax"); return true; }catch(e){ return false; } })() },
       { sec:"S", n:"ПУЛЬТ сразу во весь экран; РАЗВЕРНУТЬ снят; Esc — выход из меню", ok: !!(document.getElementById("panel") && !document.getElementById("pulToggle") && !document.getElementById("pulFull")) },
-      { sec:"S", n:"НАВИГАТОР (С45·КОМПАС): у пульта все шесть видов с выходами (включая ЛИЦА), РУЛЬ и ПЛИТКА закрываются Esc, КРЫША открывается из пульта и возвращает шаг назад, столб справки жив", ok: (function(){ try{ var н=["полный","руль","плитка","команда","омни","лица"], р=(window.__ПУЛЬТЫ&&window.__ПУЛЬТЫ.виды)||[]; for(var i=0;i<н.length;i++){ var х=false; for(var j=0;j<р.length;j++){ if(р[j].id===н[i]) х=true; } if(!х) return false; } return !!(window.__КРЫША&&window.__КРЫША.открыть&&window.__СПРАВКА); }catch(e){ return false; } })() },
       { sec:"S", n:"ПУЛЬТ закрыт = скрыт совсем: не просвечивает и не ест касания зала", ok: (function(){ try{ var п=document.getElementById("panel"); return !!п && !п.open && getComputedStyle(п).display==="none"; }catch(e){ return false; } })() },
       { sec:"S", n:"ТРИ СТРОКИ НА ВЫВОДЕ: титры · транскрипция · оригинал — строка-оригинал не сворачивается ни у какой строки, в РУС тоже; свои ползунки в ПУЛЬТе", ok: (function(){ try{ var a=document.getElementById("tcSlider"), b=document.getElementById("sbsSlider"), r=getComputedStyle(document.documentElement); if(!(a&&b&&r.getPropertyValue("--tcScale")&&r.getPropertyValue("--subScale"))) return false; var ln=document.querySelector("#lyricsWrap .line"); if(!ln) return false; var s=ln.querySelector(".sub"), t=ln.querySelector(".tc"); if(!s||!t) return false; var cs=getComputedStyle(s); if(cs.opacity!=="1"||cs.maxHeight==="0px") return false; if(!s.textContent.trim()) return false; return true; }catch(e){ return false; } })() },
       { sec:"S", n:"ОДИН СЛОЙ НА ВЕРХУ: колонка трёх строк — заказан z=2147483700, браузер держит свой потолок 2147483647 (выше обоих тостов 3100/3600), ничем не перекрыть (ПУЛЬТ — нативный верх); тосты ушли вниз, в зону дока", ok: (function(){ try{ var w=document.getElementById("lyricsWrap"); if(!w) return false; if(parseInt(getComputedStyle(w).zIndex,10)!==30) return false; var tt=getComputedStyle(document.querySelector(".toast")); if(tt.bottom!=="10px") return false; return true; }catch(e){ return false; } })() },
@@ -2070,14 +2023,13 @@ window.__КАЗНА = (function(){
     ["голос·микрофон",     /^__ГОЛОС|^__М2ГОЛОС$|^__КВГОЛОС$|^__PULSEVOICE$|^__VC$|^__MIC_|^__MS_STATE$|^openMic$|^__SHILKA$/],
     ["такт·пульс·синхрон", /^__TAKT|^__PULSE$|^__ON_|^__SYNCOFF$|^__OUTLAT$|^__VISLAT$|^__SYNC_/],
     ["МАЛЫШ·языки",        /^__МАЛЫШ$|^__LANGS|^__ЯЗЫКЧИПСЫ$|^ЗАКОН_|^НОСИТЕЛИ$|^ЧЕРНОВИКИ_|^__UILANG$/],
-    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__РОЛИ$|^__ЛИЦАПУЛЬТ$|^__ОМНИ$|^__КОМАНДА$|^__ЧУТЬЁ$|^__ЖЕСТ$|^__СПРАВКА$|^__КРЫША_вернутьПульт$|^__ТРАНСПОРТ$|^__TIPS$|^__TOASTS$|^__ALERT/],   /* v10.67 КОМПАС: в казну встали __СПРАВКА и __КРЫША_вернутьПульт; заодно погашена неучтёнка __ТРАНСПОРТ (такт v10.63) */
+    ["пульт·сообщения",    /^S31ПУЛЬТ$|^__PULT$|^__ПУЛЬТЫ$|^__РУЛЬ$|^__ПЛИТКА$|^__ПУЛТПАСПОРТ$|^__ГОСТЬ_ТРАНС$|^__РОЛИ$|^__ЛИЦАПУЛЬТ$|^__ОМНИ$|^__КОМАНДА$|^__ЧУТЬЁ$|^__ЖЕСТ$|^__TIPS$|^__TOASTS$|^__ALERT/],
     ["комод·мосты (С28+)",  /^__КОМОД$/],   /* С40: шкаф-костяк дома под учётом (был в неучтёнке) */
     ["мешанина·скелет (С35)", /^__МЕШАНИНА$/],   /* ИР-скелет контента — timeBase/origin/Крумхансль */
     ["экран·бодрость",      /^__WLOCK$/],   /* wake lock — экран не заснёт во время вечера */
     ["сканер·склад",       /^__SCAN|^__IMPORT$|^__POS$|^__REC$|^__СКЛАД$|^__ХРАН$/],
     ["чувства·аура",       /^__АУРА$|^__ЭХОЗАЛА$|^__ПУЛЬСЗАЛА$/],
     ["оберег·щит",         /^__ЩИТ$|^__ТИХО$|^__КАЛМТОЧКА$|^__РУЧКИ$/],   /* С34; С41: ручки Малыша — руки калм-точки */
-    ["адаптер·ос (С46)",   /^SingulyarOS$/],   /* v10.68 ПРОВОДКА: мост adapter-os — присутствие МОЗГА в зале без дублирования весов */
     ["слово·профиль",      /^__ХАРМ$|^__ПРОФИЛЬ$/],   /* С36 */
     ["ЛАБ·виз·движение",   /^__LAB|^__WIZ$|^__JOKER$|^__CONFETTI|^__VIB_K$|^__РЕЛАКС$/],
     ["лицо·автор",         /^__AUTHOR$|^__PASSPORT_INFO$|^__SHILKA_INFO$|^__TAPCAL$|^__HI$/],
@@ -5354,42 +5306,20 @@ body.insertAdjacentHTML("beforeend", `
   <div class="p-head">
     <h3>⚙ ПУЛЬТ</h3>
     <input id="pSearch" class="p-search" type="search" placeholder="поиск по настройкам…" aria-label="поиск по настройкам">
-    <div class="p-quick" role="group" aria-label="быстрые ручки — переехали с главного экрана">
-      <button id="qHealth" class="qbtn" data-tip="ЗДОРОВЬЕ: самопроверка всех частей дома. Раньше жила в шапке зала — теперь только здесь, чтобы главный экран дышал">✚</button>
-      <button id="qLang" class="qbtn" data-tip="ЯЗЫК СТРОК: таблица всех языков вечера — нажал, выехала, ткнул. Раньше жила в шапке зала">¶</button>
-      <button id="qPeople" class="qbtn" data-tip="ЛЮДИ: голосовые команды, озвучка, вибро, одна кнопка, гигант, контраст — окно доступности. Раньше жила в шапке зала">☺</button>
-      <button id="qLight" class="qbtn" data-tip="СВЕТ сцены: палитры меняются вместе с секциями песни (клавиша L)">☀</button>
-      <button id="qToasts" class="qbtn" data-tip="ТОСТЫ: подсказки между куплетами — выключи, если хочешь тишину">✉</button>
-      <button id="qMotion" class="qbtn" data-tip="ДВИЖЕНИЕ: пульс фона и отсчёт (клавиша M); полное/размеренное/выкл — вкладка ВИД">⟳</button>
-    </div>
     <button class="x" id="pulClose" data-tip="Закрыть пульт (Esc)">✕</button>
   </div>
-  <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button role="tab" id="ptab-look" data-pt="look" class="on" aria-selected="true" aria-controls="ppanel-look" data-tip="ВИД: подача, шрифт, размеры строк, движение, сцена вечера, вид пульта"><span class="tab-ico" aria-hidden="true">◐</span>ВИД</button>
-    <button role="tab" id="ptab-text" data-pt="text" aria-selected="false" aria-controls="ppanel-text" tabindex="-1" data-tip="ТЕКСТ: точность пульса, языки, Малыш, юстировка свет↔звук, ШИЛКА"><span class="tab-ico" aria-hidden="true">¶</span>ТЕКСТ</button>
-    <button role="tab" id="ptab-sound" data-pt="sound" aria-selected="false" aria-controls="ppanel-sound" tabindex="-1" data-tip="ЗВУК: громкость, тихий вечер, темп, запись выступления"><span class="tab-ico" aria-hidden="true">♪</span>ЗВУК</button>
-    <button role="tab" id="ptab-fx" data-pt="fx" aria-selected="false" aria-controls="ppanel-fx" tabindex="-1" data-tip="ЭФФЕКТЫ: свет, световой бит, конфетти, тосты, лампа"><span class="tab-ico" aria-hidden="true">✦</span>ЭФФЕКТЫ</button>
-    <button role="tab" id="ptab-people" data-pt="people" aria-selected="false" aria-controls="ppanel-people" tabindex="-1" data-tip="ЛЮДИ: голос, озвучка, пульс по голосу, вибро, одна кнопка, гигант, контраст"><span class="tab-ico" aria-hidden="true">☺</span>ЛЮДИ</button>
-    <button role="tab" id="ptab-prof" data-pt="prof" aria-selected="false" aria-controls="ppanel-prof" tabindex="-1" data-tip="ПРОФИЛЬ: десять осей доступности одним объектом, пресеты без диагнозов, экспорт/импорт"><span class="tab-ico" aria-hidden="true">⚖</span>ПРОФИЛЬ</button>
-    <button role="tab" id="ptab-data" data-pt="data" aria-selected="false" aria-controls="ppanel-data" tabindex="-1" data-tip="ДАННЫЕ: память вечера, настройки переезжают файлом, паспорт, заводские"><span class="tab-ico" aria-hidden="true">⛁</span>ДАННЫЕ</button>
-    <button role="tab" id="ptab-hands" data-pt="hands" aria-selected="false" aria-controls="ppanel-hands" tabindex="-1" data-tip="РУКИ ДОМА: карточки-действия из живого контекста, у каждой честная отмена"><span class="tab-ico" aria-hidden="true">✋</span>РУКИ</button>
-    <button role="tab" id="ptab-intuit" data-pt="intuit" aria-selected="false" aria-controls="ppanel-intuit" tabindex="-1" data-tip="ЧУТЬЁ: недавние действия с откатами и предчувствия вечера — дом объясняет каждое"><span class="tab-ico" aria-hidden="true">◇</span>ЧУТЬЁ</button>
-    <button role="tab" id="ptab-roof" data-pt="roof" aria-selected="false" aria-controls="ppanel-roof" tabindex="-1" data-tip="КРЫША ·31: телефоны по Wi-Fi, микрофон зала, Whisper-автосинхрон — переехала с угла экрана в пульт"><span class="tab-ico" aria-hidden="true">⌂</span>КРЫША</button>
+  <div class="p-tabs" role="tablist" aria-label="разделы настроек">    <button role="tab" id="ptab-look" data-pt="look" class="on" aria-selected="true" aria-controls="ppanel-look">ВИД</button>
+    <button role="tab" id="ptab-text" data-pt="text" aria-selected="false" aria-controls="ppanel-text" tabindex="-1">ТЕКСТ</button>
+    <button role="tab" id="ptab-sound" data-pt="sound" aria-selected="false" aria-controls="ppanel-sound" tabindex="-1">ЗВУК</button>
+    <button role="tab" id="ptab-fx" data-pt="fx" aria-selected="false" aria-controls="ppanel-fx" tabindex="-1">ЭФФЕКТЫ</button>
+    <button role="tab" id="ptab-people" data-pt="people" aria-selected="false" aria-controls="ppanel-people" tabindex="-1">ЛЮДИ</button>
+    <button role="tab" id="ptab-prof" data-pt="prof" aria-selected="false" aria-controls="ppanel-prof" tabindex="-1">ПРОФИЛЬ</button>
+    <button role="tab" id="ptab-data" data-pt="data" aria-selected="false" aria-controls="ppanel-data" tabindex="-1">ДАННЫЕ</button>
   </div>
-  <div class="p-body" id="pBody">
-    <div class="pempty" id="pEmpty">Ничего не нашлось — попробуй другое слово.</div>
-    <div class="ptab" role="tabpanel" id="ppanel-hands" aria-labelledby="ptab-hands" tabindex="0" data-ptab="hands">
-  <div id="жестыПолоса" role="region" aria-label="Карточки-действия: руки дома из живого контекста, у каждой честная отмена" style="margin:2px 0 14px;padding:10px 12px;border:1px solid rgba(222,169,104,.26);border-radius:14px;background:linear-gradient(180deg,rgba(222,169,104,.10),rgba(222,169,104,.03))">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <b style="font-size:11.5px;letter-spacing:.14em;color:var(--faint,#9B9B9B);white-space:nowrap">РУКИ ДОМА · КАРТОЧКИ</b>
-      <span style="font-size:10px;color:var(--faint,#9B9B9B);letter-spacing:.08em" aria-hidden="true">ЖЕСТ · v10.62</span>
-    </div>
-    <div id="жестыСетка" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px"></div>
-    <em class="pdesc">Типовые жесты вечера из живого контекста; после нажатия карточка держит честную «↩ отменить» (закон I-11): отскоки по песне и лицо считаются из живого состояния. Жесты зала — в общем руле, лицо — в личном.</em>
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 14px 0;padding:7px 12px;border:1px solid rgba(212,175,55,.3);border-radius:12px;background:rgba(212,175,55,.07);color:#D4AF37;font:600 11.5px/1.2 var(--f,system-ui,sans-serif);letter-spacing:.04em" title="Закон СИНГУЛЯРА: эргономика, приватность, конфиденциальность, юзабилити. Данные не покидают дом: настройки, нить вечера, память Малыша, кэш — всё живёт в этом браузере. Ноль счётчиков, ноль слежки.">
+    <span aria-hidden="true">⌂</span><span>данные не покидают дом — ноль счётчиков, ноль слежки</span>
   </div>
-      <em class="pdesc">Полоса «Руки дома» переехала с шапки пульта в свой раздел (v10.67 «КОМПАС»): шапка — только про ручки, зал дышит.</em>
-    </div>
-    <div class="ptab" role="tabpanel" id="ppanel-intuit" aria-labelledby="ptab-intuit" tabindex="0" data-ptab="intuit">
-  <div id="чутьёПолоса" role="region" aria-label="Чутьё пульта: недавние действия и предчувствия по контексту" style="margin:2px 0 14px;padding:10px 12px;border:1px solid rgba(222,169,104,.26);border-radius:14px;background:linear-gradient(180deg,rgba(222,169,104,.10),rgba(222,169,104,.03))">
+  <div id="чутьёПолоса" role="region" aria-label="Чутьё пульта: недавние действия и предчувствия по контексту" style="margin:10px 14px 0;padding:10px 12px;border:1px solid rgba(222,169,104,.26);border-radius:14px;background:linear-gradient(180deg,rgba(222,169,104,.10),rgba(222,169,104,.03))">
     <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px">
       <b style="font-size:11.5px;letter-spacing:.14em;color:var(--faint,#9B9B9B);white-space:nowrap">ЧУТЬЁ · ВЕТКА (v15)</b>
       <div class="seg" id="чутьёВетки" style="gap:6px">
@@ -5401,20 +5331,16 @@ body.insertAdjacentHTML("beforeend", `
     <div id="чутьёНед" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"></div>
     <em class="pdesc">Дом угадывает по контексту и честно объясняет каждое предчувствие; недавние помнятся (kv.pult.чутьё), у тишины и юстировки — честный откат «↩»; ветка помнится (kv.pult.ветка) и открывается по умолчанию.</em>
   </div>
-      <em class="pdesc">Чутьё переехало с шапки пульта в свой раздел (v10.67 «КОМПАС»): предчувствия и недавние — одной кнопкой рейки, а не поверх ручек.</em>
+  <div id="жестыПолоса" role="region" aria-label="Карточки-действия: руки дома из живого контекста, у каждой честная отмена" style="margin:8px 14px 0;padding:10px 12px;border:1px solid rgba(222,169,104,.26);border-radius:14px;background:linear-gradient(180deg,rgba(222,169,104,.10),rgba(222,169,104,.03))">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <b style="font-size:11.5px;letter-spacing:.14em;color:var(--faint,#9B9B9B);white-space:nowrap">РУКИ ДОМА · КАРТОЧКИ</b>
+      <span style="font-size:10px;color:var(--faint,#9B9B9B);letter-spacing:.08em" aria-hidden="true">ЖЕСТ · v10.62</span>
     </div>
-    <div class="ptab" role="tabpanel" id="ppanel-roof" aria-labelledby="ptab-roof" tabindex="0" data-ptab="roof">
-      <div class="prow2"><span class="plab2">КРЫША ·31 — ТЕЛЕФОНЫ ПО WI-FI</span>
-        <em class="pdesc">Крыша — сервер дома на этом экране: телефоны гостей подключаются по QR, берут руль и голос; Whisper-автосинхрон выравнивает текст по звуку. Бейдж больше не занимает угол зала — крыша открылась отсюда, и закрытие её панели вернёт сюда же (шаг назад).</em>
-        <div class="seg">
-          <button id="pulRoof" data-tip="Открыть панель крыши: собрать зал, микрофон зала в колонки, автосинхрон, пульт телефона. Закрытие панели вернёт в пульт">ОТКРЫТЬ ПАНЕЛЬ КРЫШИ</button>
-          <a class="pbtn" href="./ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html" style="display:inline-flex;align-items:center;padding:9px 14px;border-radius:12px;background:#ffffff0e;border:1px solid #ffffff18;font-weight:800;font-size:12px;letter-spacing:.05em;color:var(--dim);text-decoration:none" data-tip="Пульт телефона — отдельная лёгкая страница для гостей зала">ПУЛЬТ ТЕЛЕФОНА</a>
-        </div>
-      </div>
-      <div class="prow2"><span class="plab2">ШАГ НАЗАД — ЗАКОН ДОМА</span>
-        <em class="pdesc">Из любого уровня есть выход: Esc или ✕ закрывает панель крыши и возвращает в пульт; BACK на пульте ТВ — то же. РУЛЬ и ПЛИТКА тоже закрылись по Esc. Кнопка «СНЯТЬ КРЫШУ» в панели теперь зовётся «ГОТОВО · ЗАКРЫТЬ» — крыша стоит, панель закрывается. Ни одно меню дома не тупик.</em>
-      </div>
-    </div>
+    <div id="жестыСетка" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px"></div>
+    <em class="pdesc">Типовые жесты вечера из живого контекста; после нажатия карточка держит честную «↩ отменить» (закон I-11): отскоки по песне и лицо считаются из живого состояния. Жесты зала — в общем руле, лицо — в личном.</em>
+  </div>
+  <div class="p-body" id="pBody">
+    <div class="pempty" id="pEmpty">Ничего не нашлось — попробуй другое слово.</div>
 
     <div class="ptab on" role="tabpanel" id="ppanel-look" aria-labelledby="ptab-look" tabindex="0" data-ptab="look">
       <div class="prow2"><span class="plab2">ВИД ПУЛЬТА</span>
@@ -5720,7 +5646,6 @@ body.insertAdjacentHTML("beforeend", `
       </div>
     </div>
   </div>
-  <aside class="p-справка" id="pСправка" aria-live="polite" aria-label="Справка по ручке под курсором, стилусом, пальцем или фокусом"></aside>
   <div class="pfoot">
     <span>всё применяется сразу · всё запоминается · всё твоё</span>
     <span id="threadN" aria-live="polite" role="status">нить вечера: настроено 0 из 25</span>
@@ -5740,61 +5665,6 @@ if(header && $("btnHelp")) header.insertBefore(btnPanel, $("btnHelp"));
 const mirror = (id)=>{ const el=$(id); if(el) el.click(); pultPaint(); };
 $("pulClose").addEventListener("click",()=>$("panel").close());
 $("btnPanel").addEventListener("click",()=>{ if(window.__ПУЛЬТЫ) window.__ПУЛЬТЫ.открыть(); else window.__PULT.open(); });
-
-/* ══ v10.67 «КОМПАС» (guard=КОМПАС): столб справки + быстрые ручки ══
-   Приказ владельца: «НАСТРОЙКИ БЫЛИ СО ВСЕМИ СПРАВКАМИ ПРИ НАВЕДЕНИИ НА НИХ
-   КУРСОРА ИЛИ СТАЙЛУСА». Практики: постоянный help-pane (VS Code Settings),
-   content on hover/focus (WCAG 1.4.13), pointer hover = курсор И стилус
-   (Apple Pencil hover, iPadOS 16), пальцу — долгое нажатие 420 мс. */
-window.__СПРАВКА = (function(){
-  const ст = $("pСправка"), тело = $("pBody");
-  if(!ст) return { вер:1 };
-  const ЗАКОН = { имя:"ЗАКОН СИНГУЛЯРА", тело:"Эргономика, приватность, конфиденциальность, юзабилити — во главе угла. Данные не покидают дом: настройки, нить вечера, память Малыша, кэш — всё живёт в этом браузере. Ноль счётчиков, ноль слежки. Наведи курсор или стилус на любую ручку — здесь появится её полная справка; на пальце — держи ручку чуть дольше." };
-  let держатель = null;
-  function рендер(имя, текст, хвост){
-    ст.innerHTML = "";
-    const б = document.createElement("b"); б.textContent = имя; ст.appendChild(б);
-    if(текст){ const п = document.createElement("p"); п.textContent = текст; ст.appendChild(п); }
-    if(хвост){ const э = document.createElement("em"); э.className = "pdesc"; э.textContent = хвост; ст.appendChild(э); }
-  }
-  function поСтроке(el){
-    const tip = (el && el.closest && el.closest("[data-tip]")) || null;
-    const ряд = (el && el.closest && el.closest(".prow2")) || null;
-    let имя = "", текст = tip ? (tip.getAttribute("data-tip")||"").trim() : "";
-    if(ряд){
-      const л = ряд.querySelector(".plab2"); if(л) имя = л.textContent.trim();
-      const д = ряд.querySelector(".pdesc"); const дт = д ? д.textContent.trim() : "";
-      if(дт) текст = текст ? текст+" "+дт : дт;
-    }
-    if(!имя && !текст){ рендер(ЗАКОН.имя, ЗАКОН.тело, ""); return; }
-    let хвост = "";
-    const м = текст.match(/\((?:клавиша|клавиши|Esc|Ctrl)[^)]*\)/);
-    if(м) хвост = "горячее: " + м[0].slice(1,-1);
-    рендер(имя||"РУЧКА", текст, хвост);
-  }
-  const панель = $("panel");
-  if(панель){
-    панель.addEventListener("pointerover",(e)=>{ if(e.pointerType==="touch") return; поСтроке(e.target); });
-    панель.addEventListener("focusin",(e)=>{ поСтроке(e.target); });
-    панель.addEventListener("pointerleave",()=>{ рендер(ЗАКОН.имя, ЗАКОН.тело, ""); });
-  }
-  if(тело){
-    тело.addEventListener("pointerdown",(e)=>{ if(e.pointerType!=="touch") return; const р=e.target.closest && e.target.closest(".prow2"); if(!р) return; if(держатель) clearTimeout(держатель); держатель = setTimeout(()=>{ поСтроке(e.target); try{ if(navigator.vibrate) navigator.vibrate(12); }catch(_){} }, 420); });
-    ["pointerup","pointercancel"].forEach(t=>тело.addEventListener(t,()=>{ if(держатель){ clearTimeout(держатель); держатель=null; } }, {passive:true}));
-  }
-  рендер(ЗАКОН.имя, ЗАКОН.тело, "");
-  return { вер:1, показать:поСтроке };
-})();
-/* быстрые ручки — канонические кнопки зала живы, клики идут к ним */
-$("pulRoof").addEventListener("click",function(){ try{ $("panel").close(); }catch(_){} try{ if(window.__КРЫША&&window.__КРЫША.открыть) window.__КРЫША.открыть(true); }catch(_){} });
-/* v10.67 «КОМПАС»: шаг назад — закрытие панели крыши возвращает в пульт на вкладку КРЫША */
-window.__КРЫША_вернутьПульт = function(){ try{ if(window.__PULT&&window.__PULT.open) window.__PULT.open(); }catch(_){ } try{ var т=document.querySelector('.p-tabs button[data-pt="roof"]'); if(т) т.click(); }catch(_){ } };
-$("qHealth").addEventListener("click",function(){ try{ $("panel").close(); }catch(_){} mirror("chipHealth"); });
-$("qLang").addEventListener("click",function(){ try{ $("panel").close(); }catch(_){} mirror("btnLang"); });
-$("qPeople").addEventListener("click",function(){ try{ $("panel").close(); }catch(_){} mirror("btnPeople"); });
-$("qLight").addEventListener("click",function(){ mirror("btnLight"); });
-$("qToasts").addEventListener("click",function(){ mirror("btnToasts"); });
-$("qMotion").addEventListener("click",function(){ mirror("btnMotion"); });
 $("pulVc").addEventListener("click",()=>{ mirror("vcGo"); });
 $("pulRec").addEventListener("click",()=>{ if(window.__REC) window.__REC.toggle(); });
 $("pulLamp").addEventListener("click",()=>{ if(window.__LAMP) window.__LAMP.toggle(); });
@@ -6206,8 +6076,6 @@ window.__РУЛЬ = (function(){
     else if(a==='home'){ закрыть(); скажи('Дом: руль убран'); }
     else if(a==='pult'){ закрыть(); if(window.__ПУЛЬТЫ) window.__ПУЛЬТЫ.открыть('полный'); }
   });
-  /* v10.67 «КОМПАС»: шаг назад всегда — Esc (и BACK на ТВ) закрывает руль, как закрывает пульт */
-  D.addEventListener('keydown', function(ev){ var k=(ev.key||''); if(((k==='Escape')||ev.keyCode===27) && корень.classList.contains('открыт')){ закрыть(); } });
   return { вер:1, open:открыть, close:закрыть, краска:краска };
 })();
 /* ══ v10.58 «ВАЛЬС» (дельта ОМНИ после СТОП-ГОРНа) — СКИН «ОМНИ», пятый вид пульта (реестр __ПУЛЬТЫ.виды):
@@ -6390,8 +6258,6 @@ window.__ПЛИТКА = (function(){
     else if(a==='home'){ закрыть(); скажи('Дом: плитка убрана'); }
     else if(a==='pult'){ закрыть(); if(window.__ПУЛЬТЫ) window.__ПУЛЬТЫ.открыть('полный'); }
   });
-  /* v10.67 «КОМПАС»: шаг назад всегда — Esc (и BACK на ТВ) закрывает плитку */
-  D.addEventListener('keydown', function(ev){ var k=(ev.key||''); if(((k==='Escape')||ev.keyCode===27) && корень.classList.contains('ladom-skin-открыт')){ закрыть(); } });
   return { вер:1, open:открыть, close:закрыть, краска:краска };
 })();
 /* ══ v10.53 «ОРГАНИЗМ» — КОМАНДА, четвёртый вид пульта (реестр __ПУЛЬТЫ.виды):
@@ -6594,8 +6460,6 @@ window.__ПУЛЬТЫ = (function(){
     ,{ id:'плитка', имя:'ПЛИТКА', значок:'▦', open:function(){ if(window.__ПЛИТКА&&window.__ПЛИТКА.open) window.__ПЛИТКА.open(); } }
     ,{ id:'команда', имя:'КОМАНДА', значок:'⌘', open:function(){ if(window.__КОМАНДА&&window.__КОМАНДА.open) window.__КОМАНДА.open(); } }
     ,{ id:'омни', имя:'ОМНИ', значок:'◎', open:function(){ if(window.__ОМНИ&&window.__ОМНИ.open) window.__ОМНИ.open(); } }
-    /* v10.67 «КОМПАС» (приказ владельца: «ИЗ ПОДМЕНЮ ПРОПУЩЕНО»): шестое лицо встало в реестр — чип «ЛИЦА» больше не тупик */
-    ,{ id:'лица', имя:'ЛИЦА', значок:'❖', open:function(){ if(window.__ЛИЦАПУЛЬТ&&window.__ЛИЦАПУЛЬТ.открыть) window.__ЛИЦАПУЛЬТ.открыть(); } }
   ];
   function поId(id){ for(var i=0;i<виды.length;i++){ if(виды[i].id===id) return виды[i]; } return null; }
   function текущий(){ return поId(прочитать()) || виды[0]; }
@@ -6958,10 +6822,8 @@ window.__ЛИЦАПУЛЬТ = (function(){
       return 'guard:нет-пульта';
     }
     if(a === 'access'){
-      закрыть();
-      if(window.__КРЫША && window.__КРЫША.открыть){ window.__КРЫША.открыть(true); return 'ok'; }   /* v10.67 КОМПАС: бейдж снят с экрана — крыша по API, закрытие вернёт */
       var z = document.querySelector('#kv31roof .kv31-badge');
-      if(z){ z.click(); return 'ok'; }
+      if(z){ закрыть(); z.click(); return 'ok'; }
       return 'guard:нет-зала';
     }
     if(a === 'scene') return сцена('+1');
@@ -7582,7 +7444,6 @@ window.__HEALTH3 = ()=>[
   { n:"бирка автора: перетаскивается и помнит место", ok: !!(window.__AUTHOR && window.__AUTHOR.draggable && $("authorTag")) },
   { n:"сброс к заводским: 2 шага", ok: !!$("pulReset") },
   { n:"калм-точка присутствия: дышит, по умолчанию молчит (v10.55)", ok: !!(window.__КАЛМТОЧКА && $("калмТочка")), warn: !window.__КАЛМТОЧКА },
-  { n:"мост adapter-os (С46): присутствие МОЗГА — "+(window.SingulyarOS ? (window.SingulyarOS.state==='ready' ? 'мост жив · весы один кэш на дом · присутствие по шине' : 'честно недоступен ('+String(window.SingulyarOS.причина||'file://').slice(0,48)+')') : 'модуль не встал'), ok: !!(window.SingulyarOS && (window.SingulyarOS.state==='ready' || window.SingulyarOS.state==='unavailable')), warn: !window.SingulyarOS },
 ];
 })();
 </script>
@@ -7926,7 +7787,7 @@ let labTabBtn = null;   /* чтобы голос «фото» мог откры�
 if(tabs && pBody){
   const tb = document.createElement("button");
   labTabBtn = tb;
-  tb.dataset.pt = "lab"; tb.innerHTML = '<span class="tab-ico" aria-hidden="true">⚗</span>ЛАБ'; tb.setAttribute("role","tab"); tb.id = "ptab-lab"; tb.setAttribute("aria-selected","false"); tb.setAttribute("aria-controls","ppanel-lab"); tb.setAttribute("tabindex","-1");
+  tb.dataset.pt = "lab"; tb.textContent = "ЛАБ"; tb.setAttribute("role","tab"); tb.id = "ptab-lab"; tb.setAttribute("aria-selected","false"); tb.setAttribute("aria-controls","ppanel-lab"); tb.setAttribute("tabindex","-1");
   tb.setAttribute("data-tip","Лаборатория свободы: свои цвета, джокер, слово→цвета, типографика, свои наборы — вариантов больше, чем атомов во Вселенной");
   tb.addEventListener("click",()=>{
     document.querySelectorAll(".p-tabs button").forEach(x=>{ x.classList.toggle("on", x===tb); x.setAttribute("aria-selected", x===tb?"true":"false"); x.setAttribute("tabindex", x===tb?"0":"-1"); });
@@ -11097,7 +10958,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'10.68', такт:'ПРОВОДКА', кэш:'s15-orkestrator-v124', стр:'2026-10-12', ver:'v10.68 «ПРОВОДКА»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v124' };
+window.APP = { v:'10.67', такт:'ГОЛОС', кэш:'s15-orkestrator-v122', стр:'2026-10-12', ver:'v10.67 «ГОЛОС»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v122' };
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -11173,7 +11034,7 @@ var S = {
   ver: VER,
   peer: null, conns: [], calls: [],
   micPA: null, micPAgain: 1.0, micWant: false, echoWet: 0, echoCtx: null, echoNodes: null, echoIR: null, pulsГостям: false,
-  hostOn: false, ruleOpen: false, gseq: 0, открытаИзПульта: false,   /* v10.67 КОМПАС: шаг назад — из пульта открыл, закрытием в пульт вернулся */   /* С21: руль закрыт по умолчанию; эпоха снимков */ whisper: { ready:false, busy:false, lastOffset:null, prevOffset:null, matches:0, model:null }
+  hostOn: false, ruleOpen: false, gseq: 0,   /* С21: руль закрыт по умолчанию; эпоха снимков */ whisper: { ready:false, busy:false, lastOffset:null, prevOffset:null, matches:0, model:null }
 };
 
 function секции(){ try{ return (window.SONG&&window.SONG.sections)||[]; }catch(_){ return []; } }
@@ -11377,7 +11238,6 @@ if (roomArg){
 var badge = el('div'); badge.id='kv31roof';
 badge.innerHTML = '<div class="kv31-badge" role="button" tabindex="0" aria-label="Крыша двери 31: телефоны и автосинхрон">КРЫША ·31<small>телефоны · автосинхрон</small></div>';
 D.body.appendChild(badge);
-try{ badge.style.display = 'none'; }catch(_){ }   /* v10.67 КОМПАС: главный экран чист — крыша живёт в пульте (вкладка «КРЫША») */
 
 var panel = el('div'); panel.id='kv31panel';
 panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Крыша двери 31'); panel.setAttribute('tabindex','-1');   /* v10.45: фокус в панель при открытии */
@@ -11415,10 +11275,10 @@ panel.innerHTML = ''
 +   '<div class="kv31-log" id="kv31wLog">модель придёт с CDN один раз и осядет в кэше браузера; дальше — офлайн. Выравниваю по словам, применяю честную медиану в родной __SYNC_SET.</div>'
 + '</div>'
 + '<div class="kv31-card"><b>РУЛЬ ЗАЛА</b> — что умеет телефон: пуск/стоп, ⏮ назад/⏭ дальше (плейлист зала 62 песни), 🔁 репит, 🔀 случайно, ±15 с, секции, громкость, сцены, темы, ПУЛЬТ, БРАВО, ПОКАЗ, живой голос в колонки. Телефон всегда показывает текущую строку. Руль по умолчанию закрыт: телефон смотрит, голосует и бравит — полный руль открывает хозяин кнопкой «РУЛЬ».</div>'   /* С21 */
-+ '<div style="text-align:right"><button id="kv31btnBye">ГОТОВО · ЗАКРЫТЬ</button></div>';
++ '<div style="text-align:right"><button id="kv31btnBye">СНЯТЬ КРЫШУ</button></div>';
 D.body.appendChild(panel);
 
-function panelOpen(o){ var былВнутри = false; try{ былВнутри = panel.contains(D.activeElement); }catch(_){} panel.classList.toggle('open', !!o); try{ badge.style.display='none'; }catch(_){ }   /* v10.67 КОМПАС: бейдж не занимает угол зала — крыша открывается из пульта */ if(o){ try{panel.focus();}catch(_){}} else if(былВнутри){ if(S.открытаИзПульта){ S.открытаИзПульта = false; try{ if(window.__КРЫША_вернутьПульт) window.__КРЫША_вернутьПульт(); else if(window.__PULT&&window.__PULT.open) window.__PULT.open(); }catch(_){} } else { try{ var б=document.getElementById('btnPanel'); if(б) б.focus(); }catch(_){} } } }   /* v10.45: фокус замеряется ДО скрытия и возвращается КНОПКЕ бейджа (контейнер не фокусируем) */
+function panelOpen(o){ var былВнутри = false; try{ былВнутри = panel.contains(D.activeElement); }catch(_){} panel.classList.toggle('open', !!o); if(o){ try{badge.style.display='none';}catch(_){} try{panel.focus();}catch(_){}} else { try{badge.style.display='';}catch(_){} if(былВнутри){ try{ badge.querySelector('.kv31-badge').focus(); }catch(_){}} } }   /* v10.45: фокус замеряется ДО скрытия и возвращается КНОПКЕ бейджа (контейнер не фокусируем) */
 D.getElementById('kv31btnX').addEventListener('click', function(){ panelOpen(false); });   /* v10.45: × в шапке */
 D.getElementById('kv31doorLitsa').addEventListener('click', function(e){   /* v10.46: дверь ПУЛЬТ · ЛИЦА — вид пульта с памятью последнего лица */
   try{ e.preventDefault(); }catch(_){}
@@ -11428,7 +11288,7 @@ D.getElementById('kv31doorLitsa').addEventListener('click', function(e){   /* v1
 D.addEventListener('keydown', function(e){ if(!panel.classList.contains('open')) return; try{ if(D.querySelector('dialog[open]')) return; }catch(_){ } if(e.key==='Escape'||e.keyCode===27){ try{e.preventDefault();}catch(_){ } try{e.stopPropagation();}catch(_){ } panelOpen(false); } });
 badge.querySelector('.kv31-badge').addEventListener('click', function(){ panelOpen(!panel.classList.contains('open')); });
 badge.querySelector('.kv31-badge').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panelOpen(true);} });
-D.getElementById('kv31btnBye').addEventListener('click', function(){ panelOpen(false); toast('Панель закрыта. КРЫША стоит — снова открыть: ПУЛЬТ → вкладка «КРЫША».'); });
+D.getElementById('kv31btnBye').addEventListener('click', function(){ panelOpen(false); toast('Панель закрыта. КРЫША стоит — снова открыть: бейдж «КРЫША ·31» в углу.'); });
 D.getElementById('kv31paVol').addEventListener('input', function(){ S.micPAgain = (parseInt(this.value,10)||0)/100; if(S.echoNodes){ try{ S.echoNodes.dry.gain.value = S.micPAgain; }catch(_){} } else if(S.micPA){ S.micPA.volume = S.micPAgain; } });
 D.getElementById('kv31paEcho').addEventListener('input', function(){ try{ if(window.__ЭХОЗАЛА) window.__ЭХОЗАЛА.уровень((parseInt(this.value,10)||0)/100); }catch(_){} });
 D.getElementById('kv31btnPuls').addEventListener('click', function(){ try{ if(window.__ПУЛЬСЗАЛА){ window.__ПУЛЬСЗАЛА.переключи(); this.textContent = 'ПУЛЬС ГОСТЯМ: '+(window.__ПУЛЬСЗАЛА.вкл?'ВКЛ':'выкл'); } }catch(_){} });
@@ -11895,9 +11755,6 @@ window.__КРЫША = {
     };
   },
   align: whisperAlign, hostStart: hostStart, hostStop: hostStop,
-  /* v10.67 «КОМПАС»: крыша открывается из пульта (приказ владельца: убрать настройки с главного экрана); открыть(true) — закрытие вернёт в пульт, шаг назад честный */
-  открыть: function(изПульта){ try{ S.открытаИзПульта = !!изПульта; }catch(_){ } panelOpen(true); },
-  закрыть: function(){ panelOpen(false); },
   /* С20·ЗАЛ: мост для новых слов зала (голосование, волна) — КРЫША не переписана */
   мост: {
     разослать: function(m){ var n=0; S.conns.forEach(function(c){ try{ if(c.open){ c.send(m); n++; } }catch(_){} }); return n; },
@@ -12741,73 +12598,5 @@ window.__РУЧКИ = (function(){
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
-<script type="module">
-/* ═══ v10.68 «ПРОВОДКА» (С46) · ADAPTER-OS МОСТ В ЛАДОМ: ПРИСУТСТВИЕ МОЗГА ═══
-   Дорожная карта, строка «adapter-os мост в ЛАДОМ». Зал не запускает второй
-   wllama и не качает веса: весы живут в одном кэше устройства
-   (singular-llm-parts-v1) для всего дома.
-   (1) Датчик кэша — честный подсчёт частей весов, 0 сети.
-   (2) Шина смыслов (BroadcastChannel вкладок дома): зал объявляет
-       «зал-31-дышит»; живой МОЗГ (·19/·21, доучка llm v0.11) отвечает
-       «мозг-жив» — присутствие видно. Спящий мозг молчит (дом не врёт).
-   (3) Реестр ОС: адаптер presence.31-мозг с честным status().
-   (4) Строка «мозг» в калм-карте — MutationObserver добавляет её после каждой
-       перекраски карты; ядро калм-точки не переписано; перед мутацией текст
-       сравнивается — слушатель не будит сам себя.
-   file://: module-import блокируется → зал работает как раньше,
-   window.SingulyarOS честно = {state:'unavailable'}.
-   0 innerHTML · 0 сети · 0 телеметрии. */
-(async function(){
-try{
-  var os = await (await import('./БИБЛИОТЕКИ/adapter-os/bridge.mjs')).bootAdapterOS({ page: '31-ЛАДОМ' });
-  var М = { весы: '—', частей: null, мозг: 'спит', источник: '—', канал: '—' };
-  try{
-    if (typeof caches !== 'undefined'){
-      var кэш = await caches.open('singular-llm-parts-v1');
-      var части = await кэш.keys();
-      var n = 0;
-      части.forEach(function(р){ if(String(р && р.url || '').indexOf('part') >= 0) n++; });
-      М.частей = n;
-      М.весы = n >= 6 ? 'в кэше устройства (' + n + '/6)' : (n > 0 ? 'частично (' + n + '/6)' : 'не скачаны');
-    } else { М.весы = 'Cache API недоступен'; }
-  } catch(е){ М.весы = 'недоступен: ' + ((е && е.name) || 'ошибка'); }
-  М.канал = (typeof BroadcastChannel !== 'undefined') ? 'жив' : 'нет';
-  var карта = document.getElementById('калмКарта'), строка = null;
-  function крась(){
-    try{
-      if(!карта) карта = document.getElementById('калмКарта');
-      if(!карта) return;
-      var текст = М.мозг === 'жив'
-        ? ('присутствует (' + М.источник + ') · весы ' + М.весы)
-        : ('спит · весы ' + М.весы + ' · зовут из ·19/·21');
-      if(строка && строка.parentNode === карта && строка.textContent === 'мозг: ' + текст) return; /* 0 мутаций */
-      if(строка && строка.parentNode) строка.parentNode.removeChild(строка);
-      строка = document.createElement('div');
-      var б = document.createElement('b'); б.textContent = 'мозг: ';
-      строка.appendChild(б);
-      строка.appendChild(document.createTextNode(текст));
-      карта.appendChild(строка);
-    } catch(е){}
-  }
-  os.bus.subscribe(function(env){
-    if(env && env.type === 'мозг-жив'){ М.мозг = 'жив'; М.источник = String(env.author || 'мозг'); крась(); }
-  });
-  os.bus.publish('зал-31-дышит', { зал: '·31 ЛАДОМ', такт: (window.APP && window.APP.такт) || '?' });
-  os.registerAdapter({ id: 'presence.31-мозг', kind: 'sensor', priority: 40,
-    status: function(){
-      return { state: 'READY', privacy: 'local',
-        note: 'весы ' + М.весы + ' · мозг ' + М.мозг + (М.мозг === 'жив' ? ' (' + М.источник + ')' : '') };
-    } });
-  if(карта && typeof MutationObserver !== 'undefined'){
-    new MutationObserver(function(){ крась(); }).observe(карта, { childList: true });
-  }
-  крась();
-  try{ if(window.__КАЛМТОЧКА) window.__КАЛМТОЧКА.мозг = М; } catch(е){}
-}catch(е){
-  try{ Object.defineProperty(window, 'SingulyarOS', { value: { state: 'unavailable', page: '31-ЛАДОМ', причина: String((е && е.message) || е) }, configurable: true }); } catch(_){}
-}
-})();
-</script>
 </body>
-
 </html>
