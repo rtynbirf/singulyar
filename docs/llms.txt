@@ -87,3 +87,4 @@
 - Пакет трека: КОЛОНКА/ (34 файла: docs 00–15, OpenSCAD-корпус, Terraform/Ansible, docker-compose, policy_rules.json, конфиги сети).
 - Скин пульта «ОМНИ» — пятый вид (`__ПУЛЬТЫ.виды`, память kv.pult): кольцо 360°.
 - Уроки для Малыша: docs/МАЛЫШ.md → часть 7; дорога: docs/ДОРОЖНАЯ_КАРТА.md.
+docs/АРХИТЕКТУРА_EN.md — English translation of the house architecture doc (v10.80); canonical RU wins.
