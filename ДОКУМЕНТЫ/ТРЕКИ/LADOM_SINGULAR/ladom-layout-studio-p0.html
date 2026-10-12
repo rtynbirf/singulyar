@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ЛАДОМ · Layout Studio P0 — структура сцены</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0e1218;
+  --panel: #171d27;
+  --line: #2e3a4a;
+  --text: #e8eef6;
+  --muted: #93a0b3;
+  --accent: #6ec9b8;
+  --sel: #ffc857;
+  --err: #ff6b7a;
+  --ok: #6ec98a;
+  --warn: #e6b84d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.45 system-ui, "Segoe UI", sans-serif;
+}
+header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+header h1 { font-size: 1.1rem; margin: 0; }
+header p { margin: 0; color: var(--muted); font-size: .88rem; }
+.badge {
+  font-size: .75rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+.app {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 360px;
+  gap: 12px;
+  padding: 12px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 0;
+}
+.toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+button, input, textarea, select {
+  font: inherit;
+}
+button {
+  background: #243041;
+  color: var(--text);
+  border: 1px solid #4a5d75;
+  border-radius: 8px;
+  padding: 8px 11px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.region:focus-visible {
+  outline: 3px solid var(--sel);
+  outline-offset: 2px;
+}
+.primary { background: #1e4d45; border-color: #3f8f80; }
+.danger { background: #4a2228; border-color: #8a4550; }
+.canvas-wrap {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: #090c10;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 340px;
+}
+.canvas {
+  width: min(100%, 720px);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  background:
+    linear-gradient(145deg, #2a3644 0%, #8a7b68 52%, #3a4a4a 100%);
+  overflow: hidden;
+  border: 1px solid #5a6a7a;
+  touch-action: none;
+}
+.region {
+  position: absolute;
+  border: 2px solid var(--accent);
+  background: rgba(110, 201, 184, 0.14);
+  cursor: move;
+  min-width: 10px;
+  min-height: 10px;
+}
+.region.selected {
+  border: 3px solid var(--sel);
+  background: rgba(255, 200, 87, 0.18);
+  z-index: 20;
+}
+.region.locked {
+  border-style: dashed;
+  cursor: default;
+}
+.region.error {
+  border-color: var(--err);
+  box-shadow: 0 0 0 1px var(--err);
+}
+.region .tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  background: rgba(12, 16, 22, 0.92);
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: -7px;
+  bottom: -7px;
+  background: var(--sel);
+  border: 2px solid #171d27;
+  border-radius: 3px;
+  cursor: nwse-resize;
+}
+.hint {
+  color: var(--muted);
+  font-size: .85rem;
+  margin: 8px 0 0;
+}
+label {
+  display: block;
+  margin: 10px 0 4px;
+  color: var(--muted);
+  font-size: .88rem;
+}
+input, textarea, select {
+  width: 100%;
+  background: #0f141c;
+  color: var(--text);
+  border: 1px solid #3a4a5c;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+textarea { min-height: 72px; resize: vertical; }
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 180px;
+  overflow: auto;
+}
+.list button {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+.list button.active {
+  border-color: var(--sel);
+  background: #2a3340;
+}
+.small { color: var(--muted); font-size: .8rem; }
+.warn {
+  color: var(--warn);
+  font-size: .82rem;
+  margin: 10px 0 0;
+}
+.status {
+  margin-top: 8px;
+  min-height: 1.3em;
+  color: var(--muted);
+  font-size: .88rem;
+}
+.validation {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #10161f;
+  font-size: .85rem;
+  max-height: 140px;
+  overflow: auto;
+}
+.validation.ok { border-color: #2f5a45; color: var(--ok); }
+.validation.bad { border-color: #6a3038; color: var(--err); }
+.validation ul { margin: 6px 0 0; padding-left: 18px; }
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 120px;
+  overflow: auto;
+  margin-top: 6px;
+}
+.history button {
+  text-align: left;
+  font-size: .82rem;
+  padding: 6px 8px;
+}
+.history button.active {
+  border-color: var(--accent);
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.tabs button {
+  flex: 1;
+  padding: 7px;
+  font-size: .85rem;
+}
+.tabs button.active {
+  border-color: var(--accent);
+  background: #1e3a36;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+kbd {
+  font: .75rem ui-monospace, monospace;
+  background: #243041;
+  border: 1px solid #4a5d75;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+.autosave-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border: 1px solid #3f5a45;
+  border-radius: 8px;
+  background: #14201a;
+  font-size: .85rem;
+}
+.autosave-banner[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>ЛАДОМ · Layout Studio P0</h1>
+    <p>Открытая структура сцены · валидатор · история · diff · без сети и без API-ключа</p>
+  </div>
+  <span class="badge">schema: ladom.layout.v1</span>
+  <span class="badge" id="versionBadge">версия 0</span>
+</header>
+
+<main class="app">
+  <section class="panel" aria-label="Холст композиции">
+    <div id="autosaveBanner" class="autosave-banner" role="status" aria-live="polite" hidden>
+      <span id="autosaveMsg">Проект восстановлен из автосохранения</span>
+      <button id="autosaveReset" type="button">Сброс к заводскому примеру</button>
+      <button id="autosaveClose" type="button" aria-label="Скрыть сообщение о восстановлении">✕</button>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="btnAdd" type="button">＋ Регион</button>
+      <button id="btnUndo" type="button" title="Ctrl+Z">↶ Undo</button>
+      <button id="btnRedo" type="button" title="Ctrl+Shift+Z">↷ Redo</button>
+      <button id="btnExport" type="button">Экспорт JSON</button>
+      <button id="btnImport" type="button">Импорт JSON</button>
+      <input id="fileInput" type="file" accept="application/json,.json" hidden>
+      <button id="btnDiff" type="button">Diff с предыдущей</button>
+      <button id="btnSnapshot" type="button">Снимок версии</button>
+      <button id="btnFactoryReset" type="button" aria-label="Сбросить проект к заводскому примеру">Сброс</button>
+    </div>
+    <div class="canvas-wrap">
+      <div id="canvas" class="canvas" role="group" aria-label="Квадратный холст композиции. Регионы перетаскиваются мышью; размер — за маркер; клавиатурная альтернатива — числовые поля X, Y, Ширина, Высота."></div>
+    </div>
+    <p class="hint">
+      Перетаскивание · resize · числовые поля · <kbd>Del</kbd> удаляет · <kbd>Ctrl+Z</kbd>/<kbd>Ctrl+Shift+Z</kbd> история.
+      Ошибки геометрии подсвечиваются красным.
+    </p>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div id="validation" class="validation ok" aria-live="polite">Геометрия: ок</div>
+    <div id="autosaveStatus" class="small" role="status" aria-live="polite"></div>
+  </section>
+
+  <aside class="panel" aria-label="Свойства, список, история">
+    <div class="tabs" role="tablist" aria-label="Панели">
+      <button type="button" class="active" data-tab="props" id="tabProps" role="tab" aria-selected="true" aria-controls="panelProps">Свойства</button>
+      <button type="button" data-tab="history" id="tabHistory" role="tab" aria-selected="false" aria-controls="panelHistory">История</button>
+      <button type="button" data-tab="diff" id="tabDiff" role="tab" aria-selected="false" aria-controls="panelDiff">Diff</button>
+    </div>
+
+    <div id="panelProps" role="tabpanel" aria-labelledby="tabProps">
+      <label for="title">Название проекта</label>
+      <input id="title" value="Новая композиция">
+
+      <h2 class="sr-only">Список регионов</h2>
+      <p class="small" style="margin:12px 0 4px">Регионы</p>
+      <div id="regionList" class="list" role="listbox" aria-label="Список регионов"></div>
+      <div class="toolbar" style="margin-top:8px">
+        <button id="btnRemove" type="button" class="danger">Удалить</button>
+        <button id="btnLock" type="button">Замок</button>
+        <button id="btnUp" type="button">↑ слой</button>
+        <button id="btnDown" type="button">↓ слой</button>
+      </div>
+
+      <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+
+      <h2 style="font-size:.95rem;margin:0">Выбранный регион</h2>
+      <label for="label">Метка</label>
+      <input id="label" placeholder="главный объект">
+      <label for="prompt">Prompt / инструкция</label>
+      <textarea id="prompt" placeholder="Что должно быть в этом регионе"></textarea>
+      <div class="fields">
+        <div>
+          <label for="x">X (0–1)</label>
+          <input id="x" type="number" min="0" max="1" step="0.01">
+        </div>
+        <div>
+          <label for="y">Y (0–1)</label>
+          <input id="y" type="number" min="0" max="1" step="0.01">
+        </div>
+        <div>
+          <label for="w">Ширина</label>
+          <input id="w" type="number" min="0.01" max="1" step="0.01">
+        </div>
+        <div>
+          <label for="h">Высота</label>
+          <input id="h" type="number" min="0.01" max="1" step="0.01">
+        </div>
+      </div>
+      <p class="small" style="margin-top:8px">
+        BBox нормализованы 0…1. Локальный IR ≠ wire-format Reve. Адаптер — отдельный слой.
+      </p>
+      <p class="warn">
+        Автономный P0: нет сети, нет токена, нет генерации. Ценность — структура, валидация, история.
+      </p>
+    </div>
+
+    <div id="panelHistory" role="tabpanel" aria-labelledby="tabHistory" hidden>
+      <p class="small">Снимки версий (append-only). Клик — просмотр. «Восстановить» — новый снимок из выбранного.</p>
+      <div id="historyList" class="history" role="group" aria-label="Снимки версий"></div>
+      <div class="toolbar" style="margin-top:8px">
+        <button id="btnRestore" type="button">Восстановить выбранный снимок</button>
+      </div>
+    </div>
+
+    <div id="panelDiff" role="tabpanel" aria-labelledby="tabDiff" hidden>
+      <p class="small">Сравнение текущей версии с предыдущим снимком или с последним undo-состоянием.</p>
+      <pre id="diffOut" style="white-space:pre-wrap;font-size:.8rem;background:#0f141c;padding:10px;border-radius:8px;border:1px solid var(--line);max-height:360px;overflow:auto;margin:0"></pre>
+    </div>
+  </aside>
+</main>
+
+<script>
+(() => {
+  'use strict';
+
+  // VALIDATOR-BEGIN (ladom.layout.v1 · чистые функции без DOM; блок вырезается node-тестами и исполняется в node:vm)
+  const SCHEMA = 'ladom.layout.v1';
+  const MIN_SIZE = 0.02;
+
+  // ——— Constraint Solver (P0) ———
+  function validateLayout(proj) {
+    const errors = [];
+    const regions = proj.regions || [];
+
+    regions.forEach((r, i) => {
+      const b = r.bbox;
+      if (!b || typeof b !== 'object') {
+        errors.push({ id: r.id, msg: `Регион ${i + 1}: отсутствует bbox` });
+        return;
+      }
+      const { x, y, width, height } = b;
+      if (![x, y, width, height].every(Number.isFinite)) {
+        errors.push({ id: r.id, msg: `"${r.label || r.id}": bbox не числовой` });
+        return;
+      }
+      if (width < MIN_SIZE || height < MIN_SIZE) {
+        errors.push({ id: r.id, msg: `"${r.label || r.id}": размер < ${MIN_SIZE}` });
+      }
+      if (x < 0 || y < 0 || x + width > 1.0001 || y + height > 1.0001) {
+        errors.push({ id: r.id, msg: `"${r.label || r.id}": выходит за границы кадра` });
+      }
+      if (width <= 0 || height <= 0) {
+        errors.push({ id: r.id, msg: `"${r.label || r.id}": нулевой/отрицательный размер` });
+      }
+    });
+
+    // Overlap warning (not hard error)
+    for (let i = 0; i < regions.length; i++) {
+      for (let j = i + 1; j < regions.length; j++) {
+        const a = regions[i].bbox;
+        const b = regions[j].bbox;
+        if (!a || !b) continue;
+        const overlap =
+          a.x < b.x + b.width &&
+          a.x + a.width > b.x &&
+          a.y < b.y + b.height &&
+          a.y + a.height > b.y;
+        if (overlap && !regions[i].locked && !regions[j].locked) {
+          // soft — only note if both not locked
+        }
+      }
+    }
+
+    return errors;
+  }
+
+  // ——— Import validation (transactional) ———
+  function validateImport(raw) {
+    if (!raw || typeof raw !== 'object') throw new Error('Корень должен быть объектом');
+    if (raw.schemaVersion && typeof raw.schemaVersion !== 'string') {
+      throw new Error('schemaVersion должен быть строкой');
+    }
+    if (!Array.isArray(raw.regions)) throw new Error('regions должен быть массивом');
+    if (raw.regions.length > 64) throw new Error('Слишком много регионов (лимит 64)');
+
+    const regions = raw.regions.map((r, i) => {
+      if (!r || typeof r !== 'object') throw new Error('Регион ' + i + ' не объект');
+      const id = typeof r.id === 'string' && r.id ? r.id : 'imported-' + i;
+      const label = typeof r.label === 'string' ? r.label : 'Регион';
+      const prompt = typeof r.prompt === 'string' ? r.prompt : '';
+      const bbox = r.bbox;
+      if (!bbox || typeof bbox !== 'object') throw new Error('Регион ' + id + ': нет bbox');
+      const x = Number(bbox.x);
+      const y = Number(bbox.y);
+      const width = Number(bbox.width);
+      const height = Number(bbox.height);
+      if (![x, y, width, height].every(Number.isFinite)) {
+        throw new Error('Регион ' + id + ': bbox не числовой');
+      }
+      if (width <= 0 || height <= 0) throw new Error('Регион ' + id + ': невалидный размер');
+      if (x < 0 || y < 0 || x + width > 1.01 || y + height > 1.01) {
+        throw new Error('Регион ' + id + ': bbox вне 0…1');
+      }
+      return {
+        id,
+        label,
+        prompt,
+        bbox: {
+          x: clamp(x, 0, 1),
+          y: clamp(y, 0, 1),
+          width: clamp(width, MIN_SIZE, 1),
+          height: clamp(height, MIN_SIZE, 1)
+        },
+        zIndex: Number.isFinite(r.zIndex) ? r.zIndex : i,
+        locked: !!r.locked
+      };
+    });
+
+    return {
+      schemaVersion: typeof raw.schemaVersion === 'string' ? raw.schemaVersion : SCHEMA,
+      title: typeof raw.title === 'string' ? raw.title : 'Импортированная композиция',
+      canvas: {
+        width: Number(raw.canvas?.width) || 1024,
+        height: Number(raw.canvas?.height) || 1024,
+        aspectRatio: raw.canvas?.aspectRatio || '1:1'
+      },
+      regions
+    };
+  }
+
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+  }
+
+  function validateProject(c) {
+    // Сводный чистый валидатор IR (такт v10.73): структура + геометрия; не мутирует объект и не трогает DOM.
+    const errs = [];
+    const add = (code, id, msg) => errs.push({ code, id: id == null ? null : id, msg });
+    if (!c || typeof c !== 'object' || Array.isArray(c)) { add('root', null, 'корень не объект'); return errs; }
+    if (c.schemaVersion !== SCHEMA) add('schemaVersion', null, 'неизвестный schemaVersion: ' + String(c.schemaVersion));
+    if (typeof c.title !== 'string') add('field', null, 'title: нет строки');
+    if (!c.canvas || typeof c.canvas !== 'object' || Array.isArray(c.canvas)) add('field', null, 'canvas: нет объекта');
+    else if (![c.canvas.width, c.canvas.height].every(Number.isFinite)) add('type', null, 'canvas.width/height: не числа');
+    if (!Array.isArray(c.regions)) { add('regions', null, 'regions: не массив'); return errs; }
+    if (c.regions.length > 64) add('limit', null, 'регионов больше 64');
+    let allObjects = true;
+    c.regions.forEach((r, i) => {
+      if (!r || typeof r !== 'object' || Array.isArray(r)) { add('type', null, 'Регион ' + i + ': не объект'); allObjects = false; return; }
+      const rid = (typeof r.id === 'string' && r.id) ? r.id : '#' + i;
+      if (typeof r.id !== 'string' || !r.id) add('field', rid, 'нет id');
+      if (typeof r.label !== 'string') add('field', rid, 'нет label');
+      if (typeof r.prompt !== 'string') add('field', rid, 'нет prompt');
+      if (r.zIndex !== undefined && !Number.isFinite(r.zIndex)) add('type', rid, 'zIndex: не число');
+      if (r.locked !== undefined && typeof r.locked !== 'boolean') add('type', rid, 'locked: не boolean');
+      if (r.metadata !== undefined && (typeof r.metadata !== 'object' || r.metadata === null || Array.isArray(r.metadata))) add('type', rid, 'metadata: не объект');
+    });
+    if (allObjects) validateLayout(c).forEach((e) => add('geometry', e.id, e.msg));
+    return errs;
+  }
+  // VALIDATOR-END
+
+  const MAX_FILE = 1024 * 1024;
+
+  const $ = (id) => document.getElementById(id);
+  const canvas = $('canvas');
+
+  /** @type {{schemaVersion:string,title:string,canvas:{width:number,height:number,aspectRatio:string},regions:Region[]}} */
+  let project = emptyProject();
+  let selected = null;
+  let counter = 1;
+  let drag = null;
+
+  // Undo stack: full project snapshots
+  const undoStack = [];
+  const redoStack = [];
+  const MAX_UNDO = 40;
+
+  // Named version snapshots (Experiment Ledger lite)
+  const versions = [];
+  let viewingVersionId = null;
+
+  function emptyProject() {
+    return {
+      schemaVersion: SCHEMA,
+      title: 'Новая композиция',
+      canvas: { width: 1024, height: 1024, aspectRatio: '1:1' },
+      regions: []
+    };
+  }
+
+  function uid() {
+    return 'r-' + (counter++) + '-' + Math.random().toString(36).slice(2, 7);
+  }
+
+  function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  function say(msg) {
+    $('status').textContent = msg;
+  }
+
+  function current() {
+    return project.regions.find((r) => r.id === selected) || null;
+  }
+
+  function pushUndo() {
+    undoStack.push(clone(project));
+    if (undoStack.length > MAX_UNDO) undoStack.shift();
+    redoStack.length = 0;
+    updateUndoButtons();
+  }
+
+  function updateUndoButtons() {
+    $('btnUndo').disabled = undoStack.length === 0;
+    $('btnRedo').disabled = redoStack.length === 0;
+  }
+
+  function doUndo() {
+    if (!undoStack.length) return;
+    redoStack.push(clone(project));
+    project = undoStack.pop();
+    if (!project.regions.find((r) => r.id === selected)) {
+      selected = project.regions[0]?.id || null;
+    }
+    renderAll();
+    say('Undo');
+    updateUndoButtons();
+  }
+
+  function doRedo() {
+    if (!redoStack.length) return;
+    undoStack.push(clone(project));
+    project = redoStack.pop();
+    if (!project.regions.find((r) => r.id === selected)) {
+      selected = project.regions[0]?.id || null;
+    }
+    renderAll();
+    say('Redo');
+    updateUndoButtons();
+  }
+
+  function showValidation() {
+    const errors = validateLayout(project);
+    const box = $('validation');
+    if (!errors.length) {
+      box.className = 'validation ok';
+      box.textContent = 'Геометрия: ок · регионов: ' + project.regions.length;
+    } else {
+      box.className = 'validation bad';
+      box.textContent = 'Ошибки геометрии (' + errors.length + '):';
+      const ul = document.createElement('ul');
+      errors.forEach((e) => {
+        const li = document.createElement('li');
+        li.textContent = e.msg;
+        ul.append(li);
+      });
+      box.append(ul);
+    }
+    return errors;
+  }
+
+  // ——— Diff ———
+  function diffLayout(oldP, newP) {
+    const lines = [];
+    if (oldP.title !== newP.title) {
+      lines.push('title: "' + oldP.title + '" → "' + newP.title + '"');
+    }
+    const oldMap = Object.fromEntries((oldP.regions || []).map((r) => [r.id, r]));
+    const newMap = Object.fromEntries((newP.regions || []).map((r) => [r.id, r]));
+    const allIds = new Set([...Object.keys(oldMap), ...Object.keys(newMap)]);
+
+    for (const id of allIds) {
+      const a = oldMap[id];
+      const b = newMap[id];
+      if (!a) {
+        lines.push('+ region ' + id + ' ("' + (b.label || '') + '")');
+        continue;
+      }
+      if (!b) {
+        lines.push('- region ' + id + ' ("' + (a.label || '') + '")');
+        continue;
+      }
+      const changes = [];
+      if (a.label !== b.label) changes.push('label');
+      if (a.prompt !== b.prompt) changes.push('prompt');
+      if (a.locked !== b.locked) changes.push('locked');
+      if (a.zIndex !== b.zIndex) changes.push('zIndex');
+      const ba = a.bbox;
+      const bb = b.bbox;
+      if (ba.x !== bb.x || ba.y !== bb.y || ba.width !== bb.width || ba.height !== bb.height) {
+        changes.push(
+          'bbox [' +
+            ba.x.toFixed(2) + ',' + ba.y.toFixed(2) + ',' + ba.width.toFixed(2) + ',' + ba.height.toFixed(2) +
+            '] → [' +
+            bb.x.toFixed(2) + ',' + bb.y.toFixed(2) + ',' + bb.width.toFixed(2) + ',' + bb.height.toFixed(2) + ']'
+        );
+      }
+      if (changes.length) {
+        lines.push('~ ' + id + ': ' + changes.join(', '));
+      }
+    }
+    return lines.length ? lines.join('\n') : '(нет отличий)';
+  }
+
+  // ——— Render ———
+  function renderAll() {
+    renderCanvas();
+    renderList();
+    fillForm();
+    showValidation();
+    $('title').value = project.title;
+    $('versionBadge').textContent = 'снимков: ' + versions.length + ' · undo: ' + undoStack.length;
+    renderHistoryList();
+    scheduleAutosave();
+  }
+
+  function renderCanvas() {
+    canvas.replaceChildren();
+    const errors = validateLayout(project);
+    const errIds = new Set(errors.map((e) => e.id));
+
+    const sorted = [...project.regions].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+    sorted.forEach((r) => {
+      const el = document.createElement('div');
+      el.className = 'region' +
+        (r.id === selected ? ' selected' : '') +
+        (r.locked ? ' locked' : '') +
+        (errIds.has(r.id) ? ' error' : '');
+      el.style.left = (r.bbox.x * 100) + '%';
+      el.style.top = (r.bbox.y * 100) + '%';
+      el.style.width = (r.bbox.width * 100) + '%';
+      el.style.height = (r.bbox.height * 100) + '%';
+      el.dataset.id = r.id;
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', (r.label || r.id) + (r.locked ? ' (заблокирован)' : ''));
+
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = r.label || r.id;
+      el.append(tag);
+
+      if (r.id === selected && !r.locked) {
+        const h = document.createElement('span');
+        h.className = 'handle';
+        h.setAttribute('aria-hidden', 'true');
+        el.append(h);
+      }
+
+      el.addEventListener('pointerdown', (e) => beginDrag(e, r, el));
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selected = r.id;
+        renderAll();
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selected = r.id;
+          renderAll();
+        }
+      });
+      canvas.append(el);
+    });
+  }
+
+  function renderList() {
+    const list = $('regionList');
+    list.replaceChildren();
+    const sorted = [...project.regions].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+    sorted.forEach((r, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = r.id === selected ? 'active' : '';
+      b.setAttribute('role', 'option');
+      b.setAttribute('aria-selected', r.id === selected ? 'true' : 'false');
+      const left = document.createElement('span');
+      left.textContent = (i + 1) + '. ' + (r.label || 'Регион') + (r.locked ? ' 🔒' : '');
+      const right = document.createElement('span');
+      right.className = 'small';
+      right.textContent = r.id.slice(0, 12);
+      b.append(left, right);
+      b.addEventListener('click', () => {
+        selected = r.id;
+        renderAll();
+      });
+      list.append(b);
+    });
+  }
+
+  function fillForm() {
+    const r = current();
+    const ids = ['label', 'prompt', 'x', 'y', 'w', 'h'];
+    ids.forEach((id) => { $(id).disabled = !r; });
+    $('btnRemove').disabled = !r;
+    $('btnLock').disabled = !r;
+    $('btnUp').disabled = !r;
+    $('btnDown').disabled = !r;
+
+    if (!r) {
+      $('label').value = '';
+      $('prompt').value = '';
+      ['x', 'y', 'w', 'h'].forEach((id) => { $(id).value = ''; });
+      return;
+    }
+    $('label').value = r.label;
+    $('prompt').value = r.prompt;
+    $('x').value = r.bbox.x.toFixed(3);
+    $('y').value = r.bbox.y.toFixed(3);
+    $('w').value = r.bbox.width.toFixed(3);
+    $('h').value = r.bbox.height.toFixed(3);
+    $('btnLock').textContent = r.locked ? 'Снять замок' : 'Замок';
+  }
+
+  function applyNumericFields() {
+    const r = current();
+    if (!r || r.locked) return;
+    const vals = {
+      x: Number($('x').value),
+      y: Number($('y').value),
+      width: Number($('w').value),
+      height: Number($('h').value)
+    };
+    if (!Object.values(vals).every(Number.isFinite)) {
+      say('Числовые поля: введите корректные числа');
+      return;
+    }
+    if (vals.width < MIN_SIZE || vals.height < MIN_SIZE) {
+      say('Минимальный размер: ' + MIN_SIZE);
+      return;
+    }
+    if (vals.x < 0 || vals.y < 0 || vals.x + vals.width > 1 || vals.y + vals.height > 1) {
+      say('BBox должен оставаться внутри 0…1');
+      return;
+    }
+    pushUndo();
+    r.bbox = vals;
+    renderAll();
+    say('BBox обновлён');
+  }
+
+  function beginDrag(e, r, el) {
+    if (e.button !== 0) return;
+    if (r.locked) {
+      selected = r.id;
+      renderAll();
+      return;
+    }
+    selected = r.id;
+    const resizing = e.target.classList.contains('handle');
+    drag = {
+      id: r.id,
+      resizing,
+      startX: e.clientX,
+      startY: e.clientY,
+      orig: { ...r.bbox },
+      rect: canvas.getBoundingClientRect(),
+      moved: false
+    };
+    el.setPointerCapture?.(e.pointerId);
+    e.preventDefault();
+    renderAll();
+
+    const move = (ev) => {
+      if (!drag) return;
+      const dx = (ev.clientX - drag.startX) / drag.rect.width;
+      const dy = (ev.clientY - drag.startY) / drag.rect.height;
+      if (Math.abs(dx) > 0.002 || Math.abs(dy) > 0.002) drag.moved = true;
+      const b = drag.orig;
+      if (drag.resizing) {
+        r.bbox = {
+          ...b,
+          width: clamp(b.width + dx, MIN_SIZE, 1 - b.x),
+          height: clamp(b.height + dy, MIN_SIZE, 1 - b.y)
+        };
+      } else {
+        r.bbox = {
+          ...b,
+          x: clamp(b.x + dx, 0, 1 - b.width),
+          y: clamp(b.y + dy, 0, 1 - b.height)
+        };
+      }
+      renderCanvas();
+      fillForm();
+      showValidation();
+    };
+
+    const up = () => {
+      if (drag && drag.moved) {
+        // commit: restore orig then pushUndo then set final
+        // we already mutated; snapshot before mutation was missed.
+        // Fix: push undo of state before drag by reconstructing.
+        const final = { ...r.bbox };
+        r.bbox = drag.orig;
+        pushUndo();
+        r.bbox = final;
+      }
+      drag = null;
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      renderAll();
+    };
+
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up, { once: true });
+  }
+
+  // ——— Version snapshots ———
+  function takeSnapshot(note) {
+    const snap = {
+      id: 'v' + (versions.length + 1),
+      at: new Date().toISOString(),
+      note: note || 'снимок',
+      project: clone(project)
+    };
+    versions.push(snap);
+    viewingVersionId = snap.id;
+    renderHistoryList();
+    $('versionBadge').textContent = 'снимков: ' + versions.length + ' · undo: ' + undoStack.length;
+    say('Снимок ' + snap.id + ' сохранён');
+  }
+
+  function renderHistoryList() {
+    const list = $('historyList');
+    list.replaceChildren();
+    versions.slice().reverse().forEach((v) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = v.id === viewingVersionId ? 'active' : '';
+      b.textContent = v.id + ' · ' + v.note + ' · ' + v.at.slice(11, 19);
+      b.addEventListener('click', () => {
+        viewingVersionId = v.id;
+        // preview only — do not replace live project until restore
+        renderHistoryList();
+        say('Выбран снимок ' + v.id + ' (нажмите «Восстановить» для применения)');
+      });
+      list.append(b);
+    });
+  }
+
+  // ——— Tabs ———
+  function switchTab(name) {
+    ['props', 'history', 'diff'].forEach((t) => {
+      const panel = $('panel' + t.charAt(0).toUpperCase() + t.slice(1));
+      const tab = $('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+      if (panel) panel.hidden = t !== name;
+      if (tab) {
+        tab.classList.toggle('active', t === name);
+        tab.setAttribute('aria-selected', t === name ? 'true' : 'false');
+      }
+    });
+  }
+
+  // ——— Events ———
+  $('btnAdd').addEventListener('click', () => {
+    pushUndo();
+    const id = uid();
+    const r = {
+      id,
+      label: 'Новый регион',
+      prompt: '',
+      bbox: { x: 0.2, y: 0.2, width: 0.35, height: 0.25 },
+      zIndex: project.regions.length,
+      locked: false
+    };
+    project.regions.push(r);
+    selected = id;
+    renderAll();
+    say('Добавлен ' + id);
+  });
+
+  $('btnRemove').addEventListener('click', () => {
+    if (!selected) { say('Сначала выберите регион'); return; }
+    pushUndo();
+    project.regions = project.regions.filter((r) => r.id !== selected);
+    selected = project.regions[0]?.id || null;
+    renderAll();
+    say('Регион удалён');
+  });
+
+  $('btnLock').addEventListener('click', () => {
+    const r = current();
+    if (!r) return;
+    pushUndo();
+    r.locked = !r.locked;
+    renderAll();
+    say(r.locked ? 'Заблокирован' : 'Разблокирован');
+  });
+
+  $('btnUp').addEventListener('click', () => {
+    const r = current();
+    if (!r) return;
+    pushUndo();
+    r.zIndex = (r.zIndex || 0) + 1;
+    renderAll();
+  });
+
+  $('btnDown').addEventListener('click', () => {
+    const r = current();
+    if (!r) return;
+    pushUndo();
+    r.zIndex = Math.max(0, (r.zIndex || 0) - 1);
+    renderAll();
+  });
+
+  $('btnUndo').addEventListener('click', doUndo);
+  $('btnRedo').addEventListener('click', doRedo);
+
+  $('title').addEventListener('change', () => {
+    pushUndo();
+    project.title = $('title').value;
+  });
+
+  ['label', 'prompt'].forEach((id) => {
+    $(id).addEventListener('change', () => {
+      const r = current();
+      if (!r) return;
+      pushUndo();
+      if (id === 'label') r.label = $(id).value;
+      else r.prompt = $(id).value;
+      renderAll();
+    });
+  });
+
+  ['x', 'y', 'w', 'h'].forEach((id) => {
+    $(id).addEventListener('change', applyNumericFields);
+  });
+
+  $('btnExport').addEventListener('click', () => {
+    project.title = $('title').value;
+    const errors = validateLayout(project);
+    const blob = new Blob([JSON.stringify(project, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ladom-layout-' + Date.now() + '.json';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    say(errors.length
+      ? 'JSON экспортирован (есть ' + errors.length + ' ошибок геометрии)'
+      : 'JSON экспортирован, геометрия ок');
+  });
+
+  $('btnImport').addEventListener('click', () => $('fileInput').click());
+  $('fileInput').addEventListener('change', async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    try {
+      if (file.size > MAX_FILE) throw new Error('Файл больше 1 МБ');
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      const next = validateImport(parsed);
+      // transactional: only replace after full validation
+      pushUndo();
+      project = next;
+      selected = project.regions[0]?.id || null;
+      counter = project.regions.length + 1;
+      renderAll();
+      say('Импорт успешен · регионов: ' + project.regions.length);
+    } catch (err) {
+      say('Импорт отклонён: ' + (err.message || String(err)));
+      // last valid version untouched
+    }
+  });
+
+  $('btnSnapshot').addEventListener('click', () => takeSnapshot('ручной'));
+
+  $('btnRestore').addEventListener('click', () => {
+    const v = versions.find((x) => x.id === viewingVersionId);
+    if (!v) { say('Выберите снимок'); return; }
+    pushUndo();
+    project = clone(v.project);
+    selected = project.regions[0]?.id || null;
+    renderAll();
+    say('Восстановлен снимок ' + v.id);
+  });
+
+  $('btnDiff').addEventListener('click', () => {
+    switchTab('diff');
+    let base = null;
+    if (versions.length >= 2) {
+      base = versions[versions.length - 2].project;
+    } else if (undoStack.length) {
+      base = undoStack[undoStack.length - 1];
+    }
+    if (!base) {
+      $('diffOut').textContent = 'Нет предыдущей версии для сравнения. Сделайте снимок или правку с undo.';
+      return;
+    }
+    $('diffOut').textContent = diffLayout(base, project);
+  });
+
+  $('tabProps').addEventListener('click', () => switchTab('props'));
+  $('tabHistory').addEventListener('click', () => switchTab('history'));
+  $('tabDiff').addEventListener('click', () => switchTab('diff'));
+
+  // AUTOSAVE-BEGIN (такт v10.73: IndexedDB, база ladom-singular, store projects, ключ = имя файла; debounce 800 мс; без сети)
+  const AUTOSAVE_DB = 'ladom-singular';
+  const AUTOSAVE_STORE = 'projects';
+  const AUTOSAVE_KEY = 'ladom-layout-studio-p0.html';
+  const AUTOSAVE_DEBOUNCE_MS = 800;
+  let autosaveDb = null;
+  let autosaveTimer = null;
+
+  function autosaveSay(m) {
+    const el = $('autosaveStatus');
+    if (el) el.textContent = m;
+  }
+
+  function idbOpen() {
+    return new Promise((resolve) => {
+      if (typeof indexedDB === 'undefined') { resolve(null); return; }
+      let rq;
+      try { rq = indexedDB.open(AUTOSAVE_DB, 1); } catch (e) { resolve(null); return; }
+      rq.onupgradeneeded = () => {
+        const db = rq.result;
+        if (!db.objectStoreNames.contains(AUTOSAVE_STORE)) db.createObjectStore(AUTOSAVE_STORE);
+      };
+      rq.onsuccess = () => resolve(rq.result);
+      rq.onerror = () => resolve(null);
+      rq.onblocked = () => resolve(null);
+    });
+  }
+
+  function idbPut(db, value) {
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(AUTOSAVE_STORE, 'readwrite');
+        tx.objectStore(AUTOSAVE_STORE).put(value, AUTOSAVE_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+        tx.onabort = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  }
+
+  function idbGet(db) {
+    return new Promise((resolve) => {
+      try {
+        const rq = db.transaction(AUTOSAVE_STORE, 'readonly').objectStore(AUTOSAVE_STORE).get(AUTOSAVE_KEY);
+        rq.onsuccess = () => resolve(rq.result || null);
+        rq.onerror = () => resolve(null);
+      } catch (e) { resolve(null); }
+    });
+  }
+
+  function idbDel(db) {
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(AUTOSAVE_STORE, 'readwrite');
+        tx.objectStore(AUTOSAVE_STORE).delete(AUTOSAVE_KEY);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+        tx.onabort = () => resolve(false);
+      } catch (e) { resolve(false); }
+    });
+  }
+
+  function scheduleAutosave() {
+    if (!autosaveDb) return;
+    if (autosaveTimer) clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(async () => {
+      autosaveTimer = null;
+      if (!autosaveDb) return;
+      if (validateProject(project).length) {
+        autosaveSay('Автосохранение пропущено: в проекте ошибки валидации (запись не перезаписана)');
+        return;
+      }
+      const ok = await idbPut(autosaveDb, { savedAt: new Date().toISOString(), project: clone(project) });
+      autosaveSay(ok
+        ? 'Автосохранено в IndexedDB (' + new Date().toLocaleTimeString() + ')'
+        : 'Автосохранение не удалось — работа продолжается без записи');
+    }, AUTOSAVE_DEBOUNCE_MS);
+  }
+
+  function hideAutosaveBanner() {
+    const b = $('autosaveBanner');
+    if (b) b.hidden = true;
+  }
+
+  function factoryReset() {
+    pushUndo();
+    project = factoryProject();
+    selected = project.regions.find((r) => !r.locked)?.id || null;
+    counter = project.regions.length + 1;
+    renderAll();
+    hideAutosaveBanner();
+    say('Сброс к заводскому примеру');
+    if (!autosaveDb) return;
+    idbDel(autosaveDb).then((ok) => {
+      autosaveSay(ok ? 'Автосохранение очищено · проект = заводской пример' : 'Автосохранение: не удалось очистить запись');
+      scheduleAutosave();
+    });
+  }
+
+  $('autosaveClose').addEventListener('click', hideAutosaveBanner);
+  $('autosaveReset').addEventListener('click', factoryReset);
+  $('btnFactoryReset').addEventListener('click', factoryReset);
+
+  async function autosaveInit() {
+    try {
+      if (typeof indexedDB === 'undefined') {
+        autosaveSay('Автосохранение недоступно: IndexedDB нет в этом браузере/режиме — работа как раньше, без записи');
+        return;
+      }
+      const db = await idbOpen();
+      if (!db) {
+        autosaveSay('Автосохранение недоступно: IndexedDB не открылся (file:// или приватный режим) — работа как раньше, без записи');
+        return;
+      }
+      autosaveDb = db;
+      const saved = await idbGet(db);
+      if (saved && saved.project && typeof saved.project === 'object' && !validateProject(saved.project).length) {
+        pushUndo();
+        project = saved.project;
+        selected = project.regions[0]?.id || null;
+        counter = project.regions.length + 1;
+        renderAll();
+        const banner = $('autosaveBanner');
+        if (banner) {
+          $('autosaveMsg').textContent = 'Проект восстановлен из автосохранения (' + (saved.savedAt ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'дата неизвестна') + ')';
+          banner.hidden = false;
+        }
+        say('Проект восстановлен из автосохранения');
+      }
+      scheduleAutosave();
+    } catch (e) {
+      autosaveSay('Автосохранение недоступно: ' + (e && e.message ? e.message : 'ошибка инициализации') + ' — работа как раньше, без записи');
+    }
+  }
+  // AUTOSAVE-END
+
+  // Keyboard
+  window.addEventListener('keydown', (e) => {
+    if (e.target.matches('input, textarea, select')) {
+      if (e.key === 'Escape') e.target.blur();
+      return;
+    }
+    if (e.key === 'Escape') {
+      hideAutosaveBanner();
+      if (selected) { selected = null; renderAll(); say('Выбор снят'); }
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+      e.preventDefault();
+      doUndo();
+    }
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
+      e.preventDefault();
+      doRedo();
+    }
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      if (selected && document.activeElement === document.body) {
+        e.preventDefault();
+        $('btnRemove').click();
+      }
+    }
+  });
+
+  // Factory seed example
+  function factoryProject() {
+    return {
+    schemaVersion: SCHEMA,
+    title: 'Пример: обложка',
+    canvas: { width: 1024, height: 1024, aspectRatio: '1:1' },
+    regions: [
+      {
+        id: 'background',
+        label: 'Фон',
+        prompt: 'Мягкий тёплый градиент, спокойная фактура бумаги, без текста',
+        bbox: { x: 0, y: 0, width: 1, height: 1 },
+        zIndex: 0,
+        locked: true
+      },
+      {
+        id: 'hero',
+        label: 'Главный объект',
+        prompt: 'Один выразительный центральный объект, мягкий естественный свет, без букв',
+        bbox: { x: 0.25, y: 0.18, width: 0.5, height: 0.52 },
+        zIndex: 1,
+        locked: false
+      },
+      {
+        id: 'title-area',
+        label: 'Область заголовка',
+        prompt: 'Спокойное пустое пространство для заголовка; не генерировать буквы',
+        bbox: { x: 0.1, y: 0.76, width: 0.8, height: 0.16 },
+        zIndex: 2,
+        locked: false
+      }
+    ]
+    };
+  }
+  project = factoryProject();
+  selected = 'hero';
+  takeSnapshot('стартовый пример');
+  renderAll();
+  say('P0 готов: структура · валидатор · undo · снимки · diff · импорт/экспорт');
+  autosaveInit();
+})();
+</script>
+</body>
+</html>

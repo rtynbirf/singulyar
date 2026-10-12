@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР · ЛАДОМ — Композиция v1</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0a0e14;--panel:#141a24;--line:#2a3545;--text:#e8eef6;
+  --muted:#8b9aaf;--accent:#5ec4b2;--sel:#ffc04d;--err:#ff6b7a;
+  --ok:#5ec48a;--pulse:#7b8cff;--music:#e07a9a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,"Segoe UI",sans-serif}
+header{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+header h1{font-size:1.05rem;margin:0}
+header p{margin:0;color:var(--muted);font-size:.85rem}
+.badge{font-size:.72rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--accent)}
+.app{display:grid;grid-template-columns:1fr 340px;gap:10px;padding:10px;max-width:1480px;margin:0 auto}
+@media(max-width:960px){.app{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+button,input,textarea,select{font:inherit}
+button{background:#1e2836;color:var(--text);border:1px solid #3d4f66;border-radius:8px;padding:7px 10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.region:focus-visible{outline:3px solid var(--sel);outline-offset:2px}
+.primary{background:#1a4540;border-color:#3a8a7c}
+.music{background:#3a2230;border-color:#8a4a62}
+.canvas-wrap{background:#070a0e;border-radius:8px;padding:8px;display:grid;place-items:center;min-height:300px}
+.canvas{width:min(100%,640px);aspect-ratio:1;position:relative;background:linear-gradient(150deg,#243040,#6a5a48 50%,#2a3a3a);overflow:hidden;border:1px solid #4a5a6a;touch-action:none}
+.region{position:absolute;border:2px solid var(--accent);background:rgba(94,196,178,.12);cursor:move;min-width:12px;min-height:12px}
+.region.selected{border:3px solid var(--sel);background:rgba(255,192,77,.16);z-index:30}
+.region.locked{border-style:dashed;cursor:default}
+.region.error{border-color:var(--err)}
+.region.music-type{border-color:var(--music)}
+.region.event-type{border-color:var(--pulse)}
+.region .tag{position:absolute;top:0;left:0;max-width:100%;background:rgba(8,12,18,.9);color:#fff;padding:1px 5px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.handle{position:absolute;width:13px;height:13px;right:-6px;bottom:-6px;background:var(--sel);border:2px solid #141a24;border-radius:3px;cursor:nwse-resize}
+.hint{color:var(--muted);font-size:.82rem;margin:6px 0 0}
+label{display:block;margin:8px 0 3px;color:var(--muted);font-size:.85rem}
+input,textarea,select{width:100%;background:#0c1118;color:var(--text);border:1px solid #2e3c4e;border-radius:7px;padding:7px 9px}
+textarea{min-height:56px;resize:vertical}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.list{display:flex;flex-direction:column;gap:3px;max-height:150px;overflow:auto}
+.list button{text-align:left;display:flex;justify-content:space-between;gap:6px;width:100%;font-size:.85rem}
+.list button.active{border-color:var(--sel);background:#243040}
+.small{color:var(--muted);font-size:.78rem}
+.status{margin-top:6px;min-height:1.2em;color:var(--muted);font-size:.85rem}
+.validation{margin-top:8px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:#0c1118;font-size:.82rem;max-height:100px;overflow:auto}
+.validation.ok{border-color:#2a4a38;color:var(--ok)}
+.validation.bad{border-color:#5a3038;color:var(--err)}
+.tabs{display:flex;gap:3px;margin-bottom:8px}
+.tabs button{flex:1;padding:6px;font-size:.8rem}
+.tabs button.active{border-color:var(--accent);background:#1a3532}
+.pulse-bar{height:6px;background:#1a2230;border-radius:3px;margin:8px 0;overflow:hidden}
+.pulse-bar i{display:block;height:100%;width:0;background:var(--pulse);transition:width .05s linear}
+.adapter-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.adapter-row label{display:flex;align-items:center;gap:4px;margin:0;color:var(--text);font-size:.85rem;cursor:pointer}
+.score{font-family:ui-monospace,monospace;font-size:.9rem;line-height:1.6;background:#0c1118;padding:8px;border-radius:8px;border:1px solid var(--line);max-height:160px;overflow:auto;white-space:pre-wrap}
+kbd{font:.72rem ui-monospace,monospace;background:#1e2836;border:1px solid #3d4f66;border-radius:3px;padding:1px 4px}
+.warn{color:#e0a84a;font-size:.8rem;margin-top:8px}
+.autosave-banner{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 8px;padding:8px 10px;border:1px solid #3a5a4a;border-radius:8px;background:#12211b;font-size:.85rem}
+.autosave-banner[hidden]{display:none}
+@media (prefers-reduced-motion: reduce){.pulse-bar i{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>СИНГУЛЯР · ЛАДОМ — Композиция</h1>
+    <p>Единое произведение: структура · события · партии · адаптеры восприятия · без сети</p>
+  </div>
+  <span class="badge">IR: ladom.composition.v1</span>
+  <span class="badge" id="verBadge">v0</span>
+</header>
+
+<main class="app">
+  <section class="panel" aria-label="Холст произведения">
+    <div id="autosaveBanner" class="autosave-banner" role="status" aria-live="polite" hidden>
+      <span id="autosaveMsg">Проект восстановлен из автосохранения</span>
+      <button id="autosaveReset" type="button">Сброс к заводскому примеру</button>
+      <button id="autosaveClose" type="button" aria-label="Скрыть сообщение о восстановлении">✕</button>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="addVisual" type="button">＋ Визуал</button>
+      <button class="music" id="addMusic" type="button">＋ Партия</button>
+      <button id="addEvent" type="button">＋ Событие</button>
+      <button id="undo" type="button" aria-label="Отменить последнее действие (Ctrl+Z)">↶</button>
+      <button id="redo" type="button" aria-label="Вернуть отменённое действие (Ctrl+Y)">↷</button>
+      <button id="exportBtn" type="button">Экспорт</button>
+      <button id="importBtn" type="button">Импорт</button>
+      <input id="fileIn" type="file" accept=".json,application/json" hidden>
+      <button id="snap" type="button">Снимок</button>
+      <button id="playPulse" type="button">▶ Пульс</button>
+      <button id="factoryReset" type="button" aria-label="Сбросить проект к заводскому примеру">Сброс</button>
+    </div>
+    <div class="canvas-wrap">
+      <div id="canvas" class="canvas" role="group" aria-label="Холст композиции: регионы выбираются Tab и Enter, перетаскиваются мышью; клавиатурная альтернатива — числовые поля X, Y, W, H"></div>
+    </div>
+    <div class="pulse-bar" aria-hidden="true"><i id="pulseFill"></i></div>
+    <p class="hint">Регионы = объекты / партии / события. Один IR — много адаптеров. <kbd>Del</kbd> · <kbd>Ctrl+Z</kbd></p>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div id="validation" class="validation ok" aria-live="polite">Геометрия: ок</div>
+    <div id="autosaveStatus" class="small" role="status" aria-live="polite"></div>
+  </section>
+
+  <aside class="panel">
+    <div class="tabs" role="tablist" aria-label="Панели">
+      <button type="button" class="active" data-t="props" role="tab" id="tab-props" aria-selected="true" aria-controls="p-props">Свойства</button>
+      <button type="button" data-t="score" role="tab" id="tab-score" aria-selected="false" aria-controls="p-score">Партитура</button>
+      <button type="button" data-t="adapters" role="tab" id="tab-adapters" aria-selected="false" aria-controls="p-adapters">Адаптеры</button>
+      <button type="button" data-t="hist" role="tab" id="tab-hist" aria-selected="false" aria-controls="p-hist">История</button>
+    </div>
+
+    <div id="p-props" role="tabpanel" aria-labelledby="tab-props">
+      <label for="title">Название произведения</label>
+      <input id="title" value="Совместный вечер">
+      <p class="small" style="margin:10px 0 3px">Элементы</p>
+      <div id="rlist" class="list" role="listbox" aria-label="Элементы произведения"></div>
+      <div class="toolbar" style="margin-top:6px">
+        <button id="rm" type="button">Удалить</button>
+        <button id="lock" type="button">Замок</button>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+      <label for="rtype">Тип</label>
+      <select id="rtype" disabled>
+        <option value="visual">visual — объект сцены</option>
+        <option value="music">music — партия / голос</option>
+        <option value="event">event — смысловое событие</option>
+      </select>
+      <label for="label">Метка</label>
+      <input id="label" disabled>
+      <label for="prompt">Инструкция / prompt</label>
+      <textarea id="prompt" disabled></textarea>
+      <div class="fields">
+        <div><label for="x">X</label><input id="x" type="number" min="0" max="1" step="0.01" disabled></div>
+        <div><label for="y">Y</label><input id="y" type="number" min="0" max="1" step="0.01" disabled></div>
+        <div><label for="w">W</label><input id="w" type="number" min="0.02" max="1" step="0.01" disabled></div>
+        <div><label for="h">H</label><input id="h" type="number" min="0.02" max="1" step="0.01" disabled></div>
+      </div>
+      <label for="role">Роль (для music/event)</label>
+      <input id="role" placeholder="melody | bass | clap | pass_turn | pause" disabled>
+      <p class="warn">Локальный IR. Не wire-format Reve. Без API-токена и сети.</p>
+    </div>
+
+    <div id="p-score" role="tabpanel" aria-labelledby="tab-score" hidden>
+      <p class="small">Партитура собирается из music- и event-регионов в порядке zIndex / времени.</p>
+      <div id="scoreOut" class="score" aria-live="polite">—</div>
+      <div class="toolbar" style="margin-top:8px">
+        <button id="rebuildScore" type="button">Пересобрать</button>
+      </div>
+    </div>
+
+    <div id="p-adapters" role="tabpanel" aria-labelledby="tab-adapters" hidden>
+      <p class="small">Независимые каналы восприятия одного IR. Отключение одного не ломает остальные.</p>
+      <div class="adapter-row">
+        <label><input type="checkbox" id="adVisual" checked> Визуал</label>
+        <label><input type="checkbox" id="adSpeech" checked> Речь (TTS)</label>
+        <label><input type="checkbox" id="adVibro" checked> Вибрация</label>
+        <label><input type="checkbox" id="adPulse" checked> Пульс-бар</label>
+      </div>
+      <button id="testAdapters" type="button" style="margin-top:8px">Проиграть выбранное событие</button>
+      <p class="small" style="margin-top:8px">TTS использует Web Speech API при наличии. Вибрация — Vibration API. Отказ канала безопасен.</p>
+    </div>
+
+    <div id="p-hist" role="tabpanel" aria-labelledby="tab-hist" hidden>
+      <p class="small">Снимки версий (append-only). Восстановление = новый снимок из выбранного.</p>
+      <div id="histList" class="list" role="group" aria-label="Снимки версий"></div>
+      <button id="restore" type="button" style="margin-top:8px;width:100%">Восстановить снимок</button>
+    </div>
+  </aside>
+</main>
+
+<script>
+(() => {
+'use strict';
+// VALIDATOR-BEGIN (ladom.composition.v1 · чистые функции без DOM; блок вырезается node-тестами и исполняется в node:vm)
+const SCHEMA = 'ladom.composition.v1';
+const MIN = 0.02;
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+function validate(p) {
+  const err = [];
+  (p.regions || []).forEach((r, i) => {
+    const b = r.bbox;
+    if (!b || ![b.x, b.y, b.width, b.height].every(Number.isFinite)) {
+      err.push({ id: r.id, msg: `"${r.label || r.id}": bbox` }); return;
+    }
+    if (b.width < MIN || b.height < MIN) err.push({ id: r.id, msg: `"${r.label || r.id}": size < ${MIN}` });
+    if (b.x < 0 || b.y < 0 || b.x + b.width > 1.001 || b.y + b.height > 1.001)
+      err.push({ id: r.id, msg: `"${r.label || r.id}": out of frame` });
+  });
+  return err;
+}
+function validateImport(raw) {
+  if (!raw || typeof raw !== 'object') throw new Error('не объект');
+  if (!Array.isArray(raw.regions)) throw new Error('нет regions');
+  if (raw.regions.length > 80) throw new Error('>80 регионов');
+  const regions = raw.regions.map((r, i) => {
+    if (!r || typeof r !== 'object') throw new Error('регион ' + i);
+    const id = (typeof r.id === 'string' && r.id) ? r.id : 'imp-' + i;
+    const bbox = r.bbox;
+    if (!bbox) throw new Error(id + ': нет bbox');
+    const x = +bbox.x, y = +bbox.y, width = +bbox.width, height = +bbox.height;
+    if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0)
+      throw new Error(id + ': bbox');
+    if (x < 0 || y < 0 || x + width > 1.01 || y + height > 1.01) throw new Error(id + ': вне 0..1');
+    return {
+      id, label: String(r.label || 'Элемент'), prompt: String(r.prompt || ''),
+      type: ['visual', 'music', 'event'].includes(r.type) ? r.type : 'visual',
+      role: String(r.role || ''),
+      bbox: { x: clamp(x, 0, 1), y: clamp(y, 0, 1), width: clamp(width, MIN, 1), height: clamp(height, MIN, 1) },
+      zIndex: Number.isFinite(r.zIndex) ? r.zIndex : i,
+      locked: !!r.locked
+    };
+  });
+  return {
+    schemaVersion: String(raw.schemaVersion || SCHEMA),
+    title: String(raw.title || 'Импорт'),
+    canvas: { width: +(raw.canvas?.width) || 1024, height: +(raw.canvas?.height) || 1024, aspectRatio: raw.canvas?.aspectRatio || '1:1' },
+    regions,
+    adapters: raw.adapters || { visual: true, speech: true, vibro: true, pulse: true }
+  };
+}
+function validateProject(c) {
+  // Сводный чистый валидатор IR (такт v10.73): структура + геометрия; не мутирует объект и не трогает DOM.
+  const errs = [];
+  const add = (code, id, msg) => errs.push({ code, id: id == null ? null : id, msg });
+  if (!c || typeof c !== 'object' || Array.isArray(c)) { add('root', null, 'корень не объект'); return errs; }
+  if (c.schemaVersion !== SCHEMA) add('schemaVersion', null, 'неизвестный schemaVersion: ' + String(c.schemaVersion));
+  if (typeof c.title !== 'string') add('field', null, 'title: нет строки');
+  if (!c.canvas || typeof c.canvas !== 'object' || Array.isArray(c.canvas)) add('field', null, 'canvas: нет объекта');
+  else if (![c.canvas.width, c.canvas.height].every(Number.isFinite)) add('type', null, 'canvas.width/height: не числа');
+  if (c.adapters !== undefined && (typeof c.adapters !== 'object' || Array.isArray(c.adapters))) add('type', null, 'adapters: не объект');
+  if (!Array.isArray(c.regions)) { add('regions', null, 'regions: не массив'); return errs; }
+  if (c.regions.length > 80) add('limit', null, 'регионов больше 80');
+  let allObjects = true;
+  c.regions.forEach((r, i) => {
+    if (!r || typeof r !== 'object' || Array.isArray(r)) { add('type', null, 'регион ' + i + ': не объект'); allObjects = false; return; }
+    const rid = (typeof r.id === 'string' && r.id) ? r.id : '#' + i;
+    if (typeof r.id !== 'string' || !r.id) add('field', rid, 'нет id');
+    if (typeof r.label !== 'string') add('field', rid, 'нет label');
+    if (typeof r.prompt !== 'string') add('field', rid, 'нет prompt');
+    if (!['visual', 'music', 'event'].includes(r.type)) add('field', rid, 'неизвестный type: ' + String(r.type));
+    if (r.zIndex !== undefined && !Number.isFinite(r.zIndex)) add('type', rid, 'zIndex: не число');
+    if (r.locked !== undefined && typeof r.locked !== 'boolean') add('type', rid, 'locked: не boolean');
+    if (r.metadata !== undefined && (typeof r.metadata !== 'object' || r.metadata === null || Array.isArray(r.metadata))) add('type', rid, 'metadata: не объект');
+  });
+  if (allObjects) validate(c).forEach(e => add('geometry', e.id, e.msg));
+  return errs;
+}
+// VALIDATOR-END
+const $ = id => document.getElementById(id);
+const canvas = $('canvas');
+
+let project = empty();
+let selected = null;
+let counter = 1;
+let drag = null;
+const undoS = [], redoS = [];
+const versions = [];
+let viewVer = null;
+let pulseRAF = null;
+
+function empty() {
+  return {
+    schemaVersion: SCHEMA,
+    title: 'Совместный вечер',
+    canvas: { width: 1024, height: 1024, aspectRatio: '1:1' },
+    regions: [],
+    adapters: { visual: true, speech: true, vibro: true, pulse: true }
+  };
+}
+function uid(p) { return (p || 'r') + '-' + (counter++) + '-' + Math.random().toString(36).slice(2, 6); }
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function say(m) { $('status').textContent = m; }
+function cur() { return project.regions.find(r => r.id === selected) || null; }
+
+function pushU() {
+  undoS.push(clone(project));
+  if (undoS.length > 40) undoS.shift();
+  redoS.length = 0;
+  $('undo').disabled = !undoS.length;
+  $('redo').disabled = !redoS.length;
+}
+function doUndo() {
+  if (!undoS.length) return;
+  redoS.push(clone(project));
+  project = undoS.pop();
+  if (!project.regions.find(r => r.id === selected)) selected = project.regions[0]?.id || null;
+  full(); say('Undo');
+  $('undo').disabled = !undoS.length; $('redo').disabled = !redoS.length;
+}
+function doRedo() {
+  if (!redoS.length) return;
+  undoS.push(clone(project));
+  project = redoS.pop();
+  if (!project.regions.find(r => r.id === selected)) selected = project.regions[0]?.id || null;
+  full(); say('Redo');
+  $('undo').disabled = !undoS.length; $('redo').disabled = !redoS.length;
+}
+
+function showVal() {
+  const e = validate(project);
+  const box = $('validation');
+  if (!e.length) { box.className = 'validation ok'; box.textContent = 'Геометрия: ок · элементов: ' + project.regions.length; }
+  else {
+    box.className = 'validation bad';
+    box.textContent = 'Ошибки: ' + e.map(x => x.msg).join('; ');
+  }
+  return e;
+}
+
+function buildScore() {
+  const lines = [];
+  const sorted = [...project.regions].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+  sorted.forEach((r, i) => {
+    if (r.type === 'music') lines.push(`[${i}] MUSIC · ${r.role || 'part'} · ${r.label} · "${r.prompt.slice(0, 48)}"`);
+    if (r.type === 'event') lines.push(`[${i}] EVENT · ${r.role || 'evt'} · ${r.label} · "${r.prompt.slice(0, 48)}"`);
+  });
+  return lines.length ? lines.join('\n') : '(нет music/event регионов)';
+}
+
+function full() {
+  renderCanvas(); renderList(); fillForm(); showVal();
+  $('title').value = project.title;
+  $('verBadge').textContent = 'снимков:' + versions.length + ' undo:' + undoS.length;
+  $('scoreOut').textContent = buildScore();
+  renderHist();
+  $('adVisual').checked = !!project.adapters.visual;
+  $('adSpeech').checked = !!project.adapters.speech;
+  $('adVibro').checked = !!project.adapters.vibro;
+  $('adPulse').checked = !!project.adapters.pulse;
+  scheduleAutosave();
+}
+
+function renderCanvas() {
+  canvas.replaceChildren();
+  const errIds = new Set(validate(project).map(e => e.id));
+  [...project.regions].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0)).forEach(r => {
+    const el = document.createElement('div');
+    el.className = 'region' +
+      (r.id === selected ? ' selected' : '') +
+      (r.locked ? ' locked' : '') +
+      (errIds.has(r.id) ? ' error' : '') +
+      (r.type === 'music' ? ' music-type' : '') +
+      (r.type === 'event' ? ' event-type' : '');
+    el.style.left = (r.bbox.x * 100) + '%';
+    el.style.top = (r.bbox.y * 100) + '%';
+    el.style.width = (r.bbox.width * 100) + '%';
+    el.style.height = (r.bbox.height * 100) + '%';
+    el.dataset.id = r.id;
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `${r.type}: ${r.label || r.id}`);
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = (r.type === 'music' ? '♪ ' : r.type === 'event' ? '◆ ' : '') + (r.label || r.id);
+    el.append(tag);
+    if (r.id === selected && !r.locked) {
+      const h = document.createElement('span');
+      h.className = 'handle';
+      h.setAttribute('aria-hidden', 'true');
+      el.append(h);
+    }
+    el.addEventListener('pointerdown', e => beginDrag(e, r, el));
+    el.addEventListener('click', e => { e.stopPropagation(); selected = r.id; full(); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selected = r.id; full(); }
+    });
+    canvas.append(el);
+  });
+}
+
+function renderList() {
+  const list = $('rlist');
+  list.replaceChildren();
+  [...project.regions].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0)).forEach((r, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = r.id === selected ? 'active' : '';
+    b.setAttribute('role', 'option');
+    b.setAttribute('aria-selected', r.id === selected ? 'true' : 'false');
+    const left = document.createElement('span');
+    left.textContent = `${i + 1}. ${r.type[0].toUpperCase()} ${r.label || '…'}${r.locked ? ' 🔒' : ''}`;
+    const right = document.createElement('span');
+    right.className = 'small';
+    right.textContent = r.role || r.type;
+    b.append(left, right);
+    b.addEventListener('click', () => { selected = r.id; full(); });
+    list.append(b);
+  });
+}
+
+function fillForm() {
+  const r = cur();
+  ['rtype', 'label', 'prompt', 'x', 'y', 'w', 'h', 'role'].forEach(id => { $(id).disabled = !r; });
+  $('rm').disabled = !r; $('lock').disabled = !r;
+  if (!r) {
+    ['label', 'prompt', 'x', 'y', 'w', 'h', 'role'].forEach(id => { $(id).value = ''; });
+    return;
+  }
+  $('rtype').value = r.type || 'visual';
+  $('label').value = r.label;
+  $('prompt').value = r.prompt;
+  $('x').value = r.bbox.x.toFixed(3);
+  $('y').value = r.bbox.y.toFixed(3);
+  $('w').value = r.bbox.width.toFixed(3);
+  $('h').value = r.bbox.height.toFixed(3);
+  $('role').value = r.role || '';
+  $('lock').textContent = r.locked ? 'Снять замок' : 'Замок';
+}
+
+function beginDrag(e, r, el) {
+  if (e.button !== 0) return;
+  if (r.locked) { selected = r.id; full(); return; }
+  selected = r.id;
+  const resizing = e.target.classList.contains('handle');
+  drag = { id: r.id, resizing, startX: e.clientX, startY: e.clientY, orig: { ...r.bbox }, rect: canvas.getBoundingClientRect(), moved: false };
+  el.setPointerCapture?.(e.pointerId);
+  e.preventDefault();
+  const move = ev => {
+    if (!drag) return;
+    const dx = (ev.clientX - drag.startX) / drag.rect.width;
+    const dy = (ev.clientY - drag.startY) / drag.rect.height;
+    if (Math.abs(dx) > 0.002 || Math.abs(dy) > 0.002) drag.moved = true;
+    const b = drag.orig;
+    if (drag.resizing) {
+      r.bbox = { ...b, width: clamp(b.width + dx, MIN, 1 - b.x), height: clamp(b.height + dy, MIN, 1 - b.y) };
+    } else {
+      r.bbox = { ...b, x: clamp(b.x + dx, 0, 1 - b.width), y: clamp(b.y + dy, 0, 1 - b.height) };
+    }
+    renderCanvas(); fillForm(); showVal();
+  };
+  const up = () => {
+    if (drag?.moved) {
+      const fin = { ...r.bbox };
+      r.bbox = drag.orig;
+      pushU();
+      r.bbox = fin;
+    }
+    drag = null;
+    window.removeEventListener('pointermove', move);
+    window.removeEventListener('pointerup', up);
+    full();
+  };
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up, { once: true });
+}
+
+function addRegion(type) {
+  pushU();
+  const id = uid(type[0]);
+  const defaults = {
+    visual: { label: 'Объект', prompt: '', role: '', bbox: { x: 0.2, y: 0.2, width: 0.35, height: 0.28 } },
+    music: { label: 'Партия', prompt: 'основная мелодия', role: 'melody', bbox: { x: 0.05, y: 0.7, width: 0.9, height: 0.12 } },
+    event: { label: 'Событие', prompt: 'передать очередь', role: 'pass_turn', bbox: { x: 0.35, y: 0.45, width: 0.3, height: 0.1 } }
+  };
+  const d = defaults[type];
+  project.regions.push({
+    id, type, label: d.label, prompt: d.prompt, role: d.role,
+    bbox: { ...d.bbox }, zIndex: project.regions.length, locked: false
+  });
+  selected = id;
+  full();
+  say('Добавлен ' + type + ' · ' + id);
+}
+
+function fireAdapters(r) {
+  if (!r) { say('Выберите элемент'); return; }
+  const ad = project.adapters;
+  if (ad.pulse) {
+    const fill = $('pulseFill');
+    fill.style.width = '0%';
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      fill.style.width = '100%';
+    } else {
+      let t = 0;
+      cancelAnimationFrame(pulseRAF);
+      const step = () => {
+        t += 2;
+        fill.style.width = Math.min(100, t) + '%';
+        if (t < 100) pulseRAF = requestAnimationFrame(step);
+      };
+      pulseRAF = requestAnimationFrame(step);
+    }
+  }
+  if (ad.vibro && navigator.vibrate) {
+    if (r.type === 'event') navigator.vibrate([40, 30, 40]);
+    else if (r.type === 'music') navigator.vibrate([20, 40, 20, 40, 20]);
+    else navigator.vibrate(25);
+  }
+  if (ad.speech && window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(
+      (r.type === 'event' ? 'Событие: ' : r.type === 'music' ? 'Партия: ' : '') +
+      (r.label || '') + '. ' + (r.prompt || '')
+    );
+    u.lang = 'ru-RU';
+    u.rate = 1;
+    window.speechSynthesis.speak(u);
+  }
+  say('Адаптеры: ' +
+    [ad.visual && 'визуал', ad.speech && 'речь', ad.vibro && 'вибро', ad.pulse && 'пульс']
+      .filter(Boolean).join(', ') || 'все выключены');
+}
+
+function takeSnap(note) {
+  const s = { id: 'v' + (versions.length + 1), at: new Date().toISOString(), note: note || 'snap', project: clone(project) };
+  versions.push(s);
+  viewVer = s.id;
+  renderHist();
+  $('verBadge').textContent = 'снимков:' + versions.length + ' undo:' + undoS.length;
+  say('Снимок ' + s.id);
+}
+function renderHist() {
+  const list = $('histList');
+  list.replaceChildren();
+  versions.slice().reverse().forEach(v => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = v.id === viewVer ? 'active' : '';
+    b.textContent = v.id + ' · ' + v.note + ' · ' + v.at.slice(11, 19);
+    b.addEventListener('click', () => { viewVer = v.id; renderHist(); say('Выбран ' + v.id); });
+    list.append(b);
+  });
+}
+
+// tabs
+document.querySelectorAll('.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const t = btn.dataset.t;
+    ['props', 'score', 'adapters', 'hist'].forEach(n => {
+      $('p-' + n).hidden = n !== t;
+    });
+  });
+});
+
+$('addVisual').onclick = () => addRegion('visual');
+$('addMusic').onclick = () => addRegion('music');
+$('addEvent').onclick = () => addRegion('event');
+$('undo').onclick = doUndo;
+$('redo').onclick = doRedo;
+$('rm').onclick = () => {
+  if (!selected) return;
+  pushU();
+  project.regions = project.regions.filter(r => r.id !== selected);
+  selected = project.regions[0]?.id || null;
+  full(); say('Удалён');
+};
+$('lock').onclick = () => {
+  const r = cur(); if (!r) return;
+  pushU(); r.locked = !r.locked; full();
+};
+$('title').onchange = () => { pushU(); project.title = $('title').value; };
+['label', 'prompt', 'role'].forEach(id => {
+  $(id).onchange = () => {
+    const r = cur(); if (!r) return;
+    pushU();
+    r[id === 'label' ? 'label' : id === 'prompt' ? 'prompt' : 'role'] = $(id).value;
+    full();
+  };
+});
+$('rtype').onchange = () => {
+  const r = cur(); if (!r) return;
+  pushU(); r.type = $('rtype').value; full();
+};
+['x', 'y', 'w', 'h'].forEach(id => {
+  $(id).onchange = () => {
+    const r = cur(); if (!r || r.locked) return;
+    const vals = { x: +$('x').value, y: +$('y').value, width: +$('w').value, height: +$('h').value };
+    if (!Object.values(vals).every(Number.isFinite) || vals.width < MIN || vals.height < MIN) {
+      say('Невалидные числа'); return;
+    }
+    if (vals.x < 0 || vals.y < 0 || vals.x + vals.width > 1 || vals.y + vals.height > 1) {
+      say('Вне кадра'); return;
+    }
+    pushU(); r.bbox = vals; full();
+  };
+});
+$('exportBtn').onclick = () => {
+  project.title = $('title').value;
+  const blob = new Blob([JSON.stringify(project, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ladom-composition-' + Date.now() + '.json';
+  a.click();
+  say('Экспорт JSON');
+};
+$('importBtn').onclick = () => $('fileIn').click();
+$('fileIn').onchange = async e => {
+  const f = e.target.files?.[0]; e.target.value = '';
+  if (!f) return;
+  try {
+    if (f.size > 1024 * 1024) throw new Error('>1МБ');
+    const next = validateImport(JSON.parse(await f.text()));
+    pushU(); project = next; selected = project.regions[0]?.id || null;
+    full(); say('Импорт ок');
+  } catch (err) { say('Импорт отклонён: ' + err.message); }
+};
+$('snap').onclick = () => takeSnap('ручной');
+$('restore').onclick = () => {
+  const v = versions.find(x => x.id === viewVer);
+  if (!v) { say('Выберите снимок'); return; }
+  pushU(); project = clone(v.project); selected = project.regions[0]?.id || null;
+  full(); say('Восстановлен ' + v.id);
+};
+$('rebuildScore').onclick = () => { $('scoreOut').textContent = buildScore(); };
+$('testAdapters').onclick = () => fireAdapters(cur());
+$('playPulse').onclick = () => {
+  const ev = project.regions.find(r => r.type === 'event') || cur();
+  fireAdapters(ev);
+};
+['adVisual', 'adSpeech', 'adVibro', 'adPulse'].forEach(id => {
+  $(id).onchange = () => {
+    project.adapters = {
+      visual: $('adVisual').checked,
+      speech: $('adSpeech').checked,
+      vibro: $('adVibro').checked,
+      pulse: $('adPulse').checked
+    };
+  };
+});
+
+// AUTOSAVE-BEGIN (такт v10.73: IndexedDB, база ladom-singular, store projects, ключ = имя файла; debounce 800 мс; без сети)
+const AUTOSAVE_DB = 'ladom-singular';
+const AUTOSAVE_STORE = 'projects';
+const AUTOSAVE_KEY = 'LADOM_SINGULAR_COMPOSITION_v1.html';
+const AUTOSAVE_DEBOUNCE_MS = 800;
+let autosaveDb = null;
+let autosaveTimer = null;
+function autosaveSay(m) { const el = $('autosaveStatus'); if (el) el.textContent = m; }
+function idbOpen() {
+  return new Promise(resolve => {
+    if (typeof indexedDB === 'undefined') { resolve(null); return; }
+    let rq;
+    try { rq = indexedDB.open(AUTOSAVE_DB, 1); } catch (e) { resolve(null); return; }
+    rq.onupgradeneeded = () => {
+      const db = rq.result;
+      if (!db.objectStoreNames.contains(AUTOSAVE_STORE)) db.createObjectStore(AUTOSAVE_STORE);
+    };
+    rq.onsuccess = () => resolve(rq.result);
+    rq.onerror = () => resolve(null);
+    rq.onblocked = () => resolve(null);
+  });
+}
+function idbPut(db, value) {
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(AUTOSAVE_STORE, 'readwrite');
+      tx.objectStore(AUTOSAVE_STORE).put(value, AUTOSAVE_KEY);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+      tx.onabort = () => resolve(false);
+    } catch (e) { resolve(false); }
+  });
+}
+function idbGet(db) {
+  return new Promise(resolve => {
+    try {
+      const rq = db.transaction(AUTOSAVE_STORE, 'readonly').objectStore(AUTOSAVE_STORE).get(AUTOSAVE_KEY);
+      rq.onsuccess = () => resolve(rq.result || null);
+      rq.onerror = () => resolve(null);
+    } catch (e) { resolve(null); }
+  });
+}
+function idbDel(db) {
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(AUTOSAVE_STORE, 'readwrite');
+      tx.objectStore(AUTOSAVE_STORE).delete(AUTOSAVE_KEY);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+      tx.onabort = () => resolve(false);
+    } catch (e) { resolve(false); }
+  });
+}
+function scheduleAutosave() {
+  if (!autosaveDb) return;
+  if (autosaveTimer) clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(async () => {
+    autosaveTimer = null;
+    if (!autosaveDb) return;
+    if (validateProject(project).length) { autosaveSay('Автосохранение пропущено: в проекте ошибки валидации (запись не перезаписана)'); return; }
+    const ok = await idbPut(autosaveDb, { savedAt: new Date().toISOString(), project: clone(project) });
+    autosaveSay(ok ? 'Автосохранено в IndexedDB (' + new Date().toLocaleTimeString() + ')' : 'Автосохранение не удалось — работа продолжается без записи');
+  }, AUTOSAVE_DEBOUNCE_MS);
+}
+function hideAutosaveBanner() { const b = $('autosaveBanner'); if (b) b.hidden = true; }
+function factoryReset() {
+  pushU();
+  project = factoryProject();
+  selected = project.regions.find(r => !r.locked)?.id || null;
+  full();
+  hideAutosaveBanner();
+  say('Сброс к заводскому примеру');
+  if (!autosaveDb) return;
+  idbDel(autosaveDb).then(ok => {
+    autosaveSay(ok ? 'Автосохранение очищено · проект = заводской пример' : 'Автосохранение: не удалось очистить запись');
+    scheduleAutosave();
+  });
+}
+$('autosaveClose').addEventListener('click', hideAutosaveBanner);
+$('autosaveReset').addEventListener('click', factoryReset);
+$('factoryReset').addEventListener('click', factoryReset);
+async function autosaveInit() {
+  try {
+    if (typeof indexedDB === 'undefined') {
+      autosaveSay('Автосохранение недоступно: IndexedDB нет в этом браузере/режиме — работа как раньше, без записи');
+      return;
+    }
+    const db = await idbOpen();
+    if (!db) {
+      autosaveSay('Автосохранение недоступно: IndexedDB не открылся (file:// или приватный режим) — работа как раньше, без записи');
+      return;
+    }
+    autosaveDb = db;
+    const saved = await idbGet(db);
+    if (saved && saved.project && typeof saved.project === 'object' && !validateProject(saved.project).length) {
+      pushU();
+      project = saved.project;
+      selected = project.regions[0]?.id || null;
+      full();
+      const banner = $('autosaveBanner');
+      if (banner) {
+        $('autosaveMsg').textContent = 'Проект восстановлен из автосохранения (' + (saved.savedAt ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'дата неизвестна') + ')';
+        banner.hidden = false;
+      }
+      say('Проект восстановлен из автосохранения');
+    }
+    scheduleAutosave();
+  } catch (e) {
+    autosaveSay('Автосохранение недоступно: ' + (e && e.message ? e.message : 'ошибка инициализации') + ' — работа как раньше, без записи');
+  }
+}
+// AUTOSAVE-END
+window.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea,select')) { if (e.key === 'Escape') e.target.blur(); return; }
+  if (e.key === 'Escape') {
+    hideAutosaveBanner();
+    if (selected) { selected = null; full(); say('Выбор снят'); }
+    return;
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); doUndo(); }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); doRedo(); }
+  if ((e.key === 'Delete' || e.key === 'Backspace') && selected && document.activeElement === document.body) {
+    e.preventDefault(); $('rm').click();
+  }
+});
+
+// seed: visual + music + event = one composition
+function factoryProject() {
+  return {
+  schemaVersion: SCHEMA,
+  title: 'Эстафета · совместный припев',
+  canvas: { width: 1024, height: 1024, aspectRatio: '1:1' },
+  adapters: { visual: true, speech: true, vibro: true, pulse: true },
+  regions: [
+    { id: 'bg', type: 'visual', label: 'Сцена', prompt: 'Тёплый зал, мягкий свет, без текста', role: '', bbox: { x: 0, y: 0, width: 1, height: 1 }, zIndex: 0, locked: true },
+    { id: 'singer', type: 'visual', label: 'Участник', prompt: 'Человек с микрофоном, центр', role: '', bbox: { x: 0.28, y: 0.15, width: 0.44, height: 0.48 }, zIndex: 1, locked: false },
+    { id: 'melody', type: 'music', label: 'Мелодия', prompt: 'Припев, средний темп', role: 'melody', bbox: { x: 0.05, y: 0.68, width: 0.9, height: 0.1 }, zIndex: 2, locked: false },
+    { id: 'bass', type: 'music', label: 'Бас', prompt: 'Простой басовый рисунок', role: 'bass', bbox: { x: 0.05, y: 0.8, width: 0.55, height: 0.08 }, zIndex: 3, locked: false },
+    { id: 'pass', type: 'event', label: 'Передать очередь', prompt: 'Следующий участник', role: 'pass_turn', bbox: { x: 0.65, y: 0.8, width: 0.3, height: 0.08 }, zIndex: 4, locked: false }
+  ]
+  };
+}
+project = factoryProject();
+selected = 'singer';
+takeSnap('старт');
+full();
+say('Композиция готова: visual + music + event в одном IR');
+autosaveInit();
+})();
+</script>
+</body>
+</html>
