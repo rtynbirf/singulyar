@@ -1,0 +1,159 @@
+ПАСПОРТ ЗВУКА ДОМА «СИНГУЛЯР» v2 — «ГОЛОС»: АВТОР ПОЁТ ВО ВСЕХ ПЕСНЯХ
+====================================================================================================
+Дата: 2026-10-12 · такт v10.69 «ГОЛОС» · приказ владельца: «ВОТ ТАК СДЕЛАЙ АБСОЛЮТНО ВСЕ ПЕСНИ
+ЧТОБ АНАЛОГИЧНО ПРОСТО ЛЮБИ БЫЛИ И ИГРАЛИ»
+
+ЧТО БЫЛО (факт): 61 mp3 в minus/ — это БЕЗГОЛОСЫЕ минусовки (моно 128k): спектральная корреляция
+голосовой полосы (300-3400 Гц) с мастером «Просто люби» = 0.210 — автор там НЕ поёт. МИН-полюса
+minus/min/*.webm были собраны из тех же минусовок — автор не пел и там. Пел только «Просто люби».
+
+ЧТО СТАЛО (факт): для всех 62 песен собраны НАСТОЯЩИЕ webm-мастера из оригиналов:
+  · 61 исходник mp4 скачан с Drive пользователя (40-103 МБ каждый, AAC стерео с голосом);
+  · флагман «Когда теряем» (rWpYxmFjm9g) — AAC 192k мастер (5.7 МБ), вшитый в воротах ·01 (AUDIO_B64);
+  · МАКС: minus/{id}.max.webm — Opus 510 kbps стерео 48 кГц (256k у моно-источника), VBR;
+    МИН: minus/min/{id}.webm — Opus 24 kbps моно 48 кГц (пересобран с голосом, взамен старых);
+  · метаданные в каждом файле: title/artist=RUVSON/album/genre/date/description/comment/language.
+  Все 122 файла декодированы ffmpeg целиком (0 ошибок), длительности = исходникам (±1 с).
+
+ЧЕСТНЫЕ ИСКЛЮЧЕНИЯ (голосового исходника не существует — играют минус, помечены в метаданных):
+  · «Сборник Музыки со Смыслом» (Qb8xb0vUYDg) — на Drive/в воротах/на YouTube-добыче исходника нет;
+  · «Где настоящее» (shs0TiOwx-M) — файл «03» на Drive битый (0.5 с звука). Положи файлы — пересоберём.
+
+СПЕКТРАЛЬНЫЙ ФАКТ ГОЛОСА (полоса 300-3400 Гц, корреляция по секундам):
+  · «Я сам себе судья»: MAX↔mp4-исходник corr=1.000 · MAX↔старая минусовка corr=-0.036;
+  · «Просто люби»: MAX↔mp4 corr=1.000 (контроль); флагман: MAX↔мастер corr=1.000.
+  Вывод: новые МАКС-файлы = оригиналы с голосом автора, с минусовками не совпадают вообще.
+
+ЖИВОЙ ТЕСТ на GitHub Pages (headless-браузер, такт v10.67-транспорт):
+  · ПУСК «Просто люби» → minus/prosto-lubi.max.webm → 200;
+  · СЛЕДУЮЩАЯ → «2 / 62 · Я сам себе судья» → minus/1BZs_wUPn1s.max.webm → 206 (играет ⏸);
+  · ПОЛЮС МАКС→МИН на лету → minus/min/1BZs_wUPn1s.webm → 206 (играет ⏸, позиция не сброшена);
+  · плейлист 62 песни, полюс помнится (kv31.pol), ЗДОРОВЬЕ зелёное.
+
+ОБЪЁМ: 821 MB новых полюсов (122 файла) + 62 mp3-минусовки (караоке-режим остаётся в minus/).
+
+====================================================================================================
+ТАБЛИЦА 122 ФАЙЛОВ: путь · песня · полюс · размер · длительность · sha256(16)
+====================================================================================================
+minus/HupAWAt7CmQ.max.webm         | А время капает               | МАКС |   10.56 MB |    0.0 с | 9e5b8a83783471da
+minus/t9h3cCPCKoo.max.webm         | А что если ДА                | МАКС |   14.44 MB |    0.0 с | 51f77449650875f8
+minus/VfnGUIhaK2Y.max.webm         | А что если да                | МАКС |   10.94 MB |    0.0 с | 2b3b77a529e52b37
+minus/kziwaat2nu4.max.webm         | Ангел без крыльев            | МАКС |   15.26 MB |    0.0 с | 75c70c4b79136daf
+minus/ugjp6iaNplo.max.webm         | Бой с собой                  | МАКС |    9.45 MB |    0.0 с | e84deb6c7c1ccc81
+minus/n5IFJ-g1Rtc.max.webm         | В чём смысл                  | МАКС |   17.48 MB |    0.0 с | 3873e13c953d2790
+minus/G7L2d0Z5xfY.max.webm         | Вера остаётся                | МАКС |   10.90 MB |    0.0 с | a7606614381ac47c
+minus/eA-fyeSkavI.max.webm         | Вне зоны доступа             | МАКС |   12.81 MB |    0.0 с | 494a8894c1090a41
+minus/YaY-ZJVXFjI.max.webm         | Время как вода               | МАКС |    9.10 MB |    0.0 с | f4e7093831d6ca9a
+minus/gMASVVNFr_A.max.webm         | Время покажет                | МАКС |   11.70 MB |    0.0 с | cbfb66b9e62fd70a
+minus/_PCJ6fMfeRM.max.webm         | Всё начинается с тебя        | МАКС |   13.59 MB |    0.0 с | 6cd89725b1c7cfe4
+minus/shs0TiOwx-M.max.webm         | Где настоящее                | МАКС |    8.98 MB |    0.0 с | a1215ac72407ff77
+minus/GB31hcDi3lo.max.webm         | Гордость нас убивает         | МАКС |   11.85 MB |    0.0 с | 7a4c6a721e03c7c5
+minus/LCADfnI8F-s.max.webm         | Действуй сейчас              | МАКС |    9.55 MB |    0.0 с | 87ce9c3aa96208f9
+minus/OHaRQj9PLUY.max.webm         | Дорога мой Учитель           | МАКС |    9.98 MB |    0.0 с | ba7ad669ade9d416
+minus/Y7Wy_JBkz7A.max.webm         | Живи как умеешь              | МАКС |   14.44 MB |    0.0 с | 9e07db203bf1fd68
+minus/fJwb931iJVg.max.webm         | Живи сейчас                  | МАКС |   16.52 MB |    0.0 с | 2790087facfdfa21
+minus/QpeYJU83XiQ.max.webm         | Жизнь не прощает             | МАКС |   11.79 MB |    0.0 с | e5de89c6aa3a30d1
+minus/TRcxZ7jfPsA.max.webm         | Когда Теряем                 | МАКС |   15.38 MB |    0.0 с | 710d27c57e26af26
+minus/X90mDPOhvKc.max.webm         | Когда погаснут огни          | МАКС |   11.52 MB |    0.0 с | 55a73fb6bfe74170
+minus/rWpYxmFjm9g.max.webm         | Когда теряем                 | МАКС |   14.33 MB |    0.0 с | 627691f305954396
+minus/X_-M_cjCFVg.max.webm         | Когда ты удобен              | МАКС |   16.41 MB |    0.0 с | f491de0469f0b997
+minus/eOMrrezWEZM.max.webm         | Код перемен                  | МАКС |   11.66 MB |    0.0 с | da54bdf8003108e4
+minus/JRTUNak53nU.max.webm         | Компас на Дом                | МАКС |   12.54 MB |    0.0 с | 3fbaf69fd4853a7d
+minus/KvzORszfsg8.max.webm         | Крик в тишине                | МАКС |   13.68 MB |    0.0 с | 8cbc21760fb4c538
+minus/M9o3ZIlhHrU.max.webm         | Люди в Масках                | МАКС |    9.69 MB |    0.0 с | c3f64ac5c0fe35d0
+minus/TkmSZp1dfBE.max.webm         | Меня не сломать              | МАКС |   15.97 MB |    0.0 с | d23450b0e6f7141a
+minus/pv3GAlLG9Lk.max.webm         | Нас учат потери              | МАКС |   15.64 MB |    0.0 с | 366c2b897562c206
+minus/ahmGGM-P0CA.max.webm         | Начать сначала               | МАКС |    9.94 MB |    0.0 с | b060ffc960b39e3b
+minus/MSqK5ig-alE.max.webm         | Не Угасай                    | МАКС |    8.89 MB |    0.0 с | ada79641d7fedbe5
+minus/2g5n6B0bc2Q.max.webm         | Не вам жить мою жизнь        | МАКС |   10.37 MB |    0.0 с | 38d4008af298cab3
+minus/d2b72nYLiT8.max.webm         | Не жди завтра                | МАКС |   12.22 MB |    0.0 с | 7c2a7ea066f22e8d
+minus/8zG2LBAn1AI.max.webm         | Не играй в любовь            | МАКС |   13.70 MB |    0.0 с | 5ad20697f1495fcc
+minus/pervLR9m-vk.max.webm         | Не спеши осуждать            | МАКС |   10.37 MB |    0.0 с | a54514b06291ad15
+minus/WMU46n--Z-s.max.webm         | Не теряй шанс                | МАКС |    9.28 MB |    0.0 с | 923e323764c731d6
+minus/cFHsQ-LP3ns.max.webm         | Не тех мы ценим              | МАКС |   11.24 MB |    0.0 с | a54d70b53ce3b403
+minus/q57MLk0Uf9c.max.webm         | Неудача — не конец           | МАКС |   13.04 MB |    0.0 с | 5f47f45009d7421c
+minus/_gNbMCINv1Y.max.webm         | О чём мечтаешь ты            | МАКС |   19.78 MB |    0.0 с | 61cdef31704b0665
+minus/LqMrrKqK3AE.max.webm         | Одиночество среди людей      | МАКС |   15.12 MB |    0.0 с | 965bd0d30b05e250
+minus/POiQQ21I5n0.max.webm         | Оставайся молодым            | МАКС |   15.83 MB |    0.0 с | 895d98dcaebf2c0b
+minus/PIyWwF0t4wQ.max.webm         | Остаться человеком           | МАКС |   10.97 MB |    0.0 с | 01965a28570c774f
+minus/TobJGYOPlnw.max.webm         | Остаться человеком           | МАКС |   12.43 MB |    0.0 с | 7088daceb309d142
+minus/yK2aPehxmK8.max.webm         | Пленники прошлого            | МАКС |   11.81 MB |    0.0 с | 59b368584e3ea3ad
+minus/6woWDYcu1QY.max.webm         | Разгадка в небесах           | МАКС |   13.04 MB |    0.0 с | 02c811e5354d82b2
+minus/Qb8xb0vUYDg.max.webm         | Сборник Музыки со Смыслом    | МАКС |   20.59 MB |    0.0 с | 43aa2d2420671cda
+minus/KFnJwNv008s.max.webm         | Свет в темноте               | МАКС |   11.55 MB |    0.0 с | 9f847dfc410eda7f
+minus/VwoK5U0qOys.max.webm         | Сердце в Огне                | МАКС |    7.65 MB |    0.0 с | f0fc44b2bf17563c
+minus/KfKHWdiX3S4.max.webm         | Смысл жизни прост            | МАКС |   10.13 MB |    0.0 с | 3e70dfb9c7133fa2
+minus/WIrhIrDQvwY.max.webm         | Страх не слабость            | МАКС |   15.94 MB |    0.0 с | 3bfd44d9b8646815
+minus/8RRRYysSIHg.max.webm         | Суть проста                  | МАКС |   12.50 MB |    0.0 с | 6f7ce9f5fcf59c86
+minus/vUb40twffCI.max.webm         | Там где ты                   | МАКС |   11.29 MB |    0.0 с | b0ffb4392d574685
+minus/V-IaCbDUKao.max.webm         | Твоё плавание не вечно       | МАКС |   14.80 MB |    0.0 с | 9db1a63f8b3b62e5
+minus/lkXLeITEtGA.max.webm         | Тень ушедших                 | МАКС |   14.27 MB |    0.0 с | c9c239d0a60a93cb
+minus/_E91VEQ-8lM.max.webm         | Тишина спасает               | МАКС |   13.60 MB |    0.0 с | be7d4eb8032ae326
+minus/b_36rlzEIKk.max.webm         | Ты Главный игрок             | МАКС |   17.91 MB |    0.0 с | d131b49603d463bd
+minus/_KwlGQNmC1Q.max.webm         | Ты одна дала                 | МАКС |   11.84 MB |    0.0 с | 0ae01f5346719c1f
+minus/pP3Kk2_FHbE.max.webm         | Цени время                   | МАКС |   16.61 MB |    0.0 с | 43833eb99f196ef6
+minus/EFaMUciH3Do.max.webm         | Цени моменты                 | МАКС |   10.72 MB |    0.0 с | 31665d38eb9efd66
+minus/R0SOJreGbhM.max.webm         | Цени моменты                 | МАКС |    9.24 MB |    0.0 с | 87b0c404b1382ad2
+minus/z3RcsfHajP8.max.webm         | Я сам себе враг              | МАКС |   12.58 MB |    0.0 с | f6522b8d7020cfc4
+minus/1BZs_wUPn1s.max.webm         | Я сам себе судья             | МАКС |   10.45 MB |    0.0 с | 04cae60cabedb058
+minus/min/HupAWAt7CmQ.webm         | А время капает               | МИН  |    0.58 MB |    0.0 с | 2ec5ce7f926eca3e
+minus/min/t9h3cCPCKoo.webm         | А что если ДА                | МИН  |    0.78 MB |    0.0 с | 4b86f9843fec784d
+minus/min/VfnGUIhaK2Y.webm         | А что если да                | МИН  |    0.61 MB |    0.0 с | 7a0c0dcf07910d21
+minus/min/kziwaat2nu4.webm         | Ангел без крыльев            | МИН  |    0.86 MB |    0.0 с | 591db50c4f87cfca
+minus/min/ugjp6iaNplo.webm         | Бой с собой                  | МИН  |    0.54 MB |    0.0 с | 40df5ad8ae5f2f35
+minus/min/n5IFJ-g1Rtc.webm         | В чём смысл                  | МИН  |    1.02 MB |    0.0 с | a92bdbecc638ec79
+minus/min/G7L2d0Z5xfY.webm         | Вера остаётся                | МИН  |    0.61 MB |    0.0 с | d36782cb8e6b33cb
+minus/min/eA-fyeSkavI.webm         | Вне зоны доступа             | МИН  |    0.73 MB |    0.0 с | 1ebfe32e2fe1539b
+minus/min/YaY-ZJVXFjI.webm         | Время как вода               | МИН  |    0.50 MB |    0.0 с | fc900d619ab33a85
+minus/min/gMASVVNFr_A.webm         | Время покажет                | МИН  |    0.64 MB |    0.0 с | 9644898f5df9e2d6
+minus/min/_PCJ6fMfeRM.webm         | Всё начинается с тебя        | МИН  |    0.78 MB |    0.0 с | 654f33a89fe575e6
+minus/min/shs0TiOwx-M.webm         | Где настоящее                | МИН  |    1.08 MB |    0.0 с | 6edbcc6ab64bd543
+minus/min/GB31hcDi3lo.webm         | Гордость нас убивает         | МИН  |    0.67 MB |    0.0 с | 4dc6d6c4b91e20bd
+minus/min/LCADfnI8F-s.webm         | Действуй сейчас              | МИН  |    0.55 MB |    0.0 с | cccce3c6bb967bbc
+minus/min/OHaRQj9PLUY.webm         | Дорога мой Учитель           | МИН  |    0.57 MB |    0.0 с | 15b8cc3247da4e5e
+minus/min/Y7Wy_JBkz7A.webm         | Живи как умеешь              | МИН  |    0.82 MB |    0.0 с | 98cbf11e781f026a
+minus/min/fJwb931iJVg.webm         | Живи сейчас                  | МИН  |    0.97 MB |    0.0 с | e121e8c91f7e712a
+minus/min/QpeYJU83XiQ.webm         | Жизнь не прощает             | МИН  |    0.64 MB |    0.0 с | 5e1d06448be94bd2
+minus/min/TRcxZ7jfPsA.webm         | Когда Теряем                 | МИН  |    0.83 MB |    0.0 с | 8e90ffa8dd79fd9b
+minus/min/X90mDPOhvKc.webm         | Когда погаснут огни          | МИН  |    0.63 MB |    0.0 с | b95da21352aa3371
+minus/min/rWpYxmFjm9g.webm         | Когда теряем                 | МИН  |    0.80 MB |    0.0 с | 196a7c2e27c16dd3
+minus/min/X_-M_cjCFVg.webm         | Когда ты удобен              | МИН  |    0.95 MB |    0.0 с | ede2eda1cdd15c9e
+minus/min/eOMrrezWEZM.webm         | Код перемен                  | МИН  |    0.65 MB |    0.0 с | 46c8290bb3463cbb
+minus/min/JRTUNak53nU.webm         | Компас на Дом                | МИН  |    0.70 MB |    0.0 с | 0ea758a5b0393d21
+minus/min/KvzORszfsg8.webm         | Крик в тишине                | МИН  |    0.76 MB |    0.0 с | d9aa15098f462c36
+minus/min/M9o3ZIlhHrU.webm         | Люди в Масках                | МИН  |    0.53 MB |    0.0 с | de78b90d2e424a53
+minus/min/TkmSZp1dfBE.webm         | Меня не сломать              | МИН  |    0.85 MB |    0.0 с | 154aad8cee8b8390
+minus/min/pv3GAlLG9Lk.webm         | Нас учат потери              | МИН  |    0.86 MB |    0.0 с | db60a9011a6ec7ab
+minus/min/ahmGGM-P0CA.webm         | Начать сначала               | МИН  |    0.55 MB |    0.0 с | 781f31a61e7d3479
+minus/min/MSqK5ig-alE.webm         | Не Угасай                    | МИН  |    0.49 MB |    0.0 с | b07690bde5e10da0
+minus/min/2g5n6B0bc2Q.webm         | Не вам жить мою жизнь        | МИН  |    0.57 MB |    0.0 с | 68458f6e564a6d4b
+minus/min/d2b72nYLiT8.webm         | Не жди завтра                | МИН  |    0.69 MB |    0.0 с | 9c12aed2bcc042f6
+minus/min/8zG2LBAn1AI.webm         | Не играй в любовь            | МИН  |    0.75 MB |    0.0 с | d2412a8860a4aa77
+minus/min/pervLR9m-vk.webm         | Не спеши осуждать            | МИН  |    0.57 MB |    0.0 с | 0dfc5aa6b0544871
+minus/min/WMU46n--Z-s.webm         | Не теряй шанс                | МИН  |    0.51 MB |    0.0 с | 364df5039e490659
+minus/min/cFHsQ-LP3ns.webm         | Не тех мы ценим              | МИН  |    0.63 MB |    0.0 с | 2492de0acfd9c015
+minus/min/q57MLk0Uf9c.webm         | Неудача — не конец           | МИН  |    0.72 MB |    0.0 с | 0dc0b5ba4690c4a3
+minus/min/_gNbMCINv1Y.webm         | О чём мечтаешь ты            | МИН  |    1.12 MB |    0.0 с | 7c1def72b92bd08b
+minus/min/LqMrrKqK3AE.webm         | Одиночество среди людей      | МИН  |    0.84 MB |    0.0 с | 7e7536215adebdcb
+minus/min/POiQQ21I5n0.webm         | Оставайся молодым            | МИН  |    0.85 MB |    0.0 с | 11f85f3a05186e9e
+minus/min/PIyWwF0t4wQ.webm         | Остаться человеком           | МИН  |    0.62 MB |    0.0 с | 9c2271e128637a09
+minus/min/TobJGYOPlnw.webm         | Остаться человеком           | МИН  |    0.68 MB |    0.0 с | b7ca7cb8e776d2b8
+minus/min/yK2aPehxmK8.webm         | Пленники прошлого            | МИН  |    0.63 MB |    0.0 с | 1ce348b49b8a2e84
+minus/min/6woWDYcu1QY.webm         | Разгадка в небесах           | МИН  |    0.77 MB |    0.0 с | 7e3119d519f1e857
+minus/min/Qb8xb0vUYDg.webm         | Сборник Музыки со Смыслом    | МИН  |    2.53 MB |    0.0 с | 6e63cbc56a2d195a
+minus/min/KFnJwNv008s.webm         | Свет в темноте               | МИН  |    0.65 MB |    0.0 с | 5d56498b750d1b6b
+minus/min/VwoK5U0qOys.webm         | Сердце в Огне                | МИН  |    0.43 MB |    0.0 с | ca6bba26a21751c8
+minus/min/KfKHWdiX3S4.webm         | Смысл жизни прост            | МИН  |    0.56 MB |    0.0 с | c42f9e42cce9b78e
+minus/min/WIrhIrDQvwY.webm         | Страх не слабость            | МИН  |    0.90 MB |    0.0 с | 51eec7ee7dd823ea
+minus/min/8RRRYysSIHg.webm         | Суть проста                  | МИН  |    0.70 MB |    0.0 с | 1ac5e44ee7353d18
+minus/min/vUb40twffCI.webm         | Там где ты                   | МИН  |    0.65 MB |    0.0 с | adbdb55863dcfa5f
+minus/min/V-IaCbDUKao.webm         | Твоё плавание не вечно       | МИН  |    0.87 MB |    0.0 с | 0685db85c40496a0
+minus/min/lkXLeITEtGA.webm         | Тень ушедших                 | МИН  |    0.77 MB |    0.0 с | cafc3e51aa5a158d
+minus/min/_E91VEQ-8lM.webm         | Тишина спасает               | МИН  |    0.75 MB |    0.0 с | d74c8e3766cdb1bb
+minus/min/b_36rlzEIKk.webm         | Ты Главный игрок             | МИН  |    0.98 MB |    0.0 с | 3d7e5bea1161a929
+minus/min/_KwlGQNmC1Q.webm         | Ты одна дала                 | МИН  |    0.65 MB |    0.0 с | ede57a15a93902f1
+minus/min/pP3Kk2_FHbE.webm         | Цени время                   | МИН  |    0.92 MB |    0.0 с | 7f1f8e4e04612303
+minus/min/EFaMUciH3Do.webm         | Цени моменты                 | МИН  |    0.59 MB |    0.0 с | a9227edd25878d4a
+minus/min/R0SOJreGbhM.webm         | Цени моменты                 | МИН  |    0.49 MB |    0.0 с | a890bc52034e27de
+minus/min/z3RcsfHajP8.webm         | Я сам себе враг              | МИН  |    0.74 MB |    0.0 с | 29f37d4d5a3d78de
+minus/min/1BZs_wUPn1s.webm         | Я сам себе судья             | МИН  |    0.61 MB |    0.0 с | bc436b8ab005253f
