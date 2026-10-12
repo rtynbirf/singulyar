@@ -1,0 +1,709 @@
+<!doctype html>
+<!--
+  ГАРМОНИЯ · плеер событий .harm (фаза 1, такт v10.68 «ДОРОГА»)
+  Один файл + модули ../src/*.mjs. Демо-событие ВШИТО в страницу (script type="application/json").
+  Ноль внешних ссылок: ни скриптов, ни стилей, ни шрифтов, ни картинок.
+  CSP запрещает любые соединения (connect-src 'none'); inline-скрипт и стиль
+  разрешены по sha256-хэшам — без 'unsafe-inline' (05_PRIVACY_THREAT_MODEL.md).
+  Хэши в CSP пересчитывайте при правке кода/стиля — тест tests/player-a11y.test.mjs это проверяет.
+-->
+<html lang="ru" data-scene="romantic" data-motion="soft">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-tH/4FAm4TZyYb0Bwt/V8nsUcN16+rlyNQhnaeQaPV94='; style-src 'sha256-QF+j9JpqtTpebC3a/yAZzlGN7RE63/w4tn68NkY7BZs='; img-src 'none'; connect-src 'none'; media-src 'none'; font-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'">
+<meta name="description" content="ГАРМОНИЯ — офлайн-плеер событий .harm с профилем доступности. Данные остаются на устройстве.">
+<title>ГАРМОНИЯ · плеер событий</title>
+<link rel="icon" href="data:,">
+<style>
+/* ==== токены сцен (контраст всех пар «текст/фон» ≥ 4.5:1 — проверяет тест) ==== */
+:root {
+  --paper: #1a0f14; --ink: #faedf2; --soft: #d8bfcc;
+  --accent-bg: #be185d; --accent-ink: #ffffff; --focus: #ffd75e;
+  --size: 1; --radius: 12px;
+}
+html[data-scene="day"]      { --paper: #f7f3ea; --ink: #23272b; --soft: #4a5158; --accent-bg: #b45309; --accent-ink: #ffffff; --focus: #1d4ed8; }
+html[data-scene="party"]    { --paper: #14101e; --ink: #f2eefa; --soft: #c9c2dc; --accent-bg: #7c3aed; --accent-ink: #ffffff; --focus: #ffd75e; }
+html[data-scene="kids"]     { --paper: #fff8e7; --ink: #1f2937; --soft: #52525b; --accent-bg: #0369a1; --accent-ink: #ffffff; --focus: #1d4ed8; }
+html[data-scene="romantic"] { --paper: #1a0f14; --ink: #faedf2; --soft: #d8bfcc; --accent-bg: #be185d; --accent-ink: #ffffff; --focus: #ffd75e; }
+html[data-contrast="high"]  { --paper: #000000; --ink: #ffffff; --soft: #ffffff; --accent-bg: #ffeb3b; --accent-ink: #000000; --focus: #00e5ff; }
+
+/* ==== база ==== */
+* { box-sizing: border-box; }
+html { color-scheme: dark light; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  padding: 0 0 4rem;
+}
+header { padding: 1rem 1rem 0; }
+h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+#ev-meta { color: var(--soft); font-size: .9rem; margin: 0; }
+main { max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
+section, fieldset {
+  border: 1px solid var(--soft); border-radius: var(--radius);
+  margin: 1rem 0; padding: .75rem 1rem; background: transparent;
+}
+fieldset { min-width: 0; }
+legend { font-weight: 600; padding: 0 .4rem; }
+h2 { font-size: 1.05rem; margin: .2rem 0 .6rem; }
+p { margin: .4rem 0; }
+.muted { color: var(--soft); }
+
+/* ==== сцена: строка с гранулами ==== */
+#stage { text-align: center; padding: 1.25rem .75rem; }
+#line-now {
+  font-size: calc(var(--size) * 1.9rem); line-height: 1.35; min-height: 2.6em;
+  overflow-wrap: break-word; margin: 0;
+}
+.gran, .word { border-radius: .2em; padding: 0 .04em; }
+.on, .line-on { background: var(--accent-bg); color: var(--accent-ink); }
+#line-alt { color: var(--soft); font-size: calc(var(--size) * 1rem); min-height: 1.4em; margin: .5rem 0 0; }
+.pulse { box-shadow: 0 0 0 6px var(--accent-bg); transition: box-shadow .3s ease-out; }
+#status { min-height: 1.4em; color: var(--soft); }
+
+/* ==== органы управления: цели ≥ 44 px, видимый фокус ==== */
+button, select, input[type="range"], input[type="file"] { font: inherit; color: inherit; }
+button {
+  min-height: 44px; min-width: 44px; padding: .5rem .9rem;
+  border: 1px solid var(--soft); border-radius: var(--radius);
+  background: transparent; color: var(--ink); cursor: pointer;
+}
+button:hover { border-color: var(--accent-bg); }
+button[aria-pressed="true"], #btn-play[data-on="1"] { background: var(--accent-bg); color: var(--accent-ink); border-color: var(--accent-bg); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+input[type="range"] { min-height: 44px; width: 100%; accent-color: var(--accent-bg); }
+label { display: block; margin: .5rem 0 .1rem; }
+.row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.row > * { flex: 0 1 auto; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0 1.25rem; }
+output { font-variant-numeric: tabular-nums; color: var(--soft); }
+fieldset ul { list-style: none; margin: .25rem 0; padding: 0; }
+fieldset li { margin: .2rem 0; }
+fieldset label.inline { display: inline-flex; gap: .45rem; align-items: center; margin: .15rem 0; min-height: 44px; }
+input[type="checkbox"], input[type="radio"] { width: 1.15rem; height: 1.15rem; accent-color: var(--accent-bg); }
+
+/* ==== расшифровка ==== */
+#transcript li { margin: .15rem 0; }
+#transcript button { min-height: 44px; text-align: left; width: 100%; border-color: transparent; }
+#transcript button:hover { border-color: var(--soft); }
+#transcript li.now button { background: var(--accent-bg); color: var(--accent-ink); border-color: var(--accent-bg); }
+
+/* ==== журнал ==== */
+#ledger { font-size: .9rem; }
+#ledger li { border-bottom: 1px dotted var(--soft); padding: .15rem 0; }
+#ledger .chan { font-weight: 600; }
+
+/* ==== движение: none = без анимаций и вспышек ==== */
+html[data-motion="none"] *, html[data-motion="none"] *::before, html[data-motion="none"] *::after {
+  transition: none !important; animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+#warn, #verdict {
+  border: 2px solid var(--accent-bg); border-radius: var(--radius);
+  padding: .75rem 1rem; margin: 1rem; font-weight: 600;
+}
+[hidden] { display: none !important; }
+footer { max-width: 46rem; margin: 0 auto; padding: 0 1rem; color: var(--soft); font-size: .9rem; }
+kbd { border: 1px solid var(--soft); border-radius: 6px; padding: 0 .35em; font: inherit; }
+</style>
+</head>
+<body>
+<div id="warn" hidden>
+  Не удалось загрузить модули <code>../src/</code>. ES-модули не запускаются с адреса
+  <code>file://</code> — откройте папку через локальный сервер, например
+  <code>python3 -m http.server</code>, и обновите страницу. Никакая сеть при этом не используется.
+</div>
+<noscript><p id="warn-js" class="muted">Для работы плеера нужен JavaScript; событие и профиль остаются на устройстве.</p></noscript>
+
+<header>
+  <h1>ГАРМОНИЯ · плеер событий</h1>
+  <p id="ev-meta">…</p>
+</header>
+
+<main id="app">
+  <p id="verdict" hidden></p>
+
+  <section id="stage" aria-label="Сцена события">
+    <p id="line-now" aria-live="polite" lang="ru">—</p>
+    <p id="line-alt"></p>
+    <p id="status" role="status"></p>
+    <div class="row">
+      <button id="btn-play" type="button">Играть <span class="muted">(пробел)</span></button>
+      <button id="btn-back" type="button" aria-label="Назад на одну долю">← доля</button>
+      <button id="btn-fwd" type="button" aria-label="Вперёд на одну долю">доля →</button>
+    </div>
+    <label for="seek">Позиция события, доли</label>
+    <input type="range" id="seek" min="0" max="32" step="0.25" value="0">
+    <p class="muted"><output id="pos" for="seek">доля 0 · 00:00.0</output></p>
+  </section>
+
+  <section id="prompt" hidden aria-label="Приглашение к действию">
+    <h2>Приглашение</h2>
+    <p id="prompt-text"></p>
+    <div class="row">
+      <button id="btn-clap" type="button">Хлопнуть <span class="muted">(пробел)</span></button>
+      <output id="clap-count" for="btn-clap">ответов: 0</output>
+    </div>
+  </section>
+
+  <fieldset id="profile-panel">
+    <legend>Профиль доступности (хранится на устройстве)</legend>
+    <div class="grid2">
+      <div>
+        <fieldset>
+          <legend>Гранулярность текста</legend>
+          <ul>
+            <li><label class="inline"><input type="radio" name="gran" value="line">строка</label></li>
+            <li><label class="inline"><input type="radio" name="gran" value="word">слово</label></li>
+            <li><label class="inline"><input type="radio" name="gran" value="syllable">слог</label></li>
+            <li><label class="inline"><input type="radio" name="gran" value="letter">фонема (буква)</label></li>
+          </ul>
+        </fieldset>
+        <label for="tempo">Темп <output id="tempo-out" for="tempo">1.0×</output></label>
+        <input type="range" id="tempo" min="0.5" max="1.5" step="0.05" value="1">
+        <label for="size">Размер текста <output id="size-out" for="size">1.0</output></label>
+        <input type="range" id="size" min="1" max="2" step="0.1" value="1">
+        <label for="offset">Сдвиг синхронизации <output id="offset-out" for="offset">0 мс</output></label>
+        <input type="range" id="offset" min="-300" max="300" step="10" value="0">
+      </div>
+      <div>
+        <label for="sound">Громкость звука <output id="sound-out" for="sound">0.7</output></label>
+        <input type="range" id="sound" min="0" max="1" step="0.05" value="0.7">
+        <label for="haptic">Вибро и световой пульс <output id="haptic-out" for="haptic">0.5</output></label>
+        <input type="range" id="haptic" min="0" max="1" step="0.05" value="0.5">
+        <label for="motion">Движение</label>
+        <select id="motion">
+          <option value="full">Полное</option>
+          <option value="soft" selected>Мягкое</option>
+          <option value="none">Без анимации и вспышек</option>
+        </select>
+        <ul>
+          <li><label class="inline"><input type="checkbox" id="contrast">Высокий контраст</label></li>
+        </ul>
+        <fieldset>
+          <legend>Каналы вывода (минимум два)</legend>
+          <ul>
+            <li><label class="inline"><input type="checkbox" id="out-visual" value="visual">визуальный</label></li>
+            <li><label class="inline"><input type="checkbox" id="out-audio" value="audio">звук</label></li>
+            <li><label class="inline"><input type="checkbox" id="out-haptic" value="haptic">вибро</label></li>
+            <li><label class="inline"><input type="checkbox" id="out-braille" value="braille">брайль</label></li>
+          </ul>
+        </fieldset>
+      </div>
+    </div>
+    <div class="row" role="group" aria-label="Пресеты">
+      <button type="button" data-preset="Минимум стимулов">Минимум стимулов</button>
+      <button type="button" data-preset="Читаю медленно">Читаю медленно</button>
+      <button type="button" data-preset="Только текст и вибро">Только текст и вибро</button>
+    </div>
+    <div class="row">
+      <button id="btn-export" type="button">Скачать профиль</button>
+      <label class="inline" for="import-file">Загрузить профиль…</label>
+      <input type="file" id="import-file" accept=".json,application/json,.harm-profile">
+      <button id="btn-reset" type="button">Сбросить профиль</button>
+    </div>
+    <p class="muted">Событие получает только значения осей — никаких ярлыков и причин. (F7–F10)</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Сцена</legend>
+    <label class="inline" for="scene-sel">Палитра сцены</label>
+    <select id="scene-sel">
+      <option value="auto" selected>как в событии</option>
+      <option value="day">День</option>
+      <option value="party">Вечеринка</option>
+      <option value="kids">Дети</option>
+      <option value="romantic">Романтика</option>
+    </select>
+  </fieldset>
+
+  <section aria-label="Расшифровка">
+    <h2>Расшифровка (доступна без запуска и без темпа — F5)</h2>
+    <ol id="transcript"></ol>
+  </section>
+
+  <fieldset>
+    <legend>Журнал доступа (F11–F13)</legend>
+    <p class="muted">Сеть: обращений 0 — соединения запрещены политикой страницы (connect-src 'none').</p>
+    <ul id="ledger" aria-live="polite"></ul>
+    <div class="row">
+      <button id="btn-ledger-save" type="button">Скачать журнал</button>
+      <button id="btn-ledger-clear" type="button">Очистить журнал</button>
+    </div>
+  </fieldset>
+</main>
+
+<footer>
+  <p>Клавиатура: <kbd>Tab</kbd> — обход, <kbd>пробел</kbd> — играть/пауза (во время приглашения — ответ),
+     <kbd>←</kbd> <kbd>→</kbd> — на долю. Каждый смысл дублируется текстом. Данные не покидают устройство.</p>
+</footer>
+
+<script type="application/json" id="harm-demo">{
+  "schema": "harm/0.1",
+  "title": "Просто люби (демо)",
+  "author": "HARMONIA demo",
+  "license": "CC-BY-4.0",
+  "bpm": 96,
+  "beatsPerLine": 4,
+  "timeline": [
+    { "beat": 0,  "type": "scene",  "data": { "scene": "romantic" }, "alt": "Мягкая сцена" },
+    { "beat": 0,  "type": "text",   "data": { "words": [[["Про",1],["сто",1]],[["лю",1],["би",1]]] }, "alt": "Просто люби" },
+    { "beat": 4,  "type": "text",   "data": { "words": [[["Дом",1]],[["где",1]],[["те",0.5],["бя",0.5]],[["ждут",1]]] }, "alt": "Дом, где тебя ждут" },
+    { "beat": 16, "type": "accent", "data": { "strength": 0.8 }, "alt": "Акцент: руки вверх" },
+    { "beat": 20, "type": "prompt", "data": { "action": "clap", "keyboardAlt": "Space" }, "alt": "Хлопните или нажмите пробел" },
+    { "beat": 28, "type": "text",   "data": { "words": [[["Про",1],["сто",1]],[["лю",1],["би",1]]] }, "alt": "Просто люби" }
+  ]
+}
+</script>
+
+<script type="module">
+/* ГАРМОНИЯ · плеер фазы 1. Модули — те же, что проходят node:test (../src/). */
+const modwarn = document.getElementById('warn');
+let PulseEngine, TextPulse, Profile, validateHarm;
+try {
+  ({ PulseEngine } = await import('../src/pulse-engine.mjs'));
+  ({ TextPulse } = await import('../src/text-pulse.mjs'));
+  ({ Profile } = await import('../src/profile.mjs'));
+  ({ validateHarm } = await import('../src/harm-validate.mjs'));
+} catch (err) {
+  modwarn.hidden = false;
+  document.getElementById('app').hidden = true;
+  const p = document.createElement('p');
+  p.className = 'muted';
+  p.textContent = 'Причина: ' + (err && err.message ? err.message : err);
+  modwarn.append(p);
+  throw err;
+}
+
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls) => { const n = document.createElement(tag); if (cls) n.className = cls; return n; };
+
+/* ---------- событие: вшито в страницу, читается из data-блока (0 запросов) ---------- */
+const doc = JSON.parse($('harm-demo').textContent);
+const verdict = validateHarm(doc);
+if (!verdict.ok) {
+  const v = $('verdict');
+  v.hidden = false;
+  v.textContent = 'Событие не прошло проверку формата .harm — запуск отменён: ' + verdict.errors.join(' · ');
+}
+if (verdict.warnings.length) {
+  const v = $('verdict');
+  v.hidden = false;
+  v.append(Object.assign(el('span'), { textContent: ' Предупреждения: ' + verdict.warnings.join(' · ') }));
+}
+$('ev-meta').textContent =
+  `«${doc.title}» · автор: ${doc.author ?? '—'} · ${doc.license ?? ''} · схема ${doc.schema} · ${doc.bpm} долей/мин`;
+const beatsPerLine = Number.isInteger(doc.beatsPerLine) ? doc.beatsPerLine : 4;
+const bpm = doc.bpm;
+
+const textMarkers = doc.timeline.filter((m) => m.type === 'text').slice().sort((a, b) => a.beat - b.beat);
+const tp = new TextPulse(doc.timeline, { beatsPerLine });
+const sylls = tp.range('syllable', 0, Number.MAX_VALUE);
+let engine = null; // создаётся при первом «Играть» — до этого панели управляют только профилем
+
+/* аудио-состояние объявлено ЗАРАНЕЕ: applyAll() ниже читает master в applyProfile('sound')
+   — объявление после вызова давало TDZ ReferenceError и убивало весь модуль (найдено живым прогоном) */
+let ctx = null, master = null, fallbackClock = false, vibroLogged = false;
+const clockNow = () => (ctx ? ctx.currentTime : performance.now() / 1000);
+
+/* ---------- журнал доступа: каждое обращение к устройству (F11–F12) ---------- */
+const ledger = [];
+let lastLedgerKey = '', lastLedgerAt = 0;
+function журнал(канал, сообщение) {
+  const now = Date.now();
+  const key = канал + '|' + сообщение;
+  if (key === lastLedgerKey && now - lastLedgerAt < 3000) return; // не засоряем при движении ползунков
+  lastLedgerKey = key; lastLedgerAt = now;
+  ledger.push({ время: new Date().toLocaleTimeString(), канал, сообщение });
+  if (ledger.length > 200) ledger.shift();
+  renderLedger();
+}
+function renderLedger() {
+  const ul = $('ledger');
+  ul.textContent = '';
+  for (const r of ledger.slice(-50)) {
+    const li = el('li');
+    const b = el('span', 'chan'); b.textContent = r.канал + ': ';
+    li.append(b, document.createTextNode(`${r.сообщение} · ${r.время}`));
+    ul.append(li);
+  }
+}
+$('btn-ledger-clear').addEventListener('click', () => { ledger.length = 0; renderLedger(); журнал('журнал', 'очищен пользователем'); });
+$('btn-ledger-save').addEventListener('click', () => {
+  const text = ledger.map((r) => `${r.время}\t${r.канал}\t${r.сообщение}`).join('\n') + '\n';
+  download('harmonia-journal.txt', text, 'text/plain');
+});
+
+function download(name, text, mime) {
+  const a = el('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: mime }));
+  a.download = name;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+/* ---------- профиль: оси 04_PROFILE_SPEC.md, офлайн-хранение (F7–F9) ---------- */
+let hadStored = false;
+try { hadStored = !!globalThis.localStorage.getItem('harmonia.profile.v1'); } catch (e) { /* приватный режим */ }
+журнал('хранилище', hadStored ? 'профиль прочитан с устройства' : 'сохранённого профиля нет — значения по умолчанию');
+журнал('система', 'прочитаны prefers-reduced-motion / prefers-contrast (автонастройка, F8)');
+const profile = Profile.load(Profile.detectEnv()); // автоначальные значения из системных настроек (F8)
+
+function applyProfile(axis) {
+  const v = profile.get(axis);
+  switch (axis) {
+    case 'gran': for (const r of document.querySelectorAll('input[name="gran"]')) r.checked = r.value === v; break;
+    case 'tempo': $('tempo').value = v; $('tempo-out').value = v.toFixed(2).replace(/0$/, '') + '×'; if (engine) engine.setTempo(v); break;
+    case 'size': $('size').value = v; $('size-out').value = v.toFixed(1); document.documentElement.style.setProperty('--size', String(v)); break;
+    case 'offset': $('offset').value = v; $('offset-out').value = Math.round(v) + ' мс'; break;
+    case 'sound': $('sound').value = v; $('sound-out').value = v.toFixed(2); if (master) master.gain.value = v; break;
+    case 'haptic': $('haptic').value = v; $('haptic-out').value = v.toFixed(2); break;
+    case 'motion': $('motion').value = v; document.documentElement.dataset.motion = v; break;
+    case 'contrast': $('contrast').checked = v === 'high'; document.documentElement.dataset.contrast = v; break;
+    case 'input': break;
+    case 'output': for (const c of document.querySelectorAll('input[id^="out-"]')) c.checked = v.includes(c.value); break;
+  }
+}
+function applyAll() { for (const a of ['gran', 'tempo', 'size', 'offset', 'sound', 'haptic', 'motion', 'contrast', 'output']) applyProfile(a); }
+
+function saveProfile(axis, value) {
+  profile.set(axis, value);
+  profile.save();
+  журнал('хранилище', 'профиль сохранён на устройстве');
+  applyProfile(axis);
+  if (curLineIdx >= 0) renderLine(textMarkers[curLineIdx], profile.get('gran'));
+}
+
+for (const r of document.querySelectorAll('input[name="gran"]')) r.addEventListener('change', () => saveProfile('gran', r.value));
+$('tempo').addEventListener('input', (e) => saveProfile('tempo', +e.target.value));
+$('size').addEventListener('input', (e) => saveProfile('size', +e.target.value));
+$('offset').addEventListener('input', (e) => saveProfile('offset', +e.target.value));
+$('sound').addEventListener('input', (e) => saveProfile('sound', +e.target.value));
+$('haptic').addEventListener('input', (e) => saveProfile('haptic', +e.target.value));
+$('motion').addEventListener('change', (e) => saveProfile('motion', e.target.value));
+$('contrast').addEventListener('change', (e) => saveProfile('contrast', e.target.checked ? 'high' : 'normal'));
+for (const c of document.querySelectorAll('input[id^="out-"]')) {
+  c.addEventListener('change', () => {
+    const chosen = [...document.querySelectorAll('input[id^="out-"]:checked')].map((x) => x.value);
+    profile.set('output', chosen); profile.save();
+    журнал('хранилище', 'профиль сохранён на устройстве');
+    applyProfile('output'); // нормализация: минимум два канала
+  });
+}
+for (const b of document.querySelectorAll('button[data-preset]')) {
+  b.addEventListener('click', () => {
+    try {
+      profile.preset(b.dataset.preset); profile.save();
+      журнал('хранилище', `применён пресет «${b.dataset.preset}», профиль сохранён`);
+      applyAll();
+      if (curLineIdx >= 0) renderLine(textMarkers[curLineIdx], profile.get('gran'));
+    } catch (e) { журнал('профиль', 'пресет не найден: ' + b.dataset.preset); }
+  });
+}
+$('btn-export').addEventListener('click', () => {
+  download('harm-profile.json', profile.export(), 'application/json');
+  журнал('хранилище', 'профиль выгружен в файл по действию пользователя');
+});
+$('import-file').addEventListener('change', async (e) => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const next = Profile.import(text, Profile.detectEnv(), profile._store);
+    Object.assign(profile, next); // тот же экземпляр-адресат, новые оси
+    profile.save();
+    applyAll();
+    if (curLineIdx >= 0) renderLine(textMarkers[curLineIdx], profile.get('gran'));
+    журнал('хранилище', 'профиль импортирован из файла');
+  } catch (err) {
+    журнал('профиль', 'импорт отклонён: ' + (err && err.message ? err.message : 'файл не подходит'));
+  } finally { e.target.value = ''; }
+});
+$('btn-reset').addEventListener('click', () => {
+  profile.clear();
+  for (const k of ['motion', 'gran', 'size', 'contrast', 'tempo', 'sound', 'haptic', 'offset', 'input', 'output']) {
+    const def = profile.axes()[k];
+    profile.set(k, Array.isArray(def) ? def.slice() : def);
+  }
+  applyAll();
+  if (curLineIdx >= 0) renderLine(textMarkers[curLineIdx], profile.get('gran'));
+  журнал('хранилище', 'профиль удалён на этом устройстве');
+});
+applyAll();
+
+/* ---------- сцены (F6) ---------- */
+let sceneMode = 'auto';
+$('scene-sel').addEventListener('change', (e) => {
+  sceneMode = e.target.value;
+  if (sceneMode !== 'auto') setScene(sceneMode, 'сцена выбрана вручную');
+});
+function setScene(name, why) {
+  document.documentElement.dataset.scene = name;
+  const names = { day: 'День', party: 'Вечеринка', kids: 'Дети', romantic: 'Романтика' };
+  статус(`сцена: ${names[name] ?? name} — ${why}`);
+}
+
+/* ---------- аудио: единые часы AudioContext.currentTime (F3) ---------- */
+function ensureAudio() {
+  if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return true; }
+  try {
+    ctx = new AudioContext();
+    master = ctx.createGain();
+    master.gain.value = profile.get('sound');
+    master.connect(ctx.destination);
+    журнал('аудио', 'создан AudioContext: единые часы + локальный синтез, без сети');
+    return true;
+  } catch (e) {
+    fallbackClock = true;
+    журнал('аудио', 'AudioContext недоступен — тихие часы performance.now, звук отключён');
+    return false;
+  }
+}
+function tone(at, freq, dur, gain) {
+  if (!ctx || !master) return;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = 'sine'; o.frequency.value = freq;
+  const a = Math.max(0.0001, gain);
+  g.gain.setValueAtTime(0.0001, at);
+  g.gain.exponentialRampToValueAtTime(a, at + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g); g.connect(master);
+  o.start(at); o.stop(at + dur + 0.05);
+}
+
+/* ---------- движок: планировщик с упреждением 120 мс ---------- */
+const endBeat = Math.max(0, ...doc.timeline.map((m) => m.beat), ...sylls.map((s) => s.endBeat));
+const pendings = []; // {at, kind, ...} — визуал/вибро применяются по аудио-часам в кадре
+
+function onEvent(ev) {
+  if (ev.type === 'syl') {
+    tone(ev.at, 520 + (ev.data.lineIndex % 4) * 60, 0.07, 0.22);
+  } else if (ev.type === 'accent') {
+    tone(ev.at, 175, 0.35, 0.5);
+    pendings.push({ at: ev.at, kind: 'accent', alt: ev.alt, strength: Number(ev.data?.strength) || 0.5 });
+  } else if (ev.type === 'scene') {
+    pendings.push({ at: ev.at, kind: 'scene', scene: ev.data?.scene, alt: ev.alt });
+  } else if (ev.type === 'prompt') {
+    pendings.push({ at: ev.at, kind: 'prompt', alt: ev.alt, action: ev.data?.action });
+  }
+}
+function buildEngine() {
+  engine = new PulseEngine({
+    clock: { now: clockNow },
+    events: doc.timeline.map((m) => ({ beat: m.beat, type: m.type, data: m.data, alt: m.alt }))
+      .concat(sylls.map((s) => ({ beat: s.startBeat, type: 'syl', data: { text: s.text, lineIndex: s.lineIndex }, alt: s.text }))),
+    bpm, tempo: profile.get('tempo'), endBeat,
+    lookaheadMs: 120, tickMs: 25,
+    onEvent,
+    onEnd: () => { $('btn-play').textContent = 'Сначала (пробел)'; статус('событие закончилось — «Играть» начнёт с начала'); },
+    onSeek: ({ beat }) => статус(`переход к доле ${round1(beat)}`),
+    onStall: ({ stallMs }) => {
+      $('btn-play').textContent = 'Играть (пробел)';
+      $('btn-play').dataset.on = '0';
+      статус(`поток простаивал ${Math.round(stallMs)} мс — честная пауза (архитектура §3.4)`);
+    },
+  });
+}
+function round1(x) { return Math.round(x * 10) / 10; }
+
+function togglePlay() {
+  if (!verdict.ok) return;
+  if (!engine) { ensureAudio(); buildEngine(); }
+  ensureAudio();
+  engine.toggle();
+  const on = engine.playing;
+  $('btn-play').textContent = on ? 'Пауза (пробел)' : (engine.positionBeats() >= endBeat ? 'Сначала (пробел)' : 'Играть (пробел)');
+  $('btn-play').dataset.on = on ? '1' : '0';
+  if (!on) { document.querySelectorAll('.gran.on, .line-on').forEach((n) => n.classList.remove('on')); }
+}
+$('btn-play').addEventListener('click', togglePlay);
+$('btn-back').addEventListener('click', () => engine && engine.seek(Math.max(0, engine.positionBeats() - 1)));
+$('btn-fwd').addEventListener('click', () => engine && engine.seek(Math.min(endBeat, engine.positionBeats() + 1)));
+$('seek').addEventListener('input', (e) => { if (engine) engine.seek(+e.target.value); else статус(`позиция ${e.target.value} долей — нажмите «Играть»`); });
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && engine && engine.playing) {
+    engine.pause();
+    $('btn-play').textContent = 'Играть (пробел)'; $('btn-play').dataset.on = '0';
+    статус('вкладка ушла в фон — воспроизведение остановлено (архитектура §3.4)');
+  }
+});
+
+/* ---------- клавиатура (F17): пробел / стрелки / Tab ---------- */
+document.addEventListener('keydown', (e) => {
+  const onControl = e.target.closest && e.target.closest('button, input, select, textarea, a[href], summary');
+  if ((e.key === ' ' || e.code === 'Space') && !onControl) {
+    e.preventDefault();
+    if (promptOpen) ответ(); else togglePlay();
+  } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !onControl && engine) {
+    e.preventDefault();
+    engine.seek(Math.min(endBeat, Math.max(0, engine.positionBeats() + (e.key === 'ArrowRight' ? 1 : -1))));
+  }
+});
+
+/* ---------- приглашение (F17: альтернатива жесту — кнопка и пробел) ---------- */
+let promptOpen = false, answers = 0;
+function ответ() {
+  answers += 1;
+  $('clap-count').value = 'ответов: ' + answers;
+  журнал('ввод', 'ответ на приглашение кнопкой/пробелом (жест не требуется)');
+  pulseNow(0.5);
+}
+
+/* ---------- световой пульс + вибро (F14): всегда с текстовым дублем ---------- */
+let pulseTimer = 0;
+function pulseNow(strength) {
+  if (profile.get('haptic') <= 0) return;
+  if ('vibrate' in navigator) {
+    const ms = Math.max(10, Math.round(80 * strength * profile.get('haptic')));
+    navigator.vibrate(ms);
+    if (!vibroLogged) { журнал('вибро', 'канал доступен — импульсы на акцентах (дублируются светом и текстом)'); vibroLogged = true; }
+  }
+  if (profile.get('motion') === 'none') return; // без вспышек и анимации
+  const stage = $('stage');
+  stage.classList.add('pulse');
+  clearTimeout(pulseTimer);
+  pulseTimer = setTimeout(() => stage.classList.remove('pulse'), 320);
+}
+
+/* ---------- расшифровка (F5) ---------- */
+const transcriptOl = $('transcript');
+const lineButtons = [];
+textMarkers.forEach((m, i) => {
+  const li = el('li');
+  const b = el('button');
+  b.type = 'button';
+  const sec = (m.beat * 60) / bpm;
+  const mm = String(Math.floor(sec / 60)).padStart(2, '0');
+  const ss = (sec % 60).toFixed(1).padStart(4, '0');
+  const alt = typeof m.alt === 'string' && m.alt ? m.alt : wordsText(m);
+  b.textContent = `${mm}:${ss} · ${alt}`;
+  b.addEventListener('click', () => {
+    if (!engine) { ensureAudio(); buildEngine(); }
+    engine.seek(m.beat);
+    if (!engine.playing) { $('seek').value = m.beat; $('pos').value = `доля ${round1(m.beat)} · ${mm}:${ss}`; }
+  });
+  li.append(b);
+  transcriptOl.append(li);
+  lineButtons.push(li);
+});
+function wordsText(m) {
+  const w = (m.data && m.data.words) || [];
+  return w.map((word) => word.map((p) => p[0]).join('')).join(' ');
+}
+
+/* ---------- сцена: строка + гранулы ---------- */
+const lineEl = $('line-now');
+let curLineIdx = -1, curGran = '';
+function renderLine(marker, gran) {
+  lineEl.textContent = '';
+  curGran = gran;
+  if (!marker) { lineEl.textContent = '—'; return; }
+  const words = Array.isArray(marker.data?.words) ? marker.data.words : [];
+  if (gran === 'line') { lineEl.textContent = wordsText(marker) || marker.alt || ''; return; }
+  let cursor = marker.beat;
+  words.forEach((w, wi) => {
+    if (wi > 0) lineEl.append(' ');
+    const wSpan = el('span', 'word');
+    const wStart = cursor;
+    for (const pair of w) {
+      const glyph = typeof pair[0] === 'string' ? pair[0] : '';
+      const weight = Number(pair[1]) > 0 ? Number(pair[1]) : 1;
+      if (gran === 'word') {
+        wSpan.textContent += glyph;
+      } else if (gran === 'syllable') {
+        const sp = el('span', 'gran');
+        sp.dataset.s = cursor; sp.dataset.e = cursor + weight;
+        sp.textContent = glyph;
+        wSpan.append(sp);
+      } else {
+        const chars = Array.from(glyph);
+        const share = weight / Math.max(1, chars.length);
+        chars.forEach((ch, ci) => {
+          const sp = el('span', 'gran');
+          sp.dataset.s = cursor + share * ci; sp.dataset.e = cursor + share * (ci + 1);
+          sp.textContent = ch;
+          wSpan.append(sp);
+        });
+      }
+      cursor += weight;
+    }
+    if (gran === 'word') { wSpan.dataset.s = wStart; wSpan.dataset.e = cursor; }
+    lineEl.append(wSpan);
+  });
+}
+function paint(beat) {
+  const act = tp.activeAt(beat);
+  const idx = act.line ? act.line.lineIndex : -1;
+  if (idx !== curLineIdx) {
+    curLineIdx = idx;
+    renderLine(idx >= 0 ? textMarkers[idx] : null, profile.get('gran'));
+    $('line-alt').textContent = idx >= 0 ? (textMarkers[idx].alt || '') : '';
+    lineButtons.forEach((li, i) => li.classList.toggle('now', i === idx));
+  }
+  if (curGran === 'line') {
+    lineEl.classList.toggle('line-on', idx >= 0);
+  } else {
+    for (const sp of lineEl.querySelectorAll('[data-s]')) {
+      sp.classList.toggle('on', beat >= +sp.dataset.s && beat < +sp.dataset.e);
+    }
+  }
+  return act;
+}
+
+/* ---------- окно приглашения: от маркера до следующего маркера партитуры ---------- */
+const markerBeats = doc.timeline.map((m) => m.beat).sort((a, b) => a - b);
+function promptWindowAt(beat) {
+  let active = null;
+  for (const m of doc.timeline) {
+    if (m.type !== 'prompt') continue;
+    const next = markerBeats.find((b) => b > m.beat) ?? endBeat + 1;
+    if (beat >= m.beat && beat < next) active = m;
+  }
+  return active;
+}
+
+/* ---------- главный кадр: визуал по rAF, время = часы − задержка вывода − сдвиг (§3.2–3.3) ---------- */
+const statusEl = $('status');
+function статус(msg) { statusEl.textContent = msg; }
+function fmt(sec) {
+  const mm = String(Math.floor(sec / 60)).padStart(2, '0');
+  return `${mm}:${(sec % 60).toFixed(1).padStart(4, '0')}`;
+}
+function frame() {
+  if (engine && engine.playing) {
+    const latency = ctx ? ((ctx.outputLatency || ctx.baseLatency || 0)) : 0;
+    const off = profile.get('offset') / 1000;
+    const reading = Math.max(0, clockNow() - latency - off);
+    const beat = Math.max(0, engine.positionBeats(reading));
+    paint(beat);
+
+    const now = clockNow();
+    for (let i = pendings.length - 1; i >= 0; i--) {
+      const p = pendings[i];
+      if (p.at > now) continue;
+      pendings.splice(i, 1);
+      if (p.kind === 'accent') { pulseNow(p.strength); статус(p.alt || 'акцент'); }
+      else if (p.kind === 'scene') { if (sceneMode === 'auto' && p.scene) setScene(p.scene, p.alt || 'по событию'); }
+      else if (p.kind === 'prompt') { $('prompt-text').textContent = p.alt || ''; статус(p.alt || 'приглашение'); }
+    }
+    const pw = promptWindowAt(beat);
+    if (pw && !promptOpen) { promptOpen = true; $('prompt').hidden = false; }
+    if (!pw && promptOpen) { promptOpen = false; $('prompt').hidden = true; }
+
+    if (document.activeElement !== $('seek')) {
+      $('seek').value = Math.min(endBeat, beat);
+      $('pos').value = `доля ${round1(beat)} · такт ${Math.floor(beat / beatsPerLine) + 1} · ${fmt(beat * 60 / bpm)}`;
+    }
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+статус(verdict.ok ? 'Событие проверено, готово к запуску. Сеть не используется.' : 'Событие не прошло проверку.');
+</script>
+</body>
+</html>
