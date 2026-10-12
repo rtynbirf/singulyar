@@ -566,10 +566,63 @@ header{border-bottom:var(--лин);background:var(--стекло)}
     </div>
   </section>
 
+  <section class="раздел" id="словарь-истины">
+    <h2>◇ словарь истины <em>фидбек учеников — в связке с залом ·31</em></h2>
+    <p style="margin:.2rem 0 .9rem;opacity:.85">Как ты понял(а) смысл — самое честное знание дома. В зале ·31 включи слой КОНТУР и жми «✎ смысл» на карточке слова — запись попадёт сюда и будет жить только в этом браузере: дом ничего не отправляет, экспорт копированием — по явному действию, удаление настоящее. («Рыбное место» — не про интернет; так словарь истины и растёт — от людей.)</p>
+    <div class="кнопки">
+      <button class="действие" type="button" id="сифид-копия">⧉ скопировать всё (JSON)</button>
+      <button class="действие" type="button" id="сифид-очистить">✕ забыть всё</button>
+      <a class="действие" href="./СИНГУЛЯР_31_ЛАДОМ.html">◉ ·31 ЛАДОМ — где ставится отметка</a>
+    </div>
+    <dl class="словарь" id="сифид-список" style="margin-top:.9rem"></dl>
+  </section>
+
   <p class="низ"><a href="./index.html" title="Домой — лицо дома: кристалл, намерение, нить Ариадны">⌂ дом · хаб ·00</a></p>
 </main>
 <script defer src="js/sg-registry.js"></script>
 <script defer src="js/room-36.js"></script>
+<script>
+/* С52 · Д5 «словарь истины» — вторая половина приёма фидбека (первая — кнопка «✎ смысл» на карточке слова в КОНТУРе зала ·31).
+   Читает kv.словарь.фидбек этого браузера; показывает, позволяет скопировать JSON и честно удалить. 0 сети, 0 облаков. */
+(function(){
+"use strict";
+var КЛЮЧ="kv.словарь.фидбек";
+function читай(){ try{ var а=JSON.parse(localStorage.getItem(КЛЮЧ)||"[]"); return Array.isArray(а)?а:[]; }catch(e){ return []; } }
+function пиши(а){ try{ localStorage.setItem(КЛЮЧ,JSON.stringify(а)); }catch(e){} }
+function esc(с){ return String(с==null?"":с).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function скачай(т){ var у=URL.createObjectURL(new Blob([т],{type:"application/json"})); var а=document.createElement("a"); а.href=у; а.download="словарь-истины-фидбек.json"; document.body.appendChild(а); а.click(); а.remove(); setTimeout(function(){ URL.revokeObjectURL(у); },800); }
+function рендер(){
+  var список=document.getElementById("сифид-список"); if(!список) return;
+  var а=читай();
+  if(!а.length){ список.innerHTML='<div class="термин" style="border-style:dashed"><b>Пока тихо.</b><br>Записи появляются, когда в зале ·31 включён слой КОНТУР и кто-то жмёт «✎ смысл» на карточке слова. Всё живёт только в этом браузере — дом ничего не отправляет.</div>'; return; }
+  список.innerHTML=а.map(function(x,i){
+    var д=x.t?new Date(x.t).toLocaleDateString("ru",{day:"numeric",month:"long"}):"";
+    return '<div class="термин"><b>'+esc(x.сл?("«"+x.сл+"»"):"строка "+((x.и|0)+1))+'</b> <span style="opacity:.55">· '+esc(x.п||"песня")+' · '+esc(д)+'</span><br>'
+      +(x.строка?'<span style="opacity:.75">строка: '+esc(x.строка)+'</span><br>':'')
+      +esc(x.с||"")+'<br><button type="button" data-сифид="'+i+'" aria-label="Удалить запись" style="margin-top:6px;cursor:pointer">✕ забыть эту</button></div>';
+  }).join("");
+}
+document.addEventListener("click",function(e){
+  try{
+    var б=e.target&&e.target.closest?e.target.closest("[data-сифид]"):null;
+    if(б){ var а=читай(); а.splice(+б.getAttribute("data-сифид"),1); пиши(а); рендер(); }
+  }catch(e){}
+});
+var коп=document.getElementById("сифид-копия");
+if(коп) коп.addEventListener("click",function(){
+  var а=читай();
+  var т=JSON.stringify({экспорт:"словарь истины · фидбек учеников (дом СИНГУЛЯР)",такт:"v10.76 «СВЯЗКА»",записи:а},null,1);
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(т).then(function(){ коп.textContent="⧉ скопировано ("+а.length+")"; setTimeout(function(){ коп.textContent="⧉ скопировать всё (JSON)"; },2500); },function(){ скачай(т); });
+  else скачай(т);
+});
+var стир=document.getElementById("сифид-очистить");
+if(стир) стир.addEventListener("click",function(){
+  if(стир.dataset.арм){ try{ localStorage.removeItem(КЛЮЧ); }catch(e){} delete стир.dataset.арм; стир.textContent="✕ забыть всё"; рендер(); return; }
+  стир.dataset.арм="1"; стир.textContent="точно забыть всё?"; setTimeout(function(){ try{ delete стир.dataset.арм; стир.textContent="✕ забыть всё"; }catch(e){} },4000);
+});
+рендер();
+})();
+</script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
