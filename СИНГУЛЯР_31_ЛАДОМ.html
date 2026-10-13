@@ -2,6 +2,7 @@
 <html lang="ru" data-motion="on">
 <!-- такт v10.97 «ОТ ГОЛОСА» (С73; PAT №23; РЕПАРАЦИЯ: их v10.95 «ЧТЕНИЕ» (С71) и v10.96 «ГРУППЫ» (С72) байты восстановлены — мой прежний коммит d86b163 затёр их в 6 путях, признано и исправлено): приказ владельца — подсветка строки бежит ОТ ГОЛОСА (человек), а не от музыки (инструмент). 20 осей КАРАОКЕ перегенерированы ASR-конвейером по мастерам minus/min (якорь строки = измеренный вход голоса), формулировки «в такт музыке» исправлены на «в такт голосу», вшитый флагман сверен с голосом и не тронут. -->
 <head>
+<!-- такт v11.05 «ПО СЛОВУ» (С81, PAT №29; поверх их v11.04 «ТУТТИ» (С80, 6b4dc06) и их v11.03 «ДУЭТ» (С79): КС1 МВП-редактор word-level — модуль __ПУЛЬССИНХРОН (пульс-синхрон/1): импорт/экспорт Enhanced LRC + JSON-юниты SyncUnit, IndexedDB «s31-склад»/библиотека (songId+версия), «применить к текущей песне»/«снять», ±0,05/±0,1/±0,3 с, одна кнопка (Пробел ставит начало слова), fallback слово→слог→буква→эвристика; Текст-пульс принимает точный синхрон: приоритет точных токенов в rebuild()/такты() при пустом дефолте байты прежние; window.SONG.cues — только чтение; И-01..И-05 нерушимы -->
 <!-- такт v10.96 «ГРУППЫ» (С72, ключ ⑲; СТОП-ГОРН ×2: их v10.93 «ПОРЯДОК» (С69, 9384a77), v10.94 «ГОЛОС» (С70, 05d62ca, PAT №26) и v10.95 «ЧТЕНИЕ» (С71, 9f639fb, PAT №26, OCR А3-шаг-2) приняты целиком — их ход первыми, их ЧТЕНИЕ встала между моим fetch и пушем (прецедент v10.91), мой такт перенумерован честно v10.96→v10.96, С72→С72, кэш v151→v152, летопись 84→85; их Whisper/OCR-контракты и их закон-доводку I-12 не задел; репарация: у их коммента v10.93 в шапке был стёрт открывающий «<!--» — восстановлен одной парой символов, их слова не тронуты). Приказ владельца 2026-10-13: «Я ТЕБЕ ЕГО ДАЛ ЧТОБ ТЫ СТРУКТУРУ ЕГО ИЗУЧИЛ!!! КАК НАМ У СЕБЯ НАДО ГРАМОТНО ОРГАНИЗОВАТЬ НАШ!!! ПУЛЬТ ГДЕ ВСЁ НАГЛЯДНО ДОСТУПНО И ЛЕГКО!!! И САМОЕ ГЛАВНОЕ РЕБЁНКУ ПОНЯТНО!!! А В НАШЕМ ПУЛЬТЕ ВСЁ БЕЗ ГРАМОТНО ВСЁ РАЗОРВАНО ПО РАЗНЫМ ВКЛАДКАМ ЧТО В КАЖДОЙ ВКЛАДКЕ ЧЁРТ НОГУ СЛОМИТ=) ПЕРЕДЕЛАЙ ВСЮ НАШУ СТРУКТУРУ ПУЛЬТА КАК ТУТ ЧТОБ ГРУППЫ И ВСЕ НАЖАЛ В ГРУППЕ РЕГУЛИРУ НАЖАЛ ВСЁ ВСЕ В ОДНОМ МЕСТЕ!!! ТОЛЬКО ПРО СПРАВКИ НЕ ЗАБУДЬ ЧТОБ ВСПЛЫВАЮЩАЯ ПОДСКАЗКА ПРИ НАВЕДЕНИИ КУРСОРОМ ВСПЛЫВАЛА С ПОДРОБНОЙ СПРАВКОЙ ФУНКЦИИ=) ДЕРЗАЙ Я В ТЕБЯ ВЕРЮ=)». Исполнение — ПУЛЬТ перестроен по структуре КОМБАЙНА владельца (его плагин Хром, МАНИФЕСТ №3; изучены popup.html/popup.js: группы-чипы, аккордеон «строка → настройки тут же», data-tip на каждом элементе + syncAriaTips, поиск по всему списку, ARIA-вкладки со стрелками): (1) ГРУППЫ ВМЕСТО ВКЛАДОК-СТЕН — модуль __ПУЛЬТ_ГРУППЫ (последний скрипт body): каждая вкладка-кнопка = ЗАГОЛОВОК ГРУППЫ (иконка + имя + пояснение «ребёнку понятно» + счётчик ручек + стрелка ▸), панель ручек перезжает В ТЕЛО группы (pg-body) — «нажал в группе — регулируй — всё в одном месте»; одна группа раскрыта (практика КОМБАЙНА), повторный клик сворачивает; открытие пульта — всегда с ВИДа (закон владельца v10.10 «ОДИН СЛОЙ» не тронут); память kv.pult.группа (реестр I-11) — честная память ДАННЫХ «где регулировал»; (2) НОЛЬ ПОЛОМАННЫХ ХУКОВ — кнопки остаются в .p-tabs с role=tab/aria-selected (стрелки, Home/End живы), tabs.open() и КРЫША-возврат кликают те же кнопки, все ~120 ручек со своими id/привязками не тронуты; ЛАБ и ЧЕТВЁРКА (дин-вкладки) оборачиваются в группы сами — MutationObserver на полосу и полотно, реестр открыт (новая вкладка = +1 группа); (3) СПРАВКИ — приказ «всплывающая подсказка с подробной справкой» исполнен трижды: каждая группа несёт ПОДРОБНЫЙ data-tip (2-4 предложения: что внутри, как работает, какие клавиши) → флоат-тип дома (hover 380 мс / фокус сразу / палец 460 мс / Esc / hoverable) + aria-label на заголовке (скринридер читает полную справку при фокусе — владелец незрячий) + столб p-справка (v10.67) показывает то же по наведению/фокусу; долгое нажатие пальцем на ряд внутри группы — справка в столбе с вибро-акцентом; (4) ПОИСК ПО ВСЕМ ГРУППАМ — applySearch переписан: запрос ищет по ВСЕМ группам сразу (практика КОМБАЙНА, было — по одной вкладке), группы с хитами раскрываются тут же, пустые прячутся, «Ничего не нашлось ни в одной группе» честно по всему пульту; (5) СЕТКА пульта: рейка-вкладок стала полотном групп во всю ширину (118px-столбец умер), столб справки 292px остался справа, на узких — группы сверху, справка снизу; две колонки ручек внутри раскрытой группы на широких, одна на узких; #pBody скрыт (панели живут в группах), pEmpty переехал к группам. Пробы ЗДОРОВЬЕ: __HEALTH36 (группы-аккордеон: ≥12 групп, aria-expanded, память), __HEALTH37 (поиск открывает все группы). APP/титул v10.96, кэш v151→v152. -->
 <!-- такт v10.93 «ПОРЯДОК» (С69; СТОП-ГОРН ×3: их v10.92 «СВОИ» (С68, c6e1442) принята целиком — их ход первым, мой такт перенумерован честно v10.92→v10.93, С68→С69, кэш v148→v149): ЗАКОН ЯЗЫКОВ I-12 — флагманы/·20/ремонт am→hy (см. CHANGELOG [10.93]) -->
 <!-- такт v10.92 «СВОИ» (С68; ключ ⑲ — PAT №11 летописи агента; СТОП-ГОРН ×2: их v10.91 «УНИСОН» (С67, PAT №23) встала ПЕРВОЙ — их ход пришёл между моим fetch и пушем, их байты в 5 путях восстановлены байт-в-байт, их СЦЕНА ·32 не задета; мой такт перенумерован честно v10.91→v10.92; кэш v147→v148). ПРИКАЗ владельца 2026-10-13: «НАХУЙ НАМ КТО ТО? МЫ САМИ С УСАМИ… НАДО ПРОСТО ВСЁ ЧТО У НИХ БЫЛО ВЗЯТЬ И УЛУЧШИТЬ САМИМ ОТ НОЛЯ ДО ИХ УРОВНЯ И ДАЖЕ НА ГОЛОВУ ЛУЧШЕ… Я НЕ ЖДУ ЧТО КТО ТО ПРИЙДЁТ И ДАСТ ГОТОВУЮ!!! Я ЧЕЛОВЕК!!! Я САМ ЕЁ ДЕЛАЮ!!!» — строка Л1 закрыта СВОИМ путём, закон I-13 «СВОЙ МЕХАНИЗМ» вшит в СВОД: (1) СВОЯ КИСТЬ svoya-kist/0.1 — renderLayout: Project → детерминированный SVG (палитра из промпта FNV-1a, слои по zIndex, замок штрихом, текст экранирован), альтернативныйТекст — словесная картина для незрячего владельца, ledger ladom.svoya-kist.v1 без timestamps; (2) СВОЙ ГЛАЗ svoy-glaz/0.1 — extractLayout (SVG кисти → Project, round-trip байт-в-байт, чужое — честный отказ), reconcileLayout + маска изменённых разблокированных id (в их repair-agent), применитьКоманду (их шесть add/shift/remove/place/keep/change — замки не снимаются), мост toReveWire/fromReveWire (их форма x0/y0/x1/y1); (3) тесты такта 41/41, регресс трека 298/298, свод-тест 12→13. Их ход v10.90 «ЗАКОН» (С66; СТОП-ГОРН: их v10.89.1 «ЛАТКА УУП» (С65, PAT №22, 3b7d782) встала первым — мой такт перенумерован честно С65→С66, кэш v145→v146; их байты приняты целиком (уточнение владельца: УУП = УСТРОЙСТВО УПРАВЛЕНИЯ ПРИЁМНИКА — живые места их, история не правлена). Приказ владельца 2026-10-13: «ЯЗЫКИ НАРУШЕНО МОЁ УСЛОВИЕ ПЕРВЫЙ ЧЕЛОВЕЧЕСКИЙ ЯЗЫК эТО РУССКИЙ ВТОРОЙ ВСЕГДА СЕРбСКИЙ ТРЕТИЙ ЯЗЫК ВСЕГДА КАЗАхСКИЙ ЧЕТВёРТЫЙ ВСЕГДА НЕМЕЦКИЙ ДАЛЕЕ 15 ЯЗЫКОВ СССР ДАЛЕЕ ВСЕ ЯЗЫКИ НАРОДОВ СССР А ДАЛЕЕ ЯЗЫКИ В ПОРЯДКЕ ОТ бОЛЬШЕГО К МЕНЬШЕМУ ПОКОЛИЧЕСТВУ Их НОСИТЕЛЕЙ эТО ЗАКОН!!!» + «УбЕРИ С СЕРЕДИНЫ эКРАНА ПОРОНОГРАФИю=) СПРЯЧЬ Её В ПУЛЬТ ВСЕ ВМЕСТЕ эСТОФЕТА ТАКТ И ТД И ТП»): (1) ЗАКОН ЯЗЫКОВ вошёл в СВОД как I-12 «ПОРЯДОК ЯЗЫКОВ» (закон живёт в коде и доказывается тестом: канон ДАННЫЕ/ПОРЯДОК_ЯЗЫКОВ.json, тесты ИНСТРУМЕНТЫ/test_zakon_yazykov.mjs + test_zakon_yazykov_ladom.py, свод-тест 11→12); ЗАКОН_ПОРЯДОК зала переписан по закону: первые четыре рулят (РУС→СРБ→КАЗ→НЕМ), СССР-15 собраны в конституционном порядке союзных республик (украинский белорусский узбекский грузинский азербайджанский литовский молдавский латышский киргизский таджикский армянский туркменский эстонский; русский и казахский уже в первых четырёх) и встали ПЕРЕД хвостом, хвост — по числу носителей от большего к меньшему; НОСИТЕЛИ дополнены (СССР-15 + мировые топы для честной сортировки); селект «АВТО-ПЕРЕВОД · ЯЗЫК ЧЕЛОВЕКА» выстроен по закону (был РУС→ENG→ESP→DEU… с КАЗ/СРБ на девятом-десятом местах — вот её нарушение); таблица «ЯЗЫК СТРОК» стрóится по ЗАКОН_ПОРЯДОК — порядок пришёл сам; (2) ПУЛЬТ-чистка середины экрана: ряды «ВСЕ ВМЕСТЕ · ЭСТАФЕТА · КАНОН» и ТАКТ-монитор (доли · BPM · ТЕКСТ·СЛОВО) переехали ЖИВЫМИ УЗЛАМИ в ПУЛЬТ → вкладка ТЕКСТ, блок «РЕЖИМЫ ПОЭНИЯ · ТАКТ-МОНТОР» — середина экрана показывает только песню и метку секции; узлы те же — ссылки modeBtns/tkGran/tkBar/tkBpm не рвались, память и клавиши прежние; метка секции песни (ВСТУПЛЕНИЕ/далее…) осталась ориентиром вечера; пробы ЗДОРОВЬЕ __HEALTH33 (чистка) и __HEALTH34 (порядок языков); (3) строка Л1 — mock-ход Reve-адаптера (решение владельца «заводим mock и двигаем адаптер без них»): ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/reve-adapter.mjs (reve-adapter/0.1) — полный контракт ТЗ Reve на честном моке: 0 сети, 0 токена, детерминированный requestId, статус MOCK_NO_TOKEN, image:null, retryable:true — не притворяется настоящим Reve; (4) А3 — приоритет владельца записан в карту: локальный Whisper (речь — ядро) → OCR → gaze → Demucs → Брайль (последним — аудитория узкая). APP/титул v10.90, кэш v146 -->
@@ -1254,6 +1255,9 @@ body.тихо .ящ-таб{opacity:.26}
     </div>
     <em class="pstat">указатель движется по строке в такт голосу — слово за словом, слог за слогом или буква за буквой. Для тех, кто поёт внутренним голосом и слышит текст глазами. Точную синхрон буквы со звуком даёт «Пульс по голосу» — в ПУЛЬТе, вкладка «ЛЮДИ».</em>
   </div>
+  <div class="prow"><span class="plab">Текст-пульс · точный</span>
+    <div class="pctl"><button id="psGo" class="pbtn" data-tip="Редактор word-level ПУЛЬС-СИНХРОН: импорт/экспорт Enhanced LRC, точные тайминги слов, применение к текущей песне. Всё локально.">РЕДАКТОР СИНХРОНА</button><em id="psStat" class="pstat">точный синхрон не применён — пульс ведёт по весам строки</em></div>
+  </div>
   <div class="prow"><span class="plab">РЕЛАКС</span>\n        <div class="pctl"><button class="pbtn" id="relaxBtn" aria-pressed="false" data-tip="При пении панели гаснут: только отдых, только текст, только песня. Любое касание возвращает панели. Выбор помнится.">РЕЛАКС</button></div>\n      </div>\n      <div class="prow"><span class="plab">Язык строк</span>
     <div class="pctl" id="langChips" style="flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding-bottom:4px"></div>
   </div>
@@ -1266,6 +1270,40 @@ body.тихо .ящ-таб{opacity:.26}
   </div>
 </dialog>
 
+<dialog id="psEd" aria-label="Редактор синхрона ПУЛЬС-СИНХРОН">
+  <button class="x" id="psClose" aria-label="Закрыть редактор синхрона (Esc)" data-tip="Закрыть (Esc)">✕</button>
+  <h3 id="psTitle">ПУЛЬС-СИНХРОН · РЕДАКТОР ПО СЛОВУ</h3>
+  <p class="psSub" id="psSub">песня — , юнитов — 0, версия синхрона — —</p>
+  <div class="psRow">
+    <button id="psImport" class="pbtn">импорт eLRC/JSON</button>
+    <input type="file" id="psFile" accept=".lrc,.elrc,.json,.txt" hidden>
+    <button id="psExportLrc" class="pbtn">экспорт eLRC</button>
+    <button id="psExportJson" class="pbtn">экспорт JSON</button>
+  </div>
+  <div class="psRow">
+    <button id="psApply" class="pbtn">применить к текущей песне</button>
+    <button id="psUnapply" class="pbtn">снять применение</button>
+    <button id="psSave" class="pbtn">сохранить в склад</button>
+    <button id="psLoad" class="pbtn">загрузить из склада</button>
+  </div>
+  <div class="psRow">
+    <button id="psPrev" class="pbtn">← строка</button>
+    <button id="psNext" class="pbtn">строка →</button>
+    <label class="psChk"><input type="checkbox" id="psSpace"> одна кнопка: Пробел ставит начало слова</label>
+  </div>
+  <div class="psRow" id="psNudge">
+    <span class="psLab">выбранное слово, начало:</span>
+    <button class="pbtn" data-ps="-0.3">−0,3 с</button>
+    <button class="pbtn" data-ps="-0.1">−0,1 с</button>
+    <button class="pbtn" data-ps="-0.05">−0,05 с</button>
+    <button class="pbtn" data-ps="0.05">+0,05 с</button>
+    <button class="pbtn" data-ps="0.1">+0,1 с</button>
+    <button class="pbtn" data-ps="0.3">+0,3 с</button>
+    <button id="psNow" class="pbtn">начало = сейчас</button>
+  </div>
+  <div id="psList" class="psList" role="list" aria-label="слова и тайминги"></div>
+  <p class="psHint">eLRC: [мин:сек.сотки]строка &lt;мин:сек.сотки&gt;слово … · всё локально (И-01) · человек главнее автоматики (И-02) · ось window.SONG.cues не трогается.</p>
+</dialog>
 <dialog id="help" aria-labelledby="helpTitle">
   <button class="x" id="helpClose" aria-label="Закрыть справку (Esc)" data-tip="Закрыть справку (Esc)">✕</button>
   <h3 id="helpTitle">СПРАВКА</h3>
@@ -2233,6 +2271,7 @@ function health(){
   { sec:"R", n:"голос: один распознаватель на страницу (ЛАДОМ + UX-движок в одном микрофоне)", ok: !!window.__ГОЛОС },
   { sec:"R", n:"микрофон: один тракт getUserMedia на страницу (нота/запись/зал через брокера)", ok: !!(window.__ГОЛОС && window.__ГОЛОС.тракт) },   /* С21 */
     { n:"текст-пульс: строка·слово·слог·буква", ok: !!(window.__PULSE) },
+    { sec:"R", n:"пульс-синхрон: "+(window.__ПУЛЬССИНХРОН?(window.__ПУЛЬССИНХРОН.состояние().применён?("точный синхрон применён, слов "+window.__ПУЛЬССИНХРОН.состояние().юнитов):"редактор в доме, точный синхрон не применён"):"НЕТ"), ok: !!(window.__ПУЛЬССИНХРОН) },
     { sec:"R", n:"такт-монитор: "+(window.__TAKT?(window.__TAKT.bpm?Math.round(window.__TAKT.bpm)+" BPM":"слушаю бас"):"запуск"), ok: !!window.__TAKT },
   ];
   /* v9.8 «СТРАХОВКА»: пробы-расширения под защитой — одна сломанная проба
@@ -3847,6 +3886,9 @@ function rebuild(i){
   txt.dataset.src=text;
   toks=tokenize(text,GRANS[granIdx].k);
   var hТок=null;   /* С36 «СЛОВО»: маркерные веса .harm — ритм автора вместо эвристики */
+  var псТок=null; try{ if(window.__ПС_ТОЧНО) псТок=window.__ПС_ТОЧНО.токены(text,GRANS[granIdx].k,i); }catch(e){}
+  if(псТок&&псТок.length){ toks=псТок; el.setAttribute("data-пс","1"); el.removeAttribute("data-харм"); }
+  else { el.removeAttribute("data-пс"); }
   try{ if(window.__ХАРМ&&window.__ХАРМ.токены) hТок=window.__ХАРМ.токены(text,GRANS[granIdx].k); }catch(e){}
   if(hТок&&hТок.length){ toks=hТок; el.setAttribute("data-харм","1"); } else { el.removeAttribute("data-харм"); }
   let acc=0;
@@ -3992,6 +4034,8 @@ function такты(и, гран){
   if(и<0 || и>=CUES.length || !CUES[и]) return null;
   const c = CUES[и];
   const a = Math.max(0, +c.a||0), b = Math.max(a+0.25, +c.b||a+4);
+  var псТак=null; try{ if(window.__ПС_ТОЧНО) псТак=window.__ПС_ТОЧНО.такты(и,гран,a,b); }catch(e){}
+  if(псТак) return псТак;   /* v11.05 «ПО СЛОВУ»: точный word-синхрон главнее эвристики (И-02) */
   const tk = tokenize(String(c.t==null?"":c.t), гран==="word"?"word":"char");
   const total = tk.reduce((s,t)=>s+t.w, 0) || 1;
   let cur = a; const out = [];
@@ -15778,6 +15822,369 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
 })();
 </script>
 
+
+<script>
+/* ═════════ ПУЛЬС-СИНХРОН · МВП (КС1, такт v11.05 «ПО СЛОВУ», С81) ═════════
+   Редактор word-level на чистом JS. Контракт из спеки ·43:
+     SyncUnit { text, startMs, endMs, level: "line"|"word"|"syllable"|"letter" }
+   Инварианты: И-01 ноль сети (файл — только FileReader); И-02 человек главнее
+   автоматики (применить/снять в один тап); И-03 монолит остаётся единым
+   работоспособным файлом; И-04 данные — локально (IndexedDB «s31-склад»);
+   И-05 fallback: точный word → внутри слова слог/буква по весам → эвристика дома.
+   window.SONG.cues — ТОЛЬКО чтение. Дефолт (синхрон не применён) — байты
+   прежнего пульса не меняются ни на символ. */
+(function(){
+"use strict";
+if (window.__ПУЛЬССИНХРОН) return;
+var ver = "v11.05 «ПО СЛОВУ»", канон = "пульс-синхрон/1";
+var $ = function(id){ return document.getElementById(id); };
+var ПРИМЕНЁН = null;              /* { songId, версия, юнитов } */
+var ЮНИТЫ = [];                   /* SyncUnit[] текущего редактора */
+var ВЕРСИЯ = 0;                   /* версия синхрона (songId+версия в складе) */
+var ПЕСНЯ = function(){ try{ return (window.SONG && window.SONG.i) || "?"; }catch(e){ return "?"; } };
+var ПЕСНЯИМЯ = function(){ try{ return (window.SONG && window.SONG.t) || ""; }catch(e){ return ""; } };
+var КУРСОР = { строка: 0, слово: 0 };
+
+/* ── веса букв (копия закона дома — для раскладки внутри слова) ── */
+function charW(ch){
+  if(/[аоыеэиюяё]/i.test(ch)) return 0.6;
+  if(/[лмнрй]/i.test(ch)) return 0.9;
+  if(/[бвгджзкпфхцчшщ]/i.test(ch)) return 1.25;
+  if(/[a-z]/i.test(ch)) return /[aeiouy]/i.test(ch) ? 0.7 : 1.0;
+  return 1;
+}
+function кламп(v,a,b){ return Math.min(b, Math.max(a, v)); }
+
+/* ── eLRC ── */
+function парсВремя(s){
+  var m = /^\s*(\d+):(\d{1,2})[.:](\d{1,3})\s*$/.exec(s || "");
+  if(!m) return null;
+  var сс = parseInt(m[1],10)*60 + parseInt(m[2],10) + parseFloat("0."+m[3]);
+  return Math.round(сс*1000);
+}
+function фмт(мс){
+  if(мс==null || !isFinite(мс)) return "";
+  var t = Math.max(0, мс), мин = Math.floor(t/60000), сс = Math.floor(t%60000/1000), сот = Math.floor(t%1000/10);
+  return (мин<10?"0":"")+мин+":"+ (сс<10?"0":"")+сс + "." + (сот<10?"0":"")+сот;
+}
+function парсELRC(текст){
+  var юниты = [], строк = 0;
+  текст.split(/\r?\n/).forEach(function(строка){
+    if(!строка || !строка.trim()) return;
+    var ш = /^\s*\[(\d+:\d{1,2}[.:]\d{1,3})\](.*)$/.exec(строка);
+    if(!ш) return;
+    var lineMs = парсВремя(ш[1]), тело = ш[2] || "";
+    строк++;
+    var вords = [], р = /<(\d+:\d{1,2}[.:]\d{1,3})>/g, м, метки = [];
+    while((м = р.exec(тело))) метки.push({ i: м.index, мс: парсВремя(м[1]) });
+    if(метки.length){
+      var куски = [];
+      for(var k=0;k<метки.length;k++){
+        var от = метки[k].i + метки[k].мс.toString().length + 2; /* после <...> */
+      }
+      /* разрезаем тело по меткам: текст между метками — слово */
+      var части = [];
+      for(var j=0;j<метки.length;j++){
+        var нач = метки[j].i + /<[^>]+>/.exec(тело.slice(метки[j].i))[0].length;
+        var кон = (j+1<метки.length) ? метки[j+1].i : тело.length;
+        части.push({ мс: метки[j].мс, s: тело.slice(нач, кон).replace(/^\s+/,"").replace(/\s+$/,"") });
+      }
+      части.forEach(function(ч, idx){
+        if(!ч.s) return;
+        var конец = (idx+1<части.length && части[idx+1].s) ? части[idx+1].мс : (lineMs + 4000);
+        юниты.push({ text: ч.s, startMs: ч.мс, endMs: конец, level: "word" });
+      });
+    } else if(тело.trim()){
+      юниты.push({ text: тело.trim(), startMs: lineMs, endMs: lineMs + 4000, level: "line" });
+    }
+  });
+  /* конец каждого слова = начало следующего (кроме последнего в строке — но
+     границы строк неизвестны из eLRC: честно ставим +4 с, примен пересадит) */
+  for(var i=0;i<юниты.length-1;i++){
+    if(юниты[i].level==="word" && юниты[i+1].level==="word") юниты[i].endMs = юниты[i+1].startMs;
+  }
+  return юниты;
+}
+function eLRCизЮнитов(юниты){
+  var построк = {}, порядок = [];
+  юниты.forEach(function(ю){
+    var ключ = Math.round(ю.startMs/1000);
+    if(!построк[ключ]){ построк[ключ] = []; порядок.push(ключ); }
+    построк[ключ].push(ю);
+  });
+  порядок.sort(function(a,b){ return a-b; });
+  var out = [];
+  порядок.forEach(function(ключ){
+    var слова = построк[ключ];
+    if(слова.length && слова[0].level === "word"){
+      var тег = "["+фмт(слова[0].startMs)+"]";
+      var тело = слова.map(function(с){ return "<"+фмт(с.startMs)+">"+с.text; }).join(" ");
+      out.push(тег + тело);
+    } else {
+      out.push("["+фмт(слова[0].startMs)+"]"+слова.map(function(с){ return с.text; }).join(" "));
+    }
+  });
+  return out.join("\n") + "\n";
+}
+
+/* ── хранилище: склад дома (И-04) ── */
+function ключСклада(){ return "пульс-синхрон:" + ПЕСНЯ(); }
+function вСклад(){
+  try{
+    if(!(window.__СКЛАД && window.__СКЛАД.библиотека)) return Promise.resolve("склад недоступен");
+    var док = { v: 1, канон: канон, songId: ПЕСНЯ(), песня: ПЕСНЯИМЯ(), версия: ВЕРСИЯ, юниты: ЮНИТЫ, ts: Date.now() };
+    return window.__СКЛАД.библиотека.клади(ключСклада(), док).then(function(ок){ return ок ? ("сохранено: "+ключСклада()+" · версия "+ВЕРСИЯ) : "склад отказал (приватный режим?)"; });
+  }catch(e){ return Promise.resolve("ошибка склада: "+String((e&&e.message)||e)); }
+}
+function изСклада(){
+  try{
+    if(!(window.__СКЛАД && window.__СКЛАД.библиотека)) return Promise.resolve("склад недоступен");
+    return window.__СКЛАД.библиотека.бери(ключСклада()).then(function(док){
+      if(!док || !док.юниты) return "в складе пусто для песни "+ПЕСНЯ();
+      ЮНИТЫ = док.юниты; ВЕРСИЯ = док.версия || 1;
+      скажи("загружено из склада: версия "+ВЕРСИЯ+", юнитов "+ЮНИТЫ.length);
+      рисуйСписок(); стат();
+      return "загружено";
+    });
+  }catch(e){ return Promise.resolve("ошибка склада"); }
+}
+
+/* ── применение к пульсу (И-02: снять — мгновенный возврат) ── */
+function юнитыСтроки(и){
+  /* ось дома — только чтение: границы строки берём из SONG.cues */
+  var ось = (window.SONG && window.SONG.cues) || [];
+  if(и<0 || и>=ось.length) return null;
+  var c = ось[и];
+  var a = Math.max(0, +c.a||0), b = Math.max(a+0.25, +c.b||a+4);
+  var своя = ЮНИТЫ.filter(function(ю){ return ю.startMs/1000 >= a - 0.6 && ю.startMs/1000 < b; });
+  return { a:a, b:b, юниты: своя, текст: (c.t==null?"":String(c.t)) };
+}
+function токеныДляЭкрана(текст, гран, и){
+  if(!ПРИМЕНЁН || гран==="line") return null;
+  var с = юнитыСтроки(и);
+  if(!с || !с.юниты.length) return null;                 /* И-05: нет точного — эвристика дома */
+  if(с.юниты[0].level !== "word") return null;           /* line-юниты: пусть дом ведёт по весам */
+  var toks = [];
+  var пред = null;
+  var a0 = с.a, b0 = с.b;
+  с.юниты.forEach(function(ю){
+    var s0 = кламп(ю.startMs/1000, a0, b0), e0 = кламп(ю.endMs/1000, s0+0.02, b0);
+    if(пред && s0 > пред + 0.001) toks.push({ s:" ", w:+(s0-пред).toFixed(4), sp:true });
+    if(гран==="word"){ toks.push({ s:ю.text, w:+(e0-s0).toFixed(4), sp:false }); }
+    else {
+      var буквы = [...ю.text], вс = буквы.reduce(function(s,ch){ return s+charW(ch); },0) || 1, cur = s0;
+      буквы.forEach(function(ch){
+        var d = (e0-s0)*charW(ch)/вс;
+        if(гран==="char"){ toks.push({ s:ch, w:+d.toFixed(4), sp:/\s/.test(ch) }); }
+        else { /* syl: копим слог — сброс на гласной */
+          var посл = toks[toks.length-1];
+          if(посл && !посл.закрыт && /[аоыеэиюяёaeiouy]/i.test(ch)){ посл.s += ch; посл.w += d; посл.закрыт = true; }
+          else if(посл && !посл.закрыт && !/[аоыеэиюяёaeiouy]/i.test(ch)){ посл.s += ch; посл.w += d; }
+          else toks.push({ s:ch, w:+d.toFixed(4), sp:false });
+        }
+        cur += d;
+      });
+    }
+    пред = e0;
+  });
+  if(пред && пред < b0 - 0.001) toks.push({ s:" ", w:+(b0-пред).toFixed(4), sp:true });
+  /* первый токен прижимаем к началу строки: дырка до первого слова — пауза-токен */
+  var п = с.юниты.length ? кламп(с.юниты[0].startMs/1000, a0, b0) : a0;
+  if(п > a0 + 0.001) toks.unshift({ s:" ", w:+(п-a0).toFixed(4), sp:true });
+  var W = toks.reduce(function(s,t){ return s+t.w; }, 0) || 1;
+  toks.forEach(function(t){ t.w = +(t.w/W).toFixed(6); });   /* веса к единице — закон дома */
+  return toks;
+}
+function тактыТочные(и, гран, a, b){
+  if(!ПРИМЕНЁН) return null;
+  var с = юнитыСтроки(и);
+  if(!с || !с.юниты.length || (с.юниты[0].level !== "word")) return null;
+  var а0 = Math.max(0, +a||0), b0 = Math.max(а0+0.25, +b||а0+4);
+  var out = [], пред = а0;
+  с.юниты.forEach(function(ю){
+    var s0 = кламп(ю.startMs/1000, а0, b0), e0 = кламп(ю.endMs/1000, s0+0.02, b0);
+    if(s0 > пред + 0.002) out.push({ s:" ", a:+пред.toFixed(4), b:+s0.toFixed(4) });
+    out.push({ s:ю.text, a:+s0.toFixed(4), b:+e0.toFixed(4) });
+    пред = e0;
+  });
+  if(пред < b0 - 0.002) out.push({ s:" ", a:+пред.toFixed(4), b:+b0.toFixed(4) });
+  return { a:а0, b:b0, гран:"word", n:out.length, токены:out };
+}
+
+/* ── UI ── */
+var ДИАЛОГ = null, СПИСОК = null;
+function скажи(т){
+  try{ if(window.__KV && window.__KV.showToast) window.__KV.showToast(т); }catch(e){}
+  var s = $("psStat"); if(s) s.textContent = т;
+}
+function стат(){
+  var s = $("psSub");
+  if(s) s.textContent = "песня — "+ПЕСНЯИМЯ()+" ("+ПЕСНЯ()+"), юнитов — "+ЮНИТЫ.length+", версия синхрона — "+(ВЕРСИЯ||"—")+(ПРИМЕНЁН ? " · ПРИМЕНЁН (точные слова)" : " · не применён (веса дома)");
+  var st = $("psStat");
+  if(st) st.textContent = ПРИМЕНЁН ? ("точный синхрон применён: "+ПРИМЕНЁН.юнитов+" слов, версия "+ПРИМЕНЁН.версия) : "точный синхрон не применён — пульс ведёт по весам строки";
+}
+function рисуйСписок(){
+  if(!СПИСОК) return;
+  СПИСОК.innerHTML = "";
+  var ось = (window.SONG && window.SONG.cues) || [];
+  if(!ЮНИТЫ.length){
+    var п = document.createElement("p");
+    п.className = "psHint";
+    п.textContent = "юнитов нет: импортируй eLRC/JSON или разметь Пробелом во время песни (строки дома — ось "+ось.length+").";
+    СПИСОК.appendChild(п);
+    return;
+  }
+  var п0 = document.createElement("p"); п0.className = "psHint";
+  п0.textContent = "строка "+(КУРСОР.строка+1)+"/"+ось.length+": тапни слово — выберется; Пробел ставит начало «сейчас» и идёт дальше.";
+  СПИСОК.appendChild(п0);
+  var с = юнитыСтроки(КУРСОР.строка);
+  if(!с){ var пx = document.createElement("p"); пx.className="psHint"; пx.textContent="строки нет на оси"; СПИСОК.appendChild(пx); return; }
+  var див = document.createElement("div"); див.className = "psWords";
+  с.юниты.forEach(function(ю, k){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "pbtn psW" + (k===КУРСОР.слово ? " on" : "");
+    b.textContent = ю.text + " · " + фмт(ю.startMs);
+    b.setAttribute("data-tip", "слово: "+фмт(ю.startMs)+" → "+фмт(ю.endMs));
+    b.addEventListener("click", function(){ КУРСОР.слово = k; рисуйСписок(); });
+    див.appendChild(b);
+  });
+  if(!с.юниты.length){ var п2 = document.createElement("p"); п2.className="psHint"; п2.textContent="на этой строке слов не размечено"; СПИСОК.appendChild(п2); }
+  СПИСОК.appendChild(див);
+}
+function выбЮнит(){
+  var с = юнитыСтроки(КУРСОР.строка);
+  if(!с || !с.юниты.length) return null;
+  КУРСОР.слово = кламп(КУРСОР.слово, 0, с.юниты.length-1);
+  return с.юниты[КУРСОР.слово];
+}
+function аудиоТепер(){
+  try{ var а = window.__KV && window.__KV.audio; return а && isFinite(а.currentTime) ? а.currentTime*1000 : 0; }catch(e){ return 0; }
+}
+function сдвиг(дмс){
+  var ю = выбЮнит(); if(!ю) { скажи("слова не выбрано"); return; }
+  var ось = (window.SONG && window.SONG.cues) || [];
+  var с = юнитыСтроки(КУРСОР.строка);
+  ю.startMs = Math.max(0, ю.startMs + дмс);
+  if(с){ ю.startMs = кламп(ю.startMs, Math.round(с.a*1000), Math.round(с.b*1000)); }
+  рисуйСписок();
+}
+function началоСейчас(){
+  var с = юнитыСтроки(КУРСОР.строка);
+  var ю = выбЮнит(); if(!ю) { скажи("слова не выбрано — строка пуста"); return; }
+  var мс = Math.round(аудиоТепер());
+  if(с) мс = кламп(мс, Math.round(с.a*1000), Math.round(с.b*1000));
+  ю.startMs = мс;
+  var соседи = с.юниты;
+  соседи.sort(function(x,y){ return x.startMs - y.startMs; });
+  var idx = соседи.indexOf(ю);
+  for(var i=0;i<соседи.length-1;i++) соседи[i].endMs = соседи[i+1].startMs;
+  if(idx+1 < соседи.length){ КУРСОР.слово = соседи.indexOf(соседи[idx+1]); } else { КУРСОР.слово = idx; }
+  рисуйСписок();
+}
+function примени(){
+  if(!ЮНИТЫ.length){ скажи("юнитов нет — импортируй eLRC или разметь Пробелом"); return; }
+  ПРИМЕНЁН = { songId: ПЕСНЯ(), версия: ВЕРСИЯ || 1, юнитов: ЮНИТЫ.filter(function(ю){ return ю.level==="word"; }).length };
+  стат(); скажи("применено: Текст-пульс ведёт по точным словам ("+ПРИМЕНЁН.юнитов+")");
+  try{ if(window.__ПС_ПЕРЕСОБРАТЬ) window.__ПС_ПЕРЕСОБРАТЬ(); }catch(e){}
+}
+function снять(){
+  ПРИМЕНЁН = null; стат(); скажи("применение снято — пульс вернулся к весам дома");
+  try{ if(window.__ПС_ПЕРЕСОБРАТЬ) window.__ПС_ПЕРЕСОБРАТЬ(); }catch(e){}
+}
+function скачай(имя, текст, тип){
+  try{
+    var б = new Blob([текст], { type: тип || "text/plain;charset=utf-8" });
+    var у = URL.createObjectURL(б);
+    var а = document.createElement("a");
+    а.href = у; а.download = имя; document.body.appendChild(а); а.click();
+    setTimeout(function(){ URL.revokeObjectURL(у); а.remove(); }, 400);
+    скажи("файл отдан: "+имя);
+  }catch(e){ скажи("экспорт не вышел: "+String((e&&e.message)||e)); }
+}
+function читайФайл(ф){
+  var ч = new FileReader();
+  ч.onload = function(){
+    try{
+      var т = String(ч.result || "");
+      if(/^\s*\[/.test(т)){ ЮНИТЫ = парсELRC(т); }
+      else { var j = JSON.parse(т); ЮНИТЫ = (j.юниты || j.units || j) || []; if(!Array.isArray(ЮНИТЫ)) throw new Error("в JSON нет массива юнитов"); }
+      КУРСОР = { строка: 0, слово: 0 };
+      скажи("понял файл: юнитов "+ЮНИТЫ.length);
+      рисуйСписок(); стат();
+    }catch(e){ скажи("файл не понял: "+String((e&&e.message)||e)); }
+  };
+  ч.readAsText(ф, "utf-8");
+}
+function проба(){
+  var ось = (window.SONG && window.SONG.cues) || [];
+  var жив = !!(СПИСОК && document.contains(СПИСОК));
+  var честно = true;
+  if(ПРИМЕНЁН){
+    try{
+      var т = (window.__PULSE && window.__PULSE.такты) ? window.__PULSE.такты(Math.min(1, ось.length-1), "word") : null;
+      if(т && т.токены && т.токены.length){
+        for(var k=1;k<т.токены.length;k++){
+          if(т.токены[k].a < т.токены[k-1].b - 0.002 || т.токены[k].a > т.токены[k-1].b + 0.002){ честно = false; break; }
+        }
+      }
+    }catch(e){}
+  }
+  return [
+    { n:"пульс-синхрон: редактор в доме ("+ver+", "+канон+")", ok: жив },
+    { n:"пульс-синхрон: "+(ПРИМЕНЁН ? ("точный синхрон применён — "+ПРИМЕНЁН.юнитов+" слов, версия "+ПРИМЕНЁН.версия+", непрерывность токенов "+(честно?"сошлась":"РАЗЫВАЕТСЯ")) : ("не применён (юнитов в редакторе: "+ЮНИТЫ.length+") — пульс по весам дома")), ok: честно, warn: !ПРИМЕНЁН }
+  ];
+}
+function бинд(){
+  ДИАЛОГ = $("psEd"); СПИСОК = $("psList");
+  if(!ДИАЛОГ || ДИАЛОГ.__пс_бинд) return;
+  ДИАЛОГ.__пс_бинд = true;
+  $("psGo").addEventListener("click", function(){ стат(); рисуйСписок(); try{ ДИАЛОГ.showModal(); }catch(e){} });
+  $("psClose").addEventListener("click", function(){ try{ ДИАЛОГ.close(); }catch(e){} });
+  $("psImport").addEventListener("click", function(){ $("psFile").click(); });
+  $("psFile").addEventListener("change", function(e){ if(e.target.files && e.target.files[0]) читайФайл(e.target.files[0]); e.target.value=""; });
+  $("psExportLrc").addEventListener("click", function(){ if(!ЮНИТЫ.length){ скажи("юнитов нет"); return; } скачай("синхрон-"+ПЕСНЯ()+".lrc", eLRCизЮнитов(ЮНИТЫ), "text/plain;charset=utf-8"); });
+  $("psExportJson").addEventListener("click", function(){ if(!ЮНИТЫ.length){ скажи("юнитов нет"); return; } скачай("синхрон-"+ПЕСНЯ()+".json", JSON.stringify({ канон: канон, songId: ПЕСНЯ(), версия: ВЕРСИЯ||1, юниты: ЮНИТЫ }, null, 1), "application/json;charset=utf-8"); });
+  $("psApply").addEventListener("click", примени);
+  $("psUnapply").addEventListener("click", снять);
+  $("psSave").addEventListener("click", function(){ вСклад().then(скажи); });
+  $("psLoad").addEventListener("click", function(){ изСклада(); });
+  $("psPrev").addEventListener("click", function(){ КУРСОР.строка = Math.max(0, КУРСОР.строка-1); КУРСОР.слово = 0; рисуйСписок(); });
+  $("psNext").addEventListener("click", function(){ КУРСОР.строка++; КУРСОР.слово = 0; рисуйСписок(); });
+  [...document.querySelectorAll("#psNudge [data-ps]")].forEach(function(b){
+    b.addEventListener("click", function(){ сдвиг(Math.round(parseFloat(b.getAttribute("data-ps"))*1000)); });
+  });
+  $("psNow").addEventListener("click", началоСейчас);
+  document.addEventListener("keydown", function(e){
+    if(!ДИАЛОГ || !ДИАЛОГ.open) return;
+    if(e.key === " " || e.code === "Space"){
+      if($("psSpace") && $("psSpace").checked){ e.preventDefault(); началоСейчас(); }
+    }
+  });
+  стат();
+}
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", бинд);
+else бинд();
+
+window.__ПУЛЬССИНХРОН = {
+  ver: ver, канон: канон,
+  токеныДляЭкрана: токеныДляЭкрана,
+  тактыТочные: тактыТочные,
+  юнитыСтроки: юнитыСтроки,
+  парсELRC: парсELRC, eLRCизЮнитов: eLRCизЮнитов,
+  примени: примени, снять: снять,
+  вСклад: вСклад, изСклада: изСклада,
+  положиЮниты: function(у){ ЮНИТЫ = у || []; рисуйСписок(); стат(); },
+  юниты: function(){ return ЮНИТЫ.slice(); },
+  состояние: function(){ return { применён: !!ПРИМЕНЁН, юнитов: ЮНИТЫ.length, версия: ВЕРСИЯ, песня: ПЕСНЯ() }; },
+  проба: проба
+};
+/* хук пересборки текущей строки пульса (объявит движок ·31 при загрузке) */
+window.__ПС_ТОЧНО = {
+  токены: function(text, gran, i){ try{ return токеныДляЭкрана(text, gran, i); }catch(e){ return null; } },
+  такты: function(и, гран, a, b){ try{ return тактыТочные(и, гран, a, b); }catch(e){ return null; } }
+};
+})();
+</script>
 </body>
 
 </html>
