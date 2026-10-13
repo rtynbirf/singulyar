@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.93 «ПОРЯДОК» («THE ORDER») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.96 «ГРУППЫ» («GROUPS») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -42,6 +42,7 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 
 ### Line HOME · hall ·31, honesty, data
 
+- ✅ **ПУЛЬТ-GROUPS closed by tact v10.96 «ГРУППЫ» («GROUPS»)** → fact in [CHANGELOG.md](../CHANGELOG.md) `[10.96]` (owner's order "redo the panel like the COMBINE — groups, click a group, adjust right there, everything in one place + hover tooltips with detailed help": 14 accordion groups `__ПУЛЬТ_ГРУППЫ` modeled on the owner's plugin (MANIFEST #3), detailed group help data-tip+aria-label+help column, search across all groups, honest isTrusted clicks, kv.pult.группа in I-11, probes 36/37 — 190 probes, 0 regressions).
 - **Д2** · 👤 **Sense-editing of the 732 corpus** — drafts ready (732/732); by the law «THE HUMAN DECIDES» editing belongs to people. *Closed when:* the owner accepts the edited parts or allows marking «draft» as final.
 - **Д3** · 👤 **Owner verdicts on the 1–373 registry** (KEEP / TWEAK) — the КОЛЛЕГА map. *Closed when:* the owner marks the registry; unmarked positions are never chased.
 - **Д4** · 👤 **Real keys of the repertoire** — from the owner; АВТОАКОРД defaults bend to life. *Closed when:* keys are merged into the corpus and АВТОАКОРД verifies against them.
