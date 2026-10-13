@@ -22,6 +22,7 @@
 - Browser speech adapter: только если браузер предоставляет SpeechRecognition; статус явно помечается `browser-dependent`.
 - Speech (Whisper) adapter: контракт `input.whisper-local` с реализацией-дверью (v10.94 «ГОЛОС»): ledger `adapter-os.speech.v1`, пин весов (SHA-256 склейки частей, расхождение — данные не выдаются), строгий разбор сегментов, честный мок; без пина — EXPERIMENTAL, честно.
 - OCR adapter: контракт `input.ocr` с реализацией-дверью (v10.95 «ЧТЕНИЕ»): ledger `adapter-os.ocr.v1`, подпись картинки по магическим байтам (6 форматов — не по ярлыку), пустой текст — честная пустота чистого листа, пин модели, честный мок; без пина — EXPERIMENTAL, честно.
+- Gaze adapter: контракт `input.gaze` с реализацией-дверью (v10.98 «ВЗГЛЯД»): ledger `adapter-os.gaze.v1`, калибровка `gaze-calib-affine/0.1` (наименьшие квадраты, вырожденность — честный отказ, остаток назван числами), проекция без поджатия (честный флаг `в_границах`), dwell-редюсер на внешних часах (гистерезис, замок от пулемёта кликов, порог уверенности), пин модели, честный мок; без калибровки и без пина — EXPERIMENTAL, честно.
 - Adapter ledger: LOCAL / BROWSER / NETWORK / EXPERIMENTAL / UNAVAILABLE.
 
 ## Что намеренно НЕ заявлено как готовое
@@ -52,6 +53,7 @@ python -m http.server 8080 -d prototype
 node tests/run-tests.mjs        # их база — 4/4 (не тронута)
 node tests/test-speech.mjs      # v10.94 «ГОЛОС» — 16/16 (контракт Whisper)
 node tests/test-ocr.mjs         # v10.95 «ЧТЕНИЕ» — 14/14 (контракт OCR)
+node tests/test-gaze.mjs        # v10.98 «ВЗГЛЯД» — 16/16 (контракт gaze)
 ```
 
 ## Архитектура
