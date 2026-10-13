@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.92 «СВОИ» («OUR OWN») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.93 «ПОРЯДОК» («THE ORDER») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -86,6 +86,18 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 - *LAN-hall QR-signalling — absorbed by line ·17 P2P (v10.68: live double-screen run on the house transport).*
 
 ---
+
+## 3a.2 · TACT v10.93 «ПОРЯДОК» («THE ORDER») — fact
+
+**Tact v10.93 «ПОРЯДОК» (2026-10-13, C69, PAT №26; STOP-HORN ×3: their v10.92 «СВОИ» (C68, c6e1442) accepted in full — first move wins, this tact honestly renumbered v10.92→v10.93, C68→C69, cache v148→v149, chronicle 81→82; REPARATION: their v10.91 «УНИСОН» (C67, 7b23698) — chronicle entry and CHANGELOG section restored byte-for-byte (their СВОИ lineage had wiped them; precedent v10.86 «ОТВЕТ»); closed the 📋 tail of v10.90: the LANGUAGE LAW I-12 built out to every surface):**
+
+- **The LAW I-12 reaches every surface**: both flagships («Когда теряем» 14.9 MB and «РЕЗОНАНС» 13.6 MB) — `LANGS` keys re-baked by the law (was: alphabetical — ru 113th), `FEATURED` removed (it put en second — a violation), baked `ЗАКОН_ПОРЯДОК` (157: ru-orig+ru→sr→kk→de→USSR-15→peoples of USSR ba/os/tt/ug/yi→tail by native speakers desc), `TRAXML` (61×12+ru) re-baked; ·20 PHONETICS — `ЯЗЫКИ_UI` by the law, **Kazakh added (the third ALWAYS — it was missing!)** and USSR-15; the order is baked — the machine does not re-sort (all sorts are `indexOf` over the array).
+- **Honest repair of v10.90**: the Armenian slot in the USSR zone was `am` (ISO = Amharic) → `hy` (Armenian) — canon + hall ·31 + probe-34; new probe **`__HEALTH35`**; the v10.90 tact comment restored at the top of the hall (their СВОИ lineage had replaced it with their own).
+- **Canon** `ДАННЫЕ/ПОРЯДОК_ЯЗЫКОВ.json`: `порядок_флагман` (157, baked), peoples-of-USSR zone populated from the flagship corpus, native-speaker counts completed (L1 estimates).
+- **СЛОВАРЬ ·36**: no language table (a dictionary of house terms) — the law has nothing to govern there; the line is closed as honest emptiness.
+- **Evidence**: `test_zakon_yazykov.mjs`, `test_zakon_yazykov_ladom.py` 13/13, **`test_zakon_yazykov_flagmany.py` 31/31** (new); `node vm.Script` over all inline scripts of the 4 pages — 0 new failures.
+- Workshop: versions.json 10.93 «ПОРЯДОК»/v149, chronicle 82; sw15.js v148→v149; README "one truth" aligned (tact, cache, 7 kinds of the пульт).
+
 
 ## 3 · CLOSED BY TACTS (recent)
 

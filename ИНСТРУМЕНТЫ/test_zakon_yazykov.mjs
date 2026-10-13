@@ -18,7 +18,7 @@ const канон = JSON.parse(readFileSync(path.join(T, 'ДАННЫЕ', 'ПОР�
 const зал = readFileSync(path.join(T, 'СИНГУЛЯР_31_ЛАДОМ.html'), 'utf8');
 
 const ПЕРВЫЕ = ['ru', 'sr', 'kk', 'de'];
-const СССР15 = ['ru', 'uk', 'be', 'uz', 'kk', 'ka', 'az', 'lt', 'mo', 'lv', 'ky', 'tg', 'am', 'tk', 'et'];
+const СССР15 = ['ru', 'uk', 'be', 'uz', 'kk', 'ka', 'az', 'lt', 'mo', 'lv', 'ky', 'tg', 'hy', 'tk', 'et']; /* v10.91: ремонт — hy (армянский), не am (амхарский) */
 const ссср_остаток = СССР15.filter(c => !ПЕРВЫЕ.includes(c));
 
 // --- 1. Канон: паспорт и зоны ---
@@ -68,4 +68,30 @@ const п5 = опции.slice(5);
 const ожидаемыйХвост = [...п5].sort((a, b) => (нос[b] ?? 0) - (нос[a] ?? 0));
 assert.deepEqual(п5, ожидаемыйХвост, 'селект: хвост по убыванию носителей');
 
-console.log(`ЗАКОН ЯЗЫКОВ (I-12): канон ${п.length} кодов, СССР-15 перед хвостом, хвост по носителям — всё сходится`);
+
+// --- 5. Флагман «Когда теряем» — порядок по закону (v10.91 «ПОРЯДОК») ---
+const флагман = readFileSync(path.join(T, 'СИНГУЛЯР_01_Когда_теряем_157_голосов.html'), 'utf8');
+const пф = канон.порядок_флагман;
+assert.ok(Array.isArray(пф) && пф.length === 157, 'флагман: канон порядка — 157 кодов');
+assert.deepEqual(пф.slice(0, 5), ['ru-orig', 'ru', 'sr', 'kk', 'de'], 'флагман: РУС-ориг+РУС → СРБ → КАЗ → НЕМ');
+assert.equal(new Set(пф).size, пф.length, 'флагман: без повторов');
+const индФ = Object.fromEntries(пф.map((c, i) => [c, i]));
+const сссрФ = ['uk', 'be', 'uz', 'ka', 'az', 'lt', 'lv', 'ky', 'tg', 'hy', 'tk', 'et'].filter(c => c in индФ);
+const нарФ = ['ba', 'os', 'tt', 'ug', 'yi'].filter(c => c in индФ);
+const хвФ = ['es', 'en', 'pt', 'fr', 'it', 'pl'].filter(c => c in индФ);
+assert.ok(Math.max(...сссрФ.map(c => индФ[c])) < Math.min(...нарФ.map(c => индФ[c])), 'флагман: СССР-15 перед народами СССР');
+assert.ok(Math.max(...нарФ.map(c => индФ[c])) < Math.min(...хвФ.map(c => индФ[c])), 'флагман: народы СССР перед хвостом');
+const стФ = флагман.indexOf('const ЗАКОН_ПОРЯДОК=[');
+assert.ok(стФ > 0, 'флагман: ЗАКОН_ПОРЯДОК найден');
+const кнФ = флагман.indexOf(']', стФ);
+const кодыФ = [...флагман.slice(стФ, кнФ + 1).matchAll(/"([A-Za-z_-]+)"/g)].map(m => m[1]);
+assert.deepEqual(кодыФ, пф, 'флагман: массив байт-в-байт равен канону');
+const стЛ = флагман.indexOf('const LANGS={');
+const ключи = [...флагман.slice(стЛ).matchAll(/"([a-z][a-zA-Z_-]{1,9})":\{"n":"/g)].map(m => m[1]);
+assert.equal(ключи.length, 157, 'флагман: 157 ключей LANGS');
+assert.deepEqual(ключи, пф, 'флагман: ключи LANGS по закону');
+assert.ok(флагман.includes('ЗАКОН_ПОРЯДОК.indexOf(a)'), 'флагман: сортировка только по печёному массиву');
+assert.ok(!флагман.includes('const FEATURED') && !флагман.includes('FEATURED.indexOf'), 'флагман: FEATURED снят из кода (нарушал закон)');
+
+console.log(`ЗАКОН ЯЗЫКОВ (I-12): канон ${п.length} + флагман ${пф.length} кодов, СССР-15 (hy!) перед хвостом, хвост по носителям — всё сходится`);
+
