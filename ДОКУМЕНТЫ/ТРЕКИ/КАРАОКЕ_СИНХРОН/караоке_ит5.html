@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Crystal Karaoke & Control Console</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+        body {
+            background-color: #040306;
+            color: #ffffff;
+            font-family: 'Cinzel', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #webgl-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .karaoke-stage {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 42%;
+            max-width: 620px;
+            padding: 35px 25px;
+            background: rgba(12, 10, 16, 0.72);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(184, 134, 11, 0.25);
+            pointer-events: none;
+        }
+
+        .karaoke-header {
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #cd7f32;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .karaoke-line-prev, .karaoke-line-next {
+            font-size: 16px;
+            color: #7a7a85;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .karaoke-line-active {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 18px 0;
+            min-height: 40px;
+            line-height: 1.3;
+        }
+
+        .karaoke-word {
+            display: inline-block;
+            margin: 0 5px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            color: #8c6239;
+        }
+
+        .karaoke-word.active {
+            color: #ffd700;
+            transform: scale(1.15);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(205, 127, 50, 0.6);
+        }
+
+        .system-feedback {
+            margin-top: 15px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #ffd700;
+            height: 18px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        .hint-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-size: 11px;
+            color: #cd7f32;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="webgl-container"></div>
+
+    <div class="karaoke-stage">
+        <div class="karaoke-header">Imperial Quartz Karaoke Engine</div>
+        <div class="karaoke-line-prev" id="line-prev">Сингулярная Гармония Кристалла</div>
+        <div class="karaoke-line-active" id="line-active"></div>
+        <div class="karaoke-line-next" id="line-next">Нажмите NAV-стрелку в углу грани</div>
+        <div class="system-feedback" id="sys-feedback">СИСТЕМА ГОТОВА</div>
+    </div>
+
+    <div class="hint-overlay">СТЕКЛЯННЫЕ КНОПКИ · NAV-СТРЕЛКИ ПОВОРАЧИВАЮТ КУБ НА 90°</div>
+
+<script>
+    // ==========================================
+    // 1. ЗВУК & КАРАОКЕ
+    // ==========================================
+    class AudioKaraokeEngine {
+        constructor() {
+            this.ctx = null; this.isPlaying = false;
+            this.currentLine = 0; this.currentWord = 0; this.timer = null;
+            this.lyrics = [
+                { line: "Хрустальный куб стоит на острой грани", words: ["Хрустальный", "куб", "стоит", "на", "острой", "грани"] },
+                { line: "Бронза и золото сияют в квантовом тумане", words: ["Бронза", "и", "золото", "сияют", "в", "квантовом", "тумане"] },
+                { line: "Вращение плавно пробуждает звук", words: ["Вращение", "плавно", "пробуждает", "звук"] },
+                { line: "Симфония импульса и магия рук", words: ["Симфония", "импульса", "и", "магия", "рук"] }
+            ];
+        }
+        init() {
+            if (!this.ctx) {
+                const AC = window.AudioContext || window.webkitAudioContext;
+                this.ctx = new AC();
+            }
+        }
+        playClickChome(freq = 440) {
+            this.init();
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freq * 1.8, this.ctx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(); osc.stop(this.ctx.currentTime + 0.15);
+        }
+        startKaraokeSequence() {
+            this.init();
+            if (this.isPlaying) return;
+            this.isPlaying = true;
+            this.renderLine();
+            this.timer = setInterval(() => this.advanceWord(), 450);
+        }
+        renderLine() {
+            const lineData = this.lyrics[this.currentLine];
+            const c = document.getElementById('line-active');
+            c.innerHTML = '';
+            lineData.words.forEach((word, idx) => {
+                const s = document.createElement('span');
+                s.className = 'karaoke-word'; s.id = `word-${idx}`; s.textContent = word;
+                c.appendChild(s);
+            });
+            document.getElementById('line-prev').textContent =
+                this.lyrics[(this.currentLine - 1 + this.lyrics.length) % this.lyrics.length].line;
+            document.getElementById('line-next').textContent =
+                this.lyrics[(this.currentLine + 1) % this.lyrics.length].line;
+        }
+        advanceWord() {
+            const lineData = this.lyrics[this.currentLine];
+            if (this.currentWord > 0) {
+                const p = document.getElementById(`word-${this.currentWord - 1}`);
+                if (p) p.classList.remove('active');
+            }
+            if (this.currentWord < lineData.words.length) {
+                const cr = document.getElementById(`word-${this.currentWord}`);
+                if (cr) cr.classList.add('active');
+                this.playClickChome(320 + this.currentWord * 60);
+                this.currentWord++;
+            } else {
+                this.currentWord = 0;
+                this.currentLine = (this.currentLine + 1) % this.lyrics.length;
+                this.renderLine();
+            }
+        }
+    }
+    const karaokeEngine = new AudioKaraokeEngine();
+
+    // ==========================================
+    // 2. СЦЕНА
+    // ==========================================
+    const container = document.getElementById('webgl-container');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x040306, 0.04);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.5, 8.8);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    container.appendChild(renderer.domElement);
+
+    // --- ОКРУЖЕНИЕ (для настоящих отражений в стекле) ---
+    (function buildEnvironment() {
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        pmrem.compileEquirectangularShader();
+
+        const c = document.createElement('canvas');
+        c.width = 1024; c.height = 512;
+        const e = c.getContext('2d');
+
+        const bg = e.createLinearGradient(0, 0, 0, 512);
+        bg.addColorStop(0, '#241a36');
+        bg.addColorStop(0.5, '#0a0614');
+        bg.addColorStop(1, '#040306');
+        e.fillStyle = bg;
+        e.fillRect(0, 0, 1024, 512);
+
+        // Яркие блики — чтобы стекло "играло"
+        const spots = [
+            { x: 150, y: 80, r: 180, color: 'rgba(255, 235, 130, 1)' },
+            { x: 800, y: 120, r: 140, color: 'rgba(160, 230, 255, 1)' },
+            { x: 480, y: 340, r: 200, color: 'rgba(255, 170, 80, 0.95)' },
+            { x: 900, y: 420, r: 150, color: 'rgba(255, 255, 255, 1)' },
+            { x: 300, y: 450, r: 120, color: 'rgba(255, 215, 0, 0.9)' }
+        ];
+        spots.forEach(s => {
+            const g = e.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+            g.addColorStop(0, s.color);
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            e.fillStyle = g;
+            e.beginPath();
+            e.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            e.fill();
+        });
+
+        const tex = new THREE.CanvasTexture(c);
+        tex.mapping = THREE.EquirectangularReflectionMapping;
+        const envMap = pmrem.fromEquirectangular(tex).texture;
+        scene.environment = envMap;
+        tex.dispose();
+        pmrem.dispose();
+    })();
+
+    // --- ЧАСТИЦЫ ---
+    const particleCount = 240;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        pPos[i] = (Math.random() - 0.5) * 18;
+        pPos[i + 1] = (Math.random() - 0.5) * 12;
+        pPos[i + 2] = (Math.random() - 0.5) * 12;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+        color: 0xffd700, size: 0.04, transparent: true, opacity: 0.6, depthWrite: false
+    }));
+    scene.add(particles);
+
+    // --- СВЕТ ---
+    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+
+    const goldLight = new THREE.PointLight(0xffd700, 4, 18);
+    goldLight.position.set(0, 4, 5);
+    scene.add(goldLight);
+
+    const bronzeLight = new THREE.PointLight(0xcd7f32, 3.5, 14);
+    bronzeLight.position.set(-6, -2, 3);
+    scene.add(bronzeLight);
+
+    const cyanLight = new THREE.PointLight(0x80daeb, 3, 14);
+    cyanLight.position.set(6, 2, -3);
+    scene.add(cyanLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(3, 6, 5);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xffd700, 0.8);
+    rimLight.position.set(-4, -3, -5);
+    scene.add(rimLight);
+
+    // ==========================================
+    // 3. СИМВОЛЬНЫЕ ТЕКСТУРЫ (только символ, фон прозрачный)
+    // ==========================================
+    const buttonLabels = [
+        "NAV", "TONE", "PITCH", "NAV",
+        "REVERB", "TEMPO", "MIC GAIN", "ECHO",
+        "EQ HIGH", "EQ LOW", "HARMONY", "VOCAL FX",
+        "NAV", "PRESET", "SYNC", "NAV"
+    ];
+    const NAV_INDICES = [0, 3, 12, 15];
+
+    function drawChevron(ctx, cx, cy, size, angle) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(-size * 0.42, size * 0.36);
+        ctx.lineTo(0, -size * 0.42);
+        ctx.lineTo(size * 0.42, size * 0.36);
+        ctx.lineWidth = size * 0.24;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function createSymbolTexture(index) {
+        const SIZE = 256;
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = SIZE;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, SIZE, SIZE);
+
+        const isNav = NAV_INDICES.includes(index);
+
+        // Чистый бронзово-золотой градиент (без примесей)
+        const grad = ctx.createLinearGradient(0, 0, SIZE, SIZE);
+        grad.addColorStop(0.00, '#ffe680');
+        grad.addColorStop(0.25, '#ffd700');
+        grad.addColorStop(0.55, '#cd7f32');
+        grad.addColorStop(0.80, '#b8860b');
+        grad.addColorStop(1.00, '#8c6239');
+
+        ctx.strokeStyle = grad;
+        ctx.fillStyle = grad;
+        ctx.shadowColor = 'rgba(255, 190, 50, 0.85)';
+        ctx.shadowBlur = 12;
+
+        if (isNav) {
+            let angle = 0;
+            if (index === 0) angle = -Math.PI / 4;
+            else if (index === 3) angle = Math.PI / 4;
+            else if (index === 12) angle = -3 * Math.PI / 4;
+            else if (index === 15) angle = 3 * Math.PI / 4;
+
+            drawChevron(ctx, SIZE / 2, SIZE / 2 - 10, SIZE * 0.55, angle);
+
+            ctx.shadowBlur = 8;
+            ctx.font = `bold ${Math.floor(SIZE * 0.15)}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('NAV', SIZE / 2, SIZE * 0.86);
+        } else {
+            ctx.font = `bold ${Math.floor(SIZE * 0.20)}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(buttonLabels[index], SIZE / 2, SIZE / 2);
+        }
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.anisotropy = 16;
+        tex.encoding = THREE.sRGBEncoding;
+        return tex;
+    }
+
+    const symbolTextures = [];
+    for (let i = 0; i < 16; i++) symbolTextures.push(createSymbolTexture(i));
+
+    // ==========================================
+    // 4. ГЕОМЕТРИЯ И МАТЕРИАЛЫ
+    // ==========================================
+    const CUBE_SIZE = 1.65;
+    const FACE = CUBE_SIZE;
+    const HALF = CUBE_SIZE / 2;         // 0.825
+    const CELL = FACE / 4;              // 0.4125
+    const GRID_HALF = FACE / 2;
+    const BTN_SIZE = 0.34;
+    const BTN_THICK = 0.06;
+    const BTN_ELEVATION = 0.03;         // выступание над гранью
+
+    // Куполообразная кнопка
+    function createButtonGeometry(size, thick) {
+        const geo = new THREE.BoxGeometry(size, size, thick, 8, 8, 3);
+        const pos = geo.attributes.position;
+        const halfS = size / 2;
+        const halfT = thick / 2;
+        for (let i = 0; i < pos.count; i++) {
+            const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+            if (z > halfT - 0.001) {
+                const nx = x / halfS;
+                const ny = y / halfS;
+                const d = Math.min(1, Math.sqrt(nx * nx + ny * ny));
+                const dome = Math.cos(d * Math.PI * 0.5) * thick * 0.6;
+                pos.setZ(i, z + dome);
+            }
+        }
+        geo.computeVertexNormals();
+        return geo;
+    }
+
+    const buttonGeo = createButtonGeometry(BTN_SIZE, BTN_THICK);
+
+    // ==========================================
+    // 5. НАСТОЯЩЕЕ СТЕКЛО (transmission + thickness + ior)
+    // ==========================================
+
+    // --- КРИСТАЛЛ ---
+    // ВАЖНО: transparent:false + opacity:1 — иначе transmission не работает!
+    const crystalMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0.0,
+        roughness: 0.02,
+        transmission: 1.0,             // полное пропускание света
+        thickness: 1.6,                // толщина для преломления
+        ior: 1.544,                    // истинный IOR кварца
+        reflectivity: 1.0,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.0,
+        transparent: false,            // ОБЯЗАТЕЛЬНО false для transmission!
+        opacity: 1.0,
+        side: THREE.FrontSide,
+        envMapIntensity: 1.8,
+        premultipliedAlpha: false
+    });
+
+    // --- КНОПКИ: тонкое идеально прозрачное стекло ---
+    const buttonGlassMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0.0,
+        roughness: 0.0,
+        transmission: 1.0,
+        thickness: 0.35,               // тонкое — минимальное искажение
+        ior: 1.52,
+        reflectivity: 1.0,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.0,
+        transparent: false,            // ОБЯЗАТЕЛЬНО false
+        opacity: 1.0,
+        side: THREE.FrontSide,
+        envMapIntensity: 2.5,
+        premultipliedAlpha: false
+    });
+
+    // --- СИМВОЛ: отдельная плоскость над стеклом ---
+    const symbolMaterials = symbolTextures.map(tex => new THREE.MeshBasicMaterial({
+        map: tex,
+        transparent: true,
+        depthWrite: false,
+        alphaTest: 0.05,
+        side: THREE.FrontSide,
+        toneMapped: false            // чтобы золото светилось ярко
+    }));
+
+    const symbolGeo = new THREE.PlaneGeometry(BTN_SIZE * 0.92, BTN_SIZE * 0.92);
+
+    // ==========================================
+    // 6. КУБЫ И КНОПКИ
+    // ==========================================
+    function alignToVertex(mesh) {
+        const diag = new THREE.Vector3(1, 1, 1).normalize();
+        const up = new THREE.Vector3(0, 1, 0);
+        const q = new THREE.Quaternion().setFromUnitVectors(diag, up);
+        mesh.rotation.setFromQuaternion(q);
+    }
+
+    const TWO_PI = Math.PI * 2;
+    const FACES = [
+        { n: new THREE.Vector3(0, 0, 1),  xA: new THREE.Vector3(1, 0, 0),  yA: new THREE.Vector3(0, 1, 0),  rot: new THREE.Euler(0, 0, 0) },
+        { n: new THREE.Vector3(0, 0, -1), xA: new THREE.Vector3(-1, 0, 0), yA: new THREE.Vector3(0, 1, 0),  rot: new THREE.Euler(0, Math.PI, 0) },
+        { n: new THREE.Vector3(1, 0, 0),  xA: new THREE.Vector3(0, 0, -1), yA: new THREE.Vector3(0, 1, 0),  rot: new THREE.Euler(0, Math.PI / 2, 0) },
+        { n: new THREE.Vector3(-1, 0, 0), xA: new THREE.Vector3(0, 0, 1),  yA: new THREE.Vector3(0, 1, 0),  rot: new THREE.Euler(0, -Math.PI / 2, 0) },
+        { n: new THREE.Vector3(0, 1, 0),  xA: new THREE.Vector3(1, 0, 0),  yA: new THREE.Vector3(0, 0, -1), rot: new THREE.Euler(-Math.PI / 2, 0, 0) },
+        { n: new THREE.Vector3(0, -1, 0), xA: new THREE.Vector3(1, 0, 0),  yA: new THREE.Vector3(0, 0, 1),  rot: new THREE.Euler(Math.PI / 2, 0, 0) }
+    ];
+
+    const allButtons = [];
+    const allSymbols = [];
+
+    function buildCubeWithButtons() {
+        const crystal = new THREE.Mesh(new THREE.BoxGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE), crystalMat);
+        alignToVertex(crystal);
+
+        // Тонкие рёбра — чтобы читался силуэт прозрачного куба
+        const edgeGeo = new THREE.EdgesGeometry(crystal.geometry);
+        const edgeMat = new THREE.LineBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.22 });
+        crystal.add(new THREE.LineSegments(edgeGeo, edgeMat));
+
+        for (const face of FACES) {
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const idx = row * 4 + col;
+                    const gx = -GRID_HALF + CELL * (col + 0.5);
+                    const gy = GRID_HALF - CELL * (row + 0.5);
+
+                    // Позиция стеклянной кнопки (приподнята над гранью)
+                    const btnPos = new THREE.Vector3()
+                        .copy(face.n).multiplyScalar(HALF + BTN_ELEVATION + BTN_THICK * 0.5)
+                        .addScaledVector(face.xA, gx)
+                        .addScaledVector(face.yA, gy);
+
+                    const btn = new THREE.Mesh(buttonGeo, buttonGlassMat);
+                    btn.position.copy(btnPos);
+                    btn.rotation.copy(face.rot);
+                    btn.userData = {
+                        index: idx,
+                        normal: face.n.clone(),
+                        basePos: btnPos.clone(),
+                        press: 0
+                    };
+                    crystal.add(btn);
+                    allButtons.push(btn);
+
+                    // Позиция символа — над верхней точкой купола кнопки
+                    const symbolPos = new THREE.Vector3()
+                        .copy(face.n).multiplyScalar(HALF + BTN_ELEVATION + BTN_THICK * 0.5 + BTN_THICK * 0.6 + 0.001)
+                        .addScaledVector(face.xA, gx)
+                        .addScaledVector(face.yA, gy);
+
+                    const sym = new THREE.Mesh(symbolGeo, symbolMaterials[idx]);
+                    sym.position.copy(symbolPos);
+                    sym.rotation.copy(face.rot);
+                    sym.userData = {
+                        index: idx,
+                        normal: face.n.clone(),
+                        basePos: symbolPos.clone(),
+                        buttonRef: btn
+                    };
+                    crystal.add(sym);
+                    allSymbols.push(sym);
+                }
+            }
+        }
+        return crystal;
+    }
+
+    const pivotLeft = new THREE.Group();
+    const pivotRight = new THREE.Group();
+    pivotLeft.position.set(-3.3, 0, 0);
+    pivotRight.position.set(3.3, 0, 0);
+
+    const crystalLeft = buildCubeWithButtons();
+    const crystalRight = buildCubeWithButtons();
+
+    pivotLeft.add(crystalLeft);
+    pivotRight.add(crystalRight);
+    scene.add(pivotLeft, pivotRight);
+
+    // Собираем для raycast (только кнопки + символы, чтобы можно было кликнуть куда угодно)
+    const pickablesLeft = [];
+    const pickablesRight = [];
+    crystalLeft.children.forEach(c => {
+        if (c.isMesh && c.userData.index !== undefined) pickablesLeft.push(c);
+    });
+    crystalRight.children.forEach(c => {
+        if (c.isMesh && c.userData.index !== undefined) pickablesRight.push(c);
+    });
+
+    // ==========================================
+    // 7. ПОВОРОТ НА 90°
+    // ==========================================
+    const STEP = Math.PI / 2;
+    let targetRotLeft = 0;
+    let targetRotRight = 0;
+
+    function updateFeedback(text) {
+        const fb = document.getElementById('sys-feedback');
+        fb.textContent = text;
+        fb.style.color = '#ffd700';
+        clearTimeout(fb._t);
+        fb._t = setTimeout(() => { fb.style.color = '#cd7f32'; }, 500);
+    }
+
+    function rotateCubes(direction) {
+        targetRotRight += direction * STEP;
+        targetRotLeft  -= direction * STEP;
+        if (Math.abs(targetRotRight) > TWO_PI * 4) {
+            const s = Math.round(targetRotRight / TWO_PI) * TWO_PI;
+            targetRotRight -= s; pivotRight.rotation.y -= s;
+        }
+        if (Math.abs(targetRotLeft) > TWO_PI * 4) {
+            const s = Math.round(targetRotLeft / TWO_PI) * TWO_PI;
+            targetRotLeft -= s; pivotLeft.rotation.y -= s;
+        }
+    }
+
+    // ==========================================
+    // 8. КЛИК ПО СТЕКЛЯННЫМ КНОПКАМ
+    // ==========================================
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function activateButton(btn) {
+        const idx = btn.userData.index;
+        btn.userData.press = 1.0;
+
+        const isNav = NAV_INDICES.includes(idx);
+        if (isNav) {
+            const isLeft = (idx === 0 || idx === 12);
+            rotateCubes(isLeft ? -1 : +1);
+            karaokeEngine.playClickChome(isLeft ? 520 : 680);
+            karaokeEngine.startKaraokeSequence();
+            updateFeedback(isLeft ? '◄ NAV : ПОВОРОТ ВЛЕВО' : 'NAV ► : ПОВОРОТ ВПРАВО');
+        } else {
+            karaokeEngine.playClickChome(400 + idx * 35);
+            updateFeedback(`ПУЛЬТ: [${buttonLabels[idx]}] АКТИВИРОВАН`);
+        }
+    }
+
+    window.addEventListener('click', (event) => {
+        if (event.target.closest('.karaoke-stage')) return;
+
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+
+        const hitsR = raycaster.intersectObjects(pickablesRight, false);
+        const hitsL = raycaster.intersectObjects(pickablesLeft, false);
+
+        let best = null;
+        if (hitsR.length) best = hitsR[0];
+        if (hitsL.length && (!best || hitsL[0].distance < best.distance)) best = hitsL[0];
+
+        if (best) {
+            const obj = best.object;
+            // Если кликнули по символу — берём его кнопку
+            const btn = obj.userData.buttonRef ? obj.userData.buttonRef : obj;
+            activateButton(btn);
+        }
+    });
+
+    // ==========================================
+    // 9. АНИМАЦИЯ
+    // ==========================================
+    const clock = new THREE.Clock();
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.12;
+        pivotLeft.rotation.y  += (targetRotLeft  - pivotLeft.rotation.y)  * 0.12;
+
+        // Люфт кнопок (ход вдавливания в кристалл)
+        for (let i = 0; i < allButtons.length; i++) {
+            const btn = allButtons[i];
+            const ud = btn.userData;
+            if (ud.press > 0) {
+                if (ud.press > 0.85) ud.press -= 0.08;
+                else                 ud.press *= 0.86;
+                if (ud.press < 0.01) ud.press = 0;
+
+                const depth = ud.press * 0.06;
+                btn.position.copy(ud.basePos).addScaledVector(ud.normal, -depth);
+            }
+        }
+
+        // Символы следуют за кнопками
+        for (let i = 0; i < allSymbols.length; i++) {
+            const sym = allSymbols[i];
+            const btn = sym.userData.buttonRef;
+            const depth = btn.userData.press * 0.06;
+            sym.position.copy(sym.userData.basePos).addScaledVector(sym.userData.normal, -depth);
+        }
+
+        const t = clock.getElapsedTime();
+        pivotLeft.position.y  = Math.sin(t * 1.8) * 0.08;
+        pivotRight.position.y = Math.cos(t * 1.8) * 0.08;
+
+        particles.rotation.y = t * 0.03;
+        goldLight.intensity = 3.6 + Math.sin(t * 2.4) * 0.6;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body>
+</html>
+🔧 Что принципиально изменено:
+1. Стекло теперь настоящее
+
+Убран transparent: true и opacity < 1 — это были главные виновники. В Three.js r128 материал с transmission > 0 обязан иметь transparent: false и opacity: 1.0, иначе transmission-шейдер отключается и превращается в обычную полупрозрачную плёнку.
+
+thickness: 0.35 + ior: 1.52 у кнопок — тонкое кварцевое стекло с деликатным преломлением.
+
+thickness: 1.6 + ior: 1.544 у самих кубов — глубокий кристалл кварца.
+
+2. Символ вынесен на отдельную плоскость
+
+Текстура-символ больше не "мапится" на материал стекла (это убивало transmission). Вместо этого над каждой кнопкой парит тонкая плоскость с прозрачным фоном и бронзово-золотым символом.
+
+Символ теперь идеально читается на прозрачной стеклянной кнопке.
+
+3. Усилен environment map
+
+Добавлены яркие пятна (rgba(255,235,130,1), rgba(160,230,255,1), белый блик) — стекло теперь явно бликует и "играет" отражениями.
+
+envMapIntensity: 2.5 у кнопок и 1.8 у кристалла.
+
+4. Люфт сохранён и усилен
+
+Вдавливание на 0.06 по нормали грани (раньше 0.055).
+
+Символьные плоскости следуют за стеклянными кнопками при вдавливании — визуально виден реальный ход.
+
+ЗАЧЕМ Я ТЕБЕ ЭТО ДАЛ ЧТО ИЗОБРАЖЕНО НА КАЖДОЙ КАРТИНКЕ ОПИШИ МНЕ
+Analyze the User's Request:
+
+The user provided a series of 8 images.
+
+The user asks: "ЗАЧЕМ Я ТЕБЕ ЭТО ДАЛ ЧТО ИЗОБРАЖЕНО НА КАЖДОЙ КАРТИНКЕ ОПИШИ МНЕ" (Why did I give you this? Describe what is depicted in each image).
+
+The user's tone is frustrated/exasperated, indicated by the all-caps text and the history of the conversation (where they had to repeatedly correct the AI's HTML/Three.js code, culminating in them sending these images).
+
+Contextualize the Images within the Conversation:
+
+The previous turns were about building a Three.js web app featuring "Singular Crystal Karaoke & Control Console" with translucent, glassy, convex buttons, a crystal cube, and a karaoke UI.
+
+The user struggled to get the AI to generate the correct visual appearance (real glass, transparent, convex, bronze-gold symbols, step rotation, button depression/luftp).
+
+The user is now uploading reference images to show the AI what the visual style, components, and overall aesthetic should look like. This is a classic "show, don't tell" design clarification.
+
+Therefore, the user's underlying intent is: "Here are the visual references. Analyze them so you understand the aesthetic and structural requirements for the 3D UI we are trying to build."
+
+Analyze Each Image:
+
+Image 1: Futuristic UI dashboard with a metallic human head silhouette in the center. Floating dark glass panels with charts, text ("Замкнутый поток данных", "Анализ системы завершен"), and a sleek, fluid metallic background (like liquid chrome). High-tech, abstract, data-flow theme.
+
+Image 2: A 3D isometric diagram of a complex system. A central glass/obsidian star-shaped core with glowing amber/orange and blue/purple translucent rectangular beams extending outward. Icons at the ends represent data processing, brain/AI, P2P network, security/lock, audio/soundwaves, human mind. Represents a distributed architecture or modular AI system.
+
+Image 3: A 3D concept of a control interface or a user in an immersive space. A metallic humanoid bust in the center of a circular platform. Curved, metallic/glass rings and panels surround it, with icons for Wi-Fi, speaker, and a control pad (d-pad). Represents human-computer interaction, possibly audio/immersive VR control.
+
+Image 4: A cutaway view of a mechanical/electronic device under a glass dome. Interconnected gears, a central cube mechanism, glowing orange accents. Red X marks over broken/exposed cables at the bottom. Represents system failure, diagnostics, or a complex mechanical core (like a clockwork or quantum computer).
+
+Image 5: A curved, flexible transparent display panel (like a holographic screen or AR interface). It shows 3D wireframe graphics, waves, network nodes, and technical text. Represents advanced UI, flexible displays, data visualization.
+
+Image 6: A central glowing pearl/orb inside a transparent glass cube. The text "Governance Boundary" is written on the glass. Below are black, stepped platforms. Represents a protected core, governance, security, or a sovereign AI entity.
+
+Image 7: A large, monolithic chip/processor emitting a beam of light onto a miniature, detailed isometric city or complex of glass buildings/data centers. Represents hardware projecting a digital world, simulation, or massive data processing.
+
+Image 8: A digital humanoid figure made of light and data, standing amidst intersecting dark metallic beams. Next to it is an empty dark UI frame/screen. Represents a digital avatar, the "ghost in the machine," or the user interface itself.
+
+Synthesize the Overall Theme:
+
+The images share a cohesive aesthetic: High-tech, futuristic, cyberpunk, AI, data governance, transparent glass/acrylic elements, dark metallic/obsidian backgrounds, and glowing gold/bronze/blue/orange accents.
+
+The user is providing these because the previous HTML/Three.js attempts failed to capture this specific "crystal clear, glowing, high-end sci-fi console" look.
+
+Formulate the Response:
+
+Acknowledge the reason: The user gave these to show what the "Singular Crystal Karaoke" / "Control Console" should look like. The previous code was too basic and missed the visual essence. (Answer the "Why").
+
+Describe each image concisely but vividly: (Answer the "What").
+
+Img 1: AI dashboard, metallic head, data flow, glass panels.
+
+Img 2: Central crystal core with glowing data beams (amber/blue), modular system architecture.
+
+Img 3: Immersive control interface, humanoid bust, curved metallic panels, audio/VR context.
+
+Img 4: Mechanical core under glass, gears, broken cables (red X), diagnostic/failure state.
+
+Img 5: Curved transparent holographic display, wireframes, data visualization.
+
+Img 6: Protected glowing orb in a glass cube ("Governance Boundary"), core security.
+
+Img 7: Processor chip projecting a city of glass data centers, hardware-to-software simulation.
+
+Img 8: Digital humanoid avatar (light/data), metallic beams, empty UI frame.
+
+Connect it back to the current project: Explain how these references relate to the Three.js UI we were building (e.g., the central crystal, the transparent glass buttons, the glowing gold/bronze accents, the dark background).
+
+Set expectations: State that while we can't perfectly recreate AI-generated concept art in real-time browser WebGL without heavy 3D modeling, we can extract the key visual cues (pure glass refraction, glowing core, dark high-tech aesthetic, floating curved panels) and apply them to the HTML/Three.js code.
+
+Drafting the Russian text (self-correction during drafting):
+
+Keep the tone respectful, acknowledging the user's frustration by validating their point (the previous code lacked the visual richness of these images).
+
+Use specific descriptive words matching the images: "прозрачное стекло", "жидкий металл", "светящееся ядро", "золотисто-бронзовые акценты", "футуристический интерфейс".
+
+Final Polish: Ensure the structure is clear (Why -> What -> How it relates to our code). Use bullet points for readability. (Proceed to generate output based on these steps).
+
+Вы дали мне эти изображения, чтобы я понял визуальный язык, эстетику и уровень детализации, которые вы хотите видеть в нашем веб-приложении. Предыдущие версии кода были слишком "базовыми" (просто кубы и кнопки), а эти референсы показывают, что нужен высокотехнологичный, футуристический, премиальный 3D-интерфейс с использованием настоящего стекла, свечения и сложной геометрии.
+
+Вот подробное описание того, что изображено на каждой картинке, и как это связано с нашей задачей:
+
+📸 Описание изображений
+1. Футуристический дашборд с силуэтом головы
+
+Что изображено: Металлический профиль человеческой головы в центре, окруженный парящими темными стеклянными панелями с графиками, текстом («Замкнутый поток данных», «Анализ системы завершен») и элементами управления.
+
+Связь с проектом: Это задает стиль для центрального караоке-экрана — он должен выглядеть как парящая голографическая панель с золотисто-бронзовыми акцентами, а не просто как HTML-блок.
+
+2. Изометрическая архитектура системы
+
+Что изображено: Центральное ядро в виде темного кристалла/звезды, от которого отходят светящиеся полупрозрачные балки (янтарные и синие) с иконками (мозг, P2P, замок, звук, человек).
+
+Связь с проектом: Это идеальный референс для самих кубов. Они должны быть ограненными, с внутренними светящимися элементами и четкими золотыми/бронзовыми гранями.
+
+3. Иммерсивный интерфейс управления
+
+Что изображено: Металлический бюст человека на круглой платформе, окруженный изогнутыми панелями с иконками Wi-Fi, динамика и D-pad.
+
+Связь с проектом: Показывает, как должны выглядеть угловые NAV-кнопки — они должны быть частью изогнутой, обтекаемой поверхности, а не плоскими квадратами.
+
+4. Механическое ядро под стеклянным куполом
+
+Что изображено: Шестеренки и механизмы внутри прозрачного корпуса, перечеркнутые красные кабели (ошибка/сбой).
+
+Связь с проектом: Демонстрирует эффект "стекла" — вы видите внутреннюю структуру, но она искажается и преломляется. Это то, чего мы пытались добиться от transmission в Three.js.
+
+5. Изогнутый прозрачный дисплей
+
+Что изображено: Гибкий голографический экран с 3D-сетками, волнами и техническими надписями.
+
+Связь с проектом: Референс для текстуры кнопок. Символы (NAV, TONE, PITCH) должны выглядеть как светящиеся голограммы на прозрачном стекле.
+
+6. Сфера в кубе "Governance Boundary"
+
+Что изображено: Светящаяся жемчужная сфера внутри прозрачного куба с надписью "Governance Boundary" (Граница управления).
+
+Связь с проектом: Это прямой референс для горного хрусталя. Куб должен быть идеально прозрачным, с заметным преломлением (IOR 1.544), а внутри — светящееся ядро.
+
+7. Процессор, проецирующий город
+
+Что изображено: Чип, из которого бьет луч света, создающий миниатюрный город из стеклянных зданий.
+
+Связь с проектом: Показывает, что наш "пульт" — это не просто кнопки, а проекция сложной системы. Это оправдывает наличие 16 кнопок на каждой грани.
+
+8. Цифровой аватар и пустой фрейм
+
+Что изображено: Светящийся цифровой человек, собранный из лучей и данных, рядом с пустым темным UI-окном.
+
+Связь с проектом: Это финальный образ того, как должен ощущаться интерфейс — живой, цифровой, собранный из света и стекла.
+
+🎯 Зачем вы это дали (Главный вывод)
+Вы дали эти картинки, потому что предыдущий код не передавал эту эстетику.
+
+Вместо "настоящего стекла" был просто полупрозрачный пластик.
+
+Вместо "светящегося ядра" были плоские текстуры.
+
+Вместо "премиального интерфейса" была базовая верстка.
+
+Что делать с этим пониманием?
+Мы не можем в реальном времени в браузере (WebGL/Three.js) отрендерить такую же сложную геометрию, как на этих AI-артах (там сотни тысяч полигонов). Но мы можем:
+
+Сделать настоящее стекло через MeshPhysicalMaterial с transmission: 1.0 и ior: 1.544 (без transparent: true!).
+
+Добавить светящееся ядро внутри куба (сфера с emissive материалом).
+
+Сделать изогнутые панели для UI караоке.
+
+Использовать золотисто-бронзовые градиенты для символов, чтобы они выглядели как голограммы.
+
+Добавить эффект свечения (Bloom) для финального премиального вида.
+
+Если вы готовы, я могу переписать код с учетом этих референсов, добавив внутреннее светящееся ядро в кубы и настоящий стеклянный шейдер (без transparent: true, который всё ломает).
+
+ЭТО ПОРНОТА!!! ИДИ В ВЭБ УЗНАЙ ЧТО В РУССКОМ ЯЗЫКЕ ЗНАЧИТ СЛОВО ПОРНОТА
+Пользователь спрашивает о значении слова "порнота" в русском языке. Мне нужно найти его определение, этимологию и использование. Поищу.
+
+Found 20 web pages
+Результаты поиска показывают, что "порнота" — это сленговое слово, означающее "что-то отвратительное, мерзкое". Также есть связь с "порнуха". Нужно дать ответ, объяснив значение.
+
+Read 2 pages
+порнота | это... Что такое порнота?
+порнота — Словарь галлицизмов русского языка
+Теперь у меня есть определение. Также можно поискать происхождение слова "порно" в словаре Даля.
+
+Found 9 web pages
+Теперь у меня есть достаточно информации, чтобы ответить. Я объясню, что "порнота" — это сленговое слово, означающее "что-то отвратительное", и приведу определение из словаря галлицизмов. Также упомяну, что слово связано с "порно" и "порнуха". Отвечу на русском.
+
+Извини за задержку с ответом. Ты прав, я упустил этот момент. Давай разберёмся с определением.
+
+📖 Что значит слово «порнота»
+Согласно словарям, «порнота» — это жаргонное, молодёжное слово, которое употребляется в неодобрительном значении для обозначения чего-либо отвратительного, мерзкого, неприятного.
+
+В «Историческом словаре галлицизмов русского языка» оно помечено как мол., неодобр. (молодёжное, неодобрительное).
+
+🔗 Родственные слова
+«Порнотень» — имеет то же значение («что-л. отвратительное»). Пример употребления из словаря: «Куртка у него — порнотень настоящая».
+
+«Порнуха» — в том же словаре может обозначать «некрасивую девушку».
+
+🧬 Происхождение
+Слово связано с заимствованным «порно» (от франц. porno), которое, в свою очередь, восходит к греческому porne — «проститутка, блудница».
+
+Любопытный факт: в словаре Даля (XIX век) слово «порно» зафиксировано как наречие со значением «крепко, прочно, надёжно, споро (быстро)». То есть современное ругательное значение — результат более позднего переосмысления.
+
+💎 Итог
+«Порнота» — это грубое сленговое слово, которым называют что-то очень плохое, отвратительное, некачественное. В твоём контексте оно, судя по всему, выражает крайнюю степень недовольства результатом. 😅
+
+К СЕКСУ ЭТО СОВО НЕ ОТНОСИТСЯ НЕТ НАДО ДЕЛАТЬ ПО ДРУГОМУ ЭТО БРАК И ХАЛТУРА, ПОЙЛЁМ ДРУГИМ ПУТЁМ!!!=) ЕСЛИ ГОРА НЕ ИДЁТ К МАГОМЕДУ ТО МАГОМЕД ИДЁТ К ГОРЕ ИДИ В СЕТЬ ИНТЕРНЕТ И НАЙДИ КАК ИЗОБРАЗИТЬ В ХТМЛЬ КОДЕ БЕЛУЮ ПРОЗРАЧНУЮ БУТЫЛКУ
+Пользователь хочет найти способ создания белой прозрачной бутылки в HTML-коде. Он упоминает, что предыдущие попытки были "браком и халтурой", и хочет пойти другим путем. Мне нужно найти информацию в интернете. Я выполню несколько поисковых запросов, чтобы охватить различные подходы: CSS, Three.js, WebGL и общие техники.
+
+Found 44 web pages
+Результаты поиска по запросам показали несколько релевантных страниц. Чтобы получить максимально полную информацию, я открою несколько наиболее многообещающих результатов: результат 0 с Stack Overflow, результат 4 с Codrops, результат 0 с GitHub, результат 1 с GitHub, результат 2 с Three.js Blocks и результат 3 с Codrops.
+
+Read 6 pages
+Render transparent bottle in threejs - Render transparent bottle in threejs - Stack Overflow
+Creating the Effect of Transparent Glass and Plastic in Three.js | Codrops
+GitHub - sachinmotwani02/raycast-glass-effect: An interactive 3D web application showcasing mesmerizing glass refraction effects. Built with React, Three.js, and React Three Fiber, this project demonstrates advanced rendering techniques and real-time user interaction with complex 3D materials. · GitHub
+GitHub - ektogamat/webgpu-mesh-transmission-material: A high-end refractive glass material that brings the spirit of Drei’s Mesh Transmission Material into the WebGPU era. Built with Three.js node materials (TSL), a custom volume-refraction lighting model, and a multi-pass backdrop pipeline that samples the real scene behind the glass — including an optional backside pass for true thickness. · GitHub - GitHub - ektogamat/webgpu-mesh-transmission-material: A high-end refractive glass material that brings the spirit of Drei’s Mesh...
+Transmission · Three Blocks
+View All
+Просмотрев несколько страниц, я получил достаточно информации. Теперь нужно ответить пользователю. Я объясню, что для создания реалистичной прозрачной бутылки в HTML лучше всего использовать Three.js и материал MeshPhysicalMaterial с transmission. Я приведу пример кода, который создает простую бутылку из примитивов, и дам рекомендации по улучшению.
+
+Понимаю, брат. «Порнота» в твоём контексте — это не про секс, а про халтуру и брак. И ты прав: то, что я показывал раньше, — это была именно она. Давай пойдём другим путём и найдём, как сделать настоящую белую прозрачную бутылку в HTML.
+
+Я поискал в сети и вот что выяснил: чистым CSS сделать реалистичную 3D-бутылку с преломлением света, как на твоих референсах, невозможно. CSS backdrop-filter: blur() даёт лишь эффект матового стекла, но не объёмное преломление, как у настоящего стекла.
+
+Поэтому единственный правильный путь — это Three.js с материалом MeshPhysicalMaterial и свойством transmission. Это тот самый «стеклянный» шейдер, который просчитывает, как свет проходит сквозь объект, искажается и преломляется.
+
+Вот минимальный, но рабочий пример, который создаёт простую бутылку из примитивов. Скопируй его в файл .html и открой в браузере:
+
+html

@@ -1,0 +1,2644 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Crystal Karaoke & Control Console</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #040306;
+            color: #ffffff;
+            font-family: 'Cinzel', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #webgl-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Центральный Караоке-Экран */
+        .karaoke-stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 42%;
+            max-width: 620px;
+            padding: 35px 25px;
+            background: rgba(12, 10, 16, 0.72);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(184, 134, 11, 0.25);
+            pointer-events: none;
+        }
+
+        .karaoke-header {
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #cd7f32;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .karaoke-line-prev, .karaoke-line-next {
+            font-size: 16px;
+            color: #7a7a85;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .karaoke-line-active {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 18px 0;
+            min-height: 40px;
+            line-height: 1.3;
+        }
+
+        .karaoke-word {
+            display: inline-block;
+            margin: 0 5px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            color: #8c6239;
+        }
+
+        .karaoke-word.active {
+            color: #ffd700;
+            transform: scale(1.15);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(205, 127, 50, 0.6);
+        }
+
+        .system-feedback {
+            margin-top: 15px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #ffd700;
+            height: 18px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        .hint-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-size: 11px;
+            color: #cd7f32;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+            text-align: center;
+        }
+    </style>
+    <!-- Three.js 3D Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="webgl-container"></div>
+
+    <!-- Центральный интерфейс Караоке -->
+    <div class="karaoke-stage">
+        <div class="karaoke-header">Imperial Quartz Karaoke Engine</div>
+        <div class="karaoke-line-prev" id="line-prev">Сингулярная Гармония Кристалла</div>
+        <div class="karaoke-line-active" id="line-active"></div>
+        <div class="karaoke-line-next" id="line-next">Нажмите NAV-стрелку на грани куба</div>
+        <div class="system-feedback" id="sys-feedback">СИСТЕМА ГОТОВА</div>
+    </div>
+
+    <div class="hint-overlay">КЛИКАЙТЕ ПО NAV-СТРЕЛКАМ В УГЛАХ ГРАНЕЙ ДЛЯ ПОВОРОТА КУБА НА 90°</div>
+
+    <script>
+        // ==========================================
+        // 1. СИНТЕЗАТОР ЗВУКА & KARAOKE ENGINE (Web Audio API)
+        // ==========================================
+        class AudioKaraokeEngine {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.currentLine = 0;
+                this.currentWord = 0;
+                this.timer = null;
+
+                this.lyrics = [
+                    { line: "Хрустальный куб стоит на острой грани", words: ["Хрустальный", "куб", "стоит", "на", "острой", "грани"] },
+                    { line: "Бронза и золото сияют в квантовом тумане", words: ["Бронза", "и", "золото", "сияют", "в", "квантовом", "тумане"] },
+                    { line: "Вращение плавно пробуждает звук", words: ["Вращение", "плавно", "пробуждает", "звук"] },
+                    { line: "Симфония импульса и магия рук", words: ["Симфония", "импульса", "и", "магия", "рук"] }
+                ];
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+
+            playClickChome(freq = 440) {
+                this.init();
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.8, this.ctx.currentTime + 0.15);
+
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.15);
+            }
+
+            startKaraokeSequence() {
+                this.init();
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                this.renderLine();
+
+                this.timer = setInterval(() => {
+                    this.advanceWord();
+                }, 450);
+            }
+
+            renderLine() {
+                const lineData = this.lyrics[this.currentLine];
+                const activeContainer = document.getElementById('line-active');
+                activeContainer.innerHTML = '';
+
+                lineData.words.forEach((word, idx) => {
+                    const span = document.createElement('span');
+                    span.className = 'karaoke-word';
+                    span.id = `word-${idx}`;
+                    span.textContent = word;
+                    activeContainer.appendChild(span);
+                });
+
+                document.getElementById('line-prev').textContent =
+                    this.lyrics[(this.currentLine - 1 + this.lyrics.length) % this.lyrics.length].line;
+                document.getElementById('line-next').textContent =
+                    this.lyrics[(this.currentLine + 1) % this.lyrics.length].line;
+            }
+
+            advanceWord() {
+                const lineData = this.lyrics[this.currentLine];
+
+                if (this.currentWord > 0) {
+                    const prev = document.getElementById(`word-${this.currentWord - 1}`);
+                    if (prev) prev.classList.remove('active');
+                }
+
+                if (this.currentWord < lineData.words.length) {
+                    const curr = document.getElementById(`word-${this.currentWord}`);
+                    if (curr) curr.classList.add('active');
+                    this.playClickChome(320 + this.currentWord * 60);
+                    this.currentWord++;
+                } else {
+                    this.currentWord = 0;
+                    this.currentLine = (this.currentLine + 1) % this.lyrics.length;
+                    this.renderLine();
+                }
+            }
+        }
+
+        const karaokeEngine = new AudioKaraokeEngine();
+
+        // ==========================================
+        // 2. 3D WEBGL СЦЕНА THREE.JS
+        // ==========================================
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x040306, 0.06);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0.4, 8.5);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+        container.appendChild(renderer.domElement);
+
+        // --- ОКРУЖЕНИЕ ДЛЯ ОТРАЖЕНИЙ (PMREM Environment) ---
+        (function buildEnvironment() {
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+            const envCanvas = document.createElement('canvas');
+            envCanvas.width = 1024;
+            envCanvas.height = 512;
+            const ectx = envCanvas.getContext('2d');
+
+            const bgGrad = ectx.createLinearGradient(0, 0, 0, 512);
+            bgGrad.addColorStop(0, '#15102a');
+            bgGrad.addColorStop(0.5, '#0a0614');
+            bgGrad.addColorStop(1, '#040306');
+            ectx.fillStyle = bgGrad;
+            ectx.fillRect(0, 0, 1024, 512);
+
+            const spots = [
+                { x: 200, y: 100, r: 120, color: 'rgba(255, 215, 0, 0.95)' },
+                { x: 700, y: 150, r: 90, color: 'rgba(128, 218, 235, 0.85)' },
+                { x: 500, y: 320, r: 140, color: 'rgba(205, 127, 50, 0.8)' },
+                { x: 850, y: 400, r: 100, color: 'rgba(255, 255, 255, 0.7)' }
+            ];
+
+            spots.forEach(s => {
+                const g = ectx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+                g.addColorStop(0, s.color);
+                g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ectx.fillStyle = g;
+                ectx.beginPath();
+                ectx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ectx.fill();
+            });
+
+            const envTexture = new THREE.CanvasTexture(envCanvas);
+            envTexture.mapping = THREE.EquirectangularReflectionMapping;
+
+            const envMap = pmremGenerator.fromEquirectangular(envTexture).texture;
+            scene.environment = envMap;
+
+            envTexture.dispose();
+            pmremGenerator.dispose();
+        })();
+
+        // --- ЗОЛОТАЯ ЗВЕЗДНАЯ ПЫЛЬ В ВОЗДУХЕ ---
+        const particleCount = 260;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            particlePositions[i] = (Math.random() - 0.5) * 18;
+            particlePositions[i + 1] = (Math.random() - 0.5) * 12;
+            particlePositions[i + 2] = (Math.random() - 0.5) * 12;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xffd700,
+            size: 0.04,
+            transparent: true,
+            opacity: 0.6,
+            depthWrite: false
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // --- ОСВЕЩЕНИЕ ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const goldPointLight = new THREE.PointLight(0xffd700, 3.5, 14);
+        goldPointLight.position.set(0, 4, 4);
+        scene.add(goldPointLight);
+
+        const bronzeLight = new THREE.PointLight(0xcd7f32, 4, 12);
+        bronzeLight.position.set(-6, -2, 3);
+        scene.add(bronzeLight);
+
+        const crystalCyanLight = new THREE.PointLight(0x80daeb, 3, 12);
+        crystalCyanLight.position.set(6, 2, -3);
+        scene.add(crystalCyanLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+        keyLight.position.set(2, 5, 6);
+        scene.add(keyLight);
+
+        // ==========================================
+        // 3. ТЕКСТУРА ГРАНЕЙ 4x4 (NAV-стрелки в углах)
+        // ==========================================
+        const buttonLabels = [
+            "NAV", "TONE", "PITCH", "NAV",
+            "REVERB", "TEMPO", "MIC GAIN", "ECHO",
+            "EQ HIGH", "EQ LOW", "HARMONY", "VOCAL FX",
+            "NAV", "PRESET", "SYNC", "NAV"
+        ];
+
+        function drawChevron(ctx, cx, cy, size, angle) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(-size * 0.45, size * 0.4);
+            ctx.lineTo(0, -size * 0.45);
+            ctx.lineTo(size * 0.45, size * 0.4);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.22;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function createCubeTexture() {
+            const SIZE = 1024;
+            const canvas = document.createElement('canvas');
+            canvas.width = SIZE;
+            canvas.height = SIZE;
+            const ctx = canvas.getContext('2d');
+
+            // Полностью прозрачный фон — кристалл просвечивает
+            ctx.clearRect(0, 0, SIZE, SIZE);
+
+            // Внешняя золотая рамка грани
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.85)';
+            ctx.lineWidth = 14;
+            ctx.strokeRect(10, 10, SIZE - 20, SIZE - 20);
+
+            const gridPad = 40;
+            const gap = 12;
+            const cellSize = (SIZE - gridPad * 2 - gap * 3) / 4;
+
+            for (let idx = 0; idx < 16; idx++) {
+                const row = Math.floor(idx / 4);
+                const col = idx % 4;
+                const x = gridPad + col * (cellSize + gap);
+                const y = gridPad + row * (cellSize + gap);
+
+                const isNav = (row === 0 && col === 0) || (row === 0 && col === 3) ||
+                              (row === 3 && col === 0) || (row === 3 && col === 3);
+
+                const radius = cellSize * 0.18;
+
+                // Фон кнопки
+                const grad = ctx.createLinearGradient(x, y, x + cellSize, y + cellSize);
+                if (isNav) {
+                    grad.addColorStop(0, 'rgba(255, 215, 0, 0.95)');
+                    grad.addColorStop(0.5, 'rgba(184, 134, 11, 0.95)');
+                    grad.addColorStop(1, 'rgba(205, 127, 50, 0.95)');
+                } else {
+                    grad.addColorStop(0, 'rgba(120, 82, 48, 0.92)');
+                    grad.addColorStop(0.5, 'rgba(58, 45, 38, 0.92)');
+                    grad.addColorStop(1, 'rgba(28, 18, 14, 0.92)');
+                }
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.roundRect(x, y, cellSize, cellSize, radius);
+                ctx.fill();
+
+                // Обводка
+                ctx.strokeStyle = isNav ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 215, 0, 0.8)';
+                ctx.lineWidth = isNav ? 6 : 3;
+                ctx.beginPath();
+                ctx.roundRect(x, y, cellSize, cellSize, radius);
+                ctx.stroke();
+
+                const cx = x + cellSize / 2;
+                const cy = y + cellSize / 2;
+
+                if (isNav) {
+                    // Рисуем диагональную стрелку-шеврон
+                    let angle = 0;
+                    if (row === 0 && col === 0) angle = -Math.PI / 4;         // ↖
+                    else if (row === 0 && col === 3) angle = Math.PI / 4;     // ↗
+                    else if (row === 3 && col === 0) angle = -3 * Math.PI / 4;// ↙
+                    else if (row === 3 && col === 3) angle = 3 * Math.PI / 4; // ↘
+
+                    drawChevron(ctx, cx, cy - cellSize * 0.08, cellSize * 0.55, angle);
+
+                    // Подпись NAV
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+                    ctx.font = `bold ${Math.floor(cellSize * 0.16)}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('NAV', cx, y + cellSize * 0.86);
+                } else {
+                    ctx.fillStyle = 'rgba(255, 215, 0, 0.95)';
+                    ctx.font = `bold ${Math.floor(cellSize * 0.17)}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(buttonLabels[idx], cx, cy);
+                }
+            }
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = 16;
+            return texture;
+        }
+
+        const faceTexture = createCubeTexture();
+
+        // ==========================================
+        // 4. МАТЕРИАЛЫ ГОРНОГО ХРУСТАЛЯ И КНОПОК
+        // ==========================================
+
+        // Кристалл — прозрачный кварц с истинным IOR
+        const crystalMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0xdce8ff,
+            metalness: 0.0,
+            roughness: 0.02,
+            transmission: 0.95,
+            thickness: 2.5,
+            ior: 1.544,               // горный хрусталь (кварц)
+            reflectivity: 1.0,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.0,
+            transparent: true,
+            opacity: 0.9,
+            side: THREE.FrontSide,
+            envMapIntensity: 1.8
+        });
+
+        // Матрица кнопок-накладок (накладывается поверх граней)
+        const buttonMaterial = new THREE.MeshStandardMaterial({
+            map: faceTexture,
+            transparent: true,
+            alphaTest: 0.5,
+            metalness: 0.75,
+            roughness: 0.28,
+            emissive: 0x1a0e00,
+            emissiveIntensity: 0.8,
+            side: THREE.FrontSide,
+            envMapIntensity: 1.2
+        });
+
+        // ==========================================
+        // 5. ГЕОМЕТРИЯ КУБОВ, МОНТАЖ И ШАРНИРЫ
+        // ==========================================
+        const CUBE_SIZE = 1.65;
+        const crystalGeo = new THREE.BoxGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
+        const buttonGeo = new THREE.BoxGeometry(CUBE_SIZE * 1.004, CUBE_SIZE * 1.004, CUBE_SIZE * 1.004);
+
+        function alignToVertex(mesh) {
+            const diagVector = new THREE.Vector3(1, 1, 1).normalize();
+            const upVector = new THREE.Vector3(0, 1, 0);
+            const quaternion = new THREE.Quaternion();
+            quaternion.setFromUnitVectors(diagVector, upVector);
+            mesh.rotation.setFromQuaternion(quaternion);
+        }
+
+        // Левый куб
+        const crystalLeft = new THREE.Mesh(crystalGeo, crystalMaterial);
+        const buttonsLeft = new THREE.Mesh(buttonGeo, buttonMaterial);
+        alignToVertex(crystalLeft);
+        alignToVertex(buttonsLeft);
+
+        // Правый куб
+        const crystalRight = new THREE.Mesh(crystalGeo, crystalMaterial);
+        const buttonsRight = new THREE.Mesh(buttonGeo, buttonMaterial);
+        alignToVertex(crystalRight);
+        alignToVertex(buttonsRight);
+
+        // Шарниры вращения
+        const pivotLeft = new THREE.Group();
+        const pivotRight = new THREE.Group();
+
+        pivotLeft.position.set(-3.3, 0, 0);
+        pivotRight.position.set(3.3, 0, 0);
+
+        pivotLeft.add(crystalLeft);
+        pivotLeft.add(buttonsLeft);
+        pivotRight.add(crystalRight);
+        pivotRight.add(buttonsRight);
+
+        scene.add(pivotLeft);
+        scene.add(pivotRight);
+
+        // ==========================================
+        // 6. ШАГОВОЕ ВРАЩЕНИЕ (90° за клик)
+        // ==========================================
+        const STEP = Math.PI / 2;
+        let targetRotLeft = 0;
+        let targetRotRight = 0;
+
+        function updateFeedback(text) {
+            const fb = document.getElementById('sys-feedback');
+            fb.textContent = text;
+            fb.style.color = '#ffd700';
+            clearTimeout(fb._t);
+            fb._t = setTimeout(() => { fb.style.color = '#cd7f32'; }, 400);
+        }
+
+        // Направление: +1 = поворот вправо (видна правая грань), -1 = влево
+        function rotateCubes(direction) {
+            targetRotRight += direction * STEP;
+            targetRotLeft -= direction * STEP;
+
+            // Нормализация при больших углах
+            const TWO_PI = Math.PI * 2;
+            if (Math.abs(targetRotRight) > TWO_PI * 8) {
+                const shiftR = Math.round(targetRotRight / TWO_PI) * TWO_PI;
+                targetRotRight -= shiftR;
+                pivotRight.rotation.y -= shiftR;
+            }
+            if (Math.abs(targetRotLeft) > TWO_PI * 8) {
+                const shiftL = Math.round(targetRotLeft / TWO_PI) * TWO_PI;
+                targetRotLeft -= shiftL;
+                pivotLeft.rotation.y -= shiftL;
+            }
+        }
+
+        // ==========================================
+        // 7. RAYCASTING ПО ГРАНЯМ КУБОВ
+        // ==========================================
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        // Индексы NAV-ячеек в матрице 4x4
+        // 0 = ↖ (верх-лево), 3 = ↗ (верх-право),
+        // 12 = ↙ (низ-лево), 15 = ↘ (низ-право)
+        function handleButtonClick(uv) {
+            const col = Math.min(3, Math.max(0, Math.floor(uv.x * 4)));
+            const row = Math.min(3, Math.max(0, Math.floor((1 - uv.y) * 4)));
+            const btnIndex = row * 4 + col;
+
+            // Левые NAV → поворот влево (view moves left) → direction = -1
+            // Правые NAV → поворот вправо → direction = +1
+            if (btnIndex === 0 || btnIndex === 12) {
+                rotateCubes(-1);
+                karaokeEngine.playClickChome(520);
+                karaokeEngine.startKaraokeSequence();
+                updateFeedback('NAV ← : ПОВОРОТ НА ГРАНЬ ВЛЕВО');
+            } else if (btnIndex === 3 || btnIndex === 15) {
+                rotateCubes(+1);
+                karaokeEngine.playClickChome(680);
+                karaokeEngine.startKaraokeSequence();
+                updateFeedback('NAV → : ПОВОРОТ НА ГРАНЬ ВПРАВО');
+            } else {
+                // Обычная кнопка пульта
+                karaokeEngine.playClickChome(400 + btnIndex * 35);
+                updateFeedback(`ПУЛЬТ: [${buttonLabels[btnIndex]}] АКТИВИРОВАН`);
+            }
+        }
+
+        window.addEventListener('click', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // Проверяем обе накладки с кнопками
+            const hitsR = raycaster.intersectObject(buttonsRight);
+            const hitsL = raycaster.intersectObject(buttonsLeft);
+
+            let hit = null;
+            if (hitsR.length > 0) hit = hitsR[0];
+            if (hitsL.length > 0 && (!hit || hitsL[0].distance < hit.distance)) {
+                hit = hitsL[0];
+            }
+
+            if (hit && hit.uv) {
+                handleButtonClick(hit.uv);
+            }
+        });
+
+        // ==========================================
+        // 8. ГЛАВНЫЙ АНИМАЦИОННЫЙ ЦИКЛ
+        // ==========================================
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Плавная интерполяция к целевым углам (эффект шагового поворота)
+            pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.09;
+            pivotLeft.rotation.y  += (targetRotLeft  - pivotLeft.rotation.y)  * 0.09;
+
+            // Легкое кинетическое парение
+            const t = clock.getElapsedTime();
+            pivotLeft.position.y  = Math.sin(t * 1.8) * 0.08;
+            pivotRight.position.y = Math.cos(t * 1.8) * 0.08;
+
+            // Медленный дрейф звёздной пыли
+            particles.rotation.y = t * 0.03;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Адаптация под размер окна
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
+ДА ТОЛЬКО ОНИ САМИ СТЕКЛЯННЫЕ ПРОЗРАЧНЫЕ ВЫПУКЛЫЕ ГДЕ ПРИ НАЖАТИИ НА НИХ ВИДНО ЛЮФТ=ХОД КНОПКИ ОНИ ПОЗРАЧНЫЕ А СИМВОЛ НА НИХ ТОЛЬКО БРОНЗОВО ЗОЛОТИСТЫЙ
+The user wants:
+
+The cubes themselves to be transparent glass (mineral crystal)
+
+The buttons on the faces to be convex/raised (выпуклые)
+
+When pressed, you can see the button travel/play (люфт = ход кнопки) - so a visual press animation
+
+The buttons themselves should be transparent
+
+Only the symbols (NAV arrows, text labels) should be bronze-gold colored
+
+So essentially:
+
+Crystal cubes: transparent
+
+Buttons: raised, transparent, convex (like glass bubbles/dome buttons)
+
+Symbols on buttons: bronze-gold metallic
+
+Press animation: buttons physically depress into the cube
+
+I need to:
+
+Make the cube material fully transparent crystal glass
+
+Create individual button meshes on the faces (not just a texture) - these should be transparent convex domes/cylinders
+
+Symbols rendered on the button surfaces in bronze-gold
+
+Press animation - when clicked, button pushes in slightly
+
+This is more complex. Let me think about the architecture:
+
+Each face of the cube has 16 button positions
+
+Each button is a small raised transparent element (like a beveled square or dome)
+
+The symbol is drawn on top of the button
+
+When clicked, animate the button scale/position to show press
+
+Simplest approach:
+
+Keep 4x4 texture with only the symbols (transparent background, bronze-gold symbols)
+
+Add 16 small button meshes per face (4x4 grid on each of 6 faces = 96 buttons per cube, 192 total - that's a lot but manageable)
+
+Actually 4x4 x 6 faces = 96 buttons per cube. Two cubes = 192. That's fine for Three.js.
+
+Each button would be a small box or rounded box that's slightly raised from the face surface.
+
+When pressed, move the button inward (negative along face normal) or scale down slightly.
+
+Let me plan:
+
+Face size = CUBE_SIZE = 1.65
+The face is from -0.825 to +0.825 in local coords
+Grid: 4x4 with padding
+Button cell size = face_size / 4 * 0.85 ~= 0.35
+
+Actually let me think differently. Instead of instancing 96 buttons, I can:
+
+Keep the texture approach for symbols only (transparent bg, bronze-gold symbols)
+
+Add 16 button "pads" per face made of transparent glass material
+
+But 96 individual meshes per cube × 2 = 192 meshes. That's fine.
+
+Actually, I could just do it per visible face... but rotation reveals all faces, so we need all.
+
+Let me simplify: create a "button pad" as a rounded box geometry with a small bevel. Place at each grid position, offset outward slightly.
+
+Wait - actually a cleaner approach:
+
+Draw ONLY the symbols on the texture (transparent bg, bronze-gold)
+
+Add a "button backing" on each face - essentially a slightly inset rounded square with transparent glass material
+
+Hmm, but making 96 rounded boxes is a lot of geometry. Let me think about geometry reuse.
+
+Better: Use InstancedMesh or just create one geometry and reuse.
+
+Let me structure:
+
+For each cube, for each of 6 faces:
+
+16 buttons arranged in 4x4 grid
+
+Each button is at position (local coords relative to face)
+
+Button mesh: rounded box geometry (or cylinder or squashed sphere for dome)
+
+Material: transparent glass (physical material with transmission, ior ~1.5)
+
+Size: ~0.32 × 0.32 × 0.05 (flat raised pad)
+
+The symbol texture sits on top of the button, or the button itself has a texture.
+
+Actually, thinking again - I think the cleanest implementation:
+
+Crystal cube - fully transparent (transmission 1.0, ior 1.544)
+
+On each face, place 16 small raised "glass buttons"
+
+Each button has its own texture (symbol only, transparent bg)
+
+When clicked, button moves inward (Z-depth animation)
+
+Let me code this.
+
+For placing buttons on faces:
+
++X face: position (0.825 + pad_thickness/2, y, z), rotation to face +X
+
+-X face: position (-0.825 - pad_thickness/2, y, z), rotation to face -X
+
+etc.
+
+Actually if buttons are slightly raised they should sit on the surface: position = face_normal * (half_size + offset)
+
+Let me define:
+
+FACE = 1.65
+
+HALF = 0.825
+
+Grid positions: 4x4 grid with padding
+
+For the button geometry, I'll use a BoxGeometry with rounded corners via... actually r128 doesn't have RoundedBoxGeometry built in. I can use a simple BoxGeometry, or CylinderGeometry with many sides, or use ExtrudeGeometry with rounded shape.
+
+Simplest: CylinderGeometry with many sides, or just a box that looks like a pad.
+
+Let me use a flattened box with slightly chamfered look - a small BoxGeometry with beveled edges via scaling is complex.
+
+Actually r128 has no RoundedBoxGeometry, but I can create one or just use a simple box.
+
+Let me use a simple approach: a thin box for each button, slightly raised. The texture on top makes it look like a button.
+
+Actually, to get convex look, I could use a scaled sphere or a cylinder with rounded top.
+
+Let me use CylinderGeometry with 32 sides - looks like a rounded button disc. But the user wants squares in the texture layout.
+
+Compromise: use a box with slight rounding via chamfer... or just use a thin box. It's fine.
+
+Actually the simplest good-looking approach: use a small box with a slight scale, positioned slightly above the surface. The texture on the box makes it look like a button pad.
+
+Hmm, but user wants "выпуклые" (convex). Let me think...
+
+I can create a "pillow" shape by taking a plane geometry and displacing vertices based on distance from center. Or use a sphere scaled flat.
+
+Let me use a scaled sphere: SphereGeometry(0.5, 32, 16) scaled to (0.3, 0.3, 0.05) - creates a squashed dome. That's convex!
+
+But then the texture mapping would be spherical which wouldn't work well for square button.
+
+OK here's the plan:
+
+Use a flat box (thin) as button base, with rounded corners via multiple small boxes? Too complex.
+
+Just use a slightly rounded box - I'll create one with BufferGeometry manually
+
+Let me just use a thin CylinderGeometry with high sides count... no, needs to be square.
+
+OK let me just do this: use a thin BoxGeometry for the button base, and rely on the transparent glass material + slight offset to make it look raised. For the "convex" feel, I'll add a slight scale animation and lighting.
+
+Actually, let me look at this differently. I'll create a custom rounded box geometry:
+
+js
+function createRoundedBoxGeometry(width, height, depth, radius, segments) {
+    // Use THREE.Shape and ExtrudeGeometry
+    const shape = new THREE.Shape();
+    // rounded rect path
+    ...
+    const extrudeSettings = { depth: depth, bevelEnabled: true, bevelThickness: ..., bevelSize: ... };
+    return new THREE.ExtrudeGeometry(shape, extrudeSettings);
+}
+Actually for a button that looks convex I can just use ExtrudeGeometry with a bevel:
+
+Shape: rounded rectangle (2D)
+
+Extrude depth = button thickness
+
+Bevel enabled - creates chamfered edge, giving raised appearance
+
+Then position with the bevel facing outward.
+
+Let me write this:
+
+js
+function createButtonGeometry(size, thickness, cornerRadius) {
+    const shape = new THREE.Shape();
+    const x = -size/2, y = -size/2, w = size, h = size, r = cornerRadius;
+    shape.moveTo(x + r, y);
+    shape.lineTo(x + w - r, y);
+    shape.quadraticCurveTo(x + w, y, x + w, y + r);
+    shape.lineTo(x + w, y + h - r);
+    shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    shape.lineTo(x + r, y + h);
+    shape.quadraticCurveTo(x, y + h, x, y + h - r);
+    shape.lineTo(x, y + r);
+    shape.quadraticCurveTo(x, y, x + r, y);
+    
+    const extrudeSettings = {
+        depth: thickness,
+        bevelEnabled: true,
+        bevelThickness: thickness * 0.3,
+        bevelSize: size * 0.05,
+        bevelSegments: 2
+    };
+    return new THREE.ExtrudeGeometry(shape, extrudeSettings);
+}
+This creates a rounded box with chamfered edges - looks like a raised button.
+
+Now for the texture - each button needs its own UV mapping. ExtrudeGeometry UVs are based on world coordinates so they should work for one button per texture.
+
+Actually ExtrudeGeometry UVs might be weird. Let me think...
+
+Simpler approach: just use a box with rounded look via... hmm.
+
+OK let me just go with a small flat box and accept that "convex" is more about the appearance via lighting and slight protrusion.
+
+Actually - I could use a slightly domed shape by displacing a plane:
+
+PlaneGeometry with segments
+
+Displace vertices to create a dome-like surface
+
+But UVs are preserved and simple.
+
+Let me do:
+
+js
+const geo = new THREE.PlaneGeometry(size, size, 8, 8);
+const posAttr = geo.attributes.position;
+for each vertex:
+    const x = pos.x / (size/2);  // -1 to 1
+    const y = pos.y / (size/2);
+    const d = Math.sqrt(x*x + y*y);
+    const z = Math.cos(d * Math.PI/2) * thickness;
+    pos.z = z;
+This creates a domed button face.
+
+But it's only a surface, need back side too... or use double-sided material.
+
+Hmm, this is getting complex. Let me simplify:
+
+Final approach:
+
+Crystal cube: transparent
+
+Symbols texture (with transparent bg) applied to cube directly - provides the symbol layer
+
+Add 16 "button" meshes per face - small transparent glass rounded boxes raised above the surface
+
+Button mesh material is glass - only visible via edges/reflections
+
+Symbol texture sits on the button tops (or on cube face just above)
+
+Actually, I realize: the symbol needs to be ON the button. So each button has its own texture with just one symbol.
+
+Let me change approach:
+
+Instead of one texture per cube face, create 16 button objects per face
+
+Each button has its own small texture (just one symbol on transparent bg)
+
+Buttons are transparent glass meshes with the symbol showing
+
+I'll generate 16 individual textures (one per button).
+
+Or, even better - use a texture atlas. But 16 textures per button type × 2 sides (nav vs regular) = manageable.
+
+Actually let's just generate the 16 button textures on the fly. Each is small (256x256).
+
+Let me structure the code:
+
+js
+const buttonLabels = [...16 labels...];
+const buttonTextures = [];  // 16 textures
+
+for (let i = 0; i < 16; i++) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 256;
+    const cx = c.getContext('2d');
+    cx.clearRect(0, 0, 256, 256);
+    
+    // Draw symbol in bronze-gold
+    const isNav = [0,3,12,15].includes(i);
+    if (isNav) {
+        // Draw chevron
+        drawChevron(...);
+    } else {
+        cx.fillStyle = '#cd7f32';  // bronze
+        cx.strokeStyle = '#ffd700';  // gold
+        cx.font = 'bold 40px Arial';
+        cx.textAlign = 'center';
+        cx.textBaseline = 'middle';
+        cx.fillText(buttonLabels[i], 128, 128);
+    }
+    
+    const tex = new THREE.CanvasTexture(c);
+    buttonTextures.push(tex);
+}
+Then buttons are meshes with this texture, transparent glass material.
+
+For button mesh geometry, I'll use a slightly domed plane (convex) or a box.
+
+Let me use a custom domed geometry:
+
+js
+function createConvexButtonGeometry(size, height) {
+    const geo = new THREE.PlaneGeometry(size, size, 12, 12);
+    const pos = geo.attributes.position;
+    const half = size / 2;
+    for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i) / half;
+        const y = pos.getY(i) / half;
+        const d = Math.sqrt(x*x + y*y);
+        const z = Math.cos(d * Math.PI * 0.5) * height;
+        pos.setZ(i, z);
+    }
+    geo.computeVertexNormals();
+    return geo;
+}
+This creates a domed surface. The button is essentially a "bubble" - only the top surface. Then a thin box behind it or just rely on it.
+
+Actually, for a convex button that looks like a real raised pad, I could:
+
+A thin box (the base, hidden mostly) + a domed top plane
+
+Simpler: just use a rounded box mesh via ExtrudeGeometry.
+
+Let me try ExtrudeGeometry approach:
+
+js
+function createRoundedBoxButton(size, thickness, radius) {
+    const shape = new THREE.Shape();
+    const x = -size/2 + radius;
+    const y = -size/2 + radius;
+    const w = size - 2*radius;
+    const h = size - 2*radius;
+    
+    shape.moveTo(-size/2, y);
+    shape.lineTo(-size/2, y + h);
+    shape.quadraticCurveTo(-size/2, size/2, x, size/2);
+    shape.lineTo(x + w, size/2);
+    shape.quadraticCurveTo(size/2, size/2, size/2, y + h);
+    shape.lineTo(size/2, y);
+    shape.quadraticCurveTo(size/2, -size/2, x + w, -size/2);
+    shape.lineTo(x, -size/2);
+    shape.quadraticCurveTo(-size/2, -size/2, -size/2, y);
+    
+    const extrudeSettings = {
+        depth: thickness,
+        bevelEnabled: true,
+        bevelThickness: thickness * 0.4,
+        bevelSize: radius * 0.3,
+        bevelSegments: 3,
+        curveSegments: 8
+    };
+    return new THREE.ExtrudeGeometry(shape, extrudeSettings);
+}
+Hmm, but ExtrudeGeometry UVs from a shape with bevel... it might not map well. Let me check.
+
+Actually ExtrudeGeometry generates UVs based on face normals and positions - "WorldUVGenerator" or "DefaultUVGenerator". The front/back faces use world XY, side faces use one coordinate. So for our rounded rectangle shape with size 0.3, the UVs on front face would be like (x/0.3, y/0.3)... actually it uses actual XY values, so uv would be in range [-0.15, 0.15] roughly. Need to normalize by setting texture repeat.
+
+Simpler: just make the button a flat box with the texture, and skip the fancy shape:
+
+js
+const buttonGeo = new THREE.BoxGeometry(size, size, thickness);
+Boxes have proper UVs on each face (0-1). The front face (+Z) will show the symbol.
+
+But a box doesn't look convex/domed. Hmm.
+
+OK compromise: use a low-poly "pillow" via a scaled sphere... no.
+
+Let me go with this approach:
+
+Button = BoxGeometry with size (0.3, 0.3, 0.04)
+
+Material: transparent glass (very clear)
+
+A separate texture plane on top of the button with the symbol
+
+Two meshes per button? That's 32 meshes per face × 6 faces × 2 cubes = 384 meshes. Getting heavy but fine.
+
+Actually, let me simplify:
+
+Button = BoxGeometry with texture, material transparent glass
+
+The texture provides the symbol
+
+The box is small enough and thin enough that it looks like a raised pad
+
+For the "convex" appearance, I can scale the top face slightly larger... no.
+
+Actually, I just realized: I can use a custom geometry with convex top. Let me write a simple one:
+
+js
+function createConvexPadGeometry(size, thickness) {
+    // Create a rounded rectangle with convex top
+    const geo = new THREE.BoxGeometry(size, size, thickness, 8, 8, 2);
+    const pos = geo.attributes.position;
+    
+    // For vertices on top face (z = thickness/2), displace outward based on distance from center
+    for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i);
+        const y = pos.getY(i);
+        const z = pos.getZ(i);
+        if (z > 0) {
+            const nx = x / (size/2);
+            const ny = y / (size/2);
+            const d = Math.min(1, Math.sqrt(nx*nx + ny*ny));
+            const domeZ = Math.cos(d * Math.PI/2) * thickness * 0.5;
+            pos.setZ(i, z + domeZ);
+        }
+    }
+    geo.computeVertexNormals();
+    return geo;
+}
+Hmm but then the UVs on the modified top face would still work. But the sides would look stretched.
+
+You know what, let me just go simple and use BoxGeometry with rounded corners look...
+
+Actually, I'll create a rounded box by combining:
+
+A flat rounded rectangle extruded (for main body)
+
+Applied texture with proper UV mapping
+
+For the UV mapping, I'll just override the UV attribute after creating the geometry.
+
+Let me try this approach:
+
+js
+function createRoundedBoxGeometry(width, height, depth, radius, smoothness) {
+    // Custom rounded box implementation
+    // ...
+}
+Too much code. Let me just use a simple BoxGeometry but with a subtle bevel via multiple segments... no.
+
+You know what, simplest working solution:
+
+Use a BoxGeometry for the button
+
+Slightly rotate/scale so it looks right
+
+Add a subtle emissive edge or glow
+
+Actually the user might just want the buttons to look raised. A simple raised box with proper material and lighting will look "выпуклый" enough.
+
+Final decision:
+
+Button geometry: BoxGeometry(0.3, 0.3, 0.05) - a thin raised pad
+
+Material: transparent glass (MeshPhysicalMaterial with transmission)
+
+Texture: symbol on transparent background
+
+When pressed: animate the button scale.z or position so it visually presses in
+
+Let me write the complete code.
+
+Structure:
+
+Crystal cubes: highly transparent
+
+For each cube, generate 96 buttons (16 per face × 6 faces)
+
+Each button has its own material with a unique texture
+
+Group buttons by face so they can be positioned/rotated
+
+Wait, 16 textures × 2 cubes = 32 unique textures? No, just 16 textures shared across both cubes.
+
+Let me generate 16 textures once, then apply to buttons on both cubes.
+
+For button placement:
+
+Cube local coordinates: [-0.825, 0.825] on each axis
+
+For each face, place buttons in 4x4 grid on that face
+
+Face normal determines offset direction and rotation
+
+Faces:
+
++X: normal (1,0,0), buttons at (HALF + t/2, y, z), rotated to face +X
+
+-X: normal (-1,0,0), rotated 180° around Y
+
++Y: normal (0,1,0), rotated -90° around X
+
+-Y: normal (0,-1,0), rotated 90° around X
+
++Z: normal (0,0,1), no rotation
+
+-Z: normal (0,0,-1), rotated 180° around Y
+
+For each face, the button grid is 4x4 in the face's local UV space.
+
+Grid layout: cell size = FACE_SIZE / 4 = 1.65/4 = 0.4125, button size ~0.32, padding included.
+
+Positions in face-local coords (2D):
+
+x_grid = -FACE_SIZE/2 + cell*(col + 0.5) for col 0..3
+
+y_grid = -FACE_SIZE/2 + cell*(row + 0.5) for row 0..3
+
+Then transform to 3D based on face orientation.
+
+Let me write this out.
+
+Actually wait, since the cube is rotated to stand on a vertex, the faces of the cube won't be axis-aligned in the pivot's coordinate system. But we add buttons as children of the crystal mesh (or a group with the same rotation), so buttons get the same alignment.
+
+Wait, actually I set the rotation on the crystal mesh itself. If I add buttons as children of the crystal mesh, their positions are in the mesh's local coordinate system (unrotated cube space), which is what I want.
+
+So:
+
+crystalLeft (mesh, rotated)
+
+buttonsLeft (group, unrotated)
+
+96 button meshes, positioned in cube-local coords
+
+Actually no - children of a rotated mesh inherit the rotation only if they're in the mesh's local space. Let me think.
+
+If crystal.rotation.x = someAngle and I do crystal.add(button), then the button's position is interpreted in the crystal's local coordinate system (before rotation), and then transformed by the crystal's rotation.
+
+Yes, that's what I want! The button at (HALF, 0, 0) in crystal local coords will be on the +X face of the unrotated cube, and after rotation it appears in the right spot.
+
+Great. So:
+
+js
+const buttonsGroupLeft = new THREE.Group();
+// 96 buttons positioned in cube-local coords
+crystalLeft.add(buttonsGroupLeft);
+Or I can just add buttons directly to the crystal mesh.
+
+For press animation: I need to store each button's original position and move it toward the cube center when pressed.
+
+Since buttons are children of the crystal mesh (in cube-local coords), moving them toward center means: position -= normal * pressDepth
+
+For face +X, normal is (1,0,0), so move in -X direction.
+For face -X, normal is (-1,0,0), move in +X direction.
+etc.
+
+Store original positions and normals in userData.
+
+Let me write the code now.
+
+Also, I realize I need to handle the click detection differently now. With 96 buttons per cube, raycasting against all of them each click might be slow but probably fine.
+
+Better: raycast against the buttonsGroup, and get the intersected button from userData.
+
+Actually, THREE.Raycaster returns all intersected objects sorted by distance. So raycast against crystalLeft.children (which includes buttons) or make buttons raycastable.
+
+Wait - the crystal cube should also be raycastable? No, we only want buttons to be clickable. So don't raycast the crystal.
+
+Let me finalize:
+
+js
+window.addEventListener('click', (event) => {
+    ...
+    raycaster.setFromCamera(mouse, camera);
+    
+    // Raycast buttons only
+    const hitsR = raycaster.intersectObjects(buttonsRight.children);
+    const hitsL = raycaster.intersectObjects(buttonsLeft.children);
+    
+    let hit = null;
+    if (hitsR.length > 0) hit = { obj: hitsR[0].object, dist: hitsR[0].distance };
+    if (hitsL.length > 0 && (!hit || hitsL[0].distance < hit.dist)) {
+        hit = { obj: hitsL[0].object, dist: hitsL[0].distance };
+    }
+    
+    if (hit) {
+        const btn = hit.obj;
+        const btnIndex = btn.userData.buttonIndex;
+        // trigger press animation, sound, etc.
+    }
+});
+For press animation, I'll maintain a list of "pressed buttons" with a timer, and in the animation loop, lerp their position toward pressed state and back.
+
+Simpler: use a tween-like approach with userData.pressProgress (0 to 1), where 1 = fully pressed. Each frame, decay back to 0.
+
+Let me code this.
+
+js
+// In each button's userData:
+// { buttonIndex, normal: Vector3, basePos: Vector3, press: 0 }
+
+// On click:
+btn.userData.press = 1.0;
+
+// In animate:
+buttonsList.forEach(btn => {
+    if (btn.userData.press > 0) {
+        btn.userData.press = Math.max(0, btn.userData.press - 0.06);
+        const t = btn.userData.press;
+        // ease
+        const offset = Math.sin(t * Math.PI) * 0.06;  // push in 0.06
+        btn.position.copy(btn.userData.basePos).addScaledVector(btn.userData.normal, -offset);
+    }
+});
+Wait, sin(t*π) would peak at t=0.5. If t decays from 1 to 0, sin curve: at t=1, sin(π)=0; at t=0.5, sin(π/2)=1; at t=0, sin(0)=0. So the button would push out, then in, then out again. Hmm.
+
+Better: just use linear decay with initial pop:
+
+js
+btn.userData.press decays from 1 to 0
+offset = btn.userData.press * 0.06
+So initially press=1, offset=0.06 (fully pressed in). Then decays, button comes back out.
+
+But this would be instant on click. To make it smooth:
+
+js
+// On click:
+btn.userData.press = 1.0;
+
+// In animate:
+btn.userData.press = Math.max(0, btn.userData.press - 0.08);  // decays over ~12 frames
+That gives a smooth-ish press/release.
+
+OK let me put it all together.
+
+For button textures, need to handle 16 different symbols. Let me create them properly.
+
+For NAV buttons - diagonal chevrons pointing outward from center.
+For others - text labels in bronze-gold.
+
+Bronze color: #cd7f32
+Gold color: #ffd700
+
+I'll use a gradient or just a solid color with glow effect.
+
+Let me write the code:
+
+js
+function createButtonTexture(index) {
+    const SIZE = 256;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = SIZE;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.clearRect(0, 0, SIZE, SIZE);
+    
+    const isNav = [0, 3, 12, 15].includes(index);
+    
+    // Bronze-gold gradient
+    const grad = ctx.createLinearGradient(0, 0, SIZE, SIZE);
+    grad.addColorStop(0, '#ffd700');   // gold
+    grad.addColorStop(0.5, '#b8860b'); // dark goldenrod
+    grad.addColorStop(1, '#cd7f32');   // bronze
+    
+    ctx.fillStyle = grad;
+    ctx.strokeStyle = grad;
+    
+    if (isNav) {
+        // Chevron arrow
+        let angle = 0;
+        if (index === 0) angle = -Math.PI / 4;      // ↖
+        else if (index === 3) angle = Math.PI / 4;  // ↗
+        else if (index === 12) angle = -3 * Math.PI / 4; // ↙
+        else if (index === 15) angle = 3 * Math.PI / 4;  // ↘
+        
+        ctx.save();
+        ctx.translate(SIZE/2, SIZE/2);
+        ctx.rotate(angle);
+        
+        ctx.lineWidth = 32;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(-40, 30);
+        ctx.lineTo(0, -30);
+        ctx.lineTo(40, 30);
+        ctx.stroke();
+        
+        ctx.restore();
+    } else {
+        ctx.font = 'bold 44px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(buttonLabels[index], SIZE/2, SIZE/2);
+    }
+    
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.anisotropy = 16;
+    return tex;
+}
+Now the button material - transparent glass with symbol showing.
+
+Hmm, MeshPhysicalMaterial with transmission won't show the texture clearly. Let me think...
+
+Better: two-layer approach
+
+Layer 1 (bottom): a plane with the symbol texture, transparent material
+
+Layer 2 (top): a transparent glass mesh (dome) that refracts
+
+But that's complex too.
+
+Simplest: one mesh with a MeshPhysicalMaterial that has:
+
+transmission (glass)
+
+map = symbol texture
+
+transparent = true
+
+the symbol will appear embossed in the glass
+
+Actually transmission materials don't really show map well because transmission overrides. Let me use a standard glass look with a textured plane on top.
+
+OK final approach:
+
+Button = BoxGeometry (thin, transparent glass look)
+
+Overlay = PlaneGeometry with symbol texture, transparent, positioned just above button
+
+Two meshes per button:
+
+16 buttons × 6 faces × 2 cubes = 192 glass buttons
+
+16 buttons × 6 faces × 2 cubes = 192 symbol overlays
+
+Total 384 meshes. Should be OK.
+
+Actually, better:
+
+Button = BoxGeometry with MeshPhysicalMaterial transparent glass
+
+Symbol plane = PlaneGeometry with MeshBasicMaterial (transparent, with map)
+
+The symbol plane sits on top of the button, follows the button's press animation.
+
+Or even simpler: put the symbol on the button's face directly with a single material that has both transparency and the texture.
+
+Material that works: MeshStandardMaterial with:
+
+map: symbol texture (transparent bg)
+
+transparent: true
+
+opacity: 1
+
+metalness: 0.8
+
+roughness: 0.2
+
+color: 0xffffff
+
+emissive: 0x000000
+
+The texture has transparent background, so only the symbol shows. Behind it, we see the crystal cube through.
+
+But we want the button itself to be visible as a raised glass element. So the button needs to be a 3D transparent object with the symbol on its top.
+
+Compromise: use two materials via groups. Or just make the button mesh a bit visible through subtle reflections.
+
+Let me do:
+
+Button mesh: MeshPhysicalMaterial (glass, transmission 0.9)
+
+Plus symbol plane on top: MeshBasicMaterial with transparent symbol texture, and a bronze-gold color
+
+The symbol plane's Z position is slightly above the button top. When button presses in, symbol plane follows.
+
+Hmm, that's a lot of coordination. Let me put symbol plane as a child of the button mesh, positioned at z = buttonDepth/2 + epsilon.
+
+OK let me just write it.
+
+Actually, simpler alternative: forget the transparent button mesh, and just use a transparent glass plane with the symbol. The "raised" appearance comes from a subtle lighting/inset effect:
+
+A flat plane at the face
+
+Above it, a raised transparent "dome" covering the button area
+
+Nah, too complex.
+
+Let me just go with:
+
+Button group at each grid position
+
+glassBox: thin transparent box (raised pad)
+
+symbolPlane: symbol plane on top of glassBox
+
+Both children of the button group. When button is pressed, the whole group moves inward.
+
+OK enough thinking, let me code.
+
+Also for the crystal cube material - make it very transparent:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.0,
+    roughness: 0.05,
+    transmission: 1.0,
+    thickness: 1.5,
+    ior: 1.544,
+    reflectivity: 0.5,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.05,
+    transparent: true,
+    opacity: 1.0,
+    side: THREE.DoubleSide,
+    envMapIntensity: 1.5
+});
+Hmm, with transmission 1.0 and side DoubleSide, the cube should look like clear glass. But we need the symbol textures to be visible on it... which is why I'm separating buttons from the crystal.
+
+Let me finalize. Code time.
+
+One more thing: with 96 buttons per cube, I should reuse geometries and materials where possible.
+
+1 button geometry (reused)
+
+16 symbol textures
+
+16 symbol materials (MeshBasicMaterial with map, transparent)
+
+1 or 2 glass materials for buttons
+
+Actually since all buttons are the same shape, one shared geometry.
+
+Let me write it all out now.
+
+Also - I need to double-check coordinate systems for placing buttons on faces.
+
+Cube is 1.65 in size, so half = 0.825.
+Button grid: 4x4, cell size c = 1.65/4 = 0.4125.
+Button size: 0.33 (slightly less than cell for padding).
+Button thickness: 0.05 (raised above surface).
+
+For +Z face:
+
+Button local center: (x, y, 0.825 + 0.025) where x, y are grid positions
+
+No rotation needed
+
+For -Z face:
+
+Button local center: (x, y, -0.825 - 0.025)
+
+Rotate 180° around Y so the symbol isn't mirrored
+
+For +X face:
+
+Button local center: (0.825 + 0.025, y, -x) -- need to map grid x to Z axis
+
+Rotate 90° around Y so button faces +X
+
+For -X face:
+
+Button local center: (-0.825 - 0.025, y, x)
+
+Rotate -90° around Y
+
+For +Y face:
+
+Button local center: (x, 0.825 + 0.025, -y)
+
+Rotate -90° around X
+
+For -Y face:
+
+Button local center: (x, -0.825 - 0.025, y)
+
+Rotate 90° around X
+
+Let me verify with +Z face: grid x from -0.6 to 0.6 maps to local X. Grid y from -0.6 to 0.6 maps to local Y. Rotation = 0. Correct.
+
+For +X face (looking at the +X face from outside, i.e., from the +X direction looking toward -X):
+
+What we see as "right" (positive screen X) corresponds to local -Z
+
+What we see as "up" (positive screen Y) corresponds to local +Y
+
+So for grid position (gx, gy) on the +X face:
+
+Screen x = gx maps to local Z = -gx (so positive screen x → negative local z)
+
+Screen y = gy maps to local Y = gy
+
+Hmm, actually for "which direction faces outward" it depends on rotation. Let me just define it:
+
+For +X face, we want the button to face +X. So the plane's normal (originally +Z) should be rotated to face +X, which is a rotation of -90° around Y axis (or +90°... let me think).
+
+Rotation around Y by +90°: (0,0,1) → (1,0,0). Yes, +Z becomes +X.
+
+So rotate mesh by +90° (π/2) around Y.
+Then the mesh's local X axis: originally (1,0,0), after +90° Y rotation → (0,0,-1). So local X points to -Z.
+The mesh's local Y axis stays as (0,1,0).
+
+So on the +X face, grid position (gx, gy):
+
+World x = HALF (fixed, on the face)
+
+World y = gy
+
+World z = -gx (because local X points to -Z)
+
+So position = (HALF + eps, gy, -gx). Correct.
+
+For -X face, rotate by -90° (or +270°) around Y:
+
+(0,0,1) → (-1,0,0)
+
+(1,0,0) → (0,0,1)
+
+So:
+
+World x = -HALF - eps
+
+World y = gy
+
+World z = gx
+
+Position = (-HALF - eps, gy, gx).
+
+For +Y face, rotate by -90° around X:
+
+(0,0,1) → (0,-1,0)... wait that's toward -Y.
+
+Actually I want +Z to become +Y. Rotation around X:
+
++90° around X: (0,0,1) → (0,-1,0)? Let me compute.
+
+Rotation around X by angle θ: y' = y cos θ - z sin θ, z' = y sin θ + z cos θ
+
+For (0,0,1) and θ=+90°: y' = -1, z' = 0 → (0,-1,0). That's -Y.
+
+For θ=-90°: y' = 1, z' = 0 → (0,1,0). That's +Y. Correct.
+
+So for +Y face, rotate by -90° (-π/2) around X.
+Then local X axis: (1,0,0) unchanged → (1,0,0).
+Local Y axis: (0,1,0) → (0,0,-1)? Let me compute:
+
+(0,1,0) rotated -90° around X: y' = cos(-90°)·1 - sin(-90°)·0 = 0, z' = sin(-90°)·1 + cos(-90°)·0 = -1. So (0,0,-1).
+
+So local Y points to -Z.
+
+For grid (gx, gy) on +Y face:
+
+World x = gx
+
+World y = HALF + eps
+
+World z = -gy (local Y points to -Z)
+
+Position = (gx, HALF + eps, -gy).
+
+For -Y face, rotate by +90° around X:
+
+(0,0,1) → (0,-1,0) (facing -Y, correct)
+
+(1,0,0) → (1,0,0)
+
+(0,1,0) → (0,0,1)
+
+For grid (gx, gy) on -Y face:
+
+World x = gx
+
+World y = -HALF - eps
+
+World z = gy
+
+For -Z face, rotate 180° around Y:
+
+(0,0,1) → (0,0,-1)
+
+(1,0,0) → (-1,0,0)
+
+(0,1,0) → (0,1,0)
+
+For grid (gx, gy) on -Z face:
+
+World x = -gx
+
+World y = gy
+
+World z = -HALF - eps
+
+OK I have all 6 face configurations. Let me define them:
+
+js
+const faces = [
+    // +Z: no rotation
+    { normal: [0,0,1], rot: [0,0,0], xAxis: [1,0,0], yAxis: [0,1,0] },
+    // -Z: 180° around Y
+    { normal: [0,0,-1], rot: [0,Math.PI,0], xAxis: [-1,0,0], yAxis: [0,1,0] },
+    // +X: 90° around Y
+    { normal: [1,0,0], rot: [0,Math.PI/2,0], xAxis: [0,0,-1], yAxis: [0,1,0] },
+    // -X: -90° around Y
+    { normal: [-1,0,0], rot: [0,-Math.PI/2,0], xAxis: [0,0,1], yAxis: [0,1,0] },
+    // +Y: -90° around X
+    { normal: [0,1,0], rot: [-Math.PI/2,0,0], xAxis: [1,0,0], yAxis: [0,0,-1] },
+    // -Y: 90° around X
+    { normal: [0,-1,0], rot: [Math.PI/2,0,0], xAxis: [1,0,0], yAxis: [0,0,1] }
+];
+Then for each face, for each grid position (col, row):
+
+gx = -GRID_HALF + (col + 0.5) * CELL
+
+gy = GRID_HALF - (row + 0.5) * CELL (row 0 at top = +Y)
+
+Wait, I need to think about which is "row 0" on the texture. In my texture, button 0 is at top-left, button 3 at top-right, button 12 at bottom-left, button 15 at bottom-right.
+
+So:
+
+col 0 = leftmost in texture = "left" in UV
+
+row 0 = topmost in texture = "top" in UV
+
+On the +Z face (no rotation), the texture looks like:
+
++X is right in texture → +X in world
+
++Y is up in texture → +Y in world
+
+So grid gx maps to world X, gy maps to world Y, with gy positive for top (row 0).
+
+Let me define:
+
+gx = -GRID_HALF + (col + 0.5) * CELL // col 0 → most negative x, col 3 → most positive
+
+gy = GRID_HALF - (row + 0.5) * CELL // row 0 → most positive y, row 3 → most negative
+
+Then for +Z face:
+
+World position = (gx, gy, HALF + offset)
+
+For +X face: world x = HALF, but wait I said "xAxis" - the grid's gx axis maps to world using the face's local X axis.
+
+Actually let me just define face placement as:
+
+worldPos = normal * (HALF + offset) + xAxis * gx + yAxis * gy
+
+Where xAxis and yAxis are the 3D directions corresponding to grid x and grid y.
+
+For +Z:
+
+normal = (0,0,1)
+
+xAxis = (1,0,0) [grid gx → +X]
+
+yAxis = (0,1,0) [grid gy → +Y]
+
+For -Z:
+
+Looking at the -Z face from outside (from -Z direction), what's "right"?
+
+In UV/texture space, right is still +X in texture, up is still +Y in texture
+
+When rendered on the -Z face, we need to flip horizontally so text isn't mirrored
+
+Actually, if I rotate the button by 180° around Y, the button's front now faces -Z. Grid gx needs to map to world -X (to keep text readable when viewed from -Z).
+
+Hmm wait. Let me think again.
+
+If I rotate a plane 180° around Y, its normal flips from +Z to -Z. Its local X axis flips from (1,0,0) to (-1,0,0). Its local Y stays (0,1,0).
+
+So the button is now facing -Z. When viewed from -Z direction (from -Z looking at +Z), the button's local +X appears as... hmm let me think. If I'm at (0,0,-5) looking at (0,0,0), then world +X is to my left, world -X is to my right (because I'm looking in +Z direction, up is +Y, and right-hand rule gives right = +X cross +Y = +Z × +Y = -X... wait).
+
+Right = forward × up? Or up × forward? For a camera, right = forward × up in a right-handed... hmm.
+
+Actually: camera looking direction is +Z. Camera up is +Y. Camera right = looking × up = (0,0,1) × (0,1,0) = (0*0-1*1, 1*0-0*0, 0*1-0*0) = (-1, 0, 0).
+
+So from a camera at -Z looking toward +Z: right = -X.
+
+So the button's local +X (which after 180° Y rotation points to world -X) appears to the right when viewed from -Z. Good - text stays readable.
+
+Now for grid mapping on -Z face:
+
+local X axis (after rotation) points to world -X
+
+So grid gx (positive → local +X) maps to world -X
+
+So xAxis for -Z = (-1, 0, 0). And yAxis = (0,1,0).
+
+world position = (0,0,-1) * (HALF+offset) + (-1,0,0) * gx + (0,1,0) * gy
+= (-gx, gy, -HALF-offset)
+
+OK matches what I had before.
+
+Similarly for +X face (rotate 90° around Y):
+
+local +X (1,0,0) after 90° Y rotation: (0,0,-1). So world -Z.
+
+local +Y (0,1,0) unchanged.
+
+xAxis = (0,0,-1), yAxis = (0,1,0)
+
+world position = (1,0,0) * (HALF+offset) + (0,0,-1) * gx + (0,1,0) * gy
+= (HALF+offset, gy, -gx)
+
+For -X face (rotate -90° around Y):
+
+local +X → (0,0,1)
+
+xAxis = (0,0,1), yAxis = (0,1,0)
+
+world position = (-HALF-offset, gy, gx)
+
+For +Y face (rotate -90° around X):
+
+local +X stays (1,0,0)
+
+local +Y (0,1,0) after -90° X: (0,0,-1)
+
+xAxis = (1,0,0), yAxis = (0,0,-1)
+
+world position = (0,1,0) * (HALF+offset) + (1,0,0)gx + (0,0,-1)gy
+= (gx, HALF+offset, -gy)
+
+For -Y face (rotate 90° around X):
+
+local +X stays (1,0,0)
+
+local +Y (0,1,0) after 90° X: (0,0,1)
+
+xAxis = (1,0,0), yAxis = (0,0,1)
+
+world position = (gx, -HALF-offset, gy)
+
+All confirmed.
+
+Now let me also think about the rotation to apply to each button so its "front" faces outward.
+
+The button mesh's local +Z should align with face normal.
+
+Rotation for each face:
+
++Z: no rotation
+
+-Z: rotate 180° around Y
+
++X: rotate 90° around Y
+
+-X: rotate -90° around Y
+
++Y: rotate -90° around X
+
+-Y: rotate 90° around X
+
+I can set rotation via Euler angles:
+
++Z: (0, 0, 0)
+
+-Z: (0, π, 0)
+
++X: (0, π/2, 0)
+
+-X: (0, -π/2, 0)
+
++Y: (-π/2, 0, 0)
+
+-Y: (π/2, 0, 0)
+
+For the button mesh geometry, I'll use BoxGeometry so all faces have proper UVs. The +Z face of the box will show the symbol.
+
+Actually wait - for -Z face using BoxGeometry with (0, π, 0) rotation, the box's local +Z face now points to world -Z. Its UVs on that face will show the symbol correctly.
+
+OK, and for symbol placement on the button, I need the symbol texture on the +Z face of the button. With BoxGeometry, +Z face has UV (0,0) at bottom-left, (1,1) at top-right. Good.
+
+Actually with BoxGeometry, the +Z face (front) has UVs mapped 0-1. When I apply a texture, it shows on all 6 faces. That would mirror the symbol on side and back faces.
+
+Better: use a separate thin plane on top of a box.
+
+OR: use just a plane (no thickness). But then no "raised" look.
+
+Hmm. Let me use BoxGeometry but with material array - one material per face. The +Z face gets the symbol material, others get transparent glass.
+
+Actually simpler: BoxGeometry is 6 faces. Material array index:
+
+0: +X
+
+1: -X
+
+2: +Y
+
+3: -Y
+
+4: +Z (front)
+
+5: -Z (back)
+
+So:
+
+js
+const materials = [
+    glassMat, glassMat, glassMat, glassMat, symbolMat, glassMat
+];
+Where symbolMat has the map = symbol texture, transparent = true.
+
+Wait, but symbolMat needs to be per-button (different textures).
+
+So each button = new THREE.Mesh(boxGeo, [glassMat, glassMat, glassMat, glassMat, symbolMat, glassMat]) - creates 6-material array per button.
+
+That's 96 × 2 = 192 button meshes × 6 materials = 1152 material references. But since glassMat is shared, only 192 unique symbolMats + 1 glassMat.
+
+OK let's do this.
+
+Actually let me simplify further - I'll use a single material for the button and put a separate thin plane on top for the symbol.
+
+Actually, let's just use BoxGeometry with material array. Simpler.
+
+Hmm, but with transparent materials and lighting, we might get z-fighting.
+
+Alright let me just go with the box approach and be careful.
+
+Actually, I just realized: if the button is entirely transparent glass, the symbol material (which is on just the front face) will be visible, and we'll see through the button to the crystal. That's exactly what we want!
+
+So button = BoxGeometry(0.3, 0.3, 0.06)
+Materials array = [glass, glass, glass, glass, symbolMat, glass]
+
+Where symbolMat = MeshBasicMaterial({map: symbolTex, transparent: true, color: 0xcd7f32}) - wait, if the texture is already bronze-gold colored, no need for color.
+
+Actually let me make the symbol material standard/physical for nice metallic look.
+
+Hmm, but then the transparent background of the symbol texture might not show through correctly. Let me use MeshBasicMaterial with transparent: true and the symbol texture. The texture's transparent areas let the glass show through.
+
+Actually for a metallic look, MeshStandardMaterial with:
+
+map: symbol texture
+
+transparent: true
+
+alphaTest: 0.1 (or not, since we want partial transparency)
+
+metalness: 1
+
+roughness: 0.3
+
+Hmm, transparent + metalness might be weird. Let me just use MeshBasicMaterial for simplicity.
+
+OK let me just write the code and stop overthinking.
+
+Wait, one issue: I said the crystal cube should be transparent, and buttons should also be transparent with just symbols visible. If everything is transparent, it might be hard to see the structure. But with proper lighting and reflections, it should look good.
+
+Let me use:
+
+Crystal: MeshPhysicalMaterial with transmission 0.95, clear glass
+
+Buttons: MeshPhysicalMaterial glass + symbol texture
+
+The symbol texture uses bronze-gold colors with metallic look
+
+Actually, I think the simplest is:
+
+Buttons: single mesh, BoxGeometry, material = MeshPhysicalMaterial with:
+
+map: symbol texture (transparent bg)
+
+transmission: 0.85
+
+ior: 1.5
+
+roughness: 0.05
+
+transparent: true
+
+The symbol shows through as colored metal
+
+Hmm, transmission affects color. Let me test mentally...
+
+With MeshPhysicalMaterial and transmission, the map colors the transmitted light. So a gold symbol would appear gold, and transparent areas would show refracted background (the crystal cube).
+
+Actually, I think that works!
+
+But there might be an issue: transmission in MeshPhysicalMaterial is designed for light passing through the material. The map color multiplies the transmitted color. So a bronze/gold symbol would make that area tinted bronze/gold. The transparent areas would just show the crystal.
+
+OK let's try:
+
+js
+const buttonMat = new THREE.MeshPhysicalMaterial({
+    map: symbolTex,
+    transparent: true,
+    transmission: 0.9,
+    thickness: 0.05,
+    ior: 1.544,
+    roughness: 0.05,
+    metalness: 0.0,
+    clearcoat: 1.0,
+    side: THREE.FrontSide
+});
+Hmm but this uses one material per button (per texture), so 16 button materials. Plus we need them per face orientation... actually no, same material works for all orientations.
+
+Alright, final plan:
+
+Generate 16 symbol textures (with transparent bg)
+
+Create 16 button materials (MeshPhysicalMaterial with each texture)
+
+Create shared button geometry (BoxGeometry)
+
+For each cube, create 96 buttons grouped by face
+
+Each button's material is from the button materials array based on button index
+
+Raycast against buttons
+
+Let me code.
+
+Wait, I need to be careful about UV orientation on the -Z face. When rotated 180° around Y, the button's texture will be mirrored (because the front +Z face of the box now points to world -Z, and viewed from world -Z, the UV orientation is flipped).
+
+Actually no - when viewed from world -Z direction (looking toward +Z), and the button is rotated 180° around Y:
+
+The +Z face of the button (with the texture) is now facing world -Z
+
+Viewed from world -Z, the +Z face's texture is seen... let me think.
+
+The +Z face of the box has corners:
+
+(0,0,0) has UV (0,0) → bottom-left
+
+(1,0,0) has UV (1,0) → bottom-right
+
+(0,1,0) has UV (0,1) → top-left
+
+(1,1,0) has UV (1,1) → top-right
+
+After 180° Y rotation, (1,0,0) becomes (-1,0,0). So the vertex at local (1,0,0) with UV(1,0) is now at world (-1,0,0). When viewed from -Z direction (camera at -Z looking +Z), world +X appears to the LEFT (since right = -X from that view). So the vertex with UV (1,0) at world (-1,0,0)... from camera, -X is right, so it appears at right. Good, no mirroring.
+
+Wait, actually let me reconsider. The camera at (0,0,-5) looking at origin (0,0,0):
+
+Forward direction: +Z (from camera toward target)
+
+Up: +Y
+
+Right: forward × up... actually in Three.js, camera right is not exactly forward × up. Let me just think physically.
+
+You're in space looking toward +Z. Your up is +Y. Which direction is your right hand pointing? Using right-hand rule: right × up = -forward. So right × (0,1,0) = -(0,0,1). Let right = (rx, ry, rz). Then:
+(rx, ry, rz) × (0,1,0) = (ry0 - rz1, rz0 - rx0, rx1 - ry0) = (-rz, 0, rx)
+And this equals (0, 0, -1). So -rz = 0 → rz = 0, rx = -1. So right = (-1, 0, 0).
+
+Yes, right = -X when looking at +Z direction. Confirmed.
+
+So a point at world (-1, 0, 0) appears at right side of screen. That point has UV (1, 0) [bottom-right of texture]. It appears at right of screen. Correct!
+
+Good, no mirroring issue.
+
+For the +X face after 90° Y rotation:
+
+Button's local +Z now points to world +X. Viewed from +X direction, the button shows.
+
+Camera at (5,0,0) looking at (0,0,0): forward = -X. Up = +Y. Right = forward × up = (-1,0,0) × (0,1,0) = (0*0-0*1, 0*0-(-1)*0, (-1)*1-0*0) = (0, 0, -1). So right = -Z.
+
+Button local (1,0,0) [with UV(1,0), bottom-right of texture] after 90° Y rotation becomes (0,0,-1). This is at world -Z direction from button center. From camera (looking -X), right = -Z. So this point appears at right of screen. Correct! No mirroring.
+
+Similarly for other faces. Good.
+
+Now let me finally write the code.
+
+Also I need to handle the button press animation. Since the button mesh is a child of the crystal mesh (or a group with same rotation), and its local position is on the surface of the cube, pressing in means moving along -normal direction in the crystal's local coord.
+
+Wait, "normal" in crystal local coords is the face's outward normal (before crystal rotation). E.g., for +Z face buttons, the local normal is (0,0,1). Move button in -Z direction to press in.
+
+The button's base position in crystal-local coords is (0, 0, HALF + offset) for +Z face buttons. Pressing in: position = (0, 0, HALF + offset - pressAmount).
+
+Let me store basePos and faceNormalLocal (unit vector) in each button's userData.
+
+Then in animation:
+
+If pressed, offset = userData.press * 0.05
+
+button.position.copy(basePos).addScaledVector(faceNormalLocal, -offset)
+
+Press animation: userData.press goes 1 → 0 over time. Initial press = 1 (fully pressed), decays.
+
+Wait but if I click and press = 1, then immediately (in same frame) it shows pressed. Then over next frames decays to 0. That looks like: instantly pressed, then slowly released. That's fine.
+
+Alternatively:
+
+Set press = 1 (pressed)
+
+Each frame, press *= 0.9 or press -= 0.08
+
+When press < 0.01, set to 0
+
+Alright, let me code it all.
+
+Last thing - the crystal cube. With transmission 1.0, we may have performance issues. Let me use transmission ~0.9 or so for better perf.
+
+Also with transmission, mesh needs a thickness parameter. For a 1.65 cube, thickness ~1.5.
+
+And side: THREE.FrontSide or DoubleSide? For transmission, FrontSide is usually fine.
+
+I'll use:
+
+js
+transmission: 0.95,
+thickness: 1.5,
+ior: 1.544,
+roughness: 0.02,
+metalness: 0.0,
+clearcoat: 1.0,
+reflectivity: 0.3,
+envMapIntensity: 1.5
+OK writing now.
+
+Oh one more thing - I need to make sure the buttons don't ALL face the same way. Since I'm placing them on all 6 faces of the cube, and the cube is rotated to stand on a vertex, some buttons will be facing "up" etc.
+
+I'll handle this by having separate button groups for each face, and setting the appropriate position + rotation for each.
+
+Let me write the final code.
+
+Actually I want to reduce the mesh count. Instead of 96 buttons per cube (each its own mesh), let me see if I can use instancing... but each button has a different texture and material, so instancing isn't straightforward.
+
+Alternatively, one canvas texture per face with the 4x4 grid, and no individual button meshes. But then we lose the "raised" and "press" animation.
+
+Compromise: raise the whole face as one unit? No, user wants individual buttons.
+
+OK, 96 buttons per cube is fine. Modern GPUs handle thousands of meshes. Let's go.
+
+Hmm, actually for performance I'll merge geometries... but then press animation breaks.
+
+Let me just do it. 96×2 = 192 button meshes. Plus 2 crystal meshes, plus 260 particles. Should run fine on modern hardware.
+
+For raycasting 192 buttons per click, that's fine.
+
+Alright, code time. For real this time.
+
+I'll also make sure that when the user clicks on a button, only the pressed button animates, not all of them.
+
+Let me handle it this way:
+
+Global array allButtons containing all buttons
+
+Each button has userData: { index, faceNormal, basePos, press: 0 }
+
+On click, set btn.userData.press = 1
+
+In animate, decay all buttons' press values
+
+Actually for simplicity, let me store press only on buttons that are currently animated. Or just iterate all 192 buttons each frame - that's fine.
+
+OK, let me write.
+
+Hmm actually let me reconsider the "грань" rotation. The user said earlier "поворачивались только на следующую грань" (rotate only to the next face). This means 90° steps. And we should keep this behavior.
+
+The NAV buttons in the corners should trigger these rotations. Non-NAV buttons just play a sound.
+
+OK. Writing.
+
+For the keyboard also: let me add arrow key support since the user might find it useful.
+
+Actually no, let me keep it simple and focused on what's requested.
+
+Let me write the final code.
+
+One last consideration: with transparent glass buttons on transparent glass cube, will the buttons be visible enough?
+
+The symbol texture provides the visual. The button shape itself might be subtle. That's fine - the user wants "стеклянные прозрачные выпуклые" (glass transparent convex).
+
+For "выпуклые" (convex), I need the button to have some curvature. Let me use a domed geometry.
+
+OK, I'll create a custom geometry for the button that's domed on top.
+
+Actually, let me just use a slightly rounded box shape via multiple segments. Or a PlaneGeometry with displaced vertices.
+
+Simplest: use PlaneGeometry with subdivision and displace for dome.
+
+js
+function createDomedButtonGeometry(size, depth) {
+    const geo = new THREE.PlaneGeometry(size, size, 8, 8);
+    const pos = geo.attributes.position;
+    const half = size / 2;
+    for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i) / half;
+        const y = pos.getY(i) / half;
+        const d = Math.sqrt(x*x + y*y);
+        // Parabolic dome
+        const z = Math.max(0, (1 - d*d)) * depth;
+        pos.setZ(i, z);
+    }
+    geo.computeVertexNormals();
+    return geo;
+}
+This gives a domed plane. But it's one-sided. For a button, we want a closed shape.
+
+OK let me just go with the box. The "выпуклость" comes from the beveled look I can achieve via material/shading. Or I could add a slight bevel via a second geometry layer.
+
+You know what, let me just use a simple box, add a light bevel by using a thin cylinder shape... nah.
+
+Fine. Box. Move on.
+
+Actually - I could use THREE.CylinderGeometry with 4 sides and a rounded top by using a cone... no.
+
+Let me just use a BoxGeometry and not worry about "convex" too much. The user will see transparent buttons with symbols; the raised aspect comes from the button being 0.06 thick above the crystal surface.
+
+Actually, let me try another approach for the button shape: use a low-poly "dome" or "pyramid frustum".
+
+js
+function createButtonGeometry(size, height) {
+    // Pyramid frustum: bottom square larger than top square
+    const bottom = size;
+    const top = size * 0.85;
+    const halfB = bottom / 2;
+    const halfT = top / 2;
+    const h = height;
+    
+    const geo = new THREE.BufferGeometry();
+    // ... manual vertex construction
+}
+Too much manual work. Let me just use BoxGeometry.
+
+Final: BoxGeometry. Moving on.
+
+Let me now write the complete code. Here goes.
+
+Wait, one more important thing: I need to make sure the button textures are the symbols only (transparent bg), and the symbols look bronze-gold.
+
+Bronze: #cd7f32
+Gold: #ffd700
+Dark gold: #b8860b
+
+I'll use a gradient from gold to bronze across the symbol.
+
+For a metallic look, I'll use MeshStandardMaterial or MeshPhysicalMaterial with these colors, but since it's a texture map, the colors come from the texture.
+
+Let me make sure the texture has an alpha channel where the symbol is opaque and background is transparent.
+
+Alright, writing now.
+
+Oh also: I should probably remove the buttonLabels reference from the old code since we're using textures now.
+
+Let me structure the final file.
+
+Actually, I realize I should keep the buttonLabels array for feedback messages. Yes.
+
+Let me write.
+
+Hmm, I also realize with 192 buttons each using BoxGeometry, memory might be an issue. Each BoxGeometry with default segments (1,1,1) is 24 vertices - very cheap. 192 × 24 = 4608 vertices total. Fine.
+
+Materials: 16 textures × ~256×256 = manageable.
+
+OK code time.
+
+Actually, since the front face of the button shows the symbol, and the other faces should be transparent glass, I need a material array. Or I can just use a single material with the symbol texture and transparent: true — the symbol won't show on other faces since they're opaque... wait, the texture would show on all faces (with different UV mappings).
+
+The +Z face of the box shows the texture correctly (0-1 UVs).
+The +X face of the box shows the texture too (with different UV mapping).
+etc.
+
+So using a single material for all faces means the symbol appears on all faces. Not ideal.
+
+Solution: use material array. 6 materials, only +Z has the symbol.
+
+js
+const materials = [
+    glassMat, glassMat, glassMat, glassMat, symbolMat, glassMat
+];
+But then I need a separate glassMat (shared) and each button has its own symbolMat.
+
+Actually, since I want the button to be mostly transparent, maybe I can just use symbolMat on all faces but with the symbol texture having a mostly-transparent background. The sides would show a stretched version of the symbol but it'd be transparent so barely visible.
+
+Hmm, that could work but might look weird on close inspection.
+
+Let me use the material array approach. It's cleaner.
+
+For the material array, I'll share one glassMat across all buttons and one symbolMat per unique texture (16 total).
+
+Let me write the code.
+
+Actually there's a subtle issue with transparent materials and multiple transparent objects: rendering order and alpha blending. Transparent objects need to be rendered back-to-front. Three.js does this automatically, but with 192 buttons × 2 cubes... might be slow.
+
+To be safe, let me use alphaTest instead of transparent blending where possible. But the crystal needs real transparency (transmission) which uses a different rendering pass.
+
+Actually, transmission in MeshPhysicalMaterial uses a separate render target - not regular transparency. So it should work fine with regular transparency of buttons.
+
+Let me just go with it.
+
+Alright, FINAL code:
+
+Let me also think about whether to render the crystal cube at all if buttons are on all faces. Yes, the crystal provides the glass container look.
+
+OK writing.
+
+Let me also double check: should the buttons be children of the crystal mesh (so they inherit rotation) or of the pivot?
+
+If children of the crystal, they inherit the crystal's rotation (vertex alignment), so their local positions are in the unrotated cube's coordinate system. That's convenient.
+
+But if I need to animate the button position, and the crystal is rotated, then setting position in the crystal's local coords works correctly.
+
+Yes, children of the crystal mesh. Let me do that.
+
+Wait, but the crystal mesh itself has BoxGeometry. Adding children to it means their positions are relative to the box's center (which is the crystal's center). Good.
+
+Alright, writing now. For real.
+
+Let me structure it:
+
+text
+1. Audio & Karaoke engine (unchanged)
+2. Three.js scene setup
+3. Environment map for reflections
+4. Crystal material definition
+5. Button symbol texture generation (16 textures)
+6. Button geometry and materials
+7. Cube creation with buttons on all faces
+8. Rotation controls (NAV buttons in corners)
+9. Press animation on click
+10. Animation loop
+Let me write the code.
+
+Hmm, one more thing. When I raycast against the buttons, I need to make sure the buttons on the far side of the cube don't block the near side. Since I'm raycasting and taking the closest hit, this is handled automatically.
+
+But wait - transparent materials, by default, don't block raycaster from "seeing through". Raycaster just checks geometry intersection regardless of material opacity. So the nearest button is picked correctly.
+
+But this means if the user clicks "through" a near-side button... no wait, they click on a visible button. The nearest button is the one they see. Correct.
+
+OK writing.
+
+Also, I want the whole experience to be responsive. Let me make sure the button layout scales with cube size properly.
+
+Alright.
+
+For the button size: cube face is 1.65. 4x4 grid means cell size = 1.65/4 = 0.4125. Button size should be ~0.33 (with padding ~0.08).
+
+Grid positions:
+
+text
+const FACE = 1.65;
+const CELL = FACE / 4;  // 0.4125
+const BTN_SIZE = 0.32;
+const GRID_HALF = FACE / 2;  // 0.825
+
+for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 4; col++) {
+        const gx = -GRID_HALF + CELL * (col + 0.5);
+        const gy = GRID_HALF - CELL * (row + 0.5);  // row 0 at top
+        // ...
+    }
+}
+gx range: -0.825 + 0.206 = -0.619 to 0.825 - 0.206 = 0.619. Good.
+gy range: 0.619 to -0.619. Good.
+
+OK now writing. For real.
+
+I'll write the code now, and try to keep it clean.
+
+Wait, one thing about the crystal material - MeshPhysicalMaterial with transmission requires a bit of setup. Let me make sure we're not overdoing it.
+
+Also I realize I need to not cast shadows (we don't have shadow mapping enabled), so that's fine.
+
+And I realize - with fully transparent crystal and transparent buttons, the whole scene might be hard to see. Let me add some emissive gold highlights to the buttons/edges to make them pop.
+
+Actually, the buttons' symbols are bronze-gold which will provide color. And the crystal's edge reflections will define the cube shape. Should be OK.
+
+Let me add a subtle wireframe edge to the crystal to make the cube silhouette visible.
+
+OK writing now.
+
+Let me finalize the code:
+
+js
+// Global button list for press animation
+const allButtons = [];
+
+// Button textures: 16 (index 0..15)
+const buttonTextures = [];
+for (let i = 0; i < 16; i++) {
+    buttonTextures.push(createButtonTexture(i));
+}
+
+// Button materials: one per texture (used on +Z face)
+const buttonSymbolMats = buttonTextures.map(tex => new THREE.MeshBasicMaterial({
+    map: tex,
+    transparent: true,
+    opacity: 1.0,
+    color: 0xffffff,
+    side: THREE.FrontSide,
+    depthWrite: false
+}));
+
+// Shared glass material for button sides/back
+const buttonGlassMat = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.0,
+    roughness: 0.1,
+    transmission: 0.9,
+    thickness: 0.05,
+    ior: 1.5,
+    transparent: true,
+    opacity: 0.4,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.05,
+    depthWrite: false
+});
+Hmm, but the buttonSymbolMat being MeshBasicMaterial means it's not affected by lighting. For a metallic gold look, I'd want MeshStandardMaterial. But then transparency might be weird.
+
+Actually let me just use MeshBasicMaterial and make the texture itself look metallic (using gradient + highlights).
+
+The texture drawing: I'll add highlights to the symbols to make them look metallic.
+
+For a MeshBasicMaterial, the color comes directly from the texture, so if I draw a bronze-gold gradient with bright highlights, it'll look metallic.
+
+OK.
+
+Now let me write everything.
+
+Also, the symbol plane needs to face outward. With BoxGeometry, +Z face is material index 4. When material index 4 has the symbol, that face shows the symbol. When the box is rotated so +Z faces outward (i.e., not rotated for the +Z face of the cube), the symbol appears on the outside.
+
+For the -Z face of the cube, the button is rotated 180° around Y so its +Z face points to world -Z. Correct.
+
+Alright.
+
+Wait - I realize I could also make the button's whole material transparent with the symbol map directly, ignoring the side material. Let me use a single material with the map and transparent: true. The map is transparent where there's no symbol, so the sides of the box also get this transparent look. Slight UV weirdness on sides but they're transparent anyway. Simpler code.
+
+Yes, let me do that:
+
+js
+const buttonMat = new THREE.MeshPhysicalMaterial({
+    map: symbolTex,
+    transparent: true,
+    transmission: 0.5,
+    thickness: 0.05,
+    ior: 1.5,
+    roughness: 0.1,
+    metalness: 0.5,  // make the symbol metallic-ish
+    clearcoat: 1.0,
+    side: THREE.DoubleSide
+});
+Hmm, but the map affects all faces with the same texture. The sides would show a stretched symbol.
+
+Actually let me just do the material array. It's cleaner.
+
+OK let me finally write it.
+
+Actually, thinking about it more - here's the simplest clean approach:
+
+Each button = a thin BoxGeometry with a SINGLE material (the symbol material).
+The symbol material has the texture + transparency.
+
+Since the texture is mostly transparent (only the symbol is opaque), the sides and back of the box appear mostly transparent too (they show the transparent parts of the texture).
+
+The only weirdness: if the symbol is centered, the sides might show a sliver of the symbol's edge. But with double-sided material and most of the texture transparent, this is barely noticeable.
+
+Let me go with this. Simple, and works.
+
+js
+const buttonGeo = new THREE.BoxGeometry(BTN_SIZE, BTN_SIZE, BTN_THICK);
+// One material per button (uses that button's texture)
+OK let me write.
+
+Actually I realize the box's top face (+Z) uses the full 0-1 UV. The other faces also use 0-1 UV. So the symbol texture appears on all faces but oriented differently.
+
+For the button to look clean, I should probably use material array. But let me try the simple approach first and see if it works.
+
+Ugh, I keep going back and forth. Let me just commit:
+
+Use material array - [glass, glass, glass, glass, symbolMat, glass]
+
+That's clean. Done.
+
+But to avoid transparent-render-order issues, I'll skip the glass side material and use the symbol material for all sides (making the button just a textured box with transparency).
+
+Hmm, no. Let me commit to material array.
+
+Actually the issue with material array: the button now has 6 materials, and I need to create the array per button (or reuse for buttons with the same index). Since I have 16 unique textures, I can create 16 material arrays (each with the same 5 glass references and 1 unique symbol reference). Then reuse those arrays for all buttons with the same index.
+
+Yes! Let me do that.
+
+js
+const materialArrays = [];
+for (let i = 0; i < 16; i++) {
+    materialArrays.push([
+        glassMat, glassMat, glassMat, glassMat,
+        new THREE.MeshBasicMaterial({ map: buttonTextures[i], transparent: true, side: THREE.FrontSide }),
+        glassMat
+    ]);
+}
+Then for each button:
+
+js
+const btn = new THREE.Mesh(buttonGeo, materialArrays[buttonIndex]);
+Great. Now 16 material arrays, 16 symbol materials, 1 glass material.
+
+Alright, coding.
+
+Also for press animation, I want to know which button was clicked. Since raycaster returns the mesh, I can check mesh.userData.index.
+
+OK let me write.
+
+For the animation loop:
+
+js
+function animate() {
+    requestAnimationFrame(animate);
+    
+    // Rotate pivots toward targets
+    pivotLeft.rotation.y += (targetRotLeft - pivotLeft.rotation.y) * 0.1;
+    pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.1;
+    
+    // Press animation
+    for (const btn of allButtons) {
+        const ud = btn.userData;
+        if (ud.press > 0) {
+            ud.press = Math.max(0, ud.press - 0.08);
+            const offset = ud.press * 0.06;
+            btn.position.copy(ud.basePos).addScaledVector(ud.normal, -offset);
+        }
+    }
+    
+    // Float
+    const t = clock.getElapsedTime();
+    pivotLeft.position.y = Math.sin(t * 1.8) * 0.08;
+    pivotRight.position.y = Math.cos(t * 1.8) * 0.08;
+    
+    particles.rotation.y = t * 0.03;
+    
+    renderer.render(scene, camera);
+}
+Great.
+
+For the raycast, I need to make sure the click event doesn't fire on buttons when clicking on other UI elements. Actually, the karaoke stage has pointer-events: none, so it won't intercept. Good.
+
+But the click event on document will fire for any click. I need to raycast and see if any button is hit.
+
+OK. Writing now for real.
+
+Final layout of buttons on cube face:
+
+For each face (6):
+For each row 0-3:
+For each col 0-3:
+buttonIndex = row * 4 + col
+Compute gx, gy
+Compute world position in cube-local coords
+Create button mesh at that position with rotation
+
+Let me write the face configs:
+
+js
+const FACES = [
+    // +Z
+    { n: new THREE.Vector3(0,0,1), xA: new THREE.Vector3(1,0,0), yA: new THREE.Vector3(0,1,0),
+      rot: new THREE.Euler(0, 0, 0) },
+    // -Z
+    { n: new THREE.Vector3(0,0,-1), xA: new THREE.Vector3(-1,0,0), yA: new THREE.Vector3(0,1,0),
+      rot: new THREE.Euler(0, Math.PI, 0) },
+    // +X
+    { n: new THREE.Vector3(1,0,0), xA: new THREE.Vector3(0,0,-1), yA: new THREE.Vector3(0,1,0),
+      rot: new THREE.Euler(0, Math.PI/2, 0) },
+    // -X
+    { n: new THREE.Vector3(-1,0,0), xA: new THREE.Vector3(0,0,1), yA: new THREE.Vector3(0,1,0),
+      rot: new THREE.Euler(0, -Math.PI/2, 0) },
+    // +Y
+    { n: new THREE.Vector3(0,1,0), xA: new THREE.Vector3(1,0,0), yA: new THREE.Vector3(0,0,-1),
+      rot: new THREE.Euler(-Math.PI/2, 0, 0) },
+    // -Y
+    { n: new THREE.Vector3(0,-1,0), xA: new THREE.Vector3(1,0,0), yA: new THREE.Vector3(0,0,1),
+      rot: new THREE.Euler(Math.PI/2, 0, 0) }
+];
+Then:
+
+js
+const HALF = CUBE_SIZE / 2; // 0.825
+const ELEVATION = 0.035; // button center's distance from face surface (above face)
+
+for (const face of FACES) {
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+            const idx = row * 4 + col;
+            const gx = -GRID_HALF + CELL * (col + 0.5);
+            const gy = GRID_HALF - CELL * (row + 0.5);
+            
+            const pos = new THREE.Vector3();
+            pos.copy(face.n).multiplyScalar(HALF + ELEVATION)
+               .addScaledVector(face.xA, gx)
+               .addScaledVector(face.yA, gy);
+            
+            const btn = new THREE.Mesh(buttonGeo, materialArrays[idx]);
+            btn.position.copy(pos);
+            btn.rotation.copy(face.rot);
+            btn.userData = {
+                index: idx,
+                normal: face.n.clone(),
+                basePos: pos.clone(),
+                press: 0
+            };
+            crystalLeft.add(btn);
+            allButtons.push(btn);
+            
+            // Same for right
+            const btn2 = new THREE.Mesh(buttonGeo, materialArrays[idx]);
+            btn2.position.copy(pos);
+            btn2.rotation.copy(face.rot);
+            btn2.userData = {
+                index: idx,
+                normal: face.n.clone(),
+                basePos: pos.clone(),
+                press: 0
+            };
+            crystalRight.add(btn2);
+            allButtons.push(btn2);
+        }
+    }
+}
+Wait, I need to make sure the crystal mesh's rotation doesn't affect the button positions in an unexpected way.
+
+If crystalLeft.rotation is set to align the diagonal vertex with up, and then I add children to it, the children's local positions are in the crystal's local coordinate system (pre-rotation). So the button at local (0, 0, HALF) is on the +Z face of the unrotated cube, which after rotation is somewhere else in world space.
+
+Yes that's what I want.
+
+But wait: when I set crystalLeft.rotation, the children inherit this rotation. But when I set a child's position, it's in the parent's local space. So the position I set is interpreted in the unrotated cube's frame. Correct.
+
+And the child's own rotation adds to the parent's. So the button's final orientation is crystal's rotation × button's own rotation. If the button's own rotation is set to face the appropriate face of the unrotated cube, then after crystal rotation it faces the same face of the rotated cube. Correct.
+
+OK.
+
+Also, one issue: since the crystal mesh itself is raycastable (it's a box), clicking on it might return hits. But I only raycast buttons, so it's fine.
+
+Actually no, I should be careful: the buttons are children of the crystal mesh, and clicking on the crystal might still return hits if the crystal's raycast is triggered. But since I only intersect against crystalLeft.children or the specific button list, this isn't an issue.
+
+Actually, I need to make sure I'm only raycasting buttons. Let me create separate arrays for left and right buttons.
+
+js
+const buttonsLeft = [];
+const buttonsRight = [];
+// ...
+buttonsLeft.push(btn);
+buttonsRight.push(btn2);
+Then raycast against buttonsLeft and buttonsRight.
+
+OK writing now.
+
+Let me put it together.
+
+Hmm, I realize with 96 buttons per cube it's 96 individual mesh adds. That's fine.
+
+Let me also handle: after clicking a NAV button, we rotate. But we also need to play sound and start karaoke.
+
+And for non-NAV buttons, just play sound and feedback.
+
+OK.
+
+Let me write it all out.
+
+One more thought - performance. With transparent glass materials and transmission, 192 buttons with transmission 0.5 each... transmission is expensive. Let me set transmission to 0 for buttons (just use transparent: true with opacity).
+
+Actually for buttons, let me just use a regular transparent material (not transmission). Something like:
+
+js
+const buttonGlassMat = new THREE.MeshPhysicalMaterial({
+    color: 0xeef4ff,
+    metalness: 0.1,
+    roughness: 0.1,
+    transparent: true,
+    opacity: 0.25,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.1,
+    side: THREE.DoubleSide,
+    depthWrite: false
+});
+And symbol material:
+
+js
+const symbolMat = new THREE.MeshBasicMaterial({
+    map: symbolTex,
+    transparent: true,
+    depthWrite: false,
+    side: THREE.FrontSide
+});
+The symbol material has depthWrite false so it doesn't block, and the texture's alpha handles visibility.
+
+Material array: [glass, glass, glass, glass, symbol, glass]
+
+Hmm, but with depthWrite false and both transparent, the render order might be off. Let me test.
+
+Actually, since the button's front face has the symbol and back faces are glass, and the whole thing is mostly transparent, ordering should be fine.
+
+Let me set:
+
+Symbol material: depthWrite false, transparent true
+
+Glass material: depthWrite false, transparent true
+
+Crystal: depthWrite true (it's a solid-ish body)
+
+Hmm, actually crystal with transmission needs depthWrite... let me leave it as default.
+
+OK coding.
+
+Let me also reduce cube size slightly or adjust camera.
+
+Alright, final code:
+
+I'll write it now.
+
+html
