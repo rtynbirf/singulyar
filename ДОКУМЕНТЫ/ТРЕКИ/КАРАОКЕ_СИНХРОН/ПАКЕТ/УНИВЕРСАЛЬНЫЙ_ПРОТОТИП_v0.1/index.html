@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101720">
+<title>Singulyar — универсальное караоке</title>
+<style>
+:root{color-scheme:dark;--bg:#101720;--panel:#192431;--line:#344354;--ink:#f2f6fb;--muted:#aab8c7;--accent:#a8e6cf;--warn:#ffd18a;--danger:#ff9b9b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#101720,#172736);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1050px;margin:auto;padding:24px 16px 60px}header{margin-bottom:20px}h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.1;margin:0 0 10px}h2{font-size:1.15rem;margin:0 0 14px}p{margin:8px 0}.sub{color:var(--muted);max-width:760px}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--accent);font-size:.82rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.panel{background:rgba(25,36,49,.96);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
+label{display:block;color:var(--muted);font-size:.92rem;margin:10px 0 5px}input,select,textarea,button{font:inherit;border-radius:10px;border:1px solid var(--line);padding:10px 12px;width:100%;background:#0f1821;color:var(--ink)}textarea{min-height:82px;resize:vertical}button{cursor:pointer;background:#24394a;font-weight:650}button.primary{background:var(--accent);color:#11201b;border-color:var(--accent)}button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1;min-width:145px}.status{padding:10px 12px;background:#0e171f;border-radius:10px;border:1px solid var(--line);color:var(--muted);white-space:pre-wrap}.status.good{color:var(--accent)}.status.bad{color:var(--danger)}.tiny{font-size:.88rem;color:var(--muted)}.row{display:flex;gap:10px;align-items:center}.row>*{flex:1}.lyrics{font-size:clamp(1.25rem,3vw,1.8rem);line-height:1.55;padding:16px;border-radius:12px;background:#0e171f;min-height:90px}.feed{max-height:240px;overflow:auto;display:flex;flex-direction:column;gap:8px}.msg{padding:9px 11px;border-radius:10px;background:#0e171f;border:1px solid #293847;overflow-wrap:anywhere}.msg small{color:var(--muted);display:block}.flag{border-left:4px solid var(--warn);padding:10px 12px;background:#2b261c;border-radius:8px}.hidden{display:none!important}footer{color:var(--muted);font-size:.85rem;margin-top:24px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}main{padding:16px 12px 40px}.panel{padding:14px}.actions button{min-width:100%}.row{flex-direction:column;align-items:stretch;gap:0}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <span class="pill">ПРОТОТИП v0.1 · НЕ ГОТОВЫЙ ПЕРЕВОДЧИК ПЕНИЯ</span>
+  <h1>Singulyar — одна песня, разные языки</h1>
+  <p class="sub">Бразилия ↔ Япония: общий аудиоканал, текстовый канал и демонстрация озвучивания перевода. Исходный голос передаётся партнёру; автоматический перевод живого пения пока не подключён.</p>
+</header>
+
+<section class="panel">
+<h2>1. Участник и комната</h2>
+<div class="grid">
+  <div>
+    <label for="name">Как к вам обращаться</label><input id="name" value="Бразилия" maxlength="40">
+    <label for="sourceLang">Мой язык</label>
+    <select id="sourceLang"><option value="pt-BR">Португальский (Бразилия)</option><option value="ja-JP">Японский</option><option value="ru-RU">Русский</option><option value="en-US">Английский</option><option value="es-ES">Испанский</option></select>
+  </div>
+  <div>
+    <label for="targetLang">Язык собеседника / перевода</label>
+    <select id="targetLang"><option value="ja-JP">Японский</option><option value="pt-BR">Португальский (Бразилия)</option><option value="ru-RU">Русский</option><option value="en-US">Английский</option><option value="es-ES">Испанский</option></select>
+    <label for="room">Код комнаты</label><input id="room" placeholder="Например, K7M4Q2" maxlength="12" autocomplete="off">
+  </div>
+</div>
+<div class="actions">
+<button class="primary" id="createRoom">Создать комнату</button>
+<button id="joinRoom">Подключиться по коду</button>
+<button id="copyRoom">Копировать код</button>
+</div>
+<p id="connectionStatus" class="status">Не подключено. Создайте комнату или введите код существующей.</p>
+</section>
+
+<section class="panel">
+<h2>2. Живой аудиоканал</h2>
+<p class="tiny">Для работы нужен микрофон и разрешение браузера. В публичной сети для надёжной связи обычно потребуется настроенный TURN-сервер.</p>
+<div class="actions">
+<button class="primary" id="micOn">Включить микрофон</button><button id="micOff" disabled>Выключить микрофон</button><button id="hangup">Завершить связь</button>
+</div>
+<div class="grid" style="margin-top:14px">
+<div><label>Мой микрофон</label><div id="localStatus" class="status">Выключен</div></div>
+<div><label>Входящий звук партнёра</label><div id="remoteStatus" class="status">Ожидание партнёра</div></div>
+</div>
+<audio id="remoteAudio" autoplay playsinline controls style="width:100%;margin-top:12px"></audio>
+</section>
+
+<section class="panel">
+<h2>3. Текстовый перевод — демонстрация потока</h2>
+<div class="flag">Демонстрационный словарь содержит только несколько фраз. Это не нейросетевой переводчик и не перевод аудио. Для настоящего перевода подключается отдельный сервис через документированный адаптер.</div>
+<label for="phrase">Фраза на моём языке</label>
+<textarea id="phrase" placeholder="Напишите фразу, которую хотите передать собеседнику…"></textarea>
+<div class="actions"><button class="primary" id="demoTranslate">Показать демо-перевод</button><button id="sendText">Отправить исходный текст партнёру</button></div>
+<label for="translation">Демонстрационный перевод / текст для озвучивания</label>
+<textarea id="translation" placeholder="Результат появится здесь. Проверяйте перевод перед использованием."></textarea>
+<div class="actions"><button id="speakTranslation">Озвучить текст</button><button id="stopSpeech">Остановить озвучивание</button></div>
+</section>
+
+<section class="panel">
+<h2>4. Караоке-пульт</h2>
+<p class="tiny">Пока это пульт и временная строка. Реальная синхронизация слов с нотами требует размеченного текста песни и музыкального таймлайна.</p>
+<div class="grid">
+<div><label for="originalLyrics">Оригинальная строка</label><textarea id="originalLyrics">Eu quero cantar com você</textarea></div>
+<div><label for="translatedLyrics">Строка на языке слушателя</label><textarea id="translatedLyrics">あなたと一緒に歌いたい</textarea></div>
+</div>
+<div class="lyrics" id="lyricsView" aria-live="polite">Eu quero cantar com você<br><span style="color:var(--accent)">あなたと一緒に歌いたい</span></div>
+<div class="actions"><button id="showLyrics">Обновить строки</button><button id="speakLyrics">Озвучить перевод строки</button></div>
+</section>
+
+<section class="panel">
+<h2>5. События комнаты</h2><div id="feed" class="feed" aria-live="polite"></div>
+<div class="actions"><button id="clearFeed">Очистить список событий на этом устройстве</button></div>
+</section>
+
+<footer>
+Приватность: не отправляйте секреты или чувствительные сведения в тестовой комнате. В этой версии нет пользовательских аккаунтов и долговременного хранения сообщений; сигналинг использует код комнаты. Для публичного сервиса нужны политика хранения, согласие участников, аутентификация и независимый аудит.
+</footer>
+</main>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+let ws = null, pc = null, localStream = null, roomCode = '', peerId = null, clientId = crypto.randomUUID();
+let isInitiator = false, makingOffer = false, ignoreOffer = false;
+const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }; // production: add managed TURN
+function log(text, who='Система') {
+  const el = document.createElement('div'); el.className='msg';
+  const small = document.createElement('small'); small.textContent = `${new Date().toLocaleTimeString()} · ${who}`;
+  const body = document.createElement('div'); body.textContent = text;
+  el.append(small, body); $('feed').prepend(el);
+}
+function status(text, kind='') { $('connectionStatus').textContent=text; $('connectionStatus').className='status '+kind; }
+function setRoom(code) { roomCode=code; $('room').value=code; }
+function randomCode(){return Math.random().toString(36).slice(2,8).toUpperCase();}
+function sendSignal(payload) {
+  if (ws && ws.readyState===WebSocket.OPEN) ws.send(JSON.stringify({ ...payload, room:roomCode, from:clientId }));
+}
+function connectSignal() {
+  return new Promise((resolve,reject)=>{
+    const scheme=location.protocol==='https:'?'wss':'ws';
+    ws=new WebSocket(`${scheme}://${location.host}/signal`);
+    ws.onopen=()=>resolve();
+    ws.onerror=()=>reject(new Error('Не удалось подключиться к серверу сигналинга.'));
+    ws.onclose=()=>{ if(roomCode) status('Сигналинг отключён. Проверьте сеть и сервер.','bad'); };
+    ws.onmessage=async ev=>{
+      let m; try{m=JSON.parse(ev.data)}catch{return}
+      if(m.from===clientId)return;
+      if(m.type==='joined'){
+        peerId=m.peerId||null;
+        status(`Комната ${roomCode}: ${m.peers} участник(а/ов).`,'good'); log('Подключение к комнате подтверждено.');
+        if(m.shouldOffer && pc) await makeOffer();
+      } else if(m.type==='peer-joined'){
+        peerId=m.from; log('Подключился второй участник.');
+        if(pc && isInitiator) await makeOffer();
+      } else if(m.type==='offer'){
+        await ensurePeer();
+        try { await pc.setRemoteDescription(m.description); const answer=await pc.createAnswer(); await pc.setLocalDescription(answer); sendSignal({type:'answer',description:pc.localDescription}); }
+        catch(e){log('Не удалось согласовать аудио: '+e.message); }
+      } else if(m.type==='answer'){
+        try { if(pc) await pc.setRemoteDescription(m.description); } catch(e){log('Ошибка ответа WebRTC: '+e.message);}
+      } else if(m.type==='candidate'){
+        try { if(pc && m.candidate) await pc.addIceCandidate(m.candidate); } catch(e){if(!ignoreOffer) log('ICE-кандидат не принят: '+e.message);}
+      } else if(m.type==='text'){
+        log(`${m.name||'Собеседник'}: ${m.text}`,'Входящее сообщение');
+      } else if(m.type==='peer-left'){
+        peerId=null; $('remoteStatus').textContent='Собеседник отключился'; log('Собеседник вышел из комнаты.');
+      } else if(m.type==='error'){
+        status(m.message||'Ошибка сигналинга','bad'); log(m.message||'Ошибка сигналинга');
+      }
+    };
+  });
+}
+async function ensurePeer(){
+  if(pc) return pc;
+  pc=new RTCPeerConnection(rtcConfig);
+  pc.onicecandidate=e=>{if(e.candidate)sendSignal({type:'candidate',candidate:e.candidate})};
+  pc.ontrack=e=>{$('remoteAudio').srcObject=e.streams[0]; $('remoteStatus').textContent='Получен аудиопоток'; log('Получен звук собеседника.')};
+  pc.onconnectionstatechange=()=>{ $('remoteStatus').textContent='Состояние WebRTC: '+pc.connectionState; };
+  pc.onnegotiationneeded=async()=>{if(isInitiator) await makeOffer()};
+  if(localStream) localStream.getTracks().forEach(t=>pc.addTrack(t,localStream));
+  return pc;
+}
+async function makeOffer(){
+  if(!pc || makingOffer) return;
+  try{makingOffer=true; await pc.setLocalDescription(await pc.createOffer()); sendSignal({type:'offer',description:pc.localDescription});}
+  catch(e){log('Не удалось создать предложение WebRTC: '+e.message)} finally{makingOffer=false;}
+}
+async function enterRoom(create){
+  try{
+    if(ws) {ws.close(); ws=null}
+    if(create || !$('room').value.trim()) setRoom(randomCode()); else setRoom($('room').value.trim().toUpperCase());
+    isInitiator=create; await connectSignal();
+    sendSignal({type:'join',name:$('name').value.trim()||'Участник',create,sourceLang:$('sourceLang').value,targetLang:$('targetLang').value});
+    status(`Подключение к комнате ${roomCode}…`);
+  }catch(e){status(e.message,'bad')}
+}
+$('createRoom').onclick=()=>enterRoom(true);
+$('joinRoom').onclick=()=>enterRoom(false);
+$('copyRoom').onclick=async()=>{try{await navigator.clipboard.writeText(roomCode||$('room').value);log('Код комнаты скопирован.')}catch{log('Не удалось скопировать автоматически — выделите код вручную.')}};
+$('micOn').onclick=async()=>{
+  try{
+    if(!navigator.mediaDevices?.getUserMedia) throw new Error('Браузер не предоставляет доступ к микрофону в этом контексте. Откройте HTTPS или localhost.');
+    localStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+    $('localStatus').textContent='Микрофон включён'; $('micOn').disabled=true; $('micOff').disabled=false;
+    await ensurePeer();
+    // If peer already exists, add tracks now.
+    if(pc) localStream.getTracks().forEach(t=>{if(!pc.getSenders().some(s=>s.track===t))pc.addTrack(t,localStream)});
+    if(isInitiator && peerId) await makeOffer();
+    log('Микрофон включён. Голос передаётся как исходное аудио, без перевода.');
+  }catch(e){$('localStatus').textContent=e.message;log(e.message)}
+};
+$('micOff').onclick=()=>{if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null} $('localStatus').textContent='Выключен';$('micOn').disabled=false;$('micOff').disabled=true;log('Микрофон выключен.');};
+$('hangup').onclick=()=>{if(localStream)localStream.getTracks().forEach(t=>t.stop());localStream=null;if(pc){pc.close();pc=null}if(ws){sendSignal({type:'leave'});ws.close();ws=null}peerId=null;roomCode='';$('localStatus').textContent='Выключен';$('remoteStatus').textContent='Связь завершена';$('micOn').disabled=false;$('micOff').disabled=true;status('Связь завершена.');log('Вы вышли из комнаты.')};
+$('sendText').onclick=()=>{const text=$('phrase').value.trim();if(!text)return;if(!ws||ws.readyState!==WebSocket.OPEN){log('Сначала подключитесь к комнате.');return}sendSignal({type:'text',text,name:$('name').value||'Участник'});log('Вы: '+text,'Исходящее сообщение');};
+const demo={
+ 'pt-BR|ja-JP':{'Olá, tudo bem?':'こんにちは、お元気ですか？','Eu quero cantar com você':'あなたと一緒に歌いたい','Eu gosto de você':'あなたが好きです','Vamos cantar juntos':'一緒に歌いましょう'},
+ 'ja-JP|pt-BR':{'こんにちは、お元気ですか？':'Olá, tudo bem?','あなたと一緒に歌いたい':'Eu quero cantar com você','あなたが好きです':'Eu gosto de você','一緒に歌いましょう':'Vamos cantar juntos'},
+ 'pt-BR|en-US':{'Olá, tudo bem?':'Hello, how are you?','Eu quero cantar com você':'I want to sing with you'},
+ 'ja-JP|en-US':{'こんにちは、お元気ですか？':'Hello, how are you?','あなたと一緒に歌いたい':'I want to sing with you'}
+};
+$('demoTranslate').onclick=()=>{
+ const src=$('sourceLang').value,tgt=$('targetLang').value,phrase=$('phrase').value.trim();
+ if(!phrase){log('Введите фразу для демонстрации.');return}
+ const dict=demo[`${src}|${tgt}`]||{};
+ const result=dict[phrase]||'ДЕМО: для этой фразы нет записи в словаре. Подключите настоящий переводческий адаптер.';
+ $('translation').value=result; log('Показан демонстрационный результат; это не автоматический перевод.');
+};
+function speak(text,lang){
+ if(!('speechSynthesis' in window)){log('В этом браузере нет синтеза речи.');return}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=lang;
+ const voices=speechSynthesis.getVoices();const base=lang.toLowerCase().split('-')[0];
+ const v=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase())||voices.find(v=>v.lang.toLowerCase().startsWith(base));
+ if(v)u.voice=v;u.onerror=e=>log('Ошибка синтеза речи: '+e.error);speechSynthesis.speak(u);
+}
+$('speakTranslation').onclick=()=>{const t=$('translation').value.trim();if(t)speak(t,$('targetLang').value)};
+$('stopSpeech').onclick=()=>speechSynthesis?.cancel();
+$('showLyrics').onclick=()=>{$('lyricsView').replaceChildren();const a=document.createElement('div');a.textContent=$('originalLyrics').value;const b=document.createElement('div');b.style.color='var(--accent)';b.textContent=$('translatedLyrics').value;$('lyricsView').append(a,b)};
+$('speakLyrics').onclick=()=>speak($('translatedLyrics').value,$('targetLang').value);
+$('clearFeed').onclick=()=>{$('feed').replaceChildren()};
+$('sourceLang').onchange=()=>{if($('sourceLang').value===$('targetLang').value) log('Выбран одинаковый язык источника и получателя.')};
+$('targetLang').onchange=()=>{speechSynthesis?.cancel()};
+log('Прототип запущен. Для двух участников откройте страницу в двух окнах.');
+})();
+</script>
+</body>
+</html>
