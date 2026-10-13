@@ -9,7 +9,7 @@
 | Camera | PERMISSION_REQUIRED | `getUserMedia` existence | add explicit user action and stop tracks |
 | Microphone | PERMISSION_REQUIRED | `getUserMedia` existence | add explicit user action and stop tracks |
 | OCR | EXPERIMENTAL | no model bundled | add pinned Tesseract.js worker/model and offline cache test |
-| Whisper local | EXPERIMENTAL | no WASM/model bundled | pin whisper.cpp build + model, benchmark target devices |
+| Whisper local | EXPERIMENTAL | contract implemented (v10.94 «ГОЛОС»): speech.mjs ledger + pin-glue (SHA-256, mismatch → data withheld) + WER/CER bench; no weights in the house | owner drops weights via ЛЮК_ВЕСОВ_WHISPER.md → registerWhisperModel pin → READY; benchmark corpus → track ledger |
 | Gaze | EXPERIMENTAL | no calibrated gaze implementation | Face Landmarker + calibration + mapping + dwell tests |
 | Braille | EXPERIMENTAL | Unicode only | WebHID/OS accessibility adapter where available |
 | Demucs | EXPERIMENTAL | no WASM/model bundled | benchmark memory/latency before inclusion |
