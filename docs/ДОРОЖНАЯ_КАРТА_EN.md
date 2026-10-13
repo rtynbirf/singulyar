@@ -55,7 +55,7 @@ Line format: status · ID · source · closure criterion. **Lines 👤 are never
 
 ### Line ADAPTER-OS · the bus of meanings
 
-- **А3** · 🌐 **Contracts without implementations: OCR / local Whisper / gaze / Braille / Demucs** — pinned models and benchmarks needed (track ledger). *Closed when:* a model is pinned and passes contract tests; until then statuses stay EXPERIMENTAL — honestly.
+- **А3** · 🌐→🔧 **Step 1 of five done (v10.94 «ГОЛОС»/«THE VOICE»): local Whisper — contract implemented** — **owner's priority (2026-10-13): 1) local Whisper (speech is the core), 2) OCR, 3) gaze, 4) Demucs, 5) Braille — last: narrow audience, lots of work**. `БИБЛИОТЕКИ/adapter-os/adapters/speech.mjs`: ledger `adapter-os.speech.v1` + weight pinning (SHA-256 of glued parts, all-or-nothing, mismatch → data withheld) + strict segment parsing + honest mock + `распознать` door + `createSpeechAdapter` (EXPERIMENTAL→READY on pin); `adapters/speech-bench.mjs`: WER/CER benchmark (clockless protocol, refusals never become metrics); `tools/раскрой_весов.py` + `docs/ЛЮК_ВЕСОВ_WHISPER.md`: the weights hatch (ggml → parts ≤100 MB → singulyar-llm → pin); tests **16/16** + their regression **4/4** intact. Status — honestly EXPERIMENTAL: no weights in the house, the pin awaits the owner (*closed when:* a model is pinned and passes contract tests — tests green, pin awaits the hatch). Remaining queue: OCR (step 2), gaze (3), Demucs (4), Braille (5).
 
 ### Line LADOM_SINGULAR · emergent composition track
 
