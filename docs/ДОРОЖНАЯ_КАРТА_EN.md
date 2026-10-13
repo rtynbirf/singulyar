@@ -1,7 +1,7 @@
 # THE UNIFIED ROADMAP of the SINGULAR home
 
 > **Semantic translation** of [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) — sense over letters (law of the 200-language track: «carry the meaning»).
-> **Status:** ✅ Current · **Tact:** v10.89.1 «ЛАТКА УУП» («THE UUP PATCH») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
+> **Status:** ✅ Current · **Tact:** v10.91 «УНИСОН» («THE UNISON») · **Updated:** 2026-10-13 · Translation opened by tact v10.78.
 > Line IDs (Д / Г / А / Л / Ж / К / П / Э) are kept as identifiers — they match the Russian canon byte-for-byte, so agents and people can cross-reference without ambiguity.
 
 > **Owner's standing order:** «MERGE ALL ROADMAPS INTO ONE AND FINISH EVERY TAIL, CLOSING EVERY LINE OF THE ROADMAP». This document is the whole front of the house in one place. The original lives where it lives; its open lines are consolidated in section 2 of the Russian canon — mirrored here.
@@ -20,7 +20,7 @@ Each map stays where it lives (no duplicates); its **open lines** are consolidat
 | 2 | КВАРТИРНИК roadmaps v1.0 / v1.1 / v1.2 | `ДОКУМЕНТЫ/Дорожная_карта_ЛАДОМ_v1.0..v1.2.pdf/docx` | chronicle: P0/P1/P2 closed by tacts v10.12–v10.29; open tails (verdicts, ЭП-11, keys, dictionary) consolidated into the canon |
 | 3 | КОЛЛЕГА map (373 features, P0→P2) | `ДОКУМЕНТЫ/Дорожная_карта_ЛАДОМ_КОЛЛЕГА.pdf/docx` | chronicle: catalogue and P0-trio delivered; owner verdicts — line Д3 |
 | 4 | RUVSON MASTER-PLAN × 157 languages | `ДОКУМЕНТЫ/МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md` | **FULFILLED**: phases 0–5 absorbed by tacts КОНВЕЙЕР/СМЫСЛ/ДОРОГА/ГАММА (157 → 200 languages, corpus 732/732) |
-| 5 | МАЛЫШ-PLAN (kid-agent autonomy) | `ДАННЫЕ/МАЛЫШ_ПЛАН.manifest.json` | steps 1–2 ✅ (61 songs, 732/732 pairs); step 3 (phoneme timings) was Д1 — closed v10.76; step 4 ✅ (v10.73: 12-language axis on all 60 hall songs) |
+| 5 | МАЛЫШ-PLAN (kid-agent autonomy) | `ДАННЫЕ/МАЛЫШ_ПЛАН.manifest.json` | steps 1–2 ✅ (61 songs, 732/732 pairs); step 3 (phoneme timings) was Д1 — closed v10.76; step 4 ✅ (v10.73: 12-language axis on all 60 hall songs); **v10.91 «УНИСОН»: ASR-draft axes drift line-by-line (proven by ASR match) — SCENE: tail auto-cal removed, manual shift ±30 s, per-line tuning ±0.5 s with memory, word weights by syllables; axis regeneration from masters (ASR pipeline) — queued** |
 | 6 | ГОТОВНОСТЬ (status registry) | `ГОТОВНОСТЬ.manifest.json` | a registry of facts, not a map; grows with tacts |
 | 7 | House ТЗ (user stories) | `docs/ТЗ.md` (RU) · `docs/ТЗ_EN.md` (EN, v10.77) | promises US-01–US-16; reconciled with the canon |
 | 8 | ADAPTER OS (slices) | `ДОКУМЕНТЫ/ADAPTER_OS.md` | slices 1–6 ✅; model contracts — line А3 |
