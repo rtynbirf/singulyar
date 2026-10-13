@@ -21,6 +21,7 @@
 - Camera/Microphone permission probe: только проверка возможностей, без скрытого запуска.
 - Browser speech adapter: только если браузер предоставляет SpeechRecognition; статус явно помечается `browser-dependent`.
 - Speech (Whisper) adapter: контракт `input.whisper-local` с реализацией-дверью (v10.94 «ГОЛОС»): ledger `adapter-os.speech.v1`, пин весов (SHA-256 склейки частей, расхождение — данные не выдаются), строгий разбор сегментов, честный мок; без пина — EXPERIMENTAL, честно.
+- OCR adapter: контракт `input.ocr` с реализацией-дверью (v10.95 «ЧТЕНИЕ»): ledger `adapter-os.ocr.v1`, подпись картинки по магическим байтам (6 форматов — не по ярлыку), пустой текст — честная пустота чистого листа, пин модели, честный мок; без пина — EXPERIMENTAL, честно.
 - Adapter ledger: LOCAL / BROWSER / NETWORK / EXPERIMENTAL / UNAVAILABLE.
 
 ## Что намеренно НЕ заявлено как готовое
@@ -50,6 +51,7 @@ python -m http.server 8080 -d prototype
 ```bash
 node tests/run-tests.mjs        # их база — 4/4 (не тронута)
 node tests/test-speech.mjs      # v10.94 «ГОЛОС» — 16/16 (контракт Whisper)
+node tests/test-ocr.mjs         # v10.95 «ЧТЕНИЕ» — 14/14 (контракт OCR)
 ```
 
 ## Архитектура

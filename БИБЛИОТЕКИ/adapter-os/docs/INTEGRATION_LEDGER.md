@@ -8,7 +8,7 @@
 | Browser speech | BROWSER_DEPENDENT | constructor probe only | prefer a verified local Whisper adapter when bundled |
 | Camera | PERMISSION_REQUIRED | `getUserMedia` existence | add explicit user action and stop tracks |
 | Microphone | PERMISSION_REQUIRED | `getUserMedia` existence | add explicit user action and stop tracks |
-| OCR | EXPERIMENTAL | no model bundled | add pinned Tesseract.js worker/model and offline cache test |
+| OCR | EXPERIMENTAL | contract implemented (v10.95 «ЧТЕНИЕ»): ocr.mjs ledger + pin + magic-byte honesty (6 formats) + CER/line-accuracy bench on shared measures; no model in the house | owner drops traineddata via ЛЮК_ВЕСОВ_OCR.md (rus → srp → kaz → deu) → registerOcrModel pin → READY; benchmark corpus → track ledger |
 | Whisper local | EXPERIMENTAL | contract implemented (v10.94 «ГОЛОС»): speech.mjs ledger + pin-glue (SHA-256, mismatch → data withheld) + WER/CER bench; no weights in the house | owner drops weights via ЛЮК_ВЕСОВ_WHISPER.md → registerWhisperModel pin → READY; benchmark corpus → track ledger |
 | Gaze | EXPERIMENTAL | no calibrated gaze implementation | Face Landmarker + calibration + mapping + dwell tests |
 | Braille | EXPERIMENTAL | Unicode only | WebHID/OS accessibility adapter where available |
