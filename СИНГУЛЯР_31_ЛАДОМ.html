@@ -2,6 +2,7 @@
 <html lang="ru" data-motion="on">
 <!-- такт v10.97 «ОТ ГОЛОСА» (С73; PAT №23; РЕПАРАЦИЯ: их v10.95 «ЧТЕНИЕ» (С71) и v10.96 «ГРУППЫ» (С72) байты восстановлены — мой прежний коммит d86b163 затёр их в 6 путях, признано и исправлено): приказ владельца — подсветка строки бежит ОТ ГОЛОСА (человек), а не от музыки (инструмент). 20 осей КАРАОКЕ перегенерированы ASR-конвейером по мастерам minus/min (якорь строки = измеренный вход голоса), формулировки «в такт музыке» исправлены на «в такт голосу», вшитый флагман сверен с голосом и не тронут. -->
 <head>
+<!-- такт v11.06 «ВОЛНА» (С82, PAT №29; поверх моего v11.05 «ПО СЛОВУ» (С81)): КС1 ТАКТ 2 — редактор синхрона видит песню: waveform-канвас #psWave (Web Audio декод ТЕКУЩЕГО минуса зала — тот же файл, что уже играет, ноль внешней сети И-01; отказ — честный, редактор жив), drag границ слов мышью/пальцем (pointer events, снап 10 мс, непрерывность токенов держится), syllable-уровень: резак по гласным (веса charW), слоги в токенах/тактах граны СЛОГ, Пробел ставит начало слога, слоги едут в склад/JSON; пробы волны/слогов честные (warn); window.SONG.cues — только чтение; И-01..И-05 нерушимы -->
 <!-- такт v11.05 «ПО СЛОВУ» (С81, PAT №29; поверх их v11.04 «ТУТТИ» (С80, 6b4dc06) и их v11.03 «ДУЭТ» (С79): КС1 МВП-редактор word-level — модуль __ПУЛЬССИНХРОН (пульс-синхрон/1): импорт/экспорт Enhanced LRC + JSON-юниты SyncUnit, IndexedDB «s31-склад»/библиотека (songId+версия), «применить к текущей песне»/«снять», ±0,05/±0,1/±0,3 с, одна кнопка (Пробел ставит начало слова), fallback слово→слог→буква→эвристика; Текст-пульс принимает точный синхрон: приоритет точных токенов в rebuild()/такты() при пустом дефолте байты прежние; window.SONG.cues — только чтение; И-01..И-05 нерушимы -->
 <!-- такт v10.96 «ГРУППЫ» (С72, ключ ⑲; СТОП-ГОРН ×2: их v10.93 «ПОРЯДОК» (С69, 9384a77), v10.94 «ГОЛОС» (С70, 05d62ca, PAT №26) и v10.95 «ЧТЕНИЕ» (С71, 9f639fb, PAT №26, OCR А3-шаг-2) приняты целиком — их ход первыми, их ЧТЕНИЕ встала между моим fetch и пушем (прецедент v10.91), мой такт перенумерован честно v10.96→v10.96, С72→С72, кэш v151→v152, летопись 84→85; их Whisper/OCR-контракты и их закон-доводку I-12 не задел; репарация: у их коммента v10.93 в шапке был стёрт открывающий «<!--» — восстановлен одной парой символов, их слова не тронуты). Приказ владельца 2026-10-13: «Я ТЕБЕ ЕГО ДАЛ ЧТОБ ТЫ СТРУКТУРУ ЕГО ИЗУЧИЛ!!! КАК НАМ У СЕБЯ НАДО ГРАМОТНО ОРГАНИЗОВАТЬ НАШ!!! ПУЛЬТ ГДЕ ВСЁ НАГЛЯДНО ДОСТУПНО И ЛЕГКО!!! И САМОЕ ГЛАВНОЕ РЕБЁНКУ ПОНЯТНО!!! А В НАШЕМ ПУЛЬТЕ ВСЁ БЕЗ ГРАМОТНО ВСЁ РАЗОРВАНО ПО РАЗНЫМ ВКЛАДКАМ ЧТО В КАЖДОЙ ВКЛАДКЕ ЧЁРТ НОГУ СЛОМИТ=) ПЕРЕДЕЛАЙ ВСЮ НАШУ СТРУКТУРУ ПУЛЬТА КАК ТУТ ЧТОБ ГРУППЫ И ВСЕ НАЖАЛ В ГРУППЕ РЕГУЛИРУ НАЖАЛ ВСЁ ВСЕ В ОДНОМ МЕСТЕ!!! ТОЛЬКО ПРО СПРАВКИ НЕ ЗАБУДЬ ЧТОБ ВСПЛЫВАЮЩАЯ ПОДСКАЗКА ПРИ НАВЕДЕНИИ КУРСОРОМ ВСПЛЫВАЛА С ПОДРОБНОЙ СПРАВКОЙ ФУНКЦИИ=) ДЕРЗАЙ Я В ТЕБЯ ВЕРЮ=)». Исполнение — ПУЛЬТ перестроен по структуре КОМБАЙНА владельца (его плагин Хром, МАНИФЕСТ №3; изучены popup.html/popup.js: группы-чипы, аккордеон «строка → настройки тут же», data-tip на каждом элементе + syncAriaTips, поиск по всему списку, ARIA-вкладки со стрелками): (1) ГРУППЫ ВМЕСТО ВКЛАДОК-СТЕН — модуль __ПУЛЬТ_ГРУППЫ (последний скрипт body): каждая вкладка-кнопка = ЗАГОЛОВОК ГРУППЫ (иконка + имя + пояснение «ребёнку понятно» + счётчик ручек + стрелка ▸), панель ручек перезжает В ТЕЛО группы (pg-body) — «нажал в группе — регулируй — всё в одном месте»; одна группа раскрыта (практика КОМБАЙНА), повторный клик сворачивает; открытие пульта — всегда с ВИДа (закон владельца v10.10 «ОДИН СЛОЙ» не тронут); память kv.pult.группа (реестр I-11) — честная память ДАННЫХ «где регулировал»; (2) НОЛЬ ПОЛОМАННЫХ ХУКОВ — кнопки остаются в .p-tabs с role=tab/aria-selected (стрелки, Home/End живы), tabs.open() и КРЫША-возврат кликают те же кнопки, все ~120 ручек со своими id/привязками не тронуты; ЛАБ и ЧЕТВЁРКА (дин-вкладки) оборачиваются в группы сами — MutationObserver на полосу и полотно, реестр открыт (новая вкладка = +1 группа); (3) СПРАВКИ — приказ «всплывающая подсказка с подробной справкой» исполнен трижды: каждая группа несёт ПОДРОБНЫЙ data-tip (2-4 предложения: что внутри, как работает, какие клавиши) → флоат-тип дома (hover 380 мс / фокус сразу / палец 460 мс / Esc / hoverable) + aria-label на заголовке (скринридер читает полную справку при фокусе — владелец незрячий) + столб p-справка (v10.67) показывает то же по наведению/фокусу; долгое нажатие пальцем на ряд внутри группы — справка в столбе с вибро-акцентом; (4) ПОИСК ПО ВСЕМ ГРУППАМ — applySearch переписан: запрос ищет по ВСЕМ группам сразу (практика КОМБАЙНА, было — по одной вкладке), группы с хитами раскрываются тут же, пустые прячутся, «Ничего не нашлось ни в одной группе» честно по всему пульту; (5) СЕТКА пульта: рейка-вкладок стала полотном групп во всю ширину (118px-столбец умер), столб справки 292px остался справа, на узких — группы сверху, справка снизу; две колонки ручек внутри раскрытой группы на широких, одна на узких; #pBody скрыт (панели живут в группах), pEmpty переехал к группам. Пробы ЗДОРОВЬЕ: __HEALTH36 (группы-аккордеон: ≥12 групп, aria-expanded, память), __HEALTH37 (поиск открывает все группы). APP/титул v10.96, кэш v151→v152. -->
 <!-- такт v10.93 «ПОРЯДОК» (С69; СТОП-ГОРН ×3: их v10.92 «СВОИ» (С68, c6e1442) принята целиком — их ход первым, мой такт перенумерован честно v10.92→v10.93, С68→С69, кэш v148→v149): ЗАКОН ЯЗЫКОВ I-12 — флагманы/·20/ремонт am→hy (см. CHANGELOG [10.93]) -->
@@ -1289,7 +1290,7 @@ body.тихо .ящ-таб{opacity:.26}
   <div class="psRow">
     <button id="psPrev" class="pbtn">← строка</button>
     <button id="psNext" class="pbtn">строка →</button>
-    <label class="psChk"><input type="checkbox" id="psSpace"> одна кнопка: Пробел ставит начало слова</label>
+    <label class="psChk"><input type="checkbox" id="psSpace"> одна кнопка: Пробел ставит начало слова/слога</label>
   </div>
   <div class="psRow" id="psNudge">
     <span class="psLab">выбранное слово, начало:</span>
@@ -1301,6 +1302,14 @@ body.тихо .ящ-таб{opacity:.26}
     <button class="pbtn" data-ps="0.3">+0,3 с</button>
     <button id="psNow" class="pbtn">начало = сейчас</button>
   </div>
+  <div class="psRow" id="psSyl">
+    <span class="psLab">слоги выбранного слова:</span>
+    <button id="psSplit" class="pbtn">разрезать на слоги</button>
+    <button id="psJoin" class="pbtn">слоги стереть</button>
+    <em class="pstat">грана СЛОГ ведёт по слогам, Пробел — начало слога</em>
+  </div>
+  <canvas id="psWave" width="900" height="110" style="display:block;width:100%;height:110px;border-radius:10px;background:#0d0d14;touch-action:none;cursor:ew-resize;margin:2px 0 4px" aria-label="волна песни: тап — выбрать слово, тяни границу мышью"></canvas>
+  <p class="psHint" id="psWaveHint">волна: ждёт песню — декодирую минус, который уже играет зал (тот же файл, ноль внешней сети, И-01)</p>
   <div id="psList" class="psList" role="list" aria-label="слова и тайминги"></div>
   <p class="psHint">eLRC: [мин:сек.сотки]строка &lt;мин:сек.сотки&gt;слово … · всё локально (И-01) · человек главнее автоматики (И-02) · ось window.SONG.cues не трогается.</p>
 </dialog>
@@ -15836,14 +15845,16 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
 (function(){
 "use strict";
 if (window.__ПУЛЬССИНХРОН) return;
-var ver = "v11.05 «ПО СЛОВУ»", канон = "пульс-синхрон/1";
+var ver = "v11.06 «ВОЛНА»", канон = "пульс-синхрон/1";
 var $ = function(id){ return document.getElementById(id); };
 var ПРИМЕНЁН = null;              /* { songId, версия, юнитов } */
 var ЮНИТЫ = [];                   /* SyncUnit[] текущего редактора */
 var ВЕРСИЯ = 0;                   /* версия синхрона (songId+версия в складе) */
 var ПЕСНЯ = function(){ try{ return (window.SONG && window.SONG.i) || "?"; }catch(e){ return "?"; } };
 var ПЕСНЯИМЯ = function(){ try{ return (window.SONG && window.SONG.t) || ""; }catch(e){ return ""; } };
-var КУРСОР = { строка: 0, слово: 0 };
+var КУРСОР = { строка: 0, слово: 0, слог: -1 };
+var ВОЛНА = null;                /* { пики:[], длит:с } — декод текущего минуса (v11.06 «ВОЛНА») */
+var ВОЛНА_ОТКАЗ = "";           /* src, на котором честно отказались — не долбим повторно */
 
 /* ── веса букв (копия закона дома — для раскладки внутри слова) ── */
 function charW(ch){
@@ -15971,6 +15982,15 @@ function токеныДляЭкрана(текст, гран, и){
     var s0 = кламп(ю.startMs/1000, a0, b0), e0 = кламп(ю.endMs/1000, s0+0.02, b0);
     if(пред && s0 > пред + 0.001) toks.push({ s:" ", w:+(s0-пред).toFixed(4), sp:true });
     if(гран==="word"){ toks.push({ s:ю.text, w:+(e0-s0).toFixed(4), sp:false }); }
+    else if(гран==="syl" && ю.слоги && ю.слоги.length){   /* v11.06 «ВОЛНА»: точные слоги главнее весов букв (И-05 внутри И-05) */
+      var предС = null;
+      ю.слоги.forEach(function(сг){
+        var ss = кламп(сг.startMs/1000, s0, e0), se = кламп(сг.endMs/1000, ss+0.01, e0);
+        if(предС != null && ss > предС + 0.001) toks.push({ s:" ", w:+(ss-предС).toFixed(4), sp:true });
+        toks.push({ s:String(сг.text||""), w:+(se-ss).toFixed(4), sp:false });
+        предС = se;
+      });
+    }
     else {
       var буквы = [...ю.text], вс = буквы.reduce(function(s,ch){ return s+charW(ch); },0) || 1, cur = s0;
       буквы.forEach(function(ch){
@@ -16004,7 +16024,15 @@ function тактыТочные(и, гран, a, b){
   с.юниты.forEach(function(ю){
     var s0 = кламп(ю.startMs/1000, а0, b0), e0 = кламп(ю.endMs/1000, s0+0.02, b0);
     if(s0 > пред + 0.002) out.push({ s:" ", a:+пред.toFixed(4), b:+s0.toFixed(4) });
-    out.push({ s:ю.text, a:+s0.toFixed(4), b:+e0.toFixed(4) });
+    if(гран==="syl" && ю.слоги && ю.слоги.length){   /* v11.06 «ВОЛНА»: слоги-такты */
+      var предС = null;
+      ю.слоги.forEach(function(сг){
+        var ss = кламп(сг.startMs/1000, s0, e0), se = кламп(сг.endMs/1000, ss+0.01, e0);
+        if(предС != null && ss > предС + 0.002) out.push({ s:" ", a:+предС.toFixed(4), b:+ss.toFixed(4) });
+        out.push({ s:String(сг.text||""), a:+ss.toFixed(4), b:+se.toFixed(4) });
+        предС = se;
+      });
+    } else out.push({ s:ю.text, a:+s0.toFixed(4), b:+e0.toFixed(4) });
     пред = e0;
   });
   if(пред < b0 - 0.002) out.push({ s:" ", a:+пред.toFixed(4), b:+b0.toFixed(4) });
@@ -16023,8 +16051,10 @@ function стат(){
   var st = $("psStat");
   if(st) st.textContent = ПРИМЕНЁН ? ("точный синхрон применён: "+ПРИМЕНЁН.юнитов+" слов, версия "+ПРИМЕНЁН.версия) : "точный синхрон не применён — пульс ведёт по весам строки";
 }
+
 function рисуйСписок(){
   if(!СПИСОК) return;
+  try{ рисуйВолну(); }catch(e){}
   СПИСОК.innerHTML = "";
   var ось = (window.SONG && window.SONG.cues) || [];
   if(!ЮНИТЫ.length){
@@ -16045,8 +16075,21 @@ function рисуйСписок(){
     b.type = "button"; b.className = "pbtn psW" + (k===КУРСОР.слово ? " on" : "");
     b.textContent = ю.text + " · " + фмт(ю.startMs);
     b.setAttribute("data-tip", "слово: "+фмт(ю.startMs)+" → "+фмт(ю.endMs));
-    b.addEventListener("click", function(){ КУРСОР.слово = k; рисуйСписок(); });
+    b.addEventListener("click", function(){ КУРСОР.слово = k; КУРСОР.слог = -1; рисуйСписок(); });
     див.appendChild(b);
+    if(ю.слоги && ю.слоги.length){                       /* v11.06 «ВОЛНА»: слоги под словом */
+      var сд = document.createElement("div"); сд.style.margin = "2px 0 6px 10px";
+      ю.слоги.forEach(function(сг, si){
+        var бс = document.createElement("button");
+        бс.type = "button"; бс.className = "pbtn psW" + (k === КУРСОР.слово && si === КУРСОР.слог ? " on" : "");
+        бс.style.fontSize = "12px";
+        бс.textContent = сг.text + " · " + фмт(сг.startMs);
+        бс.setAttribute("data-tip", "слог "+(si+1)+"/"+ю.слоги.length+": "+фмт(сг.startMs)+" → "+фмт(сг.endMs));
+        бс.addEventListener("click", function(){ КУРСОР.слово = k; КУРСОР.слог = si; рисуйСписок(); });
+        сд.appendChild(бс);
+      });
+      див.appendChild(сд);
+    }
   });
   if(!с.юниты.length){ var п2 = document.createElement("p"); п2.className="psHint"; п2.textContent="на этой строке слов не размечено"; СПИСОК.appendChild(п2); }
   СПИСОК.appendChild(див);
@@ -16057,29 +16100,231 @@ function выбЮнит(){
   КУРСОР.слово = кламп(КУРСОР.слово, 0, с.юниты.length-1);
   return с.юниты[КУРСОР.слово];
 }
+function выбСлог(){
+  var ю = выбЮнит(); if(!ю || !ю.слоги || !ю.слоги.length) return null;
+  if(КУРСОР.слог < 0 || КУРСОР.слог >= ю.слоги.length) return null;
+  return ю.слоги[КУРСОР.слог];
+}
+function нормСлоги(ю){
+  if(!ю || !ю.слоги) return;
+  ю.слоги.sort(function(x,y){ return x.startMs - y.startMs; });
+  for(var i=0;i<ю.слоги.length;i++){
+    var сг = ю.слоги[i], сл = (i+1 < ю.слоги.length) ? ю.слоги[i+1] : null;
+    сг.startMs = кламп(сг.startMs, ю.startMs, ю.endMs);
+    сг.endMs = сл ? Math.min(Math.max(сл.startMs, сг.startMs + 10), ю.endMs) : ю.endMs;
+    if(сг.endMs <= сг.startMs) сг.endMs = Math.min(сг.startMs + 10, ю.endMs);
+  }
+}
+function гласн(ch){ return /[аоыеэиюяёaeiouy]/i.test(ch); }
+function слогиИз(текст){
+  /* резак по группам гласных: согласные до гласной — влево, хвост — вправо; без гласных — один слог */
+  var т = [...String(текст||"")], слоги = [], буф = "", имел = false;
+  for(var i=0;i<т.length;i++){
+    буф += т[i];
+    if(гласн(т[i])){ имел = true; слоги.push(буф); буф = ""; }
+  }
+  if(буф){ if(имел && слоги.length) слоги[слоги.length-1] += буф; else слоги.push(буф); }
+  return слоги.length ? слоги : [String(текст||"")];
+}
+function разреж(ю){
+  if(!ю || !ю.text) return 0;
+  var части = слогиИз(ю.text);
+  if(части.length < 2){ скажи("слогов не выходит: «"+ю.text+"» — резать нечего"); return 0; }
+  var веса = части.map(function(t){ var с=0; for(var i=0;i<t.length;i++) с += charW(t[i]); return Math.max(0.3, с); });
+  var сумма = веса.reduce(function(a,b){ return a+b; }, 0) || 1;
+  var a0 = ю.startMs, b0 = ю.endMs, нак = 0;
+  ю.слоги = части.map(function(t, i){
+    нак += веса[i];
+    var край = (i+1 < части.length) ? (a0 + Math.round((b0-a0)*нак/сумма)) : b0;
+    return { text: t, startMs: a0, endMs: край };
+  });
+  /* старт каждого слога = конец предыдущего (по честной цепочке) */
+  for(var i=1;i<ю.слоги.length;i++) ю.слоги[i].startMs = ю.слоги[i-1].endMs;
+  нормСлоги(ю);
+  скажи("слово «"+ю.text+"» разрезано на "+ю.слоги.length+" слогов");
+  return ю.слоги.length;
+}
+/* ── волна (v11.06 «ВОЛНА»): тот же файл, что играет зал; ноль внешней сети (И-01) ── */
+function окноВолны(){
+  var с = юнитыСтроки(КУРСОР.строка);
+  var a0 = с ? с.a : 0, b0 = с ? с.b : (ВОЛНА ? ВОЛНА.длит : 12);
+  var пад = (b0 - a0) * 0.12 + 0.4;
+  var L = Math.max(0, a0 - пад), R = b0 + пад;
+  if(ВОЛНА && ВОЛНА.длит) R = Math.min(R, ВОЛНА.длит);
+  return { a: L, b: Math.max(R, L + 0.5) };
+}
+function вПикс(t, ок, w){ return (t - ок.a) / (ок.b - ок.a) * w; }
+function вРемя(x, ок, w){ return ок.a + (x / w) * (ок.b - ок.a); }
+function рисуйВолну(){
+  var cv = $("psWave"); if(!cv) return;
+  if(ДИАЛОГ && !ДИАЛОГ.open) return;                     /* закрыто — не жжём кадры */
+  var дпр = window.devicePixelRatio || 1;
+  var w = cv.clientWidth || 900, h = cv.clientHeight || 110;
+  if(cv.width !== Math.round(w*дпр) || cv.height !== Math.round(h*дпр)){ cv.width = Math.round(w*дпр); cv.height = Math.round(h*дпр); }
+  var кт = cv.getContext("2d"); if(!кт) return;
+  кт.setTransform(дпр, 0, 0, дпр, 0, 0);
+  кт.clearRect(0, 0, w, h);
+  var ок = окноВолны();
+  /* сетка секунд */
+  кт.lineWidth = 1; кт.font = "10px sans-serif";
+  for(var сс = Math.ceil(ок.a); сс <= Math.floor(ок.b); сс++){
+    var x = вПикс(сс, ок, w);
+    кт.strokeStyle = "#d4af3718"; кт.beginPath(); кт.moveTo(x, 0); кт.lineTo(x, h); кт.stroke();
+    кт.fillStyle = "#d4af3777"; кт.fillText(сс+"с", x+2, h-3);
+  }
+  /* сама волна */
+  if(ВОЛНА && ВОЛНА.пики && ВОЛНА.пики.length){
+    var N = ВОЛНА.пики.length, дл = ВОЛНА.длит || 60;
+    кт.fillStyle = "#d4af3726";
+    for(var px = 0; px < w; px++){
+      var t = ок.a + (px/w)*(ок.b-ок.a);
+      var пк = ВОЛНА.пики[Math.min(N-1, Math.max(0, Math.floor(t/дл*N)))] || 0;
+      var bh = Math.max(1, пк*(h-18));
+      кт.fillRect(px, (h-18-bh)/2, 1, bh);
+    }
+  } else {
+    кт.fillStyle = "#8a8a9a"; кт.font = "12px sans-serif";
+    кт.fillText("волны нет — аудио не декодировалось; редактор жив, слова рисуются рамками", 12, h/2);
+  }
+  /* слова строки */
+  var с = юнитыСтроки(КУРСОР.строка);
+  if(с) с.юниты.forEach(function(ю, k){
+    var x1 = вПикс(кламп(ю.startMs/1000, ок.a, ок.b), ок, w), x2 = вПикс(кламп(ю.endMs/1000, ок.a, ок.b), ок, w);
+    if(x2 < 0 || x1 > w) return;
+    var выбр = (k === КУРСОР.слово);
+    кт.fillStyle = выбр ? "#d4af3733" : "#ffffff10";
+    кт.fillRect(x1, 6, Math.max(2, x2-x1), h-24);
+    кт.strokeStyle = выбр ? "#d4af37" : "#d4af3755"; кт.lineWidth = выбр ? 2 : 1;
+    кт.strokeRect(x1, 6, Math.max(2, x2-x1), h-24);
+    if(ю.слоги && ю.слоги.length){
+      кт.strokeStyle = "#7fd4ff99"; кт.lineWidth = 1;
+      ю.слоги.forEach(function(сг, si){
+        if(si === 0) return;
+        var xs = вПикс(кламп(сг.startMs/1000, ок.a, ок.b), ок, w);
+        кт.beginPath(); кт.moveTo(xs, 6); кт.lineTo(xs, h-18); кт.stroke();
+      });
+    }
+    if(x2 - x1 > 16){
+      кт.fillStyle = выбр ? "#ffd977" : "#cfcfe0"; кт.font = "10px sans-serif";
+      кт.fillText(String(ю.text).slice(0, Math.max(1, Math.floor((x2-x1)/7))), x1+2, h-9);
+    }
+  });
+  /* курсор песни */
+  var пн = аудиоТепер()/1000;
+  if(пн >= ок.a && пн <= ок.b){
+    var xc = вПикс(пн, ок, w);
+    кт.strokeStyle = "#ff6b6b"; кт.lineWidth = 2;
+    кт.beginPath(); кт.moveTo(xc, 0); кт.lineTo(xc, h); кт.stroke();
+  }
+}
+function биндВолна(cv){
+  if(cv.__пс_волна) return; cv.__пс_волна = true;
+  var тян = null;
+  function лок(e){ var р = cv.getBoundingClientRect(); return { x: e.clientX - р.left }; }
+  cv.addEventListener("pointerdown", function(e){
+    var с = юнитыСтроки(КУРСОР.строка); if(!с || !с.юниты.length) return;
+    var ок = окноВолны(), w = cv.clientWidth || 900;
+    var л = лок(e), лучш = null, бл = 1e9;
+    с.юниты.forEach(function(ю, k){
+      [{ мс:ю.startMs, к:k, т:0 }, { мс:ю.endMs, к:k, т:1 }].forEach(function(г){
+        var d = Math.abs(вПикс(г.мс/1000, ок, w) - л.x);
+        if(d < бл){ бл = d; лучш = { к:k, т:г.т }; }
+      });
+    });
+    if(лучш && бл <= 9){                                  /* граница под курсором — тянем */
+      тян = лучш; try{ cv.setPointerCapture(e.pointerId); }catch(er){}
+      e.preventDefault(); return;
+    }
+    var t = вРемя(л.x, ок, w)*1000, нш = null;            /* тап — выбор слова */
+    с.юниты.forEach(function(ю, k){ if(t >= ю.startMs && t <= ю.endMs) нш = k; });
+    if(нш != null){ КУРСОР.слово = нш; КУРСОР.слог = -1; рисуйСписок(); }
+  });
+  cv.addEventListener("pointermove", function(e){
+    if(!тян) return;
+    var с = юнитыСтроки(КУРСОР.строка); if(!с) return;
+    var ю = с.юниты[тян.к]; if(!ю) return;
+    var ок = окноВолны(), w = cv.clientWidth || 900;
+    var мс = Math.round(вРемя(лок(e).x, ок, w)*1000 / 10) * 10;   /* снап 10 мс */
+    var iН = с.юниты.indexOf(ю);
+    if(тян.т === 0){
+      мс = кламп(мс, 0, ю.endMs - 20);
+      if(iН > 0) с.юниты[iН-1].endMs = мс;
+      ю.startMs = мс;
+    } else {
+      мс = Math.max(ю.startMs + 20, мс);
+      if(iН+1 < с.юниты.length) с.юниты[iН+1].startMs = мс;
+      ю.endMs = мс;
+    }
+    if(ю.слоги && ю.слоги.length) нормСлоги(ю);
+    рисуйВолну(); рисуйСписок();
+  });
+  function отпусти(){ тян = null; }
+  cv.addEventListener("pointerup", отпусти);
+  cv.addEventListener("pointercancel", отпусти);
+}
+function декодируйВолну(){
+  try{
+    if(ВОЛНА) return;
+    var а = window.__KV && window.__KV.audio;
+    if(!а || !а.src){ скажи("волна: в зале аудио нет — редактор жив"); return; }
+    if(ВОЛНА_ОТКАЗ === а.src) return;                     /* честный отказ уже записан */
+    var КТ = window.__ПС_ВолнаCTX;
+    try{ if(!КТ) КТ = window.__ПС_ВолнаCTX = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){}
+    if(!КТ){ ВОЛНА_ОТКАЗ = а.src; скажи("волна: Web Audio недоступен — честно, редактор жив"); return; }
+    fetch(а.src, { credentials: "omit", redirect: "error" }).then(function(r){
+      if(!r.ok) throw new Error("HTTP " + r.status);
+      return r.arrayBuffer();
+    }).then(function(аб){ return КТ.decodeAudioData(аб); }).then(function(буф){
+      var д = буф.getChannelData(0), N = 900, ш = Math.max(1, Math.floor(д.length / N));
+      var пики = [];
+      for(var i = 0; i < N; i++){
+        var м = 0;
+        for(var j = i*ш; j < Math.min(д.length, (i+1)*ш); j += 32){ var v = Math.abs(д[j]); if(v > м) м = v; }
+        пики.push(Math.round(м*100)/100);
+      }
+      ВОЛНА = { пики: пики, длит: буф.duration };
+      рисуйВолну();
+      var х = $("psWaveHint"); if(х) х.textContent = "волна: жива — "+буф.duration.toFixed(1)+" с · тяни границу слова мышью (снап 10 мс), тап — выбор слова";
+      скажи("волна декодирована: "+Math.round(буф.duration)+" с");
+    }).catch(function(e){
+      ВОЛНА_ОТКАЗ = а.src;
+      var х = $("psWaveHint"); if(х) х.textContent = "волна: не декодировалась («"+String((e&&e.message)||e)+"») — честный отказ, редактор жив";
+      рисуйВолну();
+    });
+  }catch(e){ скажи("волна: не вышло — "+String((e&&e.message)||e)); }
+}
 function аудиоТепер(){
   try{ var а = window.__KV && window.__KV.audio; return а && isFinite(а.currentTime) ? а.currentTime*1000 : 0; }catch(e){ return 0; }
 }
 function сдвиг(дмс){
   var ю = выбЮнит(); if(!ю) { скажи("слова не выбрано"); return; }
-  var ось = (window.SONG && window.SONG.cues) || [];
   var с = юнитыСтроки(КУРСОР.строка);
+  var сг = выбСлог();
+  if(сг){                                                /* v11.06: слог выбранный — двигаем слог */
+    сг.startMs = Math.max(0, сг.startMs + дмс);
+    if(с) сг.startMs = кламп(сг.startMs, Math.round(с.a*1000), Math.round(ю.endMs));
+    нормСлоги(ю); рисуйВолну(); рисуйСписок(); return;
+  }
   ю.startMs = Math.max(0, ю.startMs + дмс);
   if(с){ ю.startMs = кламп(ю.startMs, Math.round(с.a*1000), Math.round(с.b*1000)); }
-  рисуйСписок();
+  if(ю.слоги && ю.слоги.length) нормСлоги(ю);
+  рисуйВолну(); рисуйСписок();
 }
 function началоСейчас(){
   var с = юнитыСтроки(КУРСОР.строка);
   var ю = выбЮнит(); if(!ю) { скажи("слова не выбрано — строка пуста"); return; }
   var мс = Math.round(аудиоТепер());
   if(с) мс = кламп(мс, Math.round(с.a*1000), Math.round(с.b*1000));
+  var сг = выбСлог();
+  if(сг){ сг.startMs = мс; нормСлоги(ю); рисуйВолну(); рисуйСписок(); скажи("начало слога "+(КУРСОР.слог+1)+" = сейчас"); return; }   /* v11.06 */
   ю.startMs = мс;
   var соседи = с.юниты;
   соседи.sort(function(x,y){ return x.startMs - y.startMs; });
   var idx = соседи.indexOf(ю);
   for(var i=0;i<соседи.length-1;i++) соседи[i].endMs = соседи[i+1].startMs;
   if(idx+1 < соседи.length){ КУРСОР.слово = соседи.indexOf(соседи[idx+1]); } else { КУРСОР.слово = idx; }
-  рисуйСписок();
+  КУРСОР.слог = -1;
+  рисуйВолну(); рисуйСписок();
 }
 function примени(){
   if(!ЮНИТЫ.length){ скажи("юнитов нет — импортируй eLRC или разметь Пробелом"); return; }
@@ -16131,14 +16376,17 @@ function проба(){
   }
   return [
     { n:"пульс-синхрон: редактор в доме ("+ver+", "+канон+")", ok: жив },
-    { n:"пульс-синхрон: "+(ПРИМЕНЁН ? ("точный синхрон применён — "+ПРИМЕНЁН.юнитов+" слов, версия "+ПРИМЕНЁН.версия+", непрерывность токенов "+(честно?"сошлась":"РАЗЫВАЕТСЯ")) : ("не применён (юнитов в редакторе: "+ЮНИТЫ.length+") — пульс по весам дома")), ok: честно, warn: !ПРИМЕНЁН }
+    { n:"пульс-синхрон: "+(ПРИМЕНЁН ? ("точный синхрон применён — "+ПРИМЕНЁН.юнитов+" слов, версия "+ПРИМЕНЁН.версия+", непрерывность токенов "+(честно?"сошлась":"РАЗЫВАЕТСЯ")) : ("не применён (юнитов в редакторе: "+ЮНИТЫ.length+") — пульс по весам дома")), ok: честно, warn: !ПРИМЕНЁН },
+    { n:"пульс-синхрон: волна "+(ВОЛНА ? ("жива — "+(ВОЛНА.длит||0).toFixed(1)+" с, пиков "+ВОЛНА.пики.length) : "не декодирована (честный отказ/аудио нет) — редактор жив"), ok: true, warn: !ВОЛНА },
+    { n:"пульс-синхрон: слоги "+(ЮНИТЫ.some(function(ю){ return ю.слоги && ю.слоги.length; }) ? "размечены — грана СЛОГ ведёт по слогам" : "не размечены — грана СЛОГ ведёт по весам букв (И-05)"), ok: true }
   ];
 }
 function бинд(){
   ДИАЛОГ = $("psEd"); СПИСОК = $("psList");
   if(!ДИАЛОГ || ДИАЛОГ.__пс_бинд) return;
   ДИАЛОГ.__пс_бинд = true;
-  $("psGo").addEventListener("click", function(){ стат(); рисуйСписок(); try{ ДИАЛОГ.showModal(); }catch(e){} });
+  if(!ДИАЛОГ.__пс_тик){ ДИАЛОГ.__пс_тик = setInterval(function(){ if(ДИАЛОГ && ДИАЛОГ.open) рисуйВолну(); }, 700); }   /* v11.06: курсор песни на волне */
+  $("psGo").addEventListener("click", function(){ стат(); рисуйСписок(); рисуйВолну(); декодируйВолну(); try{ ДИАЛОГ.showModal(); }catch(e){} });
   $("psClose").addEventListener("click", function(){ try{ ДИАЛОГ.close(); }catch(e){} });
   $("psImport").addEventListener("click", function(){ $("psFile").click(); });
   $("psFile").addEventListener("change", function(e){ if(e.target.files && e.target.files[0]) читайФайл(e.target.files[0]); e.target.value=""; });
@@ -16148,12 +16396,15 @@ function бинд(){
   $("psUnapply").addEventListener("click", снять);
   $("psSave").addEventListener("click", function(){ вСклад().then(скажи); });
   $("psLoad").addEventListener("click", function(){ изСклада(); });
-  $("psPrev").addEventListener("click", function(){ КУРСОР.строка = Math.max(0, КУРСОР.строка-1); КУРСОР.слово = 0; рисуйСписок(); });
-  $("psNext").addEventListener("click", function(){ КУРСОР.строка++; КУРСОР.слово = 0; рисуйСписок(); });
+  $("psPrev").addEventListener("click", function(){ КУРСОР.строка = Math.max(0, КУРСОР.строка-1); КУРСОР.слово = 0; КУРСОР.слог = -1; рисуйСписок(); });
+  $("psNext").addEventListener("click", function(){ КУРСОР.строка++; КУРСОР.слово = 0; КУРСОР.слог = -1; рисуйСписок(); });
   [...document.querySelectorAll("#psNudge [data-ps]")].forEach(function(b){
     b.addEventListener("click", function(){ сдвиг(Math.round(parseFloat(b.getAttribute("data-ps"))*1000)); });
   });
   $("psNow").addEventListener("click", началоСейчас);
+  $("psSplit").addEventListener("click", function(){ var ю = выбЮнит(); if(!ю){ скажи("слова не выбрано"); return; } if(разреж(ю)){ КУРСОР.слог = 0; } рисуйВолну(); рисуйСписок(); });
+  $("psJoin").addEventListener("click", function(){ var ю = выбЮнит(); if(!ю){ скажи("слова не выбрано"); return; } if(ю.слоги){ ю.слоги = null; КУРСОР.слог = -1; рисуйВолну(); рисуйСписок(); скажи("слоги стёрты — слово ведут веса дома (И-05)"); } else скажи("у слова слогов нет"); });
+  var вэ = $("psWave"); if(вэ) биндВолна(вэ);
   document.addEventListener("keydown", function(e){
     if(!ДИАЛОГ || !ДИАЛОГ.open) return;
     if(e.key === " " || e.code === "Space"){
@@ -16176,6 +16427,14 @@ window.__ПУЛЬССИНХРОН = {
   положиЮниты: function(у){ ЮНИТЫ = у || []; рисуйСписок(); стат(); },
   юниты: function(){ return ЮНИТЫ.slice(); },
   состояние: function(){ return { применён: !!ПРИМЕНЁН, юнитов: ЮНИТЫ.length, версия: ВЕРСИЯ, песня: ПЕСНЯ() }; },
+  положиВолну: function(пики, длит){ try{ ВОЛНА = { пики: (пики||[]).map(Number), длит: +длит || 60 }; ВОЛНА_ОТКАЗ = ""; рисуйВолну(); return true; }catch(e){ return false; } },
+  волна: function(){ return ВОЛНА ? { пиков: ВОЛНА.пики.length, длит: ВОЛНА.длит } : null; },
+  окноВолны: окноВолны,
+  слоги: function(){ var ю = выбЮнит(); return (ю && ю.слоги) ? JSON.parse(JSON.stringify(ю.слоги)) : null; },
+  разрежСлоги: function(){ var ю = выбЮнит(); if(!ю) return "слова не выбрано"; var н = разреж(ю); if(н) КУРСОР.слог = 0; рисуйВолну(); рисуйСписок(); return н ? ("разрезано: "+н) : "не вышло"; },
+  разрежВсё: function(){ var с = юнитыСтроки(КУРСОР.строка); if(!с) return "нет строки"; var н = 0; с.юниты.forEach(function(ю){ if(разреж(ю)) н++; }); рисуйВолну(); рисуйСписок(); return "слов разрезано: "+н; },
+  сотриСлоги: function(){ var ю = выбЮнит(); if(!ю) return "слова не выбрано"; ю.слоги = null; КУРСОР.слог = -1; рисуйВолну(); рисуйСписок(); return "стёрты"; },
+  курсор: function(){ var с = юнитыСтроки(КУРСОР.строка); return { строка: КУРСОР.строка, слово: КУРСОР.слово, слог: КУРСОР.слог, слов: с ? с.юниты.length : 0 }; },
   проба: проба
 };
 /* хук пересборки текущей строки пульса (объявит движок ·31 при загрузке) */
