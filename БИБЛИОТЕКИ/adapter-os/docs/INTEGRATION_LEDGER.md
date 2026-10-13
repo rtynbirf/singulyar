@@ -10,7 +10,7 @@
 | Microphone | PERMISSION_REQUIRED | `getUserMedia` existence | add explicit user action and stop tracks |
 | OCR | EXPERIMENTAL | contract implemented (v10.95 «ЧТЕНИЕ»): ocr.mjs ledger + pin + magic-byte honesty (6 formats) + CER/line-accuracy bench on shared measures; no model in the house | owner drops traineddata via ЛЮК_ВЕСОВ_OCR.md (rus → srp → kaz → deu) → registerOcrModel pin → READY; benchmark corpus → track ledger |
 | Whisper local | EXPERIMENTAL | contract implemented (v10.94 «ГОЛОС»): speech.mjs ledger + pin-glue (SHA-256, mismatch → data withheld) + WER/CER bench; no weights in the house | owner drops weights via ЛЮК_ВЕСОВ_WHISPER.md → registerWhisperModel pin → READY; benchmark corpus → track ledger |
-| Gaze | EXPERIMENTAL | no calibrated gaze implementation | Face Landmarker + calibration + mapping + dwell tests |
+| Gaze | EXPERIMENTAL | contract implemented (v10.98 «ВЗГЛЯД»): gaze.mjs ledger + pin (SHA-256, mismatch → data withheld) + affine calibration `gaze-calib-affine/0.1` (least squares, degeneracy — honest refusal, residuals named) + projection without clamping (honest `в_границах` flag) + dwell reducer on external clocks (hysteresis, re-fire lock, confidence threshold); no model in the house | owner drops weights via ЛЮК_ВЕСОВ_GAZE.md → registerGazeModel pin → READY; calibration session + benchmark corpus → track ledger |
 | Braille | EXPERIMENTAL | Unicode only | WebHID/OS accessibility adapter where available |
 | Demucs | EXPERIMENTAL | no WASM/model bundled | benchmark memory/latency before inclusion |
 | PDF | NOT INCLUDED | avoid fake DOCX/PDF claims | add pdf-lib + Unicode font embedding as a separate tool |
