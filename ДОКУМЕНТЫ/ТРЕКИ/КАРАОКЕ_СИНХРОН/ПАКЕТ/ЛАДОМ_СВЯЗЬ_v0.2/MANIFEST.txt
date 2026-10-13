@@ -1,0 +1,17 @@
+README_RU.md
+SHA256SUMS.txt
+docs/ADR_RU.md
+docs/ARCHITECTURE_RU.md
+docs/FEATURE_CATALOG_100_RU.md
+docs/RESEARCH_NOTES_RU.md
+docs/ROADMAP_RU.md
+docs/SECURITY_PRIVACY_RU.md
+docs/TECHNICAL_SPEC_RU.md
+docs/TEST_PLAN_RU.md
+integration/ladom-network-bridge.js
+scripts/install_patch.py
+scripts/rollback_patch.py
+server/README_RU.md
+server/package.json
+server/server.js
+tests/SMOKE_TESTS_RU.md

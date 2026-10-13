@@ -1,0 +1,10 @@
+{
+  "name": "singulyar-ladom-signal-server",
+  "version": "0.2.0",
+  "private": true,
+  "description": "WebSocket signaling for the additive LADOM WebRTC bridge prototype",
+  "main": "server.js",
+  "scripts": {"start": "node server.js", "check": "node --check server.js"},
+  "engines": {"node": ">=20"},
+  "dependencies": {"ws": "^8.18.0"}
+}
