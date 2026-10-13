@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Crystal Karaoke & Control Console</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #040306;
+            color: #ffffff;
+            font-family: 'Cinzel', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #webgl-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Центральный Караоке-Экран */
+        .karaoke-stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 42%;
+            max-width: 620px;
+            padding: 35px 25px;
+            background: rgba(12, 10, 16, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(184, 134, 11, 0.25);
+            pointer-events: none;
+        }
+
+        .karaoke-header {
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #cd7f32;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .karaoke-line-prev, .karaoke-line-next {
+            font-size: 16px;
+            color: #7a7a85;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .karaoke-line-active {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 18px 0;
+            min-height: 40px;
+            line-height: 1.3;
+        }
+
+        .karaoke-word {
+            display: inline-block;
+            margin: 0 5px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            color: #8c6239;
+        }
+
+        .karaoke-word.active {
+            color: #ffd700;
+            transform: scale(1.15);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(205, 127, 50, 0.6);
+        }
+
+        .system-feedback {
+            margin-top: 15px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #ffd700;
+            height: 18px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        /* 4 Угловых Квадрата-Указателя */
+        .corner-trigger {
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            z-index: 20;
+            background: linear-gradient(135deg, rgba(74,59,50,0.85), rgba(140,98,57,0.85));
+            border: 2px solid #ffd700;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 15px rgba(184, 134, 11, 0.3);
+        }
+
+        .corner-trigger:hover {
+            transform: scale(1.12);
+            background: linear-gradient(135deg, rgba(140,98,57,0.95), rgba(255,215,0,0.9));
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+
+        .corner-trigger:active {
+            transform: scale(0.92);
+        }
+
+        .arrow-icon {
+            width: 38px;
+            height: 38px;
+            fill: #ffd700;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
+        }
+
+        .top-left { top: 30px; left: 30px; }
+        .top-right { top: 30px; right: 30px; }
+        .bottom-left { bottom: 30px; left: 30px; }
+        .bottom-right { bottom: 30px; right: 30px; }
+
+        .hint-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-size: 11px;
+            color: #cd7f32;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+    </style>
+    <!-- Three.js 3D Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="webgl-container"></div>
+
+    <!-- 4 Угловых квадрата-активатора -->
+    <!-- Левый верхний: Стрелка Влево -->
+    <div class="corner-trigger top-left" id="btn-top-left" title="Поворот к следующей грани (←)">
+        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M20,11H7.83l5.59-5.59L12,4l-8,8l8,8l1.41-1.41L7.83,13H20V11z"/></svg>
+    </div>
+    <!-- Правый верхний: Стрелка Вверх -->
+    <div class="corner-trigger top-right" id="btn-top-right" title="Поворот к следующей грани (↑)">
+        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M4,12l1.41,1.41L11,7.83V20h2V7.83l5.58,5.59L20,12l-8-8L4,12z"/></svg>
+    </div>
+    <!-- Левый нижний: Стрелка Вниз -->
+    <div class="corner-trigger bottom-left" id="btn-bottom-left" title="Поворот к предыдущей грани (↓)">
+        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M20,12l-1.41-1.41L13,16.17V4h-2v12.17l-5.58-5.59L4,12l8,8L20,12z"/></svg>
+    </div>
+    <!-- Правый нижний: Стрелка Вправо -->
+    <div class="corner-trigger bottom-right" id="btn-bottom-right" title="Поворот к следующей грани (→)">
+        <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M12,4l-1.41,1.41L16.17,11H4v2h12.17l-5.58-5.59L12,20l8-8L12,4z"/></svg>
+    </div>
+
+    <!-- Центральный интерфейс Караоке -->
+    <div class="karaoke-stage">
+        <div class="karaoke-header">Imperial Quartz Karaoke Engine</div>
+        <div class="karaoke-line-prev" id="line-prev">Сингулярная Гармония Кристалла</div>
+        <div class="karaoke-line-active" id="line-active"></div>
+        <div class="karaoke-line-next" id="line-next">Толкните угловой квадрат для старта</div>
+        <div class="system-feedback" id="sys-feedback">СИСТЕМА ГОТОВА</div>
+    </div>
+
+    <div class="hint-overlay">КЛИКАЙТЕ ПО ГРАНЯМ ПРАВОГО КУБА-ПУЛЬТА ИЛИ УГЛОВЫМ КВАДРАТАМ</div>
+
+    <script>
+        // ==========================================
+        // 1. СИНТЕЗАТОР ЗВУКА & KARAOKE ENGINE (Web Audio API)
+        // ==========================================
+        class AudioKaraokeEngine {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.currentLine = 0;
+                this.currentWord = 0;
+                this.timer = null;
+
+                this.lyrics = [
+                    { line: "Хрустальный куб стоит на острой грани", words: ["Хрустальный", "куб", "стоит", "на", "острой", "грани"] },
+                    { line: "Бронза и золото сияют в квантовом тумане", words: ["Бронза", "и", "золото", "сияют", "в", "квантовом", "тумане"] },
+                    { line: "Вращение плавно пробуждает звук", words: ["Вращение", "плавно", "пробуждает", "звук"] },
+                    { line: "Симфония импульса и магия рук", words: ["Симфония", "импульса", "и", "магия", "рук"] }
+                ];
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+
+            playClickChome(freq = 440) {
+                this.init();
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.8, this.ctx.currentTime + 0.15);
+
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.15);
+            }
+
+            startKaraokeSequence() {
+                this.init();
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                this.renderLine();
+
+                this.timer = setInterval(() => {
+                    this.advanceWord();
+                }, 450);
+            }
+
+            renderLine() {
+                const lineData = this.lyrics[this.currentLine];
+                const activeContainer = document.getElementById('line-active');
+                activeContainer.innerHTML = '';
+
+                lineData.words.forEach((word, idx) => {
+                    const span = document.createElement('span');
+                    span.className = 'karaoke-word';
+                    span.id = `word-${idx}`;
+                    span.textContent = word;
+                    activeContainer.appendChild(span);
+                });
+
+                document.getElementById('line-prev').textContent = 
+                    this.lyrics[(this.currentLine - 1 + this.lyrics.length) % this.lyrics.length].line;
+                document.getElementById('line-next').textContent = 
+                    this.lyrics[(this.currentLine + 1) % this.lyrics.length].line;
+            }
+
+            advanceWord() {
+                const lineData = this.lyrics[this.currentLine];
+                
+                if (this.currentWord > 0) {
+                    const prev = document.getElementById(`word-${this.currentWord - 1}`);
+                    if (prev) prev.classList.remove('active');
+                }
+
+                if (this.currentWord < lineData.words.length) {
+                    const curr = document.getElementById(`word-${this.currentWord}`);
+                    if (curr) curr.classList.add('active');
+                    this.playClickChome(320 + this.currentWord * 60);
+                    this.currentWord++;
+                } else {
+                    this.currentWord = 0;
+                    this.currentLine = (this.currentLine + 1) % this.lyrics.length;
+                    this.renderLine();
+                }
+            }
+        }
+
+        const karaokeEngine = new AudioKaraokeEngine();
+
+        // ==========================================
+        // 2. 3D WEBGL СЦЕНА THREE.JS
+        // ==========================================
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x040306, 0.06);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0, 8.5);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        container.appendChild(renderer.domElement);
+
+        // --- ЗОЛОТАЯ ЗВЕЗДНАЯ ПЫЛЬ В ВОЗДУХЕ ---
+        const particleCount = 200;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+
+        for(let i = 0; i < particleCount * 3; i += 3) {
+            particlePositions[i] = (Math.random() - 0.5) * 16;
+            particlePositions[i+1] = (Math.random() - 0.5) * 10;
+            particlePositions[i+2] = (Math.random() - 0.5) * 10;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xffd700,
+            size: 0.04,
+            transparent: true,
+            opacity: 0.6
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // --- ОВЕЩЕНИЕ ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const goldPointLight = new THREE.PointLight(0xffd700, 2.5, 12);
+        goldPointLight.position.set(0, 3, 3);
+        scene.add(goldPointLight);
+
+        const bronzeLight = new THREE.PointLight(0xcd7f32, 3, 10);
+        bronzeLight.position.set(-5, -2, 2);
+        scene.add(bronzeLight);
+
+        const crystalCyanLight = new THREE.PointLight(0x80daeb, 2, 10);
+        crystalCyanLight.position.set(5, 2, -2);
+        scene.add(crystalCyanLight);
+
+        // --- ГЕНЕРАЦИЯ ТЕКСТУРЫ ГРАНЕЙ 4x4 (16 КНОПОК) ---
+        const buttonLabels = [
+            "NAV ↖", "TONE", "PITCH", "NAV ↗",
+            "REVERB", "TEMPO", "MIC GAIN", "ECHO",
+            "EQ HIGH", "EQ LOW", "HARMONY", "VOCAL FX",
+            "NAV ↙", "PRESET", "SYNC", "NAV ↘"
+        ];
+
+        function createCubeTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // Прозрачный фон – кристалл просвечивает
+            ctx.clearRect(0, 0, 512, 512);
+
+            // Внешняя золотая рамка
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.8)';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, 502, 502);
+
+            const cellSize = 110;
+            const padding = 12;
+            const startX = 17;
+            const startY = 17;
+
+            for (let idx = 0; idx < 16; idx++) {
+                const row = Math.floor(idx / 4);
+                const col = idx % 4;
+                const x = startX + col * (cellSize + padding);
+                const y = startY + row * (cellSize + padding);
+
+                const isNav = (row === 0 && col === 0) || (row === 0 && col === 3) || 
+                              (row === 3 && col === 0) || (row === 3 && col === 3);
+
+                const grad = ctx.createLinearGradient(x, y, x + cellSize, y + cellSize);
+                if (isNav) {
+                    grad.addColorStop(0, 'rgba(255, 215, 0, 0.9)');
+                    grad.addColorStop(0.5, 'rgba(184, 134, 11, 0.9)');
+                    grad.addColorStop(1, 'rgba(205, 127, 50, 0.9)');
+                } else {
+                    grad.addColorStop(0, 'rgba(140, 98, 57, 0.8)');
+                    grad.addColorStop(0.5, 'rgba(74, 59, 50, 0.8)');
+                    grad.addColorStop(1, 'rgba(35, 24, 19, 0.8)');
+                }
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.roundRect(x, y, cellSize, cellSize, 12);
+                ctx.fill();
+
+                ctx.strokeStyle = isNav ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 215, 0, 0.8)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.fillStyle = isNav ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 215, 0, 0.9)';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(buttonLabels[idx], x + cellSize / 2, y + cellSize / 2);
+            }
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const faceTexture = createCubeTexture();
+
+        // --- МАТЕРИАЛ ГОРНОГО ХРУСТАЛЯ ---
+        const crystalMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0.0,
+            roughness: 0.02,
+            transmission: 1.0,
+            thickness: 2.0,
+            ior: 1.544, // Горный хрусталь
+            reflectivity: 0.95,
+            map: faceTexture,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.02,
+            transparent: true,
+            opacity: 0.95,
+            side: THREE.DoubleSide
+        });
+
+        // --- ГЕОМЕТРИЯ КУБОВ И МОНТАЖ НА ВЕРШИНУ ---
+        const geometry = new THREE.BoxGeometry(1.65, 1.65, 1.65);
+
+        const cubeLeft = new THREE.Mesh(geometry, crystalMaterial);
+        const cubeRight = new THREE.Mesh(geometry, crystalMaterial);
+
+        // Добавляем светящиеся рёбра для кристаллического вида
+        const edges = new THREE.EdgesGeometry(geometry);
+        const lineMat = new THREE.LineBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.25 });
+        const wireframeLeft = new THREE.LineSegments(edges, lineMat);
+        const wireframeRight = new THREE.LineSegments(edges, lineMat);
+        cubeLeft.add(wireframeLeft);
+        cubeRight.add(wireframeRight);
+
+        // Функция ориентации куба на нижнюю вершину
+        function alignToVertex(mesh) {
+            const diagVector = new THREE.Vector3(1, 1, 1).normalize();
+            const upVector = new THREE.Vector3(0, 1, 0);
+            const quaternion = new THREE.Quaternion();
+            quaternion.setFromUnitVectors(diagVector, upVector);
+            mesh.rotation.setFromQuaternion(quaternion);
+        }
+
+        alignToVertex(cubeLeft);
+        alignToVertex(cubeRight);
+
+        // Поворотные шарниры (Pivots) для независимого вращения вокруг оси Y
+        const pivotLeft = new THREE.Group();
+        const pivotRight = new THREE.Group();
+
+        pivotLeft.position.set(-3.3, 0, 0);
+        pivotRight.position.set(3.3, 0, 0);
+
+        scene.add(pivotLeft);
+        scene.add(pivotRight);
+
+        pivotLeft.add(cubeLeft);
+        pivotRight.add(cubeRight);
+
+        // --- ШАГОВОЕ ВРАЩЕНИЕ (ПО 90 ГРАДУСОВ) ---
+        let targetRotLeft = 0;
+        let targetRotRight = 0;
+        const step = Math.PI / 2; // 90 градусов
+
+        function updateFeedback(text) {
+            const fb = document.getElementById('sys-feedback');
+            fb.textContent = text;
+            fb.style.color = '#ffd700';
+            setTimeout(() => { fb.style.color = '#cd7f32'; }, 300);
+        }
+
+        // --- РЕАКЦИЯ НА 4 УГЛОВЫХ КВАДРАТА-ТОЛЧКА ---
+        document.getElementById('btn-top-left').addEventListener('click', (e) => {
+            e.stopPropagation();
+            targetRotLeft += step;
+            targetRotRight -= step;
+            karaokeEngine.startKaraokeSequence();
+            karaokeEngine.playClickChome(520);
+            updateFeedback("ПОВОРОТ: СЛЕДУЮЩАЯ ГРАНЬ (←)");
+        });
+
+        document.getElementById('btn-top-right').addEventListener('click', (e) => {
+            e.stopPropagation();
+            targetRotLeft += step;
+            targetRotRight -= step;
+            karaokeEngine.startKaraokeSequence();
+            karaokeEngine.playClickChome(680);
+            updateFeedback("ПОВОРОТ: СЛЕДУЮЩАЯ ГРАНЬ (↑)");
+        });
+
+        document.getElementById('btn-bottom-left').addEventListener('click', (e) => {
+            e.stopPropagation();
+            targetRotLeft -= step;
+            targetRotRight += step;
+            karaokeEngine.playClickChome(280);
+            updateFeedback("ПОВОРОТ: ПРЕДЫДУЩАЯ ГРАНЬ (↓)");
+        });
+
+        document.getElementById('btn-bottom-right').addEventListener('click', (e) => {
+            e.stopPropagation();
+            targetRotLeft += step;
+            targetRotRight -= step;
+            karaokeEngine.startKaraokeSequence();
+            karaokeEngine.playClickChome(440);
+            updateFeedback("ПОВОРОТ: СЛЕДУЮЩАЯ ГРАНЬ (→)");
+        });
+
+        // ==========================================
+        // 3. 3D RAYCASTING И ИНТЕРАКТИВНОСТЬ КНОПОК 4x4
+        // ==========================================
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        window.addEventListener('click', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(cubeRight);
+
+            if (intersects.length > 0) {
+                const uv = intersects[0].uv;
+                if (uv) {
+                    const col = Math.floor(uv.x * 4);
+                    const row = Math.floor((1 - uv.y) * 4);
+                    const btnIndex = Math.min(15, Math.max(0, row * 4 + col));
+                    const btnName = buttonLabels[btnIndex];
+
+                    karaokeEngine.playClickChome(400 + btnIndex * 35);
+                    updateFeedback(`ПУЛЬТ 4x4: [${btnName}] АКТИВИРОВАН`);
+
+                    // Поворот правого куба на следующую грань
+                    targetRotRight -= step;
+                }
+            }
+        });
+
+        // ==========================================
+        // 4. ГЛАВНЫЙ АНИМАЦИОННЫЙ ЦИКЛ
+        // ==========================================
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Плавный переход к целевым углам (шаговое вращение)
+            pivotLeft.rotation.y += (targetRotLeft - pivotLeft.rotation.y) * 0.1;
+            pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.1;
+
+            // Легкое кинетическое парение в воздухе
+            const elapsedTime = clock.getElapsedTime();
+            pivotLeft.position.y = Math.sin(elapsedTime * 1.8) * 0.08;
+            pivotRight.position.y = Math.cos(elapsedTime * 1.8) * 0.08;
+
+            // Медленное вращение звездной пыли
+            particles.rotation.y = elapsedTime * 0.03;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Адаптация под размер окна
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
+ОНИ НЕ ВЫПОЛНЯЮТ СВОИХ ФУНКЦИЙ ИНТЕГРИРУЙ ЭТИ СТРЕЛКИ ПРЯМ В УГЛОВЫЕ КВАДРАТЫ=ГРАНЕЙ ОТСЮДА УБЕРИ
+The user wants me to:
+
+Make the cubes actually rotate step-by-step (90 degrees) when activated - they said "ОНИ НЕ ВЫПОЛНЯЮТ СВОИХ ФУНКЦИЙ" (they don't perform their functions)
+
+Integrate the arrows directly into the corner squares = faces, remove them from there (the corner squares)
+
+Wait, let me re-read: "ИНТЕГРИРУЙ ЭТИ СТРЕЛКИ ПРЯМ В УГЛОВЫЕ КВАДРАТЫ=ГРАНЕЙ ОТСЮДА УБЕРИ"
+
+Translation: "INTEGRATE THESE ARROWS DIRECTLY INTO THE CORNER SQUARES = FACES, REMOVE THEM FROM HERE"
+
+So they want:
+
+The arrows that are currently in the corner squares (top-left, top-right, bottom-left, bottom-right HTML divs) to be integrated INTO the 3D cube faces
+
+Remove the corner square HTML divs
+
+The cubes should be made of mountain crystal (real quartz)
+
+Cubes should rotate step-by-step 90 degrees
+
+So I need to:
+
+Remove the 4 corner-trigger divs from HTML
+
+Put the arrow buttons (NAV) directly into the cube's texture faces (they already are "NAV ↖" etc., but maybe make them actual arrows)
+
+Make the cube rotation work properly - step by step 90 degree rotation
+
+Make crystal material proper - real mountain crystal look
+
+Let me think about this. The current code already has NAV buttons on the texture at corners of the 4x4 grid. But the user wants the arrows to be there as functional navigation, and remove the separate corner square HTML divs.
+
+Let me redesign:
+
+4x4 grid on each face of the cube (the button matrix)
+
+The corner cells of the 4x4 grid (NAV ↖, NAV ↗, NAV ↙, NAV ↘) should be the navigation arrows
+
+When clicked, they rotate the cube by 90 degrees to the next face
+
+Remove the corner-trigger divs entirely
+
+Actually wait, re-reading again more carefully: "ИНТЕГРИРУЙ ЭТИ СТРЕЛКИ ПРЯМ В УГЛОВЫЕ КВАДРАТЫ=ГРАНЕЙ ОТСЮДА УБЕРИ"
+
+"Integrate these arrows directly into the corner squares = [which are] faces, remove [them] from here"
+
+Hmm, "ОТСЮДА УБЕРИ" = "remove from here". Remove what from where?
+
+I think they mean:
+
+Integrate the arrow functionality directly into the corner squares of the cube faces (the NAV buttons that are already there)
+
+Remove the separate corner-trigger HTML elements
+
+So the 4 navigation arrows should be the corner cells of the 4x4 matrix on the cube face. When you click them, they should rotate the cube.
+
+Let me also fix the rotation - currently:
+
+js
+pivotLeft.rotation.y += (targetRotLeft - pivotLeft.rotation.y) * 0.1;
+pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.1;
+This is smooth lerp but it should work. The issue might be that when clicking the corner-trigger divs, the event bubbles and triggers the window click handler too. Actually no, they used e.stopPropagation().
+
+Wait, actually the real problem might be that the buttons on the cube face (via raycasting) don't rotate the cube to the next face - they just play a sound. Let me make them actually work.
+
+Also the user says "ОНИ НЕ ВЫПОЛНЯЮТ СВОИХ ФУНКЦИЙ" - "they don't perform their functions". So the corner buttons or the cube buttons aren't working.
+
+Let me create a cleaner version:
+
+Remove corner-trigger divs from HTML
+
+4x4 button grid on cube faces where the 4 corner cells are navigation arrows
+
+When a NAV corner is clicked via raycasting, rotate the cube 90 degrees to the next face
+
+When a regular button is clicked, just play sound
+
+Make the crystal material more like real mountain quartz
+
+Let me think about the crystal material. Mountain crystal (rock crystal) is clear quartz. For Three.js MeshPhysicalMaterial:
+
+transmission: 1.0
+
+ior: 1.544
+
+thickness: high
+
+roughness: very low
+
+metalness: 0
+
+clearcoat: 1
+
+color: slightly white/tinted
+
+Actually for real crystal look without environment map, it's hard. But we can add a proper environment or use high reflectivity.
+
+Let me write the code.
+
+For the rotation - each cube has 4 side faces (front, right, back, left) with the 4x4 matrix. The top and bottom faces could be different (maybe just crystal).
+
+Wait, the current texture applies to all 6 faces of the cube. That's fine.
+
+The 4x4 grid corners are:
+
+(0,0) = NAV ↖ (top-left corner)
+
+(0,3) = NAV ↗ (top-right corner)
+
+(3,0) = NAV ↙ (bottom-left corner)
+
+(3,3) = NAV ↘ (bottom-right corner)
+
+When user clicks these, we want to rotate the cube 90 degrees in the direction indicated.
+
+Actually, I think the user might want:
+
+Click NAV ↖ on the cube → rotate cube so the face to the upper-left becomes visible... but with only Y-axis rotation this is limited.
+
+Simplest: NAV buttons rotate the cube ±90° around Y axis
+
+Or maybe the "next face" concept - rotate to the next face in a direction.
+
+Let me implement:
+
+NAV ↖ (top-left): rotate 90° left (counterclockwise viewed from top) - i.e., pivotRight.rotation.y += step
+
+NAV ↗ (top-right): rotate 90° right (clockwise) - pivotRight.rotation.y -= step
+
+NAV ↙ (bottom-left): rotate 90° left
+
+NAV ↘ (bottom-right): rotate 90° right
+
+Actually let me think in terms of "previous/next face". A cube has 4 side faces. Rotating +90° shows the next face.
+
+Let me simplify:
+
+NAV buttons on left side → rotate to previous face (counterclockwise)
+
+NAV buttons on right side → rotate to next face (clockwise)
+
+Let me write this out.
+
+Also I need to make sure the raycasting works on all visible faces, not just the front one. Currently they only raycast against cubeRight which is fine, but the UV coordinates on different faces of a BoxGeometry are different - the UV mapping is per-face. So the UV.x and UV.y tell us where on that particular face we clicked, which is what we want.
+
+OK let me write the complete code.
+
+Actually, another important point - the user says "САМИ КУБЫ БЫЛИ ИЗ ГОРНОГО ХРУСТАЛА" - the cubes themselves should be made of mountain crystal. So I need to make the material look like clear quartz crystal - transparent, refractive, with slight coloring.
+
+Since we can't easily add real refraction without environment maps, let's:
+
+Use high transmission
+
+Add a subtle blue/white tint
+
+Use high clearcoat
+
+Add glowing edges
+
+Maybe use the environment from a gradient
+
+Actually, Three.js r128 supports PMREMGenerator for environment. But we don't have an HDR. We can create a simple gradient environment.
+
+Let me keep it simpler - use MeshPhysicalMaterial with good settings and add some inner glow with edges.
+
+Let me write the code now.
+
+For the texture - I need to make the NAV corners more arrow-like. I'll draw actual triangle arrows instead of text.
+
+Let me plan the texture:
+
+4x4 grid
+
+Corner cells (0,0), (0,3), (3,0), (3,3) have arrows drawn
+
+Other cells have text labels
+
+For the arrows:
+
+Top-left: diagonal arrow pointing up-left ↖
+
+Top-right: diagonal arrow pointing up-right ↗
+
+Bottom-left: diagonal arrow pointing down-left ↙
+
+Bottom-right: diagonal arrow pointing down-right ↘
+
+Let me draw actual triangle arrows using canvas paths.
+
+Now, let me structure the code:
+
+text
+1. Audio engine (same as before, but maybe improved)
+2. Scene setup
+3. Particles
+4. Lighting (add more crystal-friendly lighting)
+5. Texture generation with arrows in corners
+6. Crystal material
+7. Two cubes on pivots
+8. Step rotation logic (90 degrees per click)
+9. Raycasting to detect clicks on cube faces
+10. Animation loop with smooth rotation
+For the crystal material, since we don't have env map:
+
+transmission doesn't work well without env
+
+Let's use a mix: transparent, high reflectivity, with emissive edges
+
+Actually in three.js r128, MeshPhysicalMaterial.transmission requires renderer to support it. It should work with WebGL2.
+
+Let me just write it and see.
+
+Actually, an important issue: for the crystal to look right, we need to see the internal structure. With transmission, three.js renders the scene behind the object through the object. Since our scene has stars and lights, it should look ok.
+
+But transmission in three.js has a limitation - transparent objects behind transparent objects don't render properly. So the two cubes overlapping might have issues.
+
+Let me use transmission: 0.9 and also add opacity slightly less than 1.
+
+OK let me write it.
+
+For the step rotation, I'll use a target angle approach:
+
+js
+const currentRotLeft = { value: 0 };
+const currentRotRight = { value: 0 };
+const targetRotLeft = { value: 0 };
+const targetRotRight = { value: 0 };
+
+function rotateLeft(clockwise) {
+    // clockwise = true: rotate right cube -90, left cube +90 (or whatever)
+    targetRotRight.value -= Math.PI/2;
+    targetRotLeft.value += Math.PI/2;
+}
+Hmm, but the user wants each cube to rotate independently. Let me re-read.
+
+"ОНИ НЕ ВЫПОЛНЯЮТ СВОИХ ФУНКЦИЙ" - they don't perform their functions.
+
+The functions are:
+
+Corner arrows: rotate left/right, up/down, accelerate, brake
+
+Original design: arrows affected rotation speed
+
+Now user wants:
+
+Step rotation (90 degrees per click)
+
+Arrows integrated into cube faces
+
+Remove separate corner divs
+
+So each click on a NAV corner = 1 step rotation.
+
+Should both cubes rotate together, or just the right one? Since the right cube is the "control panel" that's interactive, maybe only rotate the right one when clicking its NAV buttons. The left one could be decorative or also rotate.
+
+I think:
+
+Clicking NAV on the right cube rotates the right cube
+
+The left cube rotates in the opposite direction for aesthetic balance (like a yin-yang)
+
+Or:
+
+Clicking NAV on right cube rotates BOTH cubes (left one opposite direction)
+
+Let me go with: clicking NAV on right cube rotates right cube in that direction, and left cube in opposite direction (for visual balance, like the original).
+
+Actually, let's think about it more. Each cube has 6 faces. Rotating around Y axis shows different side faces. Top and bottom faces (which appear as the top pyramid and bottom pyramid due to vertex alignment) are always visible somewhat.
+
+Hmm, the cube is oriented so a vertex points up. So we see the "middle" band of 4 faces rotating. Top and bottom faces (pyramids) are always partially visible.
+
+Actually let me simplify - just rotate around Y axis. Each click = 90 degrees. Both cubes rotate (opposite for aesthetics).
+
+Let me finalize the design:
+
+Remove corner-trigger HTML
+
+Draw arrows in corner cells of texture
+
+Raycasting on both cubes (or just right cube) - detect which cell was clicked
+
+If corner cell (NAV): rotate both cubes 90° (right = direction of arrow)
+
+If regular cell: play sound + feedback
+
+Crystal material for realistic quartz look
+
+For arrow directions:
+
+NAV ↖ (top-left): rotate to previous face (counterclockwise, -90°)
+
+NAV ↗ (top-right): rotate to next face (clockwise, +90°)
+
+NAV ↙ (bottom-left): rotate to previous face (-90°)
+
+NAV ↘ (bottom-right): rotate to next face (+90°)
+
+Or actually maybe make it more interesting - top-left and bottom-left rotate one way, top-right and bottom-right the other.
+
+Let me code it.
+
+For the crystal material - here's my approach:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xe8f0ff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 3.0,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.0,
+    transparent: true,
+    opacity: 0.95,
+    map: faceTexture,
+    side: THREE.FrontSide,
+    envMapIntensity: 2.0
+});
+To make it more crystal-like, I could also add a slight blue tint and some inner glow.
+
+Also, I should add a PMREM environment for reflections. Let me create a simple procedural environment.
+
+Actually in three.js r128, we can use a simple gradient cube as environment. Or we can use THREE.PMREMGenerator with a scene.
+
+Let me just create a simple gradient environment via a scene with lights and a background:
+
+js
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+const envScene = new THREE.Scene();
+envScene.background = new THREE.Color(0x1a1a2e);
+// Add some lights
+const envLight1 = new THREE.PointLight(0xffd700, 5, 20);
+envLight1.position.set(5, 5, 5);
+envScene.add(envLight1);
+// etc.
+const envMap = pmremGenerator.fromScene(envScene).texture;
+scene.environment = envMap;
+Actually simpler - just use RoomEnvironment or create a simple one.
+
+Let me not overcomplicate. Let's just use good material settings and rely on the point lights.
+
+Actually, since transmission requires environment for proper refraction, let me add a simple procedural environment.
+
+OK, I'll write the full code now. Let me be thorough.
+
+Wait, one more consideration. The user says "ИНТЕГРИРУЙ ЭТИ СТРЕЛКИ ПРЯМ В УГЛОВЫЕ КВАДРАТЫ=ГРАНЕЙ ОТСЮДА УБЕРИ".
+
+I think "УГЛОВЫЕ КВАДРАТЫ=ГРАНЕЙ" means "corner squares = faces". So the corner squares OF THE FACES. Which are the NAV cells in the 4x4 grid.
+
+"ОТСЮДА УБЕРИ" = "remove from here" - remove the separate HTML divs.
+
+So yes, my interpretation is correct. Let me proceed.
+
+Let me write the complete code now, ensuring:
+
+Real mountain crystal material
+
+Step-by-step 90° rotation
+
+Arrows integrated into cube face corners
+
+No separate corner divs
+
+Everything actually works
+
+Let me code it.
+
+js
+// Texture with arrows in corners
+function createCubeTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+    
+    // Transparent background so crystal shows through
+    ctx.clearRect(0, 0, 1024, 1024);
+    
+    // ... draw 4x4 grid with arrows in corners
+}
+Let me draw arrows properly:
+
+For top-left arrow (↖), I'll draw a triangle pointing up-left:
+
+From center of cell, a triangle with points going up-left
+
+Actually easier: draw a chevron/arrow shape using paths.
+
+Let me write a helper function drawArrow(ctx, cx, cy, size, direction) where direction is like 'ul', 'ur', 'dl', 'dr'.
+
+For each direction, I draw two lines forming an arrow or a filled triangle.
+
+Simple arrow (triangle + shaft):
+
+UL: triangle at top-left corner, shaft going to bottom-right
+
+Draw triangle with points: (cx-size/2, cy-size/2), (cx+size/4, cy-size/2), (cx-size/2, cy+size/4)
+
+Draw rectangle shaft from (cx-size/2, cy+size/8) to (cx+size/2, cy+size/2)
+
+Hmm this is getting complex. Let me just use a filled triangle rotated.
+
+Simpler: draw a chevron using two lines.
+
+js
+function drawChevron(ctx, cx, cy, size, angle) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(-size/2, 0);
+    ctx.lineTo(0, -size/2);
+    ctx.lineTo(size/2, 0);
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = size / 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    ctx.restore();
+}
+This draws a chevron pointing up when angle=0. To point different directions:
+
+Up-left: angle = -Math.PI/4
+
+Up-right: angle = Math.PI/4
+
+Down-left: angle = -3*Math.PI/4
+
+Down-right: angle = 3*Math.PI/4
+
+Wait, chevron points up when angle=0, and rotating by angle rotates it. Let me think.
+
+Chevron pointing up (^): angle 0
+
+Points to up-left: rotate -45° = -PI/4
+
+Points to up-right: rotate +45° = PI/4
+
+Points down-left: rotate -135° = -3PI/4
+
+Points down-right: rotate +135° = 3PI/4
+
+OK.
+
+Now for the code structure. Let me write it.
+
+Actually wait - I realize I should double check what the user wants exactly. They said the buttons "don't perform their functions". This could mean:
+
+The rotation doesn't happen
+
+The sound doesn't play
+
+Something else
+
+Looking at the original code, when you click a corner div, it calls speedLeft += 0.06 etc. This changes the rotation speed. But there's a base rotation of 0.0015 always happening. So the cubes are always rotating slowly. The clicks just speed up/slow down.
+
+Maybe the user wants the cubes to NOT rotate continuously, but only rotate when a button is clicked (step by step).
+
+Yes, that's what they said in the previous message: "ЧТОБ ПРИ АКТИВАЦИИ ОНИ ПОВОРАЧИВАЛИСЬ ТОЛЬКО НА СЛЕДУЮЩУЮ ГРАНЬ" - "so that when activated they rotate only to the next face"
+
+So step rotation. Good, my plan is correct.
+
+And now they're saying "ОНИ НЕ ВЫПОЛНЯЮТ СВОИХ ФУНКЦИЙ" - the arrows don't do their functions. Because in my previous attempt, I made the corner divs trigger step rotation but maybe the animation wasn't smooth or the lerp didn't work well.
+
+Actually looking at my previous response:
+
+js
+pivotLeft.rotation.y += (targetRotLeft - pivotLeft.rotation.y) * 0.1;
+pivotRight.rotation.y += (targetRotRight - pivotRight.rotation.y) * 0.1;
+This should work as a smooth lerp toward the target. The issue is that over time, the small lerp step means it takes a while to reach target, and if target keeps growing, it might not catch up. But it should visually rotate.
+
+Hmm, but wait - pivotRight.rotation.y can grow indefinitely with each step. After many clicks it could be 100*PI. The lerp still works because it's relative, but numerical precision might be an issue eventually.
+
+Anyway, the user wants me to:
+
+Remove the corner divs
+
+Put arrows in cube face corners
+
+Make the rotation actually work well
+
+Real crystal material
+
+Let me write clean, working code.
+
+One more thing - when clicking on the cube face with raycasting, I need to detect which cell was clicked and whether it's a NAV cell. If NAV, rotate. If regular, just play sound.
+
+But which cube? Both cubes have the same texture. Maybe only the right one should be interactive (as in original). Or both. Let me make only the right one interactive to keep it simple.
+
+Actually, let me make both interactive - clicking NAV on either rotates that cube. That's more fun.
+
+Hmm, but the raycast only checked cubeRight. Let me keep it simple - only right cube is interactive.
+
+OK here's my final plan:
+
+HTML:
+
+Remove corner-trigger divs
+
+Keep karaoke-stage and hint-overlay
+
+JS:
+
+Same audio engine
+
+Scene setup with better crystal material
+
+Two cubes with texture (arrows in corner cells)
+
+Raycasting on both cubes to detect clicks
+
+When NAV corner cell clicked: rotate both cubes 90° (one in each direction)
+
+When regular cell clicked: play sound
+
+Smooth lerp animation to target angles
+
+Let me also add:
+
+Better lighting for crystal
+
+Environment map for reflections
+
+Glowing edges
+
+Let me write the code.
+
+For rotation animation, I'll use a cleaner approach with velocity and easing, or just direct lerp:
+
+js
+// Smooth rotation
+pivotLeft.rotation.y += (targetLeft - pivotLeft.rotation.y) * 0.08;
+pivotRight.rotation.y += (targetRight - pivotRight.rotation.y) * 0.08;
+This should work. The lerp factor 0.08 gives about 60% progress in 10 frames, which is ~0.17s at 60fps. Good for a snappy response.
+
+OK writing the code now.
+
+Actually let me also add a subtle "click" rotation effect - like a tiny extra rotation before settling. Or just keep it simple.
+
+Let me also think about which direction each arrow rotates the cube:
+
+NAV ↖ (top-left): rotate to reveal the face on the left of current - so cube rotates clockwise viewed from top? Actually if I'm looking at the front face and want to see the face on the left, I rotate the cube to the right (clockwise from top). Hmm, no.
+
+Let me think. Current front face is F. Left face is L. To see L, I need to rotate the cube so L comes to front. This means rotating the cube clockwise when viewed from above (if we define front as +Z and left as -X, then rotating the cube +90° around Y brings -X to +Z... wait).
+
+Let's define: cube initially at rotation 0, front face is +Z.
+
+Rotating +90° around Y: front face goes to -X... no wait. Rotating the object +90° around Y means the local +Z axis maps to world +X. So the face that was front is now on the right.
+
+So to bring the LEFT face to front, we rotate the cube -90° (the left face goes from -X to +Z).
+
+OK so if user clicks "rotate left" (to see the left face), we do rotation.y -= 90°.
+If user clicks "rotate right" (to see the right face), we do rotation.y += 90°.
+
+Since NAV ↖ (top-left) is on the left side, let's make it "rotate left" = -90°. And NAV ↗ (top-right) = "rotate right" = +90°.
+
+Actually, I realize these arrows are diagonal, so they could mean anything. Let me just say:
+
+Left-side NAV buttons (top-left, bottom-left): rotate -90° (to see left face)
+
+Right-side NAV buttons (top-right, bottom-right): rotate +90° (to see right face)
+
+OK now for the left cube, let's rotate it in the opposite direction for aesthetic "yin-yang" symmetry. So:
+
+Right cube: -90° or +90°
+
+Left cube: opposite sign
+
+Actually, let me keep them moving in sync (same direction) or opposite. I think opposite is more visually appealing.
+
+Right cube +90° → Left cube -90°
+Right cube -90° → Left cube +90°
+
+OK writing now.
+
+Let me also reconsider the material. Mountain crystal:
+
+Color: transparent to slightly milky white
+
+IOR: 1.544
+
+No metallic
+
+Very smooth
+
+Slight birefringence (can't really do in three.js)
+
+For a good look without environment:
+
+Use MeshPhysicalMaterial with transmission
+
+Add subtle emissive for inner glow
+
+Use edges to show the crystal structure
+
+Let me try:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xddeeff,  // slight blue tint
+    metalness: 0.05,
+    roughness: 0.03,
+    transmission: 0.98,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.02,
+    transparent: true,
+    opacity: 0.98,
+    map: faceTexture,
+    side: THREE.FrontSide
+});
+Now let me write the whole file. I'll be careful and complete.
+
+One more consideration - drawing the texture. Since we want the crystal to show through, I should keep the background transparent and only draw the button grid. But then the text/buttons will be visible on the crystal surface. That's actually cool.
+
+But wait, with transmission: 1.0 and transparent, the material might not show the map properly. Let me test mentally... Actually the map (base color texture) is multiplied with the color and affects the base appearance. With transmission, the transmitted light is not affected by the map, but the reflected light is. Hmm.
+
+For crystal look, we want the surface to be mostly transparent, with the button grid visible on the surface. This can work by having the map on the surface while transmission makes the body transparent.
+
+Actually in Three.js, when using transmission, the map affects the diffuse color which isn't really visible when transmission is high. So the map might not show.
+
+An alternative: use the map as an emissive map, so the buttons glow on the crystal.
+
+Or: use a separate transparent overlay mesh that has the button texture.
+
+Hmm, let me think. The simplest approach: have two meshes:
+
+Crystal cube (transparent, no map)
+
+Button overlay cube (slightly larger or same size, with the button map, transparent)
+
+Actually since they're on top of each other, z-fighting might be an issue. Let me make the button mesh slightly larger (1.66 vs 1.65).
+
+Or use alphaMap on a separate material... hmm.
+
+Actually, the simplest working approach: use emissiveMap. The buttons will glow on the crystal surface.
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.0,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    emissive: 0x000000,
+    emissiveMap: faceTexture,
+    emissiveIntensity: 0.8,
+    transparent: true,
+    opacity: 0.98
+});
+But then the emissiveMap is added regardless of alpha. Hmm, we want transparent areas of the texture to not emit.
+
+Actually, emissiveMap multiplies emissive with the map value. If the texture has alpha, does emissive respect alpha? Not directly - emissive doesn't have alpha handling the same way.
+
+Hmm, this is getting complex. Let me just use map and see if it shows up. If transmission is 0.95, the base color still contributes 5% which should be visible enough for the buttons.
+
+Actually, I just remembered - with MeshPhysicalMaterial and transmission, you can still have a "base" appearance that shows through the transparent parts. The map affects the base diffuse color, and where transmission is high, the base color is more transparent.
+
+Hmm, I think in practice it will look something like: dark buttons visible through crystal, with the crystal refracting what's behind.
+
+Let me just go with map: faceTexture and transmission: 0.9 (not 1.0) so there's some visible base.
+
+Or better: I'll use a two-mesh approach. Main crystal without texture, and an overlay with the button texture using transparent alpha.
+
+Let me do this:
+
+js
+// Crystal body (no texture)
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xe0eeff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.02,
+    transparent: true,
+    opacity: 0.9
+});
+
+// Button overlay (slightly larger)
+const overlayMaterial = new THREE.MeshBasicMaterial({
+    map: faceTexture,
+    transparent: true,
+    opacity: 1.0,
+    depthWrite: false,
+    side: THREE.FrontSide
+});
+
+const geometry = new THREE.BoxGeometry(1.65, 1.65, 1.65);
+const overlayGeometry = new THREE.BoxGeometry(1.66, 1.66, 1.66);
+This way, the button texture is a transparent overlay on the crystal.
+
+But wait, this creates a transparent cube around the crystal, which might look weird from some angles.
+
+Hmm. Let me think... Actually this should be fine. The overlay is only 0.005 units larger per side, so it hugs the crystal surface closely. The depthWrite: false prevents z-fighting.
+
+Actually with transparent: true and alpha in the texture, only the button areas will be visible (since the rest of the texture is transparent).
+
+Let me go with this approach.
+
+But then for raycasting to work, I need to raycast against the overlay mesh (the one with the visible buttons). Or both. Let me just raycast the overlay.
+
+OK, let me write the code.
+
+Wait, one more thing. When user clicks a NAV button, we rotate. But the overlay is a child of the pivot, so it rotates too. Good.
+
+For raycasting the overlay, I need to use raycaster.intersectObject(overlayLeft) and raycaster.intersectObject(overlayRight).
+
+The UV coordinates will be from the overlay geometry, which is a box. UV.x and UV.y tell us the position on the clicked face.
+
+Now, we need to know which face was clicked to know if it's a NAV cell. Actually no - the NAV cells are at the corners of any face's texture. So regardless of which face, the UV determines whether it's a NAV cell:
+
+UV.x < 0.25 AND UV.y > 0.75 → top-left cell (NAV ↖)
+
+UV.x > 0.75 AND UV.y > 0.75 → top-right cell (NAV ↗)
+
+UV.x < 0.25 AND UV.y < 0.25 → bottom-left cell (NAV ↙)
+
+UV.x > 0.75 AND UV.y < 0.25 → bottom-right cell (NAV ↘)
+
+Wait, UV.y in three.js is typically 0 at bottom, 1 at top. But the texture is drawn with 0,0 at top-left. Actually for BoxGeometry UVs, v=0 is bottom and v=1 is top.
+
+In the original code: const row = Math.floor((1 - uv.y) * 4); - this converts UV.y (bottom=0, top=1) to row (0=top, 3=bottom).
+
+So UV.y close to 1 (top of face) → row 0. UV.y close to 0 (bottom) → row 3.
+
+For top-left NAV: row 0, col 0 → UV.y > 0.75, UV.x < 0.25
+For top-right NAV: row 0, col 3 → UV.y > 0.75, UV.x > 0.75
+For bottom-left NAV: row 3, col 0 → UV.y < 0.25, UV.x < 0.25
+For bottom-right NAV: row 3, col 3 → UV.y < 0.25, UV.x > 0.75
+
+Good.
+
+Now let me write the code.
+
+Hmm, one more thing about the texture. To make the crystal truly transparent, I need to clear the canvas, but the current code has ctx.fillStyle = 'rgba(10, 8, 14, 0.9)'; ctx.fillRect(0, 0, 512, 512); which fills it with dark. I need to change that to ctx.clearRect(0, 0, 512, 512); or just not fill it.
+
+OK writing now.
+
+Let me also think about the texture resolution. 512 is fine for the original but since we're drawing more detail (arrows), maybe 1024 is better. Let me use 1024.
+
+Cell size: 1024 / 4 = 256. With some padding.
+
+Let me write the texture function:
+
+js
+function createCubeTexture() {
+    const size = 1024;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    
+    // Transparent background
+    ctx.clearRect(0, 0, size, size);
+    
+    // Border
+    ctx.strokeStyle = 'rgba(255, 215, 0, 0.9)';
+    ctx.lineWidth = 16;
+    ctx.strokeRect(8, 8, size - 16, size - 16);
+    
+    const cellSize = (size - 64) / 4;
+    const padding = 8;
+    const startX = 32;
+    const startY = 32;
+    
+    for (let idx = 0; idx < 16; idx++) {
+        const row = Math.floor(idx / 4);
+        const col = idx % 4;
+        const x = startX + col * (cellSize + padding);
+        const y = startY + row * (cellSize + padding);
+        
+        const isNav = (row === 0 && col === 0) || (row === 0 && col === 3) ||
+                      (row === 3 && col === 0) || (row === 3 && col === 3);
+        
+        // Cell background
+        if (isNav) {
+            const grad = ctx.createRadialGradient(x + cellSize/2, y + cellSize/2, 0, x + cellSize/2, y + cellSize/2, cellSize);
+            grad.addColorStop(0, 'rgba(255, 215, 0, 0.7)');
+            grad.addColorStop(1, 'rgba(184, 134, 11, 0.3)');
+            ctx.fillStyle = grad;
+        } else {
+            const grad = ctx.createLinearGradient(x, y, x + cellSize, y + cellSize);
+            grad.addColorStop(0, 'rgba(140, 98, 57, 0.5)');
+            grad.addColorStop(0.5, 'rgba(74, 59, 50, 0.5)');
+            grad.addColorStop(1, 'rgba(35, 24, 19, 0.5)');
+            ctx.fillStyle = grad;
+        }
+        
+        ctx.beginPath();
+        ctx.roundRect(x, y, cellSize, cellSize, 20);
+        ctx.fill();
+        
+        // Border
+        ctx.strokeStyle = isNav ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 215, 0, 0.7)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+        
+        if (isNav) {
+            // Draw arrow
+            const cx = x + cellSize / 2;
+            const cy = y + cellSize / 2;
+            const arrowSize = cellSize * 0.5;
+            
+            let angle = 0;
+            if (row === 0 && col === 0) angle = -Math.PI / 4;      // ↖
+            else if (row === 0 && col === 3) angle = Math.PI / 4;  // ↗
+            else if (row === 3 && col === 0) angle = -3 * Math.PI / 4; // ↙
+            else if (row === 3 && col === 3) angle = 3 * Math.PI / 4;  // ↘
+            
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = arrowSize / 5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(-arrowSize/3, arrowSize/3);
+            ctx.lineTo(0, -arrowSize/3);
+            ctx.lineTo(arrowSize/3, arrowSize/3);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Label
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+            ctx.font = 'bold 28px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('NAV', cx, cy + cellSize * 0.3);
+        } else {
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.95)';
+            ctx.font = 'bold 26px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(buttonLabels[idx], x + cellSize / 2, y + cellSize / 2);
+        }
+    }
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.anisotropy = 16;
+    return texture;
+}
+Hmm, the arrow sizes are getting complex. Let me simplify.
+
+OK let me just write the whole thing now.
+
+Actually let me also reconsider - should the left cube be interactive too? The user's original design has both cubes but only the right one is mentioned as "control panel". Let me make both interactive but with the same texture. So clicking NAV on either rotates both.
+
+Actually to keep it simple and avoid confusion, let me just make the RIGHT cube interactive.
+
+OK writing final code.
+
+Hmm actually, I realize for the crystal to look good, I really need an environment map. Let me add a simple one using PMREMGenerator. But three.js r128 PMREMGenerator... let me check. Yes it's available. And there's a RoomEnvironment in examples but we're only loading the core three.min.js.
+
+I can create a simple environment from a scene:
+
+js
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+pmremGenerator.compileEquirectangularShader();
+
+const envScene = new THREE.Scene();
+// Create a colorful environment
+// ... add some emissive planes or point lights
+
+const envMap = pmremGenerator.fromScene(envScene, 0.04).texture;
+scene.environment = envMap;
+Actually, let me just create a simple gradient environment by using a scene with colored lights and rendering it:
+
+js
+function createEnvironment() {
+    const envScene = new THREE.Scene();
+    envScene.background = new THREE.Color(0x0a0614);
+    
+    // Add emissive planes to act as "studio lights" for reflections
+    const geo = new THREE.PlaneGeometry(20, 20);
+    
+    const colors = [0xffd700, 0xcd7f32, 0x80daeb, 0xffffff];
+    const positions = [
+        [10, 10, 10], [-10, 5, 10], [10, -5, -10], [0, 15, 0]
+    ];
+    
+    colors.forEach((c, i) => {
+        const mat = new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(...positions[i]);
+        mesh.lookAt(0, 0, 0);
+        envScene.add(mesh);
+    });
+    
+    return pmremGenerator.fromScene(envScene, 0.1).texture;
+}
+This creates an environment with colored planes that will reflect on the crystal.
+
+OK let me finalize and write the complete code.
+
+Actually, I realize three.js r128 might not have MeshPhysicalMaterial.transmission with proper support. Let me check... transmission was added to MeshPhysicalMaterial in r126 or so. r128 should have it. But actual transmission rendering requires renderer to support it - it uses a render target to capture the scene behind, which works in WebGL2 but is expensive.
+
+Actually, in r128 the transmission feature was still experimental. Let me just use it and hope it looks ok. If transmission doesn't work, the material will just look transparent/clear.
+
+Alternatively, I can avoid transmission and use a simpler approach with transparent: true, opacity: 0.3 plus high reflectivity and clearcoat for a glassy look.
+
+Let me use both approaches:
+
+If transmission works, great
+
+Keep opacity for fallback
+
+Hmm, using both might cause issues. Let me just try transmission with a modest value.
+
+OK final code:
+
+Actually, I want to make sure the crystal REALLY looks like mountain crystal. Let me think about what makes it distinct:
+
+Very clear, almost no color
+
+Sharp facets with high reflectivity
+
+Sparkles/reflections from any light source
+
+Slight refraction distortion
+
+For Three.js without real-time refraction:
+
+High clearcoat = sharp reflections
+
+Low roughness = mirror-like
+
+Slight blue tint = cold crystal look
+
+Edge highlights = definition
+
+I think with good lighting and material settings, it will look fine.
+
+Let me write it.
+
+Oh wait, I should also make sure the button labels are readable on the crystal. With transmission, the base color is washed out. To make the buttons pop, I might need to use emissive or add the overlay approach.
+
+Let me go with the overlay approach for reliable button visibility:
+
+Inner crystal cube (1.65 size, no texture, transmission)
+
+Outer overlay cube (1.67 size, transparent texture overlay)
+
+The overlay is slightly bigger so the buttons "float" just above the crystal surface.
+
+Actually, an even better idea: just make the crystal material and use map with a texture that has transparent background. Three.js should blend the map on top of the transmissive base.
+
+Hmm, I've seen this working. Let me just try map on the physical material with alpha.
+
+Actually in Three.js, when transmission > 0, the material's alpha/map still affects the appearance. The transmission is added on top. So a map with transparent areas would still show the crystal behind.
+
+OK let me go with this approach - single mesh, map with transparent PNG-style texture.
+
+Alright, writing the final code now.
+
+Let me also think about the size. The original cube was 1.65, positioned at ±3.3 on X. That works. Let me keep those.
+
+Final code structure:
+
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- styles -->
+</head>
+<body>
+    <div id="webgl-container"></div>
+    <div class="karaoke-stage">...</div>
+    <div class="hint-overlay">...</div>
+    <script>
+        // 1. Audio engine
+        // 2. Scene setup
+        // 3. Environment map
+        // 4. Particles
+        // 5. Lights
+        // 6. Texture creation
+        // 7. Material
+        // 8. Cubes
+        // 9. Rotation logic
+        // 10. Raycasting
+        // 11. Animation
+    </script>
+</body>
+</html>
+Let me write it.
+
+For the NAV arrow drawing, let me make it look cleaner. I'll draw a chevron (V shape) rotated to point diagonally.
+
+For rotation handling:
+
+js
+let targetRotLeft = 0;
+let targetRotRight = 0;
+const STEP = Math.PI / 2;
+
+function rotateCubes(direction) {
+    // direction: +1 for "next" (clockwise), -1 for "previous"
+    targetRotRight += direction * STEP;
+    targetRotLeft -= direction * STEP;
+}
+Hmm, wait. If the right cube rotates +90° (clockwise viewed from above), its front face goes to the right. The user sees the left face becoming the new front. So clicking "rotate right" on the NAV actually shows the left face? That's confusing.
+
+Let me think about it from user perspective. User sees the front face with buttons. They want to see the next face. They click "NAV →" (right arrow). The cube rotates so the next face appears. If "next" means the face currently on the right side, then we rotate the cube -90° (to bring the right face to front).
+
+Hmm, this is getting confusing. Let me just pick one direction and be consistent:
+
+NAV buttons on the LEFT side of the face → rotate cube -90° (view moves left)
+
+NAV buttons on the RIGHT side of the face → rotate cube +90° (view moves right)
+
+Or:
+
+All NAV buttons rotate the cube by 90° in the direction of the arrow
+
+I'll go with the second approach, but arrows are diagonal. Let me just use:
+
+NAV ↖ and NAV ↙ (left side): rotate -90°
+
+NAV ↗ and NAV ↘ (right side): rotate +90°
+
+And the left cube rotates in the opposite direction.
+
+Now, when we rotate the right cube -90°, its front face goes to the left. The new front face is the one that was on the right.
+
+Actually wait. Rotating -90° around Y means: local +Z axis rotates to point to world -X (i.e., the front face now faces left). So the face that was on the RIGHT is now on the FRONT. Yes, this is "view moves right" behavior for the viewer.
+
+Hmm, so -90° = the face on the right becomes visible. That's what you'd expect from clicking a right arrow.
+
+OK so:
+
+Right arrow click → -90° (right face becomes visible)
+
+Left arrow click → +90° (left face becomes visible)
+
+Let me just go with this.
+
+Final mapping:
+
+NAV ↖ (top-left): rotate right cube +90°, left cube -90°
+
+NAV ↗ (top-right): rotate right cube -90°, left cube +90°
+
+NAV ↙ (bottom-left): rotate right cube +90°, left cube -90°
+
+NAV ↘ (bottom-right): rotate right cube -90°, left cube +90°
+
+OK writing now.
+
+Let me also address the karaoke - I should keep it working. It starts when first button is clicked.
+
+Let me write the complete code.
+
+Actually one more thing: the hint-overlay text should be updated since there are no more corner divs. Let me change it to something like "КЛИКАЙТЕ ПО УГЛОВЫМ NAV-КНОПКАМ НА ГРАНЯХ КУБА".
+
+OK writing now.
+
+Let me be careful with the code structure. Here goes:
+
+Actually let me think about whether the environment map will work without issues. The PMREMGenerator in three.js r128... Let me just use a simpler approach: set the scene.environment directly to a gradient texture.
+
+Or even simpler: use a CubeTexture created from a canvas.
+
+Actually the simplest approach that works: just set a scene.environment to null and rely on point lights and material settings.
+
+For crystal to look good, we mostly need:
+
+Sharp specular highlights (from clearcoat)
+
+Some reflections (from reflectivity)
+
+Transparency (from transmission)
+
+Point lights will give specular highlights. For reflections, we need something to reflect. Without env map, reflections are just the background color (which is dark).
+
+So the crystal will look dark but with sharp highlights. Not great.
+
+Let me add a simple env map. Here's a simple approach:
+
+js
+const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
+    format: THREE.RGBAFormat,
+    generateMipmaps: true,
+    minFilter: THREE.LinearMipmapLinearFilter
+});
+const cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget);
+
+// Add the cube camera to the scene
+scene.add(cubeCamera);
+
+// Set scene environment
+scene.environment = cubeRenderTarget.texture;
+But we need to render the cube camera at least once. And it will capture the scene itself, including the cubes, which might cause recursive reflections. Let me just capture the stars and lights.
+
+Actually, the simplest thing: just create a gradient environment texture from a canvas and use it as the environment.
+
+js
+function createGradientEnv() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createLinearGradient(0, 0, 0, 512);
+    grad.addColorStop(0, '#1a1a3a');
+    grad.addColorStop(0.5, '#4a3b52');
+    grad.addColorStop(1, '#0a0614');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 512, 512);
+    // Add some bright spots
+    ctx.fillStyle = 'rgba(255, 215, 0, 0.8)';
+    ctx.beginPath();
+    ctx.arc(128, 128, 60, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(128, 218, 235, 0.6)';
+    ctx.beginPath();
+    ctx.arc(384, 256, 80, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(205, 127, 50, 0.7)';
+    ctx.beginPath();
+    ctx.arc(256, 400, 70, 0, Math.PI * 2);
+    ctx.fill();
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    return texture;
+}
+
+scene.environment = createGradientEnv();
+Hmm, for equirectangular mapping to work with PBR, it needs to be processed via PMREM. But three.js r128 should automatically handle it if we set scene.environment to an equirectangular texture... actually no, we need to PMREM it.
+
+Let me just use PMREMGenerator:
+
+js
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+pmremGenerator.compileEquirectangularShader();
+const envTexture = pmremGenerator.fromEquirectangular(gradientTexture).texture;
+scene.environment = envTexture;
+OK let me do this.
+
+Alright, writing the final code now.
+
+Hmm, actually one concern: if the scene has fog, the environment might interact weirdly. Let me test mentally... should be fine.
+
+OK final code coming up. Let me be thorough and complete.
+
+Let me also decide on which buttons to detect as NAV via raycasting.
+
+js
+function getButtonIndex(uv) {
+    const col = Math.min(3, Math.floor(uv.x * 4));
+    const row = Math.min(3, Math.floor((1 - uv.y) * 4));
+    return row * 4 + col;
+}
+
+function isNavButton(idx) {
+    return idx === 0 || idx === 3 || idx === 12 || idx === 15;
+}
+
+function getNavDirection(idx) {
+    // returns -1 (rotate left) or +1 (rotate right) or 0 (not nav)
+    if (idx === 0 || idx === 12) return +1; // left side -> rotate right (view moves right? wait)
+    if (idx === 3 || idx === 15) return -1; // right side -> rotate left
+    return 0;
+}
+Hmm, let me reconsider. The user clicks a NAV button. What should happen?
+
+If NAV ↖ is at the top-left of the face (viewed by user), maybe clicking it should rotate the cube in the direction of the arrow ↖. But ↖ is diagonal, meaning both up and left. Since we're only rotating around Y, we can only go left or right.
+
+Let me interpret: NAV ↖ and NAV ↙ (left column) → rotate view left (show left face) → cube rotates +90°? or -90°?
+
+Let me think again carefully. If I'm looking at the front face of a cube, and I want to see the face that's currently on the LEFT side of the cube:
+
+The left face is at local -X position
+
+I need to rotate the cube so that -X becomes +Z (facing me)
+
+Rotating around Y by +90°: local +Z → world +X, so local -X → world +Z. Yes! Rotating +90° brings the left face to the front.
+
+Wait let me redo. Rotation matrix around Y by angle θ:
+
+[cos θ, 0, sin θ]
+
+[0, 1, 0]
+
+[-sin θ, 0, cos θ]
+
+Applying to vector (x, y, z):
+
+new_x = x * cos θ + z * sin θ
+
+new_z = -x * sin θ + z * cos θ
+
+For θ = +90° (cos=0, sin=1):
+
+(1,0,0) → (0, 0, -1) : +X goes to -Z (right face goes to back)
+
+(0,0,1) → (1, 0, 0) : +Z goes to +X (front face goes to right)
+
+(-1,0,0) → (0, 0, 1) : -X goes to +Z (left face goes to front!) ✓
+
+So +90° rotation brings the LEFT face to the FRONT. Good.
+
+So:
+
+To see the left face: rotate +90°
+
+To see the right face: rotate -90°
+
+Therefore:
+
+NAV ↖ / NAV ↙ (left side): +90°
+
+NAV ↗ / NAV ↘ (right side): -90°
+
+But wait, in the original code, the pivot rotation was:
+
+js
+pivotRight.rotation.y -= (0.0015 + speedRight);
+So right cube was rotating in the negative Y direction (clockwise viewed from above). And that was described as "по часовой стрелке" (clockwise).
+
+Hmm. Let's just define it as:
+
+Left side NAV → rotate right cube by +90° (counterclockwise from top)
+
+Right side NAV → rotate right cube by -90° (clockwise from top)
+
+The left cube rotates opposite for balance.
+
+OK let me finalize.
+
+Also, I realize with each step being +90°, after 4 steps the cube returns to start (mod 360). Good.
+
+But the targetRotLeft/Right values keep growing. After many clicks they get very large. Let me use modulo when they get big, but that's tricky with lerp. Or use a "shortest path" approach.
+
+Actually, if we always add +90° or -90° to the target, the target keeps growing. The lerp will work, but after 1000 clicks the target is 1000*90° = 90000°. Float precision at that magnitude is still fine (32-bit float has ~7 decimal digits). So should be OK for typical use.
+
+Actually, since the target only grows by ±90° per click, and we lerp toward it smoothly, and the actual rotation catches up, we should be fine.
+
+Alternatively, I can normalize the rotation and target every full rotation:
+
+js
+if (Math.abs(targetRotRight) > 2 * Math.PI) {
+    const shift = Math.round(targetRotRight / (2 * Math.PI)) * 2 * Math.PI;
+    targetRotRight -= shift;
+    pivotRight.rotation.y -= shift;
+}
+This keeps values small. Let me add this.
+
+OK writing final code now.
+
+One more thing: initial rotation. The cubes should be initially positioned so that a NAV cell (top-left of a face) is visible, or maybe oriented so a face is front-facing. Let me have them start at rotation 0 (front face visible).
+
+Also, the cube is aligned to vertex, so the front face (in local coords) is facing diagonally. Hmm.
+
+Actually with alignToVertex, the cube's [1,1,1] direction points up (world +Y). So the three faces that meet at the top vertex are tilted. The other three faces that meet at the bottom vertex are also tilted.
+
+Front-facing: which face is at world +Z? Let me compute.
+
+Actually this is getting complex. Let me just position them and see. Actually, we can't test easily, so let me just accept whatever and note that the user can rotate.
+
+The original code seems to work with this setup, and the texture is visible on all faces, so it should be fine.
+
+But for the raycasting to work, the user needs to click on a visible face. With vertex-up orientation, the cube shows a "diamond" shape with 4 visible triangular-ish faces. Actually with vertex up, the cube appears as a hexagon with 3 visible faces (top three) meeting at top vertex. Hmm.
+
+Wait, vertex-up orientation: the cube is rotated so that the diagonal (1,1,1) is aligned with Y. The vertices go up and down. The visible faces from the front... let me think.
+
+If the top vertex is the one at (1,1,1) rotated to (0, 1.65*sqrt(3)/2, 0) (approximately, scaled), then the three faces meeting at top vertex are visible from above. From straight on, we'd see 2-3 faces.
+
+For a viewer at the front, looking horizontally, we'd see:
+
+Part of 2 faces (left and right of center)
+
+Maybe a third face at the top
+
+This is fine. Clicks will work on whatever is visible.
+
+OK, no more deliberation. Writing code.
+
+Let me write the raycasting to test both cubes:
+
+js
+const intersectsRight = raycaster.intersectObject(cubeRight);
+const intersectsLeft = raycaster.intersectObject(cubeLeft);
+
+let hit = null;
+if (intersectsRight.length > 0) hit = { mesh: cubeRight, intersection: intersectsRight[0] };
+if (intersectsLeft.length > 0 && (!hit || intersectsLeft[0].distance < hit.intersection.distance)) {
+    hit = { mesh: cubeLeft, intersection: intersectsLeft[0] };
+}
+
+if (hit) {
+    const uv = hit.intersection.uv;
+    // ...
+}
+OK. Let me write the final code.
+
+Hmm, actually let me simplify and only raycast the right cube since that's the "control panel". The left cube is just decorative.
+
+Actually, since the user wants the arrows "integrated into the cube faces", they should work on both. Or maybe just on the right cube for control. Let me make both interactive.
+
+OK final code:
+
+Actually wait, I realize there's a potential issue with using map on a transmissive material. Let me test my understanding:
+
+In three.js r128, MeshPhysicalMaterial:
+
+map affects the diffuse color of the material
+
+When transmission > 0, the material becomes "transmissive" - light passes through
+
+The transmissive appearance is computed separately from the base color
+
+The base color (from map) is used for the "diffuse" part
+
+With high transmission, the diffuse part is attenuated
+
+So with transmission: 0.95, the map would only contribute ~5% of the appearance, which would be too faint.
+
+Solutions:
+
+Use emissiveMap - emissive is added on top regardless of transmission
+
+Use map and lower transmission
+
+Use a separate overlay mesh
+
+Option 1 might work. Let me try:
+
+js
+emissive: 0xffffff,
+emissiveMap: faceTexture,
+emissiveIntensity: 0.6,
+But then the transparent areas of the texture would still emit? No - emissiveMap only adds where the texture has color. Where the texture is transparent (RGBA = 0,0,0,0), the emissive contribution is 0. So it should be fine.
+
+Wait, actually, does three.js support alpha in emissiveMap? Let me think... emissiveMap is multiplied by the emissive color to get the emissive contribution. The alpha channel of emissiveMap isn't used as a mask (I think). So where the texture is transparent but has RGB values of 0, the emissive is 0. That should work.
+
+Actually, if I clearRect the canvas, the RGB values are 0,0,0 and alpha is 0. So emissive contribution is 0 in those areas. Good.
+
+But wait, when I draw buttons with semi-transparent backgrounds, the canvas stores premultiplied alpha or straight alpha? Canvas 2D stores straight alpha (I think). So drawing with rgba(140, 98, 57, 0.5) means the pixel is (140, 98, 57, 0.5) - RGB is the actual color, alpha is 0.5. When used as emissiveMap, three.js would multiply emissive by (140/255, 98/255, 57/255), giving a dim brownish glow. That's actually a nice effect.
+
+But the transparency (alpha 0.5) is not used by emissiveMap, so those pixels emit at full strength of (140,98,57)/255 even though they're semi-transparent in the map. Hmm.
+
+OK let me not overthink. Let me try both approaches and see.
+
+Actually, you know what, let me use a completely different approach that I'm confident will work:
+
+Two meshes:
+
+Crystal body (transparent, no texture)
+
+Button overlay (opaque where buttons are, transparent elsewhere, MeshBasicMaterial or MeshStandardMaterial)
+
+The button overlay is slightly larger (1.67 vs 1.65). It uses transparent: true and the texture's alpha channel for transparency.
+
+This is the cleanest approach and will definitely work.
+
+Let me do this:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xe8f4ff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.02,
+    transparent: true,
+    opacity: 0.9
+});
+
+const buttonMaterial = new THREE.MeshBasicMaterial({
+    map: faceTexture,
+    transparent: true,
+    alphaTest: 0.01,
+    side: THREE.FrontSide,
+    depthWrite: false
+    // or: depthWrite: true for proper z-testing
+});
+
+const cubeSize = 1.65;
+const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+const overlayGeometry = new THREE.BoxGeometry(cubeSize * 1.005, cubeSize * 1.005, cubeSize * 1.005);
+
+const crystalLeft = new THREE.Mesh(geometry, crystalMaterial);
+const crystalRight = new THREE.Mesh(geometry, crystalMaterial);
+const buttonsLeft = new THREE.Mesh(overlayGeometry, buttonMaterial);
+const buttonsRight = new THREE.Mesh(overlayGeometry, buttonMaterial);
+Hmm, but the overlay mesh needs to be raycast against, and UV coordinates need to be computed from it. That's fine.
+
+But the overlay geometry's UV mapping should match the BoxGeometry of the crystal. Since they're both BoxGeometry with same dimensions (proportional), UVs should be the same.
+
+OK let me go with this.
+
+Now for the button overlay to look right, the texture should have:
+
+Transparent background
+
+Opaque (or semi-opaque) buttons
+
+Let me update the texture function:
+
+js
+ctx.clearRect(0, 0, size, size);  // fully transparent
+
+// Draw border
+ctx.strokeStyle = 'rgba(255, 215, 0, 0.9)';
+// ...
+
+// Draw buttons with colored backgrounds
+// The background of each button should be somewhat opaque
+With MeshBasicMaterial and transparent: true, the alpha channel is used for transparency. So opaque pixels show, transparent pixels don't.
+
+For a nicer look, let me use MeshStandardMaterial for the buttons so they respond to light. But MeshBasicMaterial is simpler and always visible.
+
+Actually, using MeshBasicMaterial for the buttons means they're always at full brightness, which might look "pasted on". Using MeshStandardMaterial would make them look like they're part of the crystal.
+
+Let me use MeshStandardMaterial with a decent metalness for a "metal inlay" look:
+
+js
+const buttonMaterial = new THREE.MeshStandardMaterial({
+    map: faceTexture,
+    transparent: true,
+    alphaTest: 0.1,
+    metalness: 0.8,
+    roughness: 0.3,
+    emissive: 0x222222,
+    emissiveMap: faceTexture,
+    emissiveIntensity: 0.3
+});
+Hmm, but then the emissive would affect transparent areas too if alpha isn't handled. Ugh.
+
+Let me keep it simple - use MeshBasicMaterial with the map. Buttons will look like flat colored squares, which is fine for a "control panel" look.
+
+Actually, let me use MeshStandardMaterial with the map:
+
+alphaTest handles transparency (discards transparent pixels)
+
+With alphaTest, no need for transparent: true (better depth handling)
+
+Lights affect the appearance
+
+js
+const buttonMaterial = new THREE.MeshStandardMaterial({
+    map: faceTexture,
+    alphaTest: 0.5,
+    metalness: 0.6,
+    roughness: 0.4,
+    side: THREE.FrontSide
+});
+This should work. Buttons look like metal inlays on the crystal.
+
+But wait, with alphaTest: 0.5, pixels with alpha < 0.5 are discarded. So semi-transparent edges become hard. For our texture where buttons have a rounded rect shape with semi-transparent backgrounds, this might look bad.
+
+Let me make the buttons opaque in the texture (alpha = 1). Then alphaTest: 0.5 works fine.
+
+Actually, let me not use alphaTest and instead use transparent: true. It's fine for our case.
+
+js
+const buttonMaterial = new THREE.MeshStandardMaterial({
+    map: faceTexture,
+    transparent: true,
+    metalness: 0.7,
+    roughness: 0.3,
+    depthWrite: false,  // to avoid z-fighting with the crystal behind
+    side: THREE.FrontSide
+});
+Hmm, depthWrite: false means it won't occlude other transparent objects. But since it's on top of the crystal, and both are transparent, we need proper sorting. Three.js does this automatically based on distance.
+
+Actually, with depthWrite: false, the button mesh won't write to depth buffer, so it won't block the crystal. But the crystal is behind it, and the crystal is also transparent, so the crystal also doesn't write to depth. The result: both render in order of distance, sorted per-object (not per-pixel).
+
+This might cause artifacts. Let me think...
+
+Actually, the button overlay is in front of the crystal (larger by 0.5%), so it renders after (three.js renders front-to-back for opaque, back-to-front for transparent). Since both are transparent, the crystal (further) renders first, then the buttons (closer) render on top. Good, no artifacts.
+
+OK, but actually the button overlay is on ALL sides of the cube, and the crystal is also on all sides. From any viewpoint, half the overlay is in front and half is behind. So the sorting isn't perfect per-face.
+
+Hmm. Let me just use depthWrite: true for both, and transparent: true. This way, the depth buffer handles occlusion correctly. The only downside is that semi-transparent edges might not blend perfectly, but for our use case with mostly opaque buttons, it should be fine.
+
+Actually, transparent: true with depthWrite: true is unusual and can cause issues. Let me just use alphaTest instead:
+
+js
+const buttonMaterial = new THREE.MeshStandardMaterial({
+    map: faceTexture,
+    alphaTest: 0.5,
+    metalness: 0.7,
+    roughness: 0.3,
+    side: THREE.FrontSide
+});
+With alphaTest: 0.5, transparent pixels are discarded, opaque pixels are rendered normally. This gives clean geometry-like rendering without transparency sorting issues.
+
+For this to work, I need the texture to have either fully opaque (alpha=1) or fully transparent (alpha=0) pixels. So the button backgrounds should be fully opaque.
+
+Let me update the texture function accordingly.
+
+Actually, I want the button backgrounds to be semi-transparent for a nice crystal look. Hmm.
+
+Let me try: full opacity buttons but with colors that look good against the crystal. Like dark bronze/gold.
+
+OK I'll just go with opaque buttons.
+
+Alright, writing the final code now. Let me commit.
+
+One more thing about the rotation direction. Since the cube is oriented with a vertex up, rotating around Y axis will make the cube "spin" on its vertical axis. The visible triangular faces will change.
+
+With vertex-up orientation, the cube looks like a hexagonal prism from the side (well, sort of). Rotating around Y makes the faces change. Each 120° rotation would bring a different face pattern, but since the cube has 4-fold symmetry (4 side faces), a 90° rotation brings the next face. But with vertex-up, the faces are tilted, so it's more complex.
+
+Actually, let me think. With vertex-up orientation, the diagonal (1,1,1) is aligned with Y. The 6 faces of the cube are tilted in various directions. None are exactly "front-facing".
+
+Wait, actually. The diagonal (1,1,1) is aligned with Y. The three faces that meet at vertex (1,1,1) are all tilted at the same angle from Y (about 54.7° from vertical). The three faces that meet at vertex (-1,-1,-1) are tilted the opposite way.
+
+Hmm, from the side (looking horizontally), we'd see... let me think. Actually with this orientation, the cube looks like a "diamond" with the top vertex up. The 4 edges from the top vertex go down at ~54.7° to the equator.
+
+The 4 faces of the "upper" part... wait, there are only 3 faces meeting at each vertex of a cube. Not 4.
+
+Oh right, a cube has 3 faces meeting at each vertex. The top vertex (1,1,1) has 3 edges going down. The other 7 vertices are arranged around.
+
+Ugh, this is complex. Let me just trust the original code's orientation and the fact that it "looks fine" and move on.
+
+When we rotate around Y, the top and bottom vertices stay in place (since they're on the Y axis). The 6 side vertices rotate around. So it's a proper spinning motion.
+
+OK, writing final code.
+
+Let me also ensure that karaoke continues to work. The audio engine should be triggered on first click.
+
+Final consideration: the feedback text "СИСТЕМА ГОТОВА" should initially show, and update on button clicks.
+
+OK writing now for real.
+
+Hmm, one thing about the arrows. I want to make them look nice. Let me draw them as filled triangles with a shaft, or just a chevron.
+
+Chevron is simpler and looks cleaner. Let me do a chevron.
+
+For a chevron pointing up-right (↗), the shape is like:
+
+text
+    /
+   /
+  /
+Which is: starting from bottom-left, going to top-right, then going down-right.
+
+Hmm, that's an arrow. Let me draw:
+
+text
+  A
+ / \
+B   C
+Actually for a chevron (V shape), it's:
+
+text
+  A
+ / 
+B
+ \
+  C
+Wait no. A chevron pointing up:
+
+Left point at bottom-left
+
+Middle point at top-center
+
+Right point at bottom-right
+
+So:
+
+text
+    *
+   / \
+  *   *
+Two line segments from bottom-corners to top-center.
+
+For pointing diagonally, rotate the whole thing.
+
+OK let me code:
+
+js
+function drawChevron(ctx, cx, cy, size, angle) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(-size/2, size/2);
+    ctx.lineTo(0, -size/2);
+    ctx.lineTo(size/2, size/2);
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = size * 0.2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    ctx.restore();
+}
+This draws a chevron pointing up. Rotating by angle changes direction.
+
+For ↖: angle = -PI/4 (rotate the up-chevron 45° counterclockwise)
+For ↗: angle = PI/4
+For ↙: angle = -3PI/4
+For ↘: angle = 3PI/4
+
+OK good.
+
+Now writing the final code. Let me put it all together.
+
+I'll organize the code with clear sections and comments. Let me write it out.
+
+Hmm, I realize I should also make the cubes NOT rotate automatically. They should only rotate when a button is clicked. So remove the base rotation. Good.
+
+Also, after each click, the target angle should be exactly 90° more than the current target. The cube will lerp to that position.
+
+Let me finalize the code.
+
+Also, hint text should be updated to reflect the new UI.
+
+Let me write:
+
+html
+<div class="hint-overlay">КЛИКАЙТЕ ПО NAV-СТРЕЛКАМ НА УГЛАХ ГРАНЕЙ ДЛЯ ПОВОРОТА КУБА</div>
+Alright, writing the complete code now.
+
+One more design question: with 4 NAV buttons on each face, and both cubes having the same texture, clicking any NAV on any face should work.
+
+When you click NAV, you rotate the cube 90°. The button is now in a different position, so you can click a different NAV to rotate again.
+
+The user's intent: "ПРИ АКТИВАЦИИ ОНИ ПОВОРАЧИВАЛИСЬ ТОЛЬКО НА СЛЕДУЮЩУЮ ГРАНЬ" - "when activated they rotate only to the next face". So one click = one face. Good.
+
+OK writing the code.
+
+Let me structure the final code carefully. I want it to be well-organized and complete.
+
+Actually, I just realized I should double-check: with renderer.toneMapping = THREE.ACESFilmicToneMapping, transmissive materials might look different. Let me keep it.
+
+Also, I should make sure the background is dark but not completely black, so reflections have something to show. The scene has fog with color 0x040306, so the far background is dark. But local reflections from lights will show. OK.
+
+Alright, here goes. Writing final complete code.
+
+One last thing about the crystal: I want it to really look like mountain crystal. Let me add:
+
+Very slight blue/violet tint
+
+Sharp edges (via the material settings)
+
+Bright specular highlights
+
+The material settings I have should achieve this. Let me also add an EdgesGeometry line to emphasize the crystal facets - wait, that might interfere with the "crystal look". Let me skip the edges for now and just rely on the material.
+
+Actually, adding very subtle edge highlights could enhance the crystal look. Let me add very thin, very transparent white lines at the edges.
+
+Hmm, edges of the cube would be visible as 12 lines. Actually with vertex-up orientation, the edges still form the cube outline. Yes, let me add them.
+
+Actually, you know what, let me skip edges. The material alone should look good.
+
+OK, final code:
+
+Wait, I need to think about the lighting setup. Currently there are 3 point lights. For crystal to look good, we need bright, localized light sources that create sharp highlights. Point lights work for this.
+
+Let me also add a directional light for overall illumination.
+
+OK writing now, for real.
+
+Let me also make sure the button feedback text is displayed properly.
+
+Alright. Here's my final code structure:
+
+HTML with no corner divs, karaoke stage, hint overlay
+
+CSS unchanged except maybe hint text
+
+JS:
+
+AudioKaraokeEngine class
+
+Scene setup
+
+Environment map
+
+Lights
+
+Particles
+
+Texture function (with arrows)
+
+Material setup
+
+Cube creation
+
+Rotation state
+
+Click handler (raycasting)
+
+Animation loop
+
+Let me write it.
+
+Actually, one thing I want to reconsider: should there be a delay/animation for rotation, or should it snap instantly?
+
+I think smooth animation is nicer. Let me use lerp for smooth 90° rotations.
+
+But if user clicks rapidly, the target keeps accumulating and the cube speeds up to catch up. That's fine actually - it feels responsive.
+
+OK writing.
+
+Alright, here's the final code. Let me be very thorough and make sure everything works.
+
+For the material, I'll use:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xd8e8ff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.0,
+    transparent: true,
+    opacity: 0.85,
+    side: THREE.FrontSide
+});
+And for buttons:
+
+js
+const buttonMaterial = new THREE.MeshStandardMaterial({
+    map: faceTexture,
+    transparent: true,
+    alphaTest: 0.5,
+    metalness: 0.7,
+    roughness: 0.3,
+    emissive: 0x332200,
+    emissiveIntensity: 0.5,
+    side: THREE.FrontSide
+});
+Wait, using emissive with alphaTest - emissive will show on non-transparent areas. Actually the emissive color is just added, and where alpha < 0.5 the pixel is discarded anyway. So emissive only shows on buttons. Good. This gives a nice "backlit" look to the buttons.
+
+OK let me write it.
+
+Actually, let me reconsider using both transmission AND transparent. In Three.js:
+
+transmission > 0 makes the material use the transmission render path
+
+transparent: true and opacity < 1 make the material use alpha blending
+
+Using both can cause issues. Let me just use transmission without transparent: true. Actually, transmission implies some level of transparency. Let me try:
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xd8e8ff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.0
+});
+Without transparent: true. But transmission requires the material to be treated as transparent... let me check three.js docs.
+
+Actually, from three.js docs: "transmission - Degree of transmission (or optical transparency), from 0.0 to 1.0. Default is 0. When transmission is 0, the material is opaque. Above 0, the material becomes transparent (you will also want to set transparent: true or use alphaTest)."
+
+OK so we need transparent: true for transmission to work. Got it.
+
+Actually, I've seen examples where transmission works without transparent: true, because transmission has its own render path. Let me just set both to be safe.
+
+js
+const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xd8e8ff,
+    metalness: 0.0,
+    roughness: 0.02,
+    transmission: 0.95,
+    thickness: 2.5,
+    ior: 1.544,
+    reflectivity: 1.0,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.0,
+    transparent: true,
+    opacity: 1.0  // Don't use opacity for transparency, use transmission
+});
+Hmm, if opacity: 1.0 and transparent: true, the material is technically not alpha-blended. But transmission handles the transparency. OK.
+
+Alright, writing the code.
+
+For the environment map, let me use PMREMGenerator:
+
+js
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+pmremGenerator.compileEquirectangularShader();
+
+const envCanvas = document.createElement('canvas');
+envCanvas.width = 1024;
+envCanvas.height = 512;
+const ectx = envCanvas.getContext('2d');
+
+// Dark gradient background
+const bgGrad = ectx.createLinearGradient(0, 0, 0, 512);
+bgGrad.addColorStop(0, '#1a1530');
+bgGrad.addColorStop(0.5, '#0a0614');
+bgGrad.addColorStop(1, '#040306');
+ectx.fillStyle = bgGrad;
+ectx.fillRect(0, 0, 1024, 512);
+
+// Bright spots for specular reflections
+const spots = [
+    { x: 200, y: 100, r: 80, color: 'rgba(255, 215, 0, 0.9)' },
+    { x: 700, y: 150, r: 60, color: 'rgba(128, 218, 235, 0.8)' },
+    { x: 500, y: 300, r: 100, color: 'rgba(205, 127, 50, 0.7)' },
+    { x: 850, y: 400, r: 70, color: 'rgba(255, 255, 255, 0.6)' }
+];
+
+spots.forEach(s => {
+    const g = ectx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
+    g.addColorStop(0, s.color);
+    g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ectx.fillStyle = g;
+    ectx.beginPath();
+    ectx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ectx.fill();
+});
+
+const envTexture = new THREE.CanvasTexture(envCanvas);
+envTexture.mapping = THREE.EquirectangularReflectionMapping;
+
+const envMap = pmremGenerator.fromEquirectangular(envTexture).texture;
+scene.environment = envMap;
+This should give nice reflections on the crystal.
+
+Alright, let me write the final complete code.
+
+Ugh, one more thing. When using scene.environment, ALL PBR materials get the environment map applied. Our button material is MeshStandardMaterial which will also get env reflections. That's fine, maybe even good.
+
+OK writing now. Final code coming up.
+
+Let me also make sure the karaoke text is still visible. The karaoke-stage div with its content is at z-index 10, and the canvas is at z-index 1. So karaoke is on top. Good.
+
+Final code:
+
+html
