@@ -1289,6 +1289,7 @@ function micToggle(){
   }
   navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:true}}).then(function(stream){
     var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { try { stream.getTracks().forEach(function(t){ t.stop(); }); } catch(e){} return pError('S15_NO_AUDIO_CTX', 'Web Audio недоступен — голос с эффектами не поднимется; репетиция и минус играют (ложим то, что доступно)'); } /* v11.41 «ДОСТУПНО»: честный отказ вместо TypeError */
     var ctx = new AC();
     var src = ctx.createMediaStreamSource(stream);
     var gain = ctx.createGain(); gain.gain.value = (+$('#gMic').value)/100;
