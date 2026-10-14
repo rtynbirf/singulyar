@@ -105,6 +105,14 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
 </head>
 <body>
+<script id="sg-tv-sound">/* v11.34 «ЛИК» ТБ-1: телевизор не играет Opus/webm и глушит WebAudio-граф — дом честно уходит на mp3 и прямой звук элемента (приказ владельца: «НЕ РАБОТАЕТ МУЗЫКА НА ТВ В ПК ЕСТЬ НА ТВ НЕТ») */
+(function(){'use strict';
+var ТВ=false,ОПУС=false;
+try{ТВ=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|SmartHub|HbbTV|NetCast|BRAVIA|AFT[BTSMW]|Android TV|CrKey|Apple ?TV|Vewd/i.test(String(navigator.userAgent||''));}catch(e){}
+try{var п=document.createElement('audio');ОПУС=(п.canPlayType('audio/webm; codecs="opus"')==='probably');}catch(e){}
+window.SG_ТВ=ТВ;
+window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
+}());</script>
 <header>
   <div class="wrap hd">
     <div class="logo" aria-hidden="true">32</div>
@@ -423,7 +431,7 @@ window.S32_ЯДРО = (function () {
     }
     var а = аудиоГотово();
     /* v10.85 «СИНХРОН»: поём мастера с голосом автора (МАКС), минусовка mp3 — честный фолбэк */
-    var вебм = (п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.max.webm' : ('minus/' + п.id + '.max.webm');
+    var вебм = (window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) ? ('minus/' + п.id + '.mp3') : ((п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.max.webm' : ('minus/' + п.id + '.max.webm')); /* ТБ-1 v11.34 */
     а.onerror = function () { а.onerror = null; а.src = 'minus/' + п.id + '.mp3'; статус('мастера webm нет рядом — играет минусовка (mp3)', 'warn'); };
     а.src = вебм;
     а.playbackRate = темп;

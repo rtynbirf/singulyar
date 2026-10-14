@@ -345,6 +345,14 @@ input{font:inherit}
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
 </head>
 <body>
+<script id="sg-tv-sound">/* v11.34 «ЛИК» ТБ-1: телевизор не играет Opus/webm и глушит WebAudio-граф — дом честно уходит на mp3 и прямой звук элемента (приказ владельца: «НЕ РАБОТАЕТ МУЗЫКА НА ТВ В ПК ЕСТЬ НА ТВ НЕТ») */
+(function(){'use strict';
+var ТВ=false,ОПУС=false;
+try{ТВ=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|SmartHub|HbbTV|NetCast|BRAVIA|AFT[BTSMW]|Android TV|CrKey|Apple ?TV|Vewd/i.test(String(navigator.userAgent||''));}catch(e){}
+try{var п=document.createElement('audio');ОПУС=(п.canPlayType('audio/webm; codecs="opus"')==='probably');}catch(e){}
+window.SG_ТВ=ТВ;
+window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
+}());</script>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <style>/* фирменный холст v3.0 (такт v1.27.0): сцены и темы data-theme аппа не тронуты */body{background:#0A0B0E !important}.singulyar-canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(255,94,98,.12) 0%,transparent 40%),radial-gradient(circle at 80% 80%,rgba(0,242,254,.12) 0%,transparent 40%),radial-gradient(circle at 50% 50%,rgba(56,239,125,.08) 0%,transparent 50%),#0A0B0E}</style>
 <canvas id="gl"></canvas>
@@ -853,6 +861,7 @@ async function initAudio() {
   freqData = new Uint8Array(FFT/2);
   timeData = new Float32Array(FFT);
   dsBuf = new Float32Array(FFT/2);
+      if (window.SG_ЗВУК_ТВ && window.SG_ЗВУК_ТВ()) { /* ТБ-1 v11.34: ТВ — вшитый трек играет напрямую (AAC элементом), вокал-вырез WebAudio честно недоступен, синтез не дублируем */ audioReady = true; return; }
 
   if (AUDIO_B64 && AUDIO_B64.length > 100) {
     try {

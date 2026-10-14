@@ -950,6 +950,14 @@ html[data-env="тв"] .langgrid{max-height:52vh}
 </style>
 </head>
 <body data-mode="start" data-scene="party" class="">
+<script id="sg-tv-sound">/* v11.34 «ЛИК» ТБ-1: телевизор не играет Opus/webm и глушит WebAudio-граф — дом честно уходит на mp3 и прямой звук элемента (приказ владельца: «НЕ РАБОТАЕТ МУЗЫКА НА ТВ В ПК ЕСТЬ НА ТВ НЕТ») */
+(function(){'use strict';
+var ТВ=false,ОПУС=false;
+try{ТВ=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|SmartHub|HbbTV|NetCast|BRAVIA|AFT[BTSMW]|Android TV|CrKey|Apple ?TV|Vewd/i.test(String(navigator.userAgent||''));}catch(e){}
+try{var п=document.createElement('audio');ОПУС=(п.canPlayType('audio/webm; codecs="opus"')==='probably');}catch(e){}
+window.SG_ТВ=ТВ;
+window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
+}());</script>
 <noscript><div style="position:fixed;left:0;right:0;bottom:0;z-index:var(--z-toast,60);background:#d4af37;color:var(--ink-on-accent);font:800 14px/1.4 system-ui,sans-serif;padding:14px 18px;text-align:center">Этому вечеру нужен JavaScript: включи его — и музыка заработает. Весь файл автономен, сеть не нужна.</div></noscript>
 <script>window.__errlog=[];window.addEventListener("error",function(e){window.__errlog.push(String(e&&e.message||"?")+" @"+(e&&e.lineno)+":"+(e&&e.colno))});</script>
 <div id="sngbg" aria-hidden="true"></div>
@@ -1537,7 +1545,7 @@ let ac=null, an=null, freqArr=null;
 const audio = new Audio();
 audio.preload = "auto";
 if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
-  if (buf && !audio.src) audio.src = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
+  if (buf && !audio.src && !(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ())) audio.src = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
 });
 audio.addEventListener("error", ()=>{ try{
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.минОтвал && window.__ТРАНСПОРТ.минОтвал()) return; /* v10.66: МИН не нашёлся — транспорт сам честно поднял МАКС */
@@ -1604,6 +1612,7 @@ function refreshOutLat(){
 }
 function ensureAudio(){
   if(ac) return true;
+  if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return false; /* ТБ-1 v11.34: на ТВ граф не глотает элемент — звук напрямую */
   try{
     const AC = window.AudioContext||window.webkitAudioContext;
     ac = new AC();
@@ -1990,8 +1999,8 @@ window.__ТРАНСПОРТ = (function(){
   const plateName = document.getElementById("концертИмя");
 
   /* v10.66 «ПОЛЮСА»: путь файла текущего полюса; null — караоке-дом (блоб) */
-  function src(i){ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (pole==="мин" ? "./minus/min/"+ПЕСНИ[i][0]+".webm" : "./minus/"+ПЕСНИ[i][0]+".max.webm"); } /* v10.69 ГОЛОС: МАКС = настоящий webm-мастер */
-  function караокеПуть(){ return pole==="мин" ? "./minus/prosto-lubi.min.webm" : "./minus/prosto-lubi.max.webm"; }
+  function src(i){ if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return ПЕСНИ[i][0]===КАРАОКЕ_ID ? "./minus/9ys_TVEtda8.mp3" : "./minus/"+ПЕСНИ[i][0]+".mp3"; /* ТБ-1 v11.34: ТВ не играет Opus — честная mp3-минусовка */ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (pole==="мин" ? "./minus/min/"+ПЕСНИ[i][0]+".webm" : "./minus/"+ПЕСНИ[i][0]+".max.webm"); } /* v10.69 ГОЛОС: МАКС = настоящий webm-мастер */
+  function караокеПуть(){ if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return "./minus/9ys_TVEtda8.mp3"; /* ТБ-1 v11.34 */ return pole==="мин" ? "./minus/prosto-lubi.min.webm" : "./minus/prosto-lubi.max.webm"; }
 
   function playСейчас(){
     state.started = true;
@@ -2005,7 +2014,7 @@ window.__ТРАНСПОРТ = (function(){
   /* честный блоб полюса, если он уже в шасси (готов(url)); false — нужно сncать */
   function карaokeБлоб(p, готов){
     if(караокеБлобы[p]){ готов(караокеБлобы[p]); return true; }
-    if(p==="макс" && window.TRACK_BUF){
+    if(p==="макс" && window.TRACK_BUF && !(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ())){
       караокеБлобы[p] = URL.createObjectURL(new Blob([window.TRACK_BUF], { type: "audio/webm" }));
       готов(караокеБлобы[p]); return true;
     }
@@ -2021,11 +2030,11 @@ window.__ТРАНСПОРТ = (function(){
     return false;
   }
   function карaokeСеть(p, готов, фиаско){
-    fetch(караокеПуть()).then(function(r){
+    var ТБ1ПУТЬ = караокеПуть(); fetch(ТБ1ПУТЬ).then(function(r){
       if(!r.ok) throw new Error("HTTP "+r.status);
       return r.arrayBuffer();
     }).then(function(buf){
-      караокеБлобы[p] = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
+      караокеБлобы[p] = URL.createObjectURL(new Blob([buf], { type: (window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) ? "audio/mpeg" : "audio/webm" })); /* ТБ-1 v11.34 */
       if(ПЕСНИ[idx][0]===КАРАОКЕ_ID && pole===p) готов(караокеБлобы[p]); /* сторож: трек/полюс не уехали */
     }).catch(фиаско||function(){});
   }
