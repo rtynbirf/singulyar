@@ -53,6 +53,7 @@ test('синтаксис JS ·19 и ·18 валиден (vm, блок за бл�
     let проверено = 0;
     for (const b of blocks) {
       if (/\bsrc=/.test(b[0])) continue;
+      if (/type\s*=\s*["']?(speculationrules|importmap|application\/(ld\+)?json)/i.test(b[0])) continue; /* JSON-блоки — не JS (догнан на такте v11.19) */
       const модуль = /type\s*=\s*["']?module/i.test(b[0]);
       /* module-блоки: top-level await и динамический import легальны в
          браузере, но vm.Script парсит как классический скрипт — для

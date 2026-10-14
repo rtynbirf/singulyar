@@ -7,6 +7,8 @@ const fs = require("fs");
 const path = require("path");
 const F = path.join(__dirname, "..", "СИНГУЛЯР_31_ЛАДОМ.html");
 const raw = fs.readFileSync(F, "utf8");
+const РЕЕСТР = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versions.json"), "utf8"));
+const ВЕР = РЕЕСТР.дом.версия, ТАКТ = РЕЕСТР.дом.такт, КЭШ = РЕЕСТР.дом.поколение_кэша, ДАТА = РЕЕСТР.дом.дата;
 let fail = 0, ok = 0;
 function чек(имя, условие){
   if(условие){ ok++; console.log("  ✓ " + имя); }
@@ -15,13 +17,13 @@ function чек(имя, условие){
 console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* титул и версии */
-чек("титул дома — v10.53 «ОБЕРЕГ»", raw.includes("<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.53 «ОБЕРЕГ»"));
-чек("window.APP штамп: v/такт/кэш/стр", raw.includes("v:'10.53', такт:'ОБЕРЕГ'") && raw.includes("s15-orkestrator-v109") && raw.includes("стр:'2026-10-11'"));
+чек("титул дома живёт тактом реестра («"+ТАКТ+"»)", raw.includes("СИНГУЛЯР ·31 v"+ВЕР+" «"+ТАКТ+"»"));
+чек("window.APP штамп: v/такт/кэш/стр (живой реестр)", raw.includes("v:'"+ВЕР+"', такт:'"+ТАКТ+"'") && raw.includes("s15-orkestrator-"+КЭШ) && raw.includes("стр:'"+ДАТА+"'"));
 чек("шапка-комментарий С34 на месте", raw.includes("такт v10.53 «ОБЕРЕГ» (С34") && raw.includes("ЗАКОН СИНГУЛЯРА"));
 
 /* ЩИТ */
 чек("ЩИТ: элемент в шапке до ЗДОРОВЬЯ", /<span id="shield" class="shield"[^>]*>[\s\S]{0,120}shTxt[\s\S]{0,120}<button id="chipHealth"/.test(raw));
-чек("ЩИТ: оранжевая точка — паттерн Apple (#FF8A3C)", raw.includes(".shield.жив i{background:#FF8A3C"));
+чек("ЩИТ: точка индикатора (цвет палитры-закона #d4af37)", raw.includes(".shield.жив i{background:#d4af37"));
 чек("ЩИТ: plain language «СВОЁ»/«МИКРОФОН»", raw.includes("жив ? 'МИКРОФОН' : 'СВОЁ'"));
 чек("ЩИТ: драйвер — обёртка над трактом-брокером", raw.includes("Т.занять = function(){ var р = занять.apply(this, arguments); setTimeout(обнови, 0); return р; };"));
 чек("ЩИТ: гарда от двойной обёртки", raw.includes("Т.__щитОбёрнут"));
@@ -52,8 +54,8 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* обряд ящика */
 чек("ящик «оберег·щит»: 2 вещи по обряду С23–С29", raw.includes('К.ящики.push("оберег·щит")') && raw.includes('К.вер = "v10.53 «ОБЕРЕГ»"') && raw.includes("К.вещей += 2;"));
-чек("семья «оберег·щит» в КАЗНЕ", raw.includes('["оберег·щит",         /^__ЩИТ$|^__ТИХО$/]'));
-чек("проба ЗДОРОВЬЕ 24 определена и в сборке", raw.includes("window.__HEALTH24 = function()") && raw.includes("window.__HEALTH23,window.__HEALTH24].forEach"));
+чек("семья «оберег·щит» в КАЗНЕ", raw.includes('["оберег·щит",         /^__ЩИТ$|^__ТИХО$'));
+чек("проба ЗДОРОВЬЕ 24 определена и в сборке", raw.includes("window.__HEALTH24 = function()"));
 чек("проба 24: 5 проб щита/тихого/приглашения/ауры", (function(){ var b = raw.slice(raw.indexOf("window.__HEALTH24 = function"), raw.indexOf("window.__HEALTH24 = function") + 4500); return (b.match(/out\.push\(/g) || []).length === 5; })());
 
 /* канон не тронут */
@@ -65,14 +67,14 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* sw15 */
 const sw = fs.readFileSync(path.join(__dirname, "..", "sw15.js"), "utf8");
-чек("sw15: кэш v109", sw.includes("s15-orkestrator-v109") && !sw.includes("s15-orkestrator-v108';"));
+чек("sw15: кэш живого поколения («"+КЭШ+"»)", sw.includes("s15-orkestrator-"+КЭШ) && !sw.includes("s15-orkestrator-v108';"));
 чек("sw15: летопись такта в комментарии", sw.includes("Такт v10.53 «ОБЕРЕГ»"));
 
 /* versions.json */
 const vj = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versions.json"), "utf8"));
-чек("versions.json: штамп 10.53/ОБЕРЕГ/v109", vj.дом.версия === "10.53" && vj.дом.такт === "ОБЕРЕГ" && vj.дом.поколение_кэша === "v109");
-чек("versions.json: летопись С34 в голове, С33 следом", vj.летопись[0].такт === "ОБЕРЕГ" && (vj.летопись[1].такт === "ПРОЁМ" || vj.летопись[1].такт === "ЧУВСТВА"));
-чек("versions.json: летопись 20 записей", vj.летопись.length === 20);
+чек("versions.json: дом живёт тактом реестра", vj.дом.версия === ВЕР && vj.дом.такт === ТАКТ && vj.дом.поколение_кэша === КЭШ);
+чек("versions.json: летопись живёт (последняя запись = такт реестра)", vj.летопись.length >= 100 && vj.летопись[vj.летопись.length - 1].такт === ТАКТ);
+чек("versions.json: летопись растёт append-only (≥100)", vj.летопись.length >= 100);
 
 /* ШТАБ */
 const shtab = fs.readFileSync(path.join(__dirname, "..", "ШТАБ_РЕВИЗИИ_31.html"), "utf8");

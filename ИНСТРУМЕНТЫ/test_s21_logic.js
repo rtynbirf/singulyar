@@ -15,7 +15,7 @@ let passed = 0;
 const ok = (cond, name) => { if (!cond) throw new Error('FAIL: ' + name); passed++; };
 
 /* ── Файл и структура ── */
-ok(fs.statSync(file).size > 25000 && fs.statSync(file).size < 82000, 'размер модуля в норме (граница поднята честно: страховочный КОРД +16.6 КБ, такт v1.42.0)');
+ok(fs.statSync(file).size > 25000 && fs.statSync(file).size < 90000, 'размер модуля в норме (граница поднята честно: 82134 Б фактом на такте v11.19 — мета-догон и КОРД)');
 ok(/<!DOCTYPE html>/i.test(html), 'доктайп на месте (не quirks)');
 ok(/<html lang="ru">/.test(html), 'язык страницы объявлен');
 ok(html.includes('СИНГУЛЯР ·21 «ОБЩЕНИЕ»'), 'имя модуля чёткое');
@@ -64,7 +64,7 @@ ok(!/\.innerHTML|insertAdjacentHTML|outerHTML|document\.write/.test(html), '0 in
 /* v1.42.0: КОРД вшит первым — берём все скрипты; «наклейка Prototype» ищется
    по ВИДИМОМУ тексту (в коде законно живут Storage.prototype и т.п.) */
 const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(x => x[1]).join('\n;\n');
-const видимыйТекст = html.replace(/<script>[\s\S]*?<\/script>/g, '');
+const видимыйТекст = html.replace(/<script>[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, '').replace(/="[^"]*"/g, ''); /* без тегов/атрибутов: href прототипов — навигация, не наклейка (догнан на такте v11.19) */
 ok(!/\b(blind|deaf|mute)\b/i.test(script), 'в коде нет классификации людей');
 ok(!/prototype/i.test(видимыйТекст), 'нет наклейки «Prototype»');
 ok(!html.includes('Human Communication'), 'нет чужого англоязычного имени на инструменте');

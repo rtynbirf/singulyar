@@ -103,7 +103,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
   <div class="row">
     <button class="btn" id="btnPlay">▶ играть минусовку</button>
     <button class="btn gray" id="btnStop">⏹ стоп</button>
-    <input type="range" id="seek" min="0" max="1000" value="0">
+    <input type="range" id="seek" aria-label="Позиция воспроизведения" min="0" max="1000" value="0">
     <span class="hint" id="clock" style="font-family:var(--mono)">0.0 / 0.0 с</span>
   </div>
   <div class="row">
@@ -120,7 +120,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
     <div class="row" style="margin:6px 0">
       <button class="btn" id="btnExtract">собрать ноты из минусовки</button>
       <button class="btn ghost" id="btnTxt">импорт UltraStar .txt / LRC</button>
-      <input type="file" id="fileChart" accept=".txt,.lrc,.us,.ul">
+      <input type="file" id="fileChart" aria-label="Загрузить текст или титры: txt, lrc, us, ul" accept=".txt,.lrc,.us,.ul">
       <button class="btn ghost" id="btnFromMem">из памяти (IndexedDB)</button>
       <button class="btn gray" id="btnSaveTxt" disabled>скачать .txt</button>
       <button class="btn gray" id="btnSaveMem" disabled>запомнить карту</button>
