@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
+<!-- такт v11.42 «ПОД РУКОЙ» (С120, PAT №34): юзабилити-ремонт пульта по приказу владельца «ДЕЛАЙ ВСЁ РАБОЧЕЕ ЮЗОБИЛИТИ ТАМ КОСЯКИ НА КОСЯКЕ=) ОДНО ДЕЛАЕТЕ ДРУГОЕ ЛОМАЕТ ПУЛЬТ ПОЧЕМУ ТОЛЬКО ПОЛОВИНА ВИДНА ПРИ РАСКРЫТИ? А КАК В НИЖНИЕ МЕНЮ ПОПАДАТЬ СДЕЛАЙ ВСЁ КОМПАКТО ПЛОТНО ЧТОБ ВСЁ ПОД РУКОЙ БЫЛО А НЕ ПОЛЗАТЬ ПО ВСЕМУ ЭКРАНУ РАСПРЕДИЛИ КОМПАКТНО ВСЁ И ВСЯ=)» Диагноз живым браузером (390x844 и 1280x720): (D1) пульт-диалог на телефоне — строка справки схлопнута в 0px и наезжает на футер (замер grid-rows «68px 637px 0px 93px 44px»); (D2) руль-плитка z=50 закрыла док-транспорт z=40 — нижнее меню недоступно; (D3) рейка пульта — туннель 3462px, раскрытая группа (2550px) уводит заголовок из виду; (D4) ящики РУЛЬ и ХОЗЯЙСТВО открываются одновременно. Лекарство: явные строки сетки пульта на узких + столб справки спрятан (справка живёт в подсказках и футере); руль поднят над доком по живому замеру --sng-dockH, потолок 56vh со скроллом; чипы-якоря всех групп одной полосой сверху рейки + автоскролл к раскрытой группе; ящики друг друга не душат; руль компактнее на телефоне (тач ≥50px). Поверка: живой браузер после пуша (ЭП-06). Идемпотентно 3/1. Их байты v11.41 целиком. -->
 <!-- такт v11.41 «ДОСТУПНО» (С119, ключ ㉖; СТОП-ГОРН ×2: их v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца — усыновление их латинского файла-призрака настоящей дверью ·31, удаление призрака Trees API; их байты целиком) и их v11.39 «ГОЛОС ТВ» (С117, PAT №34) — мой такт честно перенумерован v11.40→v11.41/С118→С119/v191→v192/летопись 126→128; пуш aec9528 и 6d92a62-хвост не прошли — перестроено поверх их канона): приказ владельца trace 1a13b4ac78ca67ad «ВЭБ АУДИО НЕ ДОСТУПНО В ЭТОМ БРАУЗЕРЕ ЗНАЧИТ ЛОЖИ ТО ЧТО ДОСТУПНО=) ЧЕЛОВЕК НЕ ДОЛЖЕН ИСПЫТОВАТЬ ДИСКОМФОРТ ОТ НЕ СПОСОБНОСТИ СИСТЕМЫ=)» — тупик «Web Audio недоступен в этом браузере» снят: startShow при отсутствии AudioContext играет элементом (ветка безГрафа — общий путь старта без дубля кода; сторож звука __СТОРОЖ_ЗВУКА жив; один честный тост; светомузыка/аплодисменты молчат честно); запись — микрофоном напрямую MediaRecorder(micStream) без recDest (честные надписи по месту); ЗДОРОВЬЕ-строка аплодисментов описывает штатную деградацию; гарда ac && ac.state; их ГОЛОС ТВ и ВОЗВРАТ ГОЛОСА не задеты; ПК не тронут; кэш v191→v192 -->
 <!-- такт v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy; СТОП-ГОРН ×2: их v11.39 «ГОЛОС ТВ» (С117, 68c46c44, PAT №34) встал между моим досье и пушем — их байты приняты целиком): приказ владельца «ВЕРНИ НА МЕСТО ОРИГИНАЛЬНЫЕ ТРЕКИ ПЕСНИ СО СЛОВАМИ АВТОРА» — ИСПОЛНЕН: (1) КОРЕНЬ (измерено) — их v11.39 собрал mp3-фонд голоса автора minus/голос/ (59 транскодов 48 kHz stereo из МАКС-мастеров, лестница 320k→224k, ≤9,8 МБ/файл; 2 исключения v10.69 изъяты честно) и перевёл ТВ-ветку src() на него, но их пушер записал дверь файлом-призраком SINGULYAR_31_ЛАДОМ.html (латинская транслитерация имени) — настоящая дверь осталась на безголосых mp3 ТБ-1; (2) их байты усыновлены настоящей дверью байт-в-байт (дифф призрака против двери = ровно их 50 строк правок: src() → minus/голос/, голосОтвал, TRACK_READY честный отказ webm-шасси, ПОЛЮС-гарда, ЗДОРОВЬЕ, APP) — их правки не перевоспроизведены, а приняты как есть; (3) файл-призрак удалён из дома; (4) фонд поверен выборочно 5/5 (48 kHz stereo 320k, Δ ≤ 0,04 с против МАКС-мастеров); (5) ·32 СЦЕНА подключена к фонду тем же тактом; ПК не тронут -->
 <!-- такт v11.39 «ГОЛОС ТВ» (С117, PAT №34; СТОП-ГОРН ×3: их v11.36 «ВОЗВРАТ» (С114, 0bd4734a), их v11.37 «ОКНО» (С115, d9b3f4ec) и их v11.38 «СВЕРКА» (С116, 81bf0770 — ремонт старта плеера на ТВ: ensureAudio/startShow/сторож звука/домОтвал/твПуть, + ПВ5 crdt-ядро/0.1) встали между моим досье и пушем — их байты приняты целиком, мой такт перенумерован честно v11.36→v11.39/С114→С117/v186→v190/летопись 122→125, ПВ5 погашен ИХ каноном — мой канон снят честно «один факт — одно место»; их ремонт старта цел байт-в-байт): приказ владельца trace 1a13aeb7646ed6d5 + 1a13b4816e2b62d9 «НЕ ИГРАЕТ ПЛЕЕР В ЛАДОМЕ РАНЬШЕ ПЕЛ ТРЕКИ СЕЙЧАС ПОЕБЕНЬ А НЕ МИНУС ВЕРНИ КАК БЫЛО ЧТОБ ИГРАЛИ ОРИГИНАЛЬНЫЕ ТРЕКИ АВТОРА!!!! ДАЛЕЕ ПО ДОРОЖНОЙ КАРТЕ=) ТЫ ПОЛИМАТ=МУЛЬТИАГЕНТ» (trace 1a13aeb7646ed6d5; повтор владельца с ключом №34 — trace 1a13b4816e2b62d9 «ИНТЕГРИРОВАТЬ В ДОРОЖНУЮ КАРТУ И ПРИСТУПИТЬ К ВЫПОЛНЕНЮ РЕАЛИЗАЦИИ ЭТОЙ ДОРОЖНОЙ КАРТЫ»; их ход по тому же следу — их trace 1a13ae6e6c3cf919 «…ВАЖНО, ЧТОБ ИГРАЛО!!! ОТРЕМОНТИРУЙ ЧТО СЛОМАЛ») — ГОЛОСОВОЙ MP3-ФОНД minus/голос/ (59 транскодов 48 kHz stereo из МАКС-мастеров — голос автора, same-origin И-01; битрейт честный по длительности 320k→224k ступенями, каждый файл ≤9,8 МБ — кап тела запроса песочницы; транскод качество не добавляет): их СВЕРКА сделала так, чтобы на ТВ ВЕЧЕР СТАРТОВАЛ и играл прямые mp3 (твПуть → src) — мой такт поднимает САМ ЗВУК этих mp3 на голос автора: ТВ-ветка src() → minus/голос/{id}.mp3, их твПуть() зовёт src() и играет фонд автоматически; караоке-дом — их minus/prosto-lubi.mp3 (v11.35); 2 честных исключения v10.69 («Сборник Музыки со Смыслом» Qb8xb0vUYDg, «Где настоящее» shs0TiOwx-M — их МАКС-мастера сами безголосые, фондовый дубль 337 МБ не добавил бы ничего) играют свой старый mp3-минус тем же содержанием через голосОтвал; честные фолбэки: голосОтвал (голос mp3 недоступен → mp3-минусовка, позиция сохраняется) в лестницу их СВЕРКИ, ПОЛЮС на ТВ — один полюс с честным тостом; ТВ не грузит webm-шасси 14,6 МБ (TRACK_READY — честный отказ на ТВ); ЗДОРОВЬЕ — правда о звуке; ПК не тронут; vm-тест 14/14, идемпотентность 3 прогона = 1 sha256 -->
@@ -806,6 +807,13 @@ dialog#panel .p-tabs button{border-radius:0;min-height:56px;display:flex;flex-di
   dialog#panel .p-tabs button{flex:none;flex-direction:row;width:100%;min-height:56px}
   dialog#panel .p-справка{max-height:26vh;border-left:none;border-top:1px solid #ffffff12}
   .pg-body .ptab.on{column-count:1}
+  /*СНГ:ПОДРУКОЙ v11.42 (С120): пульт на телефоне — целиком, без наездов. Диагноз: явных строк
+  было три на четыре области — строка справки схлопывалась в 0px и наезжала на футер.
+  Лекарство: явные auto/1fr/auto/auto; столб справки спрятан — та же справка живёт в
+  подсказке заголовка группы (флоат-тип: наведение/долгое нажатие) и в футере пульта.*/
+  dialog#panel{grid-template-rows:auto minmax(0,1fr) auto auto}
+  dialog#panel .p-tabs{overflow-x:hidden}
+  dialog#panel .p-справка{display:none}
 }
 
 /* ───── v5 · СПРАВКА-ВКЛАДКИ ───── */
@@ -6723,7 +6731,7 @@ window.__РУЛЬ = (function(){
   var D = document;
   var css = D.createElement('style');
   css.textContent = ''
-  + '#руль{position:fixed;left:0;right:0;bottom:0;z-index:var(--z-modal,50);display:none;flex-direction:column;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,rgba(18, 18, 18,.96),rgba(6, 6, 6,.98));border-top:1px solid rgba(244, 244, 244,.14);box-shadow:0 -12px 44px rgba(0,0,0,.6);font:14px/1.35 var(--f,system-ui,sans-serif)}'
+  + '#руль{position:fixed;left:0;right:0;bottom:var(--sng-dockH,84px);max-height:56vh;overflow-y:auto;z-index:var(--z-modal,50);display:none;flex-direction:column;gap:10px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,rgba(18, 18, 18,.96),rgba(6, 6, 6,.98));border-top:1px solid rgba(244, 244, 244,.14);box-shadow:0 -12px 44px rgba(0,0,0,.6);font:14px/1.35 var(--f,system-ui,sans-serif)}'
 + '#руль.открыт{display:flex}'
 + '#руль .руль-ряд{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--text,#BABAB9)}'
 + '#руль .руль-имя{font-weight:700;letter-spacing:.5px;white-space:nowrap}'
@@ -6733,7 +6741,9 @@ window.__РУЛЬ = (function(){
 + '#руль button:active{transform:translateY(1px)}'
 + '#руль button.горяч{background:var(--amber,#d4af37);color:var(--ink-on-accent,#060606)}'
 + '#руль button.опасн{border-color:rgba(212, 175, 55,.45);color:var(--red,#d4af37)}'
-+ '@media (prefers-reduced-motion: reduce){#руль button:active{transform:none}}';
++ '@media (prefers-reduced-motion: reduce){#руль button:active{transform:none}}'
++ /*СНГ:ПОДРУКОЙ v11.42: телефон — руль плотнее, тач-цели ≥50px (закон ≥44 сохранён)*/
++ '@media (max-width:720px){#руль{gap:7px}#руль .руль-сетка{gap:7px}#руль button{padding:10px 4px;min-height:50px;font-size:13px}}';
   D.head.appendChild(css);
   var корень = D.createElement('div');
   корень.id = 'руль';
@@ -11701,7 +11711,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'11.41', такт:'ДОСТУПНО', кэш:'s15-orkestrator-v192', стр:'2026-10-14', ver:'v11.41 «ДОСТУПНО»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v192' }; /* v11.39 «ГОЛОС ТВ» (С117, PAT №34; СТОП-ГОРН ×3): поверх их ремонта старта (СВЕРКА С116) — голос автора вернулся на ТВ во всех песнях зала: mp3-фонд minus/голос/ (59 транскодов МАКС-мастеров), твПуть → src → фонд, голосОтвал в лестнице; их СВЕРКА целa байт-в-байт; APP стоял 11.38 */ /* такт v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy): их байты v11.39 усыновлены настоящей дверью (их пушер встал файлом-призраком SINGULYAR_31_ЛАДОМ.html — латинское имя; дифф = их 50 строк правок), файл-призрак удалён, ·32 СЦЕНА подключена к фонду minus/голос/ тем же тактом, их поломка sw15 починена (св снова регистрируется), фонд поверен 5/5; APP стоял 11.39 */
+window.APP = { v:'11.42', такт:'ПОД РУКОЙ', кэш:'s15-orkestrator-v193', стр:'2026-10-15', ver:'v11.42 «ПОД РУКОЙ»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v192' }; /* v11.39 «ГОЛОС ТВ» (С117, PAT №34; СТОП-ГОРН ×3): поверх их ремонта старта (СВЕРКА С116) — голос автора вернулся на ТВ во всех песнях зала: mp3-фонд minus/голос/ (59 транскодов МАКС-мастеров), твПуть → src → фонд, голосОтвал в лестнице; их СВЕРКА целa байт-в-байт; APP стоял 11.38 */ /* такт v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy): их байты v11.39 усыновлены настоящей дверью (их пушер встал файлом-призраком SINGULYAR_31_ЛАДОМ.html — латинское имя; дифф = их 50 строк правок), файл-призрак удалён, ·32 СЦЕНА подключена к фонду minus/голос/ тем же тактом, их поломка sw15 починена (св снова регистрируется), фонд поверен 5/5; APP стоял 11.39 */
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -16183,6 +16193,8 @@ window.__ЯЩИКИ = (function(){
   function переключи(имя, принудительно){
     var с=состояние[имя], ст=СТОРОНЫ[имя];
     с.открыт = (принудительно===undefined) ? !с.открыт : !!принудительно;
+    /*СНГ:ПОДРУКОЙ v11.42 (С120): ящики не душат друг друга — открыт один, второй честно закрыт (закон «ни одно меню не тупик» сохранён: Esc/✕ возвращает)*/
+    if(с.открыт){ Object.keys(СТОРОНЫ).forEach(function(др){ if(др!==имя && состояние[др].открыт){ состояние[др].открыт=false; СТОРОНЫ[др].ящ.classList.remove("открыт"); СТОРОНЫ[др].таб.setAttribute("aria-expanded","false"); } }); }
     ст.ящ.hidden = false; /* панель прячется трансформом — класс ставится синхронно, анимация честная */
     ст.ящ.classList.toggle("открыт", с.открыт);
     ст.таб.setAttribute("aria-expanded", с.открыт?"true":"false");
@@ -16848,6 +16860,16 @@ window.__HEALTH37 = function(){
      Esc) + aria-label на заголовке для скринридера + столб p-справка. Память выбора —
      kv.pult.группа (реестр I-11). Реестр открыт: новые вкладки (ЛАБ, ЧЕТВЁРКА, будущие)
      оборачиваются в группу сами — MutationObserver. Ноль сети, ноль слежки. -->
+<style>
+/* ══ v11.42 «ПОД РУКОЙ» (С120): чипы-якоря групп — вся карта пульта одной полосой, всё под рукой ══ */
+dialog#panel .p-tabs .pg-чипы{display:flex;flex:none;gap:6px;align-items:center;flex-wrap:nowrap;overflow-x:auto;padding:8px 10px;border-bottom:1px solid #ffffff12;position:sticky;top:0;z-index:2;background:var(--panel-solid,#131313);scrollbar-width:none}
+dialog#panel .p-tabs .pg-чипы::-webkit-scrollbar{display:none}
+dialog#panel .p-tabs .pg-чип{flex:none;width:auto;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:6px 12px;border-radius:99px;border:1px solid #ffffff18;background:#ffffff0a;color:var(--dim,#A7A8A8);font:800 11.5px/1.1 var(--f,system-ui,sans-serif);letter-spacing:.05em;cursor:pointer;white-space:nowrap;box-shadow:none;text-align:center}
+dialog#panel .p-tabs .pg-чип:hover{color:var(--text,#BABAB9);border-color:#ffffff2e;background:#ffffff14}
+dialog#panel .p-tabs .pg-чип.on{color:#060606;background:var(--amber,#d4af37);border-color:transparent}
+dialog#panel .p-tabs .pgroup{scroll-margin-top:64px}   /* СНГ:ПОДРУКОЙ v11.42 — автоскролл кладёт заголовок под полосой чипов, а не под ней */
+dialog#panel .p-tabs .pg-чип{scroll-margin-top:0}
+</style>
 <script>
 window.__ПУЛЬТ_ГРУППЫ = (function(){
   "use strict";
@@ -16932,8 +16954,11 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
     });
     if(группа){
       группа.classList.add("open");
+      /*СНГ:ПОДРУКОЙ v11.42: заголовок раскрытой группы — под глазами, ручки тут же (КОМБАЙН-закон)*/
+      setTimeout(function(){ try{ группа.scrollIntoView({block:"start",behavior:"smooth"}); }catch(_){ try{ группа.scrollIntoView(true); }catch(__){} } },40);
       var b = группа.querySelector("button[data-pt]");
       if(b){ b.setAttribute("aria-expanded","true"); if(помнить){ try{ localStorage.setItem(КЛЮЧ, b.dataset.pt); }catch(_){} } }
+      чипыКраска();
     }
   }
   function обновитьРаскрытое(){
@@ -16947,6 +16972,30 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
       return;
     }
     if(стартовый && группы[стартовый]) открыть(группы[стартовый].группа, false);
+  }
+  /*СНГ:ПОДРУКОЙ v11.42 (С120): чипы-якоря — прыжок в любую из групп одним тапом, рейка не туннель*/
+  function чипыКраска(){
+    [].slice.call(полоса.querySelectorAll(".pg-чип")).forEach(function(x){
+      var г = группы[x.dataset.pt];
+      if(г) x.classList.toggle("on", г.группа.classList.contains("open"));
+    });
+  }
+  function чипы(){
+    var стар = полоса.querySelector(".pg-чипы");
+    if(!стар){ стар = D.createElement("div"); стар.className = "pg-чипы";
+      стар.setAttribute("role","toolbar"); стар.setAttribute("aria-label","Быстрый прыжок по группам пульта");
+      полоса.insertBefore(стар, полоса.firstChild); }
+    стар.textContent = "";
+    Object.keys(группы).forEach(function(ключ){
+      var п = группы[ключ], ч = D.createElement("button");
+      ч.type = "button"; ч.className = "pg-чип" + (п.группа.classList.contains("open") ? " on" : "");
+      var ико = п.кнопка.querySelector(".tab-ico");
+      ч.textContent = (ико ? ико.textContent + " " : "") + (ИМЕНА[ключ] ? ИМЕНА[ключ].имя : ключ.toUpperCase());
+      ч.setAttribute("aria-label", "Раскрыть группу " + ч.textContent.trim());
+      ч.dataset.pt = ключ;
+      ч.addEventListener("click", function(){ открыть(п.группа, true); });
+      стар.appendChild(ч);
+    });
   }
   function свести(){
     var нов = false;
@@ -16967,6 +17016,7 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
       нов = true;
     });
     if(нов){ держатьНачало(); if(window.__ПУЛЬТ_поиск) window.__ПУЛЬТ_поиск(); }
+    чипы();
   }
   /* клик по заголовку группы: раскрыть её, свернуть прочие; повторный клик — свернуть
      (практика КОМБАЙНА); старый обработчик вкладок при этом красит панели .on —
@@ -16977,7 +17027,7 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
     if(!b) return;
     var г = b.closest(".pgroup"); if(!г) return;
     тронут = true; пмять = null;
-    if(г.classList.contains("open")){ г.classList.remove("open"); b.setAttribute("aria-expanded","false"); }
+    if(г.classList.contains("open")){ г.classList.remove("open"); b.setAttribute("aria-expanded","false"); чипыКраска(); }
     else открыть(г, true);
   }, true);
   /* палец: долгое нажатие 420 мс на ряд или заголовок — подробная справка в столбе
@@ -17022,6 +17072,7 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
         видимых++;
       }
     });
+    чипыКраска();
     return видимых;
   }
   /* начальная сводка: группа ВИД раскрыта (панель .on разметки). Открытие пульта — всегда
