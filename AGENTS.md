@@ -24,7 +24,7 @@
 - `singulyar-modules.js` — ядро SNG (кристалл, осколки, нить, карта); `singulyar-ux-engine-v9.js` — UX-движок; `singulyar-design-v3.css` — дизайн-система; `sw15.js` — сервис-воркер; `cord.js` — КОРД.
 - `docs/` — живая документация (карта: `docs/README.md`); `ДОКУМЕНТЫ/` — архив протоколов; `data/versions.json` — летопись-истина.
 - `ДАННЫЕ/` — корпуса (флагман 157 языков LRC/SRT + конвейер: «Где настоящее» 223, «Когда теряем» 197); `БИБЛИОТЕКИ/adapter-os/` — мозги Малыша (офлайн-копия + апстрим).
-- `ИНСТРУМЕНТЫ/` — 67 тест-файлов (с v11.29 — `test_singulyar_53.py`: страж контура ·53) (JS `node --test <файл>` по одному; каталог целиком на node 24 ранер не принимает — прогон пофайлово; python-тесты — `python3 -m unittest discover -s ИНСТРУМЕНТЫ`); оракулы `test_s31_*.js` сверяют штампы зала с живым реестром `data/versions.json`.
+- `ИНСТРУМЕНТЫ/` — 69 тест-файлов (с v11.29 — `test_singulyar_53.py`: страж контура ·53; с v11.33 — `test_qr_token.mjs` 9/9 и `test_transport_adapter.mjs` 18/18: стражи qr-token/0.1 и singulyar.transport/0.1) (JS `node --test <файл>` по одному; каталог целиком на node 24 ранер не принимает — прогон пофайлово; python-тесты — `python3 -m unittest discover -s ИНСТРУМЕНТЫ`); оракулы `test_s31_*.js` сверяют штампы зала с живым реестром `data/versions.json`.
 
 ## Команды
 
