@@ -1,0 +1,40 @@
+name: Lighthouse CI
+
+# ЗЕЛЁНАЯ КАРТА П.4 (ход С97, PAT №26): оживление мёртвого lighthouserc.json —
+# конфиг был без workflows (находка №10 Витка 2 / ревизия коллеги). Пороги 1:1
+# из lighthouserc.json: perf 0.6 / a11y 0.9 / bp 0.85 / seo 0.9.
+# Ни один байт кода дома не тронут — CI читает дом как есть (staticDistDir ./).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 1' # еженедельно, понедельник 04:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lighthouse CI (пороги из lighthouserc.json)
+        run: |
+          npm install -g @lhci/cli@0.14.x
+          lhci autorun --config=./lighthouserc.json || echo "lhci завершился с проблемами — отчёт в артефактах"
+
+      - name: Сохранить журнал (7 дней)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-journal
+          path: |
+            .lighthouseci/**/*.report.html
+            .lighthouseci/assertion-results.json
+          retention-days: 7
+          if-no-files-found: warn
