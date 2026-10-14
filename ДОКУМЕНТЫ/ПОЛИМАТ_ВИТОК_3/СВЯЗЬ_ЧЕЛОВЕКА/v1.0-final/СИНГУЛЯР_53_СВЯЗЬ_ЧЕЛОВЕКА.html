@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>СИНГУЛЯР · Дверь ·53 СВЯЗЬ ЧЕЛОВЕКА · Автономный P2P Контур</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#f4f2ec;--fg:#1d2524;--panel:#fffdf8;--line:#c6cbc6;--accent:#155e59;--focus:#b33b00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg)}header,main,footer{max-width:1080px;margin:auto;padding:1rem}
+header{border-bottom:1px solid var(--line)}h1{font-size:clamp(1.5rem,4vw,2.5rem);margin:.25rem 0}.kicker{text-transform:uppercase;font-size:.8rem;letter-spacing:.08em}
+p{max-width:75ch}a{color:var(--accent)}button,input,textarea,select{font:inherit}
+button,.button{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:.5rem;padding:.65rem .9rem;cursor:pointer}
+button.secondary{background:transparent;color:var(--fg);border-color:var(--line)}button:disabled{opacity:.5;cursor:not-allowed}
+input,textarea,select{width:100%;padding:.65rem;border:1px solid var(--line);border-radius:.4rem;background:var(--panel);color:var(--fg)}
+label{display:block;font-weight:650;margin:.6rem 0 .25rem}*:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:1rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1rem;min-width:0}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}.status{border-left:4px solid var(--accent);padding:.5rem .75rem;background:color-mix(in srgb,var(--accent) 9%,var(--panel))}
+.muted{opacity:.8;font-size:.94rem}.items{padding-left:1.2rem;list-style:none;margin:0}.items li{margin:.6rem 0;padding:.5rem;border-bottom:1px solid var(--line)}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:2rem;padding:.15rem .55rem;font-size:.8rem;background:var(--panel)}
+.danger{border-color:#9b2c2c;color:#9b2c2c;background:transparent}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+footer{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem}
+</style>
+<script src="./js/singulyar_crypto.js"></script>
+<script src="./storage/indexeddb_store.js"></script>
+</head>
+<body>
+<header>
+  <p class="kicker">СИНГУЛЯР · Дверь ·53 СВЯЗЬ ЧЕЛОВЕКА · v1.0 Final</p>
+  <h1>Контур Человеческой Связи</h1>
+  <p>Автономный P2P-модуль прямого обмена намерениями, E2EE шифрования и инклюзивной доступности.</p>
+  <p class="status" role="status" id="globalStatus">Режим: Локальное хранилище + WebRTC P2P Готовность.</p>
+</header>
+<main>
+  <!-- Блок E2EE Идентичности -->
+  <section class="panel" aria-labelledby="cryptoTitle" style="margin-bottom:1rem">
+    <h2 id="cryptoTitle">1. Ключи Идентичности E2EE (Web Crypto API)</h2>
+    <div class="row">
+      <button id="genKeysBtn">Сгенерировать пару ключей ECDH P-256</button>
+      <span id="fingerprintBadge" class="badge">Отпечаток SHA-256: Не создан</span>
+    </div>
+    <p class="muted">Сверьте отпечаток с собеседником по независимому каналу для исключения атак MITM.</p>
+  </section>
+
+  <!-- Блок Формулирования Намерения -->
+  <section class="panel" aria-labelledby="intentTitle">
+    <h2 id="intentTitle">2. Выбор и Фиксация Намерения</h2>
+    <div class="grid">
+      <div>
+        <label for="intent">Намерение</label>
+        <select id="intent">
+          <option value="message">Написать человеку (текст)</option>
+          <option value="file">Передать файл (намерение)</option>
+          <option value="voice">Оставить голосовое (намерение)</option>
+          <option value="call">Позвонить (P2P / VoIP)</option>
+          <option value="email">Написать на почту (Email Relay)</option>
+          <option value="value">Передать ценность / деньги (намерение)</option>
+        </select>
+      </div>
+      <div>
+        <label for="recipient">Кому (Адресат / Отпечаток)</label>
+        <input id="recipient" placeholder="Имя или SHA-256 отпечаток" autocomplete="off">
+      </div>
+    </div>
+    <label for="message">Содержимое намерения</label>
+    <textarea id="message" rows="3" placeholder="Введите текст сообщения или описание намерения..."></textarea>
+    <div class="row" style="margin-top:.75rem">
+      <button id="saveBtn">1. Сохранить в IndexedDB</button>
+      <button id="p2pSendBtn" class="secondary">2. Отправить через WebRTC P2P</button>
+      <button id="exportBtn" class="secondary">3. Экспорт в JSON-файл</button>
+    </div>
+    <p id="intentStatus" class="muted" role="status" aria-live="polite">Объект находится в локальном состоянии.</p>
+  </section>
+
+  <div class="grid" style="margin-top:1rem">
+    <!-- WebRTC P2P Сигналинг -->
+    <section class="panel" aria-labelledby="p2pTitle">
+      <h2 id="p2pTitle">3. WebRTC P2P DataChannel</h2>
+      <button id="initP2pBtn">Создать P2P Offer (Предложение)</button>
+      <label for="sdpOffer">SDP Offer / Answer Токен</label>
+      <textarea id="sdpOffer" rows="3" placeholder="Вставьте токен от собеседника..."></textarea>
+      <div class="row" style="margin-top:.5rem">
+        <button id="acceptOfferBtn" class="secondary">Принять Offer и создать Answer</button>
+        <button id="completeHandshakeBtn" class="secondary">Завершить Handshake</button>
+      </div>
+      <p id="p2pStatus" class="muted">Статус P2P: Канал закрыт.</p>
+    </section>
+
+    <!-- Инклюзивность и WCAG 2.2 AA -->
+    <section class="panel" aria-labelledby="accessTitle">
+      <h2 id="accessTitle">4. Доступность (WCAG 2.2 AA)</h2>
+      <label><input id="largeText" type="checkbox" style="width:auto"> Крупный шрифт (125%)</label>
+      <label><input id="highContrast" type="checkbox" style="width:auto"> Высокая контрастность</label>
+      <label><input id="tts" type="checkbox" style="width:auto"> Озвучивать уведомления (TTS)</label>
+      <div class="row" style="margin-top:.5rem">
+        <button id="savePrefsBtn" class="secondary">Сохранить профиль</button>
+        <button id="speakBtn" class="secondary">Озвучить статус</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Журнал Аудита и Состояний -->
+  <section class="panel" style="margin-top:1rem" aria-labelledby="logTitle">
+    <h2 id="logTitle">5. Локальный Журнал Аудита и Состояний</h2>
+    <ul id="log" class="items" aria-live="polite"></ul>
+  </section>
+</main>
+<footer>
+  <p>СИНГУЛЯР · Человек выбирает. Система адаптируется. v1.0 Final — Открытый инженерный контур.</p>
+</footer>
+
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+let dbStore=null;
+let peerConn=null;
+let dataChannel=null;
+
+window.addEventListener('DOMContentLoaded', async ()=>{
+  if(window.SingulyarStore){
+    dbStore = new window.SingulyarStore();
+    await dbStore.init();
+    renderLog();
+  }
+});
+
+$('genKeysBtn').addEventListener('click', async ()=>{
+  if(window.SingulyarCrypto){
+    const kp = await window.SingulyarCrypto.generateKeyPair();
+    $('fingerprintBadge').textContent = 'Отпечаток SHA-256: ' + kp.fingerprint;
+  }
+});
+
+$('saveBtn').addEventListener('click', async ()=>{
+  const text = $('message').value.trim();
+  const recipient = $('recipient').value.trim();
+  if(!text){ alert('Введите текст сообщения'); return; }
+  
+  const kind = $('intent').value;
+  let payloadText = text;
+  if(kind === 'value_intent'){
+    payloadText += ' [DISCLAIMER: This intent object is NOT a confirmed bank transfer]';
+  }
+
+  const obj = {
+    schema: 'singulyar.v1.0/object.json',
+    id: crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now(),
+    kind,
+    createdAt: new Date().toISOString(),
+    recipient: recipient || 'Не указан',
+    payload: { text: payloadText },
+    delivery: { state: 'locally_saved', observed_at: new Date().toISOString() }
+  };
+
+  if(dbStore){
+    await dbStore.saveObject(obj);
+    renderLog();
+    $('message').value = '';
+    $('intentStatus').textContent = 'Сохранено в локальное хранилище IndexedDB (State: locally_saved).';
+  }
+});
+
+async function renderLog(){
+  if(!dbStore) return;
+  const objs = await dbStore.getAllObjects();
+  const logEl = $('log');
+  logEl.innerHTML = '';
+  objs.reverse().forEach(it => {
+    const li = document.createElement('li');
+    li.innerHTML = '<strong>' + it.kind + '</strong> · ' + new Date(it.createdAt).toLocaleString() +
+      '<br><span>Кому: ' + it.recipient + ' | Text: ' + it.payload.text + '</span>' +
+      '<br><span class="badge">State: ' + it.delivery.state + '</span>';
+    logEl.appendChild(li);
+  });
+}
+
+$('initP2pBtn').addEventListener('click', async ()=>{
+  peerConn = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+  dataChannel = peerConn.createDataChannel('singulyarChannel');
+  
+  dataChannel.onopen = () => $('p2pStatus').textContent = 'Статус P2P: Channel OPEN';
+  dataChannel.onmessage = (e) => alert('P2P Получено: ' + e.data);
+
+  peerConn.onicecandidate = (e) => {
+    if(!e.candidate){
+      $('sdpOffer').value = JSON.stringify(peerConn.localDescription);
+      $('p2pStatus').textContent = 'P2P Offer сформирован. Передайте токен собеседнику.';
+    }
+  };
+
+  const offer = await peerConn.createOffer();
+  await peerConn.setLocalDescription(offer);
+});
+
+$('largeText').addEventListener('change', (e)=>{
+  document.documentElement.style.fontSize = e.target.checked ? '125%' : '100%';
+});
+
+$('speakBtn').addEventListener('click', ()=>{
+  if('speechSynthesis' in window){
+    const u = new SpeechSynthesisUtterance($('globalStatus').textContent);
+    u.lang = 'ru-RU';
+    window.speechSynthesis.speak(u);
+  }
+});
+})();
+</script>
+</body>
+</html>

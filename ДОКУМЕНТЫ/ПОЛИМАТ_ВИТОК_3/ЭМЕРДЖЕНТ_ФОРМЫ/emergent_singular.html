@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЭМЕРДЖЕНТНАЯ СИНГУЛЯРНАЯ ФОРМА — Оператор Харта</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e8e6e3;
+    --accent: #c9a227;
+    --accent2: #7eb8da;
+    --muted: #6b6b7b;
+    --card: #14141c;
+    --border: #2a2a38;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    color: var(--accent2);
+    margin: 2.5rem 0 1rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .operator-box {
+    background: linear-gradient(135deg, #1a1a28 0%, #12121a 100%);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .operator-box::before {
+    content: "OPERATOR";
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--bg);
+    padding: 0 0.6rem;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .operator-formula {
+    font-size: 1.15rem;
+    text-align: center;
+    color: var(--fg);
+    margin: 1rem 0;
+  }
+
+  .operator-formula span {
+    color: var(--accent);
+  }
+
+  p { margin: 0.8rem 0; color: #c8c6c3; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent2); }
+
+  .card h4 {
+    color: var(--accent2);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #1e1e2a;
+    color: var(--accent);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    margin: 0.2rem 0.2rem 0 0;
+  }
+
+  svg {
+    display: block;
+    margin: 1.5rem auto;
+    max-width: 100%;
+  }
+
+  .section-note {
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  ul { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin: 0.3rem 0; color: #c8c6c3; font-size: 0.9rem; }
+
+  .footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .highlight {
+    color: var(--accent);
+  }
+
+  .process-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .process-flow .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+
+  .process-flow .arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>ЭМЕРДЖЕНТНАЯ СИНГУЛЯРНАЯ</h1>
+<p class="subtitle">Выведенный оператор из полного корпуса фигур George W. Hart<br>
+georgehart.com — анализ без упущений ключевых классов</p>
+
+<div class="operator-box">
+  <div class="operator-formula">
+    <span>SEED</span> (конечное симметричное тело)<br>
+    + <span>STAR</span> (набор направленных зоновых векторов)<br>
+    → <span>FAMILY</span> (бесконечное семейство форм,<br>
+    в которых семя остаётся видимым, но уже не является центром)
+  </div>
+</div>
+
+<p>Это не объект. Это <strong class="highlight">процесс</strong>. PID 1 геометрии Харта.</p>
+
+<div class="process-flow">
+  <div class="step">Семя</div>
+  <div class="arrow">→</div>
+  <div class="step">Зоны</div>
+  <div class="arrow">→</div>
+  <div class="step">Расширение</div>
+  <div class="arrow">→</div>
+  <div class="step">Новое целое</div>
+  <div class="arrow">→</div>
+  <div class="step">Семя читается, но не доминирует</div>
+</div>
+
+<!-- SVG: Conceptual Operator -->
+<svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#c9a227" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="zoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7eb8da" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#7eb8da" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer zones -->
+  <polygon points="300,20 380,60 420,140 380,220 300,260 220,220 180,140 220,60"
+           fill="none" stroke="#7eb8da" stroke-width="1.5" opacity="0.4"/>
+  <polygon points="300,40 360,75 390,140 360,205 300,240 240,205 210,140 240,75"
+           fill="none" stroke="#7eb8da" stroke-width="1.2" opacity="0.5"/>
+  <polygon points="300,70 340,95 360,140 340,185 300,210 260,185 240,140 260,95"
+           fill="none" stroke="#7eb8da" stroke-width="1" opacity="0.6"/>
+
+  <!-- Mid zones (rhombi suggestion) -->
+  <polygon points="300,90 330,110 345,140 330,170 300,190 270,170 255,140 270,110"
+           fill="url(#zoneGrad)" stroke="#7eb8da" stroke-width="1" opacity="0.7"/>
+
+  <!-- Core seed (icosa-like) -->
+  <circle cx="300" cy="140" r="55" fill="url(#coreGlow)"/>
+  <polygon points="300,95 325,110 325,140 300,155 275,140 275,110"
+           fill="none" stroke="#c9a227" stroke-width="2"/>
+  <polygon points="300,105 318,118 318,140 300,148 282,140 282,118"
+           fill="#c9a227" opacity="0.3" stroke="#c9a227" stroke-width="1.5"/>
+
+  <!-- Axes -->
+  <line x1="300" y1="50" x2="300" y2="230" stroke="#c9a227" stroke-width="0.7" opacity="0.5" stroke-dasharray="4 3"/>
+  <line x1="200" y1="140" x2="400" y2="140" stroke="#c9a227" stroke-width="0.7" opacity="0.5" stroke-dasharray="4 3"/>
+  <line x1="230" y1="80" x2="370" y2="200" stroke="#c9a227" stroke-width="0.5" opacity="0.4" stroke-dasharray="3 3"/>
+  <line x1="370" y1="80" x2="230" y2="200" stroke="#c9a227" stroke-width="0.5" opacity="0.4" stroke-dasharray="3 3"/>
+
+  <!-- Labels -->
+  <text x="300" y="145" text-anchor="middle" fill="#0a0a0f" font-size="11" font-family="monospace" font-weight="bold">SEED</text>
+  <text x="300" y="290" text-anchor="middle" fill="#7eb8da" font-size="12" font-family="monospace">ЗОНЫ РАСШИРЯЮТ, СЕМЯ ОСТАЁТСЯ</text>
+</svg>
+
+<h2>1. Классы фигур — полный каркас</h2>
+
+<div class="section-note">
+  Все перечисленные классы присутствуют в Encyclopedia of Polyhedra и/или скульптурной практике Харта. Ни один крупный класс не упущен.
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Platonic Solids</h4>
+    <p>Тетраэдр, Куб, Октаэдр, Додекаэдр, Икосаэдр. Чистые семена.</p>
+    <span class="tag">seed</span>
+  </div>
+  <div class="card">
+    <h4>Kepler-Poinsot</h4>
+    <p>Малый/большой звёздчатый додекаэдр, великий додекаэдр, великий икосаэдр.</p>
+    <span class="tag">stellation</span>
+  </div>
+  <div class="card">
+    <h4>Archimedean</h4>
+    <p>Усечённые, ромбоикосидодекаэдр, курносые и др. 13 тел.</p>
+    <span class="tag">semi-regular</span>
+  </div>
+  <div class="card">
+    <h4>Archimedean Duals</h4>
+    <p>Каталановы тела. Двойственность как операция.</p>
+    <span class="tag">dual</span>
+  </div>
+  <div class="card">
+    <h4>Johnson Solids</h4>
+    <p>92 строго выпуклых тела с правильными гранями.</p>
+    <span class="tag">convex</span>
+  </div>
+  <div class="card">
+    <h4>Zonohedra</h4>
+    <p>Все грани — центрально-симметричные параллелограммы. Зоны.</p>
+    <span class="tag">zones</span>
+  </div>
+  <div class="card">
+    <h4>Zonish Polyhedra</h4>
+    <p>Обобщение: любое семя + зоны. Ключевой оператор Харта.</p>
+    <span class="tag">operator</span><span class="tag">core</span>
+  </div>
+  <div class="card">
+    <h4>Goldberg Polyhedra</h4>
+    <p>GP(a,b): 12 пятиугольников + шестиугольники, икосаэдрическая симметрия.</p>
+    <span class="tag">icosahedral</span><span class="tag">organic</span>
+  </div>
+  <div class="card">
+    <h4>Uniform Polyhedra</h4>
+    <p>Вершинно-транзитивные. Включая невыпуклые.</p>
+    <span class="tag">uniform</span>
+  </div>
+  <div class="card">
+    <h4>Compounds</h4>
+    <p>Соединения: 5 кубов, 2 тетраэдра, stella octangula и др.</p>
+    <span class="tag">compound</span>
+  </div>
+  <div class="card">
+    <h4>Stellations</h4>
+    <p>Стeлляции икосаэдра, ромбического триаконтаэдра.</p>
+    <span class="tag">stellation</span>
+  </div>
+  <div class="card">
+    <h4>Prisms / Antiprisms / Deltahedra</h4>
+    <p>Бесконечные семейства + 8 выпуклых дельтаэдров.</p>
+    <span class="tag">infinite</span>
+  </div>
+</div>
+
+<h2>2. Ключевые операции (алгебра форм)</h2>
+
+<ul>
+  <li><strong>Zonish expansion</strong> — главное: семя + star векторов → новое тело, в котором исходные грани читаются.</li>
+  <li><strong>Stellation / Kleetope</strong> — наращивание пирамид на гранях.</li>
+  <li><strong>Truncation / Expansion (Boole Stott)</strong> — топологические и геометрические расширения.</li>
+  <li><strong>Compounding</strong> — несколько тел в одном симметричном расположении.</li>
+  <li><strong>Dualization</strong> — переход к полярному.</li>
+  <li><strong>Chiralization</strong> — снятие зеркальной симметрии (snub-операции).</li>
+  <li><strong>Symmetry imposition</strong> — навязывание икосаэдрической / октаэдрической группы любому компоненту.</li>
+</ul>
+
+<h2>3. Скульптурные манифестации оператора</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Frabjous / SuperFrabjous</h4>
+    <p>Переплетённые рёбра, икосаэдрическая хиральность. Семя — невидимо, но структура держится на его осях.</p>
+  </div>
+  <div class="card">
+    <h4>No Picnic</h4>
+    <p>Вилки / ножи / ложки по зонам зониш-полиэдров. Материал бытовой, оператор — чистый.</p>
+  </div>
+  <div class="card">
+    <h4>Spaghetti Code</h4>
+    <p>Алюминиевые / деревянные трубки. Линейный каркас, выросший из симметрии.</p>
+  </div>
+  <div class="card">
+    <h4>Geometry Ascending a Staircase</h4>
+    <p>Четыре орба разного размера. Один оператор, разные масштабы.</p>
+  </div>
+  <div class="card">
+    <h4>Salamanders / Dragonflies / Creatures</h4>
+    <p>Органические компоненты, размещённые строго по осям симметрии.</p>
+  </div>
+  <div class="card">
+    <h4>Fat & Skinny</h4>
+    <p>Два разных трёхзонных расширения одного и того же семени (икосидодекаэдр).</p>
+  </div>
+  <div class="card">
+    <h4>Solar Flair / Clouds / Ambagesque</h4>
+    <p>Дерево и металл. Зониш и Голдберг как конструктивный каркас.</p>
+  </div>
+  <div class="card">
+    <h4>Barn-raising скульптуры</h4>
+    <p>Коллективная сборка. Процесс важнее объекта. PID 1 проявляется в действии.</p>
+  </div>
+</div>
+
+<h2>4. Сингулярное утверждение</h2>
+
+<div class="operator-box">
+  <p style="text-align:center; margin:0;">
+    Все тысячи моделей энциклопедии и все скульптуры —<br>
+    <strong class="highlight">частные проекции одного и того же оператора</strong>.<br><br>
+    Оператор не имеет собственной «формы» в обычном смысле.<br>
+    Он проявляется только через семьи форм, которые порождает.<br><br>
+    Поэтому он — <strong class="highlight">сингулярный</strong> и <strong class="highlight">эмерджентный</strong>.
+  </p>
+</div>
+
+<svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+  <!-- Minimal process diagram -->
+  <rect x="20" y="60" width="100" height="50" rx="4" fill="#14141c" stroke="#c9a227" stroke-width="1.5"/>
+  <text x="70" y="90" text-anchor="middle" fill="#c9a227" font-size="12" font-family="monospace">SEED</text>
+
+  <text x="150" y="90" fill="#7eb8da" font-size="18">+</text>
+
+  <rect x="180" y="60" width="100" height="50" rx="4" fill="#14141c" stroke="#7eb8da" stroke-width="1.5"/>
+  <text x="230" y="90" text-anchor="middle" fill="#7eb8da" font-size="12" font-family="monospace">ZONES</text>
+
+  <text x="310" y="90" fill="#c9a227" font-size="18">→</text>
+
+  <rect x="340" y="40" width="120" height="90" rx="4" fill="#14141c" stroke="#e8e6e3" stroke-width="1.5"/>
+  <text x="400" y="75" text-anchor="middle" fill="#e8e6e3" font-size="11" font-family="monospace">FAMILY</text>
+  <text x="400" y="95" text-anchor="middle" fill="#6b6b7b" font-size="9" font-family="monospace">seed still</text>
+  <text x="400" y="108" text-anchor="middle" fill="#6b6b7b" font-size="9" font-family="monospace">readable</text>
+
+  <text x="490" y="90" fill="#c9a227" font-size="18">→</text>
+
+  <circle cx="550" cy="85" r="28" fill="none" stroke="#c9a227" stroke-width="2"/>
+  <text x="550" y="80" text-anchor="middle" fill="#c9a227" font-size="9" font-family="monospace">PID</text>
+  <text x="550" y="93" text-anchor="middle" fill="#c9a227" font-size="9" font-family="monospace">1</text>
+</svg>
+
+<div class="footer">
+  Выведено из полного корпуса georgehart.com<br>
+  Platonic → Archimedean → Johnson → Zonohedra → Zonish → Goldberg → Compounds → Stellations → Sculptures<br>
+  Оператор один. Формы — его проекции.<br><br>
+  Архив создан как HTML-манифест эмерджентной сингулярной формы.
+</div>
+
+</body>
+</html>
