@@ -474,7 +474,7 @@ body{background:#0A0A0C !important}
       <div><label for="gRate">темп <span id="gRateV">×1.00</span></label><input type="range" id="gRate" min="50" max="150" value="100" aria-label="темп воспроизведения"></div>
       <div><label for="gKey">тональность <span id="gKeyV">0 пт</span></label><input type="range" id="gKey" min="-6" max="6" value="0" aria-label="сдвиг тональности в полутонах"></div>
     </div>
-    <div class="mini" id="rateHint">темп: браузер старается сохранять высоту голоса (preservesPitch); тональность честно работает только в синтез-режиме — для файлов нужен AudioWorklet (следующая генерация)</div>
+    <div class="mini" id="rateHint">темп: браузер старается сохранять высоту голоса (preservesPitch); тональность честно работает только в синтез-режиме — для файлов нужен AudioWorklet (следующая генерация); ядро WSOLA дома (window.__ВСОЛА, ПВ3 v11.31) умеет оффлайн-тайм-стретч буфера 0.25–4.0× без смещения высоты — потоковое на лету остаётся следующим поколением</div>
     <div id="blockedBox" role="alert">
       <b>Браузер заблокировал автозапуск звука.</b> Это не ошибка организма — так работает защита autoplay.
       Нажми ▶ ещё раз — жест пользователя снимает блок.
@@ -3041,6 +3041,8 @@ function tryBoot(){
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
 
 <script defer src="js/opfs-core.js"></script>
+<script defer src="js/wsola-core.js"></script>
+<!-- такт v11.31 «ТЕМП» (С109, PAT №28): ПВ3 — WSOLA-темп без искажения формант: канон wsola-core/0.1 (29/29 проб node --test, бенчмарк ≈62 мс/с аудио ×1.5, порт ≡ канон байт в байт) портом js/wsola-core.js — window.__ВСОЛА: оффлайн-тайм-стретч 0.25–4.0× без смещения высоты; потоковое на лету — честный хвост -->
 <!-- такт v11.23 «СТОЙКОСТЬ» (С101, PAT №27): ПВ1 — OPFS+persist для фонограмм: канон opfs-core/0.1 (28/28 проб) портом js/opfs-core.js — window.__ОПФС: хранилище дома без вытеснения (каталог «фонограммы»), закрепить() — только по явному действию -->
 </body>
 </html>

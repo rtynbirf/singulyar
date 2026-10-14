@@ -20,6 +20,8 @@
 - [docs/ЛУЧШИЕ_ПРАКТИКИ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ЛУЧШИЕ_ПРАКТИКИ.md): свод 14 лучших практик мира — советники агента
 - [docs/ЩИТ_ЧЕЛОВЕКА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ЩИТ_ЧЕЛОВЕКА.md): доктрина «Щит человека» — как дом обезопасивает человека от корпораций/государств/шарлатанов: угрозы × щиты, 7 инвариантов, пробы поверки (v11.30)
 - [docs/ЩИТ_ЧЕЛОВЕКА_EN.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ЩИТ_ЧЕЛОВЕКА_EN.md): the HUMAN'S SHIELD doctrine in English (v11.30)
+- [docs/ПОЛИМАТ_МУЛЬТИАГЕНТ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ПОЛИМАТ_МУЛЬТИАГЕНТ.md): закон роя дома — полимат = мультиагент: 8 законов с прецедентами (один ключ на такт, Директивы 1–2, летопись append-only, байты коллег не трогать, СТОП-ГОРН, измеренные цифры), руки роя и передача брифов (v11.31)
+- [docs/ПОЛИМАТ_МУЛЬТИАГЕНТ_EN.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ПОЛИМАТ_МУЛЬТИАГЕНТ_EN.md): the swarm law in English — polymath = multi-agent (v11.31)
 - [CHANGELOG.md](https://github.com/rtynbirf/singulyar/blob/main/CHANGELOG.md): летопись тактов по Keep a Changelog
 - [docs/adr/](https://github.com/rtynbirf/singulyar/blob/main/docs/adr/): архитектурные решения (MADR)
 - [СИНГУЛЯР_36_СЛОВАРЬ.html](https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_36_%D0%A1%D0%9B%D0%9E%D0%92%D0%90%D0%A0%D0%AC.html): глоссарий дома
