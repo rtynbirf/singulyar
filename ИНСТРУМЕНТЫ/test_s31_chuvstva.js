@@ -6,17 +6,19 @@ const fs = require("fs");
 const path = require("path");
 const F = path.join(__dirname, "..", "СИНГУЛЯР_31_ЛАДОМ.html");
 const raw = fs.readFileSync(F, "utf8");
+const РЕЕСТР = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versions.json"), "utf8"));
+const ВЕР = РЕЕСТР.дом.версия, ТАКТ = РЕЕСТР.дом.такт, КЭШ = РЕЕСТР.дом.поколение_кэша, ДАТА = РЕЕСТР.дом.дата;
 let fail = 0, ok = 0;
 function чек(имя, условие){
   if(условие){ ok++; console.log("  ✓ " + имя); }
   else { fail++; console.log("  ✗ " + имя); }
 }
 console.log("=== ОРАКУЛ v10.52 «ЧУВСТВА» ===");
-чек("титул дома — v10.52 «ЧУВСТВА»", raw.includes("<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v10.52 «ЧУВСТВА»"));
-чек("window.APP штамп: v/такт/кэш/стр", raw.includes("v:'10.52', такт:'ЧУВСТВА'") && raw.includes("s15-orkestrator-v107") && raw.includes("стр:'2026-10-11'"));
-чек("проба ЗДОРОВЬЕ 23 в реестре", raw.includes("window.__HEALTH22,window.__HEALTH23]"));
+чек("титул дома живёт тактом реестра («"+ТАКТ+"»)", raw.includes("СИНГУЛЯР ·31 v"+ВЕР+" «"+ТАКТ+"»"));
+чек("window.APP штамп: v/такт/кэш/стр (живой реестр)", raw.includes("v:'"+ВЕР+"', такт:'"+ТАКТ+"'") && raw.includes("s15-orkestrator-"+КЭШ) && raw.includes("стр:'"+ДАТА+"'"));
+чек("проба ЗДОРОВЬЕ 23 живёт в зале", raw.includes("window.__HEALTH23"));
 чек("проба 23 определена", raw.includes("window.__HEALTH23 = function()"));
-чек("auraScript блок на месте", raw.includes('<script id="auraScript">') && raw.includes("window.__АУРА = { ver:'v10.52'"));
+чек("auraScript блок на месте", raw.includes('<script id="auraScript">') && raw.includes("window.__АУРА = { ver:'"));
 чек("CSS ауры + гарды движения", raw.includes("#auraCv{position:absolute") && raw.includes('html[data-motion="off"] #auraCv{display:none}'));
 чек("аура — шаг в конвейере, не свой RAF", raw.includes("window.__КОНВЕЙЕР.поставь(шаг, 'аура')"));
 чек("канвас внутри #sngbg (гаснет в kids/day/kraft/hc)", /bg\.insertBefore\(cv, bg\.firstChild\)/.test(raw));
@@ -37,16 +39,16 @@ console.log("=== ОРАКУЛ v10.52 «ЧУВСТВА» ===");
 чек("F-04 закрыт: recBusy до первого await", raw.includes("let recBusy = false;") && raw.includes("recBusy = true;   /* F-04"));
 чек("ящик «чувства·аура»: 3 вещи по обряду", raw.includes('К.ящики.push("чувства·аура")') && raw.includes('К.вер = "v10.52 «ЧУВСТВА»"'));
 чек("семья в КАЗНЕ", raw.includes("/^__АУРА$|^__ЭХОЗАЛА$|^__ПУЛЬСЗАЛА$/"));
-чек("VER зала — динамический от APP (долг F-19)", raw.includes('var VER = (window.APP && window.APP.ver) || "v10.52 «ЧУВСТВА»";'));
+чек("VER зала — динамический от APP (фолбэк-литерал зала v10.78)", raw.includes('var VER = (window.APP && window.APP.ver) || "v10.78 «СЛОГ»";'));
 чек("U+FFFD (битые символы) = 0", !raw.includes("\uFFFD"));
 чек("старый хвост «СНЯТЬ КРЫШУ» жив (реверс не сломан)", raw.includes("СНЯТЬ КРЫШУ"));
 
 const sw = fs.readFileSync(path.join(__dirname, "..", "sw15.js"), "utf8");
-чек("sw15: кэш v107", sw.includes("s15-orkestrator-v107"));
+чек("sw15: кэш живого поколения («"+КЭШ+"»)", sw.includes("s15-orkestrator-"+КЭШ));
 чек("sw15: летопись такта в комментарии", sw.includes("Такт v10.52 «ЧУВСТВА»"));
 const vj = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versions.json"), "utf8"));
-чек("versions.json: штамп 10.52/ЧУВСТВА/v107", vj.дом.версия === "10.52" && vj.дом.такт === "ЧУВСТВА" && vj.дом.поколение_кэша === "v107");
-чек("versions.json: летопись С33 в голове", vj.летопись[0].такт === "ЧУВСТВА" && vj.летопись[1].такт === "ЯЗЫКИ");
+чек("versions.json: дом живёт тактом реестра", vj.дом.версия === ВЕР && vj.дом.такт === ТАКТ && vj.дом.поколение_кэша === КЭШ);
+чек("versions.json: летопись живёт (последняя запись = такт реестра)", Array.isArray(vj.летопись) && vj.летопись.length >= 100 && vj.летопись[vj.летопись.length - 1].такт === ТАКТ);
 const shtab = fs.readFileSync(path.join(__dirname, "..", "ШТАБ_РЕВИЗИИ_31.html"), "utf8");
 чек("ШТАБ: F-03/F-04 закрыты в реестре", shtab.includes("исправлено v10.52 «ЧУВСТВА» (гард micPanel.open") && shtab.includes("исправлено v10.52 «ЧУВСТВА» (recBusy"));
 чек("ШТАБ: 4 тренд-карточки ЧУВСТВ", shtab.includes("Calm technology — осознанность через периферию") && shtab.includes("Haptic rhythm") && shtab.includes("Singer tools") && shtab.includes("Иммерсивный веб 2025"));

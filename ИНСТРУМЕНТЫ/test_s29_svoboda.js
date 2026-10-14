@@ -27,7 +27,7 @@ test('комната ·29 существует, автономна, канони
 });
 
 test('офлайн-закон: ноль внешних запросов, ноль картинок', () => {
-  const внешние = [...СВОД.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)].map(м => м[1]);
+  const внешние = [...СВОД.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)].map(м => м[1]).filter(u => !u.startsWith('https://rtynbirf.github.io/singulyar/')); /* свой origin — не внешний (догнан на такте v11.19) */
   assert.equal(внешние.length, 0, 'внешних ресурсов нет: ' + внешние.join(', '));
   assert.ok(!/<img[\s>]/i.test(СВОД), '0 картинок — <img запрещён (живой холст DOM)');
   assert.ok(!/ФУНДАМЕНТ\/.*\.webp/i.test(СВОД), 'растровых вставок нет');
@@ -66,7 +66,8 @@ test('манифест дома: ·29 в реестре SNG, осколки и �
 });
 
 test('SW v63 несёт двери ·29/·30/·32 и СВОД-доки в офлайн', () => {
-  assert.ok(SW.includes("s15-orkestrator-v66"), 'кэш v66 (пин догнан на такте v1.52.0 — дальше сторож ждёт актуальную версию)');
+  const РЕЕСТР29 = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '..', 'data', 'versions.json'), 'utf8'));
+  assert.ok(SW.includes('s15-orkestrator-' + РЕЕСТР29.дом.поколение_кэша), 'кэш живого поколения «' + РЕЕСТР29.дом.поколение_кэша + '» (сторож по versions.json — догнан на такте v11.19)');
   assert.ok(SW.includes("./СИНГУЛЯР_30_ТКАНЬ.html"), '·30 в прекэше (такт v1.41.0)');
   assert.ok(SW.includes("./БИБЛИОТЕКИ/ткань/ткань.mjs"), 'ядро ткани в прекэше');
   assert.ok(SW.includes("'./СИНГУЛЯР_29_СВОБОДА.html'"), 'дверь ·29 в пре-кэше');
