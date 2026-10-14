@@ -10,7 +10,7 @@
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>СИНГУЛЯР — суверенный караоке-дом · поёт без сети</title>
-<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: 41 дверь, 62 песни, 200 языков. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
+<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: автономные двери, фонд песен, мультиязычный корпус. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
 <meta name="theme-color" content="#0A0A0C">
 <meta name="sng-build" content="v1.49.2 · ОБЩАК ОТКРЫТ · 2026-10-07">
 <meta name="color-scheme" content="dark">
@@ -18,7 +18,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="СИНГУЛЯР">
 <meta property="og:title" content="СИНГУЛЯР — ДОМ дверей · караоке-ладом">
-<meta property="og:description" content="Живой организм намерения: дом из 41 автономной двери, караоке-ладом ·31 и 62 песни фонда. Всё своё — офлайн, ноль интернета, хозяин — человек.">
+<meta property="og:description" content="Живой организм намерения: дом автономных дверей, караоке-ладом ·31 и фонд песен. Всё своё — офлайн, ноль интернета, хозяин — человек.">
 <meta property="og:url" content="https://rtynbirf.github.io/singulyar/">
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="Тёмная карточка: ДОМА СИНГУЛЯР · СИНГУЛЯР · караоке-ладом · дверь ·31 · RUVSON">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="СИНГУЛЯР — ДОМ дверей · караоке-ладом">
-<meta name="twitter:description" content="Живой организм намерения: дом из 41 автономной двери, караоке-ладом ·31 и 62 песни фонда. Всё своё — офлайн, ноль интернета.">
+<meta name="twitter:description" content="Живой организм намерения: дом автономных дверей, караоке-ладом ·31 и фонд песен. Всё своё — офлайн, ноль интернета.">
 <meta name="twitter:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/">
 <link rel="manifest" href="manifest.webmanifest">
@@ -220,7 +220,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
         <input type="search" id="ариаднаВвод" class="ариадна-ввод" placeholder="спроси дом: дверь, песня, слово"
                aria-label="Поиск по дому: дверь, песня, документ" enterkeyhint="search"
                autocomplete="off" spellcheck="false">
-        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — из 41 двери, 62 песен фонда и документов. Ноль сети, ответ мгновенный и местный.">⌕</button>
+        <button type="button" id="ариаднаИскать" data-справка="АРИАДНА — нить поиска: по любому слову ведёт к нужной двери дома — ко всем дверям, песням фонда и документам. Ноль сети, ответ мгновенный и местный.">⌕</button>
       </span>
       <span class="пульт-разделитель" aria-hidden="true"></span>
       <span class="пульт-группа" role="group" aria-label="Сквозная навигация по дому">
@@ -265,12 +265,12 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   
 
   <details id="модули" class="нить" hidden>
-    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом из 41 двери">
+    <summary aria-label="Нить Ариадны — потянуть, чтобы открыть дом: все двери на нити">
       <span class="нить-линия" aria-hidden="true"></span>
       <span class="нить-слово">⌇ нить Ариадны</span>
     </summary>
     <div id="дом">
-      <h2>Дом <em id="счётДверей">41 дверь · каждая автономна</em></h2>
+      <h2>Дом <em id="счётДверей">дверей: <span data-реестр="дверей">41</span> · каждая автономна</em></h2>
       <p class="дом-тихо">Возможность предоставлена — путь человек находит сам. Дверь открывается по нити, не по указанию.</p>
       <nav id="двери" class="двери" aria-label="Двери дома СИНГУЛЯР"></nav>
     </div>
@@ -731,5 +731,6 @@ function sg65раскрыть(){
 if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.addEventListener('hashchange', function(){ if(location.hash==='#sg65doors') sg65раскрыть(); }); }
 }catch(e){}
 </script>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.26</span> «<span data-реестр="такт">САЖЕНЦЫ</span>» · кэш <span data-реестр="кэш">v177</span></div>
 </body>
 </html>

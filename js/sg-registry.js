@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   СИНГУЛЯР · РЕЕСТР ВЕРСИЙ — общий мини-скрипт новых дверей (·35–·38)
+   СИНГУЛЯР · РЕЕСТР ВЕРСИЙ — общий мини-скрипт всех дверей дома; с такта v11.25 «САЖЕНЦЫ» (С103) — пути-кандидаты: правда находится из любой глубины подпапок
    Единый источник правды: data/versions.json (схема 1).
 
    Три независимых действия — падение одного не роняет остальные:
@@ -19,21 +19,28 @@
   (function загрузитьРеестр() {
     try {
       if (typeof fetch !== 'function') return;
-      fetch('data/versions.json')
-        .then(function (ответ) {
-          if (!ответ.ok) throw new Error('реестр: HTTP ' + ответ.status);
-          return ответ.json();
-        })
-        .then(function (json) {
-          try {
-            window.SG_РЕЕСТР = json;
-            if (typeof CustomEvent === 'function') {
-              window.dispatchEvent(new CustomEvent('sg-реестр-готов', { detail: json }));
-            }
-            заполнитьДатаРеестр(json); /* 2. после прихода правды — заполнить */
-          } catch (е) { /* реестр не имеет права ломать комнату */ }
-        })
-        .catch(function () { /* офлайн/file:// — комнаты живут без реестра */ });
+      /* такт v11.25 «САЖЕНЦЫ» (С103): дом живёт на любой глубине —
+         дверь в подпапке ищет правду вверх по лестнице (их канон не тронут) */
+      var КАНДИДАТЫ = ['data/versions.json', '../data/versions.json', '../../data/versions.json', '../../../data/versions.json'];
+      function попытка(i) {
+        if (i >= КАНДИДАТЫ.length) return; /* офлайн/file:// — комнаты живут без реестра */
+        fetch(КАНДИДАТЫ[i])
+          .then(function (ответ) {
+            if (!ответ.ok) throw new Error('реестр: HTTP ' + ответ.status);
+            return ответ.json();
+          })
+          .then(function (json) {
+            try {
+              window.SG_РЕЕСТР = json;
+              if (typeof CustomEvent === 'function') {
+                window.dispatchEvent(new CustomEvent('sg-реестр-готов', { detail: json }));
+              }
+              заполнитьДатаРеестр(json); /* 2. после прихода правды — заполнить */
+            } catch (е) { /* реестр не имеет права ломать комнату */ }
+          })
+          .catch(function () { попытка(i + 1); /* не здесь — ищем выше */ });
+      }
+      попытка(0);
     } catch (е) { /* сеть недоступна — честно молчим */ }
   }());
 
@@ -73,10 +80,15 @@
       var протокол = window.location && window.location.protocol;
       if (протокол !== 'http:' && протокол !== 'https:') return;
       if (!navigator.serviceWorker || typeof navigator.serviceWorker.register !== 'function') return;
-      var попытка = navigator.serviceWorker.register('sw15.js');
-      if (попытка && typeof попытка.catch === 'function') {
-        попытка.catch(function () { /* нет воркера — дом честно живёт без него */ });
+      var ПУТИ = ['sw15.js', '../sw15.js', '../../sw15.js', '../../../sw15.js'];
+      var i = 0;
+      function попытка() {
+        if (i >= ПУТИ.length) return; /* нет воркера — дом честно живёт без него */
+        var p = navigator.serviceWorker.register(ПУТИ[i]);
+        i += 1;
+        if (p && typeof p.catch === 'function') p.catch(function () { попытка(); });
       }
+      попытка();
     } catch (е) { /* SW запрещён — не беда */ }
   }());
 }());
