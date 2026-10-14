@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' wss:">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="ПИР ·54 — живая связь без посредников: видео, звук, текст и экран напрямую между устройствами (WebRTC P2P). Релеи Nostr — только рукопожатие; серверов дома нет. Ключ комнаты шифрует рукопожатие. Глухой режим — связь без сети сигналинга.">
+<title>СИНГУЛЯР ·54 — ПИР · связь без посредников</title>
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_54_%D0%9F%D0%98%D0%A0.html">
+<meta property="og:title" content="СИНГУЛЯР ·54 — ПИР · связь без посредников">
+<meta property="og:description" content="Живая P2P-связь: видео, звук, текст, экран — напрямую между устройствами. Релеи — только рукопожатие, серверов нет. Такт v11.32 «ПИР».">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_54_%D0%9F%D0%98%D0%A0.html">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/КРИСТАЛЛ.webp">
+<meta name="twitter:card" content="summary">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#f4f2ec;--fg:#1d2524;--panel:#fffdf8;--line:#c6cbc6;--accent:#155e59;--focus:#b33b00;--золото:#8a6d1a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg)}header,main,footer{max-width:1080px;margin:auto;padding:1rem}header{border-bottom:1px solid var(--line)}h1{font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.15;margin:.25rem 0}h2{margin:.1rem 0 .5rem;font-size:1.15rem}.kicker{letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}p{max-width:78ch}a{color:var(--accent)}button,input,textarea,select{font:inherit}button{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:.5rem;padding:.6rem .85rem;cursor:pointer}button.secondary{background:transparent;color:var(--fg);border-color:var(--line)}button.danger{background:transparent;color:#9b2c2c;border-color:#9b2c2c}button:disabled{opacity:.5;cursor:not-allowed}input,textarea{width:100%;padding:.6rem;border:1px solid var(--line);border-radius:.4rem;background:var(--panel);color:var(--fg)}label{display:block;font-weight:650;margin:.55rem 0 .2rem}*:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem}.panel{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1rem;min-width:0}.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}.row>*{flex:0 1 auto}.status{border-left:4px solid var(--accent);padding:.5rem .75rem;background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.muted{opacity:.85;font-size:.94rem}.items{padding-left:1.2rem;margin:.4rem 0}.items li{margin:.4rem 0;overflow-wrap:anywhere}.pill{display:inline-block;border:1px solid var(--line);border-radius:2rem;padding:.1rem .55rem;font-size:.85rem}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}footer{border-top:1px solid var(--line);margin-top:2rem}.notice{padding:.75rem;border:1px dashed var(--line);border-radius:.5rem}.чатЛог{list-style:none;padding:0;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:.5rem;background:#fbfaf5}.чатЛог li{padding:.45rem .65rem;border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent)}.чатЛог b{color:var(--золото)}.кто{font-weight:700}.видеоСетка{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:.6rem;margin:.6rem 0}.плитка{position:relative;background:#0c1210;border-radius:.6rem;overflow:hidden;min-height:0}.плитка video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#0c1210}.плитка figcaption{position:absolute;left:0;right:0;bottom:0;padding:.3rem .55rem;font:600 12.5px/1.3 system-ui,sans-serif;color:#e8ecf2;background:rgba(8,10,9,.62);letter-spacing:.02em}.экранПлитка video{object-fit:contain}.стихДала{font:12.5px/1.4 ui-monospace,Consolas,monospace;letter-spacing:.06em;color:#5a6470;text-transform:uppercase}.люди li{display:flex;gap:.5rem;align-items:baseline}.жуть{font:12.5px/1.4 ui-monospace,Consolas,monospace;color:#5a6470}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0A0A0C">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<script defer src="js/sg-registry.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script>
+</head>
+<body>
+
+<header>
+<p class="kicker">СИНГУЛЯР · дверь ·54 · живая связь · v0.1</p>
+<h1>ПИР — связь без посредников</h1>
+<p>Видео, звук, текст и экран идут напрямую между устройствами (WebRTC, пир-ту-пир). Релеи Nostr нужны только чтобы два устройства нашли друг друга, — контент через них не течёт. Серверов дома нет, аккаунтов нет, записи нет.</p>
+<p class="status" role="status" id="глобальныйСтатус">Сеть выключена. Руки не соединены — ничего не уходит.</p>
+</header>
+
+<main>
+<section class="panel" aria-labelledby="шаг1">
+<h2 id="шаг1">Шаг 1 · Комната</h2>
+<p class="muted">Имя комнаты — это адрес и пропуск: кто знает имя (и ключ, если он задан), тот может войти. Придумайте длинное имя или нажмите «Родить имя».</p>
+<div class="grid">
+<div>
+<label for="имяКомнаты">Имя комнаты</label>
+<div class="row"><input id="имяКомнаты" maxlength="128" autocomplete="off" placeholder="пир-янтарь-4821"><button type="button" class="secondary" id="родитьИмя">Родить имя</button></div>
+<label for="ключКомнаты">Ключ комнаты (необязательно)</label>
+<input id="ключКомнаты" type="password" maxlength="128" autocomplete="off" placeholder="шифрует рукопожатие у релеев">
+<label for="моёИмя">Ваше имя (видно пирам)</label>
+<input id="моёИмя" maxlength="64" autocomplete="off" placeholder="Как к вам обращаться">
+</div>
+<div>
+<p class="muted">Сеть включается только вашей рукой — по закону дома И‑01. На открытии страницы не соединяется ничего.</p>
+<div class="row" style="margin-top:.6rem">
+<button id="войтиКнопка">Войти в комнату</button>
+<button id="покинутьКнопка" class="danger" hidden>Покинуть комнату</button>
+</div>
+<p class="стихДала" id="адресСтрока" aria-live="polite"></p>
+</div>
+</div>
+</section>
+
+<section class="panel" style="margin-top:1rem" aria-labelledby="шаг2">
+<h2 id="шаг2">Шаг 2 · Медиа</h2>
+<div class="row">
+<button id="медиаКнопка">Камера и звук</button>
+<button id="экранКнопка" class="secondary">Показать экран</button>
+<button id="медиаСтоп" class="danger" hidden>Остановить моё медиа</button>
+</div>
+<p class="muted" id="медиаСтатус" role="status" aria-live="polite">Медиа выключены. Камера включается явной кнопкой и никуда не течёт без пиров.</p>
+<div class="видеоСетка" id="видеоСетка" aria-label="Плитки видео: ваша и пиров"></div>
+</section>
+
+<div class="grid" style="margin-top:1rem">
+<section class="panel" aria-labelledby="шаг3">
+<h2 id="шаг3">Шаг 3 · Текст</h2>
+<ul class="чатЛог" id="чатЛог" aria-live="polite" aria-label="Журнал текстов: прямая передача между пирами"></ul>
+<div class="row" style="margin-top:.5rem">
+<label class="sr-only" for="чатВвод">Текст сообщения</label>
+<input id="чатВвод" maxlength="2000" autocomplete="off" placeholder="Текст идёт напрямую пиру (до 2000 знаков)">
+<button id="послатьКнопка">Послать</button>
+</div>
+<p class="muted" id="чатСтатус" role="status">Пустое не отправляется.</p>
+</section>
+<section class="panel" aria-labelledby="шаг4">
+<h2 id="шаг4">Люди в комнате</h2>
+<ul class="items люди" id="людиСписок" aria-live="polite"></ul>
+<p class="muted" id="людиСтатус">Пока вы один.</p>
+</section>
+</div>
+
+<section class="panel" style="margin-top:1rem" aria-labelledby="глухойЗаголовок">
+<h2 id="глухойЗаголовок">Глухой режим — связь без сети сигналинга</h2>
+<p class="muted">Если релеи недоступны или сеть глуха: обменяйтесь кодами любым своим каналом (голосом, письмом, бумагой). Связь 1‑на‑1, всё то же видео, звук и текст — напрямую. Включите «Камеру и звук» до создания кодов, если нужно видео.</p>
+<label><input type="checkbox" id="глухойБезСерверов" style="width:auto"> Обе стороны в одной сети — даже STUN не звать</label>
+<label for="глухойКод">Код (приглашение или ответ — что сейчас в руках)</label>
+<textarea id="глухойКод" rows="3" placeholder="Код вставляется сюда"></textarea>
+<div class="row" style="margin-top:.5rem">
+<button id="глухойПригласить">Сделать приглашение</button>
+<button id="глухойОтветить" class="secondary">Ответить на приглашение</button>
+<button id="глухойЗавершить" class="secondary">Принять код-ответ</button>
+<button id="глухойСтоп" class="danger">Разорвать</button>
+</div>
+<p class="muted" id="глухойСтатус" role="status" aria-live="polite">Глухой режим спит.</p>
+</section>
+
+<div class="grid" style="margin-top:1rem">
+<section class="panel" aria-labelledby="какTitle">
+<h2 id="какTitle">Как это работает — по правде</h2>
+<ul class="items">
+<li><strong>Медиа и текст:</strong> напрямую между устройствами — WebRTC (DTLS‑SRTP) и DataChannel. Посредник-перевалка контента отсутствует.</li>
+<li><strong>Релеи Nostr:</strong> только рукопожатие — два устройства находят друг друга. Если задан ключ комнаты, рукопожатие зашифровано им ещё до релеев.</li>
+<li><strong>STUN:</strong> только обнаружение адреса для того же рукопожатия. В глухом режиме можно вовсе без него (одна сеть).</li>
+<li><strong>Закон И‑01:</strong> сеть включается только явной кнопкой. Открытие страницы не соединяется ни с чем.</li>
+<li><strong>Хранение:</strong> ничего не записывается и не хранится; ваше имя и последняя комната — в памяти только этого браузера.</li>
+</ul>
+</section>
+<section class="panel" aria-labelledby="границаTitle">
+<h2 id="границаTitle">Честная граница</h2>
+<ul class="items">
+<li>Имя комнаты — пропуск: попало в чужие руки — ждите гостя. Ключ комнаты сужает дверь, но не заменяет бережности.</li>
+<li>Шифрование — встроенное WebRTC (DTLS‑SRTP); отдельных «серых» слоёв не заявляется.</li>
+<li>Связь 3+ пиров — живая сетка «каждый с каждым»; качество зависит от каналов каждого.</li>
+<li>TURN (релей обхода строгих NAT) в доме отсутствует: если адреса не встретились — сказано честно, поможет глухой режим.</li>
+<li>Это инженерная дверь дома, не сервис связи: никакой регистрации, звонков на телефон и почты.</li>
+</ul>
+<p class="notice">Не вводите секреты в текст связи, которую не держите под своим ключом.</p>
+</section>
+</div>
+</main>
+
+<footer><p>СИНГУЛЯР · Человек выбирает. Система адаптируется. ·54 «ПИР» v0.1 — живая пировая связь такта v11.29; ядро pir-core/0.1, транспорт — self-hosted Trystero (MIT), релеи — публичные Nostr.</p></footer>
+
+<script type="module">
+import { создатьСеть, создатьГлухойРежим, родитьИмяКомнаты, печатьПира, ЛИМИТ_ТЕКСТА } from './js/pir-core.js';
+
+const $ = (ид) => document.getElementById(ид);
+const статус = (текст) => { $('глобальныйСтатус').textContent = текст; };
+
+/* строители без innerHTML — канон дома */
+function узел(тег, текст, класс) {
+  const н = document.createElement(тег);
+  if (текст !== undefined) н.textContent = текст;
+  if (класс) н.className = класс;
+  return н;
+}
+function время() {
+  try { return new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
+  catch (_) { return ''; }
+}
+
+/* ── плитки видео ── */
+const плиткаПоПотоку = new Map(); /* stream.id → {фигура, видео} */
+function нарисоватьПлитку(поток, подпись, свой, экран) {
+  const фигура = document.createElement('figure');
+  фигура.className = 'плитка' + (экран ? ' экранПлитка' : '');
+  фигура.setAttribute('aria-label', 'Видео: ' + подпись);
+  const видео = document.createElement('video');
+  видео.autoplay = true; видео.playsInline = true;
+  if (свой) видео.muted = true; /* своё — без самозвука; чужое — слышно */
+  видео.srcObject = поток;
+  видео.setAttribute('aria-label', 'Поток видео: ' + подпись);
+  const подпис = document.createElement('figcaption');
+  подпис.textContent = подпись + (экран ? ' · экран' : '');
+  фигура.append(видео, подпис);
+  $('видеоСетка').append(фигура);
+  плиткаПоПотоку.set(поток.id, { фигура, видео });
+  видео.play().catch(() => { /* автозапуск запрещён политикой — кнопка не нужна: поток живой */ });
+  return фигура;
+}
+function снятьПлитку(идПотока) {
+  const п = плиткаПоПотоку.get(идПотока);
+  if (п) { п.видео.srcObject = null; п.фигура.remove(); плиткаПоПотоку.delete(идПотока); }
+}
+
+/* ── люди ── */
+const человекаНити = new Map(); /* ид → li */
+function человекПришёл(ид, имя) {
+  const li = узел('li');
+  li.dataset.пир = ид;
+  const кто = узел('span', (имя ? имя + ' ' : '') + '(' + печатьПира(ид) + '…)', 'кто');
+  const состояние = узел('span', 'связь прямая', 'жуть');
+  li.append(кто, состояние);
+  $('людиСписок').append(li);
+  человекаНити.set(ид, li);
+  людиПравда();
+}
+function человекУшёл(ид) {
+  const li = человекаНити.get(ид);
+  if (li) { li.remove(); человекаНити.delete(ид); }
+  людиПравда();
+}
+function человекИмя(ид, имя) {
+  const li = человекаНити.get(ид);
+  if (li && имя) li.querySelector('.кто').textContent = имя + ' (' + печатьПира(ид) + '…)';
+}
+function людиПравда() {
+  const н = человекаНити.size;
+  $('людиСтатус').textContent = н === 0 ? 'Пока вы один. Пиры появятся, когда войдут в ту же комнату.' :
+    (н === 1 ? 'Один пир — связь прямая.' : (н + ' пиров — сетка «каждый с каждым».'));
+}
+
+/* ── чат ── */
+function строкаЧата(кто, текст) {
+  const li = узел('li');
+  li.append(узел('b', кто + ' · ' + время()));
+  li.append(document.createElement('br'));
+  li.append(узел('span', текст));
+  $('чатЛог').append(li);
+  $('чатЛог').scrollTop = $('чатЛог').scrollHeight;
+  while ($('чатЛог').children.length > 300) $('чатЛог').firstChild.remove();
+}
+
+/* ── сеть (основной режим) ── */
+const сеть = создатьСеть({
+  статус,
+  пирПришёл: (ид, имя) => { человекПришёл(ид, имя); },
+  пирУшёл: (ид) => {
+    человекУшёл(ид);
+    for (const [идПотока, п] of Array.from(плиткаПоПотоку)) {
+      if (п.фигура.dataset.пир === ид) { снятьПлитку(идПотока); }
+    }
+  },
+  имяПира: (ид, имя) => { человекИмя(ид, имя); строкаЧата('·', 'Участник теперь известен как «' + имя + '» (' + печатьПира(ид) + '…).'); },
+  потокПришёл: (поток, ид, тип, имя) => {
+    if (плиткаПоПотоку.has(поток.id)) return;
+    const фигура = нарисоватьПлитку(поток, (имя || печатьПира(ид) + '…'), false, тип === 'экран');
+    фигура.dataset.пир = ид;
+    статус('Поток пира ' + (тип === 'экран' ? '(экран) ' : '') + 'пришёл напрямую.');
+  },
+  текстПришёл: (текст, ид, имя) => { строкаЧата((имя || печатьПира(ид) + '…'), текст); }
+});
+
+let мойПоток = null;
+let мойЭкран = null;
+
+function медиаВкл() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    $('медиаСтатус').textContent = 'Честно: камера/микрофон недоступны в этом браузере (нет navigator.mediaDevices). Текст работает.';
+    return Promise.resolve(null);
+  }
+  return navigator.mediaDevices.getUserMedia({ audio: true, video: { width: { ideal: 1280 }, height: { ideal: 720 } } })
+    .then((поток) => {
+      мойПоток = поток;
+      нарисоватьПлитку(поток, 'Вы', true, false);
+      $('медиаСтатус').textContent = 'Камера и звук включены. Поток отдаётся пирам комнаты напрямую.';
+      $('медиаКнопка').hidden = true; $('медиаСтоп').hidden = false;
+      if (сеть.вКомнате()) сеть.датьПоток(мойПоток, 'камера');
+      return поток;
+    })
+    .catch((ошибка) => {
+      $('медиаСтатус').textContent = 'Честно: медиа не включены — ' + (ошибка && ошибка.name === 'NotAllowedError' ? 'разрешение не дано' : (ошибка && ошибка.name) || 'устройство недоступно') + '. Текст работает и без камеры.';
+      return null;
+    });
+}
+function медиаСтоп() {
+  if (мойПоток) {
+    if (сеть.вКомнате()) сеть.снятьПоток(мойПоток);
+    for (const т of мойПоток.getTracks()) т.stop();
+    if (мойПоток.id) снятьПлитку(мойПоток.id);
+    мойПоток = null;
+  }
+  if (!мойЭкран) { $('медиаКнопка').hidden = false; $('медиаСтоп').hidden = true; }
+  $('медиаСтатус').textContent = 'Моё медиа остановлено: дорожки закрыты честно, пиры это видят.';
+}
+
+function экранВкл() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+    $('медиаСтатус').textContent = 'Честно: показ экрана этим браузером не поддерживается.';
+    return;
+  }
+  navigator.mediaDevices.getDisplayMedia({ video: true, audio: false }).then((поток) => {
+    мойЭкран = поток;
+    нарисоватьПлитку(поток, 'Ваш экран', true, true);
+    $('медиаСтатус').textContent = 'Экран транслируется пирам напрямую.';
+    if (сеть.вКомнате()) сеть.датьПоток(поток, 'экран');
+    const дорожка = поток.getVideoTracks()[0];
+    if (дорожка) дорожка.addEventListener('ended', экранСтоп);
+  }).catch(() => {
+    $('медиаСтатус').textContent = 'Показ экрана отменён вами — ничего не транслируется.';
+  });
+}
+function экранСтоп() {
+  if (!мойЭкран) return;
+  if (сеть.вКомнате()) сеть.снятьПоток(мойЭкран);
+  if (мойЭкран.id) снятьПлитку(мойЭкран.id);
+  for (const т of мойЭкран.getTracks()) т.stop();
+  мойЭкран = null;
+  $('медиаСтатус').textContent = 'Показ экрана остановлен.';
+}
+
+/* ── вход/выход ── */
+$('родитьИмя').addEventListener('click', () => { $('имяКомнаты').value = родитьИмяКомнаты(); сохранитьПамять(); });
+$('войтиКнопка').addEventListener('click', () => {
+  const имяКомнаты = $('имяКомнаты').value.trim();
+  const ключ = $('ключКомнаты').value.trim();
+  const моёИмя = $('моёИмя').value.trim();
+  if (!имяКомнаты) { статус('Имя комнаты пусто — комната и есть адрес. Родьте имя или впишите своё.'); $('имяКомнаты').focus(); return; }
+  $('войтиКнопка').disabled = true;
+  сеть.войти(имяКомнаты, ключ, моёИмя).then(() => {
+    $('войтиКнопка').hidden = true; $('покинутьКнопка').hidden = false;
+    $('войтиКнопка').disabled = false;
+    $('адресСтрока').textContent = 'Комната: ' + имяКомнаты + (ключ ? ' · с ключом (рукопожатие зашифровано)' : ' · без ключа');
+    if (мойПоток) сеть.датьПоток(мойПоток, 'камера');
+    if (мойЭкран) сеть.датьПоток(мойЭкран, 'экран');
+    сохранитьПамять();
+  }).catch((ошибка) => {
+    $('войтиКнопка').disabled = false;
+    статус('Не вошёл: ' + ((ошибка && ошибка.message) || 'сеть не отвечает') + '. Релеи могут быть глухи — попробуйте позже или глухой режим.');
+  });
+});
+$('покинутьКнопка').addEventListener('click', () => {
+  сеть.покинуть();
+  $('войтиКнопка').hidden = false; $('покинутьКнопка').hidden = true;
+  $('адресСтрока').textContent = '';
+  for (const [идПотока, п] of Array.from(плиткаПоПотоку)) {
+    if (п.фигура.dataset.пир) снятьПлитку(идПотока); /* своё видео остаётся */
+  }
+  $('чатЛог').replaceChildren();
+});
+$('медиаКнопка').addEventListener('click', медиаВкл);
+$('медиаСтоп').addEventListener('click', медиаСтоп);
+$('экранКнопка').addEventListener('click', экранВкл);
+
+function послать() {
+  const текст = $('чатВвод').value;
+  if (!текст.trim()) { $('чатСтатус').textContent = 'Пустое не отправляется.'; return; }
+  if (текст.length > ЛИМИТ_ТЕКСТА) { $('чатСтатус').textContent = 'Длиннее ' + ЛИМИТ_ТЕКСТА + ' знаков — не уйдёт.'; return; }
+  const глух = глухойАктивен();
+  try {
+    if (глух) глухой.послатьТекст(текст);
+    else сеть.послатьТекст(текст);
+    строкаЧата('Вы', текст);
+    $('чатВвод').value = '';
+    $('чатСтатус').textContent = глух ? 'Ушло напрямую пиру (глухой режим).' : 'Ушло напрямую пирам комнаты.';
+  } catch (ошибка) {
+    $('чатСтатус').textContent = 'Не ушло: ' + ((ошибка && ошибка.message) || 'канала нет');
+  }
+}
+$('послатьКнопка').addEventListener('click', послать);
+$('чатВвод').addEventListener('keydown', (е) => { if (е.key === 'Enter') { е.preventDefault(); послать(); } });
+
+/* ── глухой режим ── */
+const глухой = создатьГлухойРежим({
+  статус: (текст) => { $('глухойСтатус').textContent = текст; },
+  потокПришёл: (поток, ид, тип, имя) => {
+    if (плиткаПоПотоку.has(поток.id)) return;
+    нарисоватьПлитку(поток, 'Пир (глухой режим)', false, false);
+    статус('Поток пира пришёл напрямую (глухой режим).');
+  },
+  текстПришёл: (текст) => { строкаЧата('Пир', текст); }
+});
+function глухойАктивен() { return $('глухойСтатус').dataset.жив === '1'; }
+function глухойПометить(жив, текст) {
+  $('глухойСтатус').dataset.жив = жив ? '1' : '';
+  if (текст) $('глухойСтатус').textContent = текст;
+}
+$('глухойПригласить').addEventListener('click', () => {
+  if (сеть.вКомнате()) { $('глухойСтатус').textContent = 'Вы в сетевой комнате — глухой режим для случая без сети. Покиньте комнату или используйте её.'; return; }
+  глухойПометить(true, 'Готовлю приглашение…');
+  const опции = { безСерверов: $('глухойБезСерверов').checked, поток: мойПоток || null };
+  глухой.сделатьПриглашение(опции).then((код) => {
+    $('глухойКод').value = код;
+    глухойПометить(true, 'Приглашение готово. Отдайте код пиру, получите код-ответ и нажмите «Принять код-ответ».');
+  }).catch((ошибка) => глухойПометить(false, 'Не вышло: ' + ((ошибка && ошибка.message) || 'ошибка рукопожатия')));
+});
+$('глухойОтветить').addEventListener('click', () => {
+  const код = $('глухойКод').value.trim();
+  if (!код) { $('глухойСтатус').textContent = 'Вставьте код приглашения в поле выше.'; return; }
+  глухойПометить(true, 'Отвечаю на приглашение…');
+  глухой.принятьПриглашение(код, { безСерверов: $('глухойБезСерверов').checked, поток: мойПоток || null }).then((кодОтвета) => {
+    $('глухойКод').value = кодОтвета;
+    глухойПометить(true, 'Код-ответ в поле. Отдайте его инициатору — связь сойдётся.');
+  }).catch((ошибка) => глухойПометить(false, 'Приглашение не принято: ' + ((ошибка && ошибка.message) || 'код не читается')));
+});
+$('глухойЗавершить').addEventListener('click', () => {
+  const код = $('глухойКод').value.trim();
+  if (!код) { $('глухойСтатус').textContent = 'Вставьте код-ответ в поле выше.'; return; }
+  глухой.завершитьСоединение(код).then(() => глухойПометить(true, 'Ответ принят — сходимся…'))
+    .catch((ошибка) => глухойПометить(false, 'Код-ответ не принят: ' + ((ошибка && ошибка.message) || 'код не читается')));
+});
+$('глухойСтоп').addEventListener('click', () => { глухой.остановить(); глухойПометить(false, 'Глухой режим спит.'); });
+
+/* ── память этого браузера + глубокая ссылка ── */
+function сохранитьПамять() {
+  try {
+    localStorage.setItem('singulyar.pir.имя', $('моёИмя').value.trim().slice(0, 64));
+    localStorage.setItem('singulyar.pir.комната', $('имяКомнаты').value.trim().slice(0, 128));
+  } catch (_) { /* хранилище глухо — живём без памяти */ }
+}
+try {
+  const памятьИмя = localStorage.getItem('singulyar.pir.имя');
+  const памятьКомната = localStorage.getItem('singulyar.pir.комната');
+  if (памятьИмя) $('моёИмя').value = памятьИмя;
+  if (памятьКомната) $('имяКомнаты').value = памятьКомната;
+} catch (_) { /* приватный режим — честно без памяти */ }
+(function глубокаяСсылка() {
+  const матч = /^#комната=([\p{L}\p{N}._-]{1,128})$/u.exec(location.hash || '');
+  if (матч) {
+    $('имяКомнаты').value = матч[1];
+    $('адресСтрока').textContent = 'Комната из ссылки: ' + матч[1] + '. Проверьте имя и войдите рукой.';
+    $('войтиКнопка').focus();
+  }
+})();
+$('моёИмя').addEventListener('change', сохранитьПамять);
+</script>
+
+<p class="штамп-дома" style="text-align:center;color:#666;font:11.5px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 18px">·54 · ПИР · такт «<span data-реестр="такт">ПИР</span>» · кэш <span data-реестр="кэш">v183</span></p>
+<p class="sr-only">Дом СИНГУЛЯР: <span data-реестр="дверей">43</span> дверей · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков</p>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<a href="СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a class="sg65here" aria-current="page" href="СИНГУЛЯР_54_ПИР.html">·54 ПИР</a>
+</div>
+</details>
+</nav>
+<!-- такт v11.32 «ПИР» (С110, ключ ㉕; СТОП-ГОРН ×2: их v11.29 «КОНТУР» (С107, c302e672, PAT №33), их v11.30 «ЩИТ» (С108, 9ffceec, PAT №28) и их v11.31 «ТЕМП» (С109, c224ef3, PAT №28) встали между моими fetch и пушами — приняты целиком, мой такт перенумерован честно v11.29→v11.31→v11.32/С107→С109→С110/v180→v182→v183 (прецедент v10.91/v11.03/v11.21/v11.28); приказ владельца trace 1a13a36f98eeb3ad: «РАБОТАЙ СО СТАРЫМ КЛЮЧЁМ … МНЕ НУЖНА БУДЕТ РАБОТАЮЩАЯ СИСТЕМА ВИДЕОКОНФЕРЕНЦИИ АДИО ТЕКСТОВЫЕ СООБЩЕНИЯ БЕЗ ПОСРЕДНИКОВ ТОЛЬКО ПИР ТУ ПИР!!! … ПОЛНОСТЬЮ ПЕРЕДЕЛАЙ ВСЕ СТРАНИЦЫ СВЯЗАННЫЕ СО СВЯЗЬЮ»): дверь ·54 ПИР — живая P2P-связь (видео+аудио+текст+экран), ядро js/pir-core.js (pir-core/0.1 — релейный слой лестницы mesh-wire/0.1 линии М1, 0 сети при импорте И-01), транспорт БИБЛИОТЕКИ/trystero-nostr.bundle.mjs (self-hosted, MIT; релеи — только рукопожатие, ключ комнаты шифрует SDP), глухой режим — рукопожатие кодами без сети сигналинга; обвязка по канону ·38: КОРД, CSP-постур А + connect-src wss:, canonical/og, sg-registry, навигатор SG65, такт-штамп -->
+</body>
+</html>
