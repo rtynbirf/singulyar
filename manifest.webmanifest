@@ -2,7 +2,7 @@
   "id": "/singulyar/",
   "name": "СИНГУЛЯР — вселенная караоке",
   "short_name": "СИНГУЛЯР",
-  "description": "61 песня × 158 языков · ОРКЕСТРАТОР ·15 · КРУГ ·23 (люди, румы, звонки) · ПОЧТА ·24 (свой ящик) · КОШЕЛЁК ·25 (тихие переводы) · ЛИНИЯ ·26 (номер, SMS, OTP) · офлайн",
+  "description": "62 песни × 200 языков · ОРКЕСТРАТОР ·15 · КРУГ ·23 (люди, румы, звонки) · ПОЧТА ·24 (свой ящик) · КОШЕЛЁК ·25 (тихие переводы) · ЛИНИЯ ·26 (номер, SMS, OTP) · офлайн",
   "lang": "ru",
   "start_url": "./index.html",
   "scope": "./",
@@ -13,8 +13,8 @@
     "browser"
   ],
   "orientation": "any",
-  "background_color": "#0a0e14",
-  "theme_color": "#0a0e14",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
   "categories": [
     "entertainment",
     "music",
