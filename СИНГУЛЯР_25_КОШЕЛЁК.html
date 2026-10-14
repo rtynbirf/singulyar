@@ -162,6 +162,20 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
     <button class="кноп" id="btnЭкспортJSON">⬇ экспорт журнала (JSON)</button>
   </div>
 
+  <h2 class="сек">Сверка · crdt-ядро/0.1 (ПВ5)</h2>
+  <div class="panel">
+    <p class="note">Журнал операций — CRDT LWW-множество на часах Лампорта: два устройства сливают диффы без сервера, победителя решает детерминированный тай-брейк (время, узел); Merkle-корень (trie 64, crdt-ядро/0.1) сверяет два набора за 3 фазы — корни, куски, дифф. Время всегда аргументом, 0 сети (И-01): транспорт — только руки человека.</p>
+    <div class="ряд-кнопок">
+      <button class="кноп" id="btnКрдтПлюс">⊕ операция в сверку</button>
+      <button class="кноп" id="btnКрдтКорень">∑ корень Merkle</button>
+      <button class="кноп" id="btnКрдтЭкспорт">⬇ дифф (JSON)</button>
+      <button class="кноп" id="btnКрдтИмпорт">⬆ дифф другого устройства</button>
+    </div>
+    <input type="text" id="вводКрдт" placeholder="текст операции для сверки (например: пополнение кассы 500)" style="width:100%;min-height:44px;margin-top:10px;border-radius:10px;border:1px solid rgba(212,175,55,.35);background:rgba(240,240,248,.04);color:inherit;font:inherit;padding:9px 12px" aria-label="текст операции для CRDT-сверки">
+    <input type="file" id="файлКрдт" accept="application/json,.json" hidden>
+    <div class="status" id="статусКрдт" role="status" aria-live="polite">ядро спит: корень считается по явному действию (И-01)</div>
+  </div>
+
   <h2 class="сек">Бумажки · семейные токены</h2>
   <div class="panel">
     <p class="note">Бумажка — подписанный эмитентом токен с номиналом. Передаётся как купюра: через ПОЧТУ ·24, ЛИНИЮ ·26 или из рук в руки (строкой). Кто держит бумажку — тот и владеет. Проверяется подпись эмитента.</p>
@@ -1226,6 +1240,70 @@ try{
 </div>
 </details>
 </nav>
+<script defer src="js/crdt-core.js"></script>
+<script>
+/* ПВ5 (такт v11.36): сверка кошелька — живой CRDT-журнал на js/crdt-core.js (канон crdt-ядро/0.1).
+   Законы дома: createElement/textContent (0 innerHTML), время аргументом, 0 сети, честные статусы. */
+(function(){
+'use strict';
+function $(id){ return document.getElementById(id); }
+function скажи(t){ var с=$('статусКрдт'); if(с) с.textContent=t; }
+var ЗК='крдт.25', ЧК='крдт.25.часы', УК='крдт.25.узел';
+function узел(){ var у=null; try{ у=localStorage.getItem(УК); }catch(e){}
+  if(!у){ у='25-'+Math.random().toString(36).slice(2,8); try{ localStorage.setItem(УК,у); }catch(e){} } return у; }
+function часы(){ var ч=null; try{ ч=parseInt(localStorage.getItem(ЧК)||'0',10)||0; }catch(e){} return ч; }
+function часыПиши(t){ try{ localStorage.setItem(ЧК,String(t)); }catch(e){} }
+function набор(){ var д={}; try{ д=JSON.parse(localStorage.getItem(ЗК)||'{}')||{}; }catch(e){ д={}; } var н=new window.__КРДТ.LWWSet().изДиффа(д); return н; }
+function пиши(н){ try{ localStorage.setItem(ЗК,JSON.stringify(н.дифф())); }catch(e){} }
+function жив(){ return !!(window.__КРДТ && window.__КРДТ.LWWSet && window.__КРДТ.Меркль); }
+document.addEventListener('DOMContentLoaded', function(){
+  if(!$('btnКрдтКорень')) return;
+  $('btnКрдтПлюс').addEventListener('click', function(){
+    if(!жив()) return скажи('ядро crdt-core не поднялось — честно жду, 0 фальши');
+    var в=$('вводКрдт'); var т=(в&&в.value||'').trim();
+    if(!т) return скажи('впиши текст операции — пустое в сверку не идёт');
+    var ч=часы()+1; часыПиши(ч);
+    var н=набор(); н.добавить(т, ч, узел()); пиши(н);
+    в.value=''; скажи('операция в сверке (часы '+ч+'); живых записей: '+н.живые().length+' — корень посчитай кнопкой ∑');
+  });
+  $('btnКрдтКорень').addEventListener('click', function(){
+    if(!жив()) return скажи('ядро crdt-core не поднялось — честно жду');
+    var н=набор(); var ж=н.живые();
+    window.__КРДТ.Меркль.корень(ж).then(function(к){
+      скажи('корень Merkle ('+ж.length+' записей): '+к.slice(0,16)+'…'+к.slice(-8)+' (32 байта, trie 64)');
+    }).catch(function(e){ скажи('корень не сошёлся: '+((e&&e.message)||e)); });
+  });
+  $('btnКрдтЭкспорт').addEventListener('click', function(){
+    if(!жив()) return скажи('ядро crdt-core не поднялось — честно жду');
+    var н=набор();
+    var пакет={ канон:'crdt-ядро/0.1', дверь:'·25 КОШЕЛЁК', уз:узел(), часы:часы(), дифф:н.дифф() };
+    var б=new Blob([JSON.stringify(пакет,null,1)],{type:'application/json'});
+    var а=document.createElement('a'); а.href=URL.createObjectURL(б); а.download='крдт-25-дифф.json';
+    document.body.appendChild(а); а.click(); а.remove();
+    скажи('дифф отдан файлом: '+Object.keys(пакет.дифф).length+' записей — передай его второму устройству из рук в руки');
+  });
+  $('btnКрдтИмпорт').addEventListener('click', function(){ $('файлКрдт').click(); });
+  $('файлКрдт').addEventListener('change', function(ev){
+    var ф=ev.target.files&&ev.target.files[0]; if(!ф) return;
+    var чтец=new FileReader();
+    чтец.onload=function(){
+      try{
+        var пакет=JSON.parse(чтец.result);
+        if(!пакет||typeof пакет!=='object'||typeof пакет.дифф!=='object') throw new Error('в файле нет диффа crdt-ядро/0.1');
+        var до=Object.keys(пакет.дифф).length;
+        var н=набор(); н.изДиффа(пакет.дифф);
+        if(Number.isInteger(пакет.часы)&&пакет.часы>часы()) часыПиши(пакет.часы);
+        пиши(н);
+        window.__КРДТ.Меркль.корень(н.живые()).then(function(к){
+          скажи('слито: пришло '+до+' записей, живых стало '+н.живые().length+'; корень после слияния: '+к.slice(0,16)+'…');
+        }).catch(function(e){ скажи('слилось, но корень не посчитался: '+((e&&e.message)||e)); });
+      }catch(e){ скажи('дифф не принят: '+((e&&e.message)||e)); }
+    };
+    чтец.readAsText(ф);
+  });
+});
+}());
+</script>
 <script defer src="js/sg-registry.js"></script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
 </body>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <!-- такт v10.97 «ОТ ГОЛОСА» (С73; PAT №23; РЕПАРАЦИЯ: их v10.95 «ЧТЕНИЕ» (С71) и v10.96 «ГРУППЫ» (С72) байты восстановлены — мой прежний коммит d86b163 затёр их в 6 путях, признано и исправлено): приказ владельца — подсветка строки бежит ОТ ГОЛОСА (человек), а не от музыки (инструмент). 20 осей КАРАОКЕ перегенерированы ASR-конвейером по мастерам minus/min (якорь строки = измеренный вход голоса), формулировки «в такт музыке» исправлены на «в такт голосу», вшитый флагман сверен с голосом и не тронут. -->
+<!-- такт v11.38 «СВЕРКА» (С116, ключ ㉕; СТОП-ГОРН ×2: их v11.36 «ВОЗВРАТ» (С114, 0bd4734 — песни на ТВ вернуты: ·32 СЦЕНА на свою mp3, транскод pervLR9m-vk, ffprobe-аудит 63/63) и их v11.37 «ОКНО» (С115, d9b3f4e, ключ ㉖ — дверь ·55 ЕДИНОЕ ОКНО из пакета владельца, счёт дверей 44) встали между моим fetch и пушем — их байты приняты целиком (reset на их main, мой хвост перестроен поверх), мой такт честно перенумерован v11.36→v11.38/С114→С116/v187→v189/летопись 123→125 (прецедент v10.91/v11.03/v11.21/v11.28/v11.32/v11.35)): ПРИКАЗ ВЛАДЕЛЬЦА «НЕ ЯБИ МНЕ МОЗГИ ДО ЭТОГО ВСЁ ИГРАЛО МНЕ НАСРАТЬ В КАКОМ ОНО ФОРМАТЕ!!! ВАЖНО, ЧТОБ ИГРАЛО!!! ОТРЕМОНТИРУЙ ЧТО СЛОМАЛ, ДАЛЕЕ ПО ДОРОЖНОЙ КАРТЕ» — ИСПОЛНЕН: (1) РЕМОНТ МУЗЫКИ ·31 — корень их ТБ-1 найден (ensureAudio() на ТВ возвращал false → startShow() отказывался начинать вечер; шасси требовал webm-блоб, который ТВ не глотает; error-цепь вела в тупиковые тосты): ensureAudio на ТВ создаёт контекст БЕЗ захвата элемента, startShow получил ТВ-ветку с прямой mp3 (твПуть()), лестница фолбэков минОтвал→максОтвал→домОтвал (новый: блоб/webm не заиграл → прямая mp3 «Просто люби») + сторож звука window.__СТОРОЖ_ЗВУКА (4,5–17 с без звука — дом сам переступает на mp3), ТВ без медиа-блобов (караокеБлоб/караокеСеть/setPole — прямые файлы), гарда beatFrame (deref анализатора ронял RAF-кадр на ТВ); ПК не тронут; живая поверка Playwright 11/11 (их ВОЗВРАТ чинил ·32 — мой хвост ·31 поверх их канона, конфликта нет); (2) ПВ5 «CRDT LWW + Merkle» (их ОКНО: «ДАЛЬШЕ ПО КАРТЕ → ПВ5») погашен по канону трека — canon crdt-ядро/0.1 (24/24 node --test), порт js/crdt-core.js ≡ канон, панели ·25/·30/·33 в стиле каждой двери (0 innerHTML, 0 сети, proof в QR через их qr-token); кэш v188→v189 -->
+<!-- такт v11.36 «ИГРАЕТ» (С114, ключ ㉕): ПРИКАЗ ВЛАДЕЛЬЦА «НЕ ЯБИ МНЕ МОЗГИ ДО ЭТОГО ВСЁ ИГРАЛО МНЕ НАСРАТЬ В КАКОМ ОНО ФОРМАТЕ!!! ВАЖНО, ЧТОБ ИГРАЛО!!! ОТРЕМОНТИРУЙ ЧТО СЛОМАЛ, ДАЛЕЕ ПО ДОРОЖНОЙ КАРТЕ» — ИСПОЛНЕН: (1) РЕМОНТ МУЗЫКИ — найден корень их ТБ-1 «ЛИК»: ensureAudio() на ТВ возвращал false и startShow() отказывался начинать вечер (страница вязла на старте), а путь шасси требовал webm-блоб, которого ТВ не глотает; починено честно: ensureAudio на ТВ создаёт контекст БЕЗ захвата элемента (звук напрямую, граф — аплодисментам), startShow получил ТВ-ветку без шасси webm (прямая mp3-минусовка твПуть()), лестница фолбэков минОтвал→максОтвал→домОтвал (новый: блоб/webm не заиграл → прямая mp3 «Просто люби») + сторож звука window.__СТОРОЖ_ЗВУКА (звук не пошёл 4,5–17 с — дом сам переступает на mp3, тупиков-тостов больше нет), на ТВ медиа-блобов больше нет (караокеБлоб/караокеСеть/setPole — прямые файлы), гарда beatFrame (an deref ронял RAF-кадр на ТВ); на ПК ничего не изменилось — живая поверка Playwright 11/11 (ПК: дом webm-блоб + фонд webm-мастер, 0 ошибок; ТВ Tizen: дом mp3 + фонд mp3; ТВ-врун: автофолбэк webm→mp3; дом-отвал: блоб→mp3 играет; ·32 ТВ: mp3 играет); (2) ПВ5 «CRDT LWW + Merkle» погашен по канону трека — canon ДОКУМЕНТЫ/ТРЕКИ/КАРАОКЕ_СИНХРОН/src/crdt-ядро.mjs (24/24 node --test: триада CRDT коммутативность/идемпотентность/ассоциативность, тай-брейк (т,уз), чистка гробниц, Merkle-несжатый trie 64 c ∅-доменом, 3 фазы сверка, proof 1491 Б < QR 2953, тампер-отказы, детерминизм байт-в-байт), порт js/crdt-core.js ≡ канон (корень/сверка/proof перекрёстно), панели в ·25 КОШЕЛЁК / ·30 ТКАНЬ / ·33 ФОНД (стиль каждой двери, 0 innerHTML, 0 сети И-01); кэш v186→v187 -->
 <!-- такт v11.35 «ЛИЦО» (С113, ключ ㉕; СТОП-ГОРН ×2: их v11.33 «ГЕРМЕТИЧНО» (С111, 862b715, PAT №33) и их «ЛИК» (С111/С112-цех, 14039de, trace 1a13a84e86cfbedd) встали между моим fetch и пушем — их байты приняты целиком, мой такт перенумерован честно v11.33→v11.35/С111→С113/v184→v186/летопись 120→122; приказ владельца trace 1a13a87b2ecf7185 «…НА ТЕЛЕВИЗОРЕ НЕ РАБОТАЕТ МУЗЫКА… ДОБИВАЙ ВСЕ ХВОСТЫ ПО ДОРОЖНОЙ КАРТЕ»: МОЙ УНИКАЛЬНЫЙ ХВОСТ поверх их ТБ-1 — minus/prosto-lubi.mp3 (новый файл репо 9 370 651 Б: транскод 320k/48 kHz stereo из МАКС-мастера; «Просто люби» была единственной песней фонда без mp3 — их ТВ-фолбэк подставлял флагман 9ys_TVEtda8.mp3 с чужими словами) + два пути караоке-дома на ТВ подняты на свою песню + проба ЗДОРОВЬЯ «аудио в шасси» говорит правду о ТВ-режиме + APP/титул на правду такта (стоял 11.28); лицо дома — страницы связи ·54/·53 в каноне СТЕКЛО·СЕРЕБРО·ЗОЛОТО; хвост ПВ4 погашен их k13/qr-token; на ПК ничего не изменилось -->
 <head>
 <!-- такт v11.14 «ПОЛИМАТ» (С90, PAT №26): КС3 ЗАКРЫТ — PKE «ПОЛИМАТ · ОБУЧЕНИЕ» на прод-зал ·31: аддитивный блок С90 перед последним </body> — порт 1:1 пакета PKE 0.1.0 (pke-ladom.js): каталог 100 практик (уникальные номера, поиск), 20 ролей маршрутизации (НЕ 20 LLM), профиль цель+язык, A–B повтор __KV.audio (гард TOGGLE, отключение на смене трека), темп 75% через __РОЛИ.ведает('SYNC') — только ведущий, с возвратом темпа, взятие строки #lyrics .line.on .txt, журнал ladom.pke.v1 (pke/1) отдельно от kv.контур, карточки/экспорт JSON/AI-запрос локально без отправки, capabilities() честный (0 сети, 0 микрофона); ЗДОРОВЬЕ __HEALTH40; кэш v168→v169 --> <!-- такт v11.13 «СОБЕСЕДНИК» (С89, PAT №26): Ж4 Этап 4 открыт кодом — ИИ-собеседник слова в КОНТУР: канон karaoke-adapters/0.2 (порт 1:1, 6 контрактов), ASR-место, честный бумажный речевой круг, журнал контур.собеседник.*, ЗДОРОВЬЕ39; кэш v167→v168 --> <!-- такт v11.12 «ТРЕНАЖЁР» (С88, PAT №26): КС4 закрыта — тренажёры + FSRS-6 в КОНТУР зала ·31. Канон fsrs6/0.1 (fsrs6.mjs, blob 08c92958, node --test 25/25) портирован 1:1 (формулы/границы канона сохранены, время всегда аргументом). FSRS-панель «1 Забыл / 2 Трудно / 3 Норм / 4 Легко» на карточке слова — только на словах src≠draft (слово из исходного текста строки, язык показа не черновик МАЛЫША); карточка слова показывает интервальное расписание по трём тренажёрам; тренажёры в пульте КОНТУР: диктант (Левенштейн с бэктрейсом), пропуски (детерминированное зерно), эхо-план (сам-отчёт за голосом); хранилище «контур.тренажёры.*» отдельно от kv.контур; люк весов владельца; пробы ЗДОРОВЬЕ38; слой сам не открывается — игнорируется полностью. Кэш v165→v166. -->
@@ -1551,6 +1553,7 @@ if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
 audio.addEventListener("error", ()=>{ try{
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.минОтвал && window.__ТРАНСПОРТ.минОтвал()) return; /* v10.66: МИН не нашёлся — транспорт сам честно поднял МАКС */
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.максОтвал && window.__ТРАНСПОРТ.максОтвал()) return; /* v10.69: МАКС-мастера нет рядом — транспорт сам честно поднял mp3-минус */
+  if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.домОтвал && window.__ТРАНСПОРТ.домОтвал()) return; /* ремонт v11.36 «ЧТОБ ИГРАЛО»: дом-блоб/webm не заиграл — транспорт сам поднял прямую mp3 «Просто люби» */
   if(window.__ТРАНСПОРТ && document.body.classList.contains("концерт")){
     showToast("Файл ./minus/ не открылся (треку нужен файл рядом) — подними его вручную");
     if(window.__ПОДНЯТЬ_ЗВУК) window.__ПОДНЯТЬ_ЗВУК();
@@ -1558,6 +1561,25 @@ audio.addEventListener("error", ()=>{ try{
     showToast("Аудио не распознано этим браузером — нужен Chrome/Edge/Firefox (webm/opus)");
   }
 }catch(e){} });
+
+/* ремонт v11.36 «ЧТОБ ИГРАЛО» (приказ владельца «ДО ЭТОГО ВСЁ ИГРАЛО… ВАЖНО, ЧТОБ ИГРАЛО»): сторож звука —
+   если после пуска звук по-честному не пошёл (браузер соврал в canPlayType, файл не декодится, «error» не пришёл),
+   дом сам переступает на mp3-минусовку — вечер не вязнет в тишине; буферизация терпится до ~17 с */
+window.__СТОРОЖ_ЗВУКА = function(попыток){
+  попыток = попыток||0;
+  if(попыток>2) return;
+  setTimeout(function(){
+    try{
+      if(!state.started || audio.paused || audio.ended) return;
+      if((audio.currentTime||0) > 0.2) return; /* звук идёт — сторож молчит */
+      if(audio.error) return; /* ошибку уже ведёт обработчик error — там лестница фолбэков */
+      if(audio.readyState < 3 && попыток < 2){ window.__СТОРОЖ_ЗВУКА(попыток+1); return; } /* ещё едет по сети — терпим */
+      if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.максОтвал && window.__ТРАНСПОРТ.максОтвал()) return;
+      if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.домОтвал && window.__ТРАНСПОРТ.домОтвал()) return;
+      window.__СТОРОЖ_ЗВУКА(попыток+1);
+    }catch(e){}
+  }, попыток===0 ? 4500 : 6500);
+};
 
 const Applause = {
   ok:false, buf:null,
@@ -1613,7 +1635,15 @@ function refreshOutLat(){
 }
 function ensureAudio(){
   if(ac) return true;
-  if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return false; /* ТБ-1 v11.34: на ТВ граф не глотает элемент — звук напрямую */
+  if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()){ /* ремонт v11.36 «ЧТОБ ИГРАЛО»: прежний «return false» убивал сам старт вечера на ТВ (startShow отказывался идти); теперь на ТВ контекст живёт БЕЗ захвата элемента — звук элемента идёт напрямую, граф — только аплодисментам и бипам */
+    try{
+      const АС = window.AudioContext||window.webkitAudioContext;
+      if(!АС) return false;
+      ac = new АС();
+      Applause.init(ac);
+      return true;
+    }catch(e){ return false; }
+  }
   try{
     const AC = window.AudioContext||window.webkitAudioContext;
     ac = new AC();
@@ -1849,6 +1879,26 @@ function setSection(i, t){
 /* ── транспорты ── */
 const btnPlay = $("btnPlay"), tCur = $("tCur"), tDur = $("tDur");
 function startShow(){
+  if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()){ /* ремонт v11.36 «ЧТОБ ИГРАЛО» (приказ владельца «ДО ЭТОГО ВСЁ ИГРАЛО… ВАЖНО, ЧТОБ ИГРАЛО»): на ТВ вечер начинается без шасси webm — прямая mp3-минусовка, никакого блоба, никакого файлопросителя */
+    if(state.started && !audio.paused && audio.currentTime>0.5) return;
+    if(!audio.src || /^blob:/.test(audio.src) || /\.webm/.test(audio.src)){
+      audio.src = (window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.твПуть) ? window.__ТРАНСПОРТ.твПуть() : "./minus/prosto-lubi.mp3";
+    }
+    ensureAudio();
+    if(ac&&ac.state==="suspended"){ const rr=ac.resume(); if(rr&&rr.catch) rr.catch(()=>{}); }
+    state.started = true; state.ended = false; state.overrides = {};
+    paintOwners();
+    body.dataset.mode = "sing";
+    forceLine = true;
+    requestAnimationFrame(()=>{ forceLine = true; });
+    audio.currentTime = 0;
+    const p = audio.play();
+    if(p && p.catch) p.catch(()=>showToast("Браузер не дал звук — нажми ▶ ещё раз"));
+    const bpb = p && p.then ? p.then(()=>{ btnPlay.textContent = "⏸"; }) : null;
+    if(!bpb) btnPlay.textContent = "⏸";
+    if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА();
+    return;
+  }
   if(!window.TRACK_BUF && window.TRACK_READY && !window.TRACK_ERR){ showToast("Аудио ещё съезжается в шасси — секунда…"); return; }
   if(!window.TRACK_BUF){ /* v10.32 «ЭТАЛОН»: локальный подхват файла песни — тупика больше нет */
   window.__ПОДНЯТЬ_ЗВУК = window.__ПОДНЯТЬ_ЗВУК || function(){
@@ -2010,6 +2060,7 @@ window.__ТРАНСПОРТ = (function(){
     const p = audio.play();
     if(p && p.catch) p.catch(()=>showToast("Браузер не дал звук — нажми ▶ ещё раз"));
     btnPlay.textContent = "⏸";
+    if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА(); /* ремонт v11.36: пуск — сторож встал */
   }
 
   /* честный блоб полюса, если он уже в шасси (готов(url)); false — нужно сncать */
@@ -2019,7 +2070,7 @@ window.__ТРАНСПОРТ = (function(){
       караокеБлобы[p] = URL.createObjectURL(new Blob([window.TRACK_BUF], { type: "audio/webm" }));
       готов(караокеБлобы[p]); return true;
     }
-    if(p==="макс" && window.TRACK_READY && !window.TRACK_ERR){
+    if(p==="макс" && window.TRACK_READY && !window.TRACK_ERR && !(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ())){ /* ремонт v11.36: на ТВ вебм-блоб не живёт — сразу честная сеть/прямой файл */
       window.TRACK_READY.then(function(buf){
         if(buf && ПЕСНИ[idx][0]===КАРАОКЕ_ID && pole==="макс"){
           караокеБлобы["макс"] = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
@@ -2031,6 +2082,7 @@ window.__ТРАНСПОРТ = (function(){
     return false;
   }
   function карaokeСеть(p, готов, фиаско){
+    if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()){ готов(караокеПуть()); if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА(); return; } /* ремонт v11.36 «ЧТОБ ИГРАЛО»: на ТВ медиа-блоб не живёт — прямой файл (ТВ сам его стримит) */
     var ТБ1ПУТЬ = караокеПуть(); fetch(ТБ1ПУТЬ).then(function(r){
       if(!r.ok) throw new Error("HTTP "+r.status);
       return r.arrayBuffer();
@@ -2093,6 +2145,7 @@ window.__ТРАНСПОРТ = (function(){
       if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
     };
     if(ПЕСНИ[idx][0]!==КАРАОКЕ_ID){ вставить(src(idx)); return pole; }
+    if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()){ вставить("./minus/prosto-lubi.mp3"); if(!молча) showToast("На ТВ играет mp3-минусовка — полюс качества не меняет файл"); return pole; } /* ремонт v11.36 «ЧТОБ ИГРАЛО»: на ТВ медиа-блоб/Opus не живёт — честная одна дорога mp3 */
     if(!карaokeБлоб(p, вставить)){
       if(p==="мин") showToast("МИН-полюс «Просто люби» подгружается…");
       карaokeСеть(p, вставить, function(){ if(pole==="мин") showToast("МИН-полюса нет рядом — играет МАКС"); });
@@ -2128,8 +2181,31 @@ window.__ТРАНСПОРТ = (function(){
       audio.removeEventListener("loadedmetadata", once);
     });
     if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
+    if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА(); /* ремонт v11.36: после переступа сторож встал заново */
     return true;
   }
+
+  /* ремонт v11.36 «ЧТОБ ИГРАЛО»: караоке-дом застрял на блобе/webm (ТВ соврал про webm, мастер не заиграл, «error» не пришёл) — прямая mp3-минусовка своей песни; жива и в обработчике error, и у сторожа звука */
+  function домОтвал(){
+    if(ПЕСНИ[idx][0]!==КАРАОКЕ_ID) return false;
+    var путь = текущийПуть || audio.currentSrc || audio.src || ""; /* автостарт шасси идёт мимо транспорта — смотрим и на элемент */
+    if(!путь) return false;
+    if(!(/^blob:/.test(путь)) && путь.indexOf(".webm")<0) return false;
+    showToast("Мастер webm не заиграл — играет mp3-минусовка «Просто люби»");
+    const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
+    audio.src = "./minus/prosto-lubi.mp3"; текущийПуть = audio.src;
+    if(t>0){
+      audio.addEventListener("loadedmetadata", function once(){
+        try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
+        audio.removeEventListener("loadedmetadata", once);
+      });
+    }
+    if(играл){ const pp = audio.play(); if(pp&&pp.catch) pp.catch(()=>{}); btnPlay.textContent = "⏸"; }
+    if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА();
+    return true;
+  }
+  /* ремонт v11.36: прямой путь текущей песни для ТВ-старта вечера (шасси webm не требуется) */
+  function твПуть(){ var s = src(idx); return s || "./minus/prosto-lubi.mp3"; }
 
   function next(manual){
     if(shuffle && N>1){ let j; do{ j = Math.floor(Math.random()*N); }while(j===idx); return load(j, state.started||manual); }
@@ -2205,7 +2281,7 @@ window.__ТРАНСПОРТ = (function(){
   btnShuffle.addEventListener("click", toggleShuffle);
   btnPole.addEventListener("click", ()=>togglePole()); /* v10.66 ПОЛЮСА */
   if(idx!==0 || pole==="мин") load(idx, false); else краска(); /* v10.66: помнённый МИН применяем и дома */
-  return { next:next, prev:prev, toggleShuffle:toggleShuffle, cycleRepeat:cycleRepeat,
+  return { next:next, prev:prev, toggleShuffle:toggleShuffle, cycleRepeat:cycleRepeat, домОтвал:домОтвал, твПуть:твПуть, /* ремонт v11.36 «ЧТОБ ИГРАЛО»: дом-фолбэк и ТВ-путь — живы для старта вечера, обработчика error и сторожа звука */
            setPole:setPole, togglePole:togglePole, полюс:function(){ return pole; }, минОтвал:минОтвал, максОтвал:максОтвал,
            onEnded:onEnded, краска:краска, вер:"v10.69",
            список:function(){ return ПЕСНИ.slice(); }, текущая:function(){ return idx; } };
@@ -4145,8 +4221,9 @@ function beatFrame(now){
   if(!wasPlaying){ wasPlaying=true; playT0=now; lastOn=now; base=0; dev=0; }
   /* энергия низа спектра → онсеты баса; v9.2: свой буфер — не конфликтуем с главным циклом part2 */
   let E=0;
-  const an=KV.an, fa=(taktArr||(taktArr=new Uint8Array(an.frequencyBinCount)));
-  if(an&&fa){
+  const an=KV.an; /* ремонт v11.36: на ТВ анализатора нет (граф без захвата элемента) — deref до гарды ронял RAF-кадр */
+  if(an){
+    const fa=(taktArr||(taktArr=new Uint8Array(an.frequencyBinCount)));
     an.getByteFrequencyData(fa);
     let s=0; for(let i=1;i<=10;i++) s+=fa[i];
     E=s/(10*255);
@@ -11595,7 +11672,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-window.APP = { v:'11.35', такт:'ЛИЦО', кэш:'s15-orkestrator-v186', стр:'2026-10-14', ver:'v11.35 «ЛИЦО»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v186' }; /* v11.35 «ЛИЦО» (С113): лицо дома (канон ·54/·53) + ТВ-караоке поёт свою песню (minus/prosto-lubi.mp3); APP стоял 11.28 с их ТБ-1 — поднят на правду такта */
+window.APP = { v:'11.38', такт:'СВЕРКА', кэш:'s15-orkestrator-v189', стр:'2026-10-14', ver:'v11.38 «СВЕРКА»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v189' }; /* v11.38 «СВЕРКА» (С116): ремонт музыки (приказ владельца «ОТРЕМОНТИРУЙ ЧТО СЛОМАЛ… ВАЖНО, ЧТОБ ИГРАЛО») — ensureAudio на ТВ живёт без захвата элемента, startShow ТВ-ветка без шасси webm (прямая mp3), лестница фолбэков мин→макс→дом→mp3 + сторож звука, ТВ без медиа-блобов, гарда beatFrame; ПК не тронут (живая поверка 11/11); + ПВ5 погашен каноном crdt-ядро/0.1 */
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}

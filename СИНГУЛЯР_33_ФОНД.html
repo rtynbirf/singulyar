@@ -205,6 +205,19 @@ details.капот pre{white-space:pre-wrap;word-break:break-word;color:var(--т
     </ul>
   </div>
 
+  <h2>Merkle-сверка общака <em>корень конфига · proof · QR-кадр (ПВ5)</em></h2>
+  <div class="панель">
+    <p class="счёт-под">Конфиг общака (ФОНД/ОБЩАК.json) сворачивается Merkle-корнем (несжатый trie 64, канон crdt-ядро/0.1): два устройства сравнивают 32 байта вместо файла — 3 фазы: корни, куски, дифф. Proof адреса влезает в QR-кадр канона qr-token дома. 0 внешней сети (И-01).</p>
+    <div class="ряд-действий">
+      <button type="button" class="действие" id="кнМеркльКорень" data-справка="Посчитать Merkle-корень текущего конфига общака: 32 байта — отпечаток всей правды конфига.">∑ корень конфига</button>
+      <button type="button" class="действие" id="кнМеркльProof" data-справка="Proof включения адреса общака в корень — QR-кадром: второе устройство проверит его без файла конфига.">proof адреса в QR</button>
+      <button type="button" class="действие" id="кнМеркльСверка" data-справка="Сверить конфиг этого устройства с файлом конфига другого устройства (ФОНД/ОБЩАК.json): 3 фазы Merkle — лишние/недостающие строки честно.">сверка с файлом конфига</button>
+    </div>
+    <input type="file" id="файлМеркль" accept="application/json,.json" hidden>
+    <p class="счёт-под" id="статусМеркль" role="status" aria-live="polite">ядро спит: корень считается по явному действию (И-01)</p>
+    <canvas id="холстМеркль" hidden aria-label="QR-кадр proof конфига общака"></canvas>
+  </div>
+
   <h2>Куда уходят <em>отчёт держателя — в летописи</em></h2>
   <div class="пути">
     <div class="панель"><b>Штаны дома</b><p class="счёт-под">инфраструктура и сервисы, без которых дому тесно; каждая трата — записью в летописи.</p></div>
@@ -1065,6 +1078,7 @@ class HallP2P {
 
   /* ── 4. СОСТОЯНИЕ ДВЕРИ ─────────────────────────────────────────────── */
   var ОБЩАК = ОБЩАК_ВШИТО;
+  window.__ОБЩАК_КОНФИГ = ОБЩАК_ВШИТО; /* ПВ5 (v11.36): экспозиция конфига для панели Merkle-сверки (чтение, 0 сети) */
   var КЛЮЧ_РАЗВЕДКИ = 'снг-фонд-разведка-v1';
   var ТАЙМАУТ_МС = 9000;
   var ид = function (х) { return document.getElementById(х); };
@@ -1676,5 +1690,84 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </nav>
 <script defer src="js/sg-registry.js"></script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
+<script defer src="js/crdt-core.js"></script>
+<script>
+/* ПВ5 (такт v11.36): Merkle-сверка общака на js/crdt-core.js (канон crdt-ядро/0.1) + QR-кадр канона qr-token.
+   Закон комнаты: createElement/textContent (0 innerHTML), время аргументом, 0 внешней сети (И-01), честные статусы. */
+(function(){
+'use strict';
+function $(id){ return document.getElementById(id); }
+function скажи(t){ var с=$('статусМеркль'); if(с) с.textContent=t; }
+function жив(){ return !!(window.__КРДТ && window.__КРДТ.Меркль); }
+function строкиКонфига(к){
+  var р=[];
+  Object.keys(к).sort().forEach(function(ключ){ р.push(ключ+'='+JSON.stringify(к[ключ])); });
+  return р;
+}
+function QRГотов(){
+  if(window.QRToken) return Promise.resolve(window.QRToken);
+  return new Promise(function(да,нет){
+    var с=document.createElement('script');
+    с.src='js/qr-token.js';
+    с.onload=function(){ да(window.QRToken); };
+    с.onerror=function(){ нет(new Error('QR-канон js/qr-token.js не поднялся — proof остаётся честным JSON-файлом')); };
+    document.head.appendChild(с);
+  });
+}
+document.addEventListener('DOMContentLoaded', function(){
+  if(!$('кнМеркльКорень')) return;
+  var конфиг = window.__ОБЩАК_КОНФИГ || (typeof ОБЩАК_ВШИТО!=='undefined' ? ОБЩАК_ВШИТО : null); /* ПВ5: через честную экспозицию ядра */
+  $('кнМеркльКорень').addEventListener('click', function(){
+    if(!жив()) return скажи('ядро crdt-core не поднялось — честно жду, 0 фальши');
+    if(!конфиг) return скажи('конфиг общака не вшит — корень не считается');
+    var стр=строкиКонфига(конфиг);
+    window.__КРДТ.Меркль.корень(стр).then(function(к){
+      скажи('корень Merkle конфига ('+стр.length+' строк): '+к+' — обменяйся им с другим устройством: равные корни = один общак');
+    }).catch(function(e){ скажи('корень не сошёлся: '+((e&&e.message)||e)); });
+  });
+  $('кнМеркльProof').addEventListener('click', function(){
+    if(!жив()) return скажи('ядро crdt-core не поднялось — честно жду');
+    if(!конфиг) return скажи('конфиг общака не вшит — proof не считается');
+    var стр=строкиКонфига(конфиг);
+    var эл=стр[0]; /* первая строка конфига — schema (стабильный якорь) */
+    var адресная = стр.filter(function(х){ return х.indexOf('адреса=')===0; })[0] || эл;
+    window.__КРДТ.Меркль.доказ(стр, адресная).then(function(пр){
+      var тект=JSON.stringify(пр);
+      if(тект.length>2953) return скажи('proof '+тект.length+' Б — шире QR-кадра канона (2953 Б): отдаю файлом');
+      QRГотов().then(function(Q){
+        var кадр=Q.закодировать(тект);
+        var хол=$('холстМеркль'); хол.hidden=false;
+        кадр.рисовать(хол,{масштаб:4});
+        var файл=new Blob([тект],{type:'application/json'});
+        var а=document.createElement('a'); а.href=URL.createObjectURL(файл); а.download='меркль-proof-общак.json';
+        document.body.appendChild(а); а.click(); а.remove();
+        скажи('QR-кадр proof нарисован ('+тект.length+' Б, версия '+кадр.версия+'); JSON-копия отдана файлом — второе устройство проверит подпись корня без конфига');
+      }).catch(function(e){ скажи(String((e&&e.message)||e)); });
+    }).catch(function(e){ скажи('proof не сошёлся: '+((e&&e.message)||e)); });
+  });
+  $('кнМеркльСверка').addEventListener('click', function(){ $('файлМеркль').click(); });
+  $('файлМеркль').addEventListener('change', function(ev){
+    var ф=ev.target.files&&ev.target.files[0]; if(!ф) return;
+    var чтец=new FileReader();
+    чтец.onload=function(){
+      try{
+        var чужой=JSON.parse(чтец.result);
+        if(!чужой||typeof чужой!=='object') throw new Error('в файле нет конфига общака');
+        if(!конфиг) throw new Error('конфиг этого устройства не вшит');
+        Promise.all([
+          window.__КРДТ.Меркль.сверка(строкиКонфига(конфиг), строкиКонфига(чужой))
+        ]).then(function(рр){
+          var р=рр[0];
+          скажи(р.равны ? 'сверка: корни равны — конфиги одинаковые'
+            : 'сверка: расхождений '+р.лишние.length+'(здесь лишние)/'+р.недостающие.length+'(здесь недостающие) — первые: '+
+              (р.лишние.concat(р.недостающие).slice(0,2).join(' | ')||'—'));
+        }).catch(function(e){ скажи('сверка не сошлась: '+((e&&e.message)||e)); });
+      }catch(e){ скажи('файл не принят: '+((e&&e.message)||e)); }
+    };
+    чтец.readAsText(ф);
+  });
+});
+}());
+</script>
 </body>
 </html>
