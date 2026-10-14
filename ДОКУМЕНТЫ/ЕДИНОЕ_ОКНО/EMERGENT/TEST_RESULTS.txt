@@ -1,0 +1,22 @@
+SINGULYAR EMERGENT repair verification — 2026-10-14 (updated after browser-flow run)
+
+PASS: node --check src/core.js
+PASS: node --check src/adapters.js
+PASS: node --check prototype/app.js
+PASS: node --check tests/e2e.chromium.cjs
+PASS: node tests/core.test.js — 14/14
+PASS: JSON Schema Draft 2020-12 self-check and generated event validation
+PASS: Chromium 144 browser-flow checks — 7/7
+PASS: no uncaught runtime exceptions or console errors in exercised flows
+
+BROWSER TEST BOUNDARY:
+- Managed Chromium policy blocks all navigable URLs except internal pages. Browser test therefore inlines the exact local HTML/CSS/JS into about:blank and uses an in-memory localStorage-compatible shim.
+- The browser test verifies UI actions, recommendation trace, save/export payload behavior, restore UI flow, and clear flow. It does NOT prove real browser-origin storage persistence across a browser restart.
+
+LIVE REPOSITORY REGRESSION:
+- GitHub repository and the current ·21 ОБЩЕНИЕ / ·22 СВЯЗЬ source pages were inspected on 2026-10-14. The source describes existing S21/adapter-OS composition and S22's channel registry/fallback graph; the prototype must integrate behind these contracts, not replace them.
+- A local git checkout could not be fetched (`git ls-remote` failed with DNS resolution error), and the public page renderer did not expose a commit SHA. No commit SHA is invented, and no regression test is claimed to have run against a pinned checkout. This is a static source review, not an executable regression run against live source.
+- Package is not deployed to GitHub Pages.
+
+REAL DELIVERY:
+- No external message, payment, or publication was sent. External adapters remain disconnected and delivery remains disabled without explicit consent and a real send implementation.

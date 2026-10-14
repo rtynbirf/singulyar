@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://singulyar.local/schemas/communication-intent.schema.json",
+  "title":"Singulyar Communication Intent Event",
+  "type":"object",
+  "required":["schemaVersion","eventId","createdAt","kind","actor","intent","recipient","urgency","content","proposal","privacy","consentToSend","provenance"],
+  "properties":{
+    "schemaVersion":{"const":"1.0.0"},"eventId":{"type":"string","minLength":1},"createdAt":{"type":"string","format":"date-time"},"kind":{"const":"communication.intent"},
+    "actor":{"type":"object","required":["displayName","identityMode"],"properties":{"displayName":{"type":"string"},"identityMode":{"const":"local"}},"additionalProperties":false},
+    "intent":{"enum":["message","talk","share","gather","publish","value","access","find"]},"recipient":{"type":["string","null"]},"urgency":{"enum":["normal","urgent","async"]},
+    "content":{"type":"object","required":["text","fromModality","toModality"],"properties":{"text":{"type":"string"},"fromModality":{"enum":["text","speech","audio","video","image","sign-manual","braille","tactile","aac","file","value-transfer"]},"toModality":{"enum":["text","speech","audio","video","image","sign-manual","braille","tactile","aac","file","value-transfer"]}},"additionalProperties":false},
+    "proposal":{"type":"object","required":["choiceId","label","classes","capabilityId","capabilityStatus","deliveryState"],"properties":{"choiceId":{"type":["string","null"]},"label":{"type":["string","null"]},"classes":{"type":"array","items":{"type":"string"}},"capabilityId":{"type":"string"},"capabilityStatus":{"enum":["available","capability-check-required","not-connected","unsupported"]},"deliveryState":{"const":"not-sent"}},"additionalProperties":false},
+    "privacy":{"type":"object","required":["storage","consentToSend"],"properties":{"storage":{"const":"local-only-until-export"},"consentToSend":{"type":"boolean"}},"additionalProperties":false},
+    "consentToSend":{"type":"boolean"},"provenance":{"type":"object","required":["source","status"],"properties":{"source":{"type":"string"},"status":{"enum":["draft","approved","sent","failed","unknown"]}},"additionalProperties":false}
+  },"additionalProperties":false
+}
