@@ -365,6 +365,281 @@ window.addEventListener('DOMContentLoaded', async function () {
 })();
 </script>
 <!-- ════════ /КОНТУР v1.2 · Фаза 1 ════════ -->
+<!-- ════════ КОНТУР v1.3 · СЕССИЯ И QR-СИГНАЛИНГ (такт v11.33 «ГЕРМЕТИЧНО», С111, PAT №33) ════════
+     Аддитивный блок: байты их Фазы 0 (С105) и Фазы 1 (С107) не тронуты.
+     Шаг WP-06 карты ЗЕЛЁНОЙ: шифрование payload в канале — AES-256-GCM, ключ сессии ECDH P-256
+     (deriveBits → SHA-256 → AES-GCM; модуль js/singulyar_crypto.js — их байты, дополнен своим ходом не был).
+     QR-сигналинг SDP: эмуляторы П.7 (ДОКУМЕНТЫ/ТРАНСПОРТ) скрещены с живым каналом — js/qr-token.js,
+     канон qr-token/0.1 (ISO 18004, byte mode, EC-L, v1–40; эталонная сверка клетка-в-клетку 7/7,
+     декодеры cv2/pyzbar покрывают все профили; песочница: scripts/эталон_qr.json).
+     Честные границы: STUN в этом блоке нет вовсе (только локальная сеть / вкладки одного устройства);
+     камера не используется — QR показывает и читает человек (глазами или любым локальным считывателем). -->
+<section class="panel" id="k13-сессия" style="margin-top:1rem" aria-labelledby="k13Title">
+<h2 id="k13Title">Контур v1.3 · Сессия AES-256-GCM и QR-сигналинг (шаг WP-06)</h2>
+<p class="muted">Отдельный защищённый канал поверх той же техники ручного сигналинга: свой P2P-канал, ключ сессии ECDH P-256 и обязательное шифрование AES-256-GCM каждого конверта. SDP-токены можно переносить не только копипастой — кнопка «QR-код токена» рисует токен QR-кодом (эмуляторы П.7 стали живым каналом: экран ↔ камера/глаза, без сети и серверов).</p>
+<div class="grid">
+<div>
+<h3 style="margin:.2rem 0 .4rem;font-size:1rem">Защищённый канал (P2P, без STUN)</h3>
+<div class="row">
+<button id="k13-init">Создать Offer</button>
+<button id="k13-close" class="danger" disabled>Закрыть</button>
+</div>
+<label for="k13-токен">SDP-токен (Offer / Answer)</label>
+<textarea id="k13-токен" rows="3" placeholder="Вставьте токен собеседника…"></textarea>
+<div class="row" style="margin-top:.5rem">
+<button id="k13-accept" class="secondary">Принять Offer → Answer</button>
+<button id="k13-handshake" class="secondary">Завершить Handshake</button>
+</div>
+<div class="row" style="margin-top:.5rem">
+<button id="k13-qrкнопка" class="secondary">QR-код токена</button>
+<button id="k13-qrизполе" class="secondary" disabled>Прочитать токен из QR-поля</button>
+</div>
+<canvas id="k13-qrхолст" width="10" height="10" style="max-width:100%;border:1px solid #333;border-radius:8px;margin-top:.5rem" aria-label="QR-код SDP-токена"></canvas>
+<p id="k13-qrстатус" class="muted" role="status">QR: пусто.</p>
+<p id="k13-статус" class="muted" role="status">Канал v1.3: закрыт. STUN здесь нет вовсе — только локальная сеть или вкладки одного устройства.</p>
+</div>
+<div>
+<h3 style="margin:.2rem 0 .4rem;font-size:1rem">Ключ сессии (ECDH → AES-256-GCM)</h3>
+<div class="row">
+<button id="k13-ключи">Сгенерировать ключи сессии</button>
+</div>
+<label for="k13-мойПуб">Мой публичный ключ (base64, передайте собеседнику — можно QR)</label>
+<textarea id="k13-мойПуб" rows="2" readonly placeholder="Пусто — ключи ещё не созданы."></textarea>
+<div class="row" style="margin-top:.5rem">
+<button id="k13-qrПуб" class="secondary" disabled>QR моего публичного ключа</button>
+</div>
+<label for="k13-чужПуб">Публичный ключ собеседника (base64)</label>
+<textarea id="k13-чужПуб" rows="2" placeholder="Вставьте публичный ключ собеседника…"></textarea>
+<div class="row" style="margin-top:.5rem">
+<button id="k13-сессияКнопка" class="secondary">Вывести сессионный ключ</button>
+</div>
+<p id="k13-сессияСтатус" class="muted" role="status">Сессия: не выведена. Шифрованная отправка невозможна — так и задумано.</p>
+<p class="muted">Отпечаток сессии (SHA-256 секрета) сверьте с собеседником по независимому каналу — он равен с обеих сторон тогда и только тогда, когда ключи сшились без подмены.</p>
+</div>
+</div>
+<div style="margin-top:.75rem">
+<h3 style="margin:.2rem 0 .4rem;font-size:1rem">Шифрованный журнал канала v1.3</h3>
+<div class="row">
+<button id="k13-отправить" class="secondary" disabled>Отправить новейший объект контура шифром</button>
+</div>
+<ul id="k13-лог" class="items" aria-live="polite"></ul>
+<p class="muted">Берётся новейший объект из базы контура (IndexedDB, та же база, что у Фазы 1); состояния честные: queued → transport_attempted → accepted_by_transport → recipient_acknowledged (по ACK). Каждый конверт в канале — {тип:"шифр", …AES-256-GCM…}. Канал без сессионного ключа объект не отправит — честный отказ, а не тихий текст.</p>
+</div>
+</section>
+<script src="./js/qr-token.js"></script>
+<script>
+(function () {
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+var соед = null, канал = null, пара = null, сессионный = null;
+
+function сказать(т) { try { $('k13-статус').textContent = т; } catch (e) {} }
+function сессияСказать(т) { try { $('k13-сессияСтатус').textContent = т; } catch (e) {} }
+function журнал(т) {
+  try {
+    var li = document.createElement('li');
+    var b = document.createElement('strong');
+    b.textContent = '[' + new Date().toLocaleTimeString() + '] ';
+    li.appendChild(b);
+    li.appendChild(document.createTextNode(т));
+    $('k13-лог').insertBefore(li, $('k13-лог').firstChild);
+  } catch (e) {}
+}
+function б64из(raw) { var с = ''; var б = new Uint8Array(raw); for (var i = 0; i < б.length; i++) с += String.fromCharCode(б[i]); return btoa(с); }
+function rawизБ64(с) { var стр = atob(String(с).trim()); var б = new Uint8Array(стр.length); for (var i = 0; i < стр.length; i++) б[i] = стр.charCodeAt(i); return б.buffer; }
+function шестнадцать(буфер) {
+  var б = new Uint8Array(буфер), с = '', i;
+  for (i = 0; i < б.length; i++) с += б[i].toString(16).padStart(2, '0');
+  return с;
+}
+
+/* ── QR: показать токен/ключ ── */
+function показатьQR(текст, подпись) {
+  try {
+    if (!window.QRToken) { $('k13-qrстатус').textContent = 'QR: модуль js/qr-token.js не загрузился — честный отказ.'; return; }
+    var qr = window.QRToken.закодировать(текст);
+    qr.рисовать($('k13-qrхолст'), { масштаб: 5, тихаяЗона: 4 });
+    $('k13-qrстатус').textContent = 'QR: ' + подпись + ' · v' + qr.версия + ' · ' + qr.размер + '×' + qr.размер + ' · маска ' + qr.маска + ' · ' + qr.байт + ' байт.';
+  } catch (e) { $('k13-qrстатус').textContent = 'QR не собрался: ' + e.message; }
+}
+$('k13-qrкнопка').addEventListener('click', function () {
+  var т = $('k13-токен').value.trim();
+  if (!т) { $('k13-qrстатус').textContent = 'QR: поле токена пусто — показывать нечего.'; return; }
+  показатьQR(т, 'SDP-токен');
+});
+$('k13-qrПуб').addEventListener('click', function () {
+  var т = $('k13-мойПуб').value.trim();
+  if (!т) { $('k13-qrстатус').textContent = 'QR: публичного ключа ещё нет.'; return; }
+  показатьQR(т, 'публичный ключ');
+});
+
+/* ── P2P: свой канал, STUN нет вовсе ── */
+function принятьСообщения(к) {
+  к.onmessage = async function (событие) {
+    var конверт = null;
+    try { конверт = JSON.parse(String(событие.data)); } catch (e) { журнал('Конверт не разобран — не мой формат.'); return; }
+    if (!конверт || конверт.тип !== 'шифр' || !сессионный) { if (конверт && конверт.тип !== 'шифр') журнал('Получен нешифрованный конверт — канал v1.3 такой формат не ведёт.'); return; }
+    try {
+      var внутренний = await window.SingulyarCrypto.decryptPayload(конверт.конверт, сессионный);
+      if (внутренний && внутренний.тип === 'ACK') {
+        try {
+          if (window.SingulyarStore) {
+            var хр = new window.SingulyarStore();
+            await хр.init();
+            var объект = await хр.getObject(внутренний.id);
+            if (объект) {
+              объект.delivery.state = 'recipient_acknowledged';
+              объект.delivery.observed_at = new Date().toISOString();
+              await хр.saveObject(объект);
+            }
+          }
+        } catch (e) {}
+        журнал('ACK (шифр) получен → recipient_acknowledged · ' + String(внутренний.id).slice(0, 8) + '…');
+      } else if (внутренний && внутренний.тип === 'объект') {
+        var т = внутренний.объект;
+        var li = document.createElement('li');
+        var b = document.createElement('strong');
+        b.textContent = (т.kind || '?') + ' · ' + new Date(т.createdAt).toLocaleString();
+        li.appendChild(b); li.appendChild(document.createElement('br'));
+        var спан = document.createElement('span');
+        спан.textContent = 'От: ' + (т.recipient || '?') + ' · ' + (т.payload && т.payload.text ? т.payload.text : '');
+        li.appendChild(спан); li.appendChild(document.createElement('br'));
+        var бдж = document.createElement('span');
+        бдж.className = 'pill';
+        бдж.textContent = 'получено шифром AES-256-GCM · hash ' + (т.manifest && т.manifest.sha256 ? т.manifest.sha256.slice(0, 16) + '…' : '—');
+        li.appendChild(бдж);
+        $('k13-лог').insertBefore(li, $('k13-лог').firstChild);
+        if (канал && канал.readyState === 'open') {
+          var ack = await window.SingulyarCrypto.encryptPayload({ тип: 'ACK', id: т.id }, сессионный);
+          канал.send(JSON.stringify({ тип: 'шифр', конверт: ack }));
+        }
+        журнал('Объект принят шифром, ACK (шифр) отправлен.');
+      }
+    } catch (e) { журнал('Расшифровка не удалась — конверт не для этой сессии: ' + e.message); }
+  };
+}
+$('k13-init').addEventListener('click', async function () {
+  try {
+    соед = new RTCPeerConnection({ iceServers: [] });
+    канал = соед.createDataChannel('singulyarSecure');
+    канал.onopen = function () {
+      $('k13-отправить').disabled = false; $('k13-close').disabled = false;
+      сказать('Канал v1.3 ОТКРЫТ. Всё, что уйдёт, — только шифром.');
+      журнал('Защищённый канал открыт.');
+    };
+    принятьСообщения(канал);
+    соед.onicecandidate = function (e) {
+      if (!e.candidate) {
+        $('k13-токен').value = JSON.stringify(соед.localDescription);
+        сказать('Offer собран. Передайте токен собеседнику (копипастой или QR).');
+      }
+    };
+    var offer = await соед.createOffer();
+    await соед.setLocalDescription(offer);
+    сказать('Offer собирается (ICE)…');
+  } catch (e) { сказать('Offer не собрался: ' + e.message); }
+});
+$('k13-accept').addEventListener('click', async function () {
+  try {
+    var сыр = $('k13-токен').value.trim();
+    if (!сыр) { сказать('Вставьте SDP Offer собеседника в поле.'); return; }
+    соед = new RTCPeerConnection({ iceServers: [] });
+    соед.onicecandidate = function (e) {
+      if (!e.candidate) {
+        $('k13-токен').value = JSON.stringify(соед.localDescription);
+        сказать('Answer собран. Отправьте токен собеседнику (копипастой или QR).');
+        журнал('Answer v1.3 сформирован.');
+      }
+    };
+    соед.ondatachannel = function (e) {
+      канал = e.channel;
+      канал.onopen = function () {
+        $('k13-отправить').disabled = false; $('k13-close').disabled = false;
+        сказать('Канал v1.3 ОТКРЫТ. Всё, что уйдёт, — только шифром.');
+      };
+      принятьСообщения(канал);
+    };
+    await соед.setRemoteDescription(JSON.parse(сыр));
+    var answer = await соед.createAnswer();
+    await соед.setLocalDescription(answer);
+    сказать('Answer собирается (ICE)…');
+  } catch (e) { сказать('Offer не принят: ' + e.message); }
+});
+$('k13-handshake').addEventListener('click', async function () {
+  try {
+    var сыр = $('k13-токен').value.trim();
+    if (!соед) { сказать('Сначала создайте Offer.'); return; }
+    if (!сыр) { сказать('Вставьте SDP Answer собеседника.'); return; }
+    await соед.setRemoteDescription(JSON.parse(сыр));
+    сказать('Handshake завершён — ждём открытия канала.');
+  } catch (e) { сказать('Handshake не сошёлся: ' + e.message); }
+});
+$('k13-close').addEventListener('click', function () {
+  try {
+    if (канал) { try { канал.close(); } catch (e) {} }
+    if (соед) { try { соед.close(); } catch (e) {} }
+    канал = null; соед = null;
+    $('k13-отправить').disabled = true; $('k13-close').disabled = true;
+    сказать('Канал v1.3: закрыт по явному действию.');
+    журнал('Защищённый канал закрыт.');
+  } catch (e) {}
+});
+
+/* ── сессия: ECDH → AES-256-GCM ── */
+$('k13-ключи').addEventListener('click', async function () {
+  try {
+    if (!window.SingulyarCrypto) { сессияСказать('Модуль js/singulyar_crypto.js не загрузился — честный отказ.'); return; }
+    пара = await window.SingulyarCrypto.generateKeyPair();
+    $('k13-мойПуб').value = б64из(пара.publicKeyRaw);
+    $('k13-qrПуб').disabled = false;
+    сессияСказать('Пара ключей сессии создана. Отдайте публичный ключ собеседнику и вставьте его ключ ниже.');
+    журнал('Ключи сессии ECDH P-256 созданы · отпечаток ' + пара.fingerprint);
+  } catch (e) { сессияСказать('Ключи не создались: ' + e.message); }
+});
+$('k13-сессияКнопка').addEventListener('click', async function () {
+  try {
+    if (!пара) { сессияСказать('Сначала создайте свои ключи сессии.'); return; }
+    var чуж = $('k13-чужПуб').value.trim();
+    if (!чуж) { сессияСказать('Вставьте публичный ключ собеседника.'); return; }
+    var чужКлюч = await crypto.subtle.importKey('raw', rawизБ64(чуж), { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+    var секрет = await crypto.subtle.deriveBits({ name: 'ECDH', public: чужКлюч }, пара.keyPair.privateKey, 256);
+    var отпечатокСессии = шестнадцать(await crypto.subtle.digest('SHA-256', секрет)).slice(0, 32);
+    сессионный = await crypto.subtle.importKey('raw', секрет, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+    сессияСказать('Сессионный ключ AES-256-GCM выведен. Отпечаток сессии: ' + отпечатокСессии + '… Сверьте с собеседником.');
+    журнал('Сессия выведена (ECDH → SHA-256 → AES-256-GCM), отпечаток ' + отпечатокСессии.slice(0, 16) + '…');
+  } catch (e) { сессияСказать('Сессия не сошлась: ' + e.message); }
+});
+
+/* ── шифрованная отправка новейшего объекта ── */
+$('k13-отправить').addEventListener('click', async function () {
+  try {
+    if (!канал || канал.readyState !== 'open') { сказать('Канал v1.3 закрыт — сначала соберите канал.'); return; }
+    if (!сессионный) { сказать('Сначала выведите сессионный ключ — канал без шифра объекты не ведёт.'); return; }
+    if (!window.SingulyarStore) { сказать('Хранилище контура недоступно — отправлять нечего.'); return; }
+    var хр = new window.SingulyarStore();
+    await хр.init();
+    var все = await хр.getAllObjects();
+    if (!все || !все.length) { сказать('База контура пуста — создайте объект в Фазе 1 выше.'); return; }
+    var объект = все[все.length - 1];
+    объект.delivery.state = 'queued';
+    объект.delivery.observed_at = new Date().toISOString();
+    await хр.saveObject(объект);
+    объект.delivery.state = 'transport_attempted';
+    объект.delivery.observed_at = new Date().toISOString();
+    await хр.saveObject(объект);
+    var конверт = await window.SingulyarCrypto.encryptPayload({ тип: 'объект', объект: объект }, сессионный);
+    канал.send(JSON.stringify({ тип: 'шифр', конверт: конверт }));
+    объект.delivery.state = 'accepted_by_transport';
+    объект.delivery.observed_at = new Date().toISOString();
+    await хр.saveObject(объект);
+    сказать('Объект ' + String(объект.id).slice(0, 8) + '… ушёл шифром → accepted_by_transport. Ждём ACK (шифр).');
+    журнал('Отправка шифром AES-256-GCM · ' + объект.kind + ' · ' + String(объект.id).slice(0, 8) + '…');
+  } catch (e) { сказать('Отправка не удалась: ' + e.message); }
+});
+})();
+</script>
+<!-- ════════ /КОНТУР v1.3 · СЕССИЯ И QR-СИГНАЛИНГ ════════ -->
+
 </main><footer><p>СИНГУЛЯР · Человек выбирает. Система адаптируется. v0.1 — инженерный прототип, не сервис связи.</p></footer>
 <script>
 (()=>{'use strict';

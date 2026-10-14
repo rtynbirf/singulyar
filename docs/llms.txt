@@ -100,3 +100,4 @@ docs/АРХИТЕКТУРА_EN.md — English translation of the house architect
 docs/README_EN.md — English mirror of the documentation map (v10.81); canonical RU wins.
 docs/МАЛЫШ_EN.md — English translation of the junior-agent handbook (v10.84); canonical RU wins.
 docs/AGENTS_EN.md — English translation of the agent rules (v10.85); canonical RU wins.
+ДОКУМЕНТЫ/СВЯЗЬ_ЧЕЛОВЕКА/ОТЧЁТ_СЕССИЯ_QR_v11.33.md — отчёт такта v11.33 «ГЕРМЕТИЧНО»: канон qr-token/0.1 (QR-сигналинг), сессия AES-256-GCM контура ·53 (WP-06), контракт маршрутов singulyar.transport/0.1 (WP-07), честные карточки ·24/·25/·26; canonical RU.
