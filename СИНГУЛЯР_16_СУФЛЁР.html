@@ -429,7 +429,9 @@ class SingulyarPitchEngine {
         this.useHeadphones = !!useHeadphones;
         this.processorName = (processorName === 'singulyar-yin-processor') ? 'singulyar-yin-processor' : 'singulyar-pitch-processor';
         this.engineTitle = this.processorName === 'singulyar-yin-processor' ? 'ЙИН' : 'MPM';
-        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AC16 = window.AudioContext || window.webkitAudioContext;
+        if (!AC16) throw new Error('S16_NO_AUDIO_CTX: Web Audio недоступен — питч-движок не поднимется; суфлёр читает без тональности (ложим то, что доступно)'); /* v11.41 «ДОСТУПНО»: честный текст вместо TypeError */
+        this.audioCtx = new AC16();
         if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
         this.stream = await navigator.mediaDevices.getUserMedia({
             audio: {

@@ -706,7 +706,23 @@ const __С39_КОЛОНКА = (function(){
     },
     async пробаЗвука(){
       try{
-        this.контекст = this.контекст || new (window.AudioContext||window.webkitAudioContext)();
+        const AC39 = window.AudioContext||window.webkitAudioContext;
+        if(!AC39){ /* v11.41 «ДОСТУПНО»: Web Audio нет — ложим то, что доступно: звоночек файлом, пульс живёт */
+          const au39 = new Audio('./звуки/тон-тест.mp3'); au39.volume = 0.9;
+          try{ await au39.play(); }catch(e39){}
+          this.играет = true;
+          const старт39 = performance.now();
+          const аним39 = () => {
+            this.пульс = 0.5+0.5*Math.sin((performance.now()-старт39)/90);
+            this.нарисовать();
+            if(performance.now()-старт39 < 1250){ requestAnimationFrame(аним39); }
+            else { this.играет = false; this.пульс = 0; this.нарисовать(); }
+          };
+          аним39();
+          await аудит.записать('audio.probe','исполнено','звоночек файлом (Web Audio недоступен — ложим то, что доступно)');
+          return true;
+        }
+        this.контекст = this.контекст || new AC39();
         const ак=this.контекст;
         if(ак.state==='suspended') await ак.resume();
         const осц=ак.createOscillator(), гейн=ак.createGain();
@@ -888,7 +904,17 @@ const __С39_КОЛОНКА = (function(){
     },
     async тон(){
       try{
-        if(!this.ctx) this.ctx=new (window.AudioContext||window.webkitAudioContext)();
+        const ACt = window.AudioContext||window.webkitAudioContext;
+        if(!ACt){ /* v11.41 «ДОСТУПНО»: Web Audio нет — ложим то, что доступно: звоночек файлом (выход — по setSinkId, если элемент умеет) */
+          const sel39 = $('#уупВыход'); const id39 = sel39 ? sel39.value : '';
+          const au = new Audio('./звуки/тон-тест.mp3');
+          au.volume = Math.max(0.05, Math.min(1, this.читай('громк', 0.9)));
+          if(id39 && au.setSinkId){ try{ await au.setSinkId(id39); }catch(e39){} }
+          try{ await au.play(); }catch(e39){}
+          await аудит.записать('ууп.тон','исполнено','звоночек файлом (Web Audio недоступен — ложим то, что доступно)');
+          return true;
+        }
+        if(!this.ctx) this.ctx=new ACt();
         if(this.ctx.state==='suspended'){ try{ await this.ctx.resume(); }catch(e){} }
         const sel=$('#уупВыход');
         const id=sel?sel.value:'';

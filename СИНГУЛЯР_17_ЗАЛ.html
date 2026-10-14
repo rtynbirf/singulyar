@@ -1353,7 +1353,9 @@ class HallApp {
             this.stream = await navigator.mediaDevices.getUserMedia({
                 audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 }
             });
-            this.ac = new (window.AudioContext || window.webkitAudioContext)();
+            const AC17 = window.AudioContext || window.webkitAudioContext;
+            if (!AC17) throw new Error('S17_NO_AUDIO_CTX: Web Audio недоступен — телефон-микрофон не поднимется; зал играет напрямую (ложим то, что доступно)'); /* v11.41 «ДОСТУПНО»: честный текст вместо TypeError */
+            this.ac = new AC17();
             if (this.ac.state === 'suspended') await this.ac.resume();
             const blob = new Blob([PHONE_WORKLET], { type: 'application/javascript' });
             const url = URL.createObjectURL(blob);

@@ -1130,7 +1130,9 @@ function ГОЛОСЗАПИСЬ() {
   }
   function ensureCtx() {
     if (ctx) return ctx;
-    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null; /* v11.41 «ДОСТУПНО»: Web Audio нет — граф не строится, вызывающие честно деградируют; само событие играет */
+    ctx = new AC();
     recDest = ctx.createMediaStreamDestination();
     return ctx;
   }
@@ -1138,6 +1140,7 @@ function ГОЛОСЗАПИСЬ() {
     get ctx() { return ctx; },
     микрофон: async function () {
       ensureCtx();
+      if (!ctx) throw new Error('S18_NO_AUDIO_CTX: Web Audio недоступен — голос в событии не поднимется; событие играется без микрофона (ложим то, что доступно)'); /* v11.41 «ДОСТУПНО»: честный отказ — вызывающий (собратьГолоса) ловит и продолжает */
       if (ctx.state === 'suspended') { try { await ctx.resume(); } catch (e) {} }
       потокМикрофона = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }, video: false
@@ -1159,6 +1162,7 @@ function ГОЛОСЗАПИСЬ() {
     },
     чужой: function (stream, id) {   /* голос удалённого участника */
       ensureCtx();
+      if (!ctx) return; /* v11.41 «ДОСТУПНО»: без Web Audio граф не построить — событие живёт без индикаторов чужого голоса */
       const стар = чужие.get(id);
       if (стар) { try { стар.src.disconnect(); } catch (e) {} }
       const src = ctx.createMediaStreamSource(stream);
