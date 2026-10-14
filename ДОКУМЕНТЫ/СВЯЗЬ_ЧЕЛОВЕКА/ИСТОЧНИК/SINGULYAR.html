@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINGULYAR — Ambient Intent Organism</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: #000;
+    color: #e8e6e3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+  }
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 1 / 1.15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  svg { width: 100%; height: auto; filter: drop-shadow(0 0 40px rgba(201,162,39,0.15)); }
+  .title-block {
+    text-align: center;
+    margin-top: -1rem;
+    z-index: 2;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    letter-spacing: 0.28em;
+    color: #d4d0c8;
+    text-shadow: 0 0 30px rgba(212,208,200,0.25);
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    letter-spacing: 0.18em;
+    color: #8a8680;
+    margin-top: 0.4rem;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a227, transparent);
+    margin: 1.1rem auto;
+  }
+  .mantra {
+    font-size: 0.78rem;
+    color: #6b6b7b;
+    letter-spacing: 0.04em;
+  }
+  .pills {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pill {
+    border: 1px solid #2a2a32;
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.72rem;
+    color: #9a9aab;
+    background: #0c0c10;
+  }
+  .coords {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.58rem;
+    color: #3a3a48;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+<svg viewBox="0 0 800 920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff4d0"/>
+      <stop offset="25%" stop-color="#f0c060"/>
+      <stop offset="55%" stop-color="#c9a227" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8f0ff" stop-opacity="0.35"/>
+      <stop offset="50%" stop-color="#a0c4e8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#6a9cc8" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0%" y1="0%" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d0e4ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7eb8da" stop-opacity="0.4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+
+  <!-- pedestal reflection glow -->
+  <ellipse cx="400" cy="780" rx="210" ry="28" fill="#c9a227" opacity="0.06" filter="url(#soft)"/>
+
+  <!-- pedestal -->
+  <polygon points="220,760 580,760 540,820 260,820" fill="#0e0e14" stroke="#2a2a38" stroke-width="1"/>
+  <polygon points="240,755 560,755 530,790 270,790" fill="#12121a" stroke="#3a3a4a" stroke-width="0.8"/>
+  <polygon points="280,750 520,750 500,775 300,775" fill="#181820" stroke="#4a4a5a" stroke-width="0.6"/>
+  <!-- top face of pedestal -->
+  <polygon points="300,748 500,748 485,762 315,762" fill="#1c1c28" stroke="#5a5a6a" stroke-width="0.5"/>
+
+  <!-- orbital rings (back) -->
+  <ellipse cx="400" cy="380" rx="290" ry="90" fill="none" stroke="#7eb8da" stroke-width="0.7" opacity="0.25" transform="rotate(-18 400 380)"/>
+  <ellipse cx="400" cy="400" rx="270" ry="70" fill="none" stroke="#c9a227" stroke-width="0.6" opacity="0.2" transform="rotate(12 400 400)"/>
+  <ellipse cx="400" cy="390" rx="310" ry="55" fill="none" stroke="#a0c4e8" stroke-width="0.5" opacity="0.18" transform="rotate(-8 400 390)"/>
+
+  <!-- main outer polyhedron (icosa-like nested) -->
+  <!-- outer shell -->
+  <g opacity="0.85" filter="url(#glow)">
+    <!-- upper pyramid facets -->
+    <polygon points="400,140 480,220 400,260 320,220" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.4"/>
+    <polygon points="400,140 480,220 520,300 400,260" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2" opacity="0.7"/>
+    <polygon points="400,140 320,220 280,300 400,260" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2" opacity="0.7"/>
+
+    <!-- mid band -->
+    <polygon points="320,220 280,300 320,380 400,340 400,260" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.3"/>
+    <polygon points="480,220 520,300 480,380 400,340 400,260" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.3"/>
+    <polygon points="280,300 240,400 280,480 320,380" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2"/>
+    <polygon points="520,300 560,400 520,480 480,380" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2"/>
+
+    <!-- lower facets -->
+    <polygon points="320,380 280,480 400,560 400,480 400,340" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.3"/>
+    <polygon points="480,380 520,480 400,560 400,480 400,340" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.3"/>
+    <polygon points="280,480 320,540 400,560" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2"/>
+    <polygon points="520,480 480,540 400,560" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2"/>
+  </g>
+
+  <!-- inner nested structure -->
+  <g opacity="0.9">
+    <polygon points="400,210 450,270 400,310 350,270" fill="none" stroke="#c9a227" stroke-width="1.1" opacity="0.7"/>
+    <polygon points="400,210 450,270 470,330 400,310" fill="none" stroke="#e0c060" stroke-width="0.9" opacity="0.5"/>
+    <polygon points="400,210 350,270 330,330 400,310" fill="none" stroke="#e0c060" stroke-width="0.9" opacity="0.5"/>
+    <polygon points="350,270 330,330 350,390 400,360 400,310" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.6"/>
+    <polygon points="450,270 470,330 450,390 400,360 400,310" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.6"/>
+    <polygon points="350,390 400,450 400,360" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.55"/>
+    <polygon points="450,390 400,450 400,360" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.55"/>
+  </g>
+
+  <!-- core glow -->
+  <circle cx="400" cy="350" r="55" fill="url(#core)" filter="url(#glow)"/>
+  <circle cx="400" cy="350" r="18" fill="#fff8e0" opacity="0.95"/>
+  <circle cx="400" cy="350" r="8" fill="#ffffff"/>
+
+  <!-- floating shards -->
+  <g fill="#a0c4e8" opacity="0.55">
+    <polygon points="180,280 195,270 200,290" transform="rotate(15 190 280)"/>
+    <polygon points="610,250 625,245 620,265"/>
+    <polygon points="160,420 175,410 170,435"/>
+    <polygon points="640,450 655,440 650,465"/>
+    <polygon points="230,180 245,175 240,195"/>
+    <polygon points="570,520 585,515 580,535"/>
+  </g>
+
+  <!-- front orbital rings -->
+  <ellipse cx="400" cy="380" rx="300" ry="95" fill="none" stroke="#7eb8da" stroke-width="0.9" opacity="0.35" transform="rotate(-18 400 380)"/>
+  <ellipse cx="400" cy="400" rx="255" ry="65" fill="none" stroke="#c9a227" stroke-width="0.7" opacity="0.3" transform="rotate(12 400 400)"/>
+
+  <!-- small orbiting crystals on rings -->
+  <circle cx="170" cy="350" r="4" fill="#c9a227" opacity="0.7"/>
+  <circle cx="630" cy="410" r="3.5" fill="#7eb8da" opacity="0.7"/>
+  <circle cx="480" cy="300" r="3" fill="#e0c060" opacity="0.6"/>
+  <circle cx="310" cy="470" r="3" fill="#a0c4e8" opacity="0.6"/>
+</svg>
+</div>
+
+<div class="title-block">
+  <h1>SINGULYAR</h1>
+  <div class="subtitle">Ambient Intent Organism</div>
+  <div class="divider"></div>
+  <div class="mantra">Смысл один. Представление — твоё.</div>
+  <div class="pills">
+    <span class="pill">Один файл.</span>
+    <span class="pill">Ноль интернета.</span>
+    <span class="pill">100% суверенитет.</span>
+  </div>
+</div>
+
+<div class="coords">
+  SEED → ZONES → SINGULAR · vertices derived from icosahedral core + orbital expansion · reproducible
+</div>
+</body>
+</html>
