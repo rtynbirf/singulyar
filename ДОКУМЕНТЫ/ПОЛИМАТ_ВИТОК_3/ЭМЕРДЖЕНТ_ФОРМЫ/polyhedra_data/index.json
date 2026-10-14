@@ -1,0 +1,252 @@
+[
+  {
+    "name": "01_Tetrahedron",
+    "vertices": 4,
+    "faces": 4
+  },
+  {
+    "name": "02_Cube",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "03_Octahedron",
+    "vertices": 6,
+    "faces": 8
+  },
+  {
+    "name": "04_Dodecahedron",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "05_Icosahedron",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "06_Cuboctahedron",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "07_Icosidodecahedron",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "08_Rhombic_Dodecahedron",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "09_Rhombic_Triacontahedron",
+    "vertices": 20,
+    "faces": 12
+  },
+  {
+    "name": "10_Stella_Octangula",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "11_Cube_Octa_Compound",
+    "vertices": 14,
+    "faces": 12
+  },
+  {
+    "name": "12_TriPrism",
+    "vertices": 6,
+    "faces": 8
+  },
+  {
+    "name": "13_SqPrism",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "14_PentPrism",
+    "vertices": 10,
+    "faces": 16
+  },
+  {
+    "name": "15_HexPrism",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "16_OctPrism",
+    "vertices": 16,
+    "faces": 28
+  },
+  {
+    "name": "17_DecPrism",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "18_TriAntiprism",
+    "vertices": 6,
+    "faces": 8
+  },
+  {
+    "name": "19_SqAntiprism",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "20_PentAntiprism",
+    "vertices": 10,
+    "faces": 16
+  },
+  {
+    "name": "21_HexAntiprism",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "22_TriBipyramid",
+    "vertices": 5,
+    "faces": 6
+  },
+  {
+    "name": "23_PentBipyramid",
+    "vertices": 7,
+    "faces": 10
+  },
+  {
+    "name": "24_HexBipyramid",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "25_HeptBipyramid",
+    "vertices": 9,
+    "faces": 14
+  },
+  {
+    "name": "26_Rhombicuboctahedron",
+    "vertices": 24,
+    "faces": 44
+  },
+  {
+    "name": "27_Truncated_Icosa_GP11",
+    "vertices": 36,
+    "faces": 68
+  },
+  {
+    "name": "28_Zonish_Cube_4z",
+    "vertices": 72,
+    "faces": 12
+  },
+  {
+    "name": "29_Zonish_Octa_3z",
+    "vertices": 42,
+    "faces": 32
+  },
+  {
+    "name": "30_Zonish_Icosa",
+    "vertices": 84,
+    "faces": 44
+  },
+  {
+    "name": "31_TriCupola",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "32_SqCupola",
+    "vertices": 16,
+    "faces": 28
+  },
+  {
+    "name": "33_PentCupola",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "34_Trapezo_Oct",
+    "vertices": 10,
+    "faces": 16
+  },
+  {
+    "name": "35_Trapezo_Pent",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "36_Compound_2Cubes",
+    "vertices": 16,
+    "faces": 28
+  },
+  {
+    "name": "37_SEED_Tetra",
+    "vertices": 4,
+    "faces": 4
+  },
+  {
+    "name": "38_SEED_Cube",
+    "vertices": 8,
+    "faces": 12
+  },
+  {
+    "name": "39_SEED_Icosa",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "40_SEED_Dodeca",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "41_SEED_Cubocta",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "42_OctPrism",
+    "vertices": 16,
+    "faces": 28
+  },
+  {
+    "name": "43_DecAntiprism",
+    "vertices": 20,
+    "faces": 36
+  },
+  {
+    "name": "44_EnneaPrism",
+    "vertices": 18,
+    "faces": 32
+  },
+  {
+    "name": "45_DodecPrism",
+    "vertices": 24,
+    "faces": 44
+  },
+  {
+    "name": "46_Gyroelong_Sq",
+    "vertices": 10,
+    "faces": 16
+  },
+  {
+    "name": "47_Disphenoid",
+    "vertices": 4,
+    "faces": 4
+  },
+  {
+    "name": "48_Bilinski",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "49_Operator_Core_Icosa",
+    "vertices": 12,
+    "faces": 20
+  },
+  {
+    "name": "50_Operator_Core_Dodeca",
+    "vertices": 20,
+    "faces": 36
+  }
+]
