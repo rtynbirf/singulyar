@@ -161,28 +161,31 @@ describe('обвязка такта: хаб / sw15 / versions / sitemap / кар
     assert.ok(хаб.includes("{ ид:'s54', номер:'·54', имя:'ПИР', файл:'СИНГУЛЯР_54_ПИР.html' }"), 'массив s54');
     assert.ok(хаб.includes('СИНГУЛЯР_54_ПИР.html" style="display:inline-block'), 'пилюля без JS');
     assert.ok(хаб.includes('<b data-реестр="дверей">43</b> дверь'), 'фолбэк 43');
-    assert.ok(хаб.includes('<span data-реестр="версия">11.32</span> «<span data-реестр="такт">ПИР</span>»'), 'бирка такта');
-    assert.ok(хаб.includes('<span data-реестр="кэш">v183</span>'), 'бирка кэша');
+    assert.ok(хаб.includes('<span data-реестр="версия">11.35</span> «<span data-реестр="такт">ЛИЦО</span>»'), 'бирка такта (страж поднят за живой правдой v11.35)');
+    assert.ok(хаб.includes('<span data-реестр="кэш">v186</span>'), 'бирка кэша');
   });
-  it('sw15.js: кэш v183, пре-кэш +3, node --check', () => {
+  it('sw15.js: кэш v186 (страж поднят за живой правдой v11.35), пре-кэш, node --check', () => {
     const sw = читать('sw15.js');
-    assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-v183'"), 'поколение v183');
+    assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-v186'"), 'поколение v186');
+    assert.ok(sw.includes('такт v11.32 «ПИР»'), 'их v11.32-коммент летописи цел');
     assert.ok(sw.includes("'./СИНГУЛЯР_54_ПИР.html'"), 'пре-кэш: дверь');
     assert.ok(sw.includes("'./js/pir-core.js'"), 'пре-кэш: ядро');
     assert.ok(sw.includes("'./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs'"), 'пре-кэш: транспорт');
     new vm.Script(sw, { filename: 'sw15.js' });
   });
-  it('versions.json: 11.32/ПИР/v183/43 ·54/летопись 119', () => {
+  it('versions.json: живая правда 11.35/ЛИЦО/v186/43 ·54/летопись 122; ПИР целы', () => {
     const д = JSON.parse(читать('data/versions.json'));
-    assert.equal(д.дом.версия, '11.32');
-    assert.equal(д.дом.такт, 'ПИР');
-    assert.equal(д.дом.поколение_кэша, 'v183');
+    assert.equal(д.дом.версия, '11.35');
+    assert.equal(д.дом.такт, 'ЛИЦО');
+    assert.equal(д.дом.поколение_кэша, 'v186');
     assert.equal(д.счётчики.дверей, 43);
     const п54 = д.двери.find((дв) => дв.номер === '·54');
     assert.ok(п54 && п54.файл === 'СИНГУЛЯР_54_ПИР.html', 'двери: ·54');
+    assert.equal(д.летопись[118].версия, '11.32'); // ПИР целы (append-only)
+    assert.equal(д.летопись[118].такт, 'ПИР');
     const л = д.летопись[д.летопись.length - 1];
-    assert.equal(л.версия, '11.32');
-    assert.equal(л.такт, 'ПИР');
+    assert.equal(л.версия, '11.35');
+    assert.equal(л.такт, 'ЛИЦО');
   });
   it('sitemap.xml: URL ·54, всего 41', () => {
     const s = читать('sitemap.xml');
@@ -202,10 +205,10 @@ describe('обвязка такта: хаб / sw15 / versions / sitemap / кар
     const зк = читать('docs/ЗЕЛЁНАЯ_КАРТА.md');
     assert.ok(зк.includes('- [x] **М.7 · Приказ владельца (вечер 14 окт. 2026, trace 1a13a36f98eeb3ad)'), 'ЗК М.7');
   });
-  it('README — одна правда', () => {
+  it('README — одна правда (страж поднят за живой правдой v11.35)', () => {
     const README = читать('README.md');
-    assert.ok(README.includes('**11.32 «ПИР»**'), 'такт');
-    assert.ok(README.includes('**s15-orkestrator-v183**'), 'кэш');
+    assert.ok(README.includes('**11.35 «ЛИЦО»**'), 'такт');
+    assert.ok(README.includes('**s15-orkestrator-v186**'), 'кэш');
     assert.ok(README.includes('**хаб + 43**'), 'двери');
   });
 });
