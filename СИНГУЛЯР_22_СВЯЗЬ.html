@@ -294,6 +294,15 @@ footer{padding-bottom:30px}
   <details class="sng-спойлер"><summary>открыть панель</summary>
 
   <p class="state" id="stCall" aria-live="polite">ЗВОНОК: свободен. Участники зала появятся ниже, когда пришлют подписанное приветствие.</p>
+  <div data-такт="v11.29" style="margin-top:10px">
+    <p class="state" id="мост54Статус">МОСТ ·54: ПИР — живая сетевая связь: видео, звук, текст и экран <b>напрямую между устройствами</b>, без посредников; релеи — только рукопожатие. Провода ·22 связывают залы дома, ПИР выводит связь в сеть. Имя комнаты — адрес:</p>
+    <div class="row" style="margin-top:8px">
+      <input id="мост54Комната" maxlength="128" autocomplete="off" placeholder="имя комнаты ПИРа" style="max-width:320px">
+      <button id="мост54Пойти" type="button">Открыть ПИР ·54</button>
+    </div>
+<script>/* мост ·54 (такт v11.32 «ПИР»): имя комнаты уносится глубокой ссылкой #комната=…; 0 сети — только сбор ссылки */
+(function(){try{var в=document.getElementById('мост54Комната'),а=document.getElementById('мост54Пойти');if(!в||!а)return;var п=null;try{п=localStorage.getItem('singulyar.pir.комната')}catch(e){}if(п&&!в.value)в.value=п;function идти(){var х='СИНГУЛЯР_54_ПИР.html#комната='+encodeURIComponent(в.value.trim());if(а.tagName==='A'){а.href=х}return х}if(а.tagName==='A'){в.addEventListener('input',идти);идти()}а.addEventListener('click',function(ev){if(а.tagName!=='A'){ev.preventDefault();location.href=идти()}})}catch(e){}})();
+</script>  </div>
   <div id="callList" class="call-grid"></div>
   <div class="row" style="margin-top:8px" id="callActions" hidden>
     <button id="btnAccept">принять</button>
@@ -2225,6 +2234,8 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 <a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
 <a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
 <a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<a href="СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a href="СИНГУЛЯР_54_ПИР.html">·54 ПИР</a>
 </div>
 </details>
 </nav>

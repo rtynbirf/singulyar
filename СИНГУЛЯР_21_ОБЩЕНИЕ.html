@@ -182,6 +182,18 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
     <p class="hint" style="margin-top:8px">Мост живёт, пока открыты обе вкладки одного браузера: входящие залов ·22 приходят сюда на представление, «В зал ·22» уносит смысл в журнал связи. Представление строится у получателя — в зал уходит только смысл.</p>
   </div>
 
+  <h2>Мост в ПИР ·54 <em>ЖИВАЯ СВЯЗЬ</em></h2>
+  <div class="panel" data-такт="v11.29">
+    <p class="hint">Видео, звук, текст и экран — <b>напрямую между устройствами</b> (WebRTC P2P, без посредников); релеи Nostr — только рукопожатие; сеть включается вашей рукой (И-01). Дверь живой связи — <a href="СИНГУЛЯР_54_ПИР.html">ПИР ·54</a>.</p>
+    <div class="row" style="margin-top:8px">
+      <input id="мост54Комната" maxlength="128" autocomplete="off" placeholder="имя комнаты (адрес и пропуск)" style="max-width:320px">
+      <button class="btn" id="мост54Пойти" type="button">Открыть ПИР ·54</button>
+    </div>
+    <p class="hint" style="margin-top:8px">Имя комнаты уносится с собой (#комната=…). ·21 строит представления смысла, ·54 несёт голос и лицо — разные этажи одного дома.</p>
+<script>/* мост ·54 (такт v11.32 «ПИР»): имя комнаты уносится глубокой ссылкой #комната=…; 0 сети — только сбор ссылки */
+(function(){try{var в=document.getElementById('мост54Комната'),а=document.getElementById('мост54Пойти');if(!в||!а)return;var п=null;try{п=localStorage.getItem('singulyar.pir.комната')}catch(e){}if(п&&!в.value)в.value=п;function идти(){var х='СИНГУЛЯР_54_ПИР.html#комната='+encodeURIComponent(в.value.trim());if(а.tagName==='A'){а.href=х}return х}if(а.tagName==='A'){в.addEventListener('input',идти);идти()}а.addEventListener('click',function(ev){if(а.tagName!=='A'){ev.preventDefault();location.href=идти()}})}catch(e){}})();
+</script>  </div>
+
   <h2>5 · Маршрутизация представлений <em>ПРИНЦИП</em></h2>
   <div class="panel">
     <p>Ядро хранит смысл сообщения. Адаптер строит представление по возможностям получателя. Смысл не меняется от канала — меняется только форма.</p>
@@ -1052,6 +1064,8 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 <a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
 <a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
 <a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<a href="СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a href="СИНГУЛЯР_54_ПИР.html">·54 ПИР</a>
 </div>
 </details>
 </nav>

@@ -264,6 +264,18 @@ footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:va
       <p class="ответ">Наклони холм.</p></div>
   </div>
 
+  <p class="kick">МОСТ · ЖИВАЯ СВЯЗЬ</p>
+  <h2>Узел выходит в сеть — <em>ПИР ·54</em></h2>
+  <div class="panel" data-такт="v11.29">
+  <p class="lead">Видео, звук, текст и экран — <b>напрямую между узлами</b> (WebRTC P2P). Релеи Nostr — только рукопожатие; посредников контента нет. Сеть включается вашей рукой — закон И-01. Дверь — <a href="СИНГУЛЯР_54_ПИР.html">ПИР ·54</a>.</p>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.6rem 0">
+    <input id="мост54Комната" maxlength="128" autocomplete="off" placeholder="имя комнаты (адрес узла)" style="max-width:320px">
+    <button class="кнопка ghost" id="мост54Пойти" type="button">Открыть ПИР ·54</button>
+  </div>
+<script>/* мост ·54 (такт v11.32 «ПИР»): имя комнаты уносится глубокой ссылкой #комната=…; 0 сети — только сбор ссылки */
+(function(){try{var в=document.getElementById('мост54Комната'),а=document.getElementById('мост54Пойти');if(!в||!а)return;var п=null;try{п=localStorage.getItem('singulyar.pir.комната')}catch(e){}if(п&&!в.value)в.value=п;function идти(){var х='СИНГУЛЯР_54_ПИР.html#комната='+encodeURIComponent(в.value.trim());if(а.tagName==='A'){а.href=х}return х}if(а.tagName==='A'){в.addEventListener('input',идти);идти()}а.addEventListener('click',function(ev){if(а.tagName!=='A'){ev.preventDefault();location.href=идти()}})}catch(e){}})();
+</script>  </div>
+
   <p class="kick">АКСИОМЫ ИНВАРИАНТА</p>
   <h2>Пять аксиом — <em>из визуалов дома</em></h2>
   <div class="аксиомы">
@@ -872,6 +884,8 @@ body{background:#0A0A0C !important}
 <a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
 <a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
 <a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<a href="СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a href="СИНГУЛЯР_54_ПИР.html">·54 ПИР</a>
 </div>
 </details>
 </nav>
