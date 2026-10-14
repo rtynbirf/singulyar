@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ak_Akan",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ak_Akan.srt",
+ "юниты": [
+  {
+   "text": "[nnwom]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Anwummere foforo wɔ kɔfetɔnbea",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Nsu a ɛyɛ den ma afie mu tew. [nnwom]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Mekyinkyin mpɔtam a nkae wɔ hɔ no mu",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ma mebɔ dam",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Faako a ɛwɔ ahohuru bere a ɛyɛ hyew mu",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Awɔw bere kata ɔkra no so",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Baabi a asetra tu te sɛ agyan twaa nna, atwam",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "yɛn",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Yɛboaboaa nkrataa ano, na yɛn werɛ fii nea enti a yɛyɛɛ saa",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "yɛte ase",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Na na ɛte sɛ nea bere nyinaa, [nnwom]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "C nnyigyei da so ara wɔ yɛn anim",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Bere a wɔde fɛm kɛkɛ",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "ɔmfa hwee mma",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Na mpofirim ara [nnwom] to me koma so",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "nsukyenee a ɛyɛ nwini",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Yesua sɛ yɛbɛkyerɛ [nnwom] ho anisɔ bere a yɛadi nkogu",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "bere a obi kanea dum wɔ ɔpon no akyi",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Yɛwosow yɛn nsa di keteke ahorow a ɛrefi hɔ no akyi, na yɛbɔ mmɔden",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "srɛsrɛ nea atwam no ma wonya mmuae",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Yesua sɛ yɛbɛdɔ bere a awɔw wom, [nnwom]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "bere a nsõ wɔ wo nsateaa mu, na ɛnyɛ dade. FA HO",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "sɛ midi kan nim a, [nnwom]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "sɛnea nea ɛda adi pefee yi bɛyɛ yaw wɔ ɔkra no mu",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "awerɛhowdi",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Wanka sɛ, [nnwom] ɔnyɛ atuu, na onni bere",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Eyi yɛ daa atirimpɔw",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Mekoraa biribiara so maa akyiri yi, me koma nyɛ afoforo dea",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "buee ano. [nnwom]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Yɛne sunsuma na ɛreko",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "yɛhyew wɔ nneɛma nketenkete a hwee nni mu so",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Na wuntumi nhu sɛnea awɔw no reyɛ ayɛ mmerɛw",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "wɔ yɛn mmati so",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Nanso anigye nni sotɔɔ mfɛnsere a ɛhyerɛn mu",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom] nyɛ sika a wɔde abɔ mu, na mmom wɔ kommyɛ mu",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "abusuafo nokware, wɔ wɔn ɔhyew a ɛwɔ ahum no mu no mu. Nanso",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "nea [nnwom] yɛ dedaw nkutoo na yɛn ani sɔ",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "ɛrentumi nyɛ yiye sɛ wɔbɛsan aba",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Metoa me bere tenten no so",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "na mpɛn pii no [nnwom] yɛ ɔkwan a ntease nnim",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "yesua sɛ yɛbɛkyerɛ anisɔ bere a yɛhwere [nnwom] no",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "bere a obi kanea dum wɔ ɔpon no akyi",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Yɛwosow keteke ahorow a ɛrekɔ no akyi wɔ [nnwom] akyi",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "mmɔden a wɔbɔ sɛ wɔbɛsrɛsrɛ nea atwam no sɛ wɔmma wɔn mmuae",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Yesua sɛ yɛbɛdɔ [nnwom] bere a ayɛ nwini no",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "bere a nsõ wɔ nsateaa mu, [nnwom] na ɛnte saa",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "dadeɛ. FA HO",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Sɛ midi kan nim sɛnea ɛbɛbɔ nkɔmmɔ a",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "saa awerɛhow a ɛda adi pefee yi wɔ ɔkra no mu",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Frɛ nkwakoraa ne mmerewa, yɛ wɔn atuu",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "bere a mogya a ɛbɔ no rebɔ no",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Ma anwiinwii no ntwam, meyɛ ma eyi nnɛ",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Mebɔ mpae",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Efisɛ nnwom nyinaa wɔ awiei",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "awiei koraa no, biako",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ɔto dwom]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Yɛn [nnwom] da so ara wɔ nsɛntitiriw a yɛkae mu",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "yɛte hɔ a yɛn werɛ afi",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Yesua sɛ yɛbɛkyerɛ anisɔ bere a yɛhwere ade no",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "bere a obi nnwom pue wɔ ɔpon no akyi",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "kanea",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Yɛwosow yɛn nsa di keteke ahorow a ɛrefi hɔ no akyi, na yɛbɔ mmɔden",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "srɛsrɛ nea atwam no ma wonya mmuae",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Yesua sɛ yɛbɛdɔ, [nnwom]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "bere a ɛyɛɛ nwini, bere a na nsõ wɔ nsateaa mu ne",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom] ahwehwɛ a abubu. Ɛsɛ sɛ mehwɛ so",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "nea ɛwɔ hɔ, bere a yɛwɔ ha no, kosi sɛ",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "wimhyɛn kɔe",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "ɔkra kɔ akyirikyiri",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[nnwom]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

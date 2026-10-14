@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "to_Tongan",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/to_Tongan.srt",
+ "юниты": [
+  {
+   "text": "[musika]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Efiafi fo'ou 'i he fale kofi",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ko e kakapu matolu ‘okú ne veteki ‘a e ngaahi falé. [musika]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku ou hē holo ʻi he ngaahi kaungāʻapi ʻoku ʻi ai ʻa e ngaahi manatú",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "fakavalevale au",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Ko fē ʻi he faʻahitaʻu failau māfaná",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku ʻufiʻufi ʻe he faʻahitaʻu momokó ʻa e laumālié",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Ko e feituʻu naʻe lele ai ʻa e moʻuí ʻo hangē ha ngahau ʻo fakalaka ʻi he ngaahi ʻaho, fakalaka ʻi he",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "kimautolu",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Na‘á ma tānaki ‘a e ngaahi pepá, ‘o ngalo ‘iate kimaua ‘a e ‘uhinga na‘á ma",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "ʻoku tau moʻui",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Pea naʻe hangē maʻu pē, [mūsika]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "'oku kei 'i ai pe 'a e le'o C 'i mu'a",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Na'e toki no taimi",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "‘oku ‘ikai te ne foaki ha me‘a",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Pea fakafokifā pē kuo tō [mūsika] ki hoku lotó",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ʻaisi momoko",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau ako ke houngaʻia ʻi he [mūsiká] ʻi he taimi ʻoku tau moʻua aí",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi ‘oku mate ai ‘a e maama ‘a ha taha ‘i mui ‘i he matapaá",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "‘Oku mau lulululu ‘o muimui ‘i he ngaahi lēlue ‘oku mavahé, ‘o feinga",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "kolekole ki he kuohili ki ha tali",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau ako ke ʻofa ʻi he taimi ʻoku momoko aí, [mūsika]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi ‘oku ‘i ai ai ‘a e efu ‘i ho ongo nimá, ‘o ‘ikai ko e ukameá. FEKAUʻAKI",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "kapau naʻá ku tomuʻa ʻiloʻi, [mūsika]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "'e anga fefe 'a e mamahi 'a e tokotaha 'ata'ataa ko 'eni 'i he laumalie",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "loto-mamahi",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Na’e ‘ikai ke ne pehe, [mūsika] na’e ‘ikai ke ne ‘uma, na’e ‘ikai ha’ane taimi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Ko ha taumuʻa taʻengata ʻeni",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Na'a ku tanaki 'a e me'a kotoa pe ki 'amui, 'oku 'ikai ko hoku loto ki he ni'ihi kehe",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "fakaava. [musika]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "'Oku tau tau mo e 'ata",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "‘oku tau vela ‘i he ngaahi me‘a si‘isi‘i ‘ata‘atā",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Pea 'oku 'ikai ke ke lava 'o sio ki he founga 'oku nofo ai 'a e 'uha momoko",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "ʻi homau umá",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Ka ko e fiefiá ‘oku ‘ikai ‘i he ngingila ‘o ha matapā sio‘ata ‘o ha falekoloa",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[mūsika] ‘o ‘ikai ‘i ha fo‘i pa‘anga, ka ‘i ha tu‘unga fakalongolongo",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "ko e moʻoni ʻo e kāingá, ʻi heʻenau māfana ʻi he lotolotonga ʻo e ngaahi afā. Ka",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "ʻoku tau houngaʻia pē ʻi he meʻa [mūsika] ʻoku ʻosi ʻi aí",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "‘ikai malava ke foki mai",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Hokohoko atu 'eku loloa",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "pea ‘oku fa‘a hoko ‘a e [mūsiká] ko ha hala ta‘e‘uhinga",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "ʻoku tau ako ke houngaʻia ʻi he taimi ʻoku mole ai ʻetau [mūsiká]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi ‘oku mate ai ‘a e maama ‘a ha taha ‘i mui ‘i he matapaá",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku mau lulululu hili [mūsika] ʻa e ngaahi lēlue kuo mavahé",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "feinga ke kolekole ki he kuohili ki ha tali",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau ako ke ʻofa ʻi he [mūsiká] ʻi he taimi kuo momoko aí",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi ‘oku ‘i ai ai ha efu ‘i he ngaahi paame, [mūsika] pea ‘ikai",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "ukamea. FEKAUʻAKI",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Kapau naʻá ku ʻiloʻi tomuʻa ʻa e founga ʻe tangilaulau ai ʻi he 2019",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "ko e loto mamahi ʻataʻatā ko ʻení ʻi he laumālié",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Ui e kau motu'a, 'uma kiate kinautolu",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "lolotonga ia 'oku ta 'a e pulse",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Tuku ke paasi atu e ngaahi tangi, ko au mo e me'a ni he 'aho ni",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku ou lotu",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "He ko e ngaahi hiva kotoa pe 'oku 'iai hono faka'osinga",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "ʻi he fakaʻosí, ko e taha",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[hiva]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau [mūsika] kei ʻi he manatu ʻo e ngaahi makamaile",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "ʻoku tau tangutu ngalo",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau ako ke houngaʻia ʻi he taimi ʻoku tau moʻua aí",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi ‘oku ‘alu atu ai ‘a e mūsika ‘a ha taha ‘i mui ‘i he matapaá",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "maama",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "‘Oku mau lulululu ‘o muimui ‘i he ngaahi lēlue ‘oku mavahé, ‘o feinga",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "kolekole ki he kuohili ki ha tali",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "ʻOku tau ako ke ʻofa, [mūsika]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "‘i he taimi na‘e momoko aí, ‘i he taimi na‘e ‘i ai ai ‘a e efu ‘i he ngaahi paame pea",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "kilisitala [mūsika] kuo motuʻa. ʻOku totonu ke u tokangaʻi ia",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "ko e hā, lolotonga ʻetau ʻi hení, ʻo aʻu ki he",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "lele atu",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "laumālie ki he mamaʻó",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[musika]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

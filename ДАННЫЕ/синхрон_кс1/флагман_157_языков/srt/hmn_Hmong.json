@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "hmn_Hmong",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/hmn_Hmong.srt",
+ "юниты": [
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Yav tsaus ntuj tshiab ntawm lub khw kas fes",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Huab cua tuab ua rau cov tsev yaj. [suab paj nruag]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Kuv taug kev hla cov zej zog uas muaj kev nco txog",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ua rau kuv vwm",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Qhov twg nyob rau hauv lub caij nplooj ntoos hlav sov",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Lub caij ntuj no npog tus ntsuj plig",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Qhov twg lub neej ya zoo li xub dhau los hnub tim, dhau los",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "peb",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Peb khaws cov ntawv cia, tsis nco qab vim li cas peb thiaj li",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "peb nyob",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Thiab nws yeej ib txwm zoo li, [suab paj nruag]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "tseem muaj lub suab C nyob tom ntej",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Tsuas yog qiv sijhawm xwb",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "tsis muab dab tsi",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Thiab mam li nco dheev [suab paj nruag] poob rau hauv kuv lub siab",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "dej khov txias",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Peb kawm paub txaus siab rau [suab paj nruag] thaum peb poob",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "thaum ib tug neeg lub teeb tawm mus tom qab lub qhov rooj",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Peb co tes tom qab cov tsheb ciav hlau tawm mus, sim",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "thov kom muaj lus teb rau yav dhau los",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Peb kawm hlub thaum txias, [suab paj nruag]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "thaum muaj tshauv nyob rau hauv koj txhais tes, tsis yog hlau. TXOG",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "yog tias kuv paub ua ntej, [suab paj nruag]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "yuav ua li cas tus neeg pob tshab no yuav mob siab rau hauv tus ntsuj plig",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "kev tu siab",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Nws tsis tau hais tias, [suab paj nruag] nws tsis khawm, nws tsis muaj sijhawm",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Qhov no yog lub hom phiaj mus ib txhis",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Kuv tau khaws txhua yam rau tom qab, kuv lub siab tsis yog rau lwm tus",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "qhib lawm. [suab paj nruag]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Peb tab tom sib ntaus nrog tus duab ntxoov ntxoo",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "peb hlawv tawm vim yog tej yam me me uas tsis muaj qab hau",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Thiab koj tsis pom tias qhov te yuav poob li cas",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "rau ntawm peb lub xub pwg nyom",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Tiam sis kev zoo siab tsis nyob hauv qhov ci ntsa iab ntawm lub qhov rais khw",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag] tsis yog nyob rau hauv ib pawg ntawm cov nqi, tab sis nyob rau hauv ib qho ntsiag to",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "qhov tseeb ntawm cov txheeb ze, hauv lawv qhov sov so ntawm cov cua daj cua dub. Tiam sis",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "peb tsuas yog txaus siab rau qhov [suab paj nruag] twb muaj lawm",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "tsis yooj yim rov qab los",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Txuas ntxiv kuv lub sijhawm ntev",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "thiab feem ntau [suab paj nruag] yog txoj kev tsis muaj txiaj ntsig",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "peb kawm paub txog kev txaus siab thaum peb poob [suab paj nruag]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "thaum ib tug neeg lub teeb tawm mus tom qab lub qhov rooj",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Peb co tes tom qab [suab paj nruag] cov tsheb ciav hlau uas tau ploj mus lawm",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "sim thov kom tau lus teb los ntawm yav dhau los",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Peb kawm hlub [suab paj nruag] thaum nws txias lawm",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "thaum muaj tshauv nyob rau hauv xib teg, [suab paj nruag] thiab tsis yog",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "hlau. TXOG",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Yog tias kuv paub ua ntej tias nws yuav quaj li cas",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "qhov kev tu siab no hauv tus ntsuj plig",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Hu cov neeg laus, khawm lawv",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "thaum lub plawv dhia",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Cia cov kev tsis txaus siab dhau mus, kuv yog rau qhov no hnub no",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Kuv thov Vajtswv",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Vim tias txhua zaj nkauj muaj qhov xaus",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "thaum kawg, ib",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[hu nkauj]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Peb [suab paj nruag] tseem nyob hauv kev nco txog cov cim tseem ceeb",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "peb zaum tsis nco qab",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Peb kawm paub txog kev txaus siab thaum peb poob",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "thaum ib tug neeg lub suab paj nruag tawm mus tom qab lub qhov rooj",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "lub teeb",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Peb co tes tom qab cov tsheb ciav hlau tawm mus, sim",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "thov kom muaj lus teb rau yav dhau los",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Peb kawm hlub, [suab paj nruag]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "thaum nws txias lawm, thaum muaj tshauv nyob rau hauv xib teg thiab",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "pob zeb tawg [suab paj nruag]. Kuv yuav tsum saib xyuas nws",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "ua li cas, thaum peb nyob ntawm no, mus txog thaum",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "ya mus deb",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "tus ntsuj plig mus rau hauv qhov deb",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[suab paj nruag]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}
