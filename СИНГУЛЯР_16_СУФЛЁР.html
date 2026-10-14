@@ -85,7 +85,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
 <main class="wrap">
   <h1>Пой — и <em>увидь свой голос</em> в нотах.</h1>
   <p class="lead">Модуль ·16 закрывает гештальт UltraStar внутри СИНГУЛЯР: микрофон анализируется
-  локально в аудио-потоке (McLeod MPM в AudioWorklet), ноты летят справа «колбасками» с плавным
+  локально в аудио-потоке — два детектора на выбор (McLeod MPM и ЙИН/YIN, ПВ2 v11.30), ноты летят справа «колбасками» с плавным
   проявлением, а HUD считает Score, Combo и рейтинг PERFECT / GOOD / MISS. Нотная карта не нужна
   заранее — она генерируется прямо из минусовки этим же DSP-движком и живёт в IndexedDB.
   Ни сервера, ни сети, ни innerHTML.</p>
@@ -95,6 +95,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
     <div class="n"><b id="stNote">—</b><i>нот в карте</i></div>
     <div class="n"><b id="stChart">—</b><i>источник карты</i></div>
     <div class="n"><b id="stMic">выкл</b><i>микрофон</i></div>
+    <div class="n"><b id="stMs">—</b><i>мс/кадр · движок ЙИН (ПВ2)</i></div>
   </div>
 
   <h2>Сцена <em>canvas · 60 fps · мастер-часы audio.currentTime</em></h2>
@@ -152,6 +153,9 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
       <button class="btn" id="btnMic">включить микрофон</button>
       <button class="btn gray" id="btnMicOff" disabled>выключить</button>
       <span class="hint">Частота → MIDI + центсы, медиана 5 кадров, октавная поправка, комбо ×1…×4.</span>
+      <span class="hint">движок высоты (оба — в аудио-потоке, вне Main Thread):</span>
+      <label class="chk"><input type="radio" name="pitchEngine" value="mpm" checked>McLeod MPM</label>
+      <label class="chk"><input type="radio" name="pitchEngine" value="yin">ЙИН (YIN)</label>
     </div>
     <div class="status" id="micStatus" role="status" aria-live="polite">Микрофон выключен. Нажми — браузер спросит разрешение (всё остаётся на устройстве).</div>
   </div>
@@ -176,7 +180,7 @@ kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid v
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════════════
    СИНГУЛЯР ·16 «СУФЛЁР» — единый файл. Архитектура:
-   1. WORKLET   — McLeod MPM (NSDF) в аудио-потоке, gate RMS, параболическая интерполяция
+   1. WORKLET   — два детектора в аудио-потоке (вне Main Thread): McLeod MPM (NSDF) и ЙИН (YIN, ПВ2 v11.30); gate RMS, параболическая интерполяция; выбор движка — панель микрофона
    2. BUS       — событийная шина (PITCH_FRAME, ACCURACY_EVALUATED, NOTECHART_*, SONG_CHANGE)
    3. PARSER    — UltraStar .txt (метки #BPM, #GAP, строки-ноты : * F) + LRC
    4. ENGINE    — микрофон → worklet → медиана×5 → MIDI+центы
@@ -240,7 +244,86 @@ class SingulyarPitchProcessor extends AudioWorkletProcessor {
         }
     }
 }
+/* ── 1b. WORKLET: ЙИН (YIN, de Cheveigné & Kawahara) — ПВ2, такт v11.30 «ЩИТ» ──
+   Второй детектор высоты в том же аудио-потоке — оценка вокала ВНЕ Main Thread.
+   Математика и умолчания 1:1 с каноном yin-core/0.1
+   (ДОКУМЕНТЫ/ТРЕКИ/КАРАОКЕ_СИНХРОН/src/yin-core.mjs): окно 2048, порог θ=0.15,
+   честный фолбэк по минимуму c(τ) (< 0.5), голос 60–1100 Гц, честный отказ у
+   нижней границы диапазона. Сообщения той же формы {pitch, clarity, rms} + ms —
+   шина, HUD и скоринг дома не меняются вовсе. */
+class SingulyarYinProcessor extends AudioWorkletProcessor {
+    constructor() {
+        super();
+        this.bufferSize = 2048;
+        this.buffer = new Float32Array(this.bufferSize);
+        this.writePos = 0;
+        this.sr = sampleRate;
+        this.diff = new Float64Array((this.bufferSize >> 1) + 1);
+        this.cmnd = new Float64Array((this.bufferSize >> 1) + 1);
+    }
+    process(inputs) {
+        const input = inputs[0];
+        if (!input || !input[0]) return true;
+        const channel = input[0];
+        for (let i = 0; i < channel.length; i++) {
+            this.buffer[this.writePos++] = channel[i];
+            if (this.writePos >= this.bufferSize) { this.analyze(); this.writePos = 0; }
+        }
+        return true;
+    }
+    analyze() {
+        const t0 = (typeof Date !== 'undefined' && Date.now) ? Date.now() : 0;
+        const msOf = () => (typeof Date !== 'undefined' && Date.now) ? (Date.now() - t0) : 0;
+        const W = this.bufferSize >> 1;
+        let sumSq = 0;
+        for (let i = 0; i < this.bufferSize; i++) sumSq += this.buffer[i] * this.buffer[i];
+        const rms = Math.sqrt(sumSq / this.bufferSize);
+        if (rms < 0.008) { this.port.postMessage({ pitch: null, clarity: 0, rms, ms: msOf() }); return; }
+        const x = this.buffer, d = this.diff;
+        d[0] = 0;
+        for (let tau = 1; tau <= W; tau++) {
+            let s = 0;
+            for (let j = 0; j < W; j++) { const delta = x[j] - x[j + tau]; s += delta * delta; }
+            d[tau] = s;
+        }
+        const c = this.cmnd;
+        c[0] = 1;
+        let running = 0;
+        for (let tau = 1; tau <= W; tau++) {
+            running += d[tau];
+            c[tau] = running > 0 ? (d[tau] * tau) / running : 1;
+        }
+        const TH = 0.15, FALLBACK = 0.5;
+        const tauMin = Math.max(2, Math.floor(this.sr / 1100));
+        const tauMax = Math.min(W - 1, Math.ceil(this.sr / 60));
+        let tau = -1;
+        for (let t = tauMin; t <= tauMax; t++) {
+            if (c[t] < TH) {
+                while (t + 1 <= tauMax && c[t + 1] < c[t]) t++;
+                tau = t; break;
+            }
+        }
+        if (tau < 0) {
+            let best = tauMin, val = c[tauMin];
+            for (let t = tauMin + 1; t <= tauMax; t++) if (c[t] < val) { val = c[t]; best = t; }
+            if (val < FALLBACK) tau = best;
+        }
+        if (tau < 0 || (tau >= tauMax && c[tauMax + 1] < c[tauMax])) {
+            /* честный отказ: периодичности нет или период уходит за нижнюю
+               границу голоса — выдумывать высоту канон запрещает */
+            this.port.postMessage({ pitch: null, clarity: 0, rms, ms: msOf() });
+            return;
+        }
+        const a = c[tau - 1], b = c[tau], cc = c[tau + 1];
+        const den = 2 * (2 * b - a - cc);
+        const delta = den !== 0 ? (cc - a) / den : 0;
+        const pitch = this.sr / (tau + (delta > -1 && delta < 1 ? delta : 0));
+        const clarity = Math.min(1, Math.max(0, 1 - c[tau]));
+        this.port.postMessage({ pitch, clarity, rms, ms: msOf() });
+    }
+}
 registerProcessor('singulyar-pitch-processor', SingulyarPitchProcessor);
+registerProcessor('singulyar-yin-processor', SingulyarYinProcessor);
 `;
 
 /* ── 2. ШИНА СОБЫТИЙ ────────────────────────────────────────────────────── */
@@ -332,15 +415,20 @@ class SingulyarPitchEngine {
         this.historySize = 5;
         this.active = false;
         this.frames = 0;
+        this.processorName = 'singulyar-pitch-processor'; /* ПВ2 v11.30: второй движок 'singulyar-yin-processor' */
+        this.engineTitle = 'MPM';
+        this.lastMs = null;    /* честный замер кадра из аудио-потока (шлёт ЙИН) */
         this.lastSignal = 0;   /* S15_PITCH_NO_SIGNAL: момент последнего сигнала */
         this.silentSince = 0;  /* мс тишины с последнего сигнала */
     }
     /* S15_PITCH_NO_SIGNAL: микрофон включён, но сигнала нет больше 3 секунд */
     noSignal() { return this.active && this.silentSince > 3000; }
 
-    async start(useHeadphones) {
+    async start(useHeadphones, processorName) {
         if (this.active) return;
         this.useHeadphones = !!useHeadphones;
+        this.processorName = (processorName === 'singulyar-yin-processor') ? 'singulyar-yin-processor' : 'singulyar-pitch-processor';
+        this.engineTitle = this.processorName === 'singulyar-yin-processor' ? 'ЙИН' : 'MPM';
         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
         this.stream = await navigator.mediaDevices.getUserMedia({
@@ -357,13 +445,14 @@ class SingulyarPitchEngine {
         await this.audioCtx.audioWorklet.addModule(url);
         URL.revokeObjectURL(url);
         const source = this.audioCtx.createMediaStreamSource(this.stream);
-        this.workletNode = new AudioWorkletNode(this.audioCtx, 'singulyar-pitch-processor');
+        this.workletNode = new AudioWorkletNode(this.audioCtx, this.processorName);
         this.workletNode.port.onmessage = (e) => this.handleData(e.data);
         source.connect(this.workletNode);   /* НЕ подключаем к destination — нет фидбека */
         this.active = true;
     }
-    handleData({ pitch, clarity, rms }) {
+    handleData({ pitch, clarity, rms, ms }) {
         this.frames++;
+        this.lastMs = (typeof ms === 'number' && ms >= 0) ? ms : null;
         const nowTs = Date.now();
         if (pitch || (rms || 0) > 0.012) this.lastSignal = nowTs;
         this.silentSince = nowTs - this.lastSignal;
@@ -803,14 +892,14 @@ class SingulyarPrompterApp {
         this.el = {};
         ['stFrame','stNote','stChart','stMic','btnPlay','btnStop','seek','clock','btnFlagman','btnFile',
          'fileAudio','chkPhones','btnExtract','btnTxt','fileChart','btnFromMem','btnSaveTxt','btnSaveMem',
-         'chartStatus','btnMic','btnMicOff','micStatus','recTable'].forEach(id => this.el[id] = document.getElementById(id));
+         'chartStatus','btnMic','btnMicOff','micStatus','stMs','recTable'].forEach(id => this.el[id] = document.getElementById(id));
 
         this.bindUI();
         this.bindBus();
         this.refreshRecords();
         this.loop = this.loop.bind(this);
         requestAnimationFrame(this.loop);
-        setInterval(() => { this.el.stFrame.textContent = this.engine.active ? '≈' + (this.engine.frames - (this._f0 || 0)) : '—'; this._f0 = this.engine.frames; }, 1000);
+        setInterval(() => { this.el.stFrame.textContent = this.engine.active ? '≈' + (this.engine.frames - (this._f0 || 0)) : '—'; this._f0 = this.engine.frames; this.el.stMs.textContent = (this.engine.active && this.engine.engineTitle === 'ЙИН' && this.engine.lastMs != null) ? '≈' + this.engine.lastMs : '—'; }, 1000);
     }
 
     /* ── UI ── */
@@ -834,6 +923,16 @@ class SingulyarPrompterApp {
         this.el.btnSaveMem.addEventListener('click', () => this.saveChartToMem());
         this.el.btnMic.addEventListener('click', () => this.micOn());
         this.el.btnMicOff.addEventListener('click', () => this.micOff());
+        /* ПВ2 v11.30: выбор движка высоты — по явному действию; живой поток честно перезапускается */
+        this.pitchRadios = Array.prototype.slice.call(document.querySelectorAll('input[name="pitchEngine"]'));
+        this.pitchRadios.forEach((r) => r.addEventListener('change', () => {
+            if (!this.engine.active) return;
+            const имя = (document.querySelector('input[name="pitchEngine"]:checked') || {}).value === 'yin' ? 'ЙИН' : 'MPM';
+            this.micOff();
+            this.micOn().then(() => {
+                if (this.engine.active) this.el.micStatus.textContent = 'Движок высоты переключён на «' + this.engine.engineTitle + '» — микрофонный поток перезапущен (прошлый: ' + имя + ').';
+            });
+        }));
         window.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT') return;
             if (e.code === 'Space') { e.preventDefault(); this.togglePlay(); }
@@ -986,10 +1085,13 @@ class SingulyarPrompterApp {
     /* ── микрофон ── */
     async micOn() {
         try {
-            await this.engine.start(this.el.chkPhones.checked);
+            const движок = (document.querySelector('input[name="pitchEngine"]:checked') || {}).value === 'yin' ? 'singulyar-yin-processor' : 'singulyar-pitch-processor';
+            await this.engine.start(this.el.chkPhones.checked, движок);
             this.el.stMic.textContent = 'вкл';
             this.el.btnMic.disabled = true; this.el.btnMicOff.disabled = false;
-            this.el.micStatus.textContent = 'Микрофон живой: шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
+            this.el.micStatus.textContent = 'Микрофон живой (движок: ' + this.engine.engineTitle
+                + (this.engine.engineTitle === 'ЙИН' ? ', бюджет кадра <10 мс — замер живой' : '')
+                + '): шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
         } catch (e) {
             const code = e && e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED'
                 : e && e.name === 'NotFoundError' ? 'S15_DEVICE_MISSING'
@@ -1707,7 +1809,7 @@ body{background:#0A0A0C !important}
 .sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
 .sng-подкапот .тело b{color:#d4af37;font-weight:600}
 .sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
-</style><details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СУФЛЁР ·16 v1.1</b> · сборка 2026-10-02 · Fusion-автосборщик<br>офлайн-оценка вокала UltraStar-стиля · детектор высоты тона McLeod MPM в AudioWorklet · нотные колбаски с плавным проявлением · HUD Score/Combo/PERFECT-GOOD-MISS · автогенерация нотной карты из минусовки · IndexedDB: notecharts + scores · <b>офлайн · 0 зависимостей · 0 внешних запросов · 0 innerHTML</b> · канон дома v1.35.0 «СТАНДАРТ»</div></details><script>
+</style><details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СУФЛЁР ·16 v1.1</b> · сборка 2026-10-14 (такт v11.30 «ЩИТ») · Fusion-автосборщик<br>офлайн-оценка вокала UltraStar-стиля · детекторы высоты в AudioWorklet: McLeod MPM + ЙИН/YIN (ПВ2, выбор в панели микрофона) · нотные колбаски с плавным проявлением · HUD Score/Combo/PERFECT-GOOD-MISS · автогенерация нотной карты из минусовки · IndexedDB: notecharts + scores · <b>офлайн · 0 зависимостей · 0 внешних запросов · 0 innerHTML</b> · канон дома v1.35.0 «СТАНДАРТ»</div></details><script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
@@ -1782,6 +1884,6 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">42</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.30</span> «<span data-реестр="такт">ЩИТ</span>» · кэш <span data-реестр="кэш">v181</span></div>
 </body>
 </html>
