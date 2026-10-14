@@ -431,8 +431,9 @@ window.S32_ЯДРО = (function () {
     }
     var а = аудиоГотово();
     /* v10.85 «СИНХРОН»: поём мастера с голосом автора (МАКС), минусовка mp3 — честный фолбэк */
-    var вебм = (window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) ? ('minus/' + п.id + '.mp3') : ((п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.max.webm' : ('minus/' + п.id + '.max.webm')); /* ТБ-1 v11.34 */
-    а.onerror = function () { а.onerror = null; а.src = 'minus/' + п.id + '.mp3'; статус('мастера webm нет рядом — играет минусовка (mp3)', 'warn'); };
+    /* v11.36 «ВОЗВРАТ» (С114): ТВ-ветка дома поднята на СВОЮ песню — minus/prosto-lubi.mp3, транскод того же МАКС-мастера, что играет ПК; их ТБ-1 v11.34 вела дому minus/9ys_TVEtda8.mp3 — файл другой записи (моно, 128k/44.1k), не мастер; ·31 починен в v11.35 «ЛИЦО», ·32 оставался на чужой записи — приказ владельца «ВЕРНИ НА МЕСТО» исполнен */
+    var вебм = (window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) ? ((п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.mp3' : ('minus/' + п.id + '.mp3')) : ((п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.max.webm' : ('minus/' + п.id + '.max.webm'));
+    а.onerror = function () { а.onerror = null; а.src = (п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.mp3' : ('minus/' + п.id + '.mp3'); статус('мастера webm нет рядом — играет минусовка (mp3)', 'warn'); }; /* v11.36: фолбэк дома — СВОЯ mp3, не чужая запись */
     а.src = вебм;
     а.playbackRate = темп;
     а.addEventListener('loadedmetadata', function () {
