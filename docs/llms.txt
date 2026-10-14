@@ -67,6 +67,7 @@
 - [·50 РАСТЕРИЗАТОР](https://rtynbirf.github.io/singulyar/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%AB/%D1%80%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B8%D0%B7%D0%B0%D1%82%D0%BE%D1%80.html): ИНСТРУМЕНТЫ/растеризатор.html
 - [·51 ADAPTER-OS](https://rtynbirf.github.io/singulyar/%D0%91%D0%98%D0%91%D0%9B%D0%98%D0%9E%D0%A2%D0%95%D0%9A%D0%98/adapter-os/prototype/index.html): БИБЛИОТЕКИ/adapter-os/prototype/index.html
 - [·52 ПРОТОТИП КОЛОНКИ](https://rtynbirf.github.io/singulyar/%D0%9A%D0%9E%D0%9B%D0%9E%D0%9D%D0%9A%D0%90/prototype/index.html): КОЛОНКА/prototype/index.html
+- [·53 СВЯЗЬ ЧЕЛОВЕКА](https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_53_%D0%A1%D0%92%D0%AF%D0%97%D0%AC_%D0%A7%D0%95%D0%9B%D0%9E%D0%92%D0%95%D0%9A%D0%90.html): СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html — автономный P2P-контур: намерения, E2EE-ключи, честная машина состояний
 
 ### Для агентов и LLM
 - [AGENTS.md](https://github.com/rtynbirf/singulyar/blob/main/AGENTS.md): свод правил для AI-агентов, работающих с репой
