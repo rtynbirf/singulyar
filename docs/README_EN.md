@@ -21,6 +21,9 @@ The SINGULAR · LADOM house — the offline karaoke universe of RUVSON: a PWA wi
 | [АРХИТЕКТУРА.md](АРХИТЕКТУРА.md) | explanation | the dresser: drawers → bridge → things; doors, threads, cache, CSP | developer |
 | [РИТУАЛ_ТАКТА.md](РИТУАЛ_ТАКТА.md) | instruction | how a version is released: 8 stages of a takt | developer |
 | [МАЛЫШ.md](МАЛЫШ.md) | textbook | teachings for the house's junior agent — everything the senior knows | МАЛЫШ, agents |
+| [ПОЛИМАТ_ПРОТОКОЛ.md](ПОЛИМАТ_ПРОТОКОЛ.md) | instruction | the MANY-SCHOLAR method: 5 rules, 12 lenses of the home, 5 steps — how the agent works as a polymath (v11.24) | agents |
+| [ИНСТРУМЕНТАРИЙ_ВЭБ.md](ИНСТРУМЕНТАРИЙ_ВЭБ.md) | instruction | the agent's three hands (INTERNET/SANDBOX/PYTHON) with laws and the live verification 8/8 (v11.24) | agents |
+| [ЛУЧШИЕ_ПРАКТИКИ.md](ЛУЧШИЕ_ПРАКТИКИ.md) | reference | the codex of 14 world best practices: canon → home precedent → stretch (v11.24) | agents, developer |
 | [../CHANGELOG.md](../CHANGELOG.md) | chronicle | all takts per Keep a Changelog: Added/Changed/Fixed | everyone |
 | [../AGENTS.md](../AGENTS.md) | reference | the rulebook for AI agents working with the repo | agents |
 | [llms.txt](llms.txt) | map for LLM | the machine map of the house's knowledge | LLM, МАЛЫШ |
