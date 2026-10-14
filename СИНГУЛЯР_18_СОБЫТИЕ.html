@@ -117,6 +117,14 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
 </head>
 
 <body>
+<script id="sg-tv-sound">/* v11.34 «ЛИК» ТБ-1: телевизор не играет Opus/webm и глушит WebAudio-граф — дом честно уходит на mp3 и прямой звук элемента (приказ владельца: «НЕ РАБОТАЕТ МУЗЫКА НА ТВ В ПК ЕСТЬ НА ТВ НЕТ») */
+(function(){'use strict';
+var ТВ=false,ОПУС=false;
+try{ТВ=/Tizen|Web0S|WebOS|SMART-TV|SmartTV|SmartHub|HbbTV|NetCast|BRAVIA|AFT[BTSMW]|Android TV|CrKey|Apple ?TV|Vewd/i.test(String(navigator.userAgent||''));}catch(e){}
+try{var п=document.createElement('audio');ОПУС=(п.canPlayType('audio/webm; codecs="opus"')==='probably');}catch(e){}
+window.SG_ТВ=ТВ;
+window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
+}());</script>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <header><div class="wrap hd">
   <div class="logo" aria-hidden="true">·18</div>
@@ -1145,10 +1153,9 @@ function ГОЛОСЗАПИСЬ() {
     get слышуСебя() { return слышатьСебя; },
     минус: function (аудио) {   /* <audio> минусовки в граф */
       ensureCtx();
-      if (!микс) { микс = { аудио: аудио, src: ctx.createMediaElementSource(аудио) }; }
-      try { микс.src.disconnect(); } catch (e) {}
+      if (!микс) { микс = { аудио: аудио, src: (function(){ try { return window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ() ? null : ctx.createMediaElementSource(аудио); } catch (e) { return null; } })() }; } /* ТБ-1 v11.34: ТВ — элемент играет напрямую, в граф не заворачиваем */ if (микс.src) { try { микс.src.disconnect(); } catch (e) {}
       микс.src.connect(ctx.destination);
-      микс.src.connect(recDest);
+      микс.src.connect(recDest); }
     },
     чужой: function (stream, id) {   /* голос удалённого участника */
       ensureCtx();
