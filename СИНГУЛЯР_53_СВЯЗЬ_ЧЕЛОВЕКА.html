@@ -16,8 +16,45 @@
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/КРИСТАЛЛ.webp">
 <meta name="twitter:card" content="summary">
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#f4f2ec;--fg:#1d2524;--panel:#fffdf8;--line:#c6cbc6;--accent:#155e59;--focus:#b33b00}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg)}header,main,footer{max-width:1050px;margin:auto;padding:1rem}header{border-bottom:1px solid var(--line)}h1{font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.15;margin:.25rem 0}.kicker{letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}p{max-width:75ch}a{color:var(--accent)}button,input,textarea,select{font:inherit}button,.button{border:1px solid var(--accent);background:var(--accent);color:white;border-radius:.5rem;padding:.65rem .9rem;cursor:pointer}button.secondary{background:transparent;color:var(--fg);border-color:var(--line)}button:disabled{opacity:.5;cursor:not-allowed}input,textarea,select{width:100%;padding:.65rem;border:1px solid var(--line);border-radius:.4rem;background:var(--panel);color:var(--fg)}label{display:block;font-weight:650;margin:.6rem 0 .25rem}*:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:1rem}.panel{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1rem;min-width:0}.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}.row>*{flex:0 1 auto}.status{border-left:4px solid var(--accent);padding:.5rem .75rem;background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.muted{opacity:.8;font-size:.94rem}.items{padding-left:1.2rem}.items li{margin:.45rem 0;overflow-wrap:anywhere}.pill{display:inline-block;border:1px solid var(--line);border-radius:2rem;padding:.1rem .55rem;font-size:.85rem}.danger{border-color:#9b2c2c;color:#9b2c2c;background:transparent}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}footer{border-top:1px solid var(--line);margin-top:2rem}.notice{padding:.75rem;border:1px dashed var(--line);border-radius:.5rem}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+/* v11.35 «ЛИЦО»: чужой бежево-бирюзовый дизайн снят по приказу владельца «СТИЛЬ ЧЕЛОВЕКА
+   НА ВСЕХ СТРАНИЦАХ ДОЛЖЕН БЫТЬ УЗНАВАЕМЫМ» — страница носит канон дома
+   СТЕКЛО·СЕРЕБРО·ЗОЛОТО (singulyar-design-v3.css). Селекторы/ID/байты прототипа
+   владельца сохранены — поменяли только краску; высококонтрастный режим ниже работает как прежде. */
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#0A0A0C;--fg:#C0C8D0;--panel:rgba(26,29,35,.55);--panel-solid:#1A1D23;--line:rgba(240,240,248,.14);--accent:#D4AF37;--gold-hi:#F5A623;--gold-pale:#F0D78C;--focus:#F5D58F;--red:#E4736B;--dim:#8A9099}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg)}
+header,main,footer{max-width:1050px;margin:auto;padding:1rem}
+header{border-bottom:1px solid var(--line)}
+h1{font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.15;margin:.25rem 0;color:#E8E8E8}
+h2{color:#E8E8E8}
+.kicker{letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;color:var(--dim)}
+p{max-width:75ch}
+a{color:var(--accent)}
+button,input,textarea,select{font:inherit}
+button,.button{border:1px solid var(--accent);background:var(--accent);color:#0A0A0C;border-radius:.5rem;padding:.65rem .9rem;cursor:pointer;font-weight:650;display:inline-block;text-decoration:none}
+button.secondary,.button.secondary{background:transparent;color:var(--fg);border-color:var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+input,textarea,select{width:100%;padding:.65rem;border:1px solid var(--line);border-radius:.4rem;background:rgba(18,20,24,.66);color:var(--fg)}
+input::placeholder,textarea::placeholder{color:#6B7178}
+label{display:block;font-weight:650;margin:.6rem 0 .25rem}
+*:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:1rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem;min-width:0;box-shadow:0 20px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(240,240,248,.05)}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.row>*{flex:0 1 auto}
+.status{border-left:4px solid var(--accent);padding:.5rem .75rem;background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.muted{opacity:.95;font-size:.94rem;color:#9CA3AF}
+.items{padding-left:1.2rem}
+.items li{margin:.45rem 0;overflow-wrap:anywhere}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:2rem;padding:.1rem .55rem;font-size:.85rem}
+.danger{border-color:var(--red);color:var(--red);background:transparent}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+footer{border-top:1px solid var(--line);margin-top:2rem}
+.notice{padding:.75rem;border:1px dashed var(--line);border-radius:.5rem}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+@media (prefers-reduced-transparency: reduce){.panel{backdrop-filter:none;background:#14171C}}
 </style>
+  <link rel="stylesheet" href="singulyar-design-v3.css">
   <link rel="manifest" href="./manifest.webmanifest">
   <meta name="theme-color" content="#0A0A0C">
   <link rel="icon" href="./favicon.ico" sizes="any">
@@ -671,7 +708,7 @@ $('clearBtn').addEventListener('click',()=>{if(!confirm('Удалить все �
 render();
 })();
 </script>
-<p class="штамп-дома" style="text-align:center;color:#666;font:11.5px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 18px">·53 · СВЯЗЬ ЧЕЛОВЕКА · такт «<span data-реестр="такт">СВЯЗЬ</span>» · кэш <span data-реестр="кэш">v178</span></p>
+<p class="штамп-дома" style="text-align:center;color:#8A9099;font:11.5px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 18px">·53 · СВЯЗЬ ЧЕЛОВЕКА · такт «<span data-реестр="такт">ЛИЦО</span>» · кэш <span data-реестр="кэш">v186</span></p>
 <p class="sr-only">Дом СИНГУЛЯР: <span data-реестр="дверей">42</span> дверей · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков</p>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
@@ -746,5 +783,6 @@ render();
 </details>
 </nav>
 <!-- такт v11.27 «СВЯЗЬ» (С105, PAT №28): пакет владельца «Контур человеческой связи» v0.1 (блокнот 14 окт. 2026, 2-я выгрузка, trace 1a139f1c5afdbf25) — дверь ·53 собрана из prototype/index.html пакета (байты владельца не тронуты), дом-обвязка по канону ·38: КОРД, CSP-постур А, canonical/og, sg-registry, навигатор SG65, организм-штамп; пакет принят в ДОКУМЕНТЫ/СВЯЗЬ_ЧЕЛОВЕКА/ (валидатор PASS, ядро 7/7, манифест 17/17); интеграционный контракт — integration/DOOR-INTEGRATION.md пакета -->
+<!-- такт v11.35 «ЛИЦО» (С113, ключ ㉕; СТОП-ГОРН ×2: их v11.33 «ГЕРМЕТИЧНО» (С111, 862b715, PAT №33) и их v11.33/11.34 «ЛИК» (С111, 14039de, trace 1a13a84e86cfbedd) встали между моим fetch и пушем — их байты приняты целиком, мой такт перенумерован честно v11.33→v11.35/С111→С113/v184→v186/летопись 120→122 (прецедент v10.91/v11.03/v11.21/v11.28/v11.32); ПВ4 «QR-сигналинг» погашен ИХ каноном — k13/qr-token/0.1 (глаза без камеры), мой qr-core.js и k12-qr-блок сняты честно по «один факт — одно место»; МОЙ УНИКАЛЬНЫЙ ХВОСТ: лицо дома — чужой бежево-бирюзовый самодельный дизайн снят, страница носит канон СТЕКЛО·СЕРЕБРО·ЗОЛОТО (singulyar-design-v3.css; селекторы/ID/k12/k13 не тронуты — только краска; высококонтрастный режим работает как прежде); штамп на правду такта -->
 </body>
 </html>
