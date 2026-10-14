@@ -1,0 +1,47 @@
+# CI-проверка комплекта «СВЯЗЬ ЧЕЛОВЕКА» при Pull Request — принят в дом тактом v11.29 «КОНТУР» (С107)
+# от прототипа singulyar-emergent-v1.1/v1.2 (владелец, 14.10.2026); пути приведены к карте дома:
+# распаковка коллеги ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_3/СВЯЗЬ_ЧЕЛОВЕКА/v1.0-final/ (такт v11.28 «ПОСАДКА», С106)
+# + их принятый пакет v0.1 ДОКУМЕНТЫ/СВЯЗЬ_ЧЕЛОВЕКА/ (такт v11.27 «СВЯЗЬ», С105).
+# Деплой-воркфлоу из прототипа НЕ активируется: дом публикуется веткой main (GitHub Pages),
+# перевод Pages на Actions и защита ветки — только по явному слову владельца (И-02: человек главнее автоматики).
+name: Pull Request Conformance Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  test-and-validate:
+    name: Run Conformance Suite and Validate Bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check Package v0.1 SHA256SUMS (их канон целости)
+        run: |
+          cd "ДОКУМЕНТЫ/СВЯЗЬ_ЧЕЛОВЕКА" && sha256sum -c SHA256SUMS
+
+      - name: Validate Bundle Integrity (их распаковка v1.0-final)
+        run: |
+          python3 "ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_3/СВЯЗЬ_ЧЕЛОВЕКА/v1.0-final/tests/validate_bundle.py"
+
+      - name: Check MANIFEST.sha256 of the v1.0-final unpack
+        run: |
+          cd "ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_3/СВЯЗЬ_ЧЕЛОВЕКА/v1.0-final" && sha256sum -c MANIFEST.sha256
+
+      - name: Run Python Core Conformance Suite
+        run: |
+          python3 "ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_3/СВЯЗЬ_ЧЕЛОВЕКА/v1.0-final/singulyar_core.py"

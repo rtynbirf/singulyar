@@ -282,6 +282,88 @@ option:checked,option:hover{background-color:#10312c;color:#7FC9A4}
   <div class="mem-grid" id="memListFull" aria-live="polite"></div>
 </section>
 
+<section id="событие-эфир" style="margin:1.2rem 0;padding:1rem 1.1rem;border:1px solid #D4AF37;border-radius:12px;background:#0A0A0C;color:#E8E2D0" aria-labelledby="событие-эфир-заг">
+<h2 id="событие-эфир-заг" style="margin:.1rem 0 .5rem;font-size:1.05rem;color:#D4AF37">ЭФИР ДОМА · mesh-wire/0.1 <span style="color:#8b93a3;font-weight:400">(М1, этап 2 — такт v11.29 «КОНТУР»)</span></h2>
+<p style="margin:.2rem 0 .6rem;color:#b9c2cf;font-size:.93rem">Лестница: вещание (вкладки этого браузера, BroadcastChannel) → данные (мост КС5) → релей (КС8). При импорте — ноль подключений; эфир открывается только по твоей кнопке.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+<button id="событие-эфир-открыть" style="border:1px solid #D4AF37;background:#1c1408;color:#FFD97A;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit">⏵ ОТКРЫТЬ ЭФИР</button>
+<button id="событие-эфир-пилот" style="border:1px solid #3a4350;background:transparent;color:#C9D2DC;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>✈ ПОСЛАТЬ ПИЛОТ</button>
+<button id="событие-эфир-закрыть" style="border:1px solid #9b2c2c;background:transparent;color:#d98a8a;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>⏹ ЗАКРЫТЬ</button>
+</div>
+<p id="событие-эфир-статус" role="status" style="margin:.6rem 0 .3rem;color:#8b93a3;font:12.5px/1.5 ui-monospace,Consolas,monospace">вещание: ждёт · данные: не собраны · релей: не собран</p>
+<ul id="событие-эфир-журнал" aria-live="polite" style="margin:.2rem 0 0;padding-left:1.1rem;color:#b9c2cf;font-size:.9rem"></ul>
+</section>
+<script>
+(function () {
+'use strict';
+var ID = 'событие';
+var провод = null;
+function $(и) { return document.getElementById(ID + '-эфир-' + и); }
+function стр(т) {
+  try {
+    var li = document.createElement('li');
+    li.textContent = '[' + new Date().toLocaleTimeString() + '] ' + т;
+    var ul = $('журнал');
+    ul.insertBefore(li, ul.firstChild);
+    while (ul.children.length > 8) ul.removeChild(ul.lastChild);
+  } catch (e) { /* журнал не роняет зал */ }
+}
+function статусы() {
+  try {
+    if (!провод) { $('статус').textContent = 'вещание: ждёт · данные: не собраны · релей: не собран'; return; }
+    var с = провод.состояние();
+    var ч = [];
+    ['вещание', 'данные', 'релей'].forEach(function (имя) {
+      ч.push(имя + ': ' + (с.слои[имя] || 'не собран'));
+    });
+    $('статус').textContent = ч.join(' · ');
+  } catch (e) { /* статус не роняет зал */ }
+}
+$('открыть').addEventListener('click', async function () {
+  try {
+    if (провод) { статусы(); return; }
+    var мод = await import('./ДОКУМЕНТЫ/ТРЕКИ/МЕТАШАНСОН/src/mesh-wire.mjs');
+    провод = мод.создатьПровод({ слои: [мод.слойВещания({ эфир: 'singlyar-событие/0.1' })] });
+    провод.приПолучении(function (конверт) {
+      try {
+        if (конверт && конверт.тип === 'пилот') стр('пилот от узла ' + конверт.узел + ' · ' + конверт.текст);
+        else стр('конверт чужой схемы — мимо');
+      } catch (e) { /* приём не роняет зал */ }
+    });
+    провод.открыть();
+    $('пилот').disabled = false; $('закрыть').disabled = false; $('открыть').disabled = true;
+    статусы();
+    стр('эфир открыт: вещание живо; данные/релей честно не собраны (мост КС5/релей КС8 — по приказу)');
+  } catch (e) { стр('эфир не открылся: ' + e.message); статусы(); }
+});
+$('пилот').addEventListener('click', function () {
+  try {
+    if (!провод) return;
+    var отчёт = провод.отправить({ тип: 'пилот', узел: ID, текст: 'пилот эфира дома (v11.29 КОНТУР)' });
+    var ч = [];
+    Object.keys(отчёт).forEach(function (имя) { ч.push(имя + '=' + отчёт[имя]); });
+    стр('пилот ушёл: ' + ч.join(', '));
+  } catch (e) { стр('пилот не ушёл: ' + e.message); }
+});
+$('закрыть').addEventListener('click', function () {
+  try {
+    if (провод) {
+      провод.закрыть();
+      var итог = провод.состояние();
+      var ч = [];
+      ['вещание', 'данные', 'релей'].forEach(function (имя) {
+        ч.push(имя + ': ' + (итог.слои[имя] || 'не собран'));
+      });
+      $('статус').textContent = ч.join(' · ');
+      провод = null;
+    }
+    $('пилот').disabled = true; $('закрыть').disabled = true; $('открыть').disabled = false;
+    стр('эфир закрыт по явному действию');
+  } catch (e) { стр('закрытие: ' + e.message); }
+});
+статусы();
+})();
+</script>
 </main>
 
 <div class="count-overlay" id="countOverlay" role="alert" aria-live="assertive">

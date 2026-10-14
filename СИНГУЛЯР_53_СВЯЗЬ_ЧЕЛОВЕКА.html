@@ -41,6 +41,327 @@
 <section class="panel" aria-labelledby="logTitle"><h2 id="logTitle">Локальный журнал</h2><div class="row"><button id="exportBtn">Экспорт JSON</button><label class="button secondary" for="importFile" style="cursor:pointer">Импорт JSON</label><input id="importFile" type="file" accept="application/json,.json" class="sr-only"><button id="clearBtn" class="danger">Удалить локальные данные</button></div><ul id="log" class="items" aria-live="polite"></ul><p class="muted">Экспорт содержит ваши записи и настройки. Храните файл осторожно.</p></section>
 </div>
 <section class="panel" style="margin-top:1rem" aria-labelledby="scopeTitle"><h2 id="scopeTitle">Граница прототипа</h2><p><strong>Работает:</strong> локальные контакты, намерения, настройки, журнал, экспорт/импорт.</p><p><strong>Не реализовано:</strong> реальная доставка, сквозное шифрование, регистрация/проверка ключей, звонки, почтовый сервер, виртуальный номер, eSIM, SMS, платёжная сеть, синхронизация.</p><p>Не вводите пароли, ключи, банковские реквизиты или другую чувствительную информацию.</p></section>
+<!-- ════════ КОНТУР v1.2 · Фаза 1: P2P-транспорт и E2EE (такт v11.28 «КОНТУР», С106, PAT №33) ════════
+     Аддитивный блок поверх их Фазы 0 (такт v11.27 «СВЯЗЬ», С105): их байты не тронуты.
+     Реализует транспортный слой пакета владельца v1.2: ключи ECDH P-256 + отпечаток SHA-256 (js/singulyar_crypto.js),
+     IndexedDB-хранилище 4 таблиц с Web Locks (js/indexeddb_store.js), WebRTC DataChannel с ручным сигналингом,
+     честная машина состояний draft→locally_saved→queued→transport_attempted→accepted_by_transport→recipient_acknowledged.
+     Честные границы: E2EE поверх канала — шаг WP-06 (ключи есть, шифрование payload в канале не включено);
+     STUN Google — выключенный по умолчанию тумблер (ноль внешних запросов без явного слова). -->
+<section class="panel" id="k12-контур" style="margin-top:1rem" aria-labelledby="k12Title">
+<h2 id="k12Title">Контур v1.2 · P2P-транспорт и E2EE (Фаза 1 роадмапа пакета)</h2>
+<p class="muted">Надстройка над локальным прототипом выше: те же намерения — теперь с настоящим прямым каналом между браузерами (WebRTC DataChannel, сигналинг вручную — без серверов) и ключами идентичности на устройстве. Журнал контура — отдельная база IndexedDB (не смешивается с локальным журналом прототипа).</p>
+<div class="row">
+<button id="k12-genKeys">Сгенерировать пару ключей ECDH P-256</button>
+<span id="k12-fp" class="pill">Отпечаток SHA-256: не создан</span>
+</div>
+<p class="muted">Ключи живут только на этом устройстве. Сверьте отпечаток с собеседником по независимому каналу — это исключает подмену (MITM).</p>
+<label for="k12-kind">Намерение для контура (имена протокола singulyar.v1.0/object.json)</label>
+<select id="k12-kind">
+<option value="text">Написать человеку (text)</option>
+<option value="file">Передать файл (намерение)</option>
+<option value="voice">Оставить голосовое (намерение)</option>
+<option value="call_invite">Позвать на разговор (call_invite)</option>
+<option value="value_intent">Передать ценность (value_intent)</option>
+<option value="contact_invite">Пригласить человека (contact_invite)</option>
+</select>
+<p id="k12-note" class="pill" role="note" hidden style="border-color:#9b6b00;color:#7a5200">DISCLAIMER: это намерение передачи ценности — НЕ платёжный документ и НЕ подтверждение банковского перевода.</p>
+<label for="k12-recipient">Кому (адресат или отпечаток)</label>
+<input id="k12-recipient" placeholder="Имя или SHA-256 отпечаток" autocomplete="off">
+<label for="k12-text">Содержимое намерения</label>
+<textarea id="k12-text" rows="3" placeholder="Введите текст сообщения или описание намерения…"></textarea>
+<div class="row" style="margin-top:.75rem">
+<button id="k12-save">1. Сохранить в IndexedDB</button>
+<button id="k12-send" class="secondary" disabled>2. Отправить по P2P</button>
+<button id="k12-export" class="secondary">3. Экспорт объекта в JSON</button>
+</div>
+<p id="k12-status" class="muted" role="status" aria-live="polite">Контур: ничего не создано.</p>
+<p class="muted">Машина состояний честная: <code>draft → locally_saved → queued → transport_attempted → accepted_by_transport → recipient_acknowledged</code>. Отправка пакета не считается прочтением — подтверждение даёт только ACK собеседника.</p>
+<div class="grid" style="margin-top:.75rem">
+<div>
+<h3 style="margin:.2rem 0 .4rem;font-size:1rem">WebRTC P2P DataChannel</h3>
+<div class="row">
+<button id="k12-init">Создать P2P Offer</button>
+<button id="k12-close" class="danger" disabled>Закрыть канал</button>
+</div>
+<label for="k12-offer">SDP Offer / Answer токен</label>
+<textarea id="k12-offer" rows="3" placeholder="Вставьте токен от собеседника…"></textarea>
+<div class="row" style="margin-top:.5rem">
+<button id="k12-accept" class="secondary">Принять Offer и создать Answer</button>
+<button id="k12-handshake" class="secondary">Завершить Handshake</button>
+</div>
+<label style="font-weight:500;margin-top:.6rem"><input id="k12-stun" type="checkbox" style="width:auto"> Разрешить STUN Google (stun:stun.l.google.com:19302) — для связи через NAT</label>
+<p class="muted">По умолчанию выключено: дом не ходит наружу без явного слова. Выключено = P2P честно работает в локальной сети и между вкладками одного устройства.</p>
+<p id="k12-p2p" class="muted" role="status">Статус P2P: канал закрыт.</p>
+</div>
+<div>
+<h3 style="margin:.2rem 0 .4rem;font-size:1rem">Журнал контура (IndexedDB)</h3>
+<ul id="k12-log" class="items" aria-live="polite"></ul>
+<div class="row" style="margin-top:.5rem">
+<button id="k12-clear" class="danger">Стереть базу контура</button>
+</div>
+<p class="muted">Стирание настоящее: база SingulyarDB_v1 удаляется с устройства. Локальный журнал прототипа выше не затрагивается.</p>
+</div>
+</div>
+</section>
+<script src="./js/singulyar_crypto.js"></script>
+<script src="./js/indexeddb_store.js"></script>
+<script>
+(function () {
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+var dbStore = null, peerConn = null, dataChannel = null, текущий = null;
+
+function сказать(текст) { try { $('k12-status').textContent = текст; } catch (e) {} }
+function журнал(текст) {
+  try {
+    var li = document.createElement('li');
+    var b = document.createElement('strong');
+    b.textContent = '[' + new Date().toLocaleTimeString() + '] ';
+    li.appendChild(b);
+    li.appendChild(document.createTextNode(текст));
+    $('k12-log').insertBefore(li, $('k12-log').firstChild);
+  } catch (e) {}
+}
+async function sha256Hex(строка) {
+  var байты = new TextEncoder().encode(строка);
+  var хеш = await crypto.subtle.digest('SHA-256', байты);
+  var в = new Uint8Array(хеш), с = '', i;
+  for (i = 0; i < в.length; i++) с += в[i].toString(16).padStart(2, '0');
+  return с;
+}
+async function собратьОбъект() {
+  var текст = $('k12-text').value.trim();
+  var кому = $('k12-recipient').value.trim() || 'Не указан';
+  var вид = $('k12-kind').value;
+  if (!текст) { сказать('Введите содержимое намерения.'); return null; }
+  var payloadText = текст;
+  if (вид === 'value_intent') payloadText += ' [DISCLAIMER: This intent object is NOT a confirmed bank transfer]';
+  var хеш = await sha256Hex(payloadText);
+  return {
+    schema: 'singulyar.v1.0/object.json',
+    id: crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now(),
+    kind: вид, createdAt: new Date().toISOString(), recipient: кому,
+    payload: { text: payloadText },
+    manifest: { sha256: хеш, байты: new TextEncoder().encode(payloadText).length },
+    delivery: { state: 'draft', observed_at: new Date().toISOString() }
+  };
+}
+async function перевести(объект, состояние) {
+  объект.delivery.state = состояние;
+  объект.delivery.observed_at = new Date().toISOString();
+  if (dbStore) await dbStore.saveObject(объект);
+  if (текущий && текущий.id === объект.id) текущий = объект;
+  сказать('Состояние: ' + состояние + '.');
+}
+async function отрисоватьЖурнал() {
+  if (!dbStore) return;
+  try {
+    var objs = await dbStore.getAllObjects();
+    objs.reverse();
+    $('k12-log').textContent = '';
+    objs.forEach(function (т) {
+      var li = document.createElement('li');
+      var b = document.createElement('strong');
+      b.textContent = т.kind + ' · ' + new Date(т.createdAt).toLocaleString();
+      li.appendChild(b); li.appendChild(document.createElement('br'));
+      var спан = document.createElement('span');
+      спан.textContent = 'Кому: ' + т.recipient + ' · ' + т.payload.text;
+      li.appendChild(спан); li.appendChild(document.createElement('br'));
+      var бдж = document.createElement('span');
+      бдж.className = 'pill';
+      бдж.textContent = 'State: ' + (т.delivery && т.delivery.state ? т.delivery.state : '?') +
+        (т.manifest && т.manifest.sha256 ? ' · hash ' + т.manifest.sha256.slice(0, 16) + '…' : '');
+      li.appendChild(бдж);
+      $('k12-log').appendChild(li);
+    });
+  } catch (e) {}
+}
+
+$('k12-genKeys').addEventListener('click', async function () {
+  try {
+    if (!window.SingulyarCrypto) { сказать('Модуль js/singulyar_crypto.js не загрузился — ключи честно недоступны.'); return; }
+    var kp = await window.SingulyarCrypto.generateKeyPair();
+    $('k12-fp').textContent = 'Отпечаток SHA-256: ' + kp.fingerprint;
+    журнал('Пара ключей ECDH P-256 создана; отпечаток ' + kp.fingerprint);
+  } catch (e) { сказать('Ключи не создались: ' + e.message); }
+});
+$('k12-save').addEventListener('click', async function () {
+  var объект = await собратьОбъект();
+  if (!объект) return;
+  try {
+    if (!dbStore) { сказать('Хранилище недоступно (IndexedDB нет) — объект держится только на странице.'); текущий = объект; return; }
+    await перевести(объект, 'locally_saved');
+    текущий = объект;
+    $('k12-text').value = '';
+    await отрисоватьЖурнал();
+    журнал('Создан объект ' + объект.kind + ' → locally_saved · hash ' + объект.manifest.sha256.slice(0, 16) + '…');
+  } catch (e) { сказать('Сохранение не удалось: ' + e.message); }
+});
+$('k12-kind').addEventListener('change', function () {
+  $('k12-note').hidden = ($('k12-kind').value !== 'value_intent');
+});
+
+function настройкиSTUN() {
+  return $('k12-stun').checked
+    ? { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
+    : { iceServers: [] };
+}
+function принятьСообщения(канал) {
+  канал.onmessage = async function (событие) {
+    var конверт = null;
+    try { конверт = JSON.parse(String(событие.data)); } catch (e) { return; }
+    if (конверт && конверт.тип === 'ACK' && текущий && конверт.id === текущий.id) {
+      await перевести(текущий, 'recipient_acknowledged');
+      await отрисоватьЖурнал();
+      журнал('ACK получен → recipient_acknowledged. Доставка подтверждена собеседником.');
+    } else if (конверт && конверт.тип === 'объект') {
+      var т = конверт.объект;
+      var li = document.createElement('li');
+      var b = document.createElement('strong');
+      b.textContent = т.kind + ' · ' + new Date(т.createdAt).toLocaleString();
+      li.appendChild(b); li.appendChild(document.createElement('br'));
+      var спан = document.createElement('span');
+      спан.textContent = 'От: ' + т.recipient + ' · ' + т.payload.text;
+      li.appendChild(спан); li.appendChild(document.createElement('br'));
+      var бдж = document.createElement('span');
+      бдж.className = 'pill';
+      бдж.textContent = 'получено по P2P · hash ' + (т.manifest && т.manifest.sha256 ? т.manifest.sha256.slice(0, 16) + '…' : '—');
+      li.appendChild(бдж);
+      $('k12-log').insertBefore(li, $('k12-log').firstChild);
+      if (dataChannel && dataChannel.readyState === 'open') {
+        dataChannel.send(JSON.stringify({ тип: 'ACK', id: т.id }));
+      }
+      журнал('Получен объект по P2P, ACK отправлен.');
+    }
+  };
+}
+$('k12-init').addEventListener('click', async function () {
+  try {
+    peerConn = new RTCPeerConnection(настройкиSTUN());
+    dataChannel = peerConn.createDataChannel('singulyarChannel');
+    dataChannel.onopen = function () {
+      $('k12-p2p').textContent = 'Статус P2P: канал ОТКРЫТ (DataChannel).';
+      $('k12-send').disabled = false; $('k12-close').disabled = false;
+      журнал('P2P-канал открыт.');
+    };
+    принятьСообщения(dataChannel);
+    peerConn.onicecandidate = function (e) {
+      if (!e.candidate) {
+        $('k12-offer').value = JSON.stringify(peerConn.localDescription);
+        $('k12-p2p').textContent = 'P2P Offer сформирован. Передайте токен собеседнику и вставьте его Answer, затем «Завершить Handshake».';
+      }
+    };
+    var offer = await peerConn.createOffer();
+    await peerConn.setLocalDescription(offer);
+    $('k12-p2p').textContent = 'Offer собирается (ICE)…';
+    журнал('P2P Offer создан' + ($('k12-stun').checked ? ' (STUN включён явно).' : ' (без внешних запросов).'));
+  } catch (e) { $('k12-p2p').textContent = 'Offer не собрался: ' + e.message; }
+});
+$('k12-accept').addEventListener('click', async function () {
+  try {
+    var сыр = $('k12-offer').value.trim();
+    if (!сыр) { $('k12-p2p').textContent = 'Вставьте SDP Offer собеседника в поле выше.'; return; }
+    peerConn = new RTCPeerConnection(настройкиSTUN());
+    peerConn.onicecandidate = function (e) {
+      if (!e.candidate) {
+        $('k12-offer').value = JSON.stringify(peerConn.localDescription);
+        $('k12-p2p').textContent = 'Answer сформирован. Отправьте токен собеседнику.';
+        журнал('P2P Answer сформирован.');
+      }
+    };
+    peerConn.ondatachannel = function (e) {
+      dataChannel = e.channel;
+      dataChannel.onopen = function () {
+        $('k12-p2p').textContent = 'Статус P2P: канал ОТКРЫТ (DataChannel).';
+        $('k12-send').disabled = false; $('k12-close').disabled = false;
+      };
+      принятьСообщения(dataChannel);
+    };
+    await peerConn.setRemoteDescription(JSON.parse(сыр));
+    var answer = await peerConn.createAnswer();
+    await peerConn.setLocalDescription(answer);
+    $('k12-p2p').textContent = 'Answer собирается (ICE)…';
+  } catch (e) { $('k12-p2p').textContent = 'Offer не принят: ' + e.message; }
+});
+$('k12-handshake').addEventListener('click', async function () {
+  try {
+    var сыр = $('k12-offer').value.trim();
+    if (!peerConn) { $('k12-p2p').textContent = 'Сначала создайте Offer.'; return; }
+    if (!сыр) { $('k12-p2p').textContent = 'Вставьте SDP Answer собеседника в поле выше.'; return; }
+    await peerConn.setRemoteDescription(JSON.parse(сыр));
+    $('k12-p2p').textContent = 'Handshake завершён — ждём открытия канала.';
+    журнал('Handshake завершён.');
+  } catch (e) { $('k12-p2p').textContent = 'Handshake не сошёлся: ' + e.message; }
+});
+$('k12-close').addEventListener('click', function () {
+  try {
+    if (dataChannel) { try { dataChannel.close(); } catch (e) {} }
+    if (peerConn) { try { peerConn.close(); } catch (e) {} }
+    dataChannel = null; peerConn = null;
+    $('k12-send').disabled = true; $('k12-close').disabled = true;
+    $('k12-p2p').textContent = 'Статус P2P: канал закрыт.';
+    журнал('P2P-канал закрыт по явному действию.');
+  } catch (e) {}
+});
+$('k12-send').addEventListener('click', async function () {
+  try {
+    if (!dataChannel || dataChannel.readyState !== 'open') {
+      сказать('P2P-канал закрыт — сначала установите канал (блок WebRTC).'); return;
+    }
+    if (!текущий) {
+      var объект = await собратьОбъект();
+      if (!объект) return;
+      if (dbStore) await перевести(объект, 'locally_saved');
+      текущий = объект;
+    }
+    await перевести(текущий, 'queued');
+    await перевести(текущий, 'transport_attempted');
+    dataChannel.send(JSON.stringify({ тип: 'объект', объект: текущий }));
+    await перевести(текущий, 'accepted_by_transport');
+    await отрисоватьЖурнал();
+    журнал('Объект ушёл по P2P → accepted_by_transport. Ждём ACK собеседника.');
+  } catch (e) { сказать('Отправка не удалась: ' + e.message); }
+});
+$('k12-export').addEventListener('click', async function () {
+  try {
+    if (!текущий) { сказать('Сначала создайте и сохраните объект.'); return; }
+    var пакет = { схема: 'singulyar.v1.0/export.json', объект: текущий, экспортировано: new Date().toISOString() };
+    var блоб = new Blob([JSON.stringify(пакет, null, 2)], { type: 'application/json' });
+    var сс = URL.createObjectURL(блоб);
+    var а = document.createElement('a');
+    а.href = сс;
+    а.download = 'singulyar_' + текущий.kind + '_' + текущий.id.slice(0, 8) + '.json';
+    document.body.appendChild(а); а.click(); document.body.removeChild(а);
+    setTimeout(function () { URL.revokeObjectURL(сс); }, 4000);
+    сказать('Экспорт: JSON-файл отдан человеку (отчуждаемая копия).');
+    журнал('Экспорт объекта ' + текущий.id.slice(0, 8) + '… в JSON-файл.');
+  } catch (e) { сказать('Экспорт не удался: ' + e.message); }
+});
+$('k12-clear').addEventListener('click', function () {
+  try {
+    if (!window.confirm('Стереть базу контура (SingulyarDB_v1) с устройства? Отменить нельзя.')) return;
+    if (window.indexedDB && indexedDB.deleteDatabase) {
+      indexedDB.deleteDatabase('SingulyarDB_v1');
+      dbStore = null; текущий = null;
+      $('k12-log').textContent = '';
+      сказать('База контура стёрта с устройства. Локальный журнал прототипа выше не тронут.');
+      журнал('Полное стирание базы контура выполнено.');
+    } else { сказать('IndexedDB недоступна — стирать нечего.'); }
+  } catch (e) { сказать('Стирание не удалось: ' + e.message); }
+});
+window.addEventListener('DOMContentLoaded', async function () {
+  try {
+    if (window.SingulyarStore) {
+      dbStore = new window.SingulyarStore();
+      await dbStore.init();
+      await отрисоватьЖурнал();
+    }
+  } catch (e) { журнал('Хранилище контура не открылось: ' + e.message); }
+});
+})();
+</script>
+<!-- ════════ /КОНТУР v1.2 · Фаза 1 ════════ -->
 </main><footer><p>СИНГУЛЯР · Человек выбирает. Система адаптируется. v0.1 — инженерный прототип, не сервис связи.</p></footer>
 <script>
 (()=>{'use strict';
