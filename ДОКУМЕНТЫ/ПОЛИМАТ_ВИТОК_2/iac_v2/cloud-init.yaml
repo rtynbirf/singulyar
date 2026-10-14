@@ -1,0 +1,86 @@
+#cloud-config
+# ==============================================================================
+# СИНГУЛЯР · Zero-Touch Mass Deployment Cloud-Init Configuration
+# ==============================================================================
+
+hostname: singulyar-node
+manage_etc_hosts: true
+
+users:
+  - name: singulyar
+    gecos: Singulyar Kiosk Operator
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, audio, video, input
+    shell: /bin/bash
+    lock_passwd: false
+    # Пароль по умолчанию: singulyar
+    passwd: "$6$rounds=409600$singulyarsalt$8U0d7A6KkX6iS.Q3u3zXyL8Hk6I8I0c6p3y.T6l9k3I9I0c6p3y.T6l9k3"
+
+packages:
+  - nginx
+  - chromium-browser
+  - xorg
+  - lightdm
+  - alsa-utils
+  - unclutter
+  - curl
+  - supervisor
+
+write_files:
+  - path: /usr/local/bin/singulyar-kiosk.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/usr/bin/env bash
+      export DISPLAY=${DISPLAY:-:0}
+      xset s off -dpms 2>/dev/null || true
+      while true; do
+          chromium               --kiosk               --no-first-run               --disable-restore-session-state               --disable-session-crashed-bubble               --disable-infobars               --autoplay-policy=no-user-gesture-required               --use-fake-ui-for-media-stream               --enable-features=SharedArrayBuffer               --ignore-certificate-errors               "http://localhost:80"
+          sleep 2
+      done
+
+  - path: /etc/systemd/system/singulyar-kiosk.service
+    permissions: '0644'
+    owner: root:root
+    content: |
+      [Unit]
+      Description=SINGULYAR OS - Autonomous Kiosk Runtime
+      After=network.target sound.target graphical.target
+      Wants=graphical.target
+
+      [Service]
+      Type=simple
+      User=singulyar
+      Environment=DISPLAY=:0
+      ExecStart=/usr/local/bin/singulyar-kiosk.sh
+      Restart=always
+      RestartSec=3
+
+      [Install]
+      WantedBy=graphical.target
+
+  - path: /etc/nginx/sites-available/singulyar.conf
+    permissions: '0644'
+    owner: root:root
+    content: |
+      server {
+          listen 80 default_server;
+          server_name _;
+          root /var/www/singulyar;
+          index index.html;
+
+          add_header Cross-Origin-Opener-Policy "same-origin" always;
+          add_header Cross-Origin-Embedder-Policy "require-corp" always;
+
+          location / {
+              try_files $uri $uri/ /index.html;
+          }
+      }
+
+runcmd:
+  - [ ln, -sf, /etc/nginx/sites-available/singulyar.conf, /etc/nginx/sites-enabled/default ]
+  - [ mkdir, -p, /var/www/singulyar ]
+  - [ systemctl, daemon-reload ]
+  - [ systemctl, enable, singulyar-kiosk.service ]
+  - [ systemctl, restart, nginx ]
+  - [ systemctl, restart, singulyar-kiosk.service ]
