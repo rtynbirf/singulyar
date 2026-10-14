@@ -1,0 +1,3 @@
+94775bd48e9b792e332effde5b02d8e06397958fae88ac910a4ec0c871d4ea8c  SINGULYAR_EMERGENT_ПРОТОТИП_ТЗ_ДОРОЖНАЯ_КАРТА_ДОКУМЕНТАЦИЯ.zip
+
+Baseline meaning: SHA-256 above identifies the exact original ZIP used as the local repair input. It is NOT a Git commit SHA and does not prove that the package matches the current published repository.
