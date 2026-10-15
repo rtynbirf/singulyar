@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СИНГУЛЯР · Пульт ·31 РУМА ЛАДОМ · Spatial Console v1.0</title>
+  <link rel="stylesheet" href="css/console_styles.css">
+</head>
+<body>
+
+  <!-- Верхняя панель управления и переключатель экранов -->
+  <header class="mode-bar">
+    <h1>
+      <span>🏠 СИНГУЛЯР</span>
+      <span style="opacity:0.6; font-weight:normal;">| Пульт «·31 РУМА ЛАДОМ»</span>
+    </h1>
+
+    <div class="mode-selectors">
+      <button class="mode-btn" data-mode="mobile">📱 Mobile (6")</button>
+      <button class="mode-btn active" data-mode="desktop">💻 Desktop (27")</button>
+      <button class="mode-btn" data-mode="tv">📺 TV 100" (Spatial 60°)</button>
+    </div>
+  </header>
+
+  <!-- Главный контейнер пульта -->
+  <main id="appContainer" class="app-container mode-desktop">
+    <div class="focal-cone">
+      <div class="grid-dashboard">
+
+        <!-- Виджет 1: Климат и среда 31 Румы -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>🌡️ Климат и Среда</span>
+            <span class="status-pill active"><span class="status-dot"></span> Норма</span>
+          </h2>
+          <div class="control-row">
+            <div>
+              <div id="tempVal" class="big-stat">22.5 °C</div>
+              <div style="font-size:0.85rem; opacity:0.8;">Влажность: <span id="humidityVal">45 %</span></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.4rem;">
+              <button id="tempPlus" class="btn btn-secondary" aria-label="Повысить температуру">+ 0.5 °C</button>
+              <button id="tempMinus" class="btn btn-secondary" aria-label="Понизить температуру">- 0.5 °C</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Виджет 2: Освещение и Атмосфера -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>💡 Освещение «Ладом»</span>
+            <span id="lightStatus" class="status-pill active">Ладом (Уют)</span>
+          </h2>
+          <p style="font-size:0.9rem; opacity:0.85;">
+            Адаптивный сценарий света подстраивается под циркадные ритмы человека.
+          </p>
+          <button id="lightBtn" class="btn">Переключить сценарий света</button>
+        </section>
+
+        <!-- Виджет 3: Безопасность и Доступ Двери ·31 -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>🚪 Замок Двери ·31</span>
+            <span id="doorStatusPill" class="status-pill active">
+              <span id="doorStatusDot" class="status-dot"></span>
+              <span id="doorStatus">Заблокирована</span>
+            </span>
+          </h2>
+          <p style="font-size:0.9rem; opacity:0.85;">
+            Прямой P2P-контроль электронного замка через контур СИНГУЛЯР.
+          </p>
+          <button id="doorToggleBtn" class="btn btn-secondary">Изменить статус замка</button>
+        </section>
+
+        <!-- Виджет 4: Быстрый диспетчер намерений связи (Дверь ·53) -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>📡 Намерения Связи (·53)</span>
+            <span class="status-pill active">P2P Ready</span>
+          </h2>
+          <p style="font-size:0.9rem; opacity:0.85;">
+            Формирование прямого намерения текстовой или голосом связи с другими комнатами.
+          </p>
+          <button id="quickIntentBtn" class="btn btn-success">Сформировать экстренное намерение</button>
+        </section>
+
+        <!-- Виджет 5: Телеметрия эргономики и конуса внимания -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>📐 Телеметрия Экрана</span>
+            <span class="status-pill">60° Focal Bounds</span>
+          </h2>
+          <div style="font-size:0.85rem; display:flex; flex-direction:column; gap:0.4rem;">
+            <div>• <strong>Thumb Zone (Mobile):</strong> Нижний 40% вектор</div>
+            <div>• <strong>Spatial Cone (TV):</b> Макс. 1280px в центре</div>
+            <div>• <strong>Focus Engine:</strong> D-Pad Snapping Активен</div>
+          </div>
+        </section>
+
+        <!-- Виджет 6: Журнал аудита событий -->
+        <section class="panel-card" tabindex="0">
+          <h2>
+            <span>📜 Журнал Аудита</span>
+            <span class="status-pill active">IndexedDB Sync</span>
+          </h2>
+          <ul id="logList" class="log-list">
+            <li>[00:00:00] Системный старт</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Мобильная плавающая шторка (Thumb Drawer) -->
+  <nav class="thumb-drawer">
+    <button class="btn btn-secondary" onclick="document.getElementById('quickIntentBtn').click()">📡 Связь</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('lightBtn').click()">💡 Свет</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('doorToggleBtn').click()">🚪 Дверь</button>
+  </nav>
+
+  <!-- Виртуальный эмулятор ТВ-пульта для тестирования D-Pad навигации -->
+  <aside class="remote-simulator">
+    <div class="remote-title">ТВ Пульт (D-Pad)</div>
+    <div class="dpad-grid">
+      <div></div>
+      <button id="dpadUp" class="dpad-btn">▲</button>
+      <div></div>
+      <button id="dpadLeft" class="dpad-btn">◄</button>
+      <button id="dpadOk" class="dpad-btn" style="background:var(--accent-color);">OK</button>
+      <button id="dpadRight" class="dpad-btn">►</button>
+      <div></div>
+      <button id="dpadDown" class="dpad-btn">▼</button>
+      <div></div>
+    </div>
+  </aside>
+
+  <script src="js/console_engine.js"></script>
+</body>
+</html>
