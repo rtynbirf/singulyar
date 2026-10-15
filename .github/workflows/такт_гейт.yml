@@ -36,34 +36,34 @@ jobs:
 
       - name: JS-оракулы (37 файлов node --test)
         run: |
-          счёт=0; красных=0
+          cnt=0; red=0
           for t in ИНСТРУМЕНТЫ/test_*.js ИНСТРУМЕНТЫ/test_*.mjs; do
-            счёт=$((счёт+1))
-            if ! node --test "$t" > /tmp/вых.log 2>&1; then
-              красных=$((красных+1)); echo "RED: $t"; tail -30 /tmp/вых.log
+            cnt=$((cnt+1))
+            if ! node --test "$t" > /tmp/out.log 2>&1; then
+              red=$((red+1)); echo "RED: $t"; tail -30 /tmp/out.log
             fi
           done
-          echo "JS: файлов $счёт, красных $красных"
-          test "$красных" -eq 0
+          echo "JS: файлов $cnt, красных $red"
+          test "$red" -eq 0
 
       - name: Python-оракулы (детерминированные, без браузера/сети)
         run: |
-          счёт=0; красных=0
+          cnt=0; red=0
           for t in ИНСТРУМЕНТЫ/test_*.py; do
-            имя=$(basename "$t")
-            case "$имя" in
+            nm=$(basename "$t")
+            case "$nm" in
               # браузерные/сетевые/живые прогоны — вне CI (их живая поверка у агентов)
               *browser*|*live*|*real*|*wire*) continue;;
               # закалка — playwright-прогон (жёсткий, но не в CI)
               *закалка*) continue;;
             esac
-            счёт=$((счёт+1))
-            if ! timeout 120 python3 "$t" > /tmp/вых.log 2>&1; then
-              красных=$((красных+1)); echo "RED: $t"; tail -30 /tmp/вых.log
+            cnt=$((cnt+1))
+            if ! timeout 120 python3 "$t" > /tmp/out.log 2>&1; then
+              red=$((red+1)); echo "RED: $t"; tail -30 /tmp/out.log
             fi
           done
-          echo "Python: файлов $счёт, красных $красных"
-          test "$красных" -eq 0
+          echo "Python: файлов $cnt, красных $red"
+          test "$red" -eq 0
 
       - name: JSON-раундтрип реестров
         run: |
