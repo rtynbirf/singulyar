@@ -303,6 +303,14 @@ footer{padding-bottom:30px}
 <script>/* мост ·54 (такт v11.32 «ПИР»): имя комнаты уносится глубокой ссылкой #комната=…; 0 сети — только сбор ссылки */
 (function(){try{var в=document.getElementById('мост54Комната'),а=document.getElementById('мост54Пойти');if(!в||!а)return;var п=null;try{п=localStorage.getItem('singulyar.pir.комната')}catch(e){}if(п&&!в.value)в.value=п;function идти(){var х='СИНГУЛЯР_54_ПИР.html#комната='+encodeURIComponent(в.value.trim());if(а.tagName==='A'){а.href=х}return х}if(а.tagName==='A'){в.addEventListener('input',идти);идти()}а.addEventListener('click',function(ev){if(а.tagName!=='A'){ev.preventDefault();location.href=идти()}})}catch(e){}})();
 </script>  </div>
+<div data-такт="v11.49" style="margin-top:10px">
+    <p class="state" id="мостКрист">КРИСТАЛЛ ЧЕЛОВЕКА — семейная рума: ПАША · МАМА · ЖЕНЯ · ВАНЯ; круг своих по канону krug-profiles, ID/IP в руме, повторный контакт без QR: мост вкладок (офлайн, автомат) + релей по явному слову (И-01), приглашение ссылкой с авто-приёмом. Латка С129.</p>
+    <div class="row" style="margin-top:8px">
+      <button id="мостКристИдти" type="button">Открыть КРИСТАЛЛ ЧЕЛОВЕКА</button>
+    </div>
+<script>/* мост КРИСТАЛЛ (латка С129): переход к семейной руме */
+(function(){try{var а=document.getElementById('мостКристИдти');if(!а)return;а.addEventListener('click',function(){location.href='КРИСТАЛЛ_ЧЕЛОВЕКА.html'})}catch(e){}})();
+</script>  </div>
   <div id="callList" class="call-grid"></div>
   <div class="row" style="margin-top:8px" id="callActions" hidden>
     <button id="btnAccept">принять</button>
