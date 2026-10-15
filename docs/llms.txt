@@ -15,6 +15,8 @@
 - [docs/ДОРОЖНАЯ_КАРТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ДОРОЖНАЯ_КАРТА.md): ЕДИНАЯ ДОРОЖНАЯ КАРТА — все карты дома сведены, весь открытый фронт со статусами и критериями закрытия
 - [docs/АРХИТЕКТУРА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/АРХИТЕКТУРА.md): комод — ящики → мост → вещи; шрамы CSP
 - [docs/РИТУАЛ_ТАКТА.md](https://github.com/rtynbirf/singulyar/blob/main/docs/РИТУАЛ_ТАКТА.md): как выпускается версия, 8 стадий
+- [SECURITY.md](https://github.com/rtynbirf/singulyar/blob/main/SECURITY.md): безопасность дома — как сообщить об уязвимости, постура CSP/SRI/гейтов
+- [CONTRIBUTING.md](https://github.com/rtynbirf/singulyar/blob/main/CONTRIBUTING.md): как попасть в такт — три шага, ловушки, локальная проверка гейта
 - [docs/ПОЛИМАТ_ПРОТОКОЛ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ПОЛИМАТ_ПРОТОКОЛ.md): метод МНОГОУЧЕНОГО — 5 правил, 12 линз дома, 5 шагов
 - [docs/ИНСТРУМЕНТАРИЙ_ВЭБ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ИНСТРУМЕНТАРИЙ_ВЭБ.md): три руки агента (ИНТЕРНЕТ+ПЕСОЧНИЦА+ПАЙТОН), живая поверка 8/8
 - [docs/ЛУЧШИЕ_ПРАКТИКИ.md](https://github.com/rtynbirf/singulyar/blob/main/docs/ЛУЧШИЕ_ПРАКТИКИ.md): свод 14 лучших практик мира — советники агента

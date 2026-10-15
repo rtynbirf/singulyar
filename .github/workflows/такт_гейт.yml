@@ -3,6 +3,8 @@
 # Кодовая часть: все JS-оракулы (node --test) + детерминированные Python-оракулы.
 # Браузерные/сетевые пробы (playwright/Nostr/прод) — отдельные живые прогоны агентов, не CI.
 # Lighthouse CI — отдельный падающий гейт (lighthouse.yml, a11y 0.95).
+# Латка С128: экшены пинованы SHA (supply-chain, ТЗ-Г); + оракул описания репозитория (ТЗ-И)
+# — description сверяется с реестром data/versions.json → дом.описание; расхождение = красный.
 name: Такт-гейт (доказательство выпуска)
 
 on:
@@ -22,15 +24,15 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
 
       - name: Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
 
       - name: Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
 
@@ -75,4 +77,19 @@ jobs:
           for п in ['data/versions.json', 'manifest.webmanifest', 'ГОТОВНОСТЬ.manifest.json', 'ИНСТРУМЕНТЫ/реестр_innerhtml.json']:
               json.load(open(п, encoding='utf-8'))
               print('OK', п)
+          EOF
+
+      - name: Оракул описания репозитория (ТЗ-И, латка С128)
+        run: |
+          python3 - <<'EOF'
+          import json, urllib.request
+          ожидание = json.load(open('data/versions.json', encoding='utf-8'))['дом']['описание']
+          запрос = urllib.request.Request(
+              'https://api.github.com/repos/rtynbirf/singulyar',
+              headers={'User-Agent': 'сингуляр-такт-гейт'})
+          факт = json.load(urllib.request.urlopen(запрос)).get('description')
+          print('реестр:', ожидание)
+          print('факт:  ', факт)
+          assert факт == ожидание, 'описание репозитория \u2260 реестру — обнови description (или цех_правды)'
+          print('OK: описание = реестру')
           EOF
