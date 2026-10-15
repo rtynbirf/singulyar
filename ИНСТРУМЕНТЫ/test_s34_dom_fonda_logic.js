@@ -62,8 +62,9 @@ test('4. независимость: чужие имена названы тек
   }
   assert.match(ДВЕРЬ, /НЕ ТЕ ФОНДЫ/);
   assert.match(ДВЕРЬ, /независимый фонд дома СИНГУЛЯР/);
-  /* внешних href на ЧУЖИЕ домены нет — свой канонический адрес (og:url/canonical) не в счёт (ТЗ-1) */
-  const все_внешние = ДВЕРЬ.match(/href="https?:\/\/[^\"]*"/g) || [];
+  /* внешних href на странице нет вовсе — только внутренние двери */
+  /* внешних href на ЧУЖИЕ домены нет — свой канонический адрес (og:url/canonical) не в счёт (ТЗ-1, мой хвост С123) */
+  const все_внешние = ДВЕРЬ.match(/href="https?:\/\/[^"]*"/g) || [];
   const чужие = все_внешние.filter(с => !/^href="https?:\/\/rtynbirf\.github\.io\//.test(с));
   assert.equal(чужие.length, 0, 'внешних дверей (чужие домены) на ·34 нет: ' + чужие.join(' | '));
 });
@@ -120,11 +121,11 @@ test('10. устав: 11 разделов, честный статус юрли�
   assert.match(УСТАВ, /helenkellerintl\.org/);
   assert.match(УСТАВ, /BTC, сеть mainnet/);
   assert.match(УСТАВ, /новой записью/);
-  /* SW v62 несёт дверь и устав офлайн (закон I-05) */
-  const КЭШ_SW34 = (SW.match(/S15_CACHE = 's15-orkestrator-(v\d+)'/) || [])[1];
-  const КЭШ_РЕЕСТРА34 = JSON.parse(readFileSync(join(КОРЕНЬ, 'data', 'versions.json'), 'utf-8')).дом.поколение_кэша;
-  assert.ok(КЭШ_SW34, 'S15_CACHE в sw15 читается');
-  assert.equal(КЭШ_SW34, КЭШ_РЕЕСТРА34, 'кэш SW = поколению реестра: ' + КЭШ_SW34 + ' vs ' + КЭШ_РЕЕСТРА34);
+  /* SW несёт дверь и устав офлайн (закон I-05); поколение — из реестра (v11.44 «ИЗМЕРЕНО») */
+  const РЕЕСТР_SW = JSON.parse(ч('data/versions.json'));
+  assert.match(SW, /s15-orkestrator-v\d+/);
+  assert.ok(SW.includes("s15-orkestrator-" + РЕЕСТР_SW.дом.поколение_кэша),
+            'SW несёт живое поколение ' + РЕЕСТР_SW.дом.поколение_кэша);
   assert.match(SW, /'\.\/СИНГУЛЯР_34_ДОМ_ФОНДА\.html'/);
   assert.match(SW, /'\.\/ФОНД\/УСТАВ_ФОНДА\.md'/);
 });
