@@ -52,6 +52,7 @@ header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);back
 .hd b{font-size:16px;display:block;line-height:1.2}
 .hd span{color:var(--dim);font-size:12px;display:block}
 .я-chip{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 8px;font-size:13.5px;max-width:44%;cursor:pointer}
+.hd .bdg{position:relative;top:-7px;margin-left:5px;background:var(--red);color:#fff;border-radius:999px;font-size:10.5px;padding:1px 6px;font-weight:700;font-family:var(--mono)}
 .я-chip .ав{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#16191E;font-size:16px;flex:none}
 .я-chip em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .я-chip small{color:var(--dim);font-family:var(--mono);font-size:10px;display:block;line-height:1}
@@ -214,6 +215,16 @@ details.уст .пимечт{color:var(--dim);font-size:13px;margin-top:8px}
 
 .сетка-ссылки{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .сетка-ссылки a{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px}
+/* ── С132 «МИНИМУМ»: шестерёнка настроек + подменю + люди списком ── */
+.шестерёнка{width:40px;height:40px;border-radius:50%;background:var(--panel);border:1px solid var(--line);font-size:19px;flex:none}
+.шестерёнка:hover{border-color:var(--teal)}
+.настр-шапка{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.настр-шапка h3{margin:0}
+div.room{cursor:pointer}
+.room .ряд{display:flex;gap:6px;flex:none;align-items:center}
+.room .ряд button{width:38px;height:34px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);font-size:16px}
+.room .ряд button:hover{border-color:var(--teal)}
+.room .имя{font-weight:700}
 footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;color:var(--dim);font-size:12.5px}
 .toast-холд{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:max-content;max-width:92vw}
 .toast{background:#16191E;border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:10px;padding:10px 16px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
@@ -232,130 +243,28 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 <a href="#v-rooms" class="skip" hidden>к румам</a>
 <header><div class="wrap hd">
   <div class="logo">S·23</div>
-  <div><b>КРУГ</b><span>люди · румы · звонки</span></div>
-  <button class="btn-install" id="btnInstall" hidden>⬇ установить</button>
+  <div><b>КРУГ <span class="bdg" id="бейджВсего" hidden>0</span></b><span>семья · чаты · звонки</span></div>
   <button class="я-chip" id="яЧип" aria-haspopup="dialog"><span class="ав" id="яЧипАв">⬡</span><span><em id="яЧипИмя">кто ты?</em><small id="яЧипТип">нажми и выбери</small></span></button>
+  <button class="шестерёнка" id="btnНастройки" title="Настройки круга — всё лишнее живёт здесь" aria-haspopup="dialog">⚙</button>
 </div></header>
 
 <main class="wrap">
 
-<!-- ═════════ РУМЫ ═════════ -->
-<section class="v on" id="v-rooms" role="tabpanel" aria-label="Румы и люди">
-  <h2 class="сек">Семья · нажми имя — и позвони</h2>
+<!-- ═════════ ГЛАВНЫЙ ЭКРАН (латка С132 «МИНИМУМ»): только необходимое — видео · аудио · чат. Все регулировки — в ⚙ подменю ниже. ═════════ -->
+<section class="v on" id="v-rooms" aria-label="Круг: семья, чаты, люди">
+  <h2 class="сек">Семья · коснись — и позвони</h2>
   <div class="семья" id="семьяСетка" aria-label="Семья: ПАША, МАМА, ВАНЯ, ЖЕНЯ — быстрые звонки"></div>
-  <button class="семья-зов" id="семьяЗов" title="Позвать всех своих — у семьи круг включится сам">⌇ позвать всех в круг — петь и говорить всей семьёй</button>
-  <details class="уст" id="устКакПозвонить" style="margin-top:10px"><summary>◉ Как позвонить — 3 шага (как в обычных мессенджерах)</summary>
-    <ol>
-      <li><b>Один раз:</b> нажми «кто ты?» вверху и выбери своё имя — ПАША ◇ · МАМА ◈ · ВАНЯ ⌇ · ЖЕНЯ ∿. Устройство запомнит (авто-ID).</li>
-      <li><b>Позвонить:</b> нажми у имени ⌇ — голос или ◈ — видео. У своих трубка поднимется сама.</li>
-      <li><b>Всем сразу:</b> вкладка ЗВОНКИ → СВОЙ КРУГ — коснись экрана, и вся семья на одной линии: говорите и пойте.</li>
-    </ol>
-    <p class="пимечт">Из чата тоже можно: открой переписку — кнопки ⌇ и ◈ в шапке. Голоса идут напрямую между устройствами; IP нигде не записывается.</p>
-  </details>
-  <h2 class="сек">Румы</h2>
-  <div class="list" id="румаСписок"></div>
+  <button class="семья-зов" id="семьяЗов" title="Позвать всех своих — у семьи круг включится сам">⌇ позвать всех</button>
   <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
 
-  <h2 class="сек">Люди круга · 16 · личные чаты</h2>
-  <div class="people" id="людскаяСетка"></div>
-  <p class="note" style="margin-top:10px">Короткие имена круга защищены: гости пишут своё имя с нейтральным словом ПЕРЕД ним — «ГОСТЬ МАША», «СОСЕД ВАНЯ». Это для ориентирования, не для деления на своих и чужих.</p>
-</section>
+  <h2 class="сек">Чаты</h2>
+  <div class="list" id="румаСписок"></div>
 
-<!-- ═════════ ЗВОНКИ ═════════ -->
-<section class="v" id="v-calls" role="tabpanel" aria-label="Звонки">
-  <h2 class="сек">Свой круг ⌇ голос одной семьи — на автомате</h2>
-  <div class="panel свк-панель" id="свкПанель">
-    <div class="перекл">
-      <button class="гальо" id="свкГальо" role="switch" aria-checked="true" aria-labelledby="свкЗагл"></button>
-      <span id="свкЗагл"><b>СВОЙ КРУГ включён</b><br><small class="note" id="свкСтатус">свои — на одной линии: открыл дверь, коснулся экрана — ты в круге, все слышат всех</small></span>
-    </div>
-    <div class="свк-линия" id="свкЛиния" aria-live="polite"></div>
-    <div class="свк-действия">
-      <button id="свкМик" title="Мой микрофон в круге вкл/выкл">◉ мик</button>
-      <button id="свкЗов" title="Позвать всех своих в круг — у них зазвонит и круг включится сам">⌇ позвать всех</button>
-      <button id="свкЗвук" hidden title="Браузер ждал твоего касания — один тап включает звук круга">◈ включить звук</button>
-    </div>
-    <p class="note" style="margin-top:10px" id="свкЗаметка">Говорить и петь можно всем сразу — линия живая, P2P. Если два устройства стоят рядом в одной комнате — приглуши мик на одном (◉). Твои голоса идут напрямую между устройствами; ID устройства — пропуск в круг, IP нигде не записывается.</p>
-  </div>
-
-  <h2 class="сек">Кому звонить · аудио ⌇ и видео ◈</h2>
-  <div class="people" id="звонСетка"></div>
-
-  <h2 class="сек">Автоответчик</h2>
-  <div class="panel звон-настройки">
-    <div class="перекл">
-      <button class="гальо" id="гальоАвто" role="switch" aria-checked="true" aria-labelledby="автоЗагл"></button>
-      <span id="автоЗагл"><b>Автоответчик включён</b><br><small class="note" id="автоСтатус">пропущенный звонок сам ответит и предложит оставить голосовое</small></span>
-    </div>
-    <label for="автоТекст" class="note">Текст автоответчика (каждый правит под себя):</label>
-    <textarea id="автоТекст" rows="2" style="margin-top:6px">Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.</textarea>
-  </div>
-
-  <h2 class="сек">Журнал звонков</h2>
-  <div class="журнал" id="журналЗвонков"></div>
-</section>
-
-<!-- ═════════ Я ═════════ -->
-<section class="v" id="v-me" role="tabpanel" aria-label="Я и устройство">
-  <h2 class="сек">Кто я</h2>
-  <div class="panel" id="яКто"></div>
-
-  <h2 class="сек">Установить как приложение</h2>
-  <div class="panel" style="margin-bottom:10px">
-    <p class="note">СИНГУЛЯР ставится штатным образом на всё: телефон, планшет, ноутбук, ПК. После установки открывается без адресной строки, как обычное приложение, работает офлайн. Выбери своё устройство:</p>
-    <button class="btn-install" id="btnInstall2" style="margin-top:10px" hidden>⬇ установить сейчас</button>
-  </div>
-  <details class="уст" id="устАндроид"><summary>Android · Chrome, Яндекс, Samsung Internet</summary>
-    <ol>
-      <li>Открой <b>rtynbirf.github.io/singulyar</b> в Chrome.</li>
-      <li>Меню <b>⋮</b> (справа сверху) → <b>«Установить приложение»</b> или «Добавить на главный экран».</li>
-      <li>Подтверди — значок дома появится на рабочем столе.</li>
-    </ol>
-    <p class="пимечт">Совет: если в меню нет пункта — сайт уже открыт как установленное приложение.</p>
-  </details>
-  <details class="уст" id="устIos"><summary>iPhone / iPad · Safari</summary>
-    <ol>
-      <li>Открой сайт именно в <b>Safari</b> (не в Chrome — iOS разрешает установку только через Safari).</li>
-      <li>Кнопка <b>«Поделиться»</b> (квадрат со стрелкой вверх).</li>
-      <li>Прокрути и выбери <b>«На экран „Домой“»</b> → <b>«Добавить»</b>.</li>
-    </ol>
-    <p class="пимечт">Иконка появится рядом с приложениями. Свайп по центру снизу — домой к СИНГУЛЯРУ.</p>
-  </details>
-  <details class="уст" id="устWin"><summary>Windows · Chrome, Edge</summary>
-    <ol>
-      <li>Открой сайт в Chrome или Edge.</li>
-      <li>В адресной строке справа нажми иконку <b>⊕ / экран с стрелкой</b> → «Установить».</li>
-      <li>Или меню <b>⋮</b> → «Транслировать, сохранить и поделиться» → «Установить страницу как приложение».</li>
-    </ol>
-    <p class="пимечт">Появится в меню «Пуск», можно закрепить на панели задач.</p>
-  </details>
-  <details class="уст" id="устMac"><summary>macOS · Chrome, Edge, Safari</summary>
-    <ol>
-      <li>Chrome/Edge: иконка установки в адресной строке → «Установить».</li>
-      <li>Safari 17+: меню <b>Файл</b> → <b>«Добавить в Dock»</b>.</li>
-    </ol>
-    <p class="пимечт">Приложение появится в Dock и Launchpad.</p>
-  </details>
-  <details class="уст" id="устLinux"><summary>Linux · Chrome, Chromium, Edge</summary>
-    <ol>
-      <li>Открой сайт в Chrome/Chromium.</li>
-      <li>Меню <b>⋮</b> → <b>«Установить приложение»</b> (или иконка ⊕ в адресной строке).</li>
-    </ol>
-    <p class="пимечт">Иконка появится в меню приложений дистрибутива.</p>
-  </details>
-
-  <h2 class="сек">Вся вселенная · модули</h2>
-  <div class="сетка-ссылки" id="модулиСсылки"></div>
+  <h2 class="сек">Люди · чат и звонки</h2>
+  <div class="list" id="людскаяСетка"></div>
 </section>
 
 </main>
-
-<!-- ═════════ ВКЛАДКИ ═════════ -->
-<nav class="tabs" role="tablist" aria-label="Разделы КРУГА">
-  <button id="tab-rooms" aria-selected="true" aria-controls="v-rooms"><span class="и">¶</span>РУМЫ<span class="bdg" id="бейджВсего" hidden>0</span></button>
-  <button id="tab-calls" aria-selected="false" aria-controls="v-calls"><span class="и">⌇</span>ЗВОНКИ</button>
-  <button id="tab-me" aria-selected="false" aria-controls="v-me"><span class="и">⬡</span>Я</button>
-</nav>
 
 <!-- ═════════ ЧАТ (полноэкранный) ═════════ -->
 <div class="овер" id="чатОвер" role="dialog" aria-modal="true" aria-label="Чат">
@@ -385,12 +294,115 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
   </div>
 </div>
 
+<!-- ═════════ НАСТРОЙКИ — ПОДМЕНЮ (латка С132 «МИНИМУМ»: все регулировки — здесь, не на главном экране) ═════════ -->
+<div class="овер" id="настройкиОвер" role="dialog" aria-modal="true" aria-label="Настройки круга">
+  <div class="карта">
+    <div class="настр-шапка">
+      <h3>⚙ Настройки КРУГА</h3>
+      <button id="настройкиЗакрыть" aria-label="Закрыть настройки" style="font-size:22px;padding:4px 10px">✕</button>
+    </div>
+
+    <h2 class="сек">Свой круг ⌇ голос семьи на автомате</h2>
+    <div class="panel свк-панель" id="свкПанель">
+      <div class="перекл">
+        <button class="гальо" id="свкГальо" role="switch" aria-checked="true" aria-labelledby="свкЗагл"></button>
+        <span id="свкЗагл"><b>СВОЙ КРУГ включён</b><br><small class="note" id="свкСтатус">свои — на одной линии: открыл дверь, коснулся экрана — ты в круге, все слышат всех</small></span>
+      </div>
+      <div class="свк-линия" id="свкЛиния" aria-live="polite"></div>
+      <div class="свк-действия">
+        <button id="свкМик" title="Мой микрофон в круге вкл/выкл">◉ мик</button>
+        <button id="свкЗов" title="Позвать всех своих в круг — у них зазвонит и круг включится сам">⌇ позвать всех</button>
+        <button id="свкЗвук" hidden title="Браузер ждал твоего касания — один тап включает звук круга">◈ включить звук</button>
+      </div>
+      <p class="note" style="margin-top:10px" id="свкЗаметка">Говорить и петь можно всем сразу — линия живая, P2P. Если два устройства стоят рядом в одной комнате — приглуши мик на одном (◉). Твои голоса идут напрямую между устройствами; ID устройства — пропуск в круг, IP нигде не записывается.</p>
+    </div>
+
+    <h2 class="сек">Автоответчик</h2>
+    <div class="panel звон-настройки">
+      <div class="перекл">
+        <button class="гальо" id="гальоАвто" role="switch" aria-checked="true" aria-labelledby="автоЗагл"></button>
+        <span id="автоЗагл"><b>Автоответчик включён</b><br><small class="note" id="автоСтатус">пропущенный звонок сам ответит и предложит оставить голосовое</small></span>
+      </div>
+      <label for="автоТекст" class="note">Текст автоответчика (каждый правит под себя):</label>
+      <textarea id="автоТекст" rows="2" style="margin-top:6px">Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.</textarea>
+    </div>
+
+    <h2 class="сек">Недавние звонки</h2>
+    <div class="журнал" id="журналЗвонков"></div>
+
+    <h2 class="сек">Как позвонить — 3 шага</h2>
+    <details class="уст" id="устКакПозвонить"><summary>◉ Как позвонить — 3 шага (как в обычных мессенджерах)</summary>
+      <ol>
+        <li><b>Один раз:</b> нажми «кто ты?» вверху и выбери своё имя — ПАША ◇ · МАМА ◈ · ВАНЯ ⌇ · ЖЕНЯ ∿. Устройство запомнит (авто-ID).</li>
+        <li><b>Позвонить:</b> нажми у имени ⌇ — голос или ◈ — видео. У своих трубка поднимется сама.</li>
+        <li><b>Всем сразу:</b> кнопка «⌇ позвать всех» на главном экране — вся семья на одной линии: говорите и пойте.</li>
+      </ol>
+      <p class="пимечт">Из чата тоже можно: открой переписку — кнопки ⌇ и ◈ в шапке. Голоса идут напрямую между устройствами; IP нигде не записывается.</p>
+    </details>
+
+    <h2 class="сек">Установить как приложение</h2>
+    <div class="panel" id="устРаздел" style="margin-bottom:10px">
+      <p class="note">СИНГУЛЯР ставится штатным образом на всё: телефон, планшет, ноутбук, ПК. После установки открывается без адресной строки, как обычное приложение, работает офлайн.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn-install" id="btnInstall" hidden>⬇ установить сейчас</button>
+        <button class="btn-install" id="btnInstall2" hidden>⬇ установить приложение</button>
+      </div>
+    </div>
+    <details class="уст" id="устАндроид"><summary>Android · Chrome, Яндекс, Samsung Internet</summary>
+      <ol>
+        <li>Открой <b>rtynbirf.github.io/singulyar</b> в Chrome.</li>
+        <li>Меню <b>⋮</b> (справа сверху) → <b>«Установить приложение»</b> или «Добавить на главный экран».</li>
+        <li>Подтверди — значок дома появится на рабочем столе.</li>
+      </ol>
+      <p class="пимечт">Совет: если в меню нет пункта — сайт уже открыт как установленное приложение.</p>
+    </details>
+    <details class="уст" id="устIos"><summary>iPhone / iPad · Safari</summary>
+      <ol>
+        <li>Открой сайт именно в <b>Safari</b> (не в Chrome — iOS разрешает установку только через Safari).</li>
+        <li>Кнопка <b>«Поделиться»</b> (квадрат со стрелкой вверх).</li>
+        <li>Прокрути и выбери <b>«На экран „Домой“»</b> → <b>«Добавить»</b>.</li>
+      </ol>
+      <p class="пимечт">Иконка появится рядом с приложениями. Свайп по центру снизу — домой к СИНГУЛЯРУ.</p>
+    </details>
+    <details class="уст" id="устWin"><summary>Windows · Chrome, Edge</summary>
+      <ol>
+        <li>Открой сайт в Chrome или Edge.</li>
+        <li>В адресной строке справа нажми иконку <b>⊕ / экран с стрелкой</b> → «Установить».</li>
+        <li>Или меню <b>⋮</b> → «Транслировать, сохранить и поделиться» → «Установить страницу как приложение».</li>
+      </ol>
+      <p class="пимечт">Появится в меню «Пуск», можно закрепить на панели задач.</p>
+    </details>
+    <details class="уст" id="устMac"><summary>macOS · Chrome, Edge, Safari</summary>
+      <ol>
+        <li>Chrome/Edge: иконка установки в адресной строке → «Установить».</li>
+        <li>Safari 17+: меню <b>Файл</b> → <b>«Добавить в Dock»</b>.</li>
+      </ol>
+      <p class="пимечт">Приложение появится в Dock и Launchpad.</p>
+    </details>
+    <details class="уст" id="устLinux"><summary>Linux · Chrome, Chromium, Edge</summary>
+      <ol>
+        <li>Открой сайт в Chrome/Chromium.</li>
+        <li>Меню <b>⋮</b> → <b>«Установить приложение»</b> (или иконка ⊕ в адресной строке).</li>
+      </ol>
+      <p class="пимечт">Иконка появится в меню приложений дистрибутива.</p>
+    </details>
+
+    <h2 class="сек">Кто я</h2>
+    <div class="panel" id="яКто"></div>
+
+    <h2 class="сек">Вся вселенная · модули</h2>
+    <div class="сетка-ссылки" id="модулиСсылки"></div>
+
+    <p class="note" style="margin-top:12px">Короткие имена круга защищены: гости пишут своё имя с нейтральным словом ПЕРЕД ним — «ГОСТЬ МАША», «СОСЕД ВАНЯ». Это для ориентирования, не для деления на своих и чужих.</p>
+  </div>
+</div>
+
 <!-- ═════════ КТО ТЫ ═════════ -->
 <div class="овер" id="идентОвер" role="dialog" aria-modal="true" aria-label="Кто ты">
   <div class="карта">
     <h3>Кто ты в КРУГЕ?</h3>
     <p class="note">Выбери себя — один раз, устройство запомнит. Если тебя нет в круге — впиши своё имя внизу.</p>
-    <p class="note" id="свкПодсказка" style="border:1px solid rgba(212,175,55,.35);border-radius:10px;padding:8px 10px">⌇ <b>СВОЙ КРУГ</b> — нажми своё имя: ПАША ◇ · МАМА ◈ (АНЯ) · ВАНЯ ⌇ (ИВАН) · ЖЕНЯ ∿. Дальше всё на автомате: линия семьи включится сама, звонки своих примутся сами.</p>
+    <p class="note" id="свкПодсказка" style="border:1px solid rgba(212,175,55,.35);border-radius:10px;padding:8px 10px">⌇ <b>СВОЙ КРУГ</b> — нажми своё имя: ПАША ◇ · МАМА ◈ · ВАНЯ ⌇ · ЖЕНЯ ∿. Дальше всё на автомате.</p>
     <div class="идент-сетка" id="идентСетка"></div>
     <label class="note" for="идентВвод">Или твоё имя (короткие имена круга защищены):</label>
     <input id="идентВвод" placeholder="например: ГОСТЬ МАША или КАПИТАН ДИМА" style="margin-top:6px">
@@ -425,7 +437,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 <div id="свкЗвукХолд" hidden aria-hidden="true"></div>
 
 <footer><div class="wrap">
-  СИНГУЛЯР ·23 «КРУГ» v1.2 · СВОЙ КРУГ: голос семьи на автомате (ПАША · МАМА · ВАНЯ · ЖЕНЯ — линия, авто-приём, зов всех) · семья на первом экране: ⌇ голос и ◈ видео одним касанием, звонок из чата — как в мессенджерах · 16 людей · румы · звонки аудио+видео · автоответчики · голосовые · ПАПА-ДОМ сохраняет всегда · P2P (Nostr-сигналинг) + мост вкладок одного браузера · данные живут на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
+  СИНГУЛЯР ·23 «КРУГ» v1.3 «МИНИМУМ» · регулировки — в ⚙ · P2P, данные на твоём устройстве · <a href="index.html">⌂ оркестратор ·15</a>
 </div></footer>
 <script>
 
@@ -439,8 +451,9 @@ function канонГлиф(г, запасной) {
   return запасной !== undefined ? запасной : '◇';
 }
 /* ═══════════════════════════════════════════════════════════════════
-   СИНГУЛЯР ·23 «КРУГ» v1.2 — люди, румы, звонки, СВОЙ КРУГ семьи на автомате,
-   семья на первом экране (латка С131: как в мессенджерах — ⌇/◈ одним касанием).
+   СИНГУЛЯР ·23 «КРУГ» v1.3 «МИНИМУМ» (латка С132) — главный экран держит только
+   необходимое: семья одним касанием, зов всех, чаты, люди. Вся машина (СВОЙ КРУГ,
+   автоответчик, журнал, инструкции установки, кто я, модули) — в подменю ⚙.
    Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
    Слои: РЕЕСТР → ГВАРД → ХРАН → ЛИЧНОСТЬ → СВОЙ КРУГ → UI → СЕТЬ → ЗВОНКИ → ГОЛОС → PWA.
    Тестовые крюки: window.K23 (только чтение).
@@ -650,18 +663,11 @@ function деньК(ц){
   return d.toLocaleDateString('ru-RU', { day:'numeric', month:'long' });
 }
 
-/* ───────────────────── 6 · ВКЛАДКИ ───────────────────── */
-function откройВкладку(имя){
-  ['rooms','calls','me'].forEach(function(v){
-    $('v-' + v).classList.toggle('on', v === имя);
-    $('tab-' + v).setAttribute('aria-selected', v === имя ? 'true' : 'false');
-  });
-  if (имя === 'calls') рендерЗвонки();
-  if (имя === 'me') рендерЯ();
-}
-['rooms','calls','me'].forEach(function(v){
-  $('tab-' + v).addEventListener('click', function(){ откройВкладку(v); });
-});
+/* ───────────────────── 6 · НАСТРОЙКИ-ПОДМЕНЮ (С132 «МИНИМУМ») ───────────────────── */
+function откройНастройки(){ $('настройкиОвер').classList.add('on'); }
+function закройНастройки(){ $('настройкиОвер').classList.remove('on'); }
+$('btnНастройки').addEventListener('click', откройНастройки);
+$('настройкиЗакрыть').addEventListener('click', закройНастройки);
 
 /* ───────────────────── 7 · РЕНДЕР: румы, люди, звонки, я ───────────────────── */
 function последнийТекст(румаИд){
@@ -729,22 +735,24 @@ function эмодзиРумы(румаИд){
 }
 
 function рендерЛюди(){
+  /* С132: люди — компактным списком, как в мессенджерах: строка = чат,
+     справа — ¶ чат, ⌇ аудио, ◈ видео. Никакого шума, только имя и «в сети». */
   const сетка = $('людскаяСетка'); сетка.textContent = '';
   РЕЕСТР.forEach(function(ч){
-    const метки = [];
-    if (ч.метка) метки.push(ч.метка);
-    if (устройствоЧеловека(ч)) метки.push('⌇ в сети');
-    if (ч.алиасы.length) метки.push('также: ' + ч.алиасы.join(', '));
-    const ряд = эл('div', { class:'ряд' });
-    ряд.appendChild(эл('button', { title:'написать', onclick:function(e){ e.stopPropagation(); открытьЧат(dmИд(ч)); } }, [ т('¶') ]));
+    const вСети = !!устройствоЧеловека(ч);
+    const тело = эл('span', { class:'тело' }, [
+      эл('span', { class:'имя', text:ч.имя + (ч.система ? ' · голос вселенной' : '') }),
+      эл('span', { class:'превью', text:(ч.метка ? ч.метка + ' · ' : '') + (вСети ? '⌇ в сети' : 'нет на связи') })
+    ]);
+    const ряд = эл('span', { class:'ряд' });
+    ряд.appendChild(эл('button', { title:'чат с ' + ч.имя, 'aria-label':'чат с ' + ч.имя, onclick:function(e){ e.stopPropagation(); открытьЧат(dmИд(ч)); } }, [ т('¶') ]));
     if (!ч.система) {
-      ряд.appendChild(эл('button', { title:'аудиозвонок', onclick:function(e){ e.stopPropagation(); позвони(ч, 'аудио'); } }, [ т('⌇') ]));
-      ряд.appendChild(эл('button', { title:'видеозвонок', onclick:function(e){ e.stopPropagation(); позвони(ч, 'видео'); } }, [ т('◈') ]));
+      ряд.appendChild(эл('button', { title:'аудиозвонок ' + ч.имя, 'aria-label':'аудиозвонок ' + ч.имя, onclick:function(e){ e.stopPropagation(); позвони(ч, 'аудио'); } }, [ т('⌇') ]));
+      ряд.appendChild(эл('button', { title:'видеозвонок ' + ч.имя, 'aria-label':'видеозвонок ' + ч.имя, onclick:function(e){ e.stopPropagation(); позвони(ч, 'видео'); } }, [ т('◈') ]));
     }
-    сетка.appendChild(эл('div', { class:'person', 'data-имя':ч.имя }, [
+    сетка.appendChild(эл('div', { class:'room', 'data-имя':ч.имя, onclick:function(){ открытьЧат(dmИд(ч)); } }, [
       эл('span', { class:'ав', text:ч.эмодзи }),
-      эл('b', { text:ч.имя }),
-      эл('small', { text:метки.join(' · ') || 'человек круга' }),
+      тело,
       ряд
     ]));
   });
@@ -776,7 +784,7 @@ function рендерСемью(){
     if (!ч) return;
     const дом = СВОЙ_КРУГ_ИМЕНИ[ид] || ч.имя;
     const вСети = !!устройствоЧеловека(ч);
-    const подпись = (дом === ч.имя ? (ч.метка || 'круг семьи') : ч.имя + (ч.метка ? ' · ' + ч.метка : '')) + (вСети ? ' · в сети' : ' · открой дверь — и на связи');
+    const подпись = (дом !== ч.имя ? ч.имя + ' · ' : '') + (вСети ? '⌇ в сети' : 'нет на связи');
     const ряд = эл('div', { class:'ряд' });
     ряд.appendChild(эл('button', { title:'аудиозвонок ' + дом, onclick:function(){ позвони(ч, 'аудио'); } }, [ т('⌇') ]));
     ряд.appendChild(эл('button', { title:'видеозвонок ' + дом, onclick:function(){ позвони(ч, 'видео'); } }, [ т('◈') ]));
@@ -790,20 +798,8 @@ function рендерСемью(){
 }
 
 function рендерЗвонки(){
-  const сетка = $('звонСетка'); сетка.textContent = '';
-  РЕЕСТР.forEach(function(ч){
-    if (ч.система) return; /* RUVSON не звонит — он в тексте */
-    const ряд = эл('div', { class:'ряд' });
-    ряд.appendChild(эл('button', { title:'аудиозвонок', onclick:function(){ позвони(ч, 'аудио'); } }, [ т('⌇') ]));
-    ряд.appendChild(эл('button', { title:'видеозвонок', onclick:function(){ позвони(ч, 'видео'); } }, [ т('◈') ]));
-    сетка.appendChild(эл('div', { class:'person', 'data-имя':ч.имя }, [
-      эл('span', { class:'ав', text:ч.эмодзи }),
-      эл('b', { text:ч.имя }),
-      эл('small', { text:ч.метка || (ч.алиасы.length ? ч.алиасы.join(', ') : 'человек круга') }),
-      устройствоЧеловека(ч) ? эл('span', { class:'свк-точка', text:'⌇ в сети' }) : эл('span', { class:'свк-точка тускло', text:'· ждём' }),
-      ряд
-    ]));
-  });
+  /* С132: отдельной сетки «кому звонить» больше нет — люди со звонками ⌇/◈ живут
+     в списке на главном; здесь только регулировки автоответчика и журнал. */
   const авт = лс(КЛЮЧ.авто, { вкл:true, текст:'Сейчас не могу подойти — оставь голосовое, я всё услышу и перезвоню.' });
   $('гальоАвто').setAttribute('aria-checked', авт.вкл ? 'true' : 'false');
   $('автоСтатус').textContent = авт.вкл
@@ -1819,10 +1815,12 @@ window.addEventListener('beforeinstallprompt', function(e){
 });
 function попробуйУстановить(){
   if (!отложенныйПромпт) {
-    /* нет промпта: iOS или уже установлено — честно ведём к инструкции */
+    /* нет промпта: iOS или уже установлено — честно ведём к инструкции в подменю */
     const иос = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    тост(иос ? 'В Safari: «Поделиться» → «На экран „Домой“»' : 'Твой браузер предложит установку в меню — см. подсказки ниже');
-    откройВкладку('me');
+    тост(иос ? 'В Safari: «Поделиться» → «На экран „Домой“»' : 'Твой браузер предложит установку в меню — см. подсказки в настройках');
+    откройНастройки();
+    const уст = $('устРаздел');
+    уст && уст.scrollIntoView({ block:'start' });
     return;
   }
   отложенныйПромпт.prompt();
@@ -1841,20 +1839,29 @@ if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
 if (!Я) открытьИдентОвер();
 window.addEventListener('keydown', function(e){
   if (e.altKey || e.ctrlKey || e.metaKey) return;
-  if ($('чатОвер').classList.contains('on') || $('идентОвер').classList.contains('on') || $('звонОвер').classList.contains('on')) {
-    if (e.key === 'Escape') { if ($('чатОвер').classList.contains('on')) закрытьЧат(); }
-    return;
+  /* закон верхнего слоя (v10.7 движка): Esc при открытом оверлее закрывает сам
+     оверлей — и НЕ ведёт на index. stopImmediatePropagation не пускает домовой
+     обработчик движка (его закон «Esc — домой») мимо открытого оверлея. */
+  const чат = $('чатОвер').classList.contains('on');
+  const наст = $('настройкиОвер').classList.contains('on');
+  const звон = $('звонОвер').classList.contains('on');
+  const идент = $('идентОвер').classList.contains('on');
+  if (e.key === 'Escape' && (чат || наст || звон || (идент && Я))) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (чат) { закрытьЧат(); return; }
+    if (наст) { закройНастройки(); return; }
+    if (звон) { завершиЗвонокКнопкой(); return; }
+    if (идент) $('идентОвер').classList.remove('on');
   }
-  if (e.key === '1') откройВкладку('rooms');
-  if (e.key === '2') откройВкладку('calls');
-  if (e.key === '3') откройВкладку('me');
 });
 
 /* ───────────── 17 · ТЕСТОВЫЕ КРЮКИ (только чтение) ───────────── */
 window.K23 = {
-  версия: '1.2.0',
+  версия: '1.3.0',
   реестр: РЕЕСТР,
   румы: РУМЫ,
+  настройки: function(){ return { открыты: $('настройкиОвер').classList.contains('on'), шестерёнка: !!$('btnНастройки'), регулировки: ['свкПанель','гальоАвто','журналЗвонков','устАндроид','яКто','модулиСсылки'].every(function(и){ return !!$(и); }) }; },
   защищённые: function(){ return Array.from(ЗАЩИЩЁННЫЕ); },
   норм: норм,
   проверьИмя: проверьИмя,
