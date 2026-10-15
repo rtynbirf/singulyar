@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+<!--СНГ:ЧЕЛОВЕК--><script src="./человек.js"></script><!-- единая личность дома (латка С135) --><!--/СНГ:ЧЕЛОВЕК-->
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' wss:">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,6 +24,7 @@
    ошибок остаётся ошибками. Все селекторы и ID страницы сохранены — поменяли только краску. */
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#0A0A0C;--fg:#C0C8D0;--panel:rgba(26,29,35,.55);--panel-solid:#1A1D23;--line:rgba(240,240,248,.14);--accent:#D4AF37;--gold-hi:#F5A623;--gold-pale:#F0D78C;--focus:#F5D58F;--red:#E4736B;--dim:#8A9099}
 *{box-sizing:border-box}
+[hidden]{display:none!important} /* латка С135-2: hidden сильнее любого display */
 body{margin:0;background:var(--bg);color:var(--fg)}
 header,main,footer{max-width:1080px;margin:auto;padding:1rem}
 header{border-bottom:1px solid var(--line)}
@@ -90,13 +92,27 @@ footer{border-top:1px solid var(--line);margin-top:2rem}
 </header>
 
 <main id="осн">
-<section class="panel" aria-labelledby="шаг1">
-<h2 id="шаг1">Шаг 1 · Комната</h2>
-<p class="muted">Имя комнаты — это адрес и пропуск: кто знает имя (и ключ, если он задан), тот может войти. Придумайте длинное имя или нажмите «Родить имя».</p>
+<!-- латка С135 «ОДИН КЛИК»: единая личность дома + вход одним касанием; регистрация в чужих комнатах не нужна -->
+<section class="panel" id="одинКликСекция" aria-labelledby="одинКликТитул">
+<h2 id="одинКликТитул">Один клик — и вы в связи</h2>
+<p class="muted">Дом сам помнит, кто вы, и сам подставляет имя и комнату. Сеть включается только вашей рукой — по закону дома И‑01, одним касанием ниже. Регистрироваться в других комнатах не нужно.</p>
+<div class="row" id="лицоСтрока" hidden><span class="pill" id="лицоПилюля"></span><button type="button" class="secondary" id="лицоСменить">это не я</button></div>
+<p class="muted" id="лицоПросьба" hidden>Кто вы? Коснитесь своей карточки — дом запомнит это устройство. Один раз и навсегда.</p>
+<div class="row" id="семьяПлитки" hidden></div>
+<div class="row" id="другоеИмяСтрока" hidden><input id="другоеИмя" maxlength="64" autocomplete="off" placeholder="ваше имя"><button type="button" class="secondary" id="другоеИмяОк">это я</button></div>
+<label for="имяКомнаты">Комната — адрес и пропуск</label>
+<div class="row"><input id="имяКомнаты" maxlength="128" autocomplete="off" placeholder="пир-янтарь-4821"><button type="button" class="secondary" id="родитьИмя">Родить имя</button></div>
+<div class="row" style="margin-top:.6rem">
+<button id="войтиРечь">⌇ Войти и говорить</button>
+<button id="войтиТихо" class="secondary">войти без камеры</button>
+</div>
+</section>
+
+<section class="panel" style="margin-top:1rem" aria-labelledby="шаг1">
+<h2 id="шаг1">Подробно · ключ и ваше имя</h2>
+<p class="muted">Имя комнаты — это адрес и пропуск: кто знает имя (и ключ, если он задан), тот может войти. Здесь же ключ шифрования рукопожатия и имя, которое видят пиры — дом подставляет их сам.</p>
 <div class="grid">
 <div>
-<label for="имяКомнаты">Имя комнаты</label>
-<div class="row"><input id="имяКомнаты" maxlength="128" autocomplete="off" placeholder="пир-янтарь-4821"><button type="button" class="secondary" id="родитьИмя">Родить имя</button></div>
 <label for="ключКомнаты">Ключ комнаты (необязательно)</label>
 <input id="ключКомнаты" type="password" maxlength="128" autocomplete="off" placeholder="шифрует рукопожатие у релеев">
 <label for="моёИмя">Ваше имя (видно пирам)</label>
@@ -343,28 +359,107 @@ function экранСтоп() {
 }
 
 /* ── вход/выход ── */
-$('родитьИмя').addEventListener('click', () => { $('имяКомнаты').value = родитьИмяКомнаты(); сохранитьПамять(); });
-$('войтиКнопка').addEventListener('click', () => {
+/* латка С135 «ОДИН КЛИК» (v12 страницы): единая личность дома (человек.js), выбор себя
+   прямо в этом окне (без регистраций в других комнатах), камера — первым жестом,
+   один вход на все дороги: «⌇ Войти и говорить» / «войти без камеры» */
+$('родитьИмя').addEventListener('click', () => { $('имяКомнаты').value = родитьИмяКомнаты(); сохранитьПамять(); готовПоказать(); });
+function кнопкиВхода(скрыть) {
+  ['войтиКнопка', 'войтиРечь', 'войтиТихо'].forEach((и) => { $(и).hidden = скрыть; $(и).disabled = false; });
+}
+function войтиСетью(сМедиа) {
   const имяКомнаты = $('имяКомнаты').value.trim();
-  const ключ = $('ключКомнаты').value.trim();
-  const моёИмя = $('моёИмя').value.trim();
   if (!имяКомнаты) { статус('Имя комнаты пусто — комната и есть адрес. Родьте имя или впишите своё.'); $('имяКомнаты').focus(); return; }
-  $('войтиКнопка').disabled = true;
-  сеть.войти(имяКомнаты, ключ, моёИмя).then(() => {
-    $('войтиКнопка').hidden = true; $('покинутьКнопка').hidden = false;
-    $('войтиКнопка').disabled = false;
-    $('адресСтрока').textContent = 'Комната: ' + имяКомнаты + (ключ ? ' · с ключом (рукопожатие зашифровано)' : ' · без ключа');
-    if (мойПоток) сеть.датьПоток(мойПоток, 'камера');
-    if (мойЭкран) сеть.датьПоток(мойЭкран, 'экран');
-    сохранитьПамять();
-  }).catch((ошибка) => {
-    $('войтиКнопка').disabled = false;
-    статус('Не вошёл: ' + ((ошибка && ошибка.message) || 'сеть не отвечает') + '. Релеи могут быть глухи — попробуйте позже или глухой режим.');
+  const подготовить = (сМедиа && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) ? медиаВкл() : Promise.resolve(null);
+  подготовить.then(() => {
+    const ключ = $('ключКомнаты').value.trim();
+    const моёИмя = $('моёИмя').value.trim();
+    ['войтиКнопка', 'войтиРечь', 'войтиТихо'].forEach((и) => { $(и).disabled = true; });
+    сеть.войти(имяКомнаты, ключ, моёИмя).then(() => {
+      кнопкиВхода(true); $('покинутьКнопка').hidden = false; $('одинКликСекция').hidden = true;
+      $('адресСтрока').textContent = 'Комната: ' + имяКомнаты + (ключ ? ' · с ключом (рукопожатие зашифровано)' : ' · без ключа');
+      if (мойПоток) сеть.датьПоток(мойПоток, 'камера');
+      if (мойЭкран) сеть.датьПоток(мойЭкран, 'экран');
+      сохранитьПамять();
+      статус('Вы в комнате. Пиры появятся, когда войдут в ту же — связь прямая.');
+    }).catch((ошибка) => {
+      кнопкиВхода(false); $('покинутьКнопка').hidden = true; $('одинКликСекция').hidden = false;
+      статус('Не вошёл: ' + ((ошибка && ошибка.message) || 'сеть не отвечает') + '. Релеи могут быть глухи — попробуйте позже или глухой режим.');
+    });
   });
+}
+$('войтиКнопка').addEventListener('click', () => войтиСетью(false));
+$('войтиРечь').addEventListener('click', () => войтиСетью(true));
+$('войтиТихо').addEventListener('click', () => войтиСетью(false));
+/* латка С135: единая личность дома — семья выбирается прямо здесь, один раз и навсегда */
+const семьяКанон = [
+  { id: 'pasha',  имя: 'ПАША', эмодзи: '◇' },
+  { id: 'anya',   имя: 'МАМА', эмодзи: '◈' },
+  { id: 'ivan',   имя: 'ВАНЯ', эмодзи: '◇' },
+  { id: 'zhenya', имя: 'ЖЕНЯ', эмодзи: '◇' }
+];
+function лицоВыбрать(основа) {
+  const имя = String(основа.имя || '').trim().slice(0, 64);
+  if (!имя || !window.ЧЕЛОВЕК) return;
+  window.ЧЕЛОВЕК.записать({ id: основа.id || null, имя: имя, эмодзи: основа.эмодзи || '◇', тип: основа.id ? 'свой' : 'гость', deviceId: window.ЧЕЛОВЕК.deviceId() });
+  $('моёИмя').value = имя;
+  сохранитьПамять();
+  лицоПоказать();
+  статус('Дом запомнил: вы — ' + имя + '. Больше нигде регистрироваться не нужно — имя и комната подставляются сами.');
+}
+function лицоПоказать() {
+  if (!window.ЧЕЛОВЕК) return;
+  const л = window.ЧЕЛОВЕК.читать();
+  const плитки = $('семьяПлитки');
+  if (л) {
+    $('моёИмя').value = л.имя;
+    $('лицоПилюля').textContent = 'вы — ' + л.имя;
+    $('лицоСтрока').hidden = false;
+    $('лицоПросьба').hidden = true;
+    плитки.hidden = true;
+    $('другоеИмяСтрока').hidden = true;
+  } else {
+    $('лицоСтрока').hidden = true;
+    $('лицоПросьба').hidden = false;
+    плитки.hidden = false;
+    if (!плитки.children.length) {
+      семьяКанон.forEach((к) => {
+        const б = узел('button', к.эмодзи + ' ' + к.имя, 'secondary');
+        б.type = 'button';
+        б.addEventListener('click', () => лицоВыбрать(к));
+        плитки.append(б);
+      });
+      const д = узел('button', 'другое имя', 'secondary');
+      д.type = 'button';
+      д.addEventListener('click', () => { $('другоеИмяСтрока').hidden = false; $('другоеИмя').focus(); });
+      плитки.append(д);
+    }
+  }
+  готовПоказать();
+}
+function готовПоказать() {
+  const л = window.ЧЕЛОВЕК && window.ЧЕЛОВЕК.читать();
+  const комната = $('имяКомнаты').value.trim();
+  if (л && комната) {
+    статус('Всё готово: вы — ' + л.имя + ', комната «' + комната + '». Один клик — и вы в связи.');
+    $('войтиРечь').focus();
+  } else if (л) {
+    статус('Вы — ' + л.имя + '. Родьте или впишите имя комнаты — адрес и есть пропуск.');
+  } else {
+    статус('Сеть выключена. Руки не соединены — ничего не уходит. Коснитесь своей карточки — дом сделает остальное сам.');
+  }
+}
+$('лицоСменить').addEventListener('click', () => {
+  if (window.ЧЕЛОВЕК) window.ЧЕЛОВЕК.забыть();
+  $('моёИмя').value = '';
+  лицоПоказать();
 });
+$('другоеИмяОк').addEventListener('click', () => лицоВыбрать({ имя: $('другоеИмя').value }));
+$('другоеИмя').addEventListener('keydown', (е) => { if (е.key === 'Enter') { е.preventDefault(); лицоВыбрать({ имя: $('другоеИмя').value }); } });
+window.addEventListener('storage', (е) => { if (!е.key || е.key === 'singulyar.человек') лицоПоказать(); });
 $('покинутьКнопка').addEventListener('click', () => {
   сеть.покинуть();
-  $('войтиКнопка').hidden = false; $('покинутьКнопка').hidden = true;
+  кнопкиВхода(false); $('покинутьКнопка').hidden = true; $('одинКликСекция').hidden = false;
+  лицоПоказать();
   $('адресСтрока').textContent = '';
   for (const [идПотока, п] of Array.from(плиткаПоПотоку)) {
     if (п.фигура.dataset.пир) снятьПлитку(идПотока); /* своё видео остаётся */
@@ -447,12 +542,13 @@ try {
   if (памятьИмя) $('моёИмя').value = памятьИмя;
   if (памятьКомната) $('имяКомнаты').value = памятьКомната;
 } catch (_) { /* приватный режим — честно без памяти */ }
+лицоПоказать(); /* латка С135: лицо дома видно сразу, без хождений по чужим комнатам */
 (function глубокаяСсылка() {
   const матч = /^#комната=([\p{L}\p{N}._-]{1,128})$/u.exec(location.hash || '');
   if (матч) {
     $('имяКомнаты').value = матч[1];
     $('адресСтрока').textContent = 'Комната из ссылки: ' + матч[1] + '. Проверьте имя и войдите рукой.';
-    $('войтиКнопка').focus();
+    $('войтиРечь').focus();
   }
 })();
 $('моёИмя').addEventListener('change', сохранитьПамять);
