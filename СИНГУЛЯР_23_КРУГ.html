@@ -102,6 +102,20 @@ h2.сек:first-child{margin-top:4px}
 .person .ряд button:hover{border-color:var(--teal)}
 .точка{width:9px;height:9px;border-radius:50%;background:#52555A;display:inline-block;margin-left:6px}
 .точка.on{background:var(--green);box-shadow:0 0 6px var(--green)}
+/* ── С131: семья на первом экране — как в обычных мессенджерах ── */
+.семья{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.семья .чел{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--panel);border:1px solid rgba(212,175,55,.35);border-radius:var(--r);padding:14px 8px 12px;text-align:center}
+.семья .чел .ав{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:32px;background:var(--panel2)}
+.семья .чел b{font-size:15px}
+.семья .чел small{color:var(--dim);font-size:11px;line-height:1.3;min-height:2.2em}
+.семья .чел .ряд{display:flex;gap:8px;margin-top:6px}
+.семья .чел .ряд button{min-width:56px;height:40px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);font-size:17px}
+.семья .чел .ряд button:hover{border-color:var(--teal)}
+.семья-зов{width:100%;margin-top:10px;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#0A0A0C;font-weight:800;border-radius:12px;padding:13px 14px;font-size:15px}
+.семья-зов:hover{filter:brightness(1.06)}
+.чат-звон{display:flex;gap:6px}
+.чат-звон button{width:36px;height:36px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);font-size:16px}
+.чат-звон button:hover{border-color:var(--teal)}
 
 /* ── чат ── */
 .chat-шапка{display:flex;align-items:center;gap:10px;padding:10px 0}
@@ -227,6 +241,17 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 
 <!-- ═════════ РУМЫ ═════════ -->
 <section class="v on" id="v-rooms" role="tabpanel" aria-label="Румы и люди">
+  <h2 class="сек">Семья · нажми имя — и позвони</h2>
+  <div class="семья" id="семьяСетка" aria-label="Семья: ПАША, МАМА, ВАНЯ, ЖЕНЯ — быстрые звонки"></div>
+  <button class="семья-зов" id="семьяЗов" title="Позвать всех своих — у семьи круг включится сам">⌇ позвать всех в круг — петь и говорить всей семьёй</button>
+  <details class="уст" id="устКакПозвонить" style="margin-top:10px"><summary>◉ Как позвонить — 3 шага (как в обычных мессенджерах)</summary>
+    <ol>
+      <li><b>Один раз:</b> нажми «кто ты?» вверху и выбери своё имя — ПАША ◇ · МАМА ◈ · ВАНЯ ⌇ · ЖЕНЯ ∿. Устройство запомнит (авто-ID).</li>
+      <li><b>Позвонить:</b> нажми у имени ⌇ — голос или ◈ — видео. У своих трубка поднимется сама.</li>
+      <li><b>Всем сразу:</b> вкладка ЗВОНКИ → СВОЙ КРУГ — коснись экрана, и вся семья на одной линии: говорите и пойте.</li>
+    </ol>
+    <p class="пимечт">Из чата тоже можно: открой переписку — кнопки ⌇ и ◈ в шапке. Голоса идут напрямую между устройствами; IP нигде не записывается.</p>
+  </details>
   <h2 class="сек">Румы</h2>
   <div class="list" id="румаСписок"></div>
   <div class="status" id="статусСвязи" role="status" aria-live="polite"></div>
@@ -339,6 +364,10 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
       <button id="чатНазад" aria-label="Назад" style="font-size:22px;padding:4px 8px">←</button>
       <span class="ав" id="чатАв">⌂</span>
       <div style="flex:1;min-width:0"><b id="чатИмя">рума</b><small id="чатПодзаг">…</small></div>
+      <span class="чат-звон" id="чатЗвон" hidden>
+        <button id="чатЗвонАудио" title="аудиозвонок из чата" aria-label="аудиозвонок">⌇</button>
+        <button id="чатЗвонВидео" title="видеозвонок из чата" aria-label="видеозвонок">◈</button>
+      </span>
       <span class="точка" id="чатОнлайн"></span>
     </div>
     <div class="msg-лента" id="лента" aria-live="polite"></div>
@@ -396,7 +425,7 @@ footer{margin-top:34px;border-top:1px solid var(--line);padding:16px 0 12px;colo
 <div id="свкЗвукХолд" hidden aria-hidden="true"></div>
 
 <footer><div class="wrap">
-  СИНГУЛЯР ·23 «КРУГ» v1.1 · СВОЙ КРУГ: голос семьи на автомате (ПАША · МАМА · ВАНЯ · ЖЕНЯ — линия, авто-приём, зов всех) · 16 людей · румы · звонки аудио+видео · автоответчики · голосовые · ПАПА-ДОМ сохраняет всегда · P2P (Nostr-сигналинг) + мост вкладок одного браузера · данные живут на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
+  СИНГУЛЯР ·23 «КРУГ» v1.2 · СВОЙ КРУГ: голос семьи на автомате (ПАША · МАМА · ВАНЯ · ЖЕНЯ — линия, авто-приём, зов всех) · семья на первом экране: ⌇ голос и ◈ видео одним касанием, звонок из чата — как в мессенджерах · 16 людей · румы · звонки аудио+видео · автоответчики · голосовые · ПАПА-ДОМ сохраняет всегда · P2P (Nostr-сигналинг) + мост вкладок одного браузера · данные живут на твоём устройстве · <a href="index.html">→ оркестратор ·15</a>
 </div></footer>
 <script>
 
@@ -410,7 +439,8 @@ function канонГлиф(г, запасной) {
   return запасной !== undefined ? запасной : '◇';
 }
 /* ═══════════════════════════════════════════════════════════════════
-   СИНГУЛЯР ·23 «КРУГ» v1.1 — люди, румы, звонки, СВОЙ КРУГ семьи на автомате.
+   СИНГУЛЯР ·23 «КРУГ» v1.2 — люди, румы, звонки, СВОЙ КРУГ семьи на автомате,
+   семья на первом экране (латка С131: как в мессенджерах — ⌇/◈ одним касанием).
    Автономный модуль. 0 innerHTML (DOM-фабрика). Данные на устройстве.
    Слои: РЕЕСТР → ГВАРД → ХРАН → ЛИЧНОСТЬ → СВОЙ КРУГ → UI → СЕТЬ → ЗВОНКИ → ГОЛОС → PWA.
    Тестовые крюки: window.K23 (только чтение).
@@ -733,6 +763,31 @@ function устройствоЧеловека(ч){ /* найдём deviceId по
   }
   return null;
 }
+/* С131: семья на первом экране — как в мессенджерах: карточки своих,
+   у каждого ⌇ аудио и ◈ видео одним касанием, метка «в сети» живьём.
+   Дом-имена — как дома зовут: МАМА (АНЯ), ВАНЯ (ИВАН). Звонок — по канону РЕЕСТРА. */
+const СВОЙ_КРУГ_ИМЕНИ = { pasha:'ПАША', anya:'МАМА', ivan:'ВАНЯ', zhenya:'ЖЕНЯ' };
+function рендерСемью(){
+  const сетка = $('семьяСетка');
+  if (!сетка) return;
+  сетка.textContent = '';
+  СВОЙ_КРУГ_ИД.forEach(function(ид){
+    const ч = РЕЕСТР.find(function(x){ return x.id === ид; });
+    if (!ч) return;
+    const дом = СВОЙ_КРУГ_ИМЕНИ[ид] || ч.имя;
+    const вСети = !!устройствоЧеловека(ч);
+    const подпись = (дом === ч.имя ? (ч.метка || 'круг семьи') : ч.имя + (ч.метка ? ' · ' + ч.метка : '')) + (вСети ? ' · в сети' : ' · открой дверь — и на связи');
+    const ряд = эл('div', { class:'ряд' });
+    ряд.appendChild(эл('button', { title:'аудиозвонок ' + дом, onclick:function(){ позвони(ч, 'аудио'); } }, [ т('⌇') ]));
+    ряд.appendChild(эл('button', { title:'видеозвонок ' + дом, onclick:function(){ позвони(ч, 'видео'); } }, [ т('◈') ]));
+    сетка.appendChild(эл('div', { class:'чел' }, [
+      эл('span', { class:'ав', text:ч.эмодзи }),
+      эл('b', { text:дом }),
+      эл('small', { text:подпись }),
+      ряд
+    ]));
+  });
+}
 
 function рендерЗвонки(){
   const сетка = $('звонСетка'); сетка.textContent = '';
@@ -822,6 +877,9 @@ function обновиБейджи(){
 'use strict';
 /* ───────────────────── 8 · ЧАТ ───────────────────── */
 let открытаяРума = null;
+let чатЗвонЦель = null; /* С131: кому звонить прямо из чата — как в мессенджерах */
+$('чатЗвонАудио').addEventListener('click', function(){ if (чатЗвонЦель) позвони(чатЗвонЦель, 'аудио'); });
+$('чатЗвонВидео').addEventListener('click', function(){ if (чатЗвонЦель) позвони(чатЗвонЦель, 'видео'); });
 function открытьЧат(румаИд){
   if (!Я) { открытьИдентОвер(); return; }
   открытаяРума = румаИд;
@@ -833,6 +891,9 @@ function открытьЧат(румаИд){
     ? (р.сохран === 'всегда' ? '§ чат сохраняется всегда — стереть нельзя' : р.описание)
     : 'личный чат · сохраняется на устройстве';
   бейдж(румаИд, 0);
+  /* С131: в личной руме — звонок из шапки (⌇ голос / ◈ видео) */
+  чатЗвонЦель = (румаИд.indexOf('dm-') === 0) ? (РЕЕСТР.find(function(x){ return 'dm-' + x.id === румаИд; }) || null) : null;
+  $('чатЗвон').hidden = !чатЗвонЦель;
   рендерЛента();
   $('чатОвер').classList.add('on');
   сетьВступи(румаИд);
@@ -922,7 +983,7 @@ function принялПакет(д){
       if (открытаяРума === д.рума) рендерЛента();
       рендерРумы();
       break;
-    case 'кто': рендерОнлайн(); рендерЛюди(); рендерЗвонки(); break;
+    case 'кто': рендерОнлайн(); рендерЛюди(); рендерЗвонки(); рендерСемью(); break;
     case 'зов': принялЗовКруга(д); break;
     case 'звоно': принялЗвонковыйСигнал(д.з); break;
     case 'vhead': принялГолову(д.з); break;
@@ -1014,7 +1075,7 @@ function сверьОнлайн(){
   const гран = Date.now() - 65000;
   Object.keys(известныеУстройства).forEach(function(д){ if (известныеУстройства[д].ts < гран) delete известныеУстройства[д]; });
   рендерОнлайн();
-  рендерЛюди(); рендерЗвонки(); /* метки «в сети» живут по тому же таймеру честности */
+  рендерЛюди(); рендерЗвонки(); рендерСемью(); /* метки «в сети» живут по тому же таймеру честности */
 }
 function рендерОнлайн(){
   if (!открытаяРума) return;
@@ -1301,6 +1362,7 @@ $('свкМик').addEventListener('click', function(){
 });
 $('свкЗов').addEventListener('click', зовиВсех);
 $('свкЗвук').addEventListener('click', включиЗвукКруга);
+$('семьяЗов').addEventListener('click', зовиВсех); /* С131: зов всех с первого экрана */
 
 /* ───────────── 10 · СМЫСЛОВАЯ ШИНА (мост ·21/·22) ───────────── */
 let смыслШинаКанал = null;
@@ -1774,7 +1836,7 @@ if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
 }
 
 /* ───────────── 16 · ИНИЦИАЛИЗАЦИЯ ───────────── */
-рендерЯЧип(); рендерРумы(); рендерЛюди(); рендерЗвонки(); рендерЯ(); рендерСвКруг(); обновиБейджи();
+рендерЯЧип(); рендерРумы(); рендерЛюди(); рендерСемью(); рендерЗвонки(); рендерЯ(); рендерСвКруг(); обновиБейджи();
 сетьЗапусти();
 if (!Я) открытьИдентОвер();
 window.addEventListener('keydown', function(e){
@@ -1790,7 +1852,7 @@ window.addEventListener('keydown', function(e){
 
 /* ───────────── 17 · ТЕСТОВЫЕ КРЮКИ (только чтение) ───────────── */
 window.K23 = {
-  версия: '1.1.0',
+  версия: '1.2.0',
   реестр: РЕЕСТР,
   румы: РУМЫ,
   защищённые: function(){ return Array.from(ЗАЩИЩЁННЫЕ); },
