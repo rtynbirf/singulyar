@@ -50,9 +50,11 @@ const rd = read('README.md');
 /* ── 4. Двери ·40/·41 ── */
 чек('ядро: s40 ГАРМОНИЯ с файлом', mod.includes("id: 's40'") && mod.includes("файл: 'harmonia-prototype.html'"));
 чек('ядро: s41 НАМЕРЕНИЕ с файлом', mod.includes("id: 's41'") && mod.includes("файл: 'hir-prototype.html'"));
-чек('ядро: версия v1.20.0', mod.includes('ЯДРО МОДУЛЕЙ v1.20.0'));
+const верЯдра = (mod.match(/ЯДРО МОДУЛЕЙ v(\d+\.\d+\.\d+)/) || [])[1];
+const чЯ = String(верЯдра || '').split('.').map(Number);
+чек('ядро: не ниже v1.20.0 (этаж, такт v11.44 «ИЗМЕРЕНО»)', чЯ.length === 3 && (чЯ[0] > 1 || (чЯ[0] === 1 && (чЯ[1] > 20 || (чЯ[1] === 20 && чЯ[2] >= 0)))));
 чек('АРИАДНА: s40/s41 на лице дома', idx.includes("ид:'s40'") && idx.includes("ид:'s41'"));
-чек('404: 41 дверь', f404.includes('41 дверь'));
+чек('404: счётчик живой (sg-registry), застывших чисел нет (v11.21 «ОРГАНИЗМ», v11.44 «ИЗМЕРЕНО»)', f404.includes('sg-registry') && !f404.includes('41 дверь'));
 чек('sw15: прототипы треков в пре-кэше', sw.includes("'./harmonia-prototype.html'") && sw.includes("'./hir-prototype.html'"));
 чек('sw15: КОДЕКС в пре-кэше', sw.includes("'./ДОКУМЕНТЫ/КОДЕКС_СИНТЕЗ_ТРЕКОВ.md'"));
 чек('прототип HARMONIA на месте и без сети', fs.existsSync(path.join(R, 'harmonia-prototype.html')) && !/src\s*=\s*["']https?:/.test(read('harmonia-prototype.html')));
@@ -85,7 +87,7 @@ const llm = read('БИБЛИОТЕКИ/adapter-os/llm.mjs');
 
 /* ── 7. Летопись и README (R-13 закрыт) ── */
 чек('versions.json: дом живёт тактом реестра', vj.дом.версия === ВЕР && vj.дом.такт === ТАКТ && vj.дом.поколение_кэша === КЭШ);
-чек('versions.json: 41 дверь', vj.счётчики.дверей === 41);
+чек('versions.json: двери = s-узлам манифеста (одна правда, v11.44 «ИЗМЕРЕНО»)', vj.счётчики.дверей === (mod.match(/id:\s*'s[^']*'/g) || []).length);
 чек('versions.json: летопись живёт (≥100, КОДЕКС в истории)', vj.летопись.length >= 100 && vj.летопись.some(e => e.такт === 'КОДЕКС'));
 чек('versions.json: ОБЕРЕГ и ОРГАНИЗМ в летописи', vj.летопись.some(e => e.такт === 'ОБЕРЕГ') && vj.летопись.some(e => e.такт === 'ОРГАНИЗМ'));
 чек('README: строка КОДЕКС в журнале', rd.includes('| v10.54 | «КОДЕКС» |'));

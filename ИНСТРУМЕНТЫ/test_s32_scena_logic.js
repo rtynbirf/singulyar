@@ -105,7 +105,9 @@ test('S32_ЯДРО: ближайшее неспетое слово — спет�
 test('корпус: 62 песни фонда, у всех текст, первые строки не за минутой, ID = минусовкам', () => {
   const ctx = поВМ(вырезать('window.S32_КОРПУС = ', ';\n</script>'));
   const корпус = ctx.window.S32_КОРПУС;
-  assert.equal(корпус.songs.length, 62, 'песен в корпусе');
+  /* v11.44 «ИЗМЕРЕНО»: число песен — из реестра дома, не литерал */
+  const РЕЕСТР = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'versions.json'), 'utf8'));
+  assert.equal(корпус.songs.length, РЕЕСТР.счётчики.песен, 'песен в корпусе = фонду реестра');
   const minus = new Set(fs.readdirSync(path.join(ROOT, 'minus')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
   for (const п of корпус.songs) {
     assert.ok(п.id && п.title, 'ID и титул есть: ' + п.id);
@@ -114,7 +116,9 @@ test('корпус: 62 песни фонда, у всех текст, первы
     assert.ok(п.lines.length >= 5, 'строк достаточно: ' + п.id + ' = ' + п.lines.length);
     assert.ok(п.lines[0][0] <= 60, 'первая строка в разумной позиции');
   }
-  assert.equal(minus.size, 62, 'минусовок на диске ровно 62');
+  /* алиас флагмана prosto-lubi.mp3 живёт рядом с YouTube-ключами (ТВ-полюс, такт v11.35 «ЛИЦО») */
+  const алиасы = new Set(['prosto-lubi']);
+  assert.equal(minus.size - алиасы.size, РЕЕСТР.счётчики.песен, 'минусовок на диске (без алиаса флагмана) = фонду реестра');
   assert.equal(корпус.meta.схема || корпус.meta.schema, 'ruvson-singulyar-32-scena');
 });
 

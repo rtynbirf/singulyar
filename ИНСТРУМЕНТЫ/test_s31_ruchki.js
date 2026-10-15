@@ -74,7 +74,11 @@ const vj = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "versio
 чек("versions.json: дом живёт тактом реестра", vj.дом.версия === ВЕР && vj.дом.такт === ТАКТ && vj.дом.поколение_кэша === КЭШ);
 чек("versions.json: летопись живёт (последняя запись = такт реестра)", vj.летопись[vj.летопись.length - 1].такт === ТАКТ);
 чек("versions.json: летопись выросла (≥100, append-only)", vj.летопись.length >= 100);
-чек("versions.json: счётчики из живого реестра (41/62/200)", vj.счётчики.дверей === 41 && vj.счётчики.песен === 62 && vj.счётчики.языков === 200);
+const мод = fs.readFileSync(path.join(__dirname, "..", "singulyar-modules.js"), "utf8");
+const сцена32 = fs.readFileSync(path.join(__dirname, "..", "СИНГУЛЯР_32_СЦЕНА.html"), "utf8");
+const мКорп = сцена32.match(/window\.S32_КОРПУС\s*=\s*(\{[\s\S]*?\});\s*\n<\/script>/);
+const песенВкорпусе = мКорп ? JSON.parse(мКорп[1]).songs.length : -1;
+чек("versions.json: счётчики согласованы (двери = s-узлам манифеста, песни = корпусу ·32, языки = флагману реестра)", vj.счётчики.дверей === (мод.match(/id:\s*'s[^']*'/g) || []).length && vj.счётчики.песен === песенВкорпусе && vj.счётчики.языков === vj.счётчики.языков_флагман_когда_теряем);
 
 /* ── документация ── */
 const ч = fs.readFileSync(path.join(__dirname, "..", "CHANGELOG.md"), "utf8");

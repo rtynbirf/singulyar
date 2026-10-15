@@ -119,8 +119,11 @@ test('10. устав: 11 разделов, честный статус юрли�
   assert.match(УСТАВ, /helenkellerintl\.org/);
   assert.match(УСТАВ, /BTC, сеть mainnet/);
   assert.match(УСТАВ, /новой записью/);
-  /* SW v62 несёт дверь и устав офлайн (закон I-05) */
-  assert.match(SW, /s15-orkestrator-v66/);
+  /* SW несёт дверь и устав офлайн (закон I-05); поколение — из реестра (v11.44 «ИЗМЕРЕНО») */
+  const РЕЕСТР_SW = JSON.parse(ч('data/versions.json'));
+  assert.match(SW, /s15-orkestrator-v\d+/);
+  assert.ok(SW.includes("s15-orkestrator-" + РЕЕСТР_SW.дом.поколение_кэша),
+            'SW несёт живое поколение ' + РЕЕСТР_SW.дом.поколение_кэша);
   assert.match(SW, /'\.\/СИНГУЛЯР_34_ДОМ_ФОНДА\.html'/);
   assert.match(SW, /'\.\/ФОНД\/УСТАВ_ФОНДА\.md'/);
 });
