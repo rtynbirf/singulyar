@@ -29,7 +29,7 @@ function check(name, cond, extra = '') {
 
 /* 1. Словарь жив, версионирован и покрывает все намерения */
 check('словарь ≥ 100 фраз (76 v0.4 + доучка v0.5)', Array.isArray(ФРАЗЫ) && ФРАЗЫ.length >= 100, String(ФРАЗЫ && ФРАЗЫ.length));
-const НАМЕРЕНИЯ = new Set(['stop', 'status', 'send', 'read', 'clear', 'clear_field', 'read_log', 'help', 'llm', 'load_model', 'open', 'repeat', 'ping', 'count', 'identity']);
+const НАМЕРЕНИЯ = new Set(['stop', 'status', 'send', 'read', 'clear', 'clear_field', 'read_log', 'help', 'llm', 'load_model', 'open', 'repeat', 'ping', 'count', 'identity', 'what', 'learn', 'calm']);  /* v0.11 (v11.47 «ЗАКРЫТО»): what-вопросы, learn-обучение, calm-тишина — живая семантика словаря */
 check('намерения словаря из известного набора', ФРАЗЫ.every(f => НАМЕРЕНИЯ.has(f.намерение)));
 check('намерение load_model присутствует (загрузка модели голосом)', ФРАЗЫ.some(f => f.намерение === 'load_model'));
 for (const н of ['open', 'repeat', 'ping', 'count', 'identity']) {

@@ -1,0 +1,75 @@
+# Э-5 «ДОКАЗАТЕЛЬСТВО ВЫПУСКА» (аудит дома 2026-10-14, ТЗ-1/Э-5) — такт v11.47 «ЗАКРЫТО» (С124).
+# Каждый такт несёт доказательства: тесты зелёные на main. Гейт падает при любом красном.
+# Кодовая часть: все JS-оракулы (node --test) + детерминированные Python-оракулы.
+# Браузерные/сетевые пробы (playwright/Nostr/прод) — отдельные живые прогоны агентов, не CI.
+# Lighthouse CI — отдельный падающий гейт (lighthouse.yml, a11y 0.95).
+name: Такт-гейт (доказательство выпуска)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    name: Оракулы дома зелёные
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: JS-оракулы (37 файлов node --test)
+        run: |
+          счёт=0; красных=0
+          for t in ИНСТРУМЕНТЫ/test_*.js ИНСТРУМЕНТЫ/test_*.mjs; do
+            счёт=$((счёт+1))
+            if ! node --test "$t" > /tmp/вых.log 2>&1; then
+              красных=$((красных+1)); echo "RED: $t"; tail -30 /tmp/вых.log
+            fi
+          done
+          echo "JS: файлов $счёт, красных $красных"
+          test "$красных" -eq 0
+
+      - name: Python-оракулы (детерминированные, без браузера/сети)
+        run: |
+          счёт=0; красных=0
+          for t in ИНСТРУМЕНТЫ/test_*.py; do
+            имя=$(basename "$t")
+            case "$имя" in
+              # браузерные/сетевые/живые прогоны — вне CI (их живая поверка у агентов)
+              *browser*|*live*|*real*|*wire*) continue;;
+              # закалка — playwright-прогон (жёсткий, но не в CI)
+              *закалка*) continue;;
+            esac
+            счёт=$((счёт+1))
+            if ! timeout 120 python3 "$t" > /tmp/вых.log 2>&1; then
+              красных=$((красных+1)); echo "RED: $t"; tail -30 /tmp/вых.log
+            fi
+          done
+          echo "Python: файлов $счёт, красных $красных"
+          test "$красных" -eq 0
+
+      - name: JSON-раундтрип реестров
+        run: |
+          python3 - <<'EOF'
+          import json
+          for п in ['data/versions.json', 'manifest.webmanifest', 'ГОТОВНОСТЬ.manifest.json', 'ИНСТРУМЕНТЫ/реестр_innerhtml.json']:
+              json.load(open(п, encoding='utf-8'))
+              print('OK', п)
+          EOF

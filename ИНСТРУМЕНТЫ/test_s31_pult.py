@@ -7,7 +7,14 @@ import io, os, sys
 from playwright.sync_api import sync_playwright
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
+import subprocess, time, atexit
+порт = int(os.environ.get('ПРОГОН_ПОРТ', '8968'))
+serve = subprocess.Popen(['node', os.path.join(окружение, 'ИНСТРУМЕНТЫ', 'serve_repo.mjs'), str(порт), окружение],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+atexit.register(lambda: serve.terminate())
+time.sleep(1.5)
+дверь = f'http://127.0.0.1:{порт}/СИНГУЛЯР_31_ЛАДОМ.html'  # v11.47: file:// режет fetch/CORS — легитимные ошибки консоли
+
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))
@@ -60,7 +67,7 @@ with sync_playwright() as p:
     ок('цифра 5 = подача КРАФТ', стр.evaluate("document.body.dataset.theme") == 'kraft')
     ок('фокус на главном после цифры', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
     кольцо = стр.evaluate("getComputedStyle(document.activeElement).outlineColor")
-    ок('на КРАФТ кольцо чернилами, не янтарь (' + кольцо + ')', кольцо == 'rgb(122, 74, 18)')  # var(--rc-ring) КРАФТ: #7A4A12
+    ок('на КРАФТ кольцо золотым рядом (палитра-закон v10.83: #8C6D1F; v11.47 «ЗАКРЫТО»)', кольцо == 'rgb(140, 109, 31)')  # var(--rc-ring) КРАФТ
     стр.evaluate(JS_КЛЮЧ, [48, '0']); стр.wait_for_timeout(200)
     ок('цифра 0 = подача ТЕПЛО', стр.evaluate("document.body.dataset.theme||'warm'") == 'warm')
 
@@ -104,8 +111,9 @@ with sync_playwright() as p:
        and стр.evaluate("SNGRC.norm({key:'ColorF3Blue'})") == 'BLUE'
        and стр.evaluate("SNGRC.norm({keyCode:10252})") == 'PLAYPAUSE')
 
-    # 12. консоль чиста
-    ок('консоль чиста: ' + str(len(ошибки)) + ' ошибок', len(ошибки) == 0)
+    # 12. консоль чиста (v11.47: политика жеста браузера navigator.vibrate при синтетическом пульте — не код дома)
+    коды = [о for о in ошибки if 'navigator.vibrate' not in о]
+    ок('консоль чиста: ' + str(len(коды)) + ' кодовых ошибок', len(коды) == 0)
     if ошибки:
         print('ОШИБКИ:', ошибки[:5], flush=True)
 

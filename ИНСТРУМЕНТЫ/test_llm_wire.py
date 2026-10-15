@@ -14,7 +14,7 @@
   · 0 JS-ошибок.
 Запуск: python3 ИНСТРУМЕНТЫ/test_llm_wire.py   (из корня репо; пути считаются от файла)
 """
-import http.server, socketserver, threading, functools, json, os
+import http.server, socketserver, threading, functools, json, os, re
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # корень репо
@@ -141,7 +141,8 @@ def main():
 
         # 8b. доучка v0.4: пинг / счёт фраз / кто ты / честная навигация
         лог = инструкция("пинг")
-        check("«пинг» откликнулся и назвал версию словаря", "здесь" in лог.lower() and "v0.4" in лог, лог[:140])
+        # v11.47 «ЗАКРЫТО»: версия словаря живёт (v0.4 → v0.11 растёт) — ждём живой формат «Словарь v\d+\.\d+»
+        check("«пинг» откликнулся и назвал версию словаря", "здесь" in лог.lower() and re.search(r"Словарь v\d+\.\d+", лог) is not None, лог[:140])
         лог = инструкция("сколько команд ты знаешь")
         числа = [int(w) for w in лог.replace(",", " ").split() if w.isdigit()]
         check("«сколько команд» назвал число фраз ≥ 60", any(n >= 60 for n in числа), лог[:140])

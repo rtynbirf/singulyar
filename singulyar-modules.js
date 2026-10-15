@@ -1995,3 +1995,20 @@ window.SNG.обновлениеДома = (function () {
     };
   } catch (e) { /* обновление дома не имеет права ломать комнату */ return null; }
 })();
+
+/* ═══ ДОСТУПНОСТЬ КАК СЛОЙ (такт v11.47 «ЗАКРЫТО», Э-2/ТЗ-3) ═══
+   Скип-ссылка: где у двери есть <main>, ядро ставит ссылку «Сразу к главному»
+   первым элементом тела; стиль несёт общий CSS дома. Одна правда — одно место. */
+(function () {
+  try {
+    var осн = document.querySelector('main');
+    if (осн && !document.querySelector('.skip-link')) {
+      if (!осн.id) осн.id = 'main';
+      var скип = document.createElement('a');
+      скип.className = 'skip-link';
+      скип.href = '#' + осн.id;
+      скип.textContent = 'Сразу к главному — пропустить навигацию';
+      document.body.insertBefore(скип, document.body.firstChild);
+    }
+  } catch (e) { /* скип — шаг конвейера, не сцена: тихо и честно */ }
+})();

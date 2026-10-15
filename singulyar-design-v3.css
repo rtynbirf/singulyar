@@ -255,3 +255,24 @@ main.glass-void>section{margin-top:var(--void-md)}
 @media (prefers-reduced-motion: no-preference){
   @view-transition{navigation:auto}
 }
+
+
+/* ═══ ДОСТУПНОСТЬ КАК СЛОЙ — такт v11.47 «ЗАКРЫТО» (Э-2/ТЗ-3, аудит дома 2026-10-14) ═══
+   Смысл один — представление твоё: слой наследуется каждой дверью, подключившей дизайн дома.
+   Скип-ссылку ставит ядро (singulyar-modules.js) там, где есть <main>; стиль — здесь. */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2147483647;background:#0A0A0C;color:#D4AF37;
+  padding:12px 18px;border:2px solid #D4AF37;border-radius:0 0 8px 0;font-size:16px;font-weight:700;text-decoration:none}
+.skip-link:focus{left:0}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:3px solid #D4AF37;outline-offset:2px;border-radius:4px}
+@media (forced-colors: active){
+  .skip-link{background:CanvasText;color:Canvas;border-color:CanvasText}
+  :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid Highlight;outline-offset:2px}
+}
+@media (prefers-contrast: more){
+  :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:4px double #FFFFFF;outline-offset:2px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+  .skip-link{transition:none}
+}
