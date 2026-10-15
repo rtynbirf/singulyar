@@ -86,7 +86,7 @@ jobs:
           ожидание = json.load(open('data/versions.json', encoding='utf-8'))['дом']['описание']
           запрос = urllib.request.Request(
               'https://api.github.com/repos/rtynbirf/singulyar',
-              headers={'User-Agent': 'сингуляр-такт-гейт'})
+              headers={'User-Agent': 'singulyar-takt-gejt'}  # ASCII: HTTP-заголовки не несут кириллицу (шрам латки С128: UnicodeEncodeError latin-1))
           факт = json.load(urllib.request.urlopen(запрос)).get('description')
           print('реестр:', ожидание)
           print('факт:  ', факт)
