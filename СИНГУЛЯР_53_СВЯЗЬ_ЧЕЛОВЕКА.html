@@ -67,9 +67,10 @@ footer{border-top:1px solid var(--line);margin-top:2rem}
 <script defer src="./singulyar-ux-engine-v9.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#осн">К основному содержанию</a>
 
 <header><p class="kicker">СИНГУЛЯР · дверь-прототип · v0.1</p><h1>Контур человеческой связи</h1><p>Сначала человек и его намерение. Затем — удобное представление и доступный канал. Если канала нет, система говорит правду и сохраняет локальную работу.</p><p class="status" role="status" id="globalStatus">Локальный режим. Сеть и внешние провайдеры не подключены.</p></header>
-<main>
+<main id="осн">
 <section class="panel" aria-labelledby="мост54Title" data-такт="v11.29"><h2 id="мост54Title">Мост в живую связь — дверь ·54 ПИР</h2><p>Этот прототип хранит намерения и журнал. <strong>Живая связь</strong> — видео, звук, текст и экран напрямую между устройствами, без посредников — живёт в двери <a href="СИНГУЛЯР_54_ПИР.html">·54 ПИР</a>. Имя комнаты — адрес и пропуск: впишите своё или родите там же.</p><label for="мост54Комната">Имя комнаты ПИРа</label><div class="row"><input id="мост54Комната" maxlength="128" placeholder="пир-янтарь-4821" style="max-width:320px"><a class="button" id="мост54Пойти" href="СИНГУЛЯР_54_ПИР.html">Открыть ПИР ·54</a></div><p class="muted">Ссылка уносит имя комнаты с собой (#комната=…); ключ комнаты переносить ссылкой нельзя — его вписывают руками.</p><script>/* мост ·54 (такт v11.32 «ПИР»): имя комнаты уносится глубокой ссылкой #комната=…; 0 сети — только сбор ссылки */
 (function(){try{var в=document.getElementById('мост54Комната'),а=document.getElementById('мост54Пойти');if(!в||!а)return;var п=null;try{п=localStorage.getItem('singulyar.pir.комната')}catch(e){}if(п&&!в.value)в.value=п;function идти(){var х='СИНГУЛЯР_54_ПИР.html#комната='+encodeURIComponent(в.value.trim());if(а.tagName==='A'){а.href=х}return х}if(а.tagName==='A'){в.addEventListener('input',идти);идти()}а.addEventListener('click',function(ev){if(а.tagName!=='A'){ev.preventDefault();location.href=идти()}})}catch(e){}})();
 </script></section>
