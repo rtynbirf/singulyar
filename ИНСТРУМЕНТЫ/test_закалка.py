@@ -49,9 +49,10 @@ with sync_playwright() as p:
        page.evaluate("() => typeof window.SNG_КОРД_ЖУРНАЛ === 'function'"))
     первый = page.evaluate("""() => {
       const с = document.querySelector('script');
-      return с ? с.textContent.slice(0, 200) : '';
+      return с ? ((с.getAttribute('src') || '') + ' ' + с.textContent).slice(0, 200) : '';
     }""")
-    ок('корд — ПЕРВЫЙ скрипт страницы', 'СИНГУЛЯР·КОРД v1.42.0' in первый, первый[:80])
+    ок('корд — ПЕРВЫЙ скрипт страницы (inline или src=cord.js; вынос в файл — честен; v11.44 «ИЗМЕРЕНО»)',
+       'cord.js' in первый or 'СИНГУЛЯР·КОРД' in первый, первый[:80])
 
     # ── БЛОК 2: краш → панель, не тишина ──
     page.evaluate("() => { setTimeout(() => { window.__бинт = несуществуетОчевидно; }, 50); }")
@@ -159,8 +160,8 @@ with sync_playwright() as p:
     page.goto(f'http://127.0.0.1:{PORT}/СИНГУЛЯР_23_КРУГ.html', wait_until='domcontentloaded', timeout=60000)
     page.wait_for_timeout(1500)
     ок('·23 КРУГ открылась с кордом, zero pageerror', not ош23, ош23[:2])
-    ок('·23: корд — первый скрипт',
-       'СИНГУЛЯР·КОРД v1.42.0' in page.evaluate("() => (document.querySelector('script')||{}).textContent || ''"))
+    ок('·23: корд — первый скрипт (inline или src=cord.js; v11.44 «ИЗМЕРЕНО»)',
+       'cord.js' in (page.evaluate("() => { const с = document.querySelector('script'); return с ? ((с.getAttribute('src')||'') + ' ' + с.textContent) : ''; }") or ''))
     ctx7.close()
 
     # ── БЛОК 8: ·19 — честный crypto-гард вшит ──

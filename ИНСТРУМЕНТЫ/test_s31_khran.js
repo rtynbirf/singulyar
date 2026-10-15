@@ -2,7 +2,7 @@
 /* Испытание S-04 «ХРАН» (storage.persist) — такт v10.51 «ЯЗЫКИ» (С32; ре-посадка СКЛАД).
    Каркас — домовой стиль test_modules_logic.js: vm + минимальный window/document.
    10 инвариантов ТЗ S-04 §5. node test_s31_khran.js → 0 = зелёный.
-   (Проба 19 занята ШИЛКОЙ коллег v10.48 — ХРАН идёт в 20.) */
+   (Проба 19 занята ШИЛКОЙ коллег v10.48 — ХРАН идёт в 20.)     Запуск: node ИНСТРУМЕНТЫ/test_s31_khran.js → exit 0 = такт встал. */
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
