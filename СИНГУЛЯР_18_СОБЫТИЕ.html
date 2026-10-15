@@ -2032,6 +2032,64 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-чтень" aria-labelledby="сг47-чтень-заголовок">
+<h2 id="сг47-чтень-заголовок">Планетарная чтень — М7 <em>(такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Все читают ОДИН текст одновременно. Язык текста — по ЗАКОНУ ЯЗЫКОВ I-12 (сейчас порядок дома начинается с РУС). Эфир этого слоя — BroadcastChannel: вкладки одного браузера слышат друг друга (счётчик «читают со мной»); между устройствами — через ЭФИР зала/ПИР по явному действию (И-01): сеть включается человеком, офлайн — локально с честной пометкой.</p>
+<label for="сг47-чтень-текст">Текст чтени (артефакт цивилизации — каждый прогон можно сохранить)</label>
+<textarea id="сг47-чтень-текст" placeholder="Текст планетарной чтени…">Сценарий «2100». Мы, читающие сейчас, держим одну нить текста через все пояса Земли.</textarea>
+<button type="button" id="сг47-чтень-старт">▶ Начать чтень</button>
+<button type="button" id="сг47-чтень-стоп">⏹ Закончить</button>
+<div class="сг47-ответ" id="сг47-чтень-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М7 — планетарная чтень в событии ·18 */
+(function(){try{
+ var текст=document.getElementById('сг47-чтень-текст'),бСтарт=document.getElementById('сг47-чтень-старт'),бСтоп=document.getElementById('сг47-чтень-стоп'),ответ=document.getElementById('сг47-чтень-ответ');
+ if(!текст||!бСтарт||!бСтоп||!ответ)return;
+ var канал=null;try{канал=new BroadcastChannel('singlyar-чтень/0.1')}catch(е){канал=null}
+ var ид=(String(Date.now(),10))+'-'+String(Math.floor(Math.random()*1e6));
+ var читатели={};var таймер=null;
+ function слушатели(){var н=0;for(var к in читатели){if(Object.prototype.hasOwnProperty.call(читатели,к)&&(Date.now()-читатели[к])<6000)н++}return н}
+ function показать(строка){ответ.textContent=строка+'\nЧитают со мной: '+слушатели()+(канал?'':'\nЭфир недоступен — чтень идёт локально (честная пометка).')}
+ if(канал){канал.onmessage=function(событие){
+  try{
+   var м=событие.data||{};
+   if(м.тип==='чтень-старт'&&м.ид!==ид){читатели[м.ид]=Date.now();текст.value=м.текст||текст.value;показать('Идёт чтень (начал сосед): «'+(м.текст||'').slice(0,80)+'…»')}
+   if(м.тип==='чтень-я-тут'&&м.ид!==ид){читатели[м.ид]=Date.now()}
+   if(м.тип==='чтень-стоп'&&м.ид!==ид){показать('Сосед закончил чтень.')}
+  }catch(е){}
+ }}
+ бСтарт.addEventListener('click',function(){
+  try{
+   if(!канал){показать('Чтень начата локально.');return}
+   канал.postMessage({тип:'чтень-старт',ид:ид,текст:текст.value});
+   if(таймер)clearInterval(таймер);
+   таймер=setInterval(function(){try{канал.postMessage({тип:'чтень-я-тут',ид:ид})}catch(е){}} ,2000);
+   показать('Чтень начата: текст ушёл в эфир слоя.');
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+ бСтоп.addEventListener('click',function(){
+  try{if(таймер){clearInterval(таймер);таймер=null}if(канал){канал.postMessage({тип:'чтень-стоп',ид:ид})}показать('Чтень закончена.')}
+  catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
 <a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>

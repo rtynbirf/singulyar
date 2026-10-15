@@ -1184,6 +1184,49 @@ try{
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-ценность" aria-labelledby="сг47-ценность-заголовок">
+<h2 id="сг47-ценность-заголовок">Рецепт дома · 50/10/20/15/5 — ценность-ядро/0.1 <em>(М3, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Value-for-value: автор 50 / переводчик 10 / слушатели 20 / сеть 15 / резерв 5. Целые минорные единицы, метод наибольшего остатка, сумма сходится ровно. Деньги на сервере не хранятся; доля подписывается ECDSA (паспорт узла ·28/·42/·51), Lightning — только внешние рельсы-рецепты.</p>
+<label for="сг47-ценность-сумма">Сумма (минорные единицы)</label>
+<input type="text" id="сг47-ценность-сумма" inputmode="numeric" placeholder="например: 1000" autocomplete="off">
+<button type="button" id="сг47-ценность-кнопка">Распределить</button>
+<div class="сг47-ответ" id="сг47-ценность-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М3 — рецепт дома в кошельке ·25 */
+(function(){try{
+ var сумма=document.getElementById('сг47-ценность-сумма'),кнопка=document.getElementById('сг47-ценность-кнопка'),ответ=document.getElementById('сг47-ценность-ответ');
+ if(!сумма||!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__ЦЕННОСТЬ;
+   if(!порт){ответ.textContent='Порт ценность-ядро/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var число=parseInt(сумма.value,10);
+   if(!/^[0-9]+$/.test((сумма.value||'').trim())){ответ.textContent='Честный отказ: сумма должна быть целым числом минорных единиц.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var р=порт.распределить(число);
+   var д=р.доли;
+   ответ.textContent='автор: '+д.автор+'\nпереводчик: '+д.переводчик+'\nслушатели: '+д.слушатели+'\nсеть: '+д.сеть+'\nрезерв: '+д.резерв+'\nСумма долей: '+(д.автор+д.переводчик+д.слушатели+д.сеть+д.резерв)+' из '+число+(р.остаток?' (остаток '+р.остаток+')':'')+'\nКанон распределения: '+порт.канонизировать(д);
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
 <a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
@@ -1304,6 +1347,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 }());
 </script>
+<script defer src="js/value-core.js"></script>
 <script defer src="js/sg-registry.js"></script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
 <nav aria-label="мост на ·55" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">¶ мост: <a href="СИНГУЛЯР_43_ЕДИНОЕ_ОКНО_КОММУНИКАЦИИ.html" style="color:#D4AF37;text-decoration:none">·55 ЕДИНОЕ ОКНО — связь одним смыслом</a></nav>
