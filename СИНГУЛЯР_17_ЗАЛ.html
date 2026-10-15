@@ -1525,6 +1525,168 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-латенс" aria-labelledby="сг47-латенс-заголовок">
+<h2 id="сг47-латенс-заголовок">Смещение зала — латенс-ядро/0.1 <em>(М4, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Глобальный временной синхрон: смещение участников — медиана разностей меток рукопожатий; компенсация — сдвиг расписания. Метки приносят участники по ЭФИРУ/ПИР — сеть только по явному действию (И-01). Живой дрейф-замер на железе — Г2 (владелец).</p>
+<label for="сг47-латенс-вход">Пары меток — по одной JSON-строке {"здесь":мс,"там":мс}</label>
+<textarea id="сг47-латенс-вход" placeholder='{"здесь":1000,"там":1250}
+{"здесь":2000,"там":2240}
+{"здесь":3000,"там":3260}'></textarea>
+<button type="button" id="сг47-латенс-кнопка">Измерить смещение</button>
+<div class="сг47-ответ" id="сг47-латенс-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М4 — латенс-ядро/0.1 в зале ·17 */
+(function(){try{
+ var вход=document.getElementById('сг47-латенс-вход'),кнопка=document.getElementById('сг47-латенс-кнопка'),ответ=document.getElementById('сг47-латенс-ответ');
+ if(!вход||!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__ЛАТЕНС;
+   if(!порт){ответ.textContent='Порт латенс-ядро/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var пары=[];
+   var строки=(вход.value||'').split(/\n+/);
+   for(var i=0;i<строки.length;i++){var с=строки[i].trim();if(!с)continue;var п=JSON.parse(с);пары.push(п)}
+   var р=порт.смещение(пары);
+   ответ.textContent='Смещение: '+р.смещениеМс+' мс (медиана '+р.проб+' проб)\nРазброс (p75−p25): '+р.разбросМс+' мс\nКомпенсация: участник '+ (р.смещениеМс>=0?'опережает на ':'отстаёт на ')+Math.abs(р.смещениеМс)+' мс — расписание сдвигается той же величиной.';
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-агрегат" aria-labelledby="сг47-агрегат-заголовок">
+<h2 id="сг47-агрегат-заголовок">Агрегат вечера — агрегат-ядро/0.1 <em>(М5, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Коллективный интеллект без слежки: считаем только на устройстве; наружу — агрегат без личности. Категории с числом событий меньше k честно скрываются («меньше k»), вырожденный агрегат — честная пометка.</p>
+<label for="сг47-агрегат-вход">События — по одной JSON-строке {"категория":"…"}</label>
+<textarea id="сг47-агрегат-вход" placeholder='{"категория":"пение"}
+{"категория":"пение"}
+{"категория":"слушание"}'></textarea>
+<label for="сг47-агрегат-k">k (минимум категории, по умолчанию 5)</label>
+<input type="text" id="сг47-агрегат-k" inputmode="numeric" placeholder="5" autocomplete="off">
+<button type="button" id="сг47-агрегат-кнопка">Собрать агрегат</button>
+<div class="сг47-ответ" id="сг47-агрегат-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М5 — агрегат-ядро/0.1 в зале ·17 */
+(function(){try{
+ var вход=document.getElementById('сг47-агрегат-вход'),k=document.getElementById('сг47-агрегат-k'),кнопка=document.getElementById('сг47-агрегат-кнопка'),ответ=document.getElementById('сг47-агрегат-ответ');
+ if(!вход||!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__АГРЕГАТ;
+   if(!порт){ответ.textContent='Порт агрегат-ядро/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var события=[];
+   var строки=(вход.value||'').split(/\n+/);
+   for(var i=0;i<строки.length;i++){var с=строки[i].trim();if(!с)continue;события.push(JSON.parse(с))}
+   var опции={};
+   if((k.value||'').trim())опции.k=parseInt(k.value,10);
+   var р=порт.собрать(события,опции);
+   var наружу=[];var имя;
+   for(имя in р.агрегат){if(Object.prototype.hasOwnProperty.call(р.агрегат,имя))наружу.push(имя+': '+р.агрегат[имя])}
+   var скрыто=[];
+   for(имя in р.скрыто){if(Object.prototype.hasOwnProperty.call(р.скрыто,имя))скрыто.push(имя)}
+   ответ.textContent=(наружу.length?('Наружу (агрегат без личности):\n  '+наружу.join('\n  ')):'Наружу нечего отдать:')+'\nСкрыто честно (<'+р.k+'): '+(скрыто.length?скрыто.join(', '):'—')+'\nВсего событий: '+р.всего+(р.вырожден?'\nАгрегат вырожден (все категории меньше k) — честная пометка.':'');
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-зеркало" aria-labelledby="сг47-зеркало-заголовок">
+<h2 id="сг47-зеркало-заголовок">Зеркало каталога — зеркало-каталога/0.1 <em>(М1, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Content-addressed протокол М1: каждый файл — честные SHA-256-иды чанков (64 КБ), корень — хэш канонизированного списка. 0 сети: транспорт (IPFS-релеи) — снаружи, по явному действию человека (И-01). Файлы выбираешь ты — дом их не читает без тебя.</p>
+<label for="сг47-зеркало-файлы">Файлы каталога для зеркала</label>
+<input type="text" id="сг47-зеркало-файлы" placeholder="пути через запятую (имена выбранных файлов)" autocomplete="off" readonly>
+<input type="file" id="сг47-зеркало-выбор" multiple aria-label="Выбрать файлы для зеркала" style="color:#e8e4da">
+<button type="button" id="сг47-зеркало-кнопка">Построить зеркало</button>
+<div class="сг47-ответ" id="сг47-зеркало-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М1 — зеркало-каталога/0.1 в зале ·17 (файлы — только от человека) */
+(function(){try{
+ var выбор=document.getElementById('сг47-зеркало-выбор'),имена=document.getElementById('сг47-зеркало-файлы'),кнопка=document.getElementById('сг47-зеркало-кнопка'),ответ=document.getElementById('сг47-зеркало-ответ');
+ if(!выбор||!кнопка||!ответ)return;
+ var файлы=[];
+ выбор.addEventListener('change',function(){
+  файлы=[];
+  for(var i=0;i<выбор.files.length;i++)файлы.push(выбор.files[i]);
+  var список=[];for(var j=0;j<файлы.length;j++)список.push(файлы[j].name);
+  имена.value=список.join(', ');
+ });
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__ЗЕРКАЛО;
+   if(!порт){ответ.textContent='Порт зеркало-каталога/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   if(!файлы.length){ответ.textContent='Файлы не выбраны: зеркало пустых каталогов не строит.';return;}
+   var очередь=[];var готово=0;
+   for(var i=0;i<файлы.length;i++){
+    (function(ф){
+     var читатель=new FileReader();
+     читатель.onload=function(){очередь.push({путь:ф.name,данные:new Uint8Array(читатель.result)});готово++;еслиВсё()};
+     читатель.onerror=function(){ответ.textContent='Честный отказ: файл «'+ф.name+'» не прочитался.';ответ.className='сг47-ответ сг47-отказ'};
+     читатель.readAsArrayBuffer(ф);
+    })(файлы[i]);
+   }
+   function еслиВсё(){
+    if(готово!==файлы.length)return;
+    порт.построить(очередь).then(function(з){
+     var сч=0;for(var i=0;i<з.листы.length;i++)сч+=з.листы[i].блоки.length;
+     ответ.textContent='Корень зеркала:\n'+з.корень+'\nЛистов: '+з.листы.length+' · блоков: '+сч+'\n(зеркало — JSON в консоли; доставка наружу — только твоим действием, И-01)';
+     try{console.log('зеркало-каталога/0.1:',JSON.parse(JSON.stringify(з)))}catch(е){}
+    }).catch(function(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'});
+   }
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
 <a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
@@ -1581,6 +1743,9 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </div>
 </details>
 </nav>
+<script defer src="js/latency-core.js"></script>
+<script defer src="js/aggregate-core.js"></script>
+<script defer src="js/mirror-core.js"></script>
 <script defer src="js/sg-registry.js"></script>
 </body>
 </html>

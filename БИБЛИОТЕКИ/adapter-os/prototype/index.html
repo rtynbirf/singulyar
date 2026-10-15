@@ -1,6 +1,9 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101828"><title>SINGULYAR Adapter OS</title><link rel="manifest" href="manifest.webmanifest"><style>
 :root{font-family:system-ui,sans-serif;color:#111827;background:#f4f6f8}body{margin:0}header{background:#101828;color:white;padding:22px}main{max-width:1100px;margin:auto;padding:18px;display:grid;gap:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.card{background:white;border:1px solid #d9dee7;border-radius:14px;padding:16px;box-shadow:0 2px 8px #0000000d}button,input,select,textarea{font:inherit}button{padding:10px 13px;border-radius:10px;border:1px solid #aeb7c5;background:#fff;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #111827;outline-offset:2px}.status{font-family:ui-monospace,monospace;font-size:.9rem}.ok{font-weight:700}.warn{font-weight:700}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.log{white-space:pre-wrap;background:#0b1220;color:#e5edf8;border-radius:10px;padding:12px;min-height:100px}.meaning{width:100%;min-height:90px}.large{font-size:1.25rem}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-</style></head><body><header><strong>SINGULYAR Adapter OS · prototype v0.1</strong><div>Смысл один → человек выбирает представление → система подстраивается</div></header><main>
+</style><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://api.github.com; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self' https://github.com">
+</head><body>
+<h1 style="position:absolute;left:-9999px;top:0">ADAPTER-OS · прототип ·51</h1>
+<header><strong>SINGULYAR Adapter OS · prototype v0.1</strong><div>Смысл один → человек выбирает представление → система подстраивается</div></header><main>
 <section class="card"><h2>1. Возможности устройства</h2><div id="capabilities" class="status"></div><p><strong>Правило:</strong> явное предпочтение человека выше автоматики.</p></section>
 <section class="card"><h2>2. Сообщение</h2><label>Текст<br><textarea id="meaning" class="meaning" placeholder="Например: Бабушка, я уже дома."></textarea></label><div class="row"><button id="renderText">Показать текстом</button><button id="speak">Озвучить</button><button id="pulse">Вибрация</button><button id="save">Сохранить локально</button><button id="export">Экспорт JSON</button></div><p id="rendered" class="large" aria-live="polite"></p></section>
 <section class="grid"><div class="card"><h2>3. Голос человека</h2><label>Язык <input id="lang" value="ru-RU"></label><br><label>Темп <input id="rate" type="number" min="0.1" max="2" step="0.1" value="0.9"></label><br><label>Высота <input id="pitch" type="number" min="0" max="2" step="0.1" value="1"></label><br><label>Громкость <input id="volume" type="number" min="0" max="1" step="0.1" value="1"></label><br><label>Голос <select id="voice"></select></label><div class="row"><button id="reloadVoices">Обновить голоса</button></div></div>
@@ -22,6 +25,72 @@
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-паспорт" aria-labelledby="сг47-паспорт-заголовок">
+<h2 id="сг47-паспорт-заголовок">Паспорт узла — узел-паспорт/0.1 <em>(ПВ7, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">ECDSA P-256 + SHA-256 через Web Crypto: паспорт узла создаётся и проверяется прямо на устройстве; приватный ключ никуда не уходит и не хранится домом. 0 сети.</p>
+<button type="button" id="сг47-паспорт-создать">Создать паспорт узла</button>
+<button type="button" id="сг47-паспорт-проверить">Проверить</button>
+<div class="сг47-ответ" id="сг47-паспорт-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): ПВ7 — паспорт узла (данные узла: ·51 ADAPTER-OS) */
+(function(){try{
+ var ответ=document.getElementById('сг47-паспорт-ответ');
+ var бСоздать=document.getElementById('сг47-паспорт-создать');
+ var бПроверить=document.getElementById('сг47-паспорт-проверить');
+ if(!ответ||!бСоздать||!бПроверить)return;
+ var паспорт=null;
+ function тактИзРеестра(){
+  try{if(window.SG_РЕЕСТР&&window.SG_РЕЕСТР.дом){return window.SG_РЕЕСТР.дом.версия+' «'+window.SG_РЕЕСТР.дом.такт+'»'}}catch(е){}
+  return 'реестр недоступен — число не выдумываем';
+ }
+ бСоздать.addEventListener('click',function(){
+  ответ.className='сг47-ответ';ответ.textContent='…';
+  try{
+   var порт=window.__УЗЕЛ_ПАСПОРТ;
+   if(!порт){ответ.textContent='Порт узел-паспорт/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var данные={узел:'ADAPTER-OS',роль:'мозги Малыша (офлайн-копия)',дверь:'·51',такт:тактИзРеестра()};
+   var создан=Date.now();
+   порт.создать(данные,{создан:создан}).then(function(п){
+    паспорт=п;
+    ответ.textContent='Паспорт создан. Отпечаток узла:\n'+п.отпечаток+'\nПодпись — base64url ECDSA P-256, проверяется кнопкой «Проверить».';
+   }).catch(function(е){
+    ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ';
+   });
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+ бПроверить.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__УЗЕЛ_ПАСПОРТ;
+   if(!порт){ответ.textContent='Порт узел-паспорт/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   if(!паспорт){ответ.textContent='Сначала создайте паспорт узла.';return;}
+   порт.проверить(паспорт).then(function(в){
+    ответ.textContent=в.верно?('Паспорт верен: подпись и отпечаток сошлись.'+(в.причины.length?' (пометки: '+в.причины.join('; ')+')':'')):('Паспорт НЕ верен. Причины: '+в.причины.join('; '));
+    if(!в.верно)ответ.className='сг47-ответ сг47-отказ';
+   }).catch(function(е){
+    ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ';
+   });
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
 <a class="sg65a" href="../../../index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
@@ -78,6 +147,7 @@
 </div>
 </details>
 </nav>
+<script defer src="../../../js/node-passport.js"></script>
 <script defer src="../../../js/sg-registry.js"></script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.26</span> «<span data-реестр="такт">САЖЕНЦЫ</span>» · кэш <span data-реестр="кэш">v177</span></div>
 </body></html>

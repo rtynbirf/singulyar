@@ -260,6 +260,53 @@ try{
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-диаг" aria-labelledby="сг47-диаг-заголовок">
+<h2 id="сг47-диаг-заголовок">Самодиагностика дома — In-Browser Test Suite <em>(ПВ8, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Пять проб устройства — считаются здесь и сейчас; канон-донор test_suite.js (байт-в-байт из ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_2/прототип_SINGULYAR_v2.0/) живёт в js/ и дублирует вердикт в консоли.</p>
+<button type="button" id="сг47-диаг-кнопка">Проверить устройство</button>
+<div class="сг47-ответ" id="сг47-диаг-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): ПВ8 — самодиагностика в ·45 (те же пробы, что у донора) */
+(function(){try{
+ var кнопка=document.getElementById('сг47-диаг-кнопка'),ответ=document.getElementById('сг47-диаг-ответ');
+ if(!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  var строки=[];
+  function проба(имя,ок){строки.push((ок?'PASS':'FAIL')+' · '+имя);return ок}
+  try{
+   var Аудио=window.AudioContext||window.webkitAudioContext;
+   var аудио=false;
+   if(Аудио){try{var контекст=new Аудио();аудио=!!(контекст.audioWorklet);контекст.close&&контекст.close()}catch(е){аудио=false}}
+   проба('AudioWorklet (звук вне Main Thread)',аудио);
+  }catch(е){проба('AudioWorklet (звук вне Main Thread)',false)}
+  try{проба('OPFS (фонограммы без вытеснения)',!!(navigator.storage&&navigator.storage.getDirectory))}catch(е){проба('OPFS',false)}
+  try{проба('Web Crypto (паспорта/подписи)',!!(window.crypto&&window.crypto.subtle))}catch(е){проба('Web Crypto',false)}
+  try{проба('WebRTC (зал/ПИР без посредников)',!!window.RTCPeerConnection)}catch(е){проба('WebRTC',false)}
+  try{проба('Service Worker (офлайн-first)',('serviceWorker' in navigator))}catch(е){проба('Service Worker',false)}
+  var красных=0;for(var i=0;i<строки.length;i++){if(строки[i].indexOf('FAIL')===0)красных++}
+  ответ.textContent=строки.join('\n')+'\nИтог: '+(5-красных)+'/5';
+  if(красных)ответ.className='сг47-ответ сг47-отказ';
+ });
+}catch(е){}})();
+</script>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
 <a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
@@ -316,6 +363,7 @@ try{
 </div>
 </details>
 </nav>
+<script defer src="js/test-suite.js"></script>
 <script defer src="js/sg-registry.js"></script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
 </body>
