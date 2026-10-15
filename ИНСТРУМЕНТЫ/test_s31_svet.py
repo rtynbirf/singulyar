@@ -8,7 +8,14 @@ from playwright.sync_api import sync_playwright
 import urllib.parse
 
 окружение = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-дверь = 'file://' + os.path.join(окружение, 'СИНГУЛЯР_31_ЛАДОМ.html')
+import subprocess, time, atexit
+порт = int(os.environ.get('ПРОГОН_ПОРТ', '8968'))
+serve = subprocess.Popen(['node', os.path.join(окружение, 'ИНСТРУМЕНТЫ', 'serve_repo.mjs'), str(порт), окружение],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+atexit.register(lambda: serve.terminate())
+time.sleep(1.5)
+дверь = f'http://127.0.0.1:{порт}/СИНГУЛЯР_31_ЛАДОМ.html'  # v11.47: file:// режет fetch/CORS — легитимные ошибки консоли
+
 шаги = []
 def ок(имя, условие):
     шаги.append((имя, bool(условие)))
@@ -42,15 +49,15 @@ with sync_playwright() as p:
     стр.evaluate(ВРАГ); стр.wait_for_timeout(250)
     фон = стр.evaluate("getComputedStyle(document.body).backgroundColor")
     текст = стр.evaluate("getComputedStyle(document.body).color")
-    ок('ДЕНЬ+MONO+враг: тело бумажное, не #101012 (' + фон + ')', фон == 'rgb(244, 239, 230)')
-    ок('ДЕНЬ+MONO+враг: текст чернильный (' + текст + ')', текст == 'rgb(42, 36, 32)')
+    ок('ДЕНЬ+MONO+враг: тело нейтрально-светлое (палитра-закон v10.83), не #101012 (' + фон + ')', фон == 'rgb(237, 237, 237)')
+    ок('ДЕНЬ+MONO+враг: текст золотым рядом (v10.83: #8C6D1F) (' + текст + ')', текст == 'rgb(140, 109, 31)')
     фон_html = стр.evaluate("getComputedStyle(document.documentElement).backgroundColor")
-    ок('ДЕНЬ+MONO+враг: html тоже закреплён (' + фон_html + ')', фон_html == 'rgb(244, 239, 230)')
+    ок('ДЕНЬ+MONO+враг: html тоже закреплён (' + фон_html + ')', фон_html == 'rgb(237, 237, 237)')
 
     # ══ 2. ЧИСТЫЙ СВЕТ: ДЕТИ — крем держится, тёмных заливок света нет ══
     стр.evaluate("window.__SCENE && window.__SCENE.set('kids')"); стр.wait_for_timeout(250)
     фон = стр.evaluate("getComputedStyle(document.body).backgroundColor")
-    ок('ДЕТИ+MONO+враг: тело кремовое (' + фон + ')', фон == 'rgb(255, 246, 233)')
+    ок('ДЕТИ+MONO+враг: тело светло-нейтральное (v10.83), не #101012 (' + фон + ')', фон == 'rgb(244, 244, 244)')
     заливки = стр.evaluate("""[...document.querySelectorAll('#light .lay')].map(l=>({vis:l.classList.contains('vis'),bg:l.style.background}))""")
     ок('ДЕТИ: слои света пусты — никакого «ТВ-растра»', all(not z['vis'] and not z['bg'] for z in заливки))
 
@@ -65,7 +72,7 @@ with sync_playwright() as p:
     ок('hc включён: инлайн закрепления снят — контраст правит сам (' + repr(инлайн) + ')', инлайн == '')
     стр.evaluate("document.getElementById('hcGo').click()")
     фон = стр.evaluate("getComputedStyle(document.body).backgroundColor")
-    ок('hc выключен: крем вернулся (' + фон + ')', фон == 'rgb(255, 246, 233)')
+    ок('hc выключен: светлый вернулся (v10.83) (' + фон + ')', фон == 'rgb(244, 244, 244)')
 
     # ══ 4б. ЛАБ выше пояса: свои цвета видны в светлой комнате (ревизия 6-b) ══
     стр.evaluate("const в=document.getElementById('врагКаскад'); if(в) в.remove(); /* враг своё отработал в шагах 1-2 */")
@@ -75,7 +82,7 @@ with sync_playwright() as p:
     ок('ЛАБ свои цвета в ДЕТИ видны (' + фон + ')', фон == 'rgb(16, 16, 16)')
     стр.evaluate("""(()=>{ document.body.style.removeProperty('--bg'); document.body.style.removeProperty('--text'); if(window.__ЗАКРЕПИСВЕТ)window.__ЗАКРЕПИСВЕТ(); })()""")
     фон = стр.evaluate("getComputedStyle(document.body).backgroundColor")
-    ок('ЛАБ снял — крем вернулся (' + фон + ')', фон == 'rgb(255, 246, 233)')
+    ок('ЛАБ снял — светлый вернулся (v10.83) (' + фон + ')', фон == 'rgb(244, 244, 244)')
 
     # ══ 5. ПУЛЬТ: синяя кнопка → сразу во весь экран, РАЗВЕРНУТЬ нет ══
     стр.evaluate(JS_КЛЮЧ, [406, 'ColorF3Blue']); стр.wait_for_timeout(300)
@@ -123,12 +130,12 @@ with sync_playwright() as p:
     ок('док виден после паузы (' + док + ')', док == '1')
 
     # ══ 10. чип версии на бирке ══
-    ок('бирка несёт чип версии', стр.evaluate("!!document.querySelector('.sng-strip .sng-верш') && /v10\.\d+/.test(document.querySelector('.sng-strip .sng-верш').textContent)   /* v10.47: пин v10.7 → паттерн версии */"))
+    ок('бирка несёт чип версии', стр.evaluate("!!document.querySelector('.sng-strip .sng-верш') && /v\d+\.\d+/.test(document.querySelector('.sng-strip .sng-верш').textContent)   /* v10.47: пин v10.7 → паттерн версии */"))
 
     стр.evaluate("try{window.__KV.audio.pause()}catch(e){}")
     браузер.close()
 
-    чисто = [о for о in ошибки if '404' not in о and 'net::' not in о]
+    чисто = [о for о in ошибки if '404' not in о and 'net::' not in о and 'navigator.vibrate' not in о]  # v11.47: политика жеста браузера — не код дома
     ок('консоль чиста (ошибок кода: ' + str(len(чисто)) + ')', not чисто)
     if чисто: print('ОШИБКИ:', чисто[:5], flush=True)
 
