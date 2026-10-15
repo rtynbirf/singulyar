@@ -54,6 +54,9 @@ jobs:
             case "$nm" in
               # браузерные/сетевые/живые прогоны — вне CI (их живая поверка у агентов)
               *browser*|*live*|*real*|*wire*) continue;;
+              # латка С126: playwright/qrcode-пробы без маркера в имени — вне CI по заголовку файла
+              # («Браузерные/сетевые пробы — отдельные живые прогоны агентов, не CI»)
+              test_catalog_index.py|test_qr_vs_python.py|test_s01_smoke.py|test_s22_chat_device.py|test_s22_device.py|test_s31_adapt.py|test_s31_pult.py|test_s31_svet.py|test_s31_verdict.py) continue;;
               # закалка — playwright-прогон (жёсткий, но не в CI)
               *закалка*) continue;;
             esac
