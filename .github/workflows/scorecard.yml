@@ -1,0 +1,53 @@
+# OpenSSF Scorecard (ТЗ-Г2/ТЗ-Л; латка С128 поверх такта v11.49 «ЗАКРЫТИЕ»).
+# Еженедельная оценка практик безопасности репозитория (supply-chain, pinnning,
+# branch protection, CI и пр.). Результаты: SARIF → Security tab + артефакт.
+# Все экшены пинованы SHA (правило дома: латка С128).
+name: OpenSSF Scorecard
+
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: '30 5 * * 3' # еженедельно, среда 05:30 UTC
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      actions: read
+      issues: read
+      pull-requests: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e # v2.5.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Сохранить артефакт (5 дней)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: scorecard-sarif
+          path: results.sarif
+          retention-days: 5
+          if-no-files-found: warn
+
+      - name: Загрузить в Security tab (code scanning)
+        uses: github/codeql-action/upload-sarif@192325c86100d080feab897ff886c34abd4c83a3 # v3.30.3
+        with:
+          sarif_file: results.sarif
