@@ -80,13 +80,17 @@ jobs:
           EOF
 
       - name: Оракул описания репозитория (ТЗ-И, латка С128)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'EOF'
-          import json, urllib.request
+          import json, os, urllib.request
           ожидание = json.load(open('data/versions.json', encoding='utf-8'))['дом']['описание']
-          запрос = urllib.request.Request(
-              'https://api.github.com/repos/rtynbirf/singulyar',
-              headers={'User-Agent': 'singulyar-takt-gejt'}  # ASCII: HTTP-заголовки не несут кириллицу (шрам латки С128: UnicodeEncodeError latin-1))
+          заголовки = {'User-Agent': 'singulyar-takt-gejt'}  # ASCII: HTTP-заголовки не несут кириллицу (шрам латки С128)
+          токен = os.environ.get('GITHUB_TOKEN')
+          if токен:
+              заголовки['Authorization'] = 'Bearer ' + токен  # 1000/ч надёжнее без-токенных 60/ч на общих IP раннеров
+          запрос = urllib.request.Request('https://api.github.com/repos/rtynbirf/singulyar', headers=заголовки)
           факт = json.load(urllib.request.urlopen(запрос)).get('description')
           print('реестр:', ожидание)
           print('факт:  ', факт)
