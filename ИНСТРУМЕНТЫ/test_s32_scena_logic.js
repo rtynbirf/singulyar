@@ -108,22 +108,26 @@ test('корпус: 64 песни фонда, у всех текст, тайми
   /* v11.44 «ИЗМЕРЕНО»: число песен — из реестра дома, не литерал */
   const РЕЕСТР = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'versions.json'), 'utf8'));
   assert.equal(корпус.songs.length, РЕЕСТР.счётчики.песен, 'песен в корпусе = фонду реестра');
-  /* RUM23-7/8 «ДИЕТА ДОМА» + «НАПОЛНЕНИЕ»: фонды — голос/ (оригинал с вокалом автора, 62) и чистый-минус/
-     (натуральная минусовка: вокал убран из оригинала, 63, включая алиас флагмана prosto-lubi);
-     в корне minus/ — 3 честных спец-mp3: дом-песня prosto-lubi и 2 мастера v10.69,
-     сами безголосые (их трек = их натуральный минус) */
+  /* RUM23-7/8/9 «ДИЕТА ДОМА» + «НАПОЛНЕНИЕ» + «АРХИВ ЧАСТЯМИ» (С140): фонды — голос/
+     (оригинал с вокалом автора, 62) и чистый-минус/ (натуральная минусовка: вокал убран
+     из оригинала, 63, включая алиас флагмана prosto-lubi); в корне minus/ — 1 честный
+     спец-mp3: дом-песня prosto-lubi; Сборник (Qb8xb0vUYDg) с С140 живёт ЧАСТЯМИ в
+     minus/сборник/ (7 × MP3 128k, полный мастер Drive «плейлист на 1 час» — по закону
+     владельца «нарезать как архив по частям, при произведении подставлять часть за частью») */
   const голос = new Set(fs.readdirSync(path.join(ROOT, 'minus', 'голос')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
   const чистый = new Set(fs.readdirSync(path.join(ROOT, 'minus', 'чистый-минус')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
   const корень = new Set(fs.readdirSync(path.join(ROOT, 'minus')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
-  const исключения = new Set(['Qb8xb0vUYDg']);   /* v10.69: мастер сам безголосый; v11.50: shs0TiOwx-M оживлено — из исключений снято */
   assert.equal(голос.size, 62, 'фонд голоса: 62 транскода (59 + две новые песни витка v11.50 + ожившее «Где настоящее»)');
   assert.equal(чистый.size, 63, 'фонд чистого минуса: 63 (с алиасом флагмана)');
-  assert.deepEqual([...корень].sort(), ['Qb8xb0vUYDg', 'prosto-lubi'], 'в корне minus/ только 2 спец-mp3: «Где настоящее» оживлено голосом (v11.50)');
+  const сборникЧасти = path.join(ROOT, 'minus', 'сборник');
+  const сборникФайлы = fs.existsSync(сборникЧасти) ? fs.readdirSync(сборникЧасти).filter(f => /^сборник-0[1-7]\.mp3$/.test(f)) : [];
+  assert.deepEqual([...корень].sort(), ['prosto-lubi'], 'в корне minus/ один спец-mp3 — 600-с огрызок Сборника ушёл с С140 (его заменили 7 частей в minus/сборник/)');
+  assert.equal(сборникФайлы.length, 7, 'Сборник: 7 частей на диске (полный мастер 4169 с)');
   for (const п of корпус.songs) {
     assert.ok(п.id && п.title, 'ID и титул есть: ' + п.id);
-    const естьГолос = голос.has(п.id) || (п.id === '9ys_TVEtda8' && корень.has('prosto-lubi')) || (исключения.has(п.id) && корень.has(п.id));
+    const естьГолос = голос.has(п.id) || (п.id === '9ys_TVEtda8' && корень.has('prosto-lubi')) || (п.id === 'Qb8xb0vUYDg' && сборникФайлы.length === 7);
     assert.ok(естьГолос, 'полный трек с голосом на диске: ' + п.id);
-    const естьМинус = чистый.has(п.id) || (п.id === '9ys_TVEtda8' && чистый.has('prosto-lubi')) || (исключения.has(п.id) && корень.has(п.id));
+    const естьМинус = чистый.has(п.id) || (п.id === '9ys_TVEtda8' && чистый.has('prosto-lubi')) || (п.id === 'Qb8xb0vUYDg' && сборникФайлы.length === 7);
     assert.ok(естьМинус, 'натуральная минусовка на диске: ' + п.id);
     assert.equal(п.has_text, true, 'текст есть: ' + п.id);
     assert.ok(п.lines.length >= 5, 'строк достаточно: ' + п.id + ' = ' + п.lines.length);

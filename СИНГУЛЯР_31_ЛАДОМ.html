@@ -1568,6 +1568,7 @@ if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
   if (buf && !audio.src && !(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ())) audio.src = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));
 });
 audio.addEventListener("error", ()=>{ try{
+  if(window.__СБОРНИК_ЦЕПЬ && window.__СБОРНИК_ЦЕПЬ.активен()){ showToast("Часть Сборника не открылась — нужны файлы minus/сборник/ (7 частей) рядом"); return; } /* латка С140: у Сборника честный отказ — фолбэков нет */
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.минОтвал && window.__ТРАНСПОРТ.минОтвал()) return; /* v10.66: МИН не нашёлся — транспорт сам честно поднял МАКС */
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.максОтвал && window.__ТРАНСПОРТ.максОтвал()) return; /* v10.69: МАКС-мастера нет рядом — транспорт сам честно поднял mp3-минус */
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.голосОтвал && window.__ТРАНСПОРТ.голосОтвал()) return; /* v11.39: голосового mp3 нет рядом (старая копия дома) — транспорт сам честно поднял mp3-минус */
@@ -1852,10 +1853,11 @@ if(S){
 }
 tlBar.addEventListener("click",(e)=>{
   const r = tlBar.getBoundingClientRect();
-  seek(clamp((e.clientX-r.left)/r.width,0,0.999)*(audio.duration||DUR)); /* v10.63 */
+  seek(clamp((e.clientX-r.left)/r.width,0,0.999)*((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.длительность():(audio.duration||DUR))); /* v10.63; С140: у Сборника — глобальная */
 });
 function seek(t){
-  try{ audio.currentTime = t; }catch(e){}
+  if(window.__СБОРНИК_ЦЕПЬ && window.__СБОРНИК_ЦЕПЬ.активен()){ window.__СБОРНИК_ЦЕПЬ.кМесту(t); } /* латка С140: глобальное время → нужная часть */
+  else try{ audio.currentTime = t; }catch(e){}
   state.cueIdx = -1; state.secIdx = -1;
   resyncToasts(t); forceLine = true;
   if(state.ended && t < DUR - 0.6){ state.ended = false; if(body.dataset.mode==="bravo") body.dataset.mode = state.started ? "sing" : "start"; }
@@ -1975,7 +1977,7 @@ btnPlay.addEventListener("click", togglePlay);
 $("btnStart").addEventListener("click", startShow);
 $("btnRestart").addEventListener("click", ()=>{ seek(0); if(audio.paused) togglePlay(); });
 $("btnAgain").addEventListener("click", ()=>{ state.claps=0; $("clapN").textContent="0"; body.dataset.mode="sing"; seek(0); if(audio.paused) togglePlay(); });
-audio.addEventListener("loadedmetadata", ()=>{ tDur.textContent = fmt(audio.duration||DUR); health(); });
+audio.addEventListener("loadedmetadata", ()=>{ tDur.textContent = fmt((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.длительность():(audio.duration||DUR)); health(); }); /* латка С140: у Сборника — глобальная */
 audio.addEventListener("ended", ()=>{
   if(window.__ТРАНСПОРТ && window.__ТРАНСПОРТ.onEnded()) return;
   if(state.ended) return; state.ended = true;
@@ -2076,7 +2078,7 @@ window.__ТРАНСПОРТ = (function(){
   const plateName = document.getElementById("концертИмя");
 
   /* v10.66 «ПОЛЮСА»: путь файла текущего полюса; null — караоке-дом (блоб) */
-  function src(i){ if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return ПЕСНИ[i][0]===КАРАОКЕ_ID ? "./minus/prosto-lubi.mp3" : "./minus/голос/"+ПЕСНИ[i][0]+".mp3"; /* ТБ-1 v11.34; v11.35 «ЛИЦО»: караоке-дом на ТВ — своя песня; v11.39 «ГОЛОС ТВ» (С117, приказ владельца trace 1a13aeb7646ed6d5 «ВЕРНИ КАК БЫЛО ЧТОБ ИГРАЛИ ОРИГИНАЛЬНЫЕ ТРЕКИ АВТОРА»): все песни зала на ТВ играют mp3-фонд С ГОЛОСОМ автора minus/голос/{id}.mp3 (59 транскодов 48 kHz stereo из МАКС-мастеров, честная лестница 320k→224k, ≤9,8 МБ/файл) — старые mp3 были минусовки/записи другого источника (летопись v10.69, улики их ВОЗВРАТА С114 по pervLR9m-vk), а голосовой Opus-мастер ТВ не декодирует; их твПуть() (СВЕРКА С116) зовёт src() — фонд играет автоматически; 2 исключения v10.69 («Сборник», «Где настоящее» — мастера сами безголосые) играют свой старый mp3-минус через голосОтвал */ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (БЕЗГОЛОСЫЕ[ПЕСНИ[i][0]] ? "./minus/"+ПЕСНИ[i][0]+".mp3" : (pole==="мин" ? "./minus/чистый-минус/"+ПЕСНИ[i][0]+".mp3" : "./minus/голос/"+ПЕСНИ[i][0]+".mp3")); } /* RUM23-7 «ДИЕТА»: МАКС = оригинал с голосом автора (minus/голос/, 48 kHz stereo — как в плеере), МИН = натуральная минусовка (minus/чистый-минус/, вокал убран из оригинала); webm-видеомастера и моно-дубл ушли из дома, оси КАРАОКЕ не едут (timeline не менялся) */
+  function src(i){ if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return ПЕСНИ[i][0]===КАРАОКЕ_ID ? "./minus/prosto-lubi.mp3" : "./minus/голос/"+ПЕСНИ[i][0]+".mp3"; /* ТБ-1 v11.34; v11.35 «ЛИЦО»: караоке-дом на ТВ — своя песня; v11.39 «ГОЛОС ТВ» (С117, приказ владельца trace 1a13aeb7646ed6d5 «ВЕРНИ КАК БЫЛО ЧТОБ ИГРАЛИ ОРИГИНАЛЬНЫЕ ТРЕКИ АВТОРА»): все песни зала на ТВ играют mp3-фонд С ГОЛОСОМ автора minus/голос/{id}.mp3 (59 транскодов 48 kHz stereo из МАКС-мастеров, честная лестница 320k→224k, ≤9,8 МБ/файл) — старые mp3 были минусовки/записи другого источника (летопись v10.69, улики их ВОЗВРАТА С114 по pervLR9m-vk), а голосовой Opus-мастер ТВ не декодирует; их твПуть() (СВЕРКА С116) зовёт src() — фонд играет автоматически; 2 исключения v10.69 («Сборник», «Где настоящее» — мастера сами безголосые) играют свой старый mp3-минус через голосОтвал */ return ПЕСНИ[i][0]===КАРАОКЕ_ID ? null : (БЕЗГОЛОСЫЕ[ПЕСНИ[i][0]] ? "./minus/сборник/сборник-01.mp3" : (pole==="мин" ? "./minus/чистый-минус/"+ПЕСНИ[i][0]+".mp3" : "./minus/голос/"+ПЕСНИ[i][0]+".mp3")); } /* латка С140: Сборник — цепь частей minus/сборник/ (полный мастер Drive «плейлист на 1 час», 7 × MP3 128k); старый 600-с огрызок минус/корня ушёл */ /* RUM23-7 «ДИЕТА»: МАКС = оригинал с голосом автора (minus/голос/, 48 kHz stereo — как в плеере), МИН = натуральная минусовка (minus/чистый-минус/, вокал убран из оригинала); webm-видеомастера и моно-дубл ушли из дома, оси КАРАОКЕ не едут (timeline не менялся) */
   function караокеПуть(){ if(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ()) return "./minus/prosto-lubi.mp3"; /* ТБ-1 v11.34; v11.35 «ЛИЦО»: своя песня — mp3 рядом */ return pole==="мин" ? "./minus/чистый-минус/prosto-lubi.mp3" : "./minus/prosto-lubi.mp3"; } /* RUM23-7: дом — mp3-шасси (320k/48 kHz транскод МАКС-мастера), МИН — его натуральная минусовка */
 
   function playСейчас(){
@@ -2146,6 +2148,7 @@ window.__ТРАНСПОРТ = (function(){
       }
     } else {
       audio.src = s; текущийПуть = s;
+      if(window.__СБОРНИК_ЦЕПЬ) window.__СБОРНИК_ЦЕПЬ.сброс(); /* латка С140: свежая загрузка — с части 1 */
       краска();
       if(autoplay) playСейчас();
       else if(!state.started) showToast("Выбрано: "+ПЕСНИ[idx][1]+" — пуск кнопкой ▶");
@@ -2187,7 +2190,7 @@ window.__ТРАНСПОРТ = (function(){
     showToast("Натуральной минусовки нет рядом — играет голос автора");
     const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
     pole = "макс"; try{ store.set("kv31.pol", "макс"); }catch(e){}
-    audio.src = БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/"+ПЕСНИ[idx][0]+".mp3" : "./minus/голос/"+ПЕСНИ[idx][0]+".mp3"; текущийПуть = audio.src; /* RUM23-7: МИН→МАКС = фонд голоса */
+    audio.src = БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/сборник/сборник-01.mp3" : "./minus/голос/"+ПЕСНИ[idx][0]+".mp3"; текущийПуть = audio.src; /* RUM23-7: МИН→МАКС = фонд голоса; С140: Сборник — часть 1 */
     краска();
     audio.addEventListener("loadedmetadata", function once(){
       try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
@@ -2199,10 +2202,10 @@ window.__ТРАНСПОРТ = (function(){
 
   /* v10.69 «ГОЛОС»: честный фолбэк МАКС→mp3, если мастера {id}.max.webm нет рядом (старая копия дома) */
   function максОтвал(){
-    if(pole!=="макс" || !текущийПуть || (текущийПуть.indexOf("./minus/голос/")!==0 && текущийПуть.indexOf(".max.webm")<0 && текущийПуть.indexOf("./minus/Qb8xb0vUYDg.mp3")<0)) return false;
+    if(pole!=="макс" || !текущийПуть || (текущийПуть.indexOf("./minus/голос/")!==0 && текущийПуть.indexOf(".max.webm")<0)) return false; /* латка С140: путь огрызка ./minus/Qb8xb0vUYDg.mp3 ушёл — Сборник ведёт error-обработчик честным отказом */
     showToast("Оригинала с голосом нет рядом — играет натуральная минусовка (чистый-минус)");
     const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
-    audio.src = ПЕСНИ[idx][0]===КАРАОКЕ_ID ? "./minus/чистый-минус/prosto-lubi.mp3" : (БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/"+ПЕСНИ[idx][0]+".mp3" : "./minus/чистый-минус/"+ПЕСНИ[idx][0]+".mp3"); текущийПуть = audio.src; /* RUM23-7: лестница голос → натуральная минусовка */
+    audio.src = ПЕСНИ[idx][0]===КАРАОКЕ_ID ? "./minus/чистый-минус/prosto-lubi.mp3" : (БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/сборник/сборник-01.mp3" : "./minus/чистый-минус/"+ПЕСНИ[idx][0]+".mp3"); текущийПуть = audio.src; /* RUM23-7: лестница голос → натуральная минусовка; С140: Сборник — часть 1 */
     audio.addEventListener("loadedmetadata", function once(){
       try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
       audio.removeEventListener("loadedmetadata", once);
@@ -2239,7 +2242,7 @@ window.__ТРАНСПОРТ = (function(){
     if(!текущийПуть || текущийПуть.indexOf("./minus/голос/")!==0) return false;
     showToast("Голосового mp3 нет рядом — играет натуральная минусовка (чистый-минус)");
     const t = audio.currentTime||0, играл = state.started && !audio.paused && !audio.ended;
-    audio.src = ПЕСНИ[idx][0]===КАРАОКЕ_ID ? "./minus/чистый-минус/prosto-lubi.mp3" : (БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/"+ПЕСНИ[idx][0]+".mp3" : "./minus/чистый-минус/"+ПЕСНИ[idx][0]+".mp3"); текущийПуть = audio.src; /* RUM23-7: фолбэк — натуральная минусовка */
+    audio.src = ПЕСНИ[idx][0]===КАРАОКЕ_ID ? "./minus/чистый-минус/prosto-lubi.mp3" : (БЕЗГОЛОСЫЕ[ПЕСНИ[idx][0]] ? "./minus/сборник/сборник-01.mp3" : "./minus/чистый-минус/"+ПЕСНИ[idx][0]+".mp3"); текущийПуть = audio.src; /* RUM23-7: фолбэк — натуральная минусовка; С140: Сборник — часть 1 */
     audio.addEventListener("loadedmetadata", function once(){
       try{ if(audio.duration) audio.currentTime = Math.min(t, audio.duration); }catch(e){}
       audio.removeEventListener("loadedmetadata", once);
@@ -2274,6 +2277,7 @@ window.__ТРАНСПОРТ = (function(){
     return shuffle;
   }
   function onEnded(){
+    if(window.__СБОРНИК_ЦЕПЬ && window.__СБОРНИК_ЦЕПЬ.далее()) return true; /* латка С140: часть закончилась — подставляем следующую */
     if(B.classList.contains("концерт")){
       if(repeat==="one"){ try{ audio.currentTime=0; audio.play(); }catch(e){} return true; }
       if(repeat==="all"){ return next(false) !== false; }
@@ -2327,6 +2331,70 @@ window.__ТРАНСПОРТ = (function(){
            setPole:setPole, togglePole:togglePole, полюс:function(){ return pole; }, минОтвал:минОтвал, максОтвал:максОтвал, голосОтвал:голосОтвал,
            onEnded:onEnded, краска:краска, вер:"v10.69",
            список:function(){ return ПЕСНИ.slice(); }, текущая:function(){ return idx; } };
+})();
+
+/* ── латка С140 (RUM23-9) «АРХИВ ЧАСТЯМИ»: Сборник играет частями ──
+   Полный мастер Drive «плейлист на 1 час» (4169,4 с) живёт в minus/сборник/ семью частями
+   MP3 128k; плеер подставляет одну часть за другой по приказу владельца. Манифест частей —
+   в оси КАРАОКЕ/Qb8xb0vUYDg.js (ключ «части», офсеты по реальным длительностям файлов).
+   Часы караоке и ползунок ходят по ГЛОБАЛЬНОМУ времени; seek раскладывает глоб → часть. */
+window.__СБОРНИК_ЦЕПЬ = (function(){
+  const ID = "Qb8xb0vUYDg";
+  let тек = 1; /* номер текущей части, 1-based */
+  function активен(){
+    const тр = window.__ТРАНСПОРТ;
+    if(!тр || !тр.список) return false;
+    const сп = тр.список(), i = тр.текущая();
+    return !!(сп[i] && сп[i][0] === ID);
+  }
+  function части(){
+    const o = window.КАРАОКЕ_КОРПУС && window.КАРАОКЕ_КОРПУС[ID];
+    return (o && o.части && o.части.length) ? o.части : null;
+  }
+  function длительность(){
+    const ч = части();
+    if(ч && ч.length) return ч[ч.length-1].b;
+    const o = window.КАРАОКЕ_КОРПУС && window.КАРАОКЕ_КОРПУС[ID];
+    return (o && o.dur) || (audio.duration||0);
+  }
+  function время(){
+    const ч = части(), к = ч && ч.find(x=>x.n===тек);
+    return к ? (к.a + (audio.currentTime||0)) : (audio.currentTime||0);
+  }
+  function сменить(n, лок, автоплей){
+    const ч = части(); if(!ч) return false;
+    const к = ч.find(x=>x.n===n); if(!к) return false;
+    тек = n;
+    const играл = автоплей || (!audio.paused && !audio.ended);
+    audio.src = "./minus/сборник/" + к.f;
+    audio.addEventListener("loadedmetadata", function once(){
+      try{ audio.currentTime = Math.max(0, лок||0); }catch(e){}
+      audio.removeEventListener("loadedmetadata", once);
+    });
+    if(играл){ const p = audio.play(); if(p && p.catch) p.catch(()=>{}); }
+    if(window.__СТОРОЖ_ЗВУКА) window.__СТОРОЖ_ЗВУКА();
+    showToast("Сборник: часть "+n+" из "+ч.length);
+    return true;
+  }
+  function кМесту(глоб){
+    const ч = части();
+    if(!ч){ try{ audio.currentTime = глоб; }catch(e){} return; }
+    const к = ч.find(x=>глоб>=x.a && глоб<x.b) || ч[ч.length-1];
+    const лок = Math.max(0, глоб - к.a);
+    if(к.n !== тек) сменить(к.n, лок, false);
+    else { try{ audio.currentTime = лок; }catch(e){} }
+  }
+  function далее(){
+    if(!активен()) return false;
+    const ч = части(); if(!ч) return false;
+    const к = ч.find(x=>x.n===тек);
+    if(к && к.n < ч.length) return сменить(к.n+1, 0, true);
+    тек = 1; /* честный финал — в следующий раз с начала */
+    return false;
+  }
+  function сброс(){ тек = 1; }
+  return { активен:активен, время:время, кМесту:кМесту, далее:далее, сброс:сброс,
+           длительность:длительность, часть:function(){ return тек; } };
 })();
 
 /* ── хлопки ── */
@@ -2589,10 +2657,10 @@ function loop(){
      прибавляем время трассера света — конвейер кадра рендер→экран; буква
      (и строка) выстреливают НАОПЕРЕЖЕ, и свет с звуком приходят к глазу
      и уху одномоментно — точка перехвата траекторий */
-  const t = Math.max(0,(audio.currentTime||0) - (window.__SYNCOFF||0) - (window.__OUTLAT||0) + (window.__VISLAT||0));
+  const t = Math.max(0,((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.время():(audio.currentTime||0)) - (window.__SYNCOFF||0) - (window.__OUTLAT||0) + (window.__VISLAT||0)); /* латка С140: у Сборника часы — глобальные (ось 4169,45 с против частей) */
   if(state.started){
     tCur.textContent = fmt(t);
-    tlFill.style.width = (clamp(t/(audio.duration||DUR),0,1)*100).toFixed(2)+"%"; /* v10.63: реальная длительность трека */
+    tlFill.style.width = (clamp(t/((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.длительность():(audio.duration||DUR)),0,1)*100).toFixed(2)+"%"; /* v10.63: реальная длительность трека; С140: у Сборника — глобальная */
     // секция
     const si = sectionAt(t);
     setSection(si,t);
@@ -4859,9 +4927,9 @@ try{
 }catch(e){}
 KV.audio.addEventListener("play", ()=>{
   clearInterval(posTimer);
-  posTimer = setInterval(()=>{ try{ if(!KV.audio.paused) localStorage.setItem("kv.pos", String(KV.audio.currentTime||0)); }catch(e){} }, 5000);
+  posTimer = setInterval(()=>{ try{ if(!KV.audio.paused) localStorage.setItem("kv.pos", String((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.время():(KV.audio.currentTime||0))); }catch(e){} }, 5000); /* латка С140: у Сборника помнится глобальное время */
 });
-KV.audio.addEventListener("pause", ()=>{ clearInterval(posTimer); posTimer = 0; try{ localStorage.setItem("kv.pos", String(KV.audio.currentTime||0)); }catch(e){} });   /* v10.26 (F-14) */
+KV.audio.addEventListener("pause", ()=>{ clearInterval(posTimer); posTimer = 0; try{ localStorage.setItem("kv.pos", String((window.__СБОРНИК_ЦЕПЬ&&window.__СБОРНИК_ЦЕПЬ.активен())?window.__СБОРНИК_ЦЕПЬ.время():(KV.audio.currentTime||0))); }catch(e){} });   /* v10.26 (F-14); латка С140: у Сборника — глобальное время */
 KV.audio.addEventListener("ended", ()=>{ clearInterval(posTimer); posTimer = 0; try{ localStorage.removeItem("kv.pos"); }catch(e){} });   /* v10.26 (F-14) */
 
 /* ── язык интерфейса: RU · EN · ES (ключевые надписи) ── */
