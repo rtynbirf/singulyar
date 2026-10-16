@@ -634,6 +634,9 @@ class SingulyarQR {
 /*<ЯДРО>*/
 const ВЕРСИЯ_ПРОТОКОЛА = 2;
 const ПАПКА_МИНУС = './minus/';
+/* RUM23-7 «ДИЕТА ДОМА» (латка С137): минус = НАТУРАЛЬНАЯ минусовка minus/чистый-минус/ (вокал убран из оригинала); дому «Просто люби» — его минус под алиасом флагмана; безголосым мастерам v10.69 — их трек в корне minus/ (сам и есть минус) */
+const БЕЗГОЛОСЫЕ = { 'Qb8xb0vUYDg': 1, 'shs0TiOwx-M': 1 };
+function ПУТЬ_МИНУСА(id){ return ПАПКА_МИНУС + (БЕЗГОЛОСЫЕ[id] ? id : 'чистый-минус/' + (id === '9ys_TVEtda8' ? 'prosto-lubi' : id)) + '.mp3'; }
 const СРОК_ВРЕМЕННОЙ_MS = 7 * 24 * 60 * 60 * 1000;   /* TEMPORARY: 7 дней */
 
 const АЛФАВИТ_КОДА = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';  /* без 0,O,1,I,L */
@@ -1455,7 +1458,7 @@ function наСостояние(ст) {
     if (o.value !== ст.song.id) o.value = ст.song.id;
     /* preload минусовки у ВСЕХ — к концу отсчёта каждый должен быть готов */
     const ауд = $('minusAudio');
-    if (ауд.dataset.song !== ст.song.id) { ауд.dataset.song = ст.song.id; ауд.src = ПАПКА_МИНУС + ст.song.id + '.mp3'; ауд.load(); }
+    if (ауд.dataset.song !== ст.song.id) { ауд.dataset.song = ст.song.id; ауд.onerror = function(){ ауд.onerror = null; ауд.src = ПАПКА_МИНУС + (ст.song.id === '9ys_TVEtda8' ? 'prosto-lubi' : ст.song.id) + '.mp3'; }; /* RUM23-7: безголосым — их трек в корне */ ауд.src = ПУТЬ_МИНУСА(ст.song.id); ауд.load(); }
   }
   const яХост = ПРИЛОЖЕНИЕ.комната.этохост();
   if (!яХост && ст.phase === 'SINGING' && !ПРИЛОЖЕНИЕ.присоединилсяКПению) {

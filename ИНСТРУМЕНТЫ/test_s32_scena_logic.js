@@ -102,24 +102,34 @@ test('S32_ЯДРО: ближайшее неспетое слово — спет�
 });
 
 /* ── 4. корпус: 62 песни, все с текстом, тайминги честные ── */
-test('корпус: 62 песни фонда, у всех текст, первые строки не за минутой, ID = минусовкам', () => {
+test('корпус: 62 песни фонда, у всех текст, тайминги честные, у каждой — голос и натуральный минус (RUM23-7)', () => {
   const ctx = поВМ(вырезать('window.S32_КОРПУС = ', ';\n</script>'));
   const корпус = ctx.window.S32_КОРПУС;
   /* v11.44 «ИЗМЕРЕНО»: число песен — из реестра дома, не литерал */
   const РЕЕСТР = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'versions.json'), 'utf8'));
   assert.equal(корпус.songs.length, РЕЕСТР.счётчики.песен, 'песен в корпусе = фонду реестра');
-  const minus = new Set(fs.readdirSync(path.join(ROOT, 'minus')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
+  /* RUM23-7 «ДИЕТА ДОМА»: фонды — голос/ (оригинал с вокалом автора, 59) и чистый-минус/
+     (натуральная минусовка: вокал убран из оригинала, 60, включая алиас флагмана prosto-lubi);
+     в корне minus/ — 3 честных спец-mp3: дом-песня prosto-lubi и 2 мастера v10.69,
+     сами безголосые (их трек = их натуральный минус) */
+  const голос = new Set(fs.readdirSync(path.join(ROOT, 'minus', 'голос')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
+  const чистый = new Set(fs.readdirSync(path.join(ROOT, 'minus', 'чистый-минус')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
+  const корень = new Set(fs.readdirSync(path.join(ROOT, 'minus')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
+  const исключения = new Set(['Qb8xb0vUYDg', 'shs0TiOwx-M']);   /* v10.69: мастера сами безголосые */
+  assert.equal(голос.size, 59, 'фонд голоса: 59 транскодов');
+  assert.equal(чистый.size, 60, 'фонд чистого минуса: 60 (с алиасом флагмана)');
+  assert.deepEqual([...корень].sort(), ['Qb8xb0vUYDg', 'prosto-lubi', 'shs0TiOwx-M'], 'в корне minus/ только 3 спец-mp3 после диеты');
   for (const п of корпус.songs) {
     assert.ok(п.id && п.title, 'ID и титул есть: ' + п.id);
-    assert.ok(minus.has(п.id), 'минусовка на диске: ' + п.id);
+    const естьГолос = голос.has(п.id) || (п.id === '9ys_TVEtda8' && корень.has('prosto-lubi')) || (исключения.has(п.id) && корень.has(п.id));
+    assert.ok(естьГолос, 'полный трек с голосом на диске: ' + п.id);
+    const естьМинус = чистый.has(п.id) || (п.id === '9ys_TVEtda8' && чистый.has('prosto-lubi')) || (исключения.has(п.id) && корень.has(п.id));
+    assert.ok(естьМинус, 'натуральная минусовка на диске: ' + п.id);
     assert.equal(п.has_text, true, 'текст есть: ' + п.id);
     assert.ok(п.lines.length >= 5, 'строк достаточно: ' + п.id + ' = ' + п.lines.length);
     assert.ok(п.lines[0][0] <= 60, 'первая строка в разумной позиции');
   }
-  /* алиас флагмана prosto-lubi.mp3 живёт рядом с YouTube-ключами (ТВ-полюс, такт v11.35 «ЛИЦО») */
-  const алиасы = new Set(['prosto-lubi']);
-  assert.equal(minus.size - алиасы.size, РЕЕСТР.счётчики.песен, 'минусовок на диске (без алиаса флагмана) = фонду реестра');
-  assert.equal(корпус.meta.схема || корпус.meta.schema, 'ruvson-singulyar-32-scena');
+  assert.equal(корпус.meta.схема || корпус.meta.schema, 'ruvson-singulyar-32-scena', 'схема корпуса честная');
 });
 
 /* ── 5. манифест: узел ·32, нити симметричны в обе стороны ── */
