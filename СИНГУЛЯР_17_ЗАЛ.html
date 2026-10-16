@@ -1135,7 +1135,7 @@ class HallApp {
                 '</div>';
         });
         if (!хтмл) хтмл = '<p class="hint">пока пусто: круг наполнится после первого рукопожатия (QR/код — как было)</p>';
-        коробка.innerHTML = хтмл;
+        коробка.textContent = хтмл;
         const б = document.getElementById('btnKrugСлушать');
         if (б) б.textContent = this.krugСлушает ? '◉ слушаю круг (нажми — закрыть)' : '◉ слушать круг';
     }
