@@ -147,7 +147,7 @@
         '@media (prefers-reduced-motion: reduce){#sux-menu,#sux-handle{transition:none!important;animation:none!important}}',
 
         // ручка ⌇ — тихая дверь меню дома для комнат (на лице её нет — там кристалл)
-        '#sux-handle{position:fixed;right:14px;bottom:14px;z-index:40;width:40px;height:40px;margin:0;padding:0;',
+        '#sux-handle{position:fixed;right:14px;bottom:14px;z-index:95;width:40px;height:40px;margin:0;padding:0; /* С136: над плашками страниц (plashka=90) — тап-цель не перекрыта */',
           'border-radius:50%;display:flex;align-items:center;justify-content:center;',
           'font:17px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
           'color:var(--sux-accent,#D4AF37);background:var(--sux-panel,rgba(10,12,16,.82));',
@@ -164,7 +164,7 @@
           'border-color:rgba(212,175,55,.65);color:var(--sux-hi,#F0D78C);transition:none}',
         '@media (prefers-reduced-motion: reduce){#sux-handle.снг-тянет,#sux-home.снг-тянет{transition:none}}',
         '#crystalButton{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}',
-        '#sux-home{position:fixed;right:14px;bottom:62px;z-index:40;width:40px;height:40px;margin:0;padding:0;',
+        '#sux-home{position:fixed;right:14px;bottom:62px;z-index:95;width:40px;height:40px;margin:0;padding:0; /* С136: один слой с ручкой ⌇ */',
           'border-radius:50%;display:flex;align-items:center;justify-content:center;font:16px/1 var(--sux-mono,Cascadia Mono,ui-monospace,Consolas,"Courier New",monospace);',
           'color:var(--sux-fg,#C0C8D0);background:var(--sux-panel,rgba(10,12,16,.82));border:1px solid var(--sux-border,rgba(240,240,248,.22));cursor:grab;',
           'touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;',
@@ -634,6 +634,18 @@
             lastFocus = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
             toggleMenu(null, null);
         });
+        /* С136: пилюли дома (#sg65nav) занимают правый нижний угол с наивысшим z —
+           честно уступаем им угол: ручки съезжают НАД пилюли,
+           пока человек сам не перетащил их куда-то (память перетаскивания сильнее закона) */
+        try {
+            var пилюли = document.getElementById('sg65nav');
+            if (пилюли && !config.posHandle && !config.posHome) {
+                var прп = пилюли.getBoundingClientRect();
+                var над = Math.max(64, Math.round(window.innerHeight - прп.top + 10));
+                ручка.style.bottom = над + 'px';
+                if (домой) домой.style.bottom = (над + 48) + 'px';
+            }
+        } catch (е) {}
     })();
 
     // Клик мимо — закрыть (ожидаемое поведение списков)

@@ -1035,7 +1035,7 @@ window.__ALERT = function(t, opts){
     <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#17181A"/><circle cx="32" cy="25" r="11" fill="none" stroke="#d4af37" stroke-width="4"/><path d="M32 39v11M21 54h22" stroke="#d4af37" stroke-width="4" stroke-linecap="round"/></svg>
     <span><b>ЛАДОМ · v9</b><span>СИНГУЛЯР · ЛАДОМ — пространство своих · «Просто люби» · RUVSON · бирка автора — в угол и перетащи</span></span>
   </div>
-  <span id="shield" class="shield" aria-live="polite" data-tip="Щит дома: всё своё — 0 облаков, 0 счётчиков; оранжевая точка вспыхивает, когда живёт микрофон (запись, нота, зал)"><i aria-hidden="true"></i><b id="shTxt">СВОЁ</b></span>
+  <span id="shield" class="shield" role="status" aria-live="polite" data-tip="Щит дома: всё своё — 0 облаков, 0 счётчиков; оранжевая точка вспыхивает, когда живёт микрофон (запись, нота, зал)"><i aria-hidden="true"></i><b id="shTxt">СВОЁ</b></span>
   <button id="chipHealth" class="chip" data-tip="Самопроверка: проверяет все части инструмента и честно докладывает, что работает">ЗДОРОВЬЕ …</button>
   <button id="btnLang" class="tbtn" data-tip="Таблица языков строк: нажал — выехала, ткнул — поём; подперевод всегда рядом">ЯЗЫК · РУС</button>
   <button id="btnPeople" class="tbtn on" data-tip="Доступность: голосовые команды, озвучка, вибро, одна кнопка, гигант, контраст">ЛЮДИ</button>
@@ -1127,22 +1127,22 @@ window.__ALERT = function(t, opts){
   data-tip="ЯЩИК · РУЛЬ — выезжает слева: пуск, песни, полюс, свет, хлопок, тишина. Кнопки компануются на unlocked замке">ЯЩИК · РУЛЬ</button>
 <button id="ящХозТаб" class="ящ-таб справа" aria-controls="ящХоз" aria-expanded="false"
   data-tip="ЯЩИК · ХОЗЯЙСТВО — выезжает справа: свой звук, библиотека, здоровье, паспорт, люди, свобода, справка, все двери, честные лимиты">ЯЩИК · ХОЗЯЙСТВО</button>
-<aside id="ящРуль" class="ящик слева" role="dialog" aria-label="Ящик РУЛЬ" aria-modal="false" hidden>
+<section id="ящРуль" class="ящик слева" role="dialog" aria-label="Ящик РУЛЬ" aria-modal="false" hidden> <!-- С136: section держит dialog честно (aria-allowed-role) -->
   <div class="ящ-шапка"><b>ЯЩИК · РУЛЬ</b><span class="ящ-зазор"></span>
     <button class="ящ-мини" data-ящ-замок="руль" aria-pressed="true" data-tip="Замок ящика: закрыт — кнопки не переставить; открыт — раскладывай как удобно">🔒</button>
     <button class="ящ-мини" data-ящ-скрыть="руль" data-tip="Спрятать ящик; вкладка на краю останется">✕</button>
   </div>
   <div class="ящ-сетка" data-ящ-лот="руль"></div>
   <div class="ящ-каталог" data-ящ-кат="руль" hidden></div>
-</aside>
-<aside id="ящХоз" class="ящик справа" role="dialog" aria-label="Ящик ХОЗЯЙСТВО" aria-modal="false" hidden>
+</section>
+<section id="ящХоз" class="ящик справа" role="dialog" aria-label="Ящик ХОЗЯЙСТВО" aria-modal="false" hidden> <!-- С136: section держит dialog честно -->
   <div class="ящ-шапка"><b>ЯЩИК · ХОЗЯЙСТВО</b><span class="ящ-зазор"></span>
     <button class="ящ-мини" data-ящ-замок="хоз" aria-pressed="true" data-tip="Замок ящика: закрыт — кнопки не переставить; открыт — раскладывай как удобно">🔒</button>
     <button class="ящ-мини" data-ящ-скрыть="хоз" data-tip="Спрятать ящик; вкладка на краю останется">✕</button>
   </div>
   <div class="ящ-сетка" data-ящ-лот="хоз"></div>
   <div class="ящ-каталог" data-ящ-кат="хоз" hidden></div>
-</aside>
+</section>
 <dialog id="лимиты" aria-label="Честные лимиты платформы">
   <button class="x" data-лимиты-х="1" aria-label="Закрыть">✕</button>
   <h3>Честные лимиты — только правда платформы</h3>
@@ -1202,7 +1202,7 @@ html[data-motion="off"] .правка .лот,html[data-motion="calm"] .прав
 #ладКаталог[hidden]{display:none}
 .кат-чип{min-height:38px;padding:6px 12px;border-radius:10px;border:1px solid #D4AF3755;background:#D4AF3714;color:#F1E3AC;
   font:800 11.5px/1.2 var(--f,system-ui);letter-spacing:.05em;cursor:pointer}
-.ящ-таб{position:fixed;top:50%;transform:translateY(-50%);z-index:44;writing-mode:vertical-rl;text-orientation:mixed;
+.ящ-таб{position:fixed;top:50%;transform:translateY(-50%);z-index:44;writing-mode:vertical-rl;text-orientation:mixed;min-width:24px; /* С136: тап-цель ≥24 (target-size) */
   min-height:96px;padding:12px 7px;border-radius:0 12px 12px 0;border:1px solid #D4AF3740;border-left:none;
   background:#000000cc;color:#D4AF37;font:800 11px/1 var(--f,system-ui);letter-spacing:.22em;cursor:pointer;transition:opacity .2s,background .2s}
 .ящ-таб.слева{left:0}
@@ -1240,7 +1240,7 @@ body.тихо .ящ-таб{opacity:.26}
   <button id="btnRepeat" class="round тран" aria-pressed="false" aria-label="Повтор: выключен (B)" data-tip="РЕПИТ (B): выкл → весь список → одна песня">🔁</button>
   <button id="btnPole" class="round тран полюс" aria-pressed="false" aria-label="Полюс качества: МАКС — полнота звука (V)" data-tip="ПОЛЮС (V): МАКС — webm-мастер с голосом автора у всех песен зала (как у «Просто люби»); МИН — Opus 24 кбит/с моно (на ТВ один полюс — голос автора). Место песни и игра/пауза не сбрасываются, выбор помнится">МАКС</button>
   <div class="tlwrap">
-    <div id="tlBar" class="tlbar" data-tip="Клик — перемотка; цветные отрезки — секции песни"><div id="tlFill"></div></div>
+    <div id="tlBar" class="tlbar" role="group" data-tip="Клик — перемотка; цветные отрезки — секции песни"><div id="tlFill"></div></div>
     <div id="tlSecs" class="tlsecs"></div>
     <div class="ttime"><span id="tCur">0:00</span> / <span id="tDur">–:––</span></div>
   </div>
@@ -16034,7 +16034,7 @@ window.__ЛАДОНЬ = (function(){
       b.type="button"; b.className="лот-кнопка";
       var имя="РУС"; try{ имя = (window.__LANGS && window.__LANGS.current && window.__LANGS.current.name) || "РУС"; }catch(e){}
       b.textContent = "ЯЗЫК · " + имя;
-      b.setAttribute("data-tip", оп.tip); b.setAttribute("aria-label", "Выбор языка строк: "+оп.tip);
+      b.setAttribute("data-tip", оп.tip); b.setAttribute("aria-label", "ЯЗЫК · "+имя+" — выбор языка строк: "+оп.tip); /* С136: имя несёт видимый текст (label-content-name-mismatch) */
       b.addEventListener("click", function(){
         var ш=$("langSheet");
         if(ш){ try{ ш.showModal(); }catch(e){ try{ window.__LANGS.cycle(); }catch(_){} } }

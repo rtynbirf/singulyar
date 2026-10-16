@@ -36,7 +36,7 @@ jobs:
         with:
           name: lighthouse-journal
           path: |
-            .lighthouseci/**/*.report.html
-            .lighthouseci/assertion-results.json
+            .lighthouseci/**/*.html
+            .lighthouseci/**/*.json
           retention-days: 7
           if-no-files-found: warn
