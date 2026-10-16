@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Запуск: node --test ИНСТРУМЕНТЫ/test_takt_11.49_zakrytie.mjs
+   Запуск: node --test ИНСТРУМЕНТЫ/test_takt_11.50_napolnenie.mjs
    ═══   СТРАЖ ТАКТА v11.49 «ЗАКРЫТИЕ» (С127) — поверх их v11.47 «ЗАКРЫТО» (С125) и v11.48 «СЛОЙ» (С126)
    Их канон не дублируется: их мосты О-3, их noindex, их SRI, их скип-слой — проверяются как ФАКТ;
    мой ход (каноны+порты+панели+хвосты лиц) — как ИНТЕГРАЦИЯ.
-   node --test ИНСТРУМЕНТЫ/test_takt_11.49_zakrytie.mjs
+   node --test ИНСТРУМЕНТЫ/test_takt_11.50_napolnenie.mjs
    ═══════════════════════════════════════════════════════════════════════════ */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -30,7 +30,7 @@ for (const [путь, имя, линия] of КАНОНЫ) {
     assert.ok(есть(путь), 'нет файла ' + путь);
     const s = читай(путь);
     assert.ok(s.includes(имя), 'нет шапки ' + имя);
-    assert.ok(s.includes('v11.49') || s.includes('С125'), 'нет строки такта');
+    assert.ok(s.includes('v11.50') || s.includes('v11.49') || s.includes('С125'), 'нет строки такта');
     assert.ok(!/\bfetch\s*\(/.test(s), 'канон зовёт сеть — нарушение И-01');
   });
   test('тесты канона ' + имя + ' в доме', () => {
@@ -45,21 +45,21 @@ const ПОРТЫ = ['hir-core.js', 'node-passport.js', 'value-core.js', 'latency
 test('все порты такта в js/', () => {
   for (const п of ПОРТЫ) assert.ok(есть('js/' + п), 'нет js/' + п);
 });
-test('sw15: поколение поднято v198→v199 (поверх их С126)', () => {
+test('sw15: поколение поднято v199→v200 (виток v11.50)', () => {
   const s = читай('sw15.js');
-  assert.ok(s.includes("s15-orkestrator-v199"), 'S15_CACHE не поднят');
+  assert.ok(s.includes("s15-orkestrator-v200"), 'S15_CACHE не поднят');
 });
 test('sw15: пре-кэш несёт порты такта ×8', () => {
   const s = читай('sw15.js');
   for (const п of ПОРТЫ) assert.ok(s.includes("'./js/" + п + "'"), 'нет в пре-кэше js/' + п);
 });
-test('versions.json: 11.49 «ЗАКРЫТИЕ» / v199 / летопись 136', () => {
+test('versions.json: 11.50 «НАПОЛНЕНИЕ» / v200 / летопись 137', () => {
   const d = JSON.parse(читай('data/versions.json'));
-  assert.equal(d.дом.версия, '11.49');
-  assert.equal(d.дом.такт, 'ЗАКРЫТИЕ');
-  assert.equal(d.дом.поколение_кэша, 'v199');
-  assert.equal(d.летопись.length, 136);
-  assert.equal(d.летопись[d.летопись.length - 1].такт, 'ЗАКРЫТИЕ');
+  assert.equal(d.дом.версия, '11.50');
+  assert.equal(d.дом.такт, 'НАПОЛНЕНИЕ');
+  assert.equal(d.дом.поколение_кэша, 'v200');
+  assert.equal(d.летопись.length, 137);
+  assert.equal(d.летопись[d.летопись.length - 1].такт, 'НАПОЛНЕНИЕ');
 });
 
 /* ── Двери: панели вживлены на их байты (С125/С126 не тронуты) ───────────── */
