@@ -27,7 +27,7 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 чек("ЩИТ: plain language «СВОЁ»/«МИКРОФОН»", raw.includes("жив ? 'МИКРОФОН' : 'СВОЁ'"));
 чек("ЩИТ: драйвер — обёртка над трактом-брокером", raw.includes("Т.занять = function(){ var р = занять.apply(this, arguments); setTimeout(обнови, 0); return р; };"));
 чек("ЩИТ: гарда от двойной обёртки", raw.includes("Т.__щитОбёрнут"));
-чек("ЩИТ: aria-live=polite (скринридер объявит ожизнь мика)", raw.includes('<span id="shield" class="shield" aria-live="polite"'));
+чек("ЩИТ: aria-live=polite (скринридер объявит ожизнь мика)", raw.includes('<span id="shield" class="shield" role="status" aria-live="polite"')); /* С136: +role=status — aria-label на щите честен, live-объявление на месте */
 чек("ЩИТ: копирование — clipboard + textarea-фолбэк", raw.includes("navigator.clipboard.writeText") && raw.includes("document.execCommand('copy')"));
 
 /* честное приглашение */

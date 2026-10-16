@@ -2,7 +2,7 @@
   "id": "/singulyar/",
   "name": "СИНГУЛЯР — вселенная караоке",
   "short_name": "СИНГУЛЯР",
-  "description": "62 песни × 200 языков · ОРКЕСТРАТОР ·15 · КРУГ ·23 (люди, румы, звонки) · ПОЧТА ·24 (свой ящик) · КОШЕЛЁК ·25 (тихие переводы) · ЛИНИЯ ·26 (номер, SMS, OTP) · офлайн",
+  "description": "62 песни × 200 языков · ОРКЕСТРАТОР ·15 · КРУГ ·23 (люди, румы, звонки) · ПОЧТА ·24 (свой ящик) · КОШЕЛЁК ·25 (тихие переводы) · ЛИНИЯ ·26 (номер, SMS, OTP) · офлайн · ПИР ·54 (связь одним кликом)",
   "lang": "ru",
   "start_url": "./index.html",
   "scope": "./",
@@ -77,6 +77,17 @@
       ]
     },
     {
+      "name": "ПИР ·54 — войти и говорить",
+      "short_name": "ПИР",
+      "url": "./СИНГУЛЯР_54_ПИР.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "ПОЧТА ·24 — свой ящик",
       "short_name": "ПОЧТА",
       "url": "./СИНГУЛЯР_24_ПОЧТА.html",
@@ -124,5 +135,21 @@
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "icons/screenshot-pir-narrow.jpg",
+      "sizes": "720x1280",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "ПИР ·54 — семья в окне, один клик — и ты в связи"
+    },
+    {
+      "src": "icons/screenshot-face-wide.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Дом СИНГУЛЯР — кристалл дверей"
+    }
+  ]
 }

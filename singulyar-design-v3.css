@@ -186,9 +186,9 @@ body{background:var(--bg-base);color:var(--text-primary)}
 /* рассыпанное ядро: стекло уходит в тень — свет несут осколки-двери */
 .кристалл-кнопка.рассыпан{filter:brightness(.5) saturate(.65);transform:scale(.92)}
 .кристалл-кнопка.рассыпан:hover{filter:brightness(.58) saturate(.7)}
-/* Тихая подсказка лица — воздух канона: мелко, тускло, по делу */
+/* Тихая подсказка лица — воздух канона: мелко, тускло, по делу (С136: серебро дома — контраст ≥4.5, было #5A6068) */
 .тихо-подсказка{margin:16px 0 0;font-family:var(--mono);font-size:11px;
-  letter-spacing:.18em;text-transform:uppercase;color:#5A6068}
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim,#8A9099)}
 @media (max-width:640px){.тихо-подсказка{letter-spacing:.1em;font-size:10px}}
 @media (prefers-reduced-motion: reduce){
   .кристалл-кнопка{transition:none}

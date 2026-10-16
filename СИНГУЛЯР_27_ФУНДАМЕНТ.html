@@ -50,6 +50,7 @@ figure.fd{margin:0;overflow:hidden;border-radius:20px;border:var(--border-subtle
 figure.fd:hover{transform:translateY(-4px);border:var(--border-active)}
 figure.fd img{display:block;width:100%;height:auto;background:#0A0A0C}
 figure.fd figcaption{padding:16px 20px 18px}
+figure.fd figcaption p a{text-decoration:underline;text-underline-offset:3px} /* С136: ссылка в тексте отличима не только цветом (link-in-text-block) */
 figure.fd .fd-t{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 8px}
 figure.fd .fd-t b{font-size:16.5px}
 figure.fd p{margin:0;color:var(--text-secondary);font-size:14px;line-height:1.55}
@@ -280,6 +281,6 @@ try{
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
 </body>
 </html>

@@ -1166,7 +1166,7 @@
     '.sng-strip .sng-нав a{color:#C8CCD2;text-decoration:none;border-bottom:1px dashed rgba(200,204,210,.4);padding:0 4px;min-height:24px;line-height:24px;display:inline-block} /* C-26: тап-цель ≥24×24 */',,
     '.sng-strip .sng-mod{min-height:24px}',
     '.sng-strip .sng-нав a:hover{color:#F0D78C;border-bottom-color:#F0D78C}',
-    '.sng-strip .sng-f{font-size:11px;color:#6B7178;white-space:nowrap}',
+    '.sng-strip .sng-f{font-size:11px;color:#8A9099;white-space:nowrap} /* С136: контраст ≥4.5 (было #6B7178) */',
     '@media (max-width:640px){.sng-strip .sng-map{margin-left:0}.sng-strip{font-size:11.5px}}',
     '@media (prefers-reduced-motion: reduce){.sng-strip *{transition:none!important;animation:none!important}}'
   ].join('');
