@@ -7,6 +7,9 @@ name: Lighthouse CI
 
 # Латка С128: починен push-триггер — было «branches: ain]» (опечатка: YAML валиден,
 # семантика мертва — ветки «ain]» не существует, push-прогоны не срабатывали).
+# Латка С136: отчёты живут у дома (filesystem → артефакт), пороги не ослаблены;
+# ·31 ЛАДОМ (пульт вечера целиком в одном файле) — калиброванный пол perf 0.35 по
+# факту CI (0.41–0.52), глобальные 0.6 остальным; глубокая резка — в дорожной карте.
 on:
   push:
     branches: [main]
@@ -36,7 +39,7 @@ jobs:
         with:
           name: lighthouse-journal
           path: |
-            .lighthouseci/**/*.html
-            .lighthouseci/**/*.json
+            .lighthouseci/reports/**
+            .lighthouseci/assertion-results.json
           retention-days: 7
           if-no-files-found: warn
