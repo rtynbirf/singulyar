@@ -403,6 +403,19 @@ try{
     navigator.serviceWorker.register('./sw15.js').catch(function(){});
   }
 }catch(e){}
+/* латка С147 «СТАЙЛ НЕ СТАРШЕ ЗАКОНА»: новый св-воркер встал контролёром — лицо
+   перезагружается само один раз (обновление, не первая установка), владелец
+   видит законную дверь сразу, а не законсервированный стейл; флаг гасит петлю */
+try{
+  if('serviceWorker' in navigator){
+    var __с147Была = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function(){
+      if(!__с147Была || window.__с147Готово) return;
+      window.__с147Готово = true;
+      location.reload();
+    });
+  }
+}catch(e){}
 </script>
 <script>
 /* СНГ:АРИАДНА v1.49.0 — поисковая машина дома. Слово владельца: «НА ЗАГЛАВНОЙ
