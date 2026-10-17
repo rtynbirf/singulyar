@@ -27,8 +27,10 @@ with sync_playwright() as p:
     браузер = p.chromium.launch()
     стр = браузер.new_page(viewport={'width': 1280, 'height': 720})
     ошибки = []
+    url404 = []  # v11.51: URL ответов 4xx/5xx — чтобы отличить средовый 404 (minus/ в спарс-клоне) от кода дома
     стр.on('console', lambda m: ошибки.append(m.text) if m.type == 'error' else None)
     стр.on('pageerror', lambda e: ошибки.append(str(e)))
+    стр.on('response', lambda r: url404.append(r.url) if r.status >= 400 else None)
     стр.goto(дверь)
     стр.wait_for_timeout(900)
 
@@ -62,14 +64,24 @@ with sync_playwright() as p:
     стр.evaluate(JS_КЛЮЧ, [40, 'ArrowDown']); стр.wait_for_timeout(200)
     ок('стрелка будит фокус: селся на главный ряд', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
 
-    # 6. цифры и кольцо на КРАФТ
-    стр.evaluate(JS_КЛЮЧ, [53, '5']); стр.wait_for_timeout(900)  # v10.7: ждём конца CSS-перехода темы — цвет читаем устоявшийся, не анимационный
-    ок('цифра 5 = подача КРАФТ', стр.evaluate("document.body.dataset.theme") == 'kraft')
-    ок('фокус на главном после цифры', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
+    # 6. СКВОЗЬ-цифры честными клавишами (закон v11.51 «СКВОЗЬ» С148: цифры 1–9 = сквозная навигация
+    #    по группам ПУЛЬТА с любого слоя, ТОЛЬКО isTrusted — синтетику модуль честно игнорирует;
+    #    темы подачи — YELLOW и ВИД; ТВ-цифра темы больше не тема)
+    стр.keyboard.press('5'); стр.wait_for_timeout(500)
+    ок('цифра 5 = СКВОЗЬ: ПУЛЬТ открыт', стр.evaluate("document.getElementById('panel').open"))
+    ок('цифра 5 = СКВОЗЬ: группа ЛЮДИ раскрыта', стр.evaluate("(function(){var g=document.querySelector('.p-tabs .pgroup.open button[data-pt]');return g?g.getAttribute('data-pt'):null;})()") == 'people')
+    ок('цифra 5 = фокус на заголовке группы (не чип)', стр.evaluate("document.activeElement.id") == 'ptab-people')
+    стр.keyboard.press('1'); стр.wait_for_timeout(400)
+    ок('цифра 1 = СКВОЗЬ: группа ВИД раскрыта', стр.evaluate("(function(){var g=document.querySelector('.p-tabs .pgroup.open button[data-pt]');return g?g.getAttribute('data-pt'):null;})()") == 'look')
+    стр.click('#themeChips [data-theme-k="kraft"]'); стр.wait_for_timeout(700)  # честный клик по чипу темы; ждём конца CSS-перехода — цвет читаем устоявшийся (v10.7)
+    ок('ВИД: чип КРАФТ сменил подачу (тема — YELLOW и ВИД, v11.51)', стр.evaluate("document.body.dataset.theme") == 'kraft')
     кольцо = стр.evaluate("getComputedStyle(document.activeElement).outlineColor")
-    ок('на КРАФТ кольцо золотым рядом (палитра-закон v10.83: #8C6D1F; v11.47 «ЗАКРЫТО»)', кольцо == 'rgb(140, 109, 31)')  # var(--rc-ring) КРАФТ
-    стр.evaluate(JS_КЛЮЧ, [48, '0']); стр.wait_for_timeout(200)
-    ок('цифра 0 = подача ТЕПЛО', стр.evaluate("document.body.dataset.theme||'warm'") == 'warm')
+    ок('на КРАФТ кольцо золотым рядом (палитра-закон v10.83: #8C6D1F)', кольцо == 'rgb(140, 109, 31)')  # var(--rc-ring) КРАФТ
+    стр.keyboard.press('2'); стр.wait_for_timeout(400)
+    ок('цифра 2 = СКВОЗЬ: группа ТЕКСТ раскрыта', стр.evaluate("(function(){var g=document.querySelector('.p-tabs .pgroup.open button[data-pt]');return g?g.getAttribute('data-pt'):null;})()") == 'text')
+    стр.keyboard.press('0'); стр.wait_for_timeout(400)
+    ок('цифра 0 = ПУЛЬТ закрыт, вернулись в зал (v11.51)', not стр.evaluate("document.getElementById('panel').open"))
+    ок('фокус вернулся на главный ряд', стр.evaluate("document.activeElement.id") in ('btnStart', 'btnPlay', 'btnAgain'))
 
     # 7. CH± текст
     р0 = int(стр.evaluate("document.getElementById('lyrSlider').value"))
@@ -111,8 +123,18 @@ with sync_playwright() as p:
        and стр.evaluate("SNGRC.norm({key:'ColorF3Blue'})") == 'BLUE'
        and стр.evaluate("SNGRC.norm({keyCode:10252})") == 'PLAYPAUSE')
 
-    # 12. консоль чиста (v11.47: политика жеста браузера navigator.vibrate при синтетическом пульте — не код дома)
+    # 12. консоль чиста (v11.47: политика жеста браузера navigator.vibrate при синтетическом пульте — не код дома;
+    #     v11.51: 404 на /minus/ — среда спарс-клона (minus/ ≈2 ГБ не выкачан), в полном доме и на Pages файл есть)
+    minus404 = len([u for u in url404 if '/minus/' in u])
     коды = [о for о in ошибки if 'navigator.vibrate' not in о]
+    if minus404:
+        убрано = 0; чисто = []
+        for о in коды:
+            if убрано < minus404 and 'Failed to load resource' in о and '404' in о:
+                убрано += 1; continue
+            чисто.append(о)
+        коды = чисто
+        print('  (прощено средовых 404 /minus/: %d — спарс-клон)' % убрано, flush=True)
     ок('консоль чиста: ' + str(len(коды)) + ' кодовых ошибок', len(коды) == 0)
     if ошибки:
         print('ОШИБКИ:', ошибки[:5], flush=True)

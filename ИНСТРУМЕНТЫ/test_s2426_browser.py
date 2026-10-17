@@ -190,6 +190,9 @@ try:
         ж.on('console', lambda м: ошибки_idx.append(м.text) if м.type == 'error' else None)
         ж.goto(url_осн + 'index.html')
         ж.wait_for_timeout(500)
+        # v11.52: нить Ариадны «под капотом» (hidden до «Я САМ»/меню/#модули) — тест идёт людским путём
+        ж.click('#яСам')
+        ж.wait_for_timeout(300)
         ж.click('.нить summary')
         ж.wait_for_timeout(300)
         ок('дверь ·24 ПОЧТА живёт под нитью', ж.locator('#двери a[href*="СИНГУЛЯР_24_ПОЧТА"]').count() == 1)
