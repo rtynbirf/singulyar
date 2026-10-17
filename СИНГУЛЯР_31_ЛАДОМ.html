@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
+<!-- такт v11.51 «СКВОЗЬ» (С148, RUM23-14): приказ владельца «НАВИГАЦИИ НЕТ ПРОВЕРЬ ВСЁ В ПУЛЬТУ ДОЛЖНА БЫТЬ ВЕЗДЕ СКВОЗНАЯ НАВИГАЦИЯ НА 1 2 3 4 5 НА ЛЮБОМ СЛОЙ ПОЛОВИНА ФУНКЦИЙ НА ТВ НЕ ПОДДЕРЖИВАЕТСЯ… ИДИ ИЗУЧАЙ… ЧИТАЙ ДОККИ В РЕПЕ» — исполнен по доскам дома (эргономика бандла ПУЛЬТ_31_РУМА: 10-foot UI, D-Pad, предсказуемый BACK; WCAG 2.2 · 2.1.1 всё с клавиатуры; docs/МАЛЫШ.md — три уровня навигации): (1) СКВОЗЬ — модуль sngSkvoz: цифры 1…9 с ЛЮБОГО слоя (зал, пульт, крестовина бирки, реестр, крыша, любой диалог) — прыжок в группу пульта №N (1 ВИД, 2 ТЕКСТ, 3 ЗВУК, 4 ЭФФЕКТЫ, 5 ЛЮДИ, 6 ПРОФИЛЬ, 7 ДАННЫЕ, 8 РУКИ, 9 ЧУТЬЁ): верхний слой честно закрывается, пульт открывается, группа раскрывается, фокус на её заголовке — скринридер/брайль читают полную справку aria-label, статус role=status в #rcToast; 0 — закрыть пульт, вернуться в зал; цифры просыпают ТВ-режим (SNGRC.tvOn), даже если детектор среды промахнулся; I-01 — только доверенные нажатия человека; (2) SNGRC v10.7→v11.51: цифры больше не тема (тема осталась на YELLOW и в ВИДе), делегируют __СКВОЗЬ; нумпад 96–105 добавлен в карту клавиш; слои BACK-стека дополнены крестовиной бирки (tagPad) — BACK закрывает её; поля ввода цифрами ТВ-режим не будят; (3) группы-аккордеон: стрелки по заголовкам групп раскрывают группу ТИХО (открыть(…,тихо) — без прыжка скролла) — ручки видимы и чуемы spatial-движком на ТВ («половина функций» открылась); легенда rcHelp переписана (1…9 СКВОЗЬ, 0 — зал); (4) страж ИНСТРУМЕНТЫ/test_skvoz_nav.py (пины модуля/делегации/слоёв/легенды/кэша v203); пин старых порядков v202→v203; кэш v202→v203; их байты С147 целиком -->
 <!-- такт v11.45 «ПОВЕРКА» (С123, ключ №11; СТОП-ГОРН: их v11.44 «ИЗМЕРЕНО» (С122, ключ ㉖) встал между моим досье и пушем — их байты приняты целиком (тесты-оракулы ×9, их летопись №131, их Волна 0: robots/sitemap/lighthouse/прототипы/удаление дубля), мой такт честно перенумерован v11.44→v11.45/С122→С123/v194→v195 (прецедент v10.91/v11.03/v11.21/v11.28/v11.32/v11.35/v11.39/v11.41); их ядро совпало с моим байт-в-байт — 45 мостов симметрии. Мой уникальный хвост поверх их канона): вход владельца — внешний аудит дома (сторонний документ, база 4cb0217) + бандл singulyar-room31-console-v1.0.zip. Починка P0-2/P0-3: 45 обратных мостов симметрии нитей (s31·s35 + s38…s55 — манифест симметричен целиком); шапка/og:title подняты v11.28 «ПОСАДКА» → v11.44 «ПОВЕРКА» (штамп забыли коллеги v11.43); оракулы 6 тестов переведены на живую воду (реестр/манифест/диск/semver, ТЗ-1 аудита) — тесты 26/26; бандл room31-console поверен (SHA 9/9, синтаксис OK; WP-02/04/05/06 честно DESIGNED — 0 @container, resize-заглушка, alert, 0 IndexedDB); CHANGELOG из пре-кэша, кэш v193→v194; index «43 двери»→«44»; факт 3а.38 -->
 <!-- такт v11.43 «МИНУС» (С121, ключ ㉖; СТОП-ГОРН: их v11.42 «ПОД РУКОЙ» (С120, PAT №34, 4cb0217 — юзабилити пульта) встал между моим fetch и пушем — их байты приняты целиком (reset на их main), мой такт честно перенумерован v11.42→v11.43/С120→С121/летопись 129→130 (прецедент v10.91/v11.03/v11.21/v11.28/v11.32/v11.35/v11.39/v11.41); их реестр №51 и их EN-факт их пушер не вписал — вписаны этим тактом честно по их коммит-сообщению): приказ владельца «СДЕЛАТЬ ЧИСТЫЕ МИНУСОВКИ ИЗ ИСХОДНИКОВ!!! УБРАТЬ ТОЛЬКО ВОКАЛ=ГОЛОС АВТОРА!! И ДАТЬ ЗИП АРХИВ АБСОЛЮТНО ВСЕХ ПЕСЕН ИХ ТЕКСТЫ В ОДНОМ ФАЙЛЕ!!!!!!» + «ДАЛЕЕ ДЕЙСТВУЙ ПО ДОРОЖНОНОЙ КАРТЕ» — чистый минус-фонд minus/чистый-минус/ (60/60 mp3 320k/48k: htdemucs two-stems, убран ТОЛЬКО вокал автора, инструменты целы; ffprobe 60/60), страховочная волна minus/быстрый-минус/ (62/62, вне репы), ТЕКСТЫ_ВСЕХ_ПЕСЕН.txt (61) + КАТАЛОГ + ZIP владельца; 2 честных исключения (Qb8xb0vUYDg сам безголосый — ZIP 96k; shs0TiOwx-M — 320k); их голос-фонд, их юзабилити пульта (ПОД РУКОЙ) и полюса не тронуты — APP поднят 11.42; факт 3а.36 -->
 <!-- такт v11.42 «ПОД РУКОЙ» (С120, PAT №34): юзабилити-ремонт пульта по приказу владельца «ДЕЛАЙ ВСЁ РАБОЧЕЕ ЮЗОБИЛИТИ ТАМ КОСЯКИ НА КОСЯКЕ=) ОДНО ДЕЛАЕТЕ ДРУГОЕ ЛОМАЕТ ПУЛЬТ ПОЧЕМУ ТОЛЬКО ПОЛОВИНА ВИДНА ПРИ РАСКРЫТИ? А КАК В НИЖНИЕ МЕНЮ ПОПАДАТЬ СДЕЛАЙ ВСЁ КОМПАКТО ПЛОТНО ЧТОБ ВСЁ ПОД РУКОЙ БЫЛО А НЕ ПОЛЗАТЬ ПО ВСЕМУ ЭКРАНУ РАСПРЕДИЛИ КОМПАКТНО ВСЁ И ВСЯ=)» Диагноз живым браузером (390x844 и 1280x720): (D1) пульт-диалог на телефоне — строка справки схлопнута в 0px и наезжает на футер (замер grid-rows «68px 637px 0px 93px 44px»); (D2) руль-плитка z=50 закрыла док-транспорт z=40 — нижнее меню недоступно; (D3) рейка пульта — туннель 3462px, раскрытая группа (2550px) уводит заголовок из виду; (D4) ящики РУЛЬ и ХОЗЯЙСТВО открываются одновременно. Лекарство: явные строки сетки пульта на узких + столб справки спрятан (справка живёт в подсказках и футере); руль поднят над доком по живому замеру --sng-dockH, потолок 56vh со скроллом; чипы-якоря всех групп одной полосой сверху рейки + автоскролл к раскрытой группе; ящики друг друга не душат; руль компактнее на телефоне (тач ≥50px). Поверка: живой браузер после пуша (ЭП-06). Идемпотентно 3/1. Их байты v11.41 целиком. -->
@@ -90,7 +91,7 @@ kv.ууп.* (СКЛАД). DOM-экран: ни одной конкатенаци
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_31_%D0%9B%D0%90%D0%94%D0%9E%D0%9C.html">
 <!--СНГ:ПРАВДА-НАЧАЛО-->
-<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v11.50 «НАПОЛНЕНИЕ»">
+<meta property="og:title" content="ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v11.51 «СКВОЗЬ»">
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 <meta property="og:description" content="Общайтесь так, как удобно каждому. Поём «Просто люби» (RUVSON) всем залом: слова, тайминги, свет сцены, инклюзивные режимы. Работает без сети.">
 <meta property="og:type" content="website">
@@ -99,7 +100,7 @@ kv.ууп.* (СКЛАД). DOM-экран: ни одной конкатенаци
 <meta name="twitter:card" content="summary">
 <!-- такт v10.76 «ТАКТ БУКВЫ» (С52; поверх v10.75 «СВЕДЕНИЕ КАРТ»): Д1+Э1 ЕДИНОЙ КАРТЫ закрыты кодом и живой поверкой. Д1 «фонемные тайминги» (Малыш, шаг 3): гранулярный движок пульса (СТРОКА/СЛОВО/СЛОГ/БУКВА, веса charW, ШИЛКА) был привязан к копии строк из querySelectorAll — установщик караоке v10.73 переставляет строки в __KV.lineEls, движок красил оторванные узлы, и у 61 караоке-песни такт буквы/слова молчал; теперь привязка живая. Такты(): фонемные тайминги строки раскладываются по оси ru-orig (c.a..c.b пропорционально фонемным весам) — «фонема = звук = буква», ЗДОРОВЬЕ сверяет непрерывность/суммы по оси (__HEALTH28). Э1 «СЛОВО-ПУЛЬС»: слово пульсирует по живому таймингу, один движок с ГАРМОНИИ (веса .harm автора сильнее эвристики — rebuild), CSS-дыхание молчит в motion calm и РЕЛАКС. Свёрстано живьём: ось 35 строк × 13 языков «Не вам жить мою жизнь», буква/слово/слог горят в дом, ЗДОРОВЬЕ зелёное, дом бит-в-бит. Кэш v130. -->
 <!--СНГ:ПРАВДА-НАЧАЛО-->
-<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v11.50 «НАПОЛНЕНИЕ» — «Просто люби» (RUVSON)</title>
+<title>ЛАДОМ — пространство своих · СИНГУЛЯР ·31 v11.51 «СКВОЗЬ» — «Просто люби» (RUVSON)</title>
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 <!-- такт v10.79 «СЛОГ» (С55, PAT №12; СТОП-ГОРН: их v10.78 «ОТКЛИК» (С54, PAT №16) принят целиком — их ход первым, их Ж3-сенсорика (вибро-акцент слова, тумблер по умолчанию ВЫКЛ, __HEALTH30) и Э2/Л2/Д7 остаются; мой параллельный такт перенумерован честно v10.78→v10.79, моя проба __HEALTH30→__HEALTH31, кэш v133→v134; поверх v10.77 «СВЯЗКА»; приказ владельца: «ТЫ ПОЛИМАТ=МУЛЬТИАГЕНТ САМ ВСЁ ЗНАЕШЬ!!! БЕРЁШЬ И ДЕЛАЕШЬ ВСЁ СОГЛАСНО ДОРОЖНОЙ КАРТЫ СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): (1) Ж3 — ВТОРАЯ ПОЛОВИНА Этапа 3 «произношение»: карточка слова КОНТУРА несёт слоги (классический перенос: боль-ше, по-нял, толь-ко; ь/ъ/й не отходят от согласной; не-буквенное — честный пустой ответ; чистая функция __КОНТУР.слоги — пробы и тесты зовут её же) и транскрипцию строки с честной пометкой точности («приближённо — машинная разметка-черновик; проверенная — за людьми», закон Д2 «ЧЕЛОВЕК РЕШАЕТ»); вибро-акцент отметки — только по явному действию: силу и сам факт масштабирует ось haptic __ПРОФИЛЬ (вибра(): выключенная ось — тишина), РЕЛАКС молчит, «не вспомнил» не вибрирует (никто не оценивает) — вместе с их половиной (вибро на смене слова) критерий Ж3 «вибрация подчиняется профилю и не мешает» выполнен обеими руками; пробы ЗДОРОВЬЕ __HEALTH31 (живой замер контракта оси: vibGo on → сила ≥1, off → 0); (2) Ж1-хвост — КОНТРАКТ_ОТМЕЧЕННОГО.md выровнен с реализацией одной правдой: канон Этапа 1 kv.контур (v10.75), s31.zhkontur.v1 — референс Этапа 0, hapticAccent — их тумблер + моя карточная ось названы честно; (3) Д7 — docs/ДОРОЖНАЯ_КАРТА_EN.md (смысловой перевод единой карты, ID строк сохранены) в пре-кэше v134; (4) цех — README «одна правда» выровнена (отставала на такт: v10.76/v131 при живом v10.77/v132; языки флагмана 157→200 по versions.json); APP/титул v10.79, кэш v133→v134, versions.json/CHANGELOG/карта одной правдой (летопись 67) -->
 <!-- такт v10.78 «ОТКЛИК» (С54, PAT №16; поверх v10.77 «СВЯЗКА» коллег (С53, PAT №11) — их ход принят целиком, мой такт поверх; приказ владельца «БЕРЁШЬ И ДЕЛАЕШЬ ВСЁ СОГЛАСНО ДОРОЖНОЙ КАРТЫ СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ» — гасим три строки единой карты сенсорными и связующими руками): (1) Ж3 — Живой Контур Этап 3 «произношение и сенсорика»: вибро-акцент СЛОВА через ось haptic профиля (__ПРОФИЛЬ.вибра) — на смене активного слова (движок paintPointers, один момент = одно слово, троттл 120 мс) рука чувствует то, что видит глаз; честная пометка точности прямо в ПУЛЬТe (вибромотор отвечает с задержкой — подсказка доли, не метроном); гарды не-мешания: тумблер по умолчанию ВЫКЛ, без «вибро в ритм» (vibGo), ось haptic 0, РЕЛАКС, motion off/calm, скрытая вкладка — аксессар молчит; тумблер «вибро-акцент слова» в ПУЛЬТe → вкладка ПРОФИЛЬ (прецедент КОНТУР); (2) Э2 — ЧЕТВЁРКА-РИТМ: ритм-игра долей 1·2·3·4 на РЕАЛЬНЫХ долях из звука (подписка __TAKT_SUBS ТАКТ-МОНТОРА — басовый онсет, честный BPM из песни), пады I–IV вспыхивают на доле, тап (кнопка ДОЛЯ / пады / Пробел при открытой ЛАБ) меряется против неё в мс — рано/поздно/средняя, без очков и наказаний; панель в ПУЛЬТe → вкладка ЛАБ; С37-проба: каждая кнопка привязана к конкретной функции (вкл/выкл, сброс, ДОЛЯ, пады, подписка, синтетическая доля, сброс статистики — все живые); (3) Л2 — связка: дверь ·29 СВОБОДА ведёт в студию LADOM_SINGULAR (намерение → черновик регионов офлайн-правилами, P1.1 закрыт в студии + node-тесты test_intent_seed.mjs); КАЗНА: __РИТМ (семья такт·пульс·синхрон), __ВИБРОСЛОВА (семья слово·профиль) — неучтёнка пуста; проба ЗДОРОВЬЕ __HEALTH30 (сенсор+ритм, 7 проб); цех: APP/титул v10.78, кэш v132→v133, versions.json/CHANGELOG/карта одной правдой -->
@@ -6718,13 +6719,18 @@ document.querySelectorAll(".p-tabs button").forEach(b=>
 /* v9.2: вкладки — стрелками, как в честных tablist */
 document.querySelector(".p-tabs").addEventListener("keydown",(e)=>{
   if(e.key!=="ArrowLeft" && e.key!=="ArrowRight" && e.key!=="Home" && e.key!=="End") return;
-  const bs=[...document.querySelectorAll(".p-tabs button")];
+  /* СКВОЗЬ v11.51 (ТВ): цикл стрелок — по заголовкам групп (role=tab); чипы-якоря
+     в цикл не мешаются (они быстрые прыжки, не вкладки) */
+  const bs=[...document.querySelectorAll(".p-tabs button[role=\"tab\"]")];
   const i=bs.indexOf(document.activeElement); if(i<0) return;
   let n=null;
   if(e.key==="Home") n=bs[0];
   else if(e.key==="End") n=bs[bs.length-1];
   else n=bs[(i+(e.key==="ArrowRight"?1:bs.length-1))%bs.length];
-  n.focus(); n.click(); e.preventDefault();
+  n.focus(); n.click();
+  /* СКВОЗЬ v11.51 (ТВ): стрелки по заголовкам групп раскрывают группу тихо — ручки видимы и чуемы spatial-движком */
+  try{ var гр=n.closest?n.closest(".pgroup"):null; if(гр&&!гр.classList.contains("open")&&window.__ПУЛЬТ_ГРУППЫ&&window.__ПУЛЬТ_ГРУППЫ.открыть) window.__ПУЛЬТ_ГРУППЫ.открыть(гр,false,true); }catch(_){}
+  e.preventDefault();
 });
 
 /* окно справки: вкладки (progressive disclosure) */
@@ -9947,7 +9953,7 @@ html[data-env="планшет"]{--sng-topH:calc(72px + var(--sng-st,0px))} /* v1
     <tr><td><span class="kc kgreen">ЗЕЛЁНАЯ</span></td><td>СУБТИТРЫ — показать или спрятать</td></tr>
     <tr><td><span class="kc kyellow">ЖЁЛТАЯ</span></td><td>ПОДАЧА: следующая тема — тепло, неон, минимал, бархат, крафт</td></tr>
     <tr><td><span class="kc kblue">СИНЯЯ</span></td><td>ПУЛЬТ настроек — открыть или закрыть</td></tr>
-    <tr><td><span class="kc">1</span>…<span class="kc">5</span></td><td>тема напрямую: тепло, неон, минимал, бархат, крафт; <span class="kc">0</span> — тепло</td></tr>
+    <tr><td><span class="kc">1</span>…<span class="kc">9</span></td><td>СКВОЗЬ — сквозная навигация с любого слоя: прыжок в группу пульта (1 ВИД, 2 ТЕКСТ, 3 ЗВУК, 4 ЭФФЕКТЫ, 5 ЛЮДИ, 6 ПРОФИЛЬ, 7 ДАННЫЕ, 8 РУКИ, 9 ЧУТЬЁ); <span class="kc">0</span> — закрыть пульт, вернуться в зал</td></tr>
     <tr><td><span class="kc">CH+</span><span class="kc">CH−</span></td><td>размер текста строк</td></tr>
     <tr><td><span class="kc">VOL</span><span class="kc">MUTE</span></td><td>громкость песни; тишина одним нажатием</td></tr>
     <tr><td><span class="kc">i</span></td><td>эта легенда; ещё раз — закрыть</td></tr>
@@ -9955,6 +9961,75 @@ html[data-env="планшет"]{--sng-topH:calc(72px + var(--sng-st,0px))} /* v1
   <p class="rcnote">Дом понимает пульты Samsung (BACK 10009), LG (BACK 461), Android / Google / Fire TV, браузерные медиа-клавиши и любой пульт, чьи стрелки доходят до браузера. На компьютере всё по-старому: G — пульт, B — лампа, запятая и точка — синхрон.</p>
 </dialog>
 <div id="rcToast" role="status" aria-live="polite"></div>
+<script id="sngSkvoz">
+/* ═══ v11.51 «СКВОЗЬ» (С148; guard=СКВОЗЬ): сквозная навигация пульта цифрами 1…9, 0 — зал ═══
+   Приказ владельца 2026-10-17: «В ПУЛЬТУ ДОЛЖНА БЫТЬ ВЕЗДЕ СКВОЗНАЯ НАВИГАЦИЯ НА 1 2 3 4 5
+   НА ЛЮБОМ СЛОЕ… ПОЛОВИНА ФУНКЦИЙ НА ТВ НЕ ПОДДЕРЖИВАЕТСЯ».
+   Мир-практики: 10-foot UI (Android/Fire TV — числовые шорткаты, предсказуемый BACK),
+   WCAG 2.2 · 2.1.1 (всё с клавиатуры), docs/МАЛЫШ.md «три уровня навигации».
+   Закон: цифра N с ЛЮБОГО слоя (зал, пульт, крестовина, реестр, крыша, диалог) — прыжок
+   в группу №N пульта: верхний слой честно закрывается, пульт открывается, группа
+   раскрывается и получает фокус (полная справка aria-label — скринридеру/брайлю).
+   0 — закрыть пульт, вернуться в зал. I-01: только явное нажатие человека. */
+(function(){
+'use strict';
+if(window.__СКВОЗЬ) return;
+var D=document;
+function $t(id){ return D.getElementById(id); }
+function вслух(t){ var el=$t('rcToast'); if(!el)return; el.textContent=t; el.classList.add('on'); if(вслух._t)clearTimeout(вслух._t); вслух._t=setTimeout(function(){ el.classList.remove('on'); },2400); }
+function поле(e){ var t=e&&e.target; if(!t)return false; return /INPUT|TEXTAREA|SELECT/.test(t.tagName||'')||!!t.isContentEditable; }
+function цифра(n,e){
+  if(e){ if(e.__сквозь)return false; e.__сквозь=1; if(e.ctrlKey||e.metaKey||e.altKey)return false; if(поле(e))return false; if(e.isTrusted===false)return false; } /* I-01 */
+  try{ if(window.SNGRC&&window.SNGRC.tvOn)window.SNGRC.tvOn(); }catch(err){}
+  if(n===0){ /* 0 — зал: пульт закрыт */
+    var p=$t('panel');
+    if(p&&p.open){ try{ var x=$t('pulClose'); if(x){x.click();} else {p.close();} }catch(err){ try{p.close();}catch(e2){} } вслух('зал'); }
+    return true;
+  }
+  var М=window.__ПУЛЬТ_ГРУППЫ, ключи=(М&&М.группы)?Object.keys(М.группы):[];
+  if(!ключи.length){ D.querySelectorAll('.p-tabs button[data-pt]').forEach(function(b){ if(ключи.indexOf(b.dataset.pt)<0)ключи.push(b.dataset.pt); }); }
+  var ключ=ключи[n-1];
+  if(!ключ){ вслух('в пульте '+ключи.length+' групп — цифры 1…'+Math.min(9,ключи.length)); return true; }
+  /* верхний слой — честно закрыть (сквозь) */
+  try{
+    var закрытьДиалоги=function(){ D.querySelectorAll('dialog[open]').forEach(function(d){ if(d.id!=='panel'){ try{ d.close(); }catch(err){} } }); };
+    if(window.SNGRC&&window.SNGRC.layer){
+      var L=window.SNGRC.layer();
+      if(L==='pad'){ var кр=D.querySelector('#tagPad button[aria-label*="закрыть"]'); if(кр&&кр.click)кр.click(); }
+      else if(L==='registry'){ var zp=D.querySelector('[data-panel="registry"] [aria-label="Закрыть пульт"]'); if(zp&&zp.click)zp.click(); }
+      else if(L==='roof'){ var бвых=$t('kv31btnBye'); if(бвых&&бвых.click)бвых.click(); }
+      else { закрытьДиалоги(); }
+    } else { закрытьДиалоги(); }
+  }catch(err){}
+  var п=$t('panel');
+  if(!п||!п.open){ var открылось=false; try{ if(window.__PULT&&window.__PULT.open){ window.__PULT.open(); открылось=true; } }catch(err){} if(!открылось){ try{ if(п&&п.showModal)п.showModal(); }catch(err){} } }
+  var п2=$t('panel'); if(!п2||!п2.open) return false;
+  var кнопка=null;
+  try{
+    /* v11.51-1: цель — ЗАГОЛОВОК группы (не чип-якорь: чипы идут первыми в DOM,
+       не красят панели и не несут aria-expanded) */
+    var b=(М&&М.группы&&М.группы[ключ]&&М.группы[ключ].кнопка)||D.querySelector('.p-tabs .pgroup > button[data-pt="'+ключ+'"]');
+    if(b){ b.click(); кнопка=b; } /* красит панели .on (единократная истина вкладок) */
+    if(М&&М.группы&&М.группы[ключ]&&М.открыть) М.открыть(М.группы[ключ].группа, true); /* раскрывает группу */
+  }catch(err){}
+  var имя='';
+  try{ var нм=кнопка&&кнопка.querySelector('.pg-имя'); имя=нм?нм.textContent:ключ.toUpperCase(); }catch(err){}
+  вслух('пульт: '+имя+' — ручки в группе');
+  try{ if(кнопка&&кнопка.focus)кнопка.focus({preventScroll:false}); }catch(err){ try{ if(кнопка)кнопка.focus(); }catch(e2){} }
+  return true;
+}
+/* цифры слушает этот модуль (capture, раньше SNGRC); тема и прочее — не тронуты */
+window.addEventListener('keydown',function(e){
+  var k=String(e.key||''), n=-1;
+  if(k.length===1&&k>='0'&&k<='9') n=+k;
+  else if(e.keyCode>=48&&e.keyCode<=57) n=e.keyCode-48;
+  else if(e.keyCode>=96&&e.keyCode<=105) n=e.keyCode-96;
+  else return;
+  if(цифра(n,e)){ try{ e.preventDefault(); }catch(err){} try{ e.stopImmediatePropagation(); }catch(err2){} }
+},true);
+window.__СКВОЗЬ={ вер:1, цифра:цифра, версия:'v11.51 «СКВОЗЬ»' };
+})();
+</script>
 <script id="sngRcCore">
 /* v10.1 «АДАПТ» — SNG-ПУЛЬТ v1 + SNG-АДАПТ v1: один язык для всех пультов, все экраны, все среды.
    Синтез практик: Samsung Remote Control (BACK 10009, цвета 403–406, медиа 415/19/413/412/417/10252),
@@ -10018,6 +10093,7 @@ function $(id){ return D.getElementById(id); }
 /* карта клавиш: keyCode всех платформ → одно действие */
 var C={37:'LEFT',38:'UP',39:'RIGHT',40:'DOWN',13:'OK',27:'ESC',461:'BACK',10009:'BACK',8:'BACK',415:'PLAY',179:'PLAY',19:'PAUSE',10252:'PLAYPAUSE',177:'PLAYPAUSE',413:'STOP',178:'STOP',412:'RW',227:'RW',417:'FF',228:'FF',176:'NEXT',403:'RED',404:'GREEN',405:'YELLOW',406:'BLUE',457:'HELP',10135:'HELP',10182:'EXIT',427:'CHUP',428:'CHDOWN',447:'VUP',448:'VDOWN',449:'MUTE'};
 for(var d0=48;d0<=57;d0++)C[d0]='D'+(d0-48);
+for(var n0=96;n0<=105;n0++)C[n0]='D'+(n0-96);   /* СКВОЗЬ v11.51: нумпад ТВ-пультов и клавиатур */
 var K={GoBack:'BACK',BrowserBack:'BACK',XF86Back:'BACK',XF86AudioPlay:'PLAY',XF86AudioPause:'PAUSE',XF86AudioStop:'STOP',XF86AudioRewind:'RW',XF86AudioForward:'FF',MediaPlayPause:'PLAYPAUSE',MediaPlay:'PLAY',MediaPause:'PAUSE',MediaStop:'STOP',MediaRewind:'RW',MediaFastForward:'FF',MediaTrackNext:'NEXT',MediaTrackPrevious:'PREV',ColorF0Red:'RED',ColorF1Green:'GREEN',ColorF2Yellow:'YELLOW',ColorF3Blue:'BLUE',Info:'HELP',Menu:'HELP',Tools:'HELP',Exit:'EXIT',ChannelUp:'CHUP',ChannelDown:'CHDOWN',VolumeUp:'VUP',VolumeDown:'VDOWN',VolumeMute:'MUTE'};
 function norm(e){
   var k=e.key;
@@ -10027,7 +10103,7 @@ function norm(e){
   return C[e.keyCode]||null;
 }
 var TVC={10009:1,461:1,403:1,404:1,405:1,406:1,415:1,19:1,413:1,412:1,417:1,10252:1,457:1,10182:1,10135:1,427:1,428:1,447:1,448:1,449:1};
-var INSTANT={BACK:1,EXIT:1,PLAY:1,PAUSE:1,PLAYPAUSE:1,STOP:1,RW:1,FF:1,NEXT:1,PREV:1,RED:1,GREEN:1,YELLOW:1,BLUE:1,HELP:1,CHUP:1,CHDOWN:1,VUP:1,VDOWN:1,MUTE:1};
+var INSTANT={BACK:1,EXIT:1,PLAY:1,PAUSE:1,PLAYPAUSE:1,STOP:1,RW:1,FF:1,NEXT:1,PREV:1,RED:1,GREEN:1,YELLOW:1,BLUE:1,HELP:1,CHUP:1,CHDOWN:1,VUP:1,VDOWN:1,MUTE:1,D0:1,D1:1,D2:1,D3:1,D4:1,D5:1,D6:1,D7:1,D8:1,D9:1};   /* СКВОЗЬ v11.51: цифры — тоже ключи пульта */
 /* ТВ-режим: на компьютере спит (I-01), на первом ТВ-ключе просыпается и запоминается */
 function tvOn(){
   if(R.getAttribute('data-rc')!=='1'){ R.setAttribute('data-rc','1'); try{localStorage.setItem('s31-rc','1');}catch(e){} }
@@ -10041,7 +10117,7 @@ try{ if(window.matchMedia&&matchMedia('(hover: none)').matches&&matchMedia('(poi
 function topDialog(){ var d=D.querySelector('dialog[open]'); return d&&d.id!=='rcHelp'?d:null; }
 function helpD(){ return $('rcHelp'); }
 function regPanel(){ var p=D.querySelector('[data-panel="registry"]'); return (p&&p.style.display!=='none')?p:null; }
-function layer(){ if(helpD()&&helpD().open)return 'help'; if(topDialog())return 'dialog'; if(regPanel())return 'registry'; var кр=D.getElementById('kv31panel'); if(кр&&кр.classList.contains('open'))return 'roof'; return null; }
+function layer(){ if(helpD()&&helpD().open)return 'help'; if(topDialog())return 'dialog'; if(regPanel())return 'registry'; var п=D.getElementById('tagPad'); if(п)return 'pad'; /* СКВОЗЬ v11.51: крестовина бирки — свой слой */ var кр=D.getElementById('kv31panel'); if(кр&&кр.classList.contains('open'))return 'roof'; return null; }
 /* фокус-движок: spatial по W3C — вперёд по направлению, штраф за боковое отклонение, край — стоп */
 function vis(el){
   if(el.disabled)return false;
@@ -10130,7 +10206,7 @@ window.addEventListener('keydown',function(e){
   var kc=e.keyCode, tg=(e.target&&e.target.tagName)||'', cur=D.activeElement;
   var field=/INPUT|TEXTAREA|SELECT/.test(tg)||(e.target&&e.target.isContentEditable);
   if(act!=='BACK'&&act!=='EXIT'&&act!=='ESC')arm=0; /* чужая клавиша снимает взвод выхода (Tizen/Android практика) */
-  if(TVC[kc]&&!field)tvOn(); else if(INSTANT[act])tvOn();
+  if(TVC[kc]&&!field)tvOn(); else if(INSTANT[act]&&!field)tvOn();   /* СКВОЗЬ v11.51: поле ввода не будит ТВ */
   if(R.getAttribute('data-rc')!=='1')return;
   if(act==='ESC'){
     if(!layer()&&!field){ e.preventDefault(); e.stopPropagation(); exitStep(); } /* движок дома не видит — выход двухшаговый */
@@ -10143,6 +10219,7 @@ window.addEventListener('keydown',function(e){
     if(L==='help'){ var h=helpD(); if(h)h.close(); seed(); return; }
     if(L==='dialog'){ var dg=topDialog(); if(dg){ var x=dg.querySelector('.x,#pulClose,#micClose'); if(x&&x.click){ x.click(); } else { try{ dg.close(); }catch(e2){} } } seed(); return; }
     if(L==='registry'){ var rp=regPanel(); if(rp){ var z=rp.querySelector('[aria-label="Закрыть пульт"]'); if(z)z.click(); } return; }
+    if(L==='pad'){ var крс=D.querySelector('#tagPad button[aria-label*="закрыть"]'); if(крс&&крс.click)крс.click(); return; } /* СКВОЗЬ v11.51: BACK закрывает крестовину */
     if(L==='roof'){ var бвых=D.getElementById('kv31btnBye'); if(бвых&&бвых.click)бвых.click(); return; }
     exitStep(); return;
   }
@@ -10172,7 +10249,7 @@ window.addEventListener('keydown',function(e){
     case 'CHUP': e.preventDefault(); lyrStep(10); return;
     case 'CHDOWN': e.preventDefault(); lyrStep(-10); return;
   }
-  if(act.length===2&&act.charAt(0)==='D'){ e.preventDefault(); var n=+act.charAt(1); if(n>=1&&n<=5)themeTo(ORD[n-1]); else if(n===0)themeTo('warm'); }
+  if(act.length===2&&act.charAt(0)==='D'){ e.preventDefault(); var n=+act.charAt(1); if(window.__СКВОЗЬ&&window.__СКВОЗЬ.цифра){ window.__СКВОЗЬ.цифра(n,e); } else if(n>=1&&n<=5){ themeTo(ORD[n-1]); } else if(n===0){ themeTo('warm'); } }   /* СКВОЗЬ v11.51: цифры = сквозная навигация (тема — YELLOW и ВИД) */
 },true);
 window.SNGRC={norm:norm,move:move,seed:seed,tvOn:tvOn,layer:layer,help:help,pult:pult,версия:'v10.7 «ЧЕТВЁРКА»'};
 })();
@@ -11802,7 +11879,7 @@ if (window.__КРЫША) return;                       /* один такт — 
 
 var D = document;
 /* ── ЭП-06 «ОДНА ВЕРСИЯ»: единый реестр версии дома — один источник для всех бирок и заголовков ── */
-/*СНГ:ПРАВДА-НАЧАЛО*/window.APP = { v:'11.50', такт:'НАПОЛНЕНИЕ', кэш:'s15-orkestrator-v202', стр:'2026-10-16', ver:'v11.50 «НАПОЛНЕНИЕ»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v202' };/*СНГ:ПРАВДА-КОНЕЦ*/ /* v11.39 «ГОЛОС ТВ» (С117, PAT №34; СТОП-ГОРН ×3): поверх их ремонта старта (СВЕРКА С116) — голос автора вернулся на ТВ во всех песнях зала: mp3-фонд minus/голос/ (59 транскодов МАКС-мастеров), твПуть → src → фонд, голосОтвал в лестнице; их СВЕРКА целa байт-в-байт; APP стоял 11.38 */ /* такт v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy): их байты v11.39 усыновлены настоящей дверью (их пушер встал файлом-призраком SINGULYAR_31_ЛАДОМ.html — латинское имя; дифф = их 50 строк правок), файл-призрак удалён, ·32 СЦЕНА подключена к фонду minus/голос/ тем же тактом, их поломка sw15 починена (св снова регистрируется), фонд поверен 5/5; APP стоял 11.39 */
+/*СНГ:ПРАВДА-НАЧАЛО*/window.APP = { v:'11.51', такт:'СКВОЗЬ', кэш:'s15-orkestrator-v203', стр:'2026-10-17', ver:'v11.51 «СКВОЗЬ»', build:String(window.__BUILD_SHA||"ceefc619241bc8aace0a41d397d9c4275f1d07c3"), cache:'s15-orkestrator-v203' };/*СНГ:ПРАВДА-КОНЕЦ*/ /* v11.39 «ГОЛОС ТВ» (С117, PAT №34; СТОП-ГОРН ×3): поверх их ремонта старта (СВЕРКА С116) — голос автора вернулся на ТВ во всех песнях зала: mp3-фонд minus/голос/ (59 транскодов МАКС-мастеров), твПуть → src → фонд, голосОтвал в лестнице; их СВЕРКА целa байт-в-байт; APP стоял 11.38 */ /* такт v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy): их байты v11.39 усыновлены настоящей дверью (их пушер встал файлом-призраком SINGULYAR_31_ЛАДОМ.html — латинское имя; дифф = их 50 строк правок), файл-призрак удалён, ·32 СЦЕНА подключена к фонду minus/голос/ тем же тактом, их поломка sw15 починена (св снова регистрируется), фонд поверен 5/5; APP стоял 11.39 */
 var VER = 'v' + window.APP.v + ' «' + window.APP.такт + '»';
 var roomArg = '';
 try { roomArg = new URLSearchParams(location.search).get('kv31room') || ''; } catch(_){}
@@ -17051,7 +17128,7 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
     кнопка.setAttribute("aria-label", полн);
     кнопка.setAttribute("aria-expanded", группа.classList.contains("open") ? "true" : "false");
   }
-  function открыть(группа, помнить){
+  function открыть(группа, помнить, тихо){
     [].slice.call(полоса.querySelectorAll(".pgroup.open")).forEach(function(g){
       if(g !== группа){
         g.classList.remove("open");
@@ -17060,8 +17137,8 @@ window.__ПУЛЬТ_ГРУППЫ = (function(){
     });
     if(группа){
       группа.classList.add("open");
-      /*СНГ:ПОДРУКОЙ v11.42: заголовок раскрытой группы — под глазами, ручки тут же (КОМБАЙН-закон)*/
-      setTimeout(function(){ try{ группа.scrollIntoView({block:"start",behavior:"smooth"}); }catch(_){ try{ группа.scrollIntoView(true); }catch(__){} } },40);
+      /*СНГ:ПОДРУКОЙ v11.42: заголовок раскрытой группы — под глазами, ручки тут же (КОМБАЙН-закон); СКВОЗЬ v11.51: тихо — без прыжка скролла (стрелки на ТВ)*/
+      if(!тихо) setTimeout(function(){ try{ группа.scrollIntoView({block:"start",behavior:"smooth"}); }catch(_){ try{ группа.scrollIntoView(true); }catch(__){} } },40);
       var b = группа.querySelector("button[data-pt]");
       if(b){ b.setAttribute("aria-expanded","true"); if(помнить){ try{ localStorage.setItem(КЛЮЧ, b.dataset.pt); }catch(_){} } }
       чипыКраска();
