@@ -159,6 +159,7 @@ video{width:100%;display:block;max-height:65vh;background:#000}
 </div>
 
 <script src="./webtorrent.min.js"></script>
+<script src="./autopilot_client.js"></script>
 <script src="./catalog.js"></script>
 <script>
 const COUNTRY_FLAG = {TH:"🇹🇭", CN:"🇨🇳", KR:"🇰🇷", JP:"🇯🇵", TW:"🇹🇼"};
@@ -380,87 +381,18 @@ function wireAutopilot(){
   });
 }
 
+// Override — uses client-side autopilot (no local proxy needed)
+// Real implementation: autopilot_client.js (window.runAutopilotUI)
 async function runAutopilot(ep, force=false){
-  const statusEl = document.getElementById('autopilotStatus');
-  const bar = document.getElementById('autopilotBar');
-  const setStatus = (text, cls='') => {
-    const s = document.getElementById('status');
-    s.textContent = text;
-    s.className = 'status' + (cls ? ' ' + cls : '');
-  };
-  
-  setStatus(`🤖 Autopilot ищет источники для эп. ${ep} (YouTube + Rutube, параллельно)...`, 'warn');
-  if(statusEl) statusEl.textContent = `🤖 Ищу источники для эп. ${ep}...`;
-  if(bar) bar.style.display = 'block';
-  
-  // title.t is the Russian name; title.q is the English/Thai search query
-  const searchQuery = title.q || title.t;
-  const targetTitle = title.t;
-  const russianName = title.t;  // Pass Russian name for Rutube search
-  
-  let url;
-  try {
-    url = `http://localhost:8765/api/autopilot?title=${encodeURIComponent(searchQuery)}&ep=${ep}&russian_name=${encodeURIComponent(russianName)}`;
-  } catch(e) {
-    setStatus('URL build error: ' + e.message, 'err');
-    return;
-  }
-  
-  try {
-    const res = await fetch(url);
-    if(!res.ok){
-      setStatus(`Autopilot HTTP ${res.status}. Сервер не запущен?`, 'err');
-      if(statusEl) statusEl.textContent = '⚠ Proxy недоступен';
-      return;
-    }
-    const data = await res.json();
-    if(data.error){
-      setStatus(`Autopilot error: ${data.error}`, 'err');
-      if(statusEl) statusEl.textContent = '⚠ ' + data.error;
-      return;
-    }
-    
-    autopilotSources = data.sources || [];
-    currentSourceIdx = 0;
-    
-    if(!autopilotSources.length){
-      setStatus(`Autopilot: 0 источников для эп. ${ep}. Попробуй найти вручную ниже.`, 'warn');
-      if(statusEl) statusEl.textContent = '⚠ Источников не найдено — найди вручную';
-      if(bar) bar.innerHTML = `<b>Autopilot:</b> 0 источников (запрос: "${escapeHtml(data.query)}"). Найди на трекере ниже.`;
-      return;
-    }
-    
-    // Populate source switcher
-    const select = document.getElementById('sourceSelect');
-    const switcher = document.getElementById('sourceSwitcher');
-    if(select && switcher){
-      select.innerHTML = autopilotSources.map((s, i) => {
-        const ru = s.russian_dub ? '🇷🇺 ' : '';
-        const meta = s.source === 'nnmclub'
-          ? `S:${s.seeds||0} ${s.size||''}`
-          : s.duration_str;
-        return `<option value="${i}">${ru}[${s.source}] ${escapeHtml(s.title).substring(0,75)} (${meta}, sc ${s.score})</option>`;
-      }).join('');
-      switcher.style.display = 'flex';
-      const countEl = document.getElementById('sourceCount');
-      if(countEl) countEl.textContent = `${autopilotSources.length} источн.`;
-    }
-    
-    const cached = data.cached ? ' (кэш)' : '';
-    const best = autopilotSources[0];
-    setStatus(`🤖 Autopilot нашёл ${autopilotSources.length} источников${cached}. Лучший: "${best.title.substring(0,60)}" (score ${best.score}). Стримлю...`, 'ok');
-    if(statusEl) statusEl.innerHTML = `✓ Найдено <b>${autopilotSources.length}</b> источников${cached}<br>Лучший: ${escapeHtml(best.title).substring(0,70)}<br><span style="color:var(--muted)">score ${best.score} · dur ${best.duration_str}</span>`;
-    if(bar) bar.innerHTML = `<b>🤖 Autopilot:</b> ${autopilotSources.length} источников${cached} для эп. ${ep}. Лучший: <i>${escapeHtml(best.title).substring(0,80)}</i> (score ${best.score}). Селект источника ниже ↓`;
-    
-    // Auto-play best source
-    playAutopilotSource(0);
-    
-  } catch(e) {
-    setStatus(`Autopilot недоступен: ${e.message}. Запусти: python3 /home/z/my-project/scripts/tracker_proxy.py`, 'err');
-    if(statusEl) statusEl.textContent = '⚠ Proxy недоступен — запусти локально';
+  if (window.currentEp === undefined) window.currentEp = ep;
+  const epLabel = document.getElementById('epLabel');
+  if (epLabel) epLabel.textContent = 'эпизода ' + ep;
+  if (typeof window.runAutopilotUI === 'function') {
+    await window.runAutopilotUI();
+  } else {
+    setStatus('⚠ autopilot_client.js не загружен — проверь подключение', 'err');
   }
 }
-
 function playAutopilotSource(idx){
   if(!autopilotSources[idx]) return;
   const src = autopilotSources[idx];
