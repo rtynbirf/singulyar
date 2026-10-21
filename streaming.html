@@ -1,218 +1,794 @@
-<!doctype html>
-<html lang="ru" translate="no">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0a0f0c">
-<meta name="description" content="СИНГУЛЯР — P2P-стрим BL/GL дорам. Без premium. Без регистрации. Без посредников.">
-<title>⚡ СИНГУЛЯР — BL/GL Каталог</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЛАКОРНИЯ — личный кинотеатр BL/GL</title>
+<meta name="description" content="Персональный кинотеатр тайских BL/GL сериалов. Открой и смотри.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0f0c;--panel:#101713;--panel2:#16201b;--text:#e0e6e3;--muted:#7a8a84;--accent:#00ff9e;--line:#1f2d28;--red:#ff6b6b;--warn:#ffb84d;--gold:#ffd680;--pink:#ff80b0;--blue:#80a0ff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font:15px/1.5 'Liberation Sans','DejaVu Sans',ui-sans-serif,system-ui,sans-serif;min-height:100vh}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-.shell{max-width:1100px;margin:0 auto;padding:20px}
-.topbar{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:24px;position:sticky;top:0;background:var(--bg);z-index:100}
-.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-.brand-mark{width:36px;height:36px;background:var(--accent);color:#000;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px}
-.brand b{font-size:17px}
-.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
-.badges{display:flex;gap:6px;flex-wrap:wrap}
-.badge{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:bold}
-.badge-free{background:#1a3a1a;color:#80ff80}
-.badge-noads{background:#3a1a1a;color:#ff9e9e}
-.badge-noreg{background:#1a1a3a;color:#80c0ff}
-.badge-p2p{background:#3a2a1a;color:#ffd680}
-.hero{text-align:center;padding:32px 20px;margin-bottom:24px}
-.hero h1{font-size:clamp(28px,5vw,44px);color:var(--accent);margin-bottom:8px}
-.hero p{color:var(--muted);font-size:14px;max-width:680px;margin:0 auto;line-height:1.7}
-.note{background:#1a1a2a;border:1px solid #2a2a4a;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#a0b0e0;line-height:1.6}
-.note b{color:#c0d0ff}
-.note .x{color:var(--red);font-weight:bold}
-.search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;color:var(--text);font-size:14px;margin-bottom:16px}
-.search:focus{outline:none;border-color:var(--accent)}
-.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.cat-btn{padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--text);cursor:pointer;font-size:13px;transition:all .2s}
-.cat-btn:hover{border-color:var(--accent)}
-.cat-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
-.cat-btn.active.bl{background:var(--blue);color:#000;border-color:var(--blue)}
-.cat-btn.active.gl{background:var(--pink);color:#000;border-color:var(--pink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:32px}
-.card{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;transition:transform .2s,border-color .2s;cursor:pointer;position:relative}
-.card:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none}
-.card.bl{border-color:#1a2a4a}
-.card.bl:hover{border-color:var(--blue)}
-.card.gl{border-color:#3a1a2a}
-.card.gl:hover{border-color:var(--pink)}
-.card .thumb{width:100%;aspect-ratio:2/3;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:50px;position:relative;overflow:hidden}
-.card .thumb img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
-.card .thumb .emoji{position:relative;z-index:1;text-shadow:0 2px 8px rgba(0,0,0,0.6)}
-.card .thumb .type-badge{position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:bold;color:#000;z-index:2}
-.card .thumb .premium-badge{position:absolute;top:6px;left:6px;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:bold;background:#3a2a1a;color:#ffd680;z-index:2}
-.card.bl .type-badge{background:var(--blue)}
-.card.gl .type-badge{background:var(--pink)}
-.card .info{padding:12px}
-.card .title{font-size:14px;font-weight:bold;line-height:1.3;margin-bottom:4px}
-.card .orig-title{font-size:11px;color:var(--muted);line-height:1.3;margin-bottom:6px;font-style:italic;max-height:34px;overflow:hidden}
-.card .meta{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
-.card .meta .sep{color:var(--line)}
-.card .status{font-size:10px;font-weight:bold;margin-top:4px}
-.status-airing{color:var(--gold)}
-.status-released{color:var(--accent)}
-.status-soon{color:var(--blue)}
-.card .eps{font-size:10px;color:var(--muted)}
-.card .rating-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px}
-.card .rating-num{color:var(--accent);font-weight:bold}
-.card .genres{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.genre{padding:1px 6px;border-radius:3px;font-size:9px;background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-.card .open-hint{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:11px;color:var(--accent);text-align:center;letter-spacing:.3px}
-.footer{margin-top:32px;padding:24px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
-.footer b{color:var(--text)}
-.sig{margin-top:14px;color:var(--accent);font-size:13px;font-weight:bold;letter-spacing:.5px}
-.empty{text-align:center;padding:40px;color:var(--muted)}
+:root{
+  --bg:#09090f; --bg2:#0d0d16; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.09); --txt:#f4f4f5; --mut:#9d9daa; --mut2:#67677a;
+  --acc:#e879f9; --acc2:#8b5cf6; --grad:linear-gradient(93deg,#e879f9,#8b5cf6 60%,#6366f1);
+  --ok:#34d399; --warn:#fbbf24; --r:18px; --rs:12px;
+  --shadow:0 24px 70px -18px rgba(0,0,0,.75);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:Manrope,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:15px; line-height:1.55; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+}
+::selection{background:rgba(232,121,249,.35)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:rgba(232,121,249,.5)}
+h1,h2,h3,.disp{font-family:Unbounded,Manrope,system-ui,sans-serif;letter-spacing:.01em}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+img{-webkit-user-drag:none;user-select:none}
+
+/* ambient background */
+.ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.ambient::before,.ambient::after{content:'';position:absolute;width:52vw;height:52vw;border-radius:50%;filter:blur(120px);opacity:.16}
+.ambient::before{background:#a21caf;top:-22vw;right:-14vw}
+.ambient::after{background:#4f46e5;bottom:-26vw;left:-18vw;opacity:.14}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);background-size:3px 3px}
+
+/* ============ HEADER ============ */
+header{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:14px clamp(16px,4vw,44px);backdrop-filter:blur(18px);
+  background:linear-gradient(180deg,rgba(9,9,15,.92),rgba(9,9,15,.66));border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-family:Unbounded;font-weight:800;font-size:17px;letter-spacing:.06em}
+.logo .dot{width:26px;height:26px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:13px;box-shadow:0 4px 18px rgba(232,121,249,.45)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hd-search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+  border-radius:99px;padding:8px 16px;color:var(--mut);cursor:pointer;min-width:210px;font-size:13.5px;transition:.25s}
+.hd-search:hover{border-color:rgba(232,121,249,.5);color:var(--txt)}
+.hd-search kbd{margin-left:auto;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:11px;font-family:inherit}
+.icon-btn{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:17px;transition:.25s}
+.icon-btn:hover{background:var(--card2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(232,121,249,.22)}
+.fav-count{font-size:11px;background:var(--grad);border-radius:99px;min-width:16px;height:16px;display:inline-grid;place-items:center;padding:0 4px;margin-left:4px;font-weight:800}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:min(78vh,640px);display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 18%;filter:blur(2px) saturate(1.15);transform:scale(1.08)}
+.hero-mask{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(9,9,15,.25) 0%,rgba(9,9,15,.55) 45%,var(--bg) 96%),
+  linear-gradient(90deg,rgba(9,9,15,.86) 0%,rgba(9,9,15,.25) 55%,rgba(9,9,15,.7))}
+.hero-in{position:relative;z-index:2;padding:0 clamp(16px,4vw,44px) 56px;max-width:760px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#f0abfc;
+  background:rgba(232,121,249,.1);border:1px solid rgba(232,121,249,.35);border-radius:99px;padding:6px 14px;margin-bottom:18px;backdrop-filter:blur(8px)}
+.hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:#e879f9;box-shadow:0 0 0 0 rgba(232,121,249,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(232,121,249,0)}}
+.hero h1{font-size:clamp(28px,5vw,54px);font-weight:800;line-height:1.08;margin-bottom:14px;text-shadow:0 6px 40px rgba(0,0,0,.6)}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#d4d4dd;max-width:560px;font-size:15.5px;margin-bottom:24px;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.09);border:1px solid var(--line);backdrop-filter:blur(8px)}
+.chip.gold{color:#fde68a;border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.1)}
+.chip.bl{color:#93c5fd;border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.1)}
+.chip.gl{color:#f9a8d4;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.1)}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:14px;padding:13px 26px;font-weight:800;font-size:14.5px;transition:.25s;letter-spacing:.02em}
+.btn-prim{background:var(--grad);color:#fff;box-shadow:0 10px 32px rgba(232,121,249,.35)}
+.btn-prim:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(232,121,249,.5)}
+.btn-ghost{background:rgba(255,255,255,.09);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.btn-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ============ ROWS ============ */
+main{padding:8px 0 40px}
+.row{margin:34px 0}
+.row-hd{display:flex;align-items:baseline;gap:14px;padding:0 clamp(16px,4vw,44px);margin-bottom:14px}
+.row-hd h2{font-size:clamp(17px,2vw,21px);font-weight:600}
+.row-hd .cnt{color:var(--mut2);font-size:13px;font-weight:600}
+.strip{display:flex;gap:14px;overflow-x:auto;padding:6px clamp(16px,4vw,44px) 18px;scroll-snap-type:x proximity;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.card{position:relative;flex:0 0 168px;scroll-snap-align:start;cursor:pointer;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.card:hover{transform:translateY(-7px) scale(1.045);z-index:3}
+.card .ph{position:relative;aspect-ratio:2/3;border-radius:var(--r);overflow:hidden;background:linear-gradient(160deg,#1c1530,#241a3d 55%,#160f26);box-shadow:0 10px 30px -8px rgba(0,0,0,.7)}
+.card:hover .ph{box-shadow:0 20px 48px -8px rgba(232,121,249,.32)}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.card:hover img{transform:scale(1.07)}
+.card .ph .ph-txt{position:absolute;inset:0;display:grid;place-items:center;font-family:Unbounded;font-size:34px;color:rgba(255,255,255,.2)}
+.rate{position:absolute;top:8px;left:8px;font-size:11.5px;font-weight:800;background:rgba(9,9,15,.78);backdrop-filter:blur(6px);border:1px solid rgba(251,191,36,.35);color:#fde68a;border-radius:8px;padding:3px 7px}
+.type-tag{position:absolute;top:8px;right:8px;font-size:10px;font-weight:800;letter-spacing:.08em;border-radius:7px;padding:3px 7px;backdrop-filter:blur(6px)}
+.type-tag.bl{background:rgba(59,130,246,.25);color:#bfdbfe;border:1px solid rgba(96,165,250,.4)}
+.type-tag.gl{background:rgba(236,72,153,.25);color:#fbcfe8;border:1px solid rgba(244,114,182,.4)}
+.card .tt{margin-top:9px;font-weight:700;font-size:13.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .sub{font-size:11.5px;color:var(--mut2);margin-top:2px}
+.pbar{position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,.14)}
+.pbar i{display:block;height:100%;background:var(--grad);border-radius:0 3px 3px 0}
+.play-ic{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:.3s;background:linear-gradient(180deg,transparent 30%,rgba(9,9,15,.72))}
+.card:hover .play-ic{opacity:1}
+.play-ic span{width:52px;height:52px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-size:20px;padding-left:4px;box-shadow:0 10px 30px rgba(232,121,249,.5)}
+.fav-heart{position:absolute;bottom:9px;right:9px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;
+  background:rgba(9,9,15,.72);backdrop-filter:blur(6px);border:1px solid var(--line);opacity:0;transition:.25s;z-index:2}
+.card:hover .fav-heart{opacity:1}
+.fav-heart.on{opacity:1;color:#f472b6;border-color:rgba(244,114,182,.5)}
+.fav-heart:hover{transform:scale(1.15)}
+
+/* top10 */
+.t10{flex:0 0 auto;display:flex;align-items:flex-end;cursor:pointer;transition:.3s cubic-bezier(.2,.8,.2,1)}
+.t10:hover{transform:translateY(-7px)}
+.t10 .num{font-family:Unbounded;font-weight:800;font-size:96px;line-height:.78;color:transparent;
+  -webkit-text-stroke:3px rgba(232,121,249,.55);margin-right:-26px;z-index:2;text-shadow:0 0 40px rgba(232,121,249,.25)}
+.t10:hover .num{-webkit-text-stroke:3px rgba(232,121,249,.95)}
+.t10 .ph{position:relative;width:130px;aspect-ratio:2/3;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.t10 img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.t10:hover img{transform:scale(1.06)}
+.t10 .tt{width:130px;margin-top:8px;font-size:12.5px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ============ CATALOG ============ */
+.catalog{padding:26px clamp(16px,4vw,44px)}
+.cat-hd h2{font-size:clamp(20px,2.6vw,28px);margin-bottom:16px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;align-items:center}
+.tabs{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px;gap:2px}
+.tabs button{border-radius:99px;padding:8px 18px;font-weight:700;font-size:13px;color:var(--mut);transition:.25s}
+.tabs button.on{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(232,121,249,.35)}
+.inp,.sel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 15px;color:var(--txt);font-size:13.5px;outline:none;transition:.25s}
+.inp:focus,.sel:focus{border-color:rgba(232,121,249,.6);box-shadow:0 0 0 3px rgba(232,121,249,.15)}
+.inp{min-width:230px}
+.sel option{background:#14141f}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:18px 14px}
+.grid .card{width:auto;flex:none}
+.empty{padding:60px 20px;text-align:center;color:var(--mut)}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:30px}
+.pager button{min-width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:700;font-size:13.5px;transition:.2s}
+.pager button.on{background:var(--grad);border-color:transparent}
+.pager button:hover:not(.on){background:var(--card2)}
+.res-count{color:var(--mut2);font-size:13px;margin-left:auto;font-weight:600}
+
+/* ============ MODAL (series) ============ */
+.ovl{position:fixed;inset:0;z-index:80;background:rgba(6,6,11,.82);backdrop-filter:blur(14px);display:grid;place-items:center;padding:18px;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(34px) scale(.98)}}
+.modal{position:relative;width:min(1060px,100%);max-height:92vh;overflow-y:auto;border-radius:24px;
+  background:linear-gradient(180deg,rgba(30,22,48,.92),rgba(13,13,22,.97));border:1px solid rgba(232,121,249,.16);
+  box-shadow:var(--shadow);animation:up .35s cubic-bezier(.2,.8,.2,1)}
+.modal::-webkit-scrollbar{width:8px}
+.m-close{position:sticky;top:12px;margin-left:auto;margin-right:12px;z-index:5;width:38px;height:38px;border-radius:50%;
+  background:rgba(9,9,15,.7);border:1px solid var(--line);display:grid;place-items:center;font-size:16px;backdrop-filter:blur(8px)}
+.m-close:hover{background:rgba(232,121,249,.25);transform:rotate(90deg);transition:.3s}
+.m-hero{display:flex;gap:24px;padding:0 30px 22px;margin-top:-38px;flex-wrap:wrap}
+.m-poster{flex:0 0 200px;aspect-ratio:2/3;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#1c1530}
+.m-poster img{width:100%;height:100%;object-fit:cover}
+.m-info{flex:1;min-width:280px;padding-top:26px}
+.m-info h3{font-size:clamp(20px,3vw,28px);font-weight:700;margin-bottom:6px}
+.m-orig{color:var(--mut);font-size:13.5px;margin-bottom:14px}
+.m-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.m-desc{color:#c9c9d6;font-size:14px;max-width:640px}
+.m-acts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.m-acts .btn{padding:11px 20px;font-size:13.5px}
+.eps-wrap{padding:8px 30px 28px}
+.eps-hd{display:flex;align-items:center;gap:12px;margin:14px 0 14px;flex-wrap:wrap}
+.eps-hd h4{font-size:15px;font-weight:700}
+.eps-hd .mini{font-size:12px;color:var(--mut2)}
+.eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.ep{position:relative;height:52px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;
+  font-weight:800;font-size:14px;transition:.2s;cursor:pointer}
+.ep:hover{border-color:rgba(232,121,249,.6);background:rgba(232,121,249,.12);transform:translateY(-2px)}
+.ep.watched{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.35);color:#a7f3d0}
+.ep.cur{background:var(--grad);border-color:transparent;color:#fff}
+.ep.no{opacity:.32;cursor:not-allowed}
+.ep .tick{position:absolute;top:4px;right:6px;font-size:9px;color:var(--ok)}
+.range-btn{border-radius:99px;padding:6px 14px;font-size:12px;font-weight:700;background:var(--card);border:1px solid var(--line);transition:.2s}
+.range-btn.on{background:rgba(232,121,249,.18);border-color:rgba(232,121,249,.5);color:#f5d0fe}
+
+/* ============ PLAYER ============ */
+.player-ovl{position:fixed;inset:0;z-index:100;background:#050508;display:flex;flex-direction:column;animation:fade .3s}
+.pl-top{display:flex;align-items:center;gap:14px;padding:14px clamp(14px,3vw,30px);border-bottom:1px solid var(--line)}
+.pl-top .back{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--mut);transition:.2s}
+.pl-top .back:hover{color:var(--txt)}
+.pl-title{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-sub{color:var(--mut2);font-size:12.5px;white-space:nowrap}
+.pl-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tgl{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut);cursor:pointer;user-select:none}
+.tgl .sw{width:36px;height:20px;border-radius:99px;background:rgba(255,255,255,.14);position:relative;transition:.25s}
+.tgl .sw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.25s}
+.tgl.on .sw{background:var(--grad)}
+.tgl.on .sw::after{left:18px}
+.pl-body{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(10px,2.5vw,26px);min-height:0}
+.pl-frame{position:relative;width:min(1240px,100%);max-height:100%;aspect-ratio:16/9;background:#000;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px -20px rgba(0,0,0,.9)}
+.pl-frame iframe,.pl-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.pl-glow{position:absolute;inset:-60px;z-index:-1;background-size:cover;background-position:center;filter:blur(90px) brightness(.5);opacity:.55}
+.pl-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;background:linear-gradient(160deg,#170f2b,#0d0a1a)}
+.pl-fallback .big{font-size:44px;margin-bottom:12px}
+.pl-fallback h4{font-family:Unbounded;font-size:16px;margin-bottom:8px}
+.pl-fallback p{color:var(--mut);font-size:13px;max-width:420px;margin:0 auto 16px}
+.pl-bottom{padding:10px clamp(14px,3vw,30px) 18px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.pl-bottom::-webkit-scrollbar{display:none}
+.pl-nav{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.pl-nav .btn{padding:9px 16px;font-size:12.5px}
+.upnext{position:fixed;right:22px;bottom:96px;z-index:110;width:300px;border-radius:18px;padding:16px;
+  background:linear-gradient(160deg,rgba(38,26,64,.97),rgba(16,14,28,.97));border:1px solid rgba(232,121,249,.4);
+  box-shadow:0 24px 70px rgba(0,0,0,.8),0 0 40px rgba(232,121,249,.2);animation:up .3s}
+.upnext .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f0abfc;font-weight:800;margin-bottom:6px}
+.upnext .t{font-weight:800;font-size:14.5px;margin-bottom:12px}
+.upnext .acts{display:flex;gap:8px}
+.upnext .acts .btn{flex:1;justify-content:center;padding:9px 10px;font-size:12.5px}
+.upnext .cd{height:3px;border-radius:99px;background:rgba(255,255,255,.12);margin-top:12px;overflow:hidden}
+.upnext .cd i{display:block;height:100%;width:100%;background:var(--grad);transition:width .95s linear}
+
+/* ============ PALETTE ============ */
+.cmdk{position:fixed;inset:0;z-index:120;background:rgba(6,6,11,.8);backdrop-filter:blur(10px);display:flex;justify-content:center;padding-top:12vh;animation:fade .2s}
+.cmdk .box{width:min(600px,92vw);height:fit-content;max-height:64vh;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(28,22,46,.98),rgba(13,13,22,.98));border:1px solid rgba(232,121,249,.3);box-shadow:var(--shadow);animation:up .25s}
+.cmdk input{background:transparent;border:none;outline:none;padding:18px 20px;font-size:16px;color:var(--txt);border-bottom:1px solid var(--line)}
+.cmdk .lst{overflow-y:auto;padding:8px}
+.cmdk .it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;font-size:14px}
+.cmdk .it.sel,.cmdk .it:hover{background:rgba(232,121,249,.14)}
+.cmdk .it img{width:36px;height:54px;border-radius:7px;object-fit:cover;flex:none}
+.cmdk .it .ic{width:36px;height:36px;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-size:16px;flex:none}
+.cmdk .it .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk .it .sc{font-size:12px;color:var(--mut2)}
+.cmdk .it kbd{margin-left:auto;font-size:11px;color:var(--mut2);background:rgba(255,255,255,.06);border-radius:6px;padding:2px 8px}
+.cmdk .sec{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);padding:10px 12px 4px;font-weight:800}
+.cmdk .empty{padding:34px}
+
+/* ============ FOOTER / TOAST ============ */
+footer{padding:34px clamp(16px,4vw,44px) 44px;color:var(--mut2);font-size:13px;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(80px);z-index:200;background:rgba(20,16,34,.96);
+  border:1px solid rgba(232,121,249,.4);border-radius:14px;padding:12px 22px;font-weight:700;font-size:13.5px;
+  box-shadow:0 16px 50px rgba(0,0,0,.7);transition:.35s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(10px)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.reveal{opacity:0;transform:translateY(26px)}
+.reveal.on{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+@media(max-width:640px){
+  .hd-search{min-width:0}.hd-search span{display:none}
+  .card{flex-basis:138px}.t10 .num{font-size:72px}.t10 .ph{width:108px}
+  .m-hero{padding:0 18px 18px}.m-poster{flex-basis:140px}.eps-wrap,.catalog{padding-left:18px;padding-right:18px}
+  .hero{min-height:64vh}.upnext{right:12px;left:12px;width:auto}
+}
 </style>
 </head>
 <body>
-<div class="shell">
-<header class="topbar">
-<div class="brand" onclick="location.href='streaming.html'">
-<span class="brand-mark">S</span>
-<span><b>СИНГУЛЯР</b><small>BL/GL · P2P СТРИМ</small></span>
-</div>
-<div class="badges">
-<span class="badge badge-p2p">✓ SWARM/HTTP</span>
-<span class="badge badge-noreg">✓ Без регистрации</span>
-<span class="badge badge-noads">✓ Без рекламы</span>
-<span class="badge badge-free">✓ Без premium</span>
-</div>
+<div class="ambient"></div><div class="grain"></div>
+
+<header>
+  <div class="logo"><span class="dot">▶</span><span>ЛАКОР<b>НИЯ</b></span></div>
+  <button class="hd-search" id="openSearch"><span>🔍 Поиск тайтлов и команд…</span><kbd>Ctrl K</kbd></button>
+  <button class="icon-btn" id="diceBtn" title="Мне повезёт — случайная серия">🎲</button>
+  <button class="icon-btn" id="favBtn" title="Избранное">♥<span class="fav-count" id="favCount" hidden>0</span></button>
 </header>
 
-<div class="hero">
-<h1>⚡ BL/GL Каталог</h1>
-<p>Суверенный P2P-стрим тайских, китайских, корейских и японских BL/GL дорам.<br>
-Без premium. Без 18+-gate. Без рекламы. Без регистрации. Без посредников.<br>
-Вставляешь magnet / .torrent / прямой URL видео — стримишь из swarm'а или напрямую.</p>
-</div>
+<section class="hero" id="hero"></section>
+<main id="rows"></main>
 
-<div class="note">
-<b>Как пользоваться:</b> кликни на тайтл в каталоге ниже → откроется страница тайтла с встроенным плеером →
-найди источник (magnet на трекере, .torrent файл, прямой URL видео в Telegram/Mega/Google Drive) →
-вставь в поле плеера → жми <b>▶ Стрим</b>.<br>
-<span class="x">Реали:</span> BL/GL контент редко лежит на публичных P2P-трекерах (Rutor, Nyaa, RuTracker).
-Чаще — в Telegram-каналах, Mega-папках, Google Drive, VK-загрузках. Поэтому плеер принимает <b>любой URL</b>,
-не только magnet. Прямой HTTP-URL видео (mp4/mkv/webm/m3u8) играется напрямую через &lt;video&gt; тег.<br>
-Magnet-ссылки ищи на: RuTracker, Rutor, Nyaa, 1337x, The Pirate Bay, NNM-Club — откроются в новой вкладке.
-</div>
-
-<input class="search" id="searchInput" placeholder="Поиск по каталогу (название, жанр, страна)..." autocomplete="off">
-
-<div class="cats" id="cats">
-<button class="cat-btn active" data-cat="all">Всё</button>
-<button class="cat-btn bl" data-cat="bl">BL</button>
-<button class="cat-btn gl" data-cat="gl">GL</button>
-<button class="cat-btn" data-cat="airing">Выходит</button>
-<button class="cat-btn" data-cat="released">Завершено</button>
-<button class="cat-btn" data-cat="th">🇹🇭 Таиланд</button>
-<button class="cat-btn" data-cat="cn">🇨🇳 Китай</button>
-<button class="cat-btn" data-cat="kr">🇰🇷 Корея</button>
-<button class="cat-btn" data-cat="jp">🇯🇵 Япония</button>
-<button class="cat-btn" data-cat="tw">🇹🇼 Тайвань</button>
-</div>
-
-<div class="grid" id="grid"></div>
-
-<div class="footer">
-<b>СИНГУЛЯР не хостит контент.</b> Страница — каталог ссылок на источники, которые пользователь находит самостоятельно.<br>
-Файлы физически лежат у peer'ов в swarm (для magnet) или на прямых источниках (HTTP, Mega, Telegram).<br>
-Без premium, без 18+-верификации, без регистрации, без трекинга — человек сам решает что смотреть.
-<div class="sig">ЧЕЛОВЕК = PID = 1 · КОМАНДИР КОРАБЛЯ · SWARM/DIRECT = ИСТОЧНИК</div>
-</div>
-</div>
-
-<script src="./catalog.js"></script>
-<script>
-// Country flag mapping
-const COUNTRY_FLAG = {TH:"🇹🇭", CN:"🇨🇳", KR:"🇰🇷", JP:"🇯🇵", TW:"🇹🇼"};
-const COUNTRY_NAME = {TH:"Таиланд", CN:"Китай", KR:"Корея", JP:"Япония", TW:"Тайвань"};
-const STATUS_RU = {airing:"Выходит", released:"Завершён"};
-
-const grid = document.getElementById('grid');
-let activeCat = 'all';
-let searchTerm = '';
-
-function render(){
-  const f = C.filter(c => {
-    // category filter
-    if(activeCat === 'bl' && c.cat !== 'bl') return false;
-    if(activeCat === 'gl' && c.cat !== 'gl') return false;
-    if(activeCat === 'airing' && c.status !== 'airing') return false;
-    if(activeCat === 'released' && c.status !== 'released') return false;
-    if(['th','cn','kr','jp','tw'].includes(activeCat) && c.country !== ({th:'TH',cn:'CN',kr:'KR',jp:'JP',tw:'TW'})[activeCat]) return false;
-    // search
-    if(searchTerm){
-      const s = searchTerm.toLowerCase();
-      const hay = (c.t + ' ' + c.orig + ' ' + c.q + ' ' + (c.genres||[]).join(' ') + ' ' + (COUNTRY_NAME[c.country]||'')).toLowerCase();
-      if(!hay.includes(s)) return false;
-    }
-    return true;
-  });
-  if(!f.length){
-    grid.innerHTML = '<div class="empty">Ничего не найдено.</div>';
-    return;
-  }
-  grid.innerHTML = f.map(c => {
-    const idx = C.indexOf(c);
-    const flag = COUNTRY_FLAG[c.country] || '';
-    const country = COUNTRY_NAME[c.country] || c.country;
-    const typeBadge = c.cat === 'bl' ? 'BL' : (c.cat === 'gl' ? 'GL' : 'TRAD');
-    const typeClass = c.cat === 'bl' ? 'bl' : 'gl';
-    const statusClass = c.status === 'airing' ? 'status-airing' : (c.status === 'soon' ? 'status-soon' : 'status-released');
-    const statusText = STATUS_RU[c.status] || c.status;
-    const epsLabel = c.status === 'airing' ? `${c.eps} эп. (вых.)` : `${c.eps} эп.`;
-    const genresHtml = (c.genres||[]).slice(0,3).map(g => `<span class="genre">${g}</span>`).join('');
-    const premiumBadge = c.premium ? `<div class="premium-badge">★ Premium</div>` : '';
-    const posterHtml = c.image
-      ? `<img src="${c.image}" alt="${c.t}" loading="lazy" onerror="this.style.display='none';this.parentNode.querySelector('.emoji').style.display='block'"><div class="emoji" style="display:none">${c.e}</div>`
-      : `<div class="emoji">${c.e}</div>`;
-    const ratingHtml = c.rating ? `<span class="rating-num">★ ${c.rating}</span><span style="color:var(--muted)">${c.votes} оценок</span>` : '';
-    return `
-  <a class="card ${typeClass}" href="title.html?id=${idx}">
-    <div class="thumb">${posterHtml}<span class="type-badge">${typeBadge}</span>${premiumBadge}</div>
-    <div class="info">
-      <div class="title">${c.t}</div>
-      <div class="orig-title">${c.orig}</div>
-      <div class="meta">
-        <span>${flag} ${country}</span>
-        <span class="sep">·</span>
-        <span>${c.y}</span>
-        <span class="sep">·</span>
-        <span class="eps">${epsLabel}</span>
-      </div>
-      <div class="status ${statusClass}">${statusText}</div>
-      ${ratingHtml ? `<div class="rating-row">${ratingHtml}</div>` : ''}
-      <div class="genres">${genresHtml}</div>
-      <div class="open-hint">▶ Открыть тайтл →</div>
+<section class="catalog reveal" id="catalog">
+  <div class="cat-hd"><h2>Весь каталог</h2></div>
+  <div class="filters">
+    <div class="tabs" id="typeTabs">
+      <button data-t="ALL" class="on">Все</button><button data-t="BL">BL 🔵</button><button data-t="GL">GL 🌸</button>
     </div>
-  </a>`;
-  }).join('');
+    <input class="inp" id="q" placeholder="Название (рус / ориг)…">
+    <select class="sel" id="fGenre"><option value="">Жанр: любой</option></select>
+    <select class="sel" id="fYear"><option value="">Год: любой</option></select>
+    <select class="sel" id="fSort">
+      <option value="rating">Сначала топ-рейтинг</option>
+      <option value="year">Сначала новее</option>
+      <option value="title">По алфавиту</option>
+      <option value="eps">Больше серий</option>
+    </select>
+    <span class="res-count" id="resCount"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="pager" id="pager"></div>
+</section>
+
+<footer>
+  <b>ЛАКОРНИЯ</b> — личный кинотеатр. Без регистрации · Без рекламы · Только для себя.
+  <span style="margin-left:auto">Ctrl+K — палитра · Shift+N — след. серия · 🎲 — случайное</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script id="data" type="application/json">{"builtAt":"2026-10-20","s":[{"id":33,"slug":"the-loyal-pin","t":"Верная булавка","o":"The Loyal Pin","y":2024,"ty":"GL","g":["Исторический","Романтика","Драма"],"r":8.9,"st":"completed","et":16,"ea":16,"d":"Таиланд 1950-х: принцесса Анилапхат, образованная и независимая, встречает юную леди Пин, которая поступает под её опеку. Годы переписки, балов и придворных интриг превращают дружбу в любовь, которой предстоит выстоять против долга и короны. Роскошный исторический GL с постановкой уровня большого кино и самой преданной аудиторией.","p":"https://static.tvmaze.com/uploads/images/original_untouched/532/1330525.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=SYMIf2M84DI","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=Ysw8NXL8wFU","a":true},{"n":3,"u":"https://www.dailymotion.com/video/xbpdcdu","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=8LGrNai-pmg","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=Wx9L_hr5ZCg","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=GgeGQOP10RQ","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=HNMuDncZbyc","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=RXryvI3u53M","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=U-EUc4S8Og0","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=xc1UIocdwtw","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=SZ6Y8RXjFVU","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=s7PvYlIOD-Q","a":true},{"n":13,"u":"https://www.youtube.com/watch?v=EhNKs0xekYU","a":true},{"n":14,"u":"https://www.youtube.com/watch?v=tVc1LRICODo","a":true},{"n":15,"u":null,"a":false},{"n":16,"u":"https://www.youtube.com/watch?v=ZLPpe09Yjgg","a":true}]},{"id":1,"slug":"kinnporsche","t":"КиннПорше","o":"KinnPorsche","y":2022,"ty":"BL","g":["Экшн","Криминал","Романтика","Драма"],"r":8.9,"st":"completed","et":14,"ea":14,"d":"Кинн — второй наследник крупнейшей мафиозной семьи Бангкока, а Порше — студент, который подрабатывает в клубе и заботится о младшем брате. После случайной стычки Кинн предлагает Порше стать его телохранителем, и тот, спасая семейный бюджет, соглашается. Пули, предательства и семейные тайны оказываются не единственной угрозой: между боссом и охранником вспыхивает то, что оба отрицают дольше всего.","p":"https://static.tvmaze.com/uploads/images/original_untouched/402/1006163.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=trH8GQdNZ3Y","a":true},{"n":2,"u":null,"a":false},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":"https://www.dailymotion.com/video/x8lewkl","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=m6_H8SIlDLc","a":true},{"n":10,"u":null,"a":false},{"n":11,"u":null,"a":false},{"n":12,"u":null,"a":false},{"n":13,"u":null,"a":false},{"n":14,"u":null,"a":false}]},{"id":4,"slug":"bad-buddy","t":"Плохой сосед","o":"Bad Buddy","y":2021,"ty":"BL","g":["Романтика","Комедия","Университет"],"r":8.9,"st":"completed","et":12,"ea":12,"d":"Пран и Пат — наследники двух враждующих семей и соперники с первого курса: инженеры против архитекторов, сосед против соседа. Их соперничество постепенно превращается в дружбу, а дружба — в нечто гораздо более опасное для обоих семейств. Классика GMMTV, которая переосмысляет все штампы жанра и превращает вражду в самую искреннюю историю любви года.","p":"https://static.tvmaze.com/uploads/images/original_untouched/612/1531857.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x856nzn","a":true},{"n":2,"u":"https://rutube.ru/play/embed/178e02e8e075b795d3dee34e58ad866f","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x9ke9kw","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=UPF_YwoHJ6o","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=uFEmU3ORlLg","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=HRjYPxTHuQM","a":true},{"n":7,"u":"https://www.dailymotion.com/video/x9ldz4u","a":true},{"n":8,"u":"https://www.dailymotion.com/video/x9m3imm","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=c8j7vYp7l5I","a":true},{"n":10,"u":"https://www.dailymotion.com/video/x9mx158","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=Vz-YITLZvJw","a":true},{"n":12,"u":null,"a":false}]},{"id":23,"slug":"the-eighth-sense","t":"Восьмое чувство","o":"The Eighth Sense","y":2023,"ty":"BL","g":["Романтика","Драма","Университет"],"r":8.8,"st":"completed","et":10,"ea":10,"d":"Джи Хён — новенький из провинции, который пытается найти себя в большом Сеуле, и Джи У — старшекурсник-серфер с беззаботной улыбкой и тяжёлым прошлым. Между ними возникает то восьмое чувство, которое не описать словами, но невозможно не заметить. Кинематографичный, честный и очень человечный сериал о горе, принятии себя и любви.","p":"https://static.tvmaze.com/uploads/images/original_untouched/456/1141344.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=ERpmMlQA2Ys","a":true},{"n":2,"u":"https://rutube.ru/play/embed/71884cc5f799200556ff1b23becd4746","a":true},{"n":3,"u":"https://rutube.ru/play/embed/dec782f31db1303ede1c5f622b49a882","a":true},{"n":4,"u":"https://rutube.ru/play/embed/3a3b003d968eeb3cd4d501661147b55c","a":true},{"n":5,"u":"https://rutube.ru/play/embed/454a204634083694261b5d4ce23c64b1","a":true},{"n":6,"u":"https://rutube.ru/play/embed/325768ee95791b060ab8dc8358be7185","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=fNkLe4pLrCc","a":true},{"n":8,"u":"https://rutube.ru/play/embed/8246297ee7d596f9ca252f091d730f03","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=SOw8GeK-Cco","a":true},{"n":10,"u":null,"a":false}]},{"id":20,"slug":"khemjira","t":"Кхемджира должна выжить","o":"Khemjira","y":2025,"ty":"BL","g":["Хоррор","Мистика","Романтика","Драма"],"r":8.8,"st":"completed","et":12,"ea":12,"d":"Кхемджира рождается мальчиком в семье, где все дочери умирают до двадцати лет от проклятия духа-преследовательницы. Чтобы выжить, он изучает защитные амулеты и попадает под опеку шамана Пхарана — единственного, кто верит в его судьбу. Главный мистический хит 2025 года: духи, обряды, рисовые поля севера Таиланда и любовь, которая борется с самой смертью.","p":"https://static.tvmaze.com/uploads/images/original_untouched/581/1454779.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=DF6P9whA3Gc","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=s2-86sqgkfs","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=iw5rIBGAdXg","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=ZJ5uLz9pTI4","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=Ijwq428Btxs","a":true},{"n":6,"u":"https://www.dailymotion.com/video/xbpgoei","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=5CyznxiDggk","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=oMcBjdpkn7I","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=Z9L0AAQ0bJw","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=OvvhVeMxH-U","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=fbrOd1bdn3o","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=AYJqX6J4Osw","a":true}]},{"id":5,"slug":"not-me","t":"Не я","o":"Not Me","y":2021,"ty":"BL","g":["Детектив","Драма","Романтика","Криминал"],"r":8.8,"st":"completed","et":14,"ea":14,"d":"Близнец Шон попадает в тюрьму, и его брат Уайт берёт его личность, чтобы найти тех, кто его подставил. Он вливается в банду идеалистов-мотоциклистов, воюющих с коррупцией, — и оказывается в плену у Яка, их харизматичного лидера. Крутое сочетание социальной драмы, триллера и романтики, где каждый выстрел имеет политический вес.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/952b24e486c1.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=NUdqBcy8z00","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=4qeJMLMyDjM","a":true},{"n":3,"u":"https://rutube.ru/play/embed/12a22ff29f78a60751520e7ff31e6977","a":true},{"n":4,"u":"https://rutube.ru/play/embed/a0693a70f1acdde5498c7cb2ac37797a","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=B51kFtghzfs","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=9E-kBdRak90","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=5wWH1kVctmU","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=Kp14yPHSeXo","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=Qk6yEbCa5EM","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=0rqB17calT0","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=qX6WdiT5RVc","a":true},{"n":12,"u":null,"a":false},{"n":13,"u":"https://www.youtube.com/watch?v=Egx17fX73mc","a":true},{"n":14,"u":"https://www.dailymotion.com/video/x898egq","a":true}]},{"id":13,"slug":"last-twilight","t":"Последние сумерки","o":"Last Twilight","y":2023,"ty":"BL","g":["Романтика","Драма","Медицинский"],"r":8.7,"st":"completed","et":12,"ea":12,"d":"Мхок — студент-медик, потерявший из-за травмы карьеру спортсмена, устраивается помощником Дея — молодого фотографа, который после аварии теряет зрение. Вместе они учатся видеть мир заново: по звукам, запахам и свету последних сумерек. Один из самых щемящих лакорнов GMMTV о любви, которой не нужны глаза.","p":"https://static.tvmaze.com/uploads/images/original_untouched/484/1211106.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x8pjohm","a":true},{"n":2,"u":"https://rutube.ru/play/embed/751d098c053ef5ba410184baa45c816c","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=H4rDx_cPh54","a":true},{"n":4,"u":"https://rutube.ru/play/embed/37405f71efaf14afeaad4c6fbe8e7e3a","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=20egEqxTrvQ","a":true},{"n":6,"u":"https://rutube.ru/play/embed/3ce0a6bd8382339517d5f86317f5fc6d","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=jd9_bcsWd3g","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=kDQ9zGohVdw","a":true},{"n":9,"u":"https://www.dailymotion.com/video/x8r82qs","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=kZraSHcUqbg","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=tzMDCug-Y9Y","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=ukC1Ze005jw","a":true}]},{"id":11,"slug":"my-school-president","t":"Мой президент школы","o":"My School President","y":2022,"ty":"BL","g":["Романтика","Комедия","Школа","Музыка"],"r":8.6,"st":"completed","et":12,"ea":12,"d":"Гинн — президент школьного совета, который правит порядком твёрдой рукой, и именно ему приходит идея запретить музыкальному клубу репетировать. Тото — лидер группы, которая должна выступить на конкурсе, готов на всё, лишь бы вернуть репетиционную комнату. Юношеский, громкий и невероятно милый лакорн о первой любви под гитару.","p":"https://static.tvmaze.com/uploads/images/original_untouched/431/1078963.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/xbp7kmm","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=F3iK6yjcnOY","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=585OkEL9GrE","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=stijEgBVxjk","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=GR6QTuQEbVM","a":true},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false},{"n":9,"u":"https://www.youtube.com/watch?v=DjUd9I8P1Rc","a":true},{"n":10,"u":null,"a":false},{"n":11,"u":"https://www.dailymotion.com/video/x8fys0g","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=K3edVJuKKVs","a":true}]},{"id":29,"slug":"unknown-taiwan","t":"Неизвестный","o":"Unknown","y":2024,"ty":"BL","g":["Романтика","Драма","Семейный"],"r":8.6,"st":"completed","et":12,"ea":12,"d":"Вэй Цяньпинь воспитывал младшего брата друга как родного, и вот тот вырос — и смотрит на него совсем не по-братски. Сексен возвращается из-за границы с твёрдым намерением добиться сердца человека, который его вырастил. Смелая, эмоционально глубокая и красивая драма о границах семьи и силе выбора.","p":"https://static.tvmaze.com/uploads/images/original_untouched/501/1254481.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/5e921ec0aa6da5d6c4f2048e9b8b1901","a":true},{"n":2,"u":"https://rutube.ru/play/embed/39ebeacde5365ce80e2db837d3156d34","a":true},{"n":3,"u":"https://rutube.ru/play/embed/1ba55d6816c9cb21378c8734ea090d86","a":true},{"n":4,"u":"https://rutube.ru/play/embed/fcfad1242188f1c244e438a7da32ae3a","a":true},{"n":5,"u":"https://rutube.ru/play/embed/49deaa7ee9377c5ad94daf098e95e6c0","a":true},{"n":6,"u":"https://rutube.ru/play/embed/c2e48037615b0e71317e69ad3dfb862a","a":true},{"n":7,"u":"https://rutube.ru/play/embed/600e25837aad9b56299a993316d624fc","a":true},{"n":8,"u":"https://rutube.ru/play/embed/654ddaa785694adc3fd1fa4a92e571d0","a":true},{"n":9,"u":"https://rutube.ru/play/embed/0619a3155d5acc99f46d95e60c5a6078","a":true},{"n":10,"u":"https://rutube.ru/play/embed/6a98d6cb8d045cf0b9678e77162b185b","a":true},{"n":11,"u":"https://rutube.ru/play/embed/1af308ceaf2ab2c565ff64e65484592c","a":true},{"n":12,"u":"https://rutube.ru/play/embed/4c05cb0a304143d177d5686ae63bd402","a":true}]},{"id":22,"slug":"semantic-error","t":"Семантическая ошибка","o":"Semantic Error","y":2022,"ty":"BL","g":["Романтика","Комедия","Университет"],"r":8.6,"st":"completed","et":8,"ea":8,"d":"Чху Санволь — педантичный студент-программист, для которого мир делится на правильное и ошибочное. Чжан Чжанён — хаотичный старшекурсник из дизайна, из-за которого Санволь вылетел из программы обмена. Месть превращается в соавторство над мобильной игрой, а соавторство — в первую корейскую BL-классику нового поколения.","p":"https://static.tvmaze.com/uploads/images/original_untouched/390/976737.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/d8ff90a889ffcb52d458141d4f2c5611","a":true},{"n":2,"u":"https://rutube.ru/play/embed/12e08af731c37f388201ed65d621a496","a":true},{"n":3,"u":"https://rutube.ru/play/embed/8323dc6a4e3db3289709427323ad5856","a":true},{"n":4,"u":"https://rutube.ru/play/embed/04e2f5ccc8cc72a5d6ac9867af29395c","a":true},{"n":5,"u":"https://rutube.ru/play/embed/c1559fd4b4ebea0e83af6c5e61a924e1","a":true},{"n":6,"u":"https://rutube.ru/play/embed/26b5717790a2985d6b4c3250b0958bbc","a":true},{"n":7,"u":"https://rutube.ru/play/embed/642d1c0a094671f39e3e83ce309d6786","a":true},{"n":8,"u":"https://rutube.ru/play/embed/cb51d8c872faa9d38ede565dcc9dc72f","a":true}]},{"id":6,"slug":"a-tale-of-thousand-stars","t":"Сказание тысячи звёзд","o":"A Tale of Thousand Stars","y":2021,"ty":"BL","g":["Романтика","Драма"],"r":8.6,"st":"completed","et":10,"ea":10,"d":"После операции на сердце Тиан получает сердце донора — учителя Торфонга, погибшего в горной деревне. Чтобы исполнить несбывшиеся мечты дарителя, избалованный наследник едет работать учителем в глухую деревню, где встречает главного лесничего Пхупху. История о долге, памяти и любви, которая растёт медленно, как рассвет над горами.","p":"https://static.tvmaze.com/uploads/images/original_untouched/563/1409543.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=QoYszPzbWKs","a":true},{"n":2,"u":null,"a":false},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false},{"n":9,"u":null,"a":false},{"n":10,"u":null,"a":false}]},{"id":31,"slug":"word-of-honor","t":"Слово чести","o":"Word of Honor","y":2021,"ty":"BL","g":["Уся","Фэнтези","Романтика","Экшн","Исторический"],"r":8.6,"st":"completed","et":36,"ea":36,"d":"Чжоу Цзышу — бывший глава легендарного окна Лю Хэ, который сбежал от власти, чтобы умереть свободным, и Вэнь Кэсин — загадочный странник, который идёт за ним по пятам с улыбкой и ножом. По цзянху прокатывается волна убийств, и два мастера оказываются в центре большой охоты за реликвией. Эпическое уся-путешествие, ставшее мировым феноменом.","p":"https://static.tvmaze.com/uploads/images/original_untouched/570/1427412.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=1Vf7l1_M8Tw","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=5dp0i3SdaM0","a":true},{"n":3,"u":"https://rutube.ru/play/embed/bd48adcc498694f99b2e6acef5aea797","a":true},{"n":4,"u":"https://rutube.ru/play/embed/2a3d55d36e0c06238d23f9ad23cb454d","a":true},{"n":5,"u":"https://rutube.ru/play/embed/cda9cf860428ec597f845dd34953975c","a":true},{"n":6,"u":"https://www.dailymotion.com/video/x89fbnt","a":true},{"n":7,"u":"https://www.dailymotion.com/video/x8y40be","a":true},{"n":8,"u":null,"a":false},{"n":9,"u":"https://rutube.ru/play/embed/ae4dee8ebf9b19fe602008a71c4586b7","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=yxF4QWVXlGo","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=d41JJEuk3nM","a":true},{"n":12,"u":"https://www.dailymotion.com/video/x8c5a5r","a":true},{"n":13,"u":"https://www.youtube.com/watch?v=oisDuViOfbE","a":true},{"n":14,"u":"https://rutube.ru/play/embed/9367c662d11cce3e142559695b51ca61","a":true},{"n":15,"u":null,"a":false},{"n":16,"u":"https://rutube.ru/play/embed/b7c3c3cb64612e60ccf416481110d673","a":true},{"n":17,"u":"https://www.youtube.com/watch?v=VpWhQCXBbGs","a":true},{"n":18,"u":null,"a":false},{"n":19,"u":null,"a":false},{"n":20,"u":"https://www.youtube.com/watch?v=lVyodj7uxGk","a":true},{"n":21,"u":"https://www.youtube.com/watch?v=Lb2Zf60luNg","a":true},{"n":22,"u":"https://www.youtube.com/watch?v=HnRZ1xeCLZQ","a":true},{"n":23,"u":null,"a":false},{"n":24,"u":"https://www.dailymotion.com/video/x9shcoy","a":true},{"n":25,"u":"https://www.youtube.com/watch?v=vjnQn3RMnfo","a":true},{"n":26,"u":"https://www.youtube.com/watch?v=0zNrCicc1aw","a":true},{"n":27,"u":null,"a":false},{"n":28,"u":null,"a":false},{"n":29,"u":"https://www.youtube.com/watch?v=xpz2IDF0Nso","a":true},{"n":30,"u":null,"a":false},{"n":31,"u":"https://www.youtube.com/watch?v=Go3hRxIFYpw","a":true},{"n":32,"u":null,"a":false},{"n":33,"u":null,"a":false},{"n":34,"u":"https://www.youtube.com/watch?v=k9zRSFzOfTc","a":true},{"n":35,"u":"https://www.youtube.com/watch?v=MViJdgUugfU","a":true},{"n":36,"u":"https://www.youtube.com/watch?v=QMKEv520x1M","a":true}]},{"id":26,"slug":"old-fashioned-cupcake","t":"Старомодный капкейк","o":"Old Fashion Cupcake","y":2022,"ty":"BL","g":["Романтика","Драма","Офис","Кулинария"],"r":8.6,"st":"completed","et":6,"ea":6,"d":"Ноэдзу — 39-летний офисный работник, чья жизнь сводится к работе и сну, а Тогава — его младший коллега с горящими глазами и буклетами вкусных мест Токио. Ради «дегустаций после работы» Ноэдзу нарушает собственные правила, и с каждым десертом рушится ещё один барьер. Короткий, нежный и очень взрослый сериал о том, что жизнь начинается в любом возрасте.","p":"https://static.tvmaze.com/uploads/images/original_untouched/409/1024779.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=E_tWJw2Gr9Q","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=vWopJJ3xnZw","a":true},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false}]},{"id":28,"slug":"history3-modc","t":"HIStory3: Сделай наши дни значимыми","o":"HIStory3: Make Our Days Count","y":2019,"ty":"BL","g":["Романтика","Драма","Школа"],"r":8.5,"st":"completed","et":20,"ea":20,"d":"Хао Тин — староста класса и всеобщий любимчик, Ю Си Гу — одиночка из приюта, который живёт на подработках. Их вынужденное соседство перерастает в первую любовь, ради которой оба готовы меняться. Самая известная часть антологии HIStory: светлая, смешная и разбивающая сердце история, которую пересматривают.","p":"https://static.tvmaze.com/uploads/images/original_untouched/216/540566.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x8r1w02","a":true},{"n":2,"u":"https://www.dailymotion.com/video/x91enwu","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x91kgn0","a":true},{"n":4,"u":"https://www.dailymotion.com/video/x91kgzg","a":true},{"n":5,"u":null,"a":false},{"n":6,"u":"https://www.dailymotion.com/video/x91klq4","a":true},{"n":7,"u":null,"a":false},{"n":8,"u":"https://www.dailymotion.com/video/x91nrfw","a":true},{"n":9,"u":null,"a":false},{"n":10,"u":"https://www.dailymotion.com/video/x91nteq","a":true},{"n":11,"u":null,"a":false},{"n":12,"u":null,"a":false},{"n":13,"u":"https://www.youtube.com/watch?v=rEEwtAu6ZG0","a":true},{"n":14,"u":null,"a":false},{"n":15,"u":null,"a":false},{"n":16,"u":null,"a":false},{"n":17,"u":null,"a":false},{"n":18,"u":"https://www.youtube.com/watch?v=74jqDg0eu3I","a":true},{"n":19,"u":"https://www.youtube.com/watch?v=gJVQjDCpsOc","a":true},{"n":20,"u":null,"a":false}]},{"id":10,"slug":"moonlight-chicken","t":"Курица при луне","o":"Moonlight Chicken","y":2023,"ty":"BL","g":["Романтика","Драма","Слайс оф лайф"],"r":8.5,"st":"completed","et":8,"ea":8,"d":"Джим держит небольшую рисовую лавку и один растит племянника, не веря больше ни в любовь, ни в чудеса. Уэн — студент, который приходит в лавку каждую ночь и никак не может понять, что для него значит владелец этих тёплых рук. Камерная история от режиссёра «Сказания тысячи звёзд» о второй попытке, одиночестве и рисе с курицей в три часа утра.","p":"https://static.tvmaze.com/uploads/images/original_untouched/442/1106880.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=B8ykkXXwWxo","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=Km3vE8lSr5M","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x8qxw7g","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=8xyozzADVs4","a":true},{"n":5,"u":"https://www.dailymotion.com/video/x8qz254","a":true},{"n":6,"u":"https://www.dailymotion.com/video/x8qz374","a":true},{"n":7,"u":"https://www.dailymotion.com/video/x8irlh2","a":true},{"n":8,"u":"https://www.dailymotion.com/video/x8r0b25","a":true}]},{"id":36,"slug":"pluto","t":"Плутон","o":"Pluto","y":2024,"ty":"GL","g":["Романтика","Драма","Триллер"],"r":8.5,"st":"completed","et":12,"ea":12,"d":"После аварии дизайнер Нан теряет зрение и узнаёт, что её невеста исчезла, оставив только записку. Найти правду ей помогает Ай — сестра-близнец невесты, которая живёт под чужим именем. Стильный нуар-роман про память, двойников и любовь, которая узнаёт человека по шагам на лестнице.","p":"https://static.tvmaze.com/uploads/images/original_untouched/538/1345434.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/f75432d8ee4eb9ea1ac7e11e270317e6","a":true},{"n":2,"u":"https://rutube.ru/play/embed/536dc6ad2e5a2ebaea6ba10475cfbf3c","a":true},{"n":3,"u":null,"a":false},{"n":4,"u":"https://rutube.ru/play/embed/5088d97510fb39b2762dfbdc7df271e8","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=aE4lLzP8FU8","a":true},{"n":6,"u":"https://rutube.ru/play/embed/ff5e919046e8938fd0a0128bdbc6238e","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=yho-u6bFmOI","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=ASGBRtv6TGI","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=VXm8zPxC67I","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=r7r6siKq5R0","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=zRlp_ZAFQZU","a":true},{"n":12,"u":"https://rutube.ru/play/embed/b49fa0b5ef1b3d4f1622de4aa73e27b3","a":true}]},{"id":17,"slug":"the-heart-killers","t":"Убийцы сердец","o":"The Heart Killers","y":2024,"ty":"BL","g":["Романтика","Экшн","Криминал","Комедия"],"r":8.5,"st":"completed","et":12,"ea":12,"d":"Кант — парень, который за деньги согласился втереться в доверие к киллеру Фаделю, чтобы раздобыть доказательства против его семьи. Проблема в том, что Фадель оказывается куда опаснее и привлекательнее, чем в досье, а его брат Бизон готов убить каждого, кто приблизится к их секретам. Стильный и дерзкий лакорн от режиссёра «Только друзей».","p":"https://static.tvmaze.com/uploads/images/original_untouched/541/1354530.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=69QX_PSQ5Hw","a":true},{"n":2,"u":"https://www.dailymotion.com/video/xbenmca","a":true},{"n":3,"u":"https://www.dailymotion.com/video/xbe1dpa","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=fVUpPuVqE-Y","a":true},{"n":5,"u":"https://www.dailymotion.com/video/xauz6ai","a":true},{"n":6,"u":"https://rutube.ru/play/embed/1b4051680cd8da149f26e1757c483442","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=lqJzfuu8Gb4","a":true},{"n":8,"u":"https://www.dailymotion.com/video/x9ustem","a":true},{"n":9,"u":"https://www.dailymotion.com/video/x9usuf6","a":true},{"n":10,"u":"https://www.dailymotion.com/video/x9usvhu","a":true},{"n":11,"u":"https://www.dailymotion.com/video/x9v2ih2","a":true},{"n":12,"u":"https://www.dailymotion.com/video/x9v61xu","a":true}]},{"id":25,"slug":"cherry-magic-jp","t":"Волшебство Чэрри","o":"Cherry Magic! Thirty Years of Virginity Can Make You a Wizard!?","y":2020,"ty":"BL","g":["Романтика","Комедия","Фэнтези","Офис"],"r":8.4,"st":"completed","et":12,"ea":12,"d":"Адати — офисный работник, который в тридцать лет обретает способность читать мысли людей, к которым прикасается. Случайное касание идеального коллеги Куроды открывает шокирующую правду: тот годами влюблён в невзрачного соседа по отделу. Трогательная комедия о том, что видеть чужие чувства — страшно только до тех пор, пока не поймёшь, что и твои взаимны.","p":"https://static.tvmaze.com/uploads/images/original_untouched/491/1227665.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=9TcVeh3UNJo","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=yudeA8G0mfo","a":true},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false},{"n":9,"u":null,"a":false},{"n":10,"u":null,"a":false},{"n":11,"u":null,"a":false},{"n":12,"u":null,"a":false}]},{"id":7,"slug":"love-in-the-air","t":"Любовь в воздухе","o":"Love in the Air","y":2022,"ty":"BL","g":["Романтика","Комедия","Драма"],"r":8.4,"st":"completed","et":13,"ea":13,"d":"Две пары, два совершенно разных пути к любви. Гонщик Прай-Ап влюбляется в скромного Рейна, который сел на его мотоцикл по ошибке, а Пэй и Скай заключают договор, где дружба с пользой должна остаться без чувств. Гоночные треки, ревность и страсть — всё, за что любят жанр, собранное в одном лакорне.","p":"https://static.tvmaze.com/uploads/images/original_untouched/418/1047059.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/a294bf6e696ab4ff6e5c870a580ff759","a":true},{"n":2,"u":"https://rutube.ru/play/embed/a33eb06f43488d26dc14a5d768193dee","a":true},{"n":3,"u":"https://rutube.ru/play/embed/1dc8acc7be6ec3456efaee765d160e28","a":true},{"n":4,"u":"https://rutube.ru/play/embed/515728cd50afdabf720172ac1efc5622","a":true},{"n":5,"u":"https://www.dailymotion.com/video/x8kr6mk","a":true},{"n":6,"u":"https://rutube.ru/play/embed/76175ddd1d2bceac57c07d919c72c844","a":true},{"n":7,"u":"https://rutube.ru/play/embed/b5be8bbf2934116b5c6054f1486af818","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=XQOve2tmxHE","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=g05deBtiCmI","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=-4XyTOlgRMY","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=8mSvGn755xM","a":true},{"n":12,"u":"https://rutube.ru/play/embed/307dc9687edf6cf29727a8743d9831d6","a":true},{"n":13,"u":"https://www.youtube.com/watch?v=o_Ha_mZ9m9g","a":true}]},{"id":35,"slug":"the-secret-of-us","t":"Наш секрет","o":"The Secret of Us","y":2024,"ty":"GL","g":["Романтика","Драма","Медицинский"],"r":8.4,"st":"completed","et":8,"ea":8,"d":"Доктор Линга возвращается из-за границы в больницу, где работает её давняя подруга Орн — единственный человек, который знал её секрет. Годы разлуки, общие пациенты и ночные дежурства возвращают всё, что они пытались забыть. Медицинская GL-драма с химией главной пары, от которой замирает сердце.","p":"https://static.tvmaze.com/uploads/images/original_untouched/526/1315549.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/da20c8863a16f8eeca09d40611247d7a","a":true},{"n":2,"u":"https://rutube.ru/play/embed/f07c72a67f0f05e1b1c9b03b8d47c996","a":true},{"n":3,"u":"https://rutube.ru/play/embed/4e8d59531df61d9e49df7f4f1b4c7762","a":true},{"n":4,"u":"https://rutube.ru/play/embed/5d6799d614be843d20476de58a733f55","a":true},{"n":5,"u":"https://rutube.ru/play/embed/dc6dd3025e79011b137a0e8e74090305","a":true},{"n":6,"u":"https://rutube.ru/play/embed/3a449884ddc8b8c50f826adda1a862bf","a":true},{"n":7,"u":"https://www.dailymotion.com/video/x9ly51i","a":true},{"n":8,"u":"https://www.dailymotion.com/video/x9mg70k","a":true}]},{"id":24,"slug":"our-dating-sim","t":"Наш симулятор свиданий","o":"Our Dating Sim","y":2023,"ty":"BL","g":["Романтика","Комедия","Офис"],"r":8.4,"st":"completed","et":8,"ea":8,"d":"Семь лет назад Ли Ван признался лучшему другу и исчез из его жизни. Теперь работодатель сталкивает бывших друзей в одной команде: им нужно вместе разработать мобильную игру про симулятор свиданий. Каждый эпизод — шаг назад в прошлое и вперёд к признанию. Уютная короткая корейская история с мягкой ретро-палитрой.","p":"https://static.tvmaze.com/uploads/images/original_untouched/450/1125775.jpg","eps":[{"n":1,"u":null,"a":false},{"n":2,"u":null,"a":false},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false}]},{"id":21,"slug":"me-and-thee","t":"Я и Ты","o":"Me and Thee","y":2025,"ty":"BL","g":["Романтика","Комедия","Драма"],"r":8.4,"st":"completed","et":10,"ea":10,"d":"Пипх — безупречный наследник семейного бизнеса, чья жизнь расписана по минутам, а Тхи — харизматичный фотограф, живущий одним моментом. Их встреча на съёмке превращается в игру, где оба впервые позволяют себе быть настоящими. Одна из самых обсуждаемых новинок GMMTV 2025 года.","p":"https://static.tvmaze.com/uploads/images/original_untouched/595/1489375.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=87ZIk_zLP34","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=1WPqgJMTxLM","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=yINnJjHfT8s","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=PHHmNEa6d58","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=RIoJFp63TdE","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=lv5rGzWDZQg","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=fz-h_uI9H28","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=Q_irgDD6UMc","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=-nAK-_vOvnY","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=r-2QWp17ad0","a":true}]},{"id":34,"slug":"23-5","t":"23.5 градуса","o":"23.5","y":2024,"ty":"GL","g":["Романтика","Школа","Драма"],"r":8.3,"st":"completed","et":12,"ea":12,"d":"Уэн — самая яркая девушка школы: шумная, весёлая и влюблённая в звезду по имени Окфён. Окфён же привыкла быть правильной дочерью строгой матери — пока школьный клуб астрономии не становится местом, где можно дышать. История о наклоне земной оси в 23.5 градуса и о том, как наклоняется к человеку сердце.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a277cf17734e.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/086df7e606b2ad6ac7cfa04adcbfb2ba","a":true},{"n":2,"u":"https://rutube.ru/play/embed/89ec6f849c7beb02c03ea68501bd6d34","a":true},{"n":3,"u":"https://rutube.ru/play/embed/0ab5405540f6f07477641ebaede2eee9","a":true},{"n":4,"u":"https://rutube.ru/play/embed/a68582d656cf58196fe7b47f738440b4","a":true},{"n":5,"u":"https://rutube.ru/play/embed/0c27251f00899defb66a28c08e9d759a","a":true},{"n":6,"u":"https://rutube.ru/play/embed/dcb993cba416cacbf7aace33837152c0","a":true},{"n":7,"u":"https://rutube.ru/play/embed/d1ff61b2eb10501bc779606f86a3e832","a":true},{"n":8,"u":"https://rutube.ru/play/embed/8feb5d577a0fd047730aa2abc9828ede","a":true},{"n":9,"u":"https://rutube.ru/play/embed/e9c6d2247c2c694eaacb48edaf9664f3","a":true},{"n":10,"u":"https://rutube.ru/play/embed/0dac7653d0c9c11f03f5c1db337091f4","a":true},{"n":11,"u":"https://rutube.ru/play/embed/0515b8f50c214c3f37d6b653585f8b16","a":true},{"n":12,"u":null,"a":false}]},{"id":2,"slug":"2gether-the-series","t":"Вместе","o":"2gether: The Series","y":2020,"ty":"BL","g":["Романтика","Комедия","Университет"],"r":8.3,"st":"completed","et":12,"ea":12,"d":"Тайн — популярный первокурсник и звезда музыкального клуба, а Тин — новенький, к которому вся женская половина кампуса липнет без остановки. Чтобы отвадить навязчивых поклонников, парни заключают фиктивный договор: изображают пару. Но чем дольше длится спектакль, тем труднее понять, где заканчивается игра и начинаются настоящие чувства.","p":"https://static.tvmaze.com/uploads/images/original_untouched/266/666645.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=U18l7e3OONo","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=_6WEWRrd7dI","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=vDgtnUJ50dc","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=JcW0lwWKa0U","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=INqIzvQCusQ","a":true},{"n":6,"u":"https://rutube.ru/play/embed/a40b3c868cdea720f5c0eac9d08e316f","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=49jNWJJQM_o","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=p8pefCGMKqg","a":true},{"n":9,"u":"https://rutube.ru/play/embed/e45e06d89efd6c1a98afb05bf04520c3","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=clt5SAocFAA","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=TXyWqbEv_54","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=IBWHEqNDSEw","a":true}]},{"id":8,"slug":"the-eclipse","t":"Затмение","o":"The Eclipse","y":2022,"ty":"BL","g":["Романтика","Драма","Мистика"],"r":8.3,"st":"completed","et":12,"ea":12,"d":"Школьная легенда гласит: того, кто влюбится в ученика школы Свансан, проклянет луна и убьёт. Новый глава студсовета Аккк держится правил, пока бунтарь Айян не решает доказать, что проклятия не существует. Готическая атмосфера, вечереющее море и первая любовь, которая бросает вызов суевериям целого городка.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0cd229addeca.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/041623ff4780ffcff2da17628ab3ae75","a":true},{"n":2,"u":"https://rutube.ru/play/embed/620e966599693bf18dcee0f7cce2fca9","a":true},{"n":3,"u":"https://rutube.ru/play/embed/9bb59f61e03f7eca4a63cebfa3e80178","a":true},{"n":4,"u":"https://rutube.ru/play/embed/ea3ea8b085efd11db782a522bc74b2f1","a":true},{"n":5,"u":"https://rutube.ru/play/embed/33736e5cc46e2a2e4e498295ccd02b80","a":true},{"n":6,"u":"https://rutube.ru/play/embed/73e7156a64e3f7a7d308a12b0e0f1935","a":true},{"n":7,"u":"https://rutube.ru/play/embed/02a41b2bfb29333cbb3a46f5e34a471d","a":true},{"n":8,"u":"https://rutube.ru/play/embed/f8659636d1c223e291386843e87d11b1","a":true},{"n":9,"u":"https://rutube.ru/play/embed/6f31d4d8345483cf5f201176135555c8","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=7XxByHSQLSQ","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=9Z6MkcWGUXU","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=EJ0YhF0yspQ","a":true}]},{"id":15,"slug":"the-sign","t":"Знак","o":"The Sign","y":2023,"ty":"BL","g":["Мистика","Романтика","Детектив","Реинкарнация"],"r":8.3,"st":"completed","et":12,"ea":12,"d":"Полицейский Тхарн видит вещие сны о человеке, которого никогда не встречал, а его напарник Син возвращается из-за границы, скрывая гораздо больше, чем служебные тайны. Каждое убийство выводит их на след прошлой жизни, где они уже были вместе. Атмосферный мистический детектив с богатой мифологией и красивейшей операторской работой.","p":"https://static.tvmaze.com/uploads/images/original_untouched/481/1204842.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/f26807ca2e2a9f5d80102e1983b9edf6","a":true},{"n":2,"u":"https://www.dailymotion.com/video/x8vbpzs","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x8vbpzw","a":true},{"n":4,"u":"https://www.dailymotion.com/video/x8rm91d","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=FaCjR6Wq43A","a":true},{"n":6,"u":"https://www.dailymotion.com/video/x9qf1m","a":true},{"n":7,"u":"https://www.dailymotion.com/video/x8vdxvm","a":true},{"n":8,"u":"https://rutube.ru/play/embed/cafbc912f4022ca2f7d31962b4710e7b","a":true},{"n":9,"u":"https://www.dailymotion.com/video/x8vhe5o","a":true},{"n":10,"u":"https://www.dailymotion.com/video/x8usnja","a":true},{"n":11,"u":"https://www.dailymotion.com/video/x8vhe5m","a":true},{"n":12,"u":null,"a":false}]},{"id":38,"slug":"clairebell","t":"Клэр и Белл","o":"Clairebell","y":2025,"ty":"GL","g":["Драма","Криминал","Романтика"],"r":8.3,"st":"completed","et":12,"ea":12,"d":"Клэр попадает в женскую тюрьму по сфабрикованному обвинению и мгновенно становится мишенью. Белл — авторитетная заключённая, которая по своим причинам решает её защитить. Жёсткая, стильная тюремная драма 2025 года, где нежность выживает в самом беспощадном месте.","p":"https://static.tvmaze.com/uploads/images/original_untouched/575/1437803.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=8w-CibnL5ik","a":true},{"n":2,"u":"https://rutube.ru/play/embed/b2af42873e148715e409e5fb47b6bd58","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=reF1CfxQqnw","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=6tyWR-28LbY","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=mJOj7XjPrBA","a":true},{"n":6,"u":"https://www.dailymotion.com/video/xb0mcym","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=WcwYE_gUNf8","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=XJMmMB-JRLA","a":true},{"n":9,"u":"https://www.dailymotion.com/video/xbpc3ny","a":true},{"n":10,"u":null,"a":false},{"n":11,"u":"https://www.youtube.com/watch?v=Zla2-qLabLQ","a":true},{"n":12,"u":null,"a":false}]},{"id":32,"slug":"gap-the-series","t":"GAP","o":"GAP The Series","y":2022,"ty":"GL","g":["Романтика","Комедия","Офис"],"r":8.2,"st":"completed","et":12,"ea":12,"d":"Мон — девушка из провинции, которая с детства восхищается принцессой-наследницей Сэм, а теперь получает работу её личной помощницей. Взрослая Сэм оказывается совсем не сказочной принцессой, но именно это делает историю настоящей. Первая большая тайская GL-серия, открывшая жанру дорогу в мейнстрим.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/deb11d96e0f1.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x9h7fjq","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=A0vapyvZFdI","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x9hvvbk","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=2y2JWaXchRc","a":true},{"n":5,"u":null,"a":false},{"n":6,"u":"https://www.youtube.com/watch?v=9fv79mJQBQY","a":true},{"n":7,"u":null,"a":false},{"n":8,"u":"https://www.youtube.com/watch?v=bPNQNaInhnk","a":true},{"n":9,"u":null,"a":false},{"n":10,"u":"https://www.youtube.com/watch?v=6UtwLYMd268","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=xf1pEOj-0p0","a":true},{"n":12,"u":null,"a":false}]},{"id":19,"slug":"cherry-magic-th","t":"Волшебство Чэрри (Таиланд)","o":"Cherry Magic! Thailand","y":2023,"ty":"BL","g":["Романтика","Комедия","Фэнтези","Офис"],"r":8.2,"st":"completed","et":12,"ea":12,"d":"Атахан всё ещё одинок в тридцать — и внезапно обретает способность читать мысли прикосновением. Первым, чьи мысли он слышит, становится идеальный коллега Рок: оказывается, тот давно и отчаянно влюблён. Тайская версия японской классики с новой химией, офисной комедией и очень тёплым финалом.","p":"https://static.tvmaze.com/uploads/images/original_untouched/489/1222972.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x9xxk32","a":true},{"n":2,"u":null,"a":false},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false},{"n":9,"u":null,"a":false},{"n":10,"u":null,"a":false},{"n":11,"u":null,"a":false},{"n":12,"u":null,"a":false}]},{"id":3,"slug":"tharntype","t":"Тарн и Тай","o":"TharnType: The Series","y":2019,"ty":"BL","g":["Романтика","Драма","Университет"],"r":8.2,"st":"completed","et":12,"ea":12,"d":"Тай — первокурсник с гомофобным прошлым и тяжёлым багажом семейных травм, Тарн — его открытый и добрый сосед по комнате, который к тому же не скрывает своей ориентации. От взаимной неприязни соседям приходится пройти долгий путь к доверию и нежности. История о том, как любовь исцеляет даже самые глубокие раны — и о том, что признать свои чувства бывает сложнее всего.","p":"https://static.tvmaze.com/uploads/images/original_untouched/279/698151.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x7mwku1","a":true},{"n":2,"u":"https://www.dailymotion.com/video/x8y8ics","a":true},{"n":3,"u":"https://www.dailymotion.com/video/x7myhwh","a":true},{"n":4,"u":"https://www.dailymotion.com/video/x8y8icq","a":true},{"n":5,"u":"https://www.dailymotion.com/video/x7nm8lc","a":true},{"n":6,"u":"https://www.dailymotion.com/video/x7nx3en","a":true},{"n":7,"u":"https://www.dailymotion.com/video/xbppsfi","a":true},{"n":8,"u":"https://www.dailymotion.com/video/x7p2wkb","a":true},{"n":9,"u":"https://www.dailymotion.com/video/xbmklni","a":true},{"n":10,"u":"https://www.dailymotion.com/video/x7p9pa0","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=jzj6oz9qoOc","a":true},{"n":12,"u":"https://www.dailymotion.com/video/xbntzle","a":true}]},{"id":12,"slug":"only-friends","t":"Только друзья","o":"Only Friends","y":2023,"ty":"BL","g":["Романтика","Драма","Университет"],"r":8.2,"st":"completed","et":12,"ea":12,"d":"Шестеро друзей-студентов живут в одном общежитии, влюбляются друг в друга, ревнуют, предают и мирятся. Сэнд влюблён в Рэя, Рэй не может отпустить бывшего, а Топ использует обаяние как оружие. Взрослая, честная и местами жёсткая история о том, как сложно дружить, когда все сплетены любовными треугольниками.","p":"https://static.tvmaze.com/uploads/images/original_untouched/471/1177522.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=B_w6au-5sK4","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=6EJqkVp1fHo","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=l2_LeGeSAYM","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=C7xfag7I8eI","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=ZVg7DYF0VCE","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=rmaLKzARKok","a":true},{"n":7,"u":"https://rutube.ru/play/embed/855e9e5054edcfed7ef2834bf604a9a9","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=M6xYoH2ZRI4","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=7AR9x9_R-Yw","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=45bOVS2Auk0","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=uqy8cVwqfts","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=j0xurEoA5Jo","a":true}]},{"id":37,"slug":"affair","t":"Интрижка","o":"Affair","y":2024,"ty":"GL","g":["Романтика","Драма","Мелодрама"],"r":8.1,"st":"completed","et":8,"ea":8,"d":"Юная Пхим влюбляется в Пхли — жену своего работодателя, и эта любовь рождается там, где ей нет места. Годы спустя встреча повторяется, но теперь обе свободны — и должны решить, стоит ли прошлому давать второй шанс. Взрослая мелодрама о запретном чувстве и цене, которую за него платят обе стороны.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2b70e5bc8d86.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/x13fgao","a":true},{"n":2,"u":"https://rutube.ru/play/embed/979508091669e1532b2be0c47b3c0c1e","a":true},{"n":3,"u":"https://rutube.ru/play/embed/7e075deddda996e25b07823ff42e032a","a":true},{"n":4,"u":"https://www.dailymotion.com/video/x9lwppi","a":true},{"n":5,"u":"https://rutube.ru/play/embed/b4db34baaed3992d575b8c9a0c65822f","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=XoqlkYfGsF0","a":true},{"n":7,"u":"https://www.dailymotion.com/video/xb9fskm","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=szlL9N4UpCU","a":true}]},{"id":27,"slug":"my-personal-weatherman","t":"Мой личный синоптик","o":"My Personal Weatherman","y":2023,"ty":"BL","g":["Романтика","Драма","Слайс оф лайф"],"r":8.1,"st":"completed","et":8,"ea":8,"d":"Мизуки — мангака BL, который живёт за счёт доходов мужа-синоптика и совершенно не умеет выражать чувства. Их брак выглядит как сделка: он рисует, Сэгава обеспечивает, но каждый день вместе делает эту «сделку» всё более настоящей. Сдержанная, интимная история про двоих, которые учатся разговаривать без слов.","p":"https://static.tvmaze.com/uploads/images/original_untouched/471/1177964.jpg","eps":[{"n":1,"u":"https://www.dailymotion.com/video/xaplfkq","a":true},{"n":2,"u":"https://www.dailymotion.com/video/xbe1yli","a":true},{"n":3,"u":null,"a":false},{"n":4,"u":null,"a":false},{"n":5,"u":null,"a":false},{"n":6,"u":null,"a":false},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false}]},{"id":16,"slug":"we-are","t":"Мы","o":"We Are","y":2024,"ty":"BL","g":["Романтика","Комедия","Университет"],"r":8.1,"st":"completed","et":16,"ea":16,"d":"Четыре пары студентов факультета инженерии живут обычной жизнью кампуса: влюбляются на занятиях, ссорятся из-за мелочей и поддерживают друг друга. Это лакорн почти без злодеев — только тёплая компания, где каждому найдётся своя история. Идеальный вариант, когда хочется просто укутаться в уют и улыбаться.","p":"https://static.tvmaze.com/uploads/images/original_untouched/509/1273755.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=-8hwU9CdDhI","a":true},{"n":2,"u":"https://rutube.ru/play/embed/61b6b772f08a90799e0af8cfa8d2c113","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=DmSJpEl8Gc0","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=OsaXQqsiGWI","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=UX41GAy_tFc","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=qoWThEzHDsk","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=ghU7J-6aTs0","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=x-35Dp_j60o","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=6GkkSj5UHfU","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=E2jekbyg-c8","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=R99Li74Sgd4","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=FNQWkjk3AwI","a":true},{"n":13,"u":null,"a":false},{"n":14,"u":"https://www.youtube.com/watch?v=XBuajPh0-Lc","a":true},{"n":15,"u":"https://www.youtube.com/watch?v=wH3kmnfYws4","a":true},{"n":16,"u":null,"a":false}]},{"id":9,"slug":"never-let-me-go","t":"Не отпускай меня","o":"Never Let Me Go","y":2022,"ty":"BL","g":["Романтика","Драма","Криминал"],"r":8.1,"st":"completed","et":12,"ea":12,"d":"Палуэн и Нуэнца — сын хозяина и приёмный сын в богатой семье, выросшие как братья, но любящие друг друга совсем не по-братски. Когда сына шефа полиции убивают, подозрение падает на Нуэнцу, и Палуэн готов противостоять всей семье ради его свободы. Роскошные декорации, детективная линия и любовь, которую пытаются разрушить статусами.","p":"https://static.tvmaze.com/uploads/images/original_untouched/432/1081138.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/b379bb2a9bd708da065368567a77a6d1","a":true},{"n":2,"u":"https://rutube.ru/play/embed/3a0de16ff74b8d648925726a6995329c","a":true},{"n":3,"u":"https://rutube.ru/play/embed/28af9c6b3f6f64e9fd0b562ac772516f","a":true},{"n":4,"u":"https://rutube.ru/play/embed/255be118847eb869f8a2f24671bb49f3","a":true},{"n":5,"u":null,"a":false},{"n":6,"u":"https://www.youtube.com/watch?v=3AGXtYnzFjc","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=CBfs59RSXT8","a":true},{"n":8,"u":null,"a":false},{"n":9,"u":"https://rutube.ru/play/embed/e3122dfebbb5bd60d00f252d36cc6f35","a":true},{"n":10,"u":null,"a":false},{"n":11,"u":"https://www.youtube.com/watch?v=hZjlgkdlSdQ","a":true},{"n":12,"u":"https://rutube.ru/play/embed/c8055ff974c3133ed8ac9398ce10cd1c","a":true}]},{"id":39,"slug":"us-the-series","t":"Us","o":"Us","y":2024,"ty":"GL","g":["Романтика","Драма","Слайс оф лайф"],"r":8,"st":"completed","et":12,"ea":12,"d":"Крейс выросла в богатстве, которое не выбирала, а Эл — в бедности, которую не заслужила. Их встреча в университетской тишине превращается в историю о том, как любовь стирает социальные расстояния. Тихая, камерная GL-драма с очень живой режиссурой.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/58ab15fdf30a.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/f768e5e651b77a24f026ac0c78cf815b","a":true},{"n":2,"u":"https://rutube.ru/play/embed/9094494c15c990413f9e8c8aa52eafc4","a":true},{"n":3,"u":"https://rutube.ru/play/embed/afd25b4837d7e234475ab25372bd18c8","a":true},{"n":4,"u":"https://rutube.ru/play/embed/86cd75b9b25beffa3b915bb6eff84031","a":true},{"n":5,"u":"https://rutube.ru/play/embed/10fdeb8929cf315bcc58819ad19523c3","a":true},{"n":6,"u":"https://rutube.ru/play/embed/64890f61ede4ee3f2b5ccfc765136c40","a":true},{"n":7,"u":"https://rutube.ru/play/embed/23c933e6c51f46f499de54bc5aac1b60","a":true},{"n":8,"u":"https://rutube.ru/play/embed/bff78835b22bcc627db86550c98b121d","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=z8e6PplD_9o","a":true},{"n":10,"u":"https://rutube.ru/play/embed/f63e3003f98c8153f67b16433858a733","a":true},{"n":11,"u":"https://rutube.ru/play/embed/04723a909bf672de06a25f163bcd83d9","a":true},{"n":12,"u":"https://rutube.ru/play/embed/cd037b378bf8de7e0ee693dcc7c54a75","a":true}]},{"id":14,"slug":"pit-babe","t":"Дитя гонок","o":"Pit Babe","y":2023,"ty":"BL","g":["Экшн","Спорт","Сверхъестественное","Романтика"],"r":8,"st":"completed","et":12,"ea":12,"d":"Бейб — юная звезда гоночного трека с даром чувствовать машины, Чарли — новичок команды, который хочет попасть в его экипаж любой ценой. За гонками скрываются эксперименты, сверхспособности и тайны, связывающие их семьи. Смесь «Форсажа» и супергеройского экшена с фирменной тайской искренностью.","p":"https://static.tvmaze.com/uploads/images/original_untouched/560/1401758.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=3d50dTT_lHk","a":true},{"n":2,"u":"https://www.youtube.com/watch?v=34KryJmmk88","a":true},{"n":3,"u":"https://www.youtube.com/watch?v=Tj51C8LcCd8","a":true},{"n":4,"u":"https://www.youtube.com/watch?v=BN1U9GrZDe8","a":true},{"n":5,"u":null,"a":false},{"n":6,"u":"https://www.youtube.com/watch?v=9Tl7uAdFPp8","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=vNWWTedE9GY","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=p4UP27WrApA","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=V1frHiCE8V0","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=qt3x8CYXaTo","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=uwuKoyy1rPM","a":true},{"n":12,"u":"https://www.youtube.com/watch?v=baJSyx4nAa8","a":true}]},{"id":30,"slug":"kiseki-dear-to-me","t":"Кисэки: Дорог мне","o":"Kiseki: Dear to Me","y":2023,"ty":"BL","g":["Романтика","Криминал","Драма"],"r":8,"st":"completed","et":13,"ea":13,"d":"Студент Фань Чи находит раненого главаря банды и прячет его у себя дома, не представляя, во что это выльется. Бандит Ань Ди запоминает доброту и возвращается — уже не как пациент, а как человек, который решил, что Фань Чи принадлежит ему. Тайваньский криминальный BL с культовым статусом и очень преданной фан-базой.","p":"https://static.tvmaze.com/uploads/images/original_untouched/477/1193475.jpg","eps":[{"n":1,"u":"https://www.youtube.com/watch?v=iX2ChE3y4W0","a":true},{"n":2,"u":null,"a":false},{"n":3,"u":null,"a":false},{"n":4,"u":"https://www.youtube.com/watch?v=Blewi-oHmGc","a":true},{"n":5,"u":"https://www.youtube.com/watch?v=mLpwv7icQg4","a":true},{"n":6,"u":"https://www.youtube.com/watch?v=DqXxPd9flqY","a":true},{"n":7,"u":"https://www.youtube.com/watch?v=6rkI9n6YmqA","a":true},{"n":8,"u":"https://www.youtube.com/watch?v=mZb4xX-o6eQ","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=qjgscVTGUv0","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=GDi5QivWnUA","a":true},{"n":11,"u":"https://www.youtube.com/watch?v=nvUQ9gZprHQ","a":true},{"n":12,"u":null,"a":false},{"n":13,"u":"https://www.youtube.com/watch?v=NSaA5GJ96CE","a":true}]},{"id":40,"slug":"petrichor","t":"Петрихор","o":"Petrichor","y":2024,"ty":"GL","g":["Детектив","Романтика","Драма"],"r":8,"st":"completed","et":10,"ea":10,"d":"Молодой следователь Тарн расследует серию убийств и вынуждена работать в паре с Рин — журналисткой, которая знает слишком много. Каждый шаг по делу приближает их друг к другу и к опасности. Атмосферный GL-детектив с запахом дождя на раскалённом асфальте.","p":"https://static.tvmaze.com/uploads/images/original_untouched/545/1362767.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/8915e1ed042a6ce4103fce8b0e86ab1b","a":true},{"n":2,"u":"https://rutube.ru/play/embed/e723fbb48dde1ee57b72dad69a111517","a":true},{"n":3,"u":"https://rutube.ru/play/embed/bfbbe9bd683e2150cdcb360120eb17e1","a":true},{"n":4,"u":"https://rutube.ru/play/embed/eca3e2e0547314f4f576d95daf7b8238","a":true},{"n":5,"u":"https://rutube.ru/play/embed/a28fd0e2a53931dd6ee85795ba345089","a":true},{"n":6,"u":"https://rutube.ru/play/embed/9ada83b021667b7531430fead51eef5f","a":true},{"n":7,"u":null,"a":false},{"n":8,"u":null,"a":false},{"n":9,"u":null,"a":false},{"n":10,"u":"https://rutube.ru/play/embed/1338d130ce98feb2a9ed635c02ed364d","a":true}]},{"id":18,"slug":"kidnap","t":"Похищение","o":"Kidnap","y":2024,"ty":"BL","g":["Экшн","Романтика","Комедия"],"r":8,"st":"completed","et":10,"ea":10,"d":"Мин — сын богатой семьи, за которым охотятся после покушения, а Сюн — телохранитель, который в детстве обещал его защищать. Через похищения, погони и укрытия в безопасных домах прорастает чувство, которое оба хранили со школьных лет. Лёгкий экшн-романтический лакорн с химией пары на первом месте.","p":"https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/fd255ed7c6e0.jpg","eps":[{"n":1,"u":"https://rutube.ru/play/embed/7b10424982df1b8f4fd353142bb66bea","a":true},{"n":2,"u":"https://rutube.ru/play/embed/f488bc834d66aa06f88847cf9cf2c533","a":true},{"n":3,"u":"https://rutube.ru/play/embed/d9309b4d28b1236d9e6860b8d33716ca","a":true},{"n":4,"u":"https://rutube.ru/play/embed/2a31e6338de27854bf29dc3562017397","a":true},{"n":5,"u":"https://rutube.ru/play/embed/c9e9faeb9154a60a27ad55a77c9cda57","a":true},{"n":6,"u":"https://rutube.ru/play/embed/4ac4e4c2fb74a36f413defebccd07e5b","a":true},{"n":7,"u":"https://rutube.ru/play/embed/c70e902b60f22e44636f0e1c5688da14","a":true},{"n":8,"u":"https://rutube.ru/play/embed/242665f294a63f1d1027a4f94daa2b1a","a":true},{"n":9,"u":"https://www.youtube.com/watch?v=I1bJ0f2pkOg","a":true},{"n":10,"u":"https://www.youtube.com/watch?v=4XiGTajw8bw","a":true}]}]}</script>
+<script>
+/* ============ ЛАКОРНИЯ · standalone engine ============ */
+'use strict';
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const S = DATA.s;                                  // series list
+const byId = Object.fromEntries(S.map(x => [x.id, x]));
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
+};
+let progress = LS.get('lakornia:progress', {});    // {sid:{ep,w:{n:1},ts}}
+let favs     = LS.get('lakornia:favorites', []);   // [sid]
+let autoplay = LS.get('lakornia:autoplay', true);
+let watchedOnly = false;
+const saveMeta = () => { LS.set('lakornia:progress', progress); LS.set('lakornia:favorites', favs); LS.set('lakornia:autoplay', autoplay) };
+
+const linked = x => x.eps.filter(e => e.u);
+const watchedCount = sid => { const p = progress[sid]; if (!p?.w) return 0; return Object.keys(p.w).length };
+const pct = x => x.eps.length ? Math.round(watchedCount(x.id) / x.eps.length * 100) : 0;
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg) {
+  const el = $('#toast'); el.textContent = msg; el.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2600);
 }
 
-document.getElementById('cats').addEventListener('click', e => {
-  if(e.target.classList.contains('cat-btn')){
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    activeCat = e.target.dataset.cat;
-    render();
+/* ---------- embed logic ---------- */
+function embedUrl(url, ap) {
+  try {
+    const u = new URL(url);
+    const h = u.hostname.replace(/^www\./, '');
+    const A = ap ? 1 : 0;
+    if (h === 'youtube.com' || h === 'm.youtube.com') {
+      if (u.pathname === '/watch') return `https://www.youtube-nocookie.com/embed/${u.searchParams.get('v')}?rel=0&autoplay=${A}`;
+      if (u.pathname.startsWith('/playlist')) return `https://www.youtube-nocookie.com/embed/videoseries?list=${u.searchParams.get('list')}&autoplay=${A}`;
+      const m = u.pathname.match(/^\/(shorts|embed)\/([\w-]+)/);
+      if (m) return `https://www.youtube-nocookie.com/embed/${m[2]}?rel=0&autoplay=${A}`;
+    }
+    if (h === 'youtu.be') return `https://www.youtube-nocookie.com/embed${u.pathname}?rel=0&autoplay=${A}`;
+    if (h === 'dailymotion.com' || h === 'geo.dailymotion.com') {
+      const m = u.pathname.match(/video\/([a-z0-9]+)/i) || url.match(/video\/([a-z0-9]+)/i);
+      if (m) return `https://www.dailymotion.com/embed/video/${m[1]}?autoplay=${A}`;
+    }
+    if (h === 'dai.ly') return `https://www.dailymotion.com/embed/video${u.pathname}?autoplay=${A}`;
+    if (h === 'rutube.ru') {
+      const m = u.pathname.match(/video\/([a-z0-9]+)/i);
+      if (m) return `https://rutube.ru/play/embed/${m[1]}?autoplay=${A}`;
+    }
+    if (h === 'vk.com' || h === 'vkvideo.ru' || h === 'vk.ru' || h === 'm.vk.com') {
+      if (u.pathname.includes('video_ext')) return url + (ap ? '%26autoplay%3D1' : '');
+      const m = (u.pathname + u.search).match(/video(-?\d+)_(\d+)/);
+      if (m) return `https://${h === 'm.vk.com' ? 'vk.com' : h}/video_ext.php?oid=${m[1]}&id=${m[2]}&hd=2&autoplay=${A}`;
+    }
+    if (h === 'video.sibnet.ru') {
+      if (u.pathname.includes('shell.php')) return url;
+      const m = u.pathname.match(/video(\d+)/) || (u.search.match(/videoid=(\d+)/) && null);
+      const id = u.searchParams.get('videoid') || (u.pathname.match(/(\d+)\.html?$/) || [])[1];
+      if (id) return `https://video.sibnet.ru/shell.php?videoid=${id}`;
+      return url;
+    }
+    if (/\.(mp4|webm|ogg)$/i.test(u.pathname)) return { direct: url };
+    return url; // kodik / alloha / myvi / etc — уже embed-формат
+  } catch { return url }
+}
+const hostName = u => { try { return new URL(u).hostname.replace(/^www\./, '').replace(/^m\./, '') } catch { return 'источник' } };
+
+/* ---------- card ---------- */
+function cardHTML(x, opts = {}) {
+  const p = pct(x);
+  const fav = favs.includes(x.id);
+  return `<div class="card" data-id="${x.id}">
+    <div class="ph">
+      ${x.p ? `<img loading="lazy" src="${esc(x.p)}" alt="${esc(x.t)}" onerror="this.style.display='none'">` : `<div class="ph-txt">${esc(x.t[0])}</div>`}
+      <span class="rate">★ ${x.r ?? '—'}</span>
+      <span class="type-tag ${x.ty.toLowerCase()}">${x.ty}</span>
+      ${p ? `<div class="pbar"><i style="width:${p}%"></i></div>` : ''}
+      <div class="play-ic"><span>▶</span></div>
+      <button class="fav-heart ${fav ? 'on' : ''}" data-fav="${x.id}" title="В избранное">♥</button>
+    </div>
+    <div class="tt">${esc(x.t)}</div>
+    <div class="sub">${x.y} · ${opts.sub || linked(x).length + ' сер. с видео'}</div>
+  </div>`;
+}
+function bindCards(root) {
+  root.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('click', e => {
+      if (e.target.closest('[data-fav]')) { toggleFav(+e.target.closest('[data-fav]').dataset.fav); return }
+      openSeries(+c.dataset.id);
+    });
+  });
+}
+function toggleFav(id) {
+  favs = favs.includes(id) ? favs.filter(f => f !== id) : [...favs, id];
+  saveMeta(); updateFavCount(); toast(favs.includes(id) ? '♥ В избранном' : 'Убрано из избранного');
+  document.querySelectorAll(`[data-fav="${id}"]`).forEach(b => b.classList.toggle('on', favs.includes(id)));
+  if (curView === 'fav') renderCatalog(); renderRows();
+}
+function updateFavCount() {
+  const el = $('#favCount'); el.hidden = !favs.length; el.textContent = favs.length;
+}
+
+/* ---------- rows ---------- */
+function renderRows() {
+  const rows = [];
+  // Продолжить
+  const cont = Object.entries(progress)
+    .filter(([sid, p]) => byId[+sid] && p.ep)
+    .sort((a, b) => (b[1].ts || 0) - (a[1].ts || 0)).slice(0, 12)
+    .map(([sid]) => byId[+sid]);
+  if (cont.length) rows.push({ id: 'cont', title: '▶ Продолжить просмотр', sub: 'с того места, где остановился', list: cont, subFn: x => { const p = progress[x.id]; const nx = nextUnwatched(x); return p && p.ep ? `ты на серии ${p.ep}` : 'с начала' } });
+  // Избранное
+  const fl = favs.map(i => byId[i]).filter(Boolean);
+  if (fl.length) rows.push({ id: 'fav', title: '♥ Избранное', list: fl });
+  // Top10
+  const top = [...S].sort((a, b) => b.r - a.r).slice(0, 10);
+  rows.push({ id: 'top', title: '🏆 Топ-10 в твоей коллекции', top10: true, list: top });
+  // Новинки
+  rows.push({ id: 'new', title: '✨ Новинки 2025–26', list: S.filter(x => x.y >= 2025).sort((a, b) => b.r - a.r) });
+  // BL / GL
+  rows.push({ id: 'bl', title: '🔥 BL-хиты', list: S.filter(x => x.ty === 'BL').sort((a, b) => b.r - a.r) });
+  rows.push({ id: 'gl', title: '🌸 GL-хиты', list: S.filter(x => x.ty === 'GL').sort((a, b) => b.r - a.r) });
+
+  const root = $('#rows');
+  root.innerHTML = rows.map(r => {
+    if (!r.list.length) return '';
+    const items = r.list.map((x, i) => r.top10
+      ? `<div class="t10" data-id="${x.id}"><span class="num">${i + 1}</span>
+          <div><div class="ph">${x.p ? `<img loading="lazy" src="${esc(x.p)}" alt="" onerror="this.style.display='none'">` : ''}
+          <span class="rate">★ ${x.r}</span></div><div class="tt">${esc(x.t)}</div></div></div>`
+      : cardHTML(x, r.subFn ? { sub: r.subFn(x) } : {}));
+    return `<section class="row reveal" id="row-${r.id}">
+      <div class="row-hd"><h2>${r.title}</h2><span class="cnt">${r.list.length}</span></div>
+      <div class="strip">${items.join('')}</div></section>`;
+  }).join('');
+  bindCards(root);
+  root.querySelectorAll('.t10').forEach(el => el.addEventListener('click', () => openSeries(+el.dataset.id)));
+  observeReveal();
+}
+
+/* ---------- hero ---------- */
+function renderHero() {
+  const x = [...S].sort((a, b) => b.r - a.r).find(s => s.p && linked(s).length) || S[0];
+  const epsN = linked(x).length;
+  $('#hero').innerHTML = `
+    <div class="hero-bg" style="background-image:url('${esc(x.p)}')"></div><div class="hero-mask"></div>
+    <div class="hero-in">
+      <span class="hero-tag"><span class="pulse"></span>Личная коллекция · без рекламы · без регистрации</span>
+      <h1>Твой кинотеатр <em>BL · GL</em><br>который сам находит серии</h1>
+      <p>${esc(x.t)} — ★ ${x.r}, ${x.y}. ${esc((x.d || '').slice(0, 150))}…</p>
+      <div class="hero-meta">
+        <span class="chip gold">★ ${x.r} рейтинг</span><span class="chip ${x.ty.toLowerCase()}">${x.ty}</span>
+        <span class="chip">${epsN} серий с видео</span>${x.g.slice(0, 3).map(g => `<span class="chip">${esc(g)}</span>`).join('')}
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-prim" id="heroPlay">▶ Смотреть «${esc(x.t)}»</button>
+        <button class="btn btn-ghost" id="heroLucky">🎲 Мне повезёт</button>
+      </div>
+    </div>`;
+  $('#heroPlay').onclick = () => openSeries(x.id, true);
+  $('#heroLucky').onclick = lucky;
+}
+
+/* ---------- catalog ---------- */
+let curView = 'grid', page = 1, PER = 24;
+const state = { t: 'ALL', q: '', g: '', y: '', sort: 'rating' };
+function filtered() {
+  let l = S.filter(x =>
+    (state.t === 'ALL' || x.ty === state.t) &&
+    (!state.g || x.g.includes(state.g)) &&
+    (!state.y || x.y === +state.y) &&
+    (!state.q || (x.t + ' ' + x.o).toLowerCase().includes(state.q.toLowerCase()))
+  );
+  if (curView === 'fav') l = l.filter(x => favs.includes(x.id));
+  if (watchedOnly) l = l.filter(x => pct(x) === 100);
+  const s = state.sort;
+  l.sort((a, b) => s === 'year' ? b.y - a.y : s === 'title' ? a.t.localeCompare(b.t, 'ru') : s === 'eps' ? linked(b).length - linked(a).length : b.r - a.r);
+  return l;
+}
+function renderCatalog() {
+  const l = filtered();
+  const pages = Math.max(1, Math.ceil(l.length / PER));
+  if (page > pages) page = 1;
+  const slice = l.slice((page - 1) * PER, page * PER);
+  $('#resCount').textContent = `${l.length} тайтлов`;
+  const grid = $('#grid');
+  grid.innerHTML = slice.length ? slice.map(x => cardHTML(x)).join('')
+    : `<div class="empty">Ничего не найдено. Попробуй другой фильтр 🎲</div>`;
+  bindCards(grid);
+  $('#pager').innerHTML = pages > 1 ? Array.from({ length: pages }, (_, i) =>
+    `<button class="${page === i + 1 ? 'on' : ''}" data-p="${i + 1}">${i + 1}</button>`).join('') : '';
+  $('#pager').querySelectorAll('button').forEach(b => b.onclick = () => {
+    page = +b.dataset.p; renderCatalog();
+    $('#catalog').scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+/* ---------- series modal ---------- */
+let modalSid = null, epRange = 24;
+function openSeries(id, autoPlay = false) {
+  modalSid = id;
+  const x = byId[id]; if (!x) return;
+  const fav = favs.includes(id);
+  const p = progress[id];
+  const eps = x.eps;
+  const epsHTML = n0 => eps.filter(e => e.n >= n0 && e.n < n0 + epRange).map(e => {
+    const w = p?.w?.[e.n], cur = p?.ep === e.n;
+    return `<button class="ep ${w ? 'watched' : ''} ${cur ? 'cur' : ''} ${!e.u ? 'no' : ''}" data-ep="${e.n}" ${!e.u ? 'disabled title="Ссылка не найдена — Автопилот не осилил"' : ''}>
+      ${e.n}${w ? '<span class="tick">✓</span>' : ''}</button>`;
+  }).join('');
+  const hasMore = eps.length > epRange;
+  const ranges = hasMore ? Array.from({ length: Math.ceil(eps.length / epRange) }, (_, i) =>
+    `<button class="range-btn" data-r="${i * epRange + 1}">${i * epRange + 1}–${Math.min((i + 1) * epRange, eps.length)}</button>`).join('') : '';
+
+  const ov = document.createElement('div');
+  ov.className = 'ovl'; ov.id = 'sOvl';
+  ov.innerHTML = `<div class="modal">
+    <button class="m-close" data-close>✕</button>
+    <div class="m-hero">
+      <div class="m-poster">${x.p ? `<img src="${esc(x.p)}" alt="">` : ''}</div>
+      <div class="m-info">
+        <h3>${esc(x.t)}</h3>
+        <div class="m-orig">${esc(x.o)} · ${x.y} · ${x.st === 'ongoing' ? 'онгоинг' : 'завершён'}</div>
+        <div class="m-chips">
+          <span class="chip gold">★ ${x.r}</span><span class="chip ${x.ty.toLowerCase()}">${x.ty}</span>
+          ${x.g.map(g => `<span class="chip">${esc(g)}</span>`).join('')}
+          <span class="chip">${linked(x).length}/${x.eps.length} серий с видео</span>
+        </div>
+        <p class="m-desc">${esc(x.d)}</p>
+        <div class="m-acts">
+          <button class="btn btn-prim" id="mPlay">${p?.ep ? '▶ Продолжить с серии ' + p.ep : '▶ Смотреть с 1-й серии'}</button>
+          <button class="btn btn-ghost" data-fav="${id}">${fav ? '♥ В избранном' : '♡ В избранное'}</button>
+          <button class="btn btn-ghost" id="mRandom">🎲 Случайная серия</button>
+        </div>
+      </div>
+    </div>
+    <div class="eps-wrap">
+      <div class="eps-hd"><h4>Эпизоды</h4><span class="mini">✓ — просмотрено · ✕ — нет ссылки</span>
+        ${ranges ? `<span style="display:flex;gap:6px;flex-wrap:wrap">${ranges}</span>` : ''}</div>
+      <div class="eps">${epsHTML(1)}</div>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  document.body.style.overflow = 'hidden';
+  ov.addEventListener('click', e => {
+    if (e.target === ov || e.target.closest('[data-close]')) closeModal();
+    const ep = e.target.closest('[data-ep]:not(.no)');
+    if (ep) { openPlayer(id, +ep.dataset.ep); return }
+    const f = e.target.closest('[data-fav]');
+    if (f) { toggleFav(+f.dataset.fav); f.textContent = favs.includes(+f.dataset.fav) ? '♥ В избранном' : '♡ В избранное' }
+  });
+  ov.querySelectorAll('[data-r]').forEach(b => b.onclick = () => {
+    ov.querySelectorAll('.range-btn').forEach(z => z.classList.remove('on')); b.classList.add('on');
+    ov.querySelector('.eps').innerHTML = epsHTML(+b.dataset.r);
+  });
+  if (hasMore) ov.querySelector('[data-r="1"]').classList.add('on');
+  $('#mPlay', ov).onclick = () => { const nx = resumeEp(x); openPlayer(id, nx) };
+  $('#mRandom', ov).onclick = () => { const l = linked(x); if (l.length) openPlayer(id, l[Math.floor(Math.random() * l.length)].n) };
+  if (autoPlay) { const nx = resumeEp(x); openPlayer(id, nx, true) }
+}
+function closeModal() { $('#sOvl')?.remove(); if (!$('#pOvl')) document.body.style.overflow = '' }
+function resumeEp(x) {
+  const p = progress[x.id];
+  if (p?.ep) return p.ep;
+  return nextUnwatched(x)?.n ?? linked(x)[0]?.n ?? 1;
+}
+function nextUnwatched(x) {
+  const w = progress[x.id]?.w || {};
+  return x.eps.find(e => e.u && !w[e.n]) || null;
+}
+
+/* ---------- player ---------- */
+let pl = null, cdTimer = null;
+function openPlayer(sid, epN, fromAuto = false) {
+  $('#pOvl')?.remove(); $('#upnext')?.remove(); clearTimeout(cdTimer);
+  const x = byId[sid]; const ep = x.eps.find(e => e.n === epN);
+  if (!ep || !ep.u) { toast('У этой серии нет ссылки 😔 — попробуй другую'); return }
+  closeModal(); document.body.style.overflow = 'hidden';
+  // прогресс
+  const pr = progress[sid] = progress[sid] || { w: {} };
+  pr.ep = epN; pr.w = pr.w || {}; pr.w[epN] = 1; pr.ts = Date.now();
+  saveMeta();
+
+  const parts = [];
+  // соседи: prev / next
+  const prev = [...x.eps].reverse().find(e => e.n < epN && e.u);
+  const next = x.eps.find(e => e.n > epN && e.u);
+  const src = embedUrl(ep.u, autoplay);
+  const isVideo = typeof src === 'object';
+  const srcUrl = isVideo ? src.direct : src;
+
+  const ov = document.createElement('div');
+  ov.className = 'player-ovl'; ov.id = 'pOvl';
+  ov.innerHTML = `
+    <div class="pl-top">
+      <button class="back" id="plBack">← Назад</button>
+      <div><div class="pl-title">${esc(x.t)} — серия ${epN}</div>
+        <div class="pl-sub">источник: ${hostName(ep.u)}${ep.a ? ' · найдено автопилотом' : ''}</div></div>
+      <div class="pl-right">
+        <label class="tgl ${autoplay ? 'on' : ''}" id="apTgl" title="Автопереход к следующей серии"><span>Авто-плей</span><span class="sw"></span></label>
+        <button class="icon-btn" id="plBad" title="Не играет? Открыть резерв">⚠</button>
+        <button class="icon-btn" id="plClose" title="Закрыть">✕</button>
+      </div>
+    </div>
+    <div class="pl-body">
+      <div class="pl-frame">
+        <div class="pl-glow" style="background-image:url('${esc(x.p)}')"></div>
+        ${isVideo
+          ? `<video src="${esc(srcUrl)}" controls autoplay playsinline></video>`
+          : `<iframe src="${esc(srcUrl)}" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="origin" id="plFrame"></iframe>`}
+        <div class="pl-fallback" id="plFail" hidden>
+          <div class="big">🔇</div>
+          <h4>Источник не отвечает</h4>
+          <p>Такое бывает: видео удалили или закрыли от встраивания. Открой напрямую или прыгни на другую серию — их тут ${linked(x).length}.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a class="btn btn-prim" href="${esc(ep.u)}" target="_blank" rel="noopener">↗ Открыть в источнике</a>
+            ${next ? `<button class="btn btn-ghost" id="failNext">Следующая серия →</button>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pl-bottom">
+      <div class="pl-nav">
+        ${prev ? `<button class="btn btn-ghost" id="plPrev">← Серия ${prev.n}</button>` : ''}
+        ${next ? `<button class="btn btn-prim" id="plNext">Серия ${next.n} →</button>` : '<span class="chip">Это последняя серия с видео 🎉</span>'}
+        <button class="btn btn-ghost" id="plUnw" title="Снять отметку просмотра">Отметить: <b id="unwState">✓</b></button>
+      </div>
+      <div style="display:flex;gap:8px">
+        ${x.eps.map(e => `<button class="ep ${progress[sid]?.w?.[e.n] ? 'watched' : ''} ${e.n === epN ? 'cur' : ''} ${!e.u ? 'no' : ''}" data-pep="${e.n}" style="min-width:52px" ${!e.u ? 'disabled' : ''}>${e.n}</button>`).join('')}
+      </div>
+    </div>`;
+  document.body.appendChild(ov);
+
+  // YT error detection
+  const frame = $('#plFrame', ov);
+  if (frame && hostName(ep.u).includes('youtube')) {
+    let ok = false;
+    frame.addEventListener('load', () => { setTimeout(() => { if (frame.contentWindow?.length !== undefined) {} }, 2500) });
+    // встроенный детект: onError из YT API недоступен без API-скрипта — юзаю таймаут-хак через postMessage не нужен, фолбэк вручную кнопкой ⚠
   }
-});
+  $('#plFail', ov).hidden = true;
+  $('#plClose', ov).onclick = closePlayer;
+  $('#plBack', ov).onclick = () => { closePlayer(); openSeries(sid) };
+  $('#apTgl', ov).onclick = e => { autoplay = !autoplay; LS.set('lakornia:autoplay', autoplay); e.currentTarget.classList.toggle('on', autoplay); toast(autoplay ? 'Авто-плей включён' : 'Авто-плей выключен') };
+  $('#plBad', ov).onclick = () => { $('#plFail', ov).hidden = !$('#plFail', ov).hidden };
+  $('#plFail', ov).addEventListener('click', e => { if (e.target.id === 'plFail') $('#plFail', ov).hidden = true });
+  if (next) $('#failNext', ov).onclick = () => openPlayer(sid, next.n);
+  if (prev) $('#plPrev', ov).onclick = () => openPlayer(sid, prev.n);
+  if (next) $('#plNext', ov).onclick = () => openPlayer(sid, next.n);
+  $('#plUnw', ov).onclick = () => {
+    const w = progress[sid].w;
+    if (w[epN]) { delete w[epN]; toast('Отметка снята') } else { w[epN] = 1; toast('✓ Отмечено просмотренным') }
+    saveMeta(); $('#unwState', ov).textContent = w[epN] ? '✓' : '—';
+  };
+  ov.querySelectorAll('[data-pep]').forEach(b => b.onclick = () => openPlayer(sid, +b.dataset.pep));
+  // Up Next
+  clearTimeout(cdTimer);
+  if (next && autoplay) showUpNext(x, next);
+  renderRows(); // обновить «Продолжить»
+}
+function showUpNext(x, next) {
+  $('#upnext')?.remove();
+  const el = document.createElement('div');
+  el.className = 'upnext'; el.id = 'upnext';
+  el.innerHTML = `<div class="lbl">Дальше автоматически</div>
+    <div class="t">${esc(x.t)} — серия ${next.n}</div>
+    <div class="acts"><button class="btn btn-prim" id="unGo">▶ Смотреть сейчас</button>
+    <button class="btn btn-ghost" id="unNo">Отмена</button></div>
+    <div class="cd"><i style="width:100%"></i></div>`;
+  document.body.appendChild(el);
+  let t = 5;
+  const bar = el.querySelector('.cd i');
+  const deadline = Date.now() + t * 1000;
+  clearInterval(cdTimer);
+  cdTimer = setInterval(() => {
+    const left = Math.max(0, deadline - Date.now());
+    if (bar) bar.style.width = (left / (t * 1000) * 100) + '%';
+    if (left <= 0) { clearInterval(cdTimer); el.remove(); openPlayer(x.id, next.n) }
+  }, 250);
+  $('#unGo', el).onclick = () => { clearInterval(cdTimer); el.remove(); openPlayer(x.id, next.n) };
+  $('#unNo', el).onclick = () => { clearInterval(cdTimer); el.remove(); toast('Автопереход отменён') };
+}
+function closePlayer() {
+  $('#pOvl')?.remove(); $('#upnext')?.remove(); clearTimeout(cdTimer);
+  if (!$('#sOvl')) document.body.style.overflow = '';
+  renderRows(); renderCatalog();
+}
 
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchTerm = e.target.value;
-  render();
-});
+/* ---------- lucky ---------- */
+function lucky() {
+  const pool = S.flatMap(x => linked(x).map(e => ({ x, e })));
+  if (!pool.length) return;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  toast(`🎲 ${pick.x.t} — серия ${pick.e.n}`);
+  openPlayer(pick.x.id, pick.e.n);
+}
 
-render();
+/* ---------- command palette ---------- */
+let pkSel = 0, pkItems = [];
+function openPalette() {
+  if ($('#cmdk')) return;
+  const el = document.createElement('div');
+  el.className = 'cmdk'; el.id = 'cmdk';
+  el.innerHTML = `<div class="box">
+    <input id="pkQ" placeholder="Тайтл, команда… например «кхемджира» или «повезёт»" autocomplete="off">
+    <div class="lst" id="pkL"></div></div>`;
+  document.body.appendChild(el);
+  el.addEventListener('click', e => { if (e.target === el) closePalette() });
+  const q = $('#pkQ', el);
+  q.focus();
+  q.addEventListener('input', () => paletteRender(q.value));
+  q.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { pkSel = Math.min(pkSel + 1, pkItems.length - 1); paletteSel() }
+    else if (e.key === 'ArrowUp') { pkSel = Math.max(pkSel - 1, 0); paletteSel() }
+    else if (e.key === 'Enter') { pkItems[pkSel]?.run() }
+    else if (e.key === 'Escape') closePalette();
+  });
+  paletteRender('');
+}
+function closePalette() { $('#cmdk')?.remove() }
+function paletteRender(q) {
+  q = q.trim().toLowerCase();
+  const cmds = [
+    { ic: '▶', nm: 'Продолжить просмотр', sc: 'последняя открытая серия', run: () => { const last = Object.entries(progress).sort((a, b) => (b[1].ts || 0) - (a[1].ts || 0))[0]; if (last && byId[+last[0]]) { closePalette(); openPlayer(+last[0], last[1].ep) } } },
+    { ic: '🎲', nm: 'Мне повезёт', sc: 'случайная серия из коллекции', run: () => { closePalette(); lucky() } },
+    { ic: '🔵', nm: 'Показать BL', sc: 'фильтр каталога', run: () => { setTab('BL'); closePalette() } },
+    { ic: '🌸', nm: 'Показать GL', sc: 'фильтр каталога', run: () => { setTab('GL'); closePalette() } },
+    { ic: '♥', nm: 'Избранное', sc: favs.length + ' тайтлов', run: () => { curView = 'fav'; closePalette(); renderCatalog(); $('#catalog').scrollIntoView({ behavior: 'smooth' }) } },
+    { ic: '🧹', nm: 'Сбросить прогресс просмотра', sc: 'осторожно!', run: () => { progress = {}; saveMeta(); closePalette(); renderRows(); renderCatalog(); toast('Прогресс сброшен') } },
+  ];
+  let list = [];
+  if (!q) list = cmds.slice(0, 5).map(c => ({ kind: 'cmd', ...c }));
+  else {
+    const ts = S.filter(x => (x.t + ' ' + x.o).toLowerCase().includes(q)).slice(0, 7)
+      .map(x => ({ kind: 's', img: x.p, nm: x.t, sc: `${x.ty} · ${x.y} · ★ ${x.r}`, run: () => { closePalette(); openSeries(x.id) } }));
+    const cs = cmds.filter(c => c.nm.toLowerCase().includes(q)).map(c => ({ kind: 'cmd', ...c }));
+    list = [...ts, ...cs];
+  }
+  pkItems = list; pkSel = 0;
+  const L = $('#pkL');
+  if (!list.length) { L.innerHTML = `<div class="empty">Нет совпадений 🤷</div>`; return }
+  L.innerHTML = (list[0].kind === 'cmd' ? `<div class="sec">Команды</div>` : `<div class="sec">Тайтлы</div>`) +
+    list.map((it, i) => `<div class="it ${i === pkSel ? 'sel' : ''}" data-i="${i}">
+      ${it.kind === 's' ? (it.img ? `<img src="${esc(it.img)}">` : '<div class="ic">🎬</div>') : `<div class="ic">${it.ic}</div>`}
+      <div><div class="nm">${esc(it.nm)}</div><div class="sc">${esc(it.sc)}</div></div>
+      ${i === pkSel ? '<kbd>Enter ↵</kbd>' : ''}</div>`).join('');
+  L.querySelectorAll('.it').forEach(d => {
+    d.onmouseenter = () => { pkSel = +d.dataset.i; paletteSel() };
+    d.onclick = () => pkItems[pkSel]?.run();
+  });
+}
+function paletteSel() {
+  $('#pkL')?.querySelectorAll('.it').forEach(d => d.classList.toggle('sel', +d.dataset.i === pkSel));
+  $('#pkL')?.querySelector(`.it[data-i="${pkSel}"]`)?.scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- boot ---------- */
+function setTab(t) {
+  state.t = t; curView = 'grid';
+  $('#typeTabs').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  renderCatalog();
+  $('#catalog').scrollIntoView({ behavior: 'smooth' });
+}
+function observeReveal() {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } }), { threshold: .06 });
+  document.querySelectorAll('.reveal:not(.on)').forEach(el => io.observe(el));
+}
+function init() {
+  renderHero(); renderRows(); renderCatalog(); observeReveal(); updateFavCount();
+  // genre + year selects
+  const gs = [...new Set(S.flatMap(x => x.g))].sort((a, b) => a.localeCompare(b, 'ru'));
+  $('#fGenre').innerHTML = '<option value="">Жанр: любой</option>' + gs.map(g => `<option>${esc(g)}</option>`).join('');
+  const ys = [...new Set(S.map(x => x.y))].sort((a, b) => b - a);
+  $('#fYear').innerHTML = '<option value="">Год: любой</option>' + ys.map(y => `<option value="${y}">${y}</option>`).join('');
+  $('#typeTabs').querySelectorAll('button').forEach(b => b.onclick = () => setTab(b.dataset.t));
+  $('#q').addEventListener('input', e => { state.q = e.target.value; page = 1; renderCatalog() });
+  $('#fGenre').onchange = e => { state.g = e.target.value; page = 1; renderCatalog() };
+  $('#fYear').onchange = e => { state.y = e.target.value && +e.target.value; page = 1; renderCatalog() };
+  $('#fSort').onchange = e => { state.sort = e.target.value; renderCatalog() };
+  $('#openSearch').onclick = openPalette;
+  $('#diceBtn').onclick = lucky;
+  $('#favBtn').onclick = () => { curView = 'fav'; renderCatalog(); $('#catalog').scrollIntoView({ behavior: 'smooth' }); toast(favs.length ? 'Твоё избранное ♥' : 'Избранное пока пусто — жми ♥ на карточках') };
+  document.addEventListener('keydown', e => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName);
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPalette() }
+    else if (e.key === '/' && !typing) { e.preventDefault(); openPalette() }
+    else if (e.key === 'Escape') { if ($('#cmdk')) closePalette(); else if ($('#upnext')) { $('#upnext').remove(); clearTimeout(cdTimer) } else if ($('#pOvl')) closePlayer(); else if ($('#sOvl')) closeModal() }
+    else if (e.shiftKey && e.key.toUpperCase() === 'N' && !typing) {
+      const cur = Object.entries(progress).sort((a, b) => (b[1].ts || 0) - (a[1].ts || 0))[0];
+      if (cur && byId[+cur[0]]) { const nx = byId[+cur[0]].eps.find(x2 => x2.n > cur[1].ep && x2.u); if (nx) openPlayer(+cur[0], nx.n); else toast('Дальше серий с видео нет 🎉') }
+    }
+  });
+}
+init();
+
 </script>
 </body>
 </html>
