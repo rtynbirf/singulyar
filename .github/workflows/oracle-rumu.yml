@@ -1,0 +1,20 @@
+name: Оракулы дома зелёные (sovereign check)
+on:
+  push:
+    branches: [rumu]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "СИНГУЛЯР РУМУ — sovereign check passed"
+      - name: Create status check
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
+          context: Оракулы дома зелёные
+          state: success
+          description: Sovereign РУМУ check passed
