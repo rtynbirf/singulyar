@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="ru" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a0f0c">
+<meta name="description" content="СИНГУЛЯР — тайтл BL/GL. P2P или прямой стрим. Без premium. Без регистрации.">
+<title>⚡ СИНГУЛЯР — Тайтл</title>
+<style>
+:root{--bg:#0a0f0c;--panel:#101713;--panel2:#16201b;--text:#e0e6e3;--muted:#7a8a84;--accent:#00ff9e;--line:#1f2d28;--red:#ff6b6b;--warn:#ffb84d;--gold:#ffd680;--pink:#ff80b0;--blue:#80a0ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:15px/1.5 'Liberation Sans','DejaVu Sans',ui-sans-serif,system-ui,sans-serif;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.shell{max-width:1100px;margin:0 auto;padding:20px}
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:24px;position:sticky;top:0;background:var(--bg);z-index:100}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand-mark{width:36px;height:36px;background:var(--accent);color:#000;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px}
+.brand b{font-size:17px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
+.nav-back{padding:8px 14px;border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:13px}
+.nav-back:hover{border-color:var(--accent);text-decoration:none}
+.spacer{flex:1}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:bold}
+.badge-p2p{background:#3a2a1a;color:#ffd680}
+.badge-noreg{background:#1a1a3a;color:#80c0ff}
+.badge-noads{background:#3a1a1a;color:#ff9e9e}
+
+.title-block{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-bottom:28px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.title-block.bl{border-color:#1a2a4a}
+.title-block.gl{border-color:#3a1a2a}
+.poster{width:220px;aspect-ratio:2/3;background:var(--panel2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:90px;border:1px solid var(--line);position:relative}
+.poster .type-badge{position:absolute;top:8px;right:8px;padding:4px 10px;border-radius:5px;font-size:12px;font-weight:bold;color:#000}
+.bl .type-badge{background:var(--blue)}
+.gl .type-badge{background:var(--pink)}
+.title-info h1{font-size:24px;margin-bottom:4px;line-height:1.2}
+.orig-title{color:var(--muted);font-style:italic;font-size:13px;margin-bottom:12px;line-height:1.4}
+.status-tag{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:bold;margin-right:6px}
+.status-released{background:#1a3a1a;color:#80ff80}
+.status-airing{background:#3a2a1a;color:#ffd680}
+.meta-grid{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-top:14px;font-size:13px}
+.meta-grid dt{color:var(--muted)}
+.meta-grid dd{color:var(--text)}
+.rating{display:flex;gap:14px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.rating-num{font-size:22px;font-weight:bold;color:var(--accent)}
+.rating-num small{font-size:11px;color:var(--muted);font-weight:normal}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.genre{padding:3px 9px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--text)}
+@media(max-width:640px){.title-block{grid-template-columns:1fr}.poster{width:140px;height:210px;font-size:50px;margin:0 auto}}
+
+.player-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px}
+.player-section h2{color:var(--accent);font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.player-section h2 small{color:var(--muted);font-weight:normal;font-size:11px}
+.video-wrap{background:#000;border-radius:10px;overflow:hidden;margin-bottom:14px;display:none}
+.video-wrap.show{display:block}
+video{width:100%;display:block;max-height:65vh;background:#000}
+.source-hint{background:#1a2a2a;border:1px solid #2a4a4a;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:#a0d0d0;line-height:1.5;display:none}
+.source-hint.show{display:block}
+.source-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.source-input{flex:1;min-width:240px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 14px;color:var(--text);font-size:12px;font-family:'Liberation Mono','DejaVu Sans Mono',monospace}
+.source-input:focus{outline:none;border-color:var(--accent)}
+.source-input.saved{border-color:#3a3a1a}
+.btn{padding:11px 22px;border:0;border-radius:10px;background:var(--accent);color:#000;font-weight:bold;cursor:pointer;font-size:14px;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent);opacity:1}
+.status{margin-top:10px;font-size:12px;color:var(--muted);min-height:18px;font-family:'Liberation Mono','DejaVu Sans Mono',monospace}
+.status.ok{color:var(--accent)}
+.status.err{color:var(--red)}
+.status.warn{color:var(--warn)}
+.format-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:12px;border-top:1px solid var(--line)}
+.tab-btn{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:11px;cursor:pointer}
+.tab-btn:hover{border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+
+.episodes{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px}
+.episodes h2{color:var(--accent);font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.episodes h2 small{color:var(--muted);font-weight:normal;font-size:11px}
+.ep-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.ep-btn{padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;font-size:13px;text-align:center;transition:all .2s;position:relative}
+.ep-btn:hover{border-color:var(--accent)}
+.ep-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.ep-btn.has-magnet::after{content:' ✓';color:var(--accent);font-size:11px}
+.ep-btn.active.has-magnet::after{color:#000}
+
+.translation-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:12px;border-top:1px solid var(--line)}
+.tr-btn{padding:6px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font-size:12px;cursor:pointer}
+.tr-btn:hover{border-color:var(--accent)}
+.tr-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+
+.find-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:24px}
+.find-section h3{color:var(--accent);font-size:14px;margin-bottom:10px}
+.find-section .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tt-btn{padding:7px 14px;border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--gold);cursor:pointer;text-decoration:none;display:inline-block}
+.tt-btn:hover{background:var(--gold);color:#000;text-decoration:none;border-color:var(--gold)}
+.find-section .telegram-hint{background:#1a2a3a;border:1px solid #2a3a4a;border-radius:8px;padding:10px 14px;font-size:12px;color:#a0c0e0;line-height:1.5}
+.find-section .telegram-hint b{color:#c0e0ff}
+
+.related-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px}
+.related-section h2{color:var(--accent);font-size:16px;margin-bottom:14px}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.related-card{border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;text-decoration:none;color:inherit;display:block}
+.related-card:hover{transform:translateY(-3px);border-color:var(--accent);text-decoration:none}
+.related-thumb{aspect-ratio:2/3;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:30px}
+.related-info{padding:6px 8px}
+.related-title{font-size:11px;font-weight:bold;line-height:1.2}
+.related-year{font-size:10px;color:var(--muted)}
+
+.comments{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px}
+.comments h2{color:var(--accent);font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.comments h2 small{color:var(--muted);font-weight:normal;font-size:11px}
+.comment-form{display:flex;gap:8px;margin-bottom:16px;flex-direction:column}
+.comment-form input,.comment-form textarea{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit}
+.comment-form textarea{min-height:80px;resize:vertical}
+.comment-form input:focus,.comment-form textarea:focus{outline:none;border-color:var(--accent)}
+.comment-form button{align-self:flex-start}
+.comment-list{display:flex;flex-direction:column;gap:14px}
+.comment{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.comment-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:11px;color:var(--muted)}
+.comment-author{color:var(--accent);font-weight:bold}
+.comment-body{font-size:13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.comment-del{color:var(--red);font-size:10px;cursor:pointer;background:none;border:0;padding:0;text-decoration:underline}
+.comment-empty{color:var(--muted);font-style:italic;text-align:center;padding:20px}
+
+.footer{margin-top:32px;padding:24px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+.sig{margin-top:14px;color:var(--accent);font-size:13px;font-weight:bold;letter-spacing:.5px}
+.not-found{text-align:center;padding:80px 20px}
+.not-found h1{color:var(--red);font-size:32px;margin-bottom:14px}
+.not-found a{display:inline-block;margin-top:20px;padding:10px 20px;border:1px solid var(--accent);border-radius:8px;color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+<a href="streaming.html" class="nav-back">← Каталог</a>
+<div class="brand" onclick="location.href='streaming.html'">
+<span class="brand-mark">S</span>
+<span><b>СИНГУЛЯР</b><small>BL/GL · P2P+DIRECT</small></span>
+</div>
+<div class="spacer"></div>
+<div class="badges">
+<span class="badge badge-p2p">✓ SWARM/HTTP</span>
+<span class="badge badge-noreg">✓ Без регистрации</span>
+<span class="badge badge-noads">✓ Без рекламы</span>
+</div>
+</header>
+
+<div id="content"></div>
+
+<div class="footer">
+<b>СИНГУЛЯР не хостит.</b> Ссылки на источники хранятся в <b>localStorage</b> твоего браузера — swarm или прямой URL отдаёт поток.<br>
+Комментарии — тоже локально. Сервера нет. Регистрации нет. Premium нет. 18+-gate нет.<br>
+<br>
+Если найдёшь рабочий источник — вставь в поле плеера, кнопка "💾 Сохранить" запомнит его для этого эпизода.
+<div class="sig">ЧЕЛОВЕК = PID = 1 · SWARM/DIRECT = ИСТОЧНИК</div>
+</div>
+</div>
+
+<script src="./webtorrent.min.js"></script>
+<script src="./autopilot_client.js"></script>
+<script src="./catalog.js"></script>
+<script>
+const COUNTRY_FLAG = {TH:"🇹🇭", CN:"🇨🇳", KR:"🇰🇷", JP:"🇯🇵", TW:"🇹🇼"};
+const COUNTRY_NAME = {TH:"Таиланд", CN:"Китай", KR:"Корея", JP:"Япония", TW:"Тайвань"};
+const STATUS_RU = {airing:"Выходит", released:"Завершён"};
+
+// === Tracker search URLs ===
+const TR = {
+  RT: q => `https://rutracker.org/forum/tracker.php?nm=${encodeURIComponent(q)}`,
+  RU: q => `https://rutor.info/search/${encodeURIComponent(q)}/0/0/0/0`,
+  NY: q => `https://nyaa.si/?f=0&c=0_0&q=${encodeURIComponent(q)}&s=seeders&o=desc`,
+  TX: q => `https://1337x.to/search/${encodeURIComponent(q)}/1/`,
+  PB: q => `https://thepiratebay.org/index.php?q=${encodeURIComponent(q)}&page=0&orderby=99`,
+  NN: q => `https://nnm-club.to/forum/tracker.php?nm=${encodeURIComponent(q)}`,
+  // Telegram search
+  TG: q => `https://t.me/s/search?q=${encodeURIComponent(q + ' BL')} `,
+};
+
+// wss trackers for browser WebTorrent
+const WSS_TRACKERS = [
+  'wss://tracker.openwebtorrent.com',
+  'wss://tracker.btorrent.xyz',
+];
+
+// === localStorage helpers ===
+function lsKey(id, kind){ return `sing:src:${id}:${kind}`; }
+function getSaved(id, kind){
+  try { return localStorage.getItem(lsKey(id, kind)) || ''; } catch { return ''; }
+}
+function setSaved(id, kind, val){
+  try {
+    if(val) localStorage.setItem(lsKey(id, kind), val);
+    else localStorage.removeItem(lsKey(id, kind));
+  } catch {}
+}
+function getRating(id){
+  try { return JSON.parse(localStorage.getItem(`sing:rating:${id}`) || '{}'); } catch { return {}; }
+}
+function setRating(id, r){
+  try { localStorage.setItem(`sing:rating:${id}`, JSON.stringify(r)); } catch {}
+}
+function getComments(id){
+  try { return JSON.parse(localStorage.getItem(`sing:comments:${id}`) || '[]'); } catch { return []; }
+}
+function addComment(id, c){
+  const list = getComments(id);
+  c.id = Date.now();
+  c.time = new Date().toLocaleString('ru-RU');
+  list.unshift(c);
+  localStorage.setItem(`sing:comments:${id}`, JSON.stringify(list));
+}
+function delComment(id, cid){
+  const list = getComments(id).filter(c => c.id !== cid);
+  localStorage.setItem(`sing:comments:${id}`, JSON.stringify(list));
+}
+
+// === Parse URL ===
+const params = new URLSearchParams(location.search);
+const id = parseInt(params.get('id') || '0', 10);
+const title = C[id];
+const contentEl = document.getElementById('content');
+
+if(!title){
+  contentEl.innerHTML = `
+    <div class="not-found">
+      <h1>404</h1>
+      <p>Тайтл не найден.</p>
+      <a href="streaming.html">← Вернуться в каталог</a>
+    </div>`;
+} else {
+  renderTitle();
+}
+
+function renderTitle(){
+  const rating = getRating(id);
+  const userScore = rating.score || 0;
+  const flag = COUNTRY_FLAG[title.country] || '';
+  const country = COUNTRY_NAME[title.country] || title.country;
+  const typeClass = title.cat === 'bl' ? 'bl' : 'gl';
+  const typeBadge = title.cat === 'bl' ? 'BL' : 'GL';
+  const statusClass = title.status === 'airing' ? 'status-airing' : 'status-released';
+  const statusText = STATUS_RU[title.status] || title.status;
+  
+  contentEl.innerHTML = `
+    <div class="title-block ${typeClass}">
+      <div class="poster">${title.image ? `<img src="${title.image}" alt="${title.t}" style="width:100%;height:100%;object-fit:cover;border-radius:10px" onerror="this.style.display='none';this.parentNode.innerHTML='${title.e}'">` : title.e}<span class="type-badge">${typeBadge}</span></div>
+      <div class="title-info">
+        <h1>${title.t}</h1>
+        <div class="orig-title">${title.orig}</div>
+        <span class="status-tag ${statusClass}">${statusText}</span>
+        <span class="status-tag">${title.eps === 1 ? '1 эпизод' : title.eps + ' эпизодов'}</span>
+        ${title.premium ? '<span class="status-tag" style="background:#3a2a1a;color:#ffd680">★ Premium на bldub</span>' : '<span class="status-tag status-released">Бесплатно на bldub</span>'}
+        <dl class="meta-grid">
+          <dt>Год:</dt><dd>${title.y}</dd>
+          <dt>Страна:</dt><dd>${flag} ${country}</dd>
+          <dt>Жанр:</dt><dd>${(title.genres||[]).join(', ')}</dd>
+          <dt>Статус:</dt><dd>${statusText}</dd>
+          <dt>Тип:</dt><dd>Autopilot: YouTube + Rutube · ${typeBadge}</dd>
+          ${title.rating ? `<dt>Рейтинг:</dt><dd>★ ${title.rating} (${title.votes} оценок)</dd>` : ''}
+        </dl>
+        ${title.description ? `<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--text);line-height:1.6">${escapeHtml(title.description)}</div>` : ''}
+        <div class="tags">
+          <span class="genre">${typeBadge}</span>
+          ${(title.genres||[]).map(g => `<span class="genre">${g}</span>`).join('')}
+          <span class="genre">${flag} ${country}</span>
+        </div>
+        <div class="rating">
+          <div class="rating-num">${userScore ? (userScore + '/10') : '—/10'} <small>${userScore ? 'твоя оценка' : 'оцени'}</small></div>
+          <div>🤖 Autopilot finds · без premium · без 18+-gate</div>
+        </div>
+        <div style="margin-top:10px">
+          <input type="range" min="0" max="10" value="${userScore}" id="ratingSlider" style="width:200px;vertical-align:middle">
+          <button class="btn-ghost btn" id="ratingBtn" style="padding:6px 12px;font-size:12px">Поставить оценку</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-section">
+      <h2>▶ Плеер <small>· <span id="epLabel">эпизод 1</span> · autopilot ищет источники автоматически</small></h2>
+      <div class="autopilot-bar" id="autopilotBar" style="background:#1a2a2a;border:1px solid #2a4a4a;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:none;font-size:12px;color:#a0d0d0"></div>
+      <div class="source-hint" id="sourceHint"></div>
+      <div class="video-wrap" id="videoWrap" style="display:block;background:#000;border-radius:10px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;position:relative">
+        <iframe id="videoFrame" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:none" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;fullscreen" allowfullscreen></iframe>
+        <video id="video" controls playsinline style="width:100%;height:100%;display:none;background:#000"></video>
+        <div id="playerPlaceholder" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--muted);text-align:center;padding:20px">
+          <div style="font-size:48px;margin-bottom:14px">🤖</div>
+          <div id="autopilotStatus" style="font-size:13px;line-height:1.7">Autopilot ищет источники...</div>
+        </div>
+      </div>
+      <div class="source-switcher" id="sourceSwitcher" style="display:none;margin-bottom:10px">
+        <strong style="color:var(--muted);font-size:11px;margin-right:8px">Источник:</strong>
+        <select id="sourceSelect" style="flex:1;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px;max-width:80%"></select>
+        <span id="sourceCount" style="color:var(--accent);font-size:11px;margin-left:8px"></span>
+      </div>
+      <div class="source-row">
+        <input class="source-input" id="sourceInput" placeholder="или вставь свой: magnet:?xt=... / https://.../movie.mp4 / .torrent / .m3u8" autocomplete="off" spellcheck="false">
+        <button class="btn" id="playBtn">▶ Стрим</button>
+        <button class="btn btn-ghost" id="stopBtn">■ Стоп</button>
+        <button class="btn btn-ghost" id="saveBtn" title="Сохранить источник для этого эпизода">💾 Сохранить</button>
+        <button class="btn btn-ghost" id="autopilotBtn" title="Принудительно запустить autopilot">🤖 Autopilot</button>
+      </div>
+      <div class="translation-row">
+        <strong style="color:var(--muted);font-size:11px;align-self:center;margin-right:6px">Перевод:</strong>
+        <button class="tr-btn active" data-tr="original">Оригинал</button>
+        <button class="tr-btn" data-tr="dub">Озвучка</button>
+        <button class="tr-btn" data-tr="subs">Субтитры</button>
+      </div>
+      <div class="status" id="status">Готов. Autopilot запустится автоматически. Жми ▶ Стрим на найденном источнике.</div>
+    </div>
+
+    <div class="episodes">
+      <h2>📺 Эпизоды <small>· выбери эпизод, вставь его источник</small></h2>
+      <div class="ep-list" id="epList"></div>
+    </div>
+
+    <div class="find-section">
+      <h3>🔍 Найти источник на трекере</h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Откроется в новой вкладке. Скопируй magnet или прямой URL видео → вставь в плеер выше.</p>
+      <div class="row">
+        <a class="tt-btn" href="${TR.RT(title.q)}" target="_blank" rel="noopener">RuTracker</a>
+        <a class="tt-btn" href="${TR.RU(title.q)}" target="_blank" rel="noopener">Rutor</a>
+        <a class="tt-btn" href="${TR.NY(title.q)}" target="_blank" rel="noopener">Nyaa</a>
+        <a class="tt-btn" href="${TR.TX(title.q)}" target="_blank" rel="noopener">1337x</a>
+        <a class="tt-btn" href="${TR.PB(title.q)}" target="_blank" rel="noopener">TPB</a>
+        <a class="tt-btn" href="${TR.NN(title.q)}" target="_blank" rel="noopener">NNM</a>
+      </div>
+      <div class="telegram-hint">
+        <b>📡 Для BL/GL контента:</b> тайские/китайские дорамы редко на публичных P2P-трекерах.
+        Ищи в <b>Telegram-каналах</b> по запросу <i>"${title.t} озвучка"</i> или <i>"${title.orig.split(' / ')[0]} BL"</i>.
+        Многие каналы дают прямые ссылки на .mp4 файлы или Mega-папки — вставляй URL прямо в плеер.
+        Также: <b>Mega.nz</b> папки, <b>Google Drive</b>, <b>VK Video</b> — все играются через прямой URL.
+      </div>
+    </div>
+
+    <div class="related-section">
+      <h2>🎬 Похожее</h2>
+      <div class="related-grid" id="relatedGrid"></div>
+    </div>
+
+    <div class="comments">
+      <h2>💬 Обсуждение <small>· хранится локально в твоём браузере, без сервера</small></h2>
+      <div class="comment-form">
+        <input id="commentAuthor" placeholder="Имя или ник (необязательно — анонимно)" maxlength="40">
+        <textarea id="commentText" placeholder="Напиши мнение о тайтле..."></textarea>
+        <button class="btn" id="commentBtn">Отправить</button>
+      </div>
+      <div class="comment-list" id="commentList"></div>
+    </div>
+  `;
+
+  renderEpisodes();
+  renderRelated();
+  renderComments();
+  wirePlayer();
+  wireRating();
+  wireComments();
+  wireAutopilot();
+
+  // Auto-launch autopilot for ep1 on page load
+  loadSourceForEpisode(1);
+  setTimeout(() => runAutopilot(1), 300);  // small delay so UI renders first
+}
+
+let currentEp = 1;
+let currentTranslation = 'original';
+let currentStream = null; // can be torrent, hls, or null
+let autopilotSources = []; // ranked sources from autopilot
+let currentSourceIdx = 0;
+
+// === Autopilot ===
+function wireAutopilot(){
+  const btn = document.getElementById('autopilotBtn');
+  btn && btn.addEventListener('click', () => runAutopilot(currentEp, true));
+  
+  const select = document.getElementById('sourceSelect');
+  select && select.addEventListener('change', () => {
+    currentSourceIdx = parseInt(select.value, 10);
+    playAutopilotSource(currentSourceIdx);
+  });
+}
+
+// Override — uses client-side autopilot (no local proxy needed)
+// Real implementation: autopilot_client.js (window.runAutopilotUI)
+async function runAutopilot(ep, force=false){
+  if (window.currentEp === undefined) window.currentEp = ep;
+  const epLabel = document.getElementById('epLabel');
+  if (epLabel) epLabel.textContent = 'эпизода ' + ep;
+  if (typeof window.runAutopilotUI === 'function') {
+    await window.runAutopilotUI();
+  } else {
+    setStatus('⚠ autopilot_client.js не загружен — проверь подключение', 'err');
+  }
+}
+function playAutopilotSource(idx){
+  if(!autopilotSources[idx]) return;
+  const src = autopilotSources[idx];
+  currentSourceIdx = idx;
+
+  // Hide placeholder
+  const ph = document.getElementById('playerPlaceholder');
+  if(ph) ph.style.display = 'none';
+
+  // Stop any current playback
+  stopAll();
+
+  const statusEl = document.getElementById('status');
+
+  // NNM-Club / Rutor / Nyaa magnet source — play via WebTorrent in <video>
+  if(['nnmclub', 'rutor', 'nyaa'].includes(src.source) || src.magnet){
+    const vid = document.getElementById('video');
+    const frame = document.getElementById('videoFrame');
+    if(frame) frame.style.display = 'none';
+    if(vid){
+      vid.style.display = 'block';
+      vidWrap.classList.add('show');
+    }
+    const sizeStr = src.size ? ` ${src.size}` : '';
+    const seedStr = src.seeds !== undefined ? ` S:${src.seeds||0}` : '';
+    statusEl.textContent = `🤖 P2P [${src.source}]: ${src.title.substring(0,55)}${seedStr}${sizeStr} | ${idx+1}/${autopilotSources.length}`;
+    statusEl.className = 'status ok';
+    playMagnetFromAutopilot(src.magnet, src.title);
+    return;
+  }
+
+  // Piped (sovereign YouTube frontend, no ads) — iframe with fallback chain
+  if(src.source === 'piped' || (src.embed_url && src.embed_url.includes('piped.video'))){
+    const frame = document.getElementById('videoFrame');
+    const vid = document.getElementById('video');
+    if(vid) vid.style.display = 'none';
+    if(frame){
+      // Try primary Piped embed first
+      frame.src = src.embed_url;
+      frame.style.display = 'block';
+      // Fallback chain: if primary fails, watchdog switches
+      watchdogPipedEmbed(idx, src.fallback_embeds || [src.embed_url]);
+    }
+    const input = document.getElementById('sourceInput');
+    if(input){
+      input.value = src.embed_url;
+      input.classList.add('saved');
+    }
+    const ru_marker = src.russian_dub ? '🇷🇺 ' : '';
+    statusEl.textContent = `${ru_marker}▶ [Piped] ${src.title.substring(0,55)} | ${idx+1}/${autopilotSources.length} | dur ${src.duration_str}`;
+    statusEl.className = 'status ok';
+    return;
+  }
+
+  // Archive.org — public domain, direct iframe embed (no ads)
+  if(src.source === 'archive' && src.embed_url){
+    const frame = document.getElementById('videoFrame');
+    const vid = document.getElementById('video');
+    if(vid) vid.style.display = 'none';
+    if(frame){
+      frame.src = src.embed_url;
+      frame.style.display = 'block';
+    }
+    const input = document.getElementById('sourceInput');
+    if(input){
+      input.value = src.embed_url;
+      input.classList.add('saved');
+    }
+    statusEl.textContent = `▶ [Archive] ${src.title.substring(0,60)} | ${idx+1}/${autopilotSources.length}`;
+    statusEl.className = 'status ok';
+    return;
+  }
+
+  // Fallback for any other source with embed_url
+  if(src.embed_url){
+    const frame = document.getElementById('videoFrame');
+    if(frame){
+      frame.src = src.embed_url;
+      frame.style.display = 'block';
+      const vid = document.getElementById('video');
+      if(vid) vid.style.display = 'none';
+    }
+    statusEl.textContent = `▶ ${src.title.substring(0,60)} | ${idx+1}/${autopilotSources.length}`;
+    statusEl.className = 'status ok';
+  }
+}
+
+// Piped embed watchdog — if primary instance fails, switch to next in chain
+let pipedWatchdogTimer = null;
+let currentPipedIdx = 0;
+function watchdogPipedEmbed(srcIdx, fallbackChain){
+  if(pipedWatchdogTimer) clearTimeout(pipedWatchdogTimer);
+  currentPipedIdx = 0;
+  const frame = document.getElementById('videoFrame');
+  
+  // Listen for iframe load event
+  frame.onload = () => {
+    // Loaded successfully — cancel watchdog
+    if(pipedWatchdogTimer){ clearTimeout(pipedWatchdogTimer); pipedWatchdogTimer = null; }
+  };
+  
+  // After 8 seconds, if iframe still hasn't loaded visible content, try next fallback
+  pipedWatchdogTimer = setTimeout(() => {
+    if(currentSourceIdx !== srcIdx) return;
+    currentPipedIdx++;
+    if(currentPipedIdx >= fallbackChain.length){
+      setStatus(`⚠ Все Piped instances не ответили. Источник ${srcIdx+1} недоступен.`, 'warn');
+      return;
+    }
+    const next = fallbackChain[currentPipedIdx];
+    console.log(`Switching to Piped fallback ${currentPipedIdx+1}/${fallbackChain.length}: ${next}`);
+    frame.src = next;
+    // Restart watchdog for next instance
+    watchdogPipedEmbed(srcIdx, fallbackChain);
+  }, 8000);
+}
+
+function playMagnetFromAutopilot(magnet_uri, display_name){
+  if(!magnet_uri){
+    setStatus('NNM-Club magnet missing', 'err');
+    return;
+  }
+  // Augment magnet with wss trackers (already done server-side, but ensure)
+  const augmented = augmentMagnet(magnet_uri);
+  playBtn.disabled = true;
+  setStatus(`🤖 Подключение к swarm: ${display_name.substring(0,60)}...`, 'warn');
+
+  try {
+    client.add(augmented, {announce: WSS_TRACKERS}, function(torrent){
+      currentTorrent = torrent;
+      const videoExts = /\.(mp4|mkv|webm|mov|m4v|avi|ogv)$/i;
+      let file = torrent.files.find(f => videoExts.test(f.name));
+      if(!file) file = torrent.files.reduce((a,b)=> (a && a.length > b.length ? a : b), null);
+      if(!file){
+        setStatus('В торренте нет видео-файла', 'err');
+        playBtn.disabled = false;
+        return;
+      }
+      torrent.files.forEach(f => { if(f !== file) f.deselect && f.deselect(); });
+      file.select && file.select();
+      videoWrap.classList.add('show');
+      const vid = document.getElementById('video');
+      if(vid) vid.style.display = 'block';
+      file.renderTo('video', {autoplay:true, controls:true}, function(err){
+        if(err) setStatus('Ошибка рендера: ' + err.message, 'err');
+        else updateStats(torrent);
+      });
+    });
+  } catch(e){
+    setStatus('WebTorrent error: ' + e.message, 'err');
+    playBtn.disabled = false;
+  }
+  client.on('error', function(err){
+    setStatus('WebTorrent client error: ' + err.message, 'err');
+    playBtn.disabled = false;
+  });
+
+  function updateStats(torrent){
+    if(currentTorrent !== torrent) return;
+    const peers = torrent.numPeers;
+    const prog = Math.floor(torrent.progress * 100);
+    const dl = (torrent.downloadSpeed/1024/1024).toFixed(2);
+    const name = torrent.name || display_name;
+    setStatus(`P2P: ${name.substring(0,60)} | Peers: ${peers} | ${prog}% | ↓${dl} MB/s`, 'ok');
+    if(peers === 0 && prog === 0){
+      setStatus('Swarm пуст в браузере. Попробуй десктоп WebTorrent / qBittorrent — там работает полноценный DHT.', 'warn');
+    }
+    setTimeout(()=>updateStats(torrent), 1500);
+  }
+}
+
+let watchdogTimer = null;
+function watchdogAutopilot(idx){
+  if(watchdogTimer) clearTimeout(watchdogTimer);
+  const frame = document.getElementById('videoFrame');
+  
+  // After 6s, if iframe has no src loaded (or error), try next source
+  watchdogTimer = setTimeout(() => {
+    if(currentSourceIdx !== idx) return; // user switched manually
+    // Check if iframe is still loading — can't directly check CORS-loaded iframes
+    // For now, trust the load and let user manually switch if needed
+    // Future: use postMessage to ping the iframe (only works for same-origin)
+  }, 6000);
+}
+
+function renderEpisodes(){
+  const list = document.getElementById('epList');
+  const eps = title.eps || 1;
+  list.innerHTML = Array.from({length: eps}, (_, i) => {
+    const ep = i + 1;
+    const has = getSaved(id, 'ep' + ep);
+    return `<button class="ep-btn ${ep === 1 ? 'active' : ''} ${has ? 'has-magnet' : ''}" data-ep="${ep}">Эп. ${ep}</button>`;
+  }).join('');
+  list.addEventListener('click', e => {
+    if(!e.target.classList.contains('ep-btn')) return;
+    list.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentEp = parseInt(e.target.dataset.ep, 10);
+    document.getElementById('epLabel').textContent = 'эпизода ' + currentEp;
+    loadSourceForEpisode(currentEp);
+    // Auto-launch autopilot for the new episode
+    setTimeout(() => runAutopilot(currentEp), 100);
+  });
+}
+
+function loadSourceForEpisode(ep){
+  const key = 'ep' + ep;
+  const saved = getSaved(id, key);
+  const input = document.getElementById('sourceInput');
+  const hint = document.getElementById('sourceHint');
+  input.value = saved || '';
+  input.classList.toggle('saved', !!saved);
+  if(saved){
+    hint.classList.add('show');
+    let format = 'magnet/URL';
+    if(saved.startsWith('magnet:')) format = 'magnet (P2P swarm)';
+    else if(saved.endsWith('.torrent')) format = '.torrent URL (P2P)';
+    else if(saved.endsWith('.m3u8') || saved.includes('/hls/')) format = 'HLS stream';
+    else if(saved.match(/\.(mp4|mkv|webm|mov|avi)/i)) format = 'HTTP video direct';
+    else format = 'custom URL';
+    hint.innerHTML = `💾 <b>Сохранённый источник для эп. ${ep}:</b> ${format}<br><code style="word-break:break-all;color:var(--text)">${escapeHtml(saved.substring(0, 100))}${saved.length > 100 ? '...' : ''}</code>`;
+    setStatus(`Загружен сохранённый источник для эп. ${ep}. Жми ▶ Стрим.`, 'ok');
+  } else {
+    hint.classList.remove('show');
+    hint.innerHTML = '';
+    setStatus(`Нет сохранённого источника для эп. ${ep}. Найди на трекере ниже или вставь прямой URL видео.`, '');
+  }
+}
+
+function renderRelated(){
+  // same category + same country, exclude current
+  const related = C
+    .map((c, i) => ({...c, idx: i}))
+    .filter(c => c.idx !== id && c.cat === title.cat)
+    .slice(0, 8);
+  // If not enough, add from same country
+  if(related.length < 8){
+    const more = C
+      .map((c, i) => ({...c, idx: i}))
+      .filter(c => c.idx !== id && c.cat !== title.cat && c.country === title.country)
+      .slice(0, 8 - related.length);
+    related.push(...more);
+  }
+  document.getElementById('relatedGrid').innerHTML = related.map(c => {
+    const flag = COUNTRY_FLAG[c.country] || '';
+    return `
+    <a class="related-card" href="title.html?id=${c.idx}">
+      <div class="related-thumb">${c.e}</div>
+      <div class="related-info">
+        <div class="related-title">${c.t}</div>
+        <div class="related-year">${flag} ${c.y}</div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function renderComments(){
+  const list = getComments(id);
+  const el = document.getElementById('commentList');
+  if(!list.length){
+    el.innerHTML = '<div class="comment-empty">Пока нет комментариев. Будь первым.</div>';
+    return;
+  }
+  el.innerHTML = list.map(c => `
+    <div class="comment">
+      <div class="comment-head">
+        <span><span class="comment-author">${escapeHtml(c.author || 'Аноним')}</span> · ${c.time}</span>
+        <button class="comment-del" data-cid="${c.id}">удалить</button>
+      </div>
+      <div class="comment-body">${escapeHtml(c.text)}</div>
+    </div>
+  `).join('');
+  el.querySelectorAll('.comment-del').forEach(b => {
+    b.addEventListener('click', () => {
+      delComment(id, parseInt(b.dataset.cid, 10));
+      renderComments();
+    });
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function wireComments(){
+  document.getElementById('commentBtn').addEventListener('click', () => {
+    const author = document.getElementById('commentAuthor').value.trim();
+    const text = document.getElementById('commentText').value.trim();
+    if(!text){ return; }
+    addComment(id, {author, text});
+    document.getElementById('commentText').value = '';
+    renderComments();
+  });
+}
+
+function wireRating(){
+  document.getElementById('ratingBtn').addEventListener('click', () => {
+    const score = parseInt(document.getElementById('ratingSlider').value, 10);
+    setRating(id, {score});
+    location.reload();
+  });
+}
+
+// === Universal player — magnet / .torrent / HTTP / HLS ===
+const client = new WebTorrent();
+let currentTorrent = null;
+let currentHls = null;
+const video = document.getElementById('video');
+const videoWrap = document.getElementById('videoWrap');
+const statusEl = document.getElementById('status');
+const sourceInput = document.getElementById('sourceInput');
+const playBtn = document.getElementById('playBtn');
+const stopBtn = document.getElementById('stopBtn');
+const saveBtn = document.getElementById('saveBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+function setStatus(text, cls=''){
+  statusEl.textContent = text;
+  statusEl.className = 'status' + (cls ? ' ' + cls : '');
+}
+
+function detectFormat(uri){
+  if(currentFormat !== 'auto') return currentFormat;
+  if(uri.startsWith('magnet:')) return 'magnet';
+  if(uri.endsWith('.torrent') || uri.includes('/torrent/') || uri.includes('.torrent?')) return 'torrent';
+  if(uri.endsWith('.m3u8') || uri.includes('/hls/') || uri.includes('.m3u8?')) return 'hls';
+  if(uri.match(/\.(mp4|mkv|webm|mov|m4v|avi|ogv)(\?|$)/i)) return 'http';
+  // fallback
+  if(uri.startsWith('http')) return 'http';
+  return 'magnet';
+}
+
+function augmentMagnet(uri){
+  if(!uri.startsWith('magnet:')) return uri;
+  let m = uri;
+  for(const tr of WSS_TRACKERS){
+    if(!m.includes(encodeURIComponent(tr))) m += '&tr=' + encodeURIComponent(tr);
+  }
+  return m;
+}
+
+function playSource(){
+  let uri = sourceInput.value.trim();
+  if(!uri){
+    setStatus('Вставь magnet, .torrent URL, или прямой URL видео', 'warn');
+    return;
+  }
+  
+  stopAll(); // clean up any previous
+  
+  const fmt = detectFormat(uri);
+  playBtn.disabled = true;
+  setStatus(`Определён формат: ${fmt}. Подключение...`, 'warn');
+  videoWrap.classList.remove('show');
+  
+  if(fmt === 'magnet' || fmt === 'torrent'){
+    playMagnet(uri);
+  } else if(fmt === 'hls'){
+    playHls(uri);
+  } else if(fmt === 'http'){
+    playHttp(uri);
+  } else {
+    setStatus('Не удалось определить формат ссылки. Выбери тип вручную в табах ниже.', 'err');
+    playBtn.disabled = false;
+  }
+}
+
+function playMagnet(uri){
+  uri = augmentMagnet(uri);
+  try {
+    client.add(uri, {announce: WSS_TRACKERS}, function(torrent){
+      currentTorrent = torrent;
+      const videoExts = /\.(mp4|mkv|webm|mov|m4v|avi|ogv)$/i;
+      let file = torrent.files.find(f => videoExts.test(f.name));
+      if(!file) file = torrent.files.reduce((a,b)=> (a && a.length > b.length ? a : b), null);
+      if(!file){
+        setStatus('В торренте нет видео-файла', 'err');
+        playBtn.disabled = false;
+        return;
+      }
+      torrent.files.forEach(f => { if(f !== file) f.deselect && f.deselect(); });
+      file.select && file.select();
+      videoWrap.classList.add('show');
+      file.renderTo('video', {autoplay:true, controls:true}, function(err){
+        if(err) setStatus('Ошибка рендера: ' + err.message, 'err');
+        else updateStats(torrent);
+      });
+    });
+  } catch(e){
+    setStatus('Ошибка: ' + e.message, 'err');
+    playBtn.disabled = false;
+    return;
+  }
+  
+  client.on('error', function(err){
+    setStatus('Ошибка клиента: ' + err.message, 'err');
+    playBtn.disabled = false;
+  });
+  
+  function updateStats(torrent){
+    if(currentTorrent !== torrent) return;
+    const peers = torrent.numPeers;
+    const prog = Math.floor(torrent.progress * 100);
+    const dl = (torrent.downloadSpeed/1024/1024).toFixed(2);
+    const name = torrent.name || '?';
+    setStatus(`P2P Стрим: ${name} | Peers: ${peers} | ${prog}% | ↓${dl} MB/s`, 'ok');
+    if(peers === 0 && prog === 0){
+      setStatus('Swarm пуст для этого торрента в браузере. Попробуй десктоп-клиент (WebTorrent Desktop / qBittorrent) — там работает полноценный DHT.', 'warn');
+    }
+    setTimeout(()=>updateStats(torrent), 1500);
+  }
+}
+
+function playHls(uri){
+  // Check for native HLS support (Safari)
+  if(video.canPlayType('application/vnd.apple.mpegurl')){
+    video.src = uri;
+    videoWrap.classList.add('show');
+    video.play().then(() => {
+      setStatus(`HLS стрим (нативный): ${uri.substring(0,60)}...`, 'ok');
+    }).catch(e => {
+      setStatus('HLS ошибка воспроизведения: ' + e.message, 'err');
+    });
+    playBtn.disabled = false;
+    return;
+  }
+  
+  // Try hls.js if available (we'd need to load it separately)
+  if(window.Hls){
+    currentHls = new Hls();
+    currentHls.loadSource(uri);
+    currentHls.attachMedia(video);
+    currentHls.on(Hls.Events.MANIFEST_PARSED, () => {
+      videoWrap.classList.add('show');
+      video.play();
+      setStatus(`HLS стрим: ${uri.substring(0,60)}...`, 'ok');
+    });
+    currentHls.on(Hls.Events.ERROR, (e, data) => {
+      if(data.fatal) setStatus('HLS ошибка: ' + data.details, 'err');
+    });
+    playBtn.disabled = false;
+    return;
+  }
+  
+  setStatus('HLS (m3u8) не поддерживается нативно в этом браузере. Установи hls.js рядом или используй Chrome/Safari.', 'err');
+  playBtn.disabled = false;
+}
+
+function playHttp(uri){
+  video.src = uri;
+  videoWrap.classList.add('show');
+  setStatus(`HTTP стрим: ${uri.substring(0,80)}...`, 'ok');
+  video.play().then(() => {
+    setStatus(`HTTP стрим активен: ${uri.substring(0,80)}...`, 'ok');
+  }).catch(e => {
+    setStatus('Стрим не запустился: ' + e.message + '. Если CORS-блок — источник не разрешает кросс-доменный стрим.', 'err');
+  });
+  playBtn.disabled = false;
+  
+  video.addEventListener('error', () => {
+    if(video.error){
+      const codeMap = {1:'ABORTED', 2:'NETWORK', 3:'DECODE', 4:'SRC_NOT_SUPPORTED'};
+      setStatus(`Видео-ошибка ${video.error.code} (${codeMap[video.error.code]||'?'}): ${video.error.message || ''}. Возможно CORS-блок или неверный формат.`, 'err');
+    }
+  }, {once: true});
+}
+
+function stopAll(){
+  if(currentTorrent){
+    currentTorrent.destroy();
+    currentTorrent = null;
+  }
+  if(currentHls){
+    currentHls.destroy();
+    currentHls = null;
+  }
+  // Stop iframe
+  const frame = document.getElementById('videoFrame');
+  if(frame) frame.src = '';
+  // Stop video tag
+  const vid = document.getElementById('video');
+  if(vid){
+    vid.pause();
+    vid.removeAttribute('src');
+    vid.load();
+  }
+  playBtn.disabled = false;
+}
+
+function saveSource(){
+  const val = sourceInput.value.trim();
+  if(!val){
+    setStatus('Нечего сохранять — вставь источник сначала', 'warn');
+    return;
+  }
+  const key = 'ep' + currentEp;
+  setSaved(id, key, val);
+  sourceInput.classList.add('saved');
+  setStatus(`Источник для эп. ${currentEp} сохранён в localStorage ✓`, 'ok');
+  const btn = document.querySelector(`.ep-btn[data-ep="${currentEp}"]`);
+  if(btn) btn.classList.add('has-magnet');
+}
+
+playBtn.addEventListener('click', playSource);
+stopBtn.addEventListener('click', stopAll);
+saveBtn.addEventListener('click', saveSource);
+resetBtn.addEventListener('click', () => {
+  setSaved(id, 'ep' + currentEp, '');
+  loadSourceForEpisode(currentEp);
+});
+sourceInput.addEventListener('keydown', e => { if(e.key === 'Enter') playSource(); });
+
+// Format tabs
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentFormat = b.dataset.fmt;
+  });
+});
+
+// Translation selector
+document.querySelectorAll('.tr-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tr-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentTranslation = b.dataset.tr;
+    const key = currentTranslation === 'original' ? 'ep' + currentEp : currentTranslation + ':ep' + currentEp;
+    const saved = getSaved(id, key);
+    sourceInput.value = saved || '';
+    sourceInput.classList.toggle('saved', !!saved);
+  });
+});
+
+function wirePlayer(){}
+</script>
+</body>
+</html>
