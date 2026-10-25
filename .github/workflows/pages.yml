@@ -22,6 +22,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Pin Pages source to workflow (убирает гонку: legacy-деплой main перебивал rumu)
+        run: |
+          code=$(curl -s -o /tmp/pg.json -w "%{http_code}" -X PATCH \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/pages \
+            -d '{"build_type":"workflow"}')
+          echo "build_type pin: HTTP $code"; cat /tmp/pg.json | head -3
+          # не-фатально: при отказе просто предупреждаем (гонка остаётся, но деплой живёт)
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
