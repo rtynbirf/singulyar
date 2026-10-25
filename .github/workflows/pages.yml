@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Pin Pages source to workflow (убирает гонку: legacy-деплой main перебивал rumu)
+      - name: "Pin Pages source to workflow (гонка legacy-main устранена)"
         run: |
           code=$(curl -s -o /tmp/pg.json -w "%{http_code}" -X PATCH \
             -H "Authorization: Bearer ${{ github.token }}" \
