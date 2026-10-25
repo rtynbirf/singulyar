@@ -255,6 +255,7 @@ footer{padding:34px clamp(16px,4vw,44px) 44px;color:var(--mut2);font-size:13px;b
 
 <header>
   <div class="logo"><span class="dot">▶</span><span>ЛАКОР<b>НИЯ</b></span></div>
+  <a class="hd-search" href="metaplayer.html" style="text-decoration:none" title="МЕТА-МЕГА-ПЛЕЕР — слой достоверности поверх каталога"><span>🎯 МЕТА-МЕГА</span></a>
   <button class="hd-search" id="openSearch"><span>🔍 Поиск тайтлов и команд…</span><kbd>Ctrl K</kbd></button>
   <button class="icon-btn" id="diceBtn" title="Мне повезёт — случайная серия">🎲</button>
   <button class="icon-btn" id="favBtn" title="Избранное">♥<span class="fav-count" id="favCount" hidden>0</span></button>
@@ -614,7 +615,7 @@ function nextUnwatched(x) {
 }
 
 /* ---------- player ---------- */
-let pl = null, cdTimer = null;
+let cdTimer = null; // pl объявлен ниже в блоке МЕГАПЛЕЕРА (фикс двойного let pl — парсер убивал весь сайт)
 // === МЕГАПЛЕЕР: universal player for ALL formats ===
 // Supports: iframe embeds (YouTube/Rutube/DM/VK/Sibnet/Piped/Invidious), direct mp4/webm,
 // HLS (m3u8) via hls.js, magnet/.torrent via WebTorrent
