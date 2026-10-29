@@ -226,11 +226,17 @@
   }
 
   // резервный путь: официальный innertube-запрос прямо со страницы
-  // (same-origin → CORS не мешает; ключ и версия — публичные константы клиента WEB)
+  // (same-origin → CORS не мешает; ключ берём только из ytcfg страницы —
+  //  это публичная константа клиента WEB, принадлежащая Google, поэтому
+  //  вшитый литерал не нужен: скрипт исполняется на youtube.com, где ytcfg
+  //  есть всегда; нет ytcfg — честный отказ, а не притворная работа.
+  //  Решение по алерту secret-scanning: docs/decisions/0012 репозитория nous,
+  //  класс B — ADR-0012, false_positive с доказательствами)
   async function innertubePlayer(vid) {
     const W = (typeof unsafeWindow !== 'undefined') ? unsafeWindow : window;
     const cfg = (W.ytcfg && typeof W.ytcfg.get === 'function') ? W.ytcfg : null;
-    const key = (cfg && cfg.get('INNERTUBE_API_KEY')) || 'AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8';
+    const key = (cfg && cfg.get('INNERTUBE_API_KEY')) || '';
+    if (!key) throw new Error('INNERTUBE_API_KEY не найден в ytcfg — открой страницу youtube.com и перезагрузи');
     const ver = (cfg && cfg.get('INNERTUBE_CLIENT_VERSION')) || '2.20240702.01.00';
     const r = await fetch('/youtubei/v1/player?key=' + encodeURIComponent(key) + '&prettyPrint=false', {
       method: 'POST', credentials: 'include',
