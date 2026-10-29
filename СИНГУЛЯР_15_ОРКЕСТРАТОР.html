@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+<!--СНГ:КОРД--><script src="js/minus-fond.js"></script><!-- TH-AUDIO-44: шим фонда, грузится до плееров -->
+<script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://github.com https://release-assets.githubusercontent.com">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
@@ -995,9 +996,9 @@ function probeOne(vid){
   var done = false;
   var to = setTimeout(function(){ if(!done){ done = true; S15.minus[vid] = 'unknown'; a.src=''; updateSrcRow(); } }, 3500);
   a.addEventListener('canplaythrough', function(){ if(!done){ done=true; clearTimeout(to); S15.minus[vid]='found'; S15.минусПуть[vid] = a.dataset.путь; updateSrcRow(); updatePulse(); } });
-  a.addEventListener('error', function(){ if(!done){ if(a.dataset.фолбэк !== '1'){ a.dataset.фолбэк = '1'; a.dataset.путь = './minus/' + vid + '.mp3'; a.src = a.dataset.путь; return; } /* RUM23-7: безголосым мастерам v10.69 — их трек в корне minus/ (сам и есть натуральный минус) */ done=true; clearTimeout(to); S15.minus[vid]='no'; updateSrcRow(); } });
+  a.addEventListener('error', function(){ if(!done){ if(a.dataset.фолбэк !== '1'){ a.dataset.фолбэк = '1'; a.dataset.путь = window.minusUrl(vid + '.mp3'); a.src = a.dataset.путь; return; } /* RUM23-7: безголосым мастерам v10.69 — их трек в корне minus/ (сам и есть натуральный минус) */ done=true; clearTimeout(to); S15.minus[vid]='no'; updateSrcRow(); } });
   a.preload = 'metadata';
-  a.dataset.путь = './minus/чистый-минус/' + vid + '.mp3'; /* RUM23-7 «ДИЕТА ДОМА»: минус-фонд = натуральные минусовки (вокал убран из оригинала) */
+  a.dataset.путь = window.minusUrl('чистый-минус/' + vid + '.mp3'); /* RUM23-7 «ДИЕТА ДОМА»: минус-фонд = натуральные минусовки (вокал убран из оригинала) */
   a.src = a.dataset.путь;
 }
 function minusFoundCount(){
@@ -1112,9 +1113,9 @@ function loadSourceFor(vid, mode, cb){
   if (mode === 'minus'){
     var st = S15.minus[vid];
     if (st !== 'found'){
-      return cb({code:'S15_AUDIO_NOT_FOUND', human:'натуральной минусовки нет рядом (./minus/чистый-минус/'+vid+'.mp3). Возьми синтез-фон или положи файл.'});
+      return cb({code:'S15_AUDIO_NOT_FOUND', human:'натуральной минусовки нет (фонд: релиз, чистый-минус/'+vid+'.mp3). Возьми синтез-фон или положи файл.'});
     }
-    finish(S15.минусПуть[vid] || ('./minus/чистый-минус/' + vid + '.mp3'), 'натуральная минусовка ' + (S15.минусПуть[vid] || ('./minus/чистый-минус/' + vid + '.mp3'))); /* RUM23-7: минус = вокал убран из оригинала */
+    finish(S15.минусПуть[vid] || window.minusUrl('чистый-минус/' + vid + '.mp3'), 'натуральная минусовка ' + (S15.минусПуть[vid] || window.minusUrl('чистый-минус/' + vid + '.mp3'))); /* RUM23-7: минус = вокал убран из оригинала */
   } else if (mode === 'file'){
     var f = $('#userAudio').files[0];
     if (!f) return cb({code:'S15_NO_FILE', human:'файл не выбран'});
@@ -1392,7 +1393,7 @@ function updateHint(){
   var h = $('#chHint');
   var st = S15.minus[vid];
   var bits = [];
-  if (st === 'no' || st === 'unknown') bits.push('натуральной минусовки (./minus/чистый-минус/'+vid+'.mp3) рядом нет — включён честный фолбэк');
+  if (st === 'no' || st === 'unknown') bits.push('натуральной минусовки (фонд: релиз, чистый-минус/'+vid+'.mp3) рядом нет — включён честный фолбэк');
   bits.push('синтез-фон строится из генов песни (сид = ID): тональность/лад/темп/прогрессия — это не оригинал');
   bits.push('минус можно положить в память: кнопка «свой файл» + «в память»');
   h.textContent = bits.join(' · ');
@@ -1820,9 +1821,9 @@ function wire(){
     var vid = $('#chSong').value;
     if (f){ idbPut(vid, f, function(err){ toast(err? 'память недоступна: '+err.message : 'минус '+songTitle(vid)+' сохранён в память'); updateSrcRow(); }); }
     else if (P15.vid && S15.minus[P15.vid] === 'found'){
-      fetch(S15.минусПуть[P15.vid] || ('./minus/чистый-минус/' + P15.vid + '.mp3')).then(function(r){ return r.blob(); })
+      fetch(S15.минусПуть[P15.vid] || (window.minusUrl('чистый-минус/' + P15.vid + '.mp3'))).then(function(r){ return r.blob(); })
         .then(function(b){ return idbPut(P15.vid, b, function(e2){ toast(e2? 'память недоступна':'минус скопирован в память'); }); })
-        .catch(function(){ toast('не смог прочитать ./minus из браузера — выбери файл вручную'); });
+        .catch(function(){ toast('минус теперь в релизе (кросс-домен не читается) — выбери файл вручную'); });
     } else toast('сначала выбери файл или найденный минус');
   }});
   $('#srcRow').appendChild(fileBtn);

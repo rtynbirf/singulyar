@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <head>
-<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл -->
+<!--СНГ:КОРД--><script src="js/minus-fond.js"></script><!-- TH-AUDIO-44: шим фонда, грузится до плееров -->
+<script src="./cord.js"></script><!-- страховочный корд дома — общий файл -->
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://github.com https://release-assets.githubusercontent.com">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
@@ -435,8 +436,8 @@ window.S32_ЯДРО = (function () {
     /* v11.40 «ВОЗВРАТ ГОЛОСА» (С118, ключ №11 владельца …brBjy): ТВ-ветка играет mp3-фонд С ГОЛОСОМ автора minus/голос/{id}.mp3 (59 транскодов 48 kHz stereo из МАКС-мастеров — их такт v11.39 «ГОЛОС ТВ» С117 собрал фонд, но встал файлом-призраком SINGULYAR_31_ЛАДОМ.html, настоящая дверь ·31 оставалась на безголосых минусовках; фонд поверен 5/5: 48 kHz stereo 320k, Δ ≤ 0,04 с против мастеров); 2 честных исключения v10.69 («Сборник Музыки со Смыслом» Qb8xb0vUYDg, «Где настоящее» shs0TiOwx-M — их МАКС-мастера сами безголосые) играют свой mp3-минус; дом — их minus/prosto-lubi.mp3 (v11.35); лестница честная: голос mp3 → mp3-минусовка; ПК не тронут (МАКС-мастера webm с голосом автора) */
     /* RUM23-7 «ДИЕТА ДОМА» (латка С137): webm-мастера и моно-дубл ушли — играем ОРИГИНАЛ С ГОЛОСОМ автора, как в плеере: minus/голос/{id}.mp3 (48 kHz stereo), дому — minus/prosto-lubi.mp3, безголосым v10.69 — их трек; фолбэк — НАТУРАЛЬНАЯ минусовка minus/чистый-минус/ (вокал убран из оригинала, htdemucs; оси не едут — timeline не менялся) */
     var безголосые = { 'Qb8xb0vUYDg': 1 }; /* латка С140: «Где настоящее» получил голос 320k (С139) — исключение снято по его же закону v10.69; остаётся Сборник (компиляция — играет частями) */
-    var звук = (п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.mp3' : (п.id === 'Qb8xb0vUYDg' ? 'minus/сборник/сборник-01.mp3' : (безголосые[п.id] ? ('minus/' + п.id + '.mp3') : ('minus/голос/' + п.id + '.mp3'))); /* v11.36: дом — СВОЯ mp3, не чужая запись; v11.40: фонд голоса; RUM23-7: единая лестница для ПК и ТВ; латка С140: Сборник — часть 1 цепи (полный мастер Drive «плейлист на 1 час», 7 × MP3 128k) */
-    а.onerror = function () { а.onerror = null; if (п.id === 'Qb8xb0vUYDg') { статус('часть Сборника не открылась — нужны файлы minus/сборник/ (7 частей) рядом', 'warn'); return; } а.src = (п.id === '9ys_TVEtda8') ? 'minus/чистый-минус/prosto-lubi.mp3' : (безголосые[п.id] ? ('minus/' + п.id + '.mp3') : ('minus/чистый-минус/' + п.id + '.mp3')); статус('оригинала с голосом нет рядом — играет натуральная минусовка (чистый-минус)', 'warn'); }; /* RUM23-7: лестница голос → чистый-минус честная; латка С140: у Сборника честный отказ — фолбэков нет */
+    var звук = (п.id === '9ys_TVEtda8') ? 'minus/prosto-lubi.mp3' : (п.id === 'Qb8xb0vUYDg' ? window.minusUrl('сборник/сборник-01.mp3') : (безголосые[п.id] ? (window.minusUrl(п.id + '.mp3')) : (window.minusUrl('голос/' + п.id + '.mp3')))); /* v11.36: дом — СВОЯ mp3, не чужая запись; v11.40: фонд голоса; RUM23-7: единая лестница для ПК и ТВ; латка С140: Сборник — часть 1 цепи (полный мастер Drive «плейлист на 1 час», 7 × MP3 128k) */
+    а.onerror = function () { а.onerror = null; if (п.id === 'Qb8xb0vUYDg') { статус('часть Сборника не открылась — фонд Сборника — в релизе MINUS-FOND-2026-10-30', 'warn'); return; } а.src = (п.id === '9ys_TVEtda8') ? window.minusUrl('чистый-минус/prosto-lubi.mp3') : (безголосые[п.id] ? (window.minusUrl(п.id + '.mp3')) : (window.minusUrl('чистый-минус/' + п.id + '.mp3'))); статус('оригинала с голосом нет рядом — играет натуральная минусовка (чистый-минус)', 'warn'); }; /* RUM23-7: лестница голос → чистый-минус честная; латка С140: у Сборника честный отказ — фолбэков нет */
     а.src = звук;
     if (п.id === 'Qb8xb0vUYDg') { сборник.тек = 1; сборникОсь(); } /* латка С140: свежий выбор — с части 1; ось с манифестом частей едет лениво */
     а.playbackRate = темп;
@@ -501,7 +502,7 @@ window.S32_ЯДРО = (function () {
     if (!к) return false;
     сборник.тек = n;
     var играл = автоплей || (аудио && !аудио.paused && !аудио.ended);
-    аудио.src = 'minus/сборник/' + к.f;
+    аудио.src = window.minusUrl('сборник/' + к.f);
     аудио.addEventListener('loadedmetadata', function once() {
       try { аудио.currentTime = Math.max(0, лок || 0); } catch (е) {}
       аудио.removeEventListener('loadedmetadata', once);
