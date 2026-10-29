@@ -32,7 +32,7 @@ jobs:
           echo "build_type pin: HTTP $code"; cat /tmp/pg.json | head -3
           # не-фатально: при отказе просто предупреждаем (гонка остаётся, но деплой живёт)
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
