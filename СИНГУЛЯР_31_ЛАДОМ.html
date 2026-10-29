@@ -1569,7 +1569,7 @@ const state = {
 
 /* ── аудио ── */
 let ac=null, an=null, freqArr=null;
-const audio = new Audio();
+const audio = new Audio(); audio.crossOrigin = 'anonymous'; /* TH-AUDIO-44c (перезапуск звука): элемент живёт в WebAudio-графе (createMediaElementSource) — кросс-доменный src без атрибута crossOrigin фетчится браузером в no-cors-режиме, ACAO:* сервера не читается, граф тавинтся = тишина при живой сети (TH-AUDIO-44b вернул байты, но не режим запроса элемента); CORS-режим запроса снимает тейнт у источника; same-origin шасси ./minus/ не задет, лестница фолбэков не тронута */
 audio.preload = "auto";
 if (window.TRACK_READY) window.TRACK_READY.then(function (buf) {
   if (buf && !audio.src && !(window.SG_ЗВУК_ТВ&&window.SG_ЗВУК_ТВ())) audio.src = URL.createObjectURL(new Blob([buf], { type: "audio/webm" }));

@@ -356,7 +356,7 @@ window.S32_ЯДРО = (function () {
   /* ── звук ── */
   function аудиоГотово() {
     if (аудио) return аудио;
-    аудио = new Audio();
+    аудио = new Audio(); аудио.crossOrigin = 'anonymous'; /* TH-AUDIO-44c: см. ·31 — анализаторГотово() строит createMediaElementSource на этом элементе; без CORS-режима кросс-доменный фонд (raw/minus-fond) даёт графу тейнт-тишину; same-origin дом не задет */
     аудио.preload = 'auto';
     аудио.volume = громкость;
     аудио.preservesPitch = true;
