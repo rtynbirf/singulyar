@@ -1,28 +1,20 @@
 /* TH-AUDIO-44 (AUDIT-2026-1030 P0-4): минус-фонд переехал из git в релиз.
-   Единая точка сборки URL: window.minusUrl('голос/ID.mp3') → ассет релиза (ASCII-префикс).
-   Схема имён ассетов: golos__<id>.mp3 · chistyi-minus__<id>.mp3 · sbornik__sbornik-N.mp3.
-   Шасси дома minus/prosto-lubi.mp3 ОСТАЛОСЬ в репо — same-origin fetch для TRACK_BUF
-   (WebAudio, закон v11.41 «вэб-аудио доступно»). Кросс-доменные ассеты вне пре-кэша
-   (закон SW: медиа не пре-кэшируется); офлайн-копия минуса — выбор файла вручную (·15).
-   Один факт — одно место: пути к фонду строятся ТОЛЬКО здесь. */
+   TH-AUDIO-44b (ремонт тишины): релизные ассеты не отдают Access-Control-Allow-Origin,
+   а зал ·31 держит <audio> в WebAudio-графе (createMediaElementSource) — кросс-доменный
+   элемент без CORS отдаёт в граф тишину (taint). Лечение: фонд отдаёт
+   raw.githubusercontent.com на ветке minus-fond (= a63089e, те же git-блобы, 0 доп.
+   веса репо): ACAO:*, content-type audio/mpeg, Range 206 — граф и fetch байтов живут.
+   Схема путей ветки = прежнее дерево minus/: голос/<id>.mp3 · чистый-минус/<id>.mp3 ·
+   сборник/сборник-N.mp3 · корень prosto-lubi.mp3. Шасси дома ./minus/prosto-lubi.mp3
+   остаётся same-origin в репо. Один факт — одно место: пути к фонду строятся ТОЛЬКО здесь. */
 (function () {
   'use strict';
-  var TAG = 'MINUS-FOND-2026-10-30';
-  var BASE = 'https://github.com/rtynbirf/singulyar/releases/download/' + TAG + '/';
-  var PREFIX = { 'голос/': 'golos__', 'чистый-минус/': 'chistyi-minus__', 'сборник/': 'sbornik__' };
+  var BASE = 'https://raw.githubusercontent.com/rtynbirf/singulyar/minus-fond/minus/';
   function minusUrl(rel) {
     var s = String(rel).replace(/^\.\//, '').replace(/^minus\//, '');
-    for (var p in PREFIX) {
-      if (s.indexOf(p) === 0) {
-        var fn = s.slice(p.length);
-        if (p === 'сборник/') fn = fn.replace(/^сборник-/, 'sbornik-');
-        return BASE + encodeURIComponent(PREFIX[p] + fn);
-      }
-    }
-    /* корень фонда: безголосые-исключения v10.69 — файла в репо не было и тут нет,
-       404 честен (как и был на сайте); шасси prosto-lubi.mp3 идёт мимо шима */
-    return BASE + encodeURIComponent(s);
+    /* сегментное кодирование: кириллица в пути честная, слэши не трогаем */
+    return BASE + s.split('/').map(encodeURIComponent).join('/');
   }
   window.minusUrl = minusUrl;
-  window.MINUS_FOND_TAG = TAG;
+  window.MINUS_FOND_TAG = 'MINUS-FOND-2026-10-30';
 })();
