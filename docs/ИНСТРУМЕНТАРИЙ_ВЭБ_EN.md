@@ -12,7 +12,7 @@ The owner folded three words into one formula: **WEB is not "web pages" — it i
 | Instrument | What it is | What it does | Laws |
 |---|---|---|---|
 | **INTERNET** | HTTPS eyes: GitHub API (dossier, Git Data API pusher), raw.githubusercontent (push verification), page reading/search (world verification) | tact dossier; blob push; fact-checking; anti-hallucination | no paid services (law I-13 "OWN MECHANISM"); the key lives only in `.git/config`, exactly one; web sessions for pushing are forbidden (the risk engine reverts); any fact from the net is either verified or marked "UNVERIFIED" |
-| **SANDBOX** | local ground: bash, git, node, `http.server` stands, filesystem, disk headroom | stands and probes; patchers; byte checks; the pre-tact dossier | patchers are idempotent (a second run breaks nothing, guard markers); STOP-HORN on every gate; colleagues' bytes untouched; everything lives under `/home/z/my-project/` |
+| **SANDBOX** | local ground: bash, git, node, `http.server` stands, filesystem, disk headroom | stands and probes; patchers; byte checks; the pre-tact dossier | patchers are idempotent (a second run breaks nothing, guard markers); STOP-HORN on every gate; colleagues' bytes untouched; everything lives under `~/` |
 | **PYTHON** | pipeline language: patchers, Git Data API pusher, counters, `test_*.py` suites | tact assembly; JSON registries; tool verification; corpus pipelines | scripts live as files (not heredocs — edit, don't recreate); stdlib before dependencies; tokens are never printed; honest Russian refusals |
 
 ## Live verification — 2026-10-14, 8/8 green

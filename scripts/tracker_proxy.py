@@ -4,7 +4,7 @@
 ======================================
 
 Запуск:
-    python3 /home/z/my-project/scripts/tracker_proxy.py
+    python3 ~/scripts/tracker_proxy.py
 
 Порт: 8765 (http://localhost:8765)
 
@@ -47,14 +47,14 @@ try:
 except ImportError:
     HAS_CURL_CFFI = False
     print("[WARN] curl_cffi not installed — /api/search won't work. Run:")
-    print("       /home/z/.venv/bin/python3 -m pip install curl_cffi")
+    print("       ~/.venv/bin/python3 -m pip install curl_cffi")
 
 # === Config ===
-ROOT = Path("/home/z/my-project/download")
+ROOT = Path("~/download").expanduser()
 PORT = 8765
-COOKIES_FILE = "/home/z/.rt_cookies.txt"  # not used by rutor (no Cloudflare)
+COOKIES_FILE = "~/.rt_cookies.txt"  # not used by rutor (no Cloudflare)
 KNOWN_MAGNETS_PATH = ROOT / "known_magnets.js"
-AUTOPILOT_CACHE_PATH = Path("/home/z/my-project/scripts/autopilot_cache.json")
+AUTOPILOT_CACHE_PATH = Path("~/scripts/autopilot_cache.json")
 
 # Piped instances for YouTube search proxy (no API key needed)
 PIPED_INSTANCES = [
@@ -254,7 +254,7 @@ def _archive_fetch(query):
 
 
 # === NNM-Club integration ===
-NNM_COOKIES_FILE = '/home/z/.nnm_cookies.txt'
+NNM_COOKIES_FILE = '~/.nnm_cookies.txt'
 NNM_PORTAL_CATEGORIES = {
     3: 'Зарубежные сериалы',
     4: 'Зарубежное кино',
@@ -890,7 +890,7 @@ def search_rutor(query):
 
 def update_known_magnets_file(title_key, magnet_data):
     """Append/update a magnet in known_magnets.js by regenerating the file from JSON."""
-    json_path = Path("/home/z/my-project/scripts/known_magnets.json")
+    json_path = Path("~/scripts/known_magnets.json")
     if json_path.exists():
         existing = json.load(open(json_path, encoding='utf-8'))
     else:
@@ -1037,7 +1037,7 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
         
         if path == '/api/all_known':
             # Return known_magnets.json as JSON
-            json_path = Path("/home/z/my-project/scripts/known_magnets.json")
+            json_path = Path("~/scripts/known_magnets.json")
             if json_path.exists():
                 data = json.load(open(json_path, encoding='utf-8'))
                 self.send_json(data)
@@ -1102,8 +1102,8 @@ def main():
            rutracker.org — Cloudflare, не используется (cookies работают только в браузере).
 
   Architecture:
-    • Static files: /home/z/my-project/download/
-    • Magnet cache: /home/z/my-project/scripts/known_magnets.json + .js
+    • Static files: ~/download/
+    • Magnet cache: ~/scripts/known_magnets.json + .js
     • Local process, no third party. Swarm = источник.
 
   Press Ctrl+C to stop.
