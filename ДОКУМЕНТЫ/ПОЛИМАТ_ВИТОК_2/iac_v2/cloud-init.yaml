@@ -6,15 +6,22 @@
 hostname: singulyar-node
 manage_etc_hosts: true
 
+# Модель доступа: вход только по SSH-ключу. Пароль пользователю не устанавливается
+# (lock_passwd: true), вход по паролю через SSH отключён (ssh_pwauth: false).
+# Одноразовый пароль при необходимости можно задать через
+# `chpasswd: users: [{name: singulyar, type: RANDOM}]` — cloud-init 26.1 выводит его
+# в консоль один раз (docs.cloud-init.io, «User passwords»); пароли по умолчанию
+# в эталонных конфигурациях не поставляются.
+ssh_pwauth: false
+
 users:
   - name: singulyar
     gecos: Singulyar Kiosk Operator
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: users, audio, video, input
     shell: /bin/bash
-    lock_passwd: false
-    # Пароль по умолчанию: singulyar
-    passwd: "$6$rounds=409600$singulyarsalt$8U0d7A6KkX6iS.Q3u3zXyL8Hk6I8I0c6p3y.T6l9k3I9I0c6p3y.T6l9k3"
+    # Пароль не устанавливается — вход только по SSH-ключу (см. примечание выше про chpasswd type: RANDOM).
+    lock_passwd: true
 
 packages:
   - nginx
