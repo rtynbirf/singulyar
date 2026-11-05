@@ -62,12 +62,27 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
 <style>
-:root{--bg:#0A0A0C;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+/* ── ШРИФТЫ КАНОНА ОЖИЛИ (такт v1.57.0 «БРОНЗА»): Unbounded + Manrope, переменные,
+   кириллица+латиница, вшиты в фонд дома /fonts/ (SIL OFL 1.1), font-src 'self' ── */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{--bg:#0A0A0C;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#C08444;--teal2:#E8C89C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 /* R-08: визуально скрытый заголовок лица — видят только скринридеры/поиск */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif} html{overflow-x:hidden} body{overflow-x:clip}
+body{background:var(--bg);color:var(--tx);font:111px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif} html{overflow-x:hidden} body{overflow-x:clip}
 a{color:var(--teal);text-decoration:none} a:hover{text-decoration:none}
 main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margin:0 auto;padding:0 20px}
 /* ── ТИТУЛ = КАРТИНА-ФУНДАМЕНТ (закон, такт v1.34.0): кристалл-алмаз на
@@ -81,25 +96,25 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .aio-sub{color:#B9C0CC;letter-spacing:.30em;text-transform:uppercase;font-family:Georgia,'Times New Roman',serif;font-size:clamp(12px,1.7vw,16px)}
 /* подчёрк хозяина: золотая нить с алмазом — подпись дома (как в макете) */
 .подчерк{display:flex;align-items:center;gap:12px;margin:18px auto 0;width:min(320px,70vw)}
-.подчерк::before,.подчерк::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0),rgba(212,175,55,.75))}
-.подчерк::after{background:linear-gradient(90deg,rgba(212,175,55,.75),rgba(212,175,55,0))}
-.подчерк i{width:7px;height:7px;background:var(--teal2);transform:rotate(45deg);flex:none;box-shadow:0 0 10px rgba(240,215,140,.6)}
+.подчерк::before,.подчерк::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(192,132,68,0),rgba(192,132,68,.75))}
+.подчерк::after{background:linear-gradient(90deg,rgba(192,132,68,.75),rgba(192,132,68,0))}
+.подчерк i{width:7px;height:7px;background:var(--teal2);transform:rotate(45deg);flex:none;box-shadow:0 0 10px rgba(232,200,156,.6)}
 .motto{margin:14px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(16px,2.2vw,20px);color:#EDEFF4;letter-spacing:.02em}
 .obj-chip{font-family:Georgia,'Times New Roman',serif;font-size:0.9062rem;color:#EDEFF4;border:1px solid rgba(238,242,250,.32);border-radius:11px;padding:10px 24px;background:rgba(16,18,24,.42);box-shadow:0 6px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(240,240,248,.10);transition:border-color .2s,color .2s,box-shadow .2s;display:inline-block}
-.obj-chip:hover{border-color:rgba(212,175,55,.60);color:#F0D78C;box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 14px rgba(212,175,55,.12)}
+.obj-chip:hover{border-color:rgba(192,132,68,.60);color:#E8C89C;box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 14px rgba(192,132,68,.12)}
 /* бирка хозяина (слово владельца v1.49.3): золото — единственный акцент, бирка одна, носит её Человек */
-.obj-chip-хозяин{border-color:rgba(212,175,55,.62);color:#F0D78C;background:rgba(212,175,55,.07)}
+.obj-chip-хозяин{border-color:rgba(192,132,68,.62);color:#E8C89C;background:rgba(192,132,68,.07)}
 .obj-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
 /* ── НИТЬ АРИАДНЫ: под капотом. Открывает движок (меню дома / N / #модули) ── */
 .нить[hidden]{display:none}
 .нить{margin-top:auto}
 .нить summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 0 40px;-webkit-tap-highlight-color:transparent}
 .нить summary::-webkit-details-marker{display:none}
-.нить-линия{width:1px;height:110px;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.85) 30%,rgba(212,175,55,.85) 70%,rgba(240,215,140,0));box-shadow:0 0 12px rgba(212,175,55,.35);animation:нить-пульс 3.2s ease-in-out infinite}
-.нить-слово{font-family:var(--mono);font-size:0.75rem;letter-spacing:.32em;text-transform:uppercase;color:#B9A468}
-.нить summary:hover .нить-линия,.нить summary:focus-visible .нить-линия{box-shadow:0 0 18px rgba(212,175,55,.6)}
-.нить summary:focus-visible{outline:1px solid rgba(212,175,55,.6);outline-offset:6px;border-radius:8px}
-.нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(212,175,55,0),rgba(212,175,55,.45))}
+.нить-линия{width:1px;height:110px;background:linear-gradient(180deg,rgba(192,132,68,0),rgba(192,132,68,.85) 30%,rgba(192,132,68,.85) 70%,rgba(232,200,156,0));box-shadow:0 0 12px rgba(192,132,68,.35);animation:нить-пульс 3.2s ease-in-out infinite}
+.нить-слово{font-family:var(--mono);font-size:0.75rem;letter-spacing:.32em;text-transform:uppercase;color:#B08A5C}
+.нить summary:hover .нить-линия,.нить summary:focus-visible .нить-линия{box-shadow:0 0 18px rgba(192,132,68,.6)}
+.нить summary:focus-visible{outline:1px solid rgba(192,132,68,.6);outline-offset:6px;border-radius:8px}
+.нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(192,132,68,0),rgba(192,132,68,.45))}
 .нить[open] .нить-слово{color:var(--dim)}
 @keyframes нить-пульс{0%,100%{opacity:.55;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
 /* ── ДОМ (внутри нити): 44 двери (·43…·54 с такта v10.65; ·54 ПИР — такт v11.29) ── */
@@ -111,10 +126,10 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .двери{display:flex;flex-wrap:wrap;gap:9px 12px;justify-content:center;max-width:860px;margin:0 auto 30px}
 .дверь{font-family:var(--mono);font-size:0.7812rem;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-block}
 .дверь i{font-style:normal;color:var(--teal);margin-right:7px}
-.дверь:hover{border-color:rgba(212,175,55,.55);color:#F0D78C}
+.дверь:hover{border-color:rgba(192,132,68,.55);color:#E8C89C}
 /* ЖИВАЯ НИТЬ: пройденная дверь светится золотом — память пути, не замок (Human-First) */
-.дверь.пройдена{border-color:rgba(212,175,55,.50);color:#F0D78C;background:rgba(212,175,55,.05)}
-.дверь.пройдена i{color:#F0D78C}
+.дверь.пройдена{border-color:rgba(192,132,68,.50);color:#E8C89C;background:rgba(192,132,68,.05)}
+.дверь.пройдена i{color:#E8C89C}
 @media (prefers-reduced-motion: reduce){
   .нить-линия{animation:none}
   .нить[open] #дом{animation:none}
@@ -123,21 +138,21 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 
 /* ── НАМЕРЕНИЕ (v1.44.0 «ПОЛИМАТ»): «Что хотите сделать?» + «Я сам» ── */
 .намерение-вход{margin:26px auto 0;max-width:640px;text-align:center}
-.намерение-вопрос{font-family:Georgia,'PT Serif',serif;font-size:clamp(17px,2.4vw,22px);color:#F0D78C;margin:0 0 12px}
+.намерение-вопрос{font-family:Georgia,'PT Serif',serif;font-size:clamp(17px,2.4vw,22px);color:#E8C89C;margin:0 0 12px}
 .намерение-форма{display:flex;gap:8px;justify-content:center}
-.намерение-ввод{flex:1;min-width:0;background:rgba(26,29,35,.55);border:1px solid rgba(212,175,55,.35);border-radius:10px;color:#EDEFF4;font-family:Georgia,'PT Serif',serif;font-size:1rem;padding:11px 14px;outline:none}
-.намерение-ввод:focus-visible{border-color:#D4AF37;box-shadow:0 0 0 2px rgba(212,175,55,.25)}
+.намерение-ввод{flex:1;min-width:0;background:rgba(26,29,35,.55);border:1px solid rgba(192,132,68,.35);border-radius:10px;color:#EDEFF4;font-family:Georgia,'PT Serif',serif;font-size:1rem;padding:11px 14px;outline:none}
+.намерение-ввод:focus-visible{border-color:#C08444;box-shadow:0 0 0 2px rgba(192,132,68,.25)}
 .намерение-ввод::placeholder{color:#8A9099}
-.намерение-кнопка{background:linear-gradient(135deg,#D4AF37,#F5A623);border:0;border-radius:10px;color:#0A0A0C;font-size:1.125rem;font-weight:700;padding:0 16px;cursor:pointer}
-.намерение-сам{margin-top:10px;background:none;border:1px solid rgba(212,175,55,.35);border-radius:999px;color:#F0D78C;font-family:Georgia,'PT Serif',serif;font-size:0.875rem;padding:7px 18px;cursor:pointer}
-.намерение-сам:hover{border-color:#D4AF37}
+.намерение-кнопка{background:linear-gradient(135deg,#C08444,#A9743C);border:0;border-radius:10px;color:#0A0A0C;font-size:1.125rem;font-weight:700;padding:0 16px;cursor:pointer}
+.намерение-сам{margin-top:10px;background:none;border:1px solid rgba(192,132,68,.35);border-radius:999px;color:#E8C89C;font-family:Georgia,'PT Serif',serif;font-size:0.875rem;padding:7px 18px;cursor:pointer}
+.намерение-сам:hover{border-color:#C08444}
 .намерение-ответ{margin-top:12px;display:grid;gap:8px;text-align:left}
-.намерение-ответ a{display:block;background:rgba(26,29,35,.55);border:1px solid rgba(212,175,55,.22);border-radius:10px;color:#EDEFF4;text-decoration:none;padding:10px 14px}
-.намерение-ответ a i{font-style:normal;color:#D4AF37;margin-right:8px}
+.намерение-ответ a{display:block;background:rgba(26,29,35,.55);border:1px solid rgba(192,132,68,.22);border-radius:10px;color:#EDEFF4;text-decoration:none;padding:10px 14px}
+.намерение-ответ a i{font-style:normal;color:#C08444;margin-right:8px}
 .намерение-ответ a b{font-weight:600}
 .намерение-ответ a span{display:block;color:#8A9099;font-size:0.8125rem;margin-top:3px}
 @media (prefers-reduced-motion: no-preference){.намерение-ответ a{transition:border-color .2s ease}}
-.намерение-ответ a:hover,.намерение-ответ a:focus-visible{border-color:#D4AF37}
+.намерение-ответ a:hover,.намерение-ответ a:focus-visible{border-color:#C08444}
 /* ── ПУЛЬТ ХОЗЯИНА (v1.45.0): музыка над шаром + сквозная навигация.
      Временно — по приказу владельца. Канон: стекло + void, золото —
      единственный акцент, ноль эмодзи. КОРД-канон: никаких innerHTML. ── */
@@ -145,32 +160,32 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   margin:0 auto 16px;padding:8px 12px;max-width:680px;
   background:rgba(18,20,24,.55);border:1px solid rgba(240,240,248,.14);border-radius:14px;
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  font:12.5px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#9CA3AF}
+  font:111px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#9CA3AF}
 .пульт-хозяина .пульт-группа{display:inline-flex;align-items:center;gap:4px}
 .пульт-хозяина .пульт-разделитель{width:1px;align-self:stretch;background:rgba(240,240,248,.14);margin:0 4px}
 .пульт-хозяина button,.пульт-хозяина .пульт-ссылка{font:inherit;color:#E8EAF0;background:rgba(240,240,248,.06);
   border:1px solid rgba(240,240,248,.18);border-radius:9px;padding:5px 11px;cursor:pointer;
   letter-spacing:.3px;text-decoration:none;white-space:nowrap}
-.пульт-хозяина button:hover,.пульт-хозяина .пульт-ссылка:hover{border-color:#D4AF37;color:#F0D78C}
-.пульт-хозяина button[aria-pressed="true"]{border-color:#D4AF37;color:#F0D78C;background:rgba(212,175,55,.12)}
-.пульт-хозяина button:focus-visible,.пульт-хозяина .пульт-ссылка:focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+.пульт-хозяина button:hover,.пульт-хозяина .пульт-ссылка:hover{border-color:#C08444;color:#E8C89C}
+.пульт-хозяина button[aria-pressed="true"]{border-color:#C08444;color:#E8C89C;background:rgba(192,132,68,.12)}
+.пульт-хозяина button:focus-visible,.пульт-хозяина .пульт-ссылка:focus-visible{outline:2px solid #C08444;outline-offset:2px}
 .пульт-хозяина .пульт-трек{flex:1 1 100%;text-align:center;color:#8A9099;font-size:0.75rem;min-height:1.4em;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (prefers-reduced-motion: no-preference){.пульт-хозяина button,.пульт-хозяина .пульт-ссылка{transition:border-color .2s ease,color .2s ease,background .2s ease}}
 .ариадна-ввод{flex:1;min-width:200px;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.18);border-radius:10px;color:#F0F2F8;padding:9px 12px;font:inherit;font-size:0.9375rem}
-.ариадна-ввод:focus-visible{outline:2px solid #D4AF37;outline-offset:2px;border-color:#D4AF37}
+.ариадна-ввод:focus-visible{outline:2px solid #C08444;outline-offset:2px;border-color:#C08444}
 .ариадна-ввод::placeholder{color:#8A9099}
 .ариадна-ответ{max-width:820px;margin:14px auto 0;padding:10px 14px;background:rgba(240,240,248,.05);border:1px solid rgba(240,240,248,.14);border-radius:12px;text-align:left}
 .ариадна-ответ:empty{display:none}
 .ариадна-вывод{margin:4px 0}
 .ариадна-вывод a{display:block;padding:8px 10px;border-radius:8px;color:#F0F2F8;text-decoration:none;border:1px solid transparent}
-.ариадна-вывод a:hover,.ариадна-вывод a:focus-visible{border-color:#D4AF37;color:#F0D78C;outline:none;background:rgba(212,175,55,.08)}
-.ариадна-вывод .к-номер{color:#D4AF37;font-family:ui-monospace,monospace;font-size:0.8125rem;margin-right:8px}
+.ариадна-вывод a:hover,.ариадна-вывод a:focus-visible{border-color:#C08444;color:#E8C89C;outline:none;background:rgba(192,132,68,.08)}
+.ариадна-вывод .к-номер{color:#C08444;font-family:ui-monospace,monospace;font-size:0.8125rem;margin-right:8px}
 .ариадна-вывод .к-почему{display:block;color:#8A9099;font-size:0.7812rem;margin-top:2px}
 .ариадна-поняла{color:#8A9099;font-size:0.7812rem;margin:6px 0 2px}
 .ариадна-чипы{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .ариадна-чип{font:inherit;font-size:0.8125rem;color:#E8EAF0;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.16);border-radius:999px;padding:5px 12px;cursor:pointer}
-.ариадна-чип:hover,.ариадна-чип:focus-visible{border-color:#D4AF37;color:#F0D78C;outline:none}
+.ариадна-чип:hover,.ариадна-чип:focus-visible{border-color:#C08444;color:#E8C89C;outline:none}
   /* v10.53 «ОРГАНИЗМ»: комнатные переходы дома — кросс-документные View Transitions
      (Chrome 126+); где движения просить нельзя — их нет (закон дома). */
   @media (prefers-reduced-motion: no-preference){
@@ -183,7 +198,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 /* ── УДОБНО КАЖДОМУ (такт v1.54.0): предпочтения человека — классы на <html> ── */
 html.уд-текст-крупно{font-size:1.125rem}
 html.уд-текст-огромно{font-size:1.25rem}
-html.уд-контраст{--tx:#FFFFFF;--dim:#D8DDE3;--line:rgba(240,240,248,.34);--teal:#FFD865;--teal2:#FFE9AE}
+html.уд-контраст{--tx:#FFFFFF;--dim:#D8DDE3;--line:rgba(240,240,248,.34);--teal:#F0C878;--teal2:#F7DDAE}
 html.уд-контраст body{background:#000}
 html.уд-крупно .дверь{padding:12px 16px;font-size:1.0625rem;min-height:48px}
 html.уд-крупно .двери{gap:12px 16px}
@@ -191,29 +206,31 @@ html.уд-тихо *{animation:none!important;transition:none!important}
 html.уд-тихо{scroll-behavior:auto}
 /* кнопка и панель: стекло + золото канона дома */
 .уд-кнопка{position:fixed;top:12px;right:14px;z-index:500;appearance:none;cursor:pointer;
-  font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;
-  background:rgba(26,29,35,.82);border:1px solid rgba(212,175,55,.55);border-radius:999px;
+  font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;
+  background:rgba(26,29,35,.82);border:1px solid rgba(192,132,68,.55);border-radius:999px;
   padding:12px 18px;min-height:44px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(212,175,55,.3);outline:2px solid #F0D78C;outline-offset:2px}
-.уд-кнопка[aria-expanded="true"]{border-color:#D4AF37}
+.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(192,132,68,.3);outline:2px solid #E8C89C;outline-offset:2px}
+.уд-кнопка[aria-expanded="true"]{border-color:#C08444}
 .уд-панель{position:fixed;top:64px;right:14px;z-index:510;width:min(340px,calc(100vw - 28px));
   max-height:calc(100svh - 84px);overflow:auto;background:rgba(20,22,27,.97);color:#C0C8D0;
-  border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:18px 18px 14px;
+  border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:18px 18px 14px;
   box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;margin:0 0 4px}
+.уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;margin:0 0 4px}
 .уд-пояс{font:.78rem/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 12px}
 .уд-ряд{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(240,240,248,.08)}
 .уд-имя{font:.9rem/1.4 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .уд-имя small{display:block;font-weight:400;color:#8A9099;font-size:.75rem}
 .уд-вкл{appearance:none;cursor:pointer;flex:none;min-width:72px;min-height:40px;border-radius:999px;
-  border:1px solid rgba(212,175,55,.55);background:none;color:#8A9099;
+  border:1px solid rgba(192,132,68,.55);background:none;color:#8A9099;
   font:600 .81rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
-.уд-вкл:hover,.уд-вкл:focus-visible{color:#F0D78C;outline:2px solid #F0D78C;outline-offset:2px}
-.уд-вкл[aria-pressed="true"]{background:rgba(212,175,55,.16);color:#F0D78C;border-color:#D4AF37}
+.уд-вкл:hover,.уд-вкл:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
+.уд-вкл[aria-pressed="true"]{background:rgba(192,132,68,.16);color:#E8C89C;border-color:#C08444}
 .уд-статус{margin:10px 0 0;font:.75rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
 .уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
 @media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
 </style>
+<link rel="preload" href="./fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="./fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
 </head>
 <body>
 <h1 class="sr-only">СИНГУЛЯР — ДОМ дверей</h1>

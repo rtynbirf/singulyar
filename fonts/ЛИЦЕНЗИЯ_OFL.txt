@@ -1,0 +1,3 @@
+Шрифты канона дома (такт v1.57.0 «БРОНЗА»):
+Unbounded — (c) The Unbounded Project Authors, Manrope — (c) The Manrope Project Authors.
+Оба — SIL Open Font License 1.1 (https://openfontlicense.org). Подмножества (cyrillic, latin) — переменные woff2, получены с fonts.googleapis.com (css2 API) 2026-11-06; исходники и полные тексты OFL — у проектов шрифтов.

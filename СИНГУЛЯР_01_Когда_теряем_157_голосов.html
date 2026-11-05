@@ -22,6 +22,8 @@
 <meta name="theme-color" content="#000000"/>
 <meta name="color-scheme" content="dark"/>
 <meta name="description" content="СИНГУЛЯР·01 — караоке-платформа RUVSON: одна песня, 157 голосов, каталог канала, тап-очки, офлайн."/>
+<link rel="preload" href="./fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="./fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
 <title>СИНГУЛЯР·01 — Когда теряем × 157 голосов</title>
 <link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_01_%D0%9A%D0%BE%D0%B3%D0%B4%D0%B0_%D1%82%D0%B5%D1%80%D1%8F%D0%B5%D0%BC_157_%D0%B3%D0%BE%D0%BB%D0%BE%D1%81%D0%BE%D0%B2.html">
 <meta property="og:title" content="СИНГУЛЯР·01 — Когда теряем × 157 голосов">
@@ -31,13 +33,28 @@
 <meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
 <style>
+/* ── ШРИФТЫ КАНОНА ОЖИЛИ (такт v1.57.0 «БРОНЗА»): Unbounded + Manrope, переменные,
+   кириллица+латиница, вшиты в фонд дома /fonts/ (SIL OFL 1.1), font-src 'self' ── */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
 /* ═══ СИНГУЛЯР·01 v2.0 · ПЛАТФОРМА RUVSON — главная + каталог + караоке-плеер ═══
    Лучшие практики: Spotify-навигация (side+tabbar+mini-player), KaraFun-фичи
    (tempo/vocal-guide/queue/scoring), Sing King-лирика, ДНК КУБ-2026 (уголь/эмбер). */
 :root{
   --coal:#000; --bg:#070605; --surf:#0d0b09; --surf2:#141110; --edge:#221e1b; --edge2:#2e2823;
   --skin:#e8e4df; --ash:#98918a; --mute:#8b857e /* такт v1.56.0: AA ≥4.5 на всех поверхностях дома (было #6e6862, 3.3) */; --dim:rgba(232,228,223,.34);
-  --ember:#d4af37; --ember2:#8a6d1d; --glow:rgba(212,175,55,.55); --glow2:rgba(212,175,55,.18);
+  --ember:#c08444; --ember2:#8a5c2a; --glow:rgba(192,132,68,.55); --glow2:rgba(192,132,68,.18);
   --ok:#7ec97e; --fd:"Unbounded","Manrope",system-ui,sans-serif;
   --fb:"Manrope","Golos Text",system-ui,sans-serif;
   --fm:"JetBrains Mono","SF Mono",monospace,sans-serif;
@@ -65,19 +82,19 @@ input,select{font:inherit}
   background:linear-gradient(180deg,rgba(7,6,5,.96),rgba(7,6,5,.86))}
 .brand{display:flex;align-items:baseline;gap:.45rem;font-family:var(--fd);font-weight:700;
   font-size:.9rem;letter-spacing:.05em;white-space:nowrap;cursor:pointer}
-.brand .sub{color:var(--ash);font-weight:400;font-size:.66rem}
-.brand .ver{color:var(--ember);font-family:var(--fm);font-size:.54rem;letter-spacing:.2em;
+.brand .sub{color:var(--ash);font-weight:400;font-size:.6875rem}
+.brand .ver{color:var(--ember);font-family:var(--fm);font-size:.6875rem;letter-spacing:.2em;
   border:1px solid var(--glow);border-radius:5px;padding:.1rem .4rem}
 .gsearch{flex:1;max-width:430px;display:flex;align-items:center;gap:.5rem;background:var(--surf);
   border:1px solid var(--edge);border-radius:10px;padding:.42rem .8rem;transition:.2s;cursor:text}
 .gsearch:focus-within{border-color:var(--glow);box-shadow:0 0 0 3px var(--glow2)}
 .gsearch input{flex:1;background:none;border:0;outline:none;color:var(--skin);font-size:.85rem;min-width:0}
-.gsearch .k{font-family:var(--fm);font-size:.58rem;color:var(--mute);border:1px solid var(--edge);
+.gsearch .k{font-family:var(--fm);font-size:.6875rem;color:var(--mute);border:1px solid var(--edge);
   border-radius:4px;padding:.05rem .35rem;white-space:nowrap}
 .top-actions{display:flex;gap:.45rem;align-items:center;margin-left:auto}
 .spacer{flex:1}
-.p-note{font-size:.6rem;color:var(--mute)}
-.tbtn{font-family:var(--fm);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
+.p-note{font-size:.6875rem;color:var(--mute)}
+.tbtn{font-family:var(--fm);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
   border:1px solid var(--edge);border-radius:999px;padding:.36rem .7rem;transition:.18s;white-space:nowrap}
 .tbtn:hover,.tbtn:focus-visible{color:var(--ember);border-color:var(--glow)}
 .tbtn[aria-pressed="true"]{color:var(--ember);border-color:var(--ember)}
@@ -92,11 +109,11 @@ input,select{font:inherit}
 .snav:hover{color:var(--skin);background:rgba(255,255,255,.04)}
 .snav.on{color:var(--ember);background:linear-gradient(90deg,var(--glow2),transparent);
   box-shadow:inset 2px 0 0 var(--ember)}
-.snav .cnt{margin-left:auto;font-family:var(--fm);font-size:.58rem;color:var(--mute)}
-.snav-sep{font-family:var(--fm);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+.snav .cnt{margin-left:auto;font-family:var(--fm);font-size:.6875rem;color:var(--mute)}
+.snav-sep{font-family:var(--fm);font-size:.6875rem;letter-spacing:.22em;text-transform:uppercase;
   color:var(--mute);padding:.85rem .75rem .3rem}
 .snav .mini-stat{margin-top:auto;padding:.7rem;border:1px solid var(--edge);border-radius:10px;
-  font-family:var(--fm);font-size:.56rem;color:var(--mute);line-height:1.7;letter-spacing:.04em}
+  font-family:var(--fm);font-size:.6875rem;color:var(--mute);line-height:1.7;letter-spacing:.04em}
 .snav .mini-stat b{color:var(--ember);font-weight:400}
 
 /* main */
@@ -113,7 +130,7 @@ input,select{font:inherit}
   padding:.35rem .5rem calc(.35rem + var(--sab));gap:.2rem;border-top:1px solid var(--edge);
   background:rgba(5,4,3,.96);backdrop-filter:blur(12px)}
 .tab{display:grid;justify-items:center;gap:.15rem;padding:.35rem .2rem;border-radius:10px;
-  color:var(--mute);font-family:var(--fm);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase}
+  color:var(--mute);font-family:var(--fm);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase}
 .tab .ic{font-size:1.05rem;line-height:1}
 .tab.on{color:var(--ember)}
 
@@ -127,7 +144,7 @@ input,select{font:inherit}
 .mini .cv{width:42px;height:42px;border-radius:8px;object-fit:cover;flex:0 0 auto}
 .mini .mt{min-width:0;display:flex;flex-direction:column;gap:.1rem;flex:1}
 .mini .mt b{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini .mt span{font-family:var(--fm);font-size:.56rem;color:var(--ash);white-space:nowrap;
+.mini .mt span{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
 .mini .prog{position:absolute;left:.7rem;right:.7rem;bottom:-1px;height:2px;border-radius:2px;
   background:var(--edge);overflow:hidden}
@@ -144,7 +161,7 @@ input,select{font:inherit}
 .hero::before{content:"";position:absolute;inset:-30% -10% auto auto;width:70%;aspect-ratio:1;
   background:radial-gradient(circle,var(--glow2),transparent 65%);pointer-events:none}
 .hero-txt{position:relative;z-index:2;display:flex;flex-direction:column;gap:.85rem}
-.kicker{font-family:var(--fm);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ember)}
+.kicker{font-family:var(--fm);font-size:.6875rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ember)}
 .hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(1.5rem,3.6vw,2.5rem);line-height:1.14;letter-spacing:.01em}
 .hero h1 em{font-style:normal;color:var(--ember)}
 .hero .lede{color:var(--ash);font-size:.92rem;line-height:1.65;max-width:34rem}
@@ -156,18 +173,18 @@ input,select{font:inherit}
 .btn.ghost{border-color:var(--edge2);color:var(--skin)}
 .btn.ghost:hover{border-color:var(--ember);color:var(--ember)}
 .stats{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
-.stat{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;color:var(--ash);
+.stat{font-family:var(--fm);font-size:.6875rem;letter-spacing:.06em;color:var(--ash);
   border:1px solid var(--edge);border-radius:8px;padding:.35rem .6rem}
 .stat b{color:var(--ember);font-weight:400}
 .hero-cube{position:relative;z-index:2;width:min(38vmin,340px);aspect-ratio:1;margin:0 auto;cursor:pointer;outline:none;
   transition:transform .5s}
 .hero-cube:hover{filter:drop-shadow(0 0 26px var(--glow))}
-.hero-cube .hint{position:absolute;bottom:-2rem;left:0;right:0;text-align:center;font-size:.6rem;
+.hero-cube .hint{position:absolute;bottom:-2rem;left:0;right:0;text-align:center;font-size:.6875rem;
   color:var(--mute);letter-spacing:.14em;text-transform:uppercase}
 .cube{position:absolute;inset:0;transform-style:preserve-3d;animation:cspin 26s linear infinite}
 @keyframes cspin{from{transform:rotateX(-24deg) rotateY(0)}to{transform:rotateX(-24deg) rotateY(360deg)}}
 .face{position:absolute;inset:6%;border:1.5px solid var(--ember);background:
-  linear-gradient(135deg,rgba(212,175,55,.09),rgba(0,0,0,.55));box-shadow:inset 0 0 34px rgba(212,175,55,.13)}
+  linear-gradient(135deg,rgba(192,132,68,.09),rgba(0,0,0,.55));box-shadow:inset 0 0 34px rgba(192,132,68,.13)}
 .f-front{transform:translateZ(50%)} .f-back{transform:rotateY(180deg) translateZ(50%)}
 .f-right{transform:rotateY(90deg) translateZ(50%)} .f-left{transform:rotateY(-90deg) translateZ(50%)}
 .f-top{transform:rotateX(90deg) translateZ(50%)} .f-bottom{transform:rotateX(-90deg) translateZ(50%)}
@@ -176,7 +193,7 @@ input,select{font:inherit}
 .rows{padding:0 0 1rem}
 .rowhead{display:flex;align-items:baseline;gap:.7rem;padding:1.1rem clamp(1rem,4vw,3rem) .6rem}
 .rowhead h2{font-family:var(--fd);font-size:1rem;letter-spacing:.02em}
-.rowhead .see{margin-left:auto;font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;
+.rowhead .see{margin-left:auto;font-family:var(--fm);font-size:.6875rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ash)}
 .rowhead .see:hover{color:var(--ember)}
 .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(196px,220px);gap:.65rem;
@@ -191,16 +208,16 @@ input,select{font:inherit}
 .card .thumb .glyph{font-family:var(--fd);font-size:1.6rem;color:var(--ember2);opacity:.8}
 .card .thumb .rank{position:absolute;top:.4rem;left:.45rem;font-family:var(--fd);font-weight:800;
   font-size:1.5rem;color:rgba(232,228,223,.16);-webkit-text-stroke:1px var(--edge2)}
-.card .thumb .badge{position:absolute;top:.4rem;right:.4rem;font-family:var(--fm);font-size:.5rem;
+.card .thumb .badge{position:absolute;top:.4rem;right:.4rem;font-family:var(--fm);font-size:.6875rem;
   letter-spacing:.12em;text-transform:uppercase;background:rgba(0,0,0,.72);border:1px solid var(--edge2);
   color:var(--ash);border-radius:5px;padding:.14rem .4rem}
 .card.live .thumb .badge{color:var(--ember);border-color:var(--glow)}
 .card.live .thumb{background:radial-gradient(120% 150% at 20% 0%,#2c1c0a 0%,#0c0805 60%);
-  box-shadow:inset 0 0 40px rgba(212,175,55,.12)}
+  box-shadow:inset 0 0 40px rgba(192,132,68,.12)}
 .card.live .thumb .glyph{color:var(--ember);opacity:1;text-shadow:0 0 18px var(--glow)}
 .card .tt{font-size:.8rem;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;min-height:2.15em}
-.card .meta{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.56rem;color:var(--mute)}
+.card .meta{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6875rem;color:var(--mute)}
 .card .meta .vw{color:var(--ash)}
 .card .fav{position:absolute;bottom:.55rem;right:.55rem;width:1.7rem;height:1.7rem;border-radius:50%;
   display:grid;place-items:center;font-size:.8rem;color:var(--mute);border:1px solid var(--edge);transition:.15s}
@@ -212,28 +229,28 @@ input,select{font:inherit}
 /* большие карточки живого трека */
 .feat{display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:1.2rem;align-items:center;
   margin:0 clamp(1rem,4vw,3rem);border:1px solid var(--glow);border-radius:18px;padding:1.1rem;
-  background:linear-gradient(120deg,rgba(212,175,55,.08),rgba(10,8,6,.6) 55%);box-shadow:0 0 60px var(--glow2)}
+  background:linear-gradient(120deg,rgba(192,132,68,.08),rgba(10,8,6,.6) 55%);box-shadow:0 0 60px var(--glow2)}
 .feat .art{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 .feat .art img{width:100%;height:100%;object-fit:cover;display:block}
 .feat .art .playov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.25);
   font-size:2.6rem;color:var(--ember);text-shadow:0 0 30px var(--glow)}
 .feat .info{display:flex;flex-direction:column;gap:.55rem;min-width:0}
-.feat .info .kick{font-family:var(--fm);font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ember)}
+.feat .info .kick{font-family:var(--fm);font-size:.6875rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ember)}
 .feat .info h3{font-family:var(--fd);font-size:clamp(1.1rem,2.4vw,1.6rem)}
 .feat .info .sub{color:var(--ash);font-size:.82rem;line-height:1.6}
 .feat .info .chips{display:flex;gap:.4rem;flex-wrap:wrap}
-.chip{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;border:1px solid var(--edge2);
+.chip{font-family:var(--fm);font-size:.6875rem;letter-spacing:.08em;border:1px solid var(--edge2);
   border-radius:999px;padding:.3rem .65rem;color:var(--ash)}
 .chip.emb{color:var(--ember);border-color:var(--glow)}
 
 /* ═══ CATALOG ═══ */
 .cathead{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;padding:1.2rem clamp(1rem,4vw,3rem) .6rem}
 .cathead h2{font-family:var(--fd);font-size:1.1rem}
-.cathead .cnt{font-family:var(--fm);font-size:.6rem;color:var(--mute)}
+.cathead .cnt{font-family:var(--fm);font-size:.6875rem;color:var(--mute)}
 .cathead select{background:var(--surf);border:1px solid var(--edge);color:var(--skin);border-radius:9px;
   padding:.4rem .6rem;font-size:.76rem;outline:none;margin-left:auto}
 .cathead select:focus{border-color:var(--glow)}
-.chstat{font-family:var(--fm);font-size:.6rem;letter-spacing:.05em;color:var(--mute);padding:0 clamp(1rem,4vw,3rem) .35rem;text-transform:none}
+.chstat{font-family:var(--fm);font-size:.6875rem;letter-spacing:.05em;color:var(--mute);padding:0 clamp(1rem,4vw,3rem) .35rem;text-transform:none}
 .chstat b{color:var(--ember);font-weight:400}
 /* TRAX: караоке любой песни */
 .badge.btxt{color:#0d0a06;background:var(--ember);border-color:var(--ember);font-weight:700}
@@ -242,7 +259,7 @@ input,select{font:inherit}
 #traxBar .ab{cursor:pointer}
 #srcYt{display:inline-flex;align-items:center;text-decoration:none}
 .filters{display:flex;gap:.4rem;flex-wrap:wrap;padding:.2rem clamp(1rem,4vw,3rem) .8rem}
-.fchip{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+.fchip{font-family:var(--fm);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;
   border:1px solid var(--edge);border-radius:999px;padding:.34rem .75rem;color:var(--ash);transition:.15s}
 .fchip:hover{color:var(--skin)}
 .fchip.on{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
@@ -260,20 +277,20 @@ input,select{font:inherit}
 @keyframes wr{to{transform:rotate(360deg)}}
 html[data-motion="off"] .wheel-rotator{animation:none}
 .wn{position:absolute;width:1.6vmin;height:1.6vmin;min-width:9px;min-height:9px;margin:-.8vmin 0 0 -.8vmin;
-  border-radius:50%;border:1px solid rgba(212,175,55,.5);background:rgba(0,0,0,.35);
+  border-radius:50%;border:1px solid rgba(192,132,68,.5);background:rgba(0,0,0,.35);
   animation:wr 240s linear infinite reverse;display:grid;place-items:center;cursor:pointer;transition:border-color .2s}
 .wn i{width:.42vmin;height:.42vmin;min-width:3px;min-height:3px;border-radius:50%;background:var(--dim);transition:.2s}
 .wn:hover .nm,.wn:focus-visible .nm{opacity:1}
 .wn:focus-visible{border-color:var(--ember)}
 .wn.heard i{background:var(--ember);box-shadow:0 0 8px var(--glow)}
 .wn .nm{position:absolute;bottom:130%;left:50%;transform:translateX(-50%);white-space:nowrap;
-  font-size:.62rem;letter-spacing:.06em;color:var(--ember);background:rgba(0,0,0,.86);border:1px solid var(--edge);
+  font-size:.6875rem;letter-spacing:.06em;color:var(--ember);background:rgba(0,0,0,.86);border:1px solid var(--edge);
   border-radius:6px;padding:.18rem .5rem;opacity:0;pointer-events:none;transition:.15s;z-index:40}
 .axis{position:absolute;left:50%;top:50%;width:12%;height:12%;transform:translate(-50%,-50%);border-radius:50%;
-  border:1px solid var(--edge);background:radial-gradient(circle,rgba(212,175,55,.16),rgba(0,0,0,.7) 70%);
+  border:1px solid var(--edge);background:radial-gradient(circle,rgba(192,132,68,.16),rgba(0,0,0,.7) 70%);
   display:grid;place-items:center;z-index:9;cursor:pointer;transition:.25s}
 .axis:hover{border-color:var(--ember)}
-.axis b{font-family:var(--fm);font-size:.58rem;letter-spacing:.16em;color:var(--ember);font-weight:400;text-align:center;line-height:1.5}
+.axis b{font-family:var(--fm);font-size:.6875rem;letter-spacing:.16em;color:var(--ember);font-weight:400;text-align:center;line-height:1.5}
 .lgrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
   gap:.5rem;padding:.4rem clamp(1rem,4vw,3rem) 1.2rem;align-content:start}
 .gi{display:flex;flex-direction:column;gap:.14rem;border:1px solid var(--edge);border-radius:9px;padding:.5rem .65rem;
@@ -281,7 +298,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .gi:hover{border-color:var(--glow)}
 .gi.cur{border-color:var(--ember);box-shadow:0 0 14px var(--glow2)}
 .gi b{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gi span{font-family:var(--fm);font-size:.56rem;color:var(--ash)}
+.gi span{font-family:var(--fm);font-size:.6875rem;color:var(--ash)}
 .gi.cur span{color:var(--ember)}
 
 /* ═══ PLAYER: полноэкранный караоке ═══ */
@@ -290,9 +307,9 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .player.open{transform:translateY(0)}
 .pl-top{display:flex;align-items:center;gap:.6rem;padding:calc(.55rem + var(--sat)) 1rem .55rem;border-bottom:1px solid var(--edge)}
 .pl-top .pl-title{font-family:var(--fd);font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pl-top .pl-sub{font-family:var(--fm);font-size:.56rem;color:var(--ash);white-space:nowrap}
+.pl-top .pl-sub{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap}
 .pl-top .grow{flex:1}
-.langchip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6rem;
+.langchip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6875rem;
   letter-spacing:.1em;border:1px solid var(--glow);color:var(--ember);border-radius:999px;padding:.3rem .65rem;
   transition:.15s;white-space:nowrap}
 .langchip:hover{background:var(--glow2)}
@@ -303,7 +320,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 
 /* счёт ТЭП */
 .scorebar{display:none;align-items:center;gap:.8rem;padding:.4rem 1rem;font-family:var(--fm);
-  font-size:.62rem;color:var(--ash);border-bottom:1px solid var(--edge);flex-wrap:wrap}
+  font-size:.6875rem;color:var(--ash);border-bottom:1px solid var(--edge);flex-wrap:wrap}
 #tapFlash{position:fixed;left:50%;top:26%;transform:translateX(-50%);z-index:6;pointer-events:none;
   font-family:var(--fd);font-weight:800;font-size:clamp(1.1rem,3.4vmin,1.8rem);color:var(--ember);
   opacity:0;transition:opacity .3s;text-shadow:0 0 24px var(--glow)}
@@ -345,7 +362,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 
 /* транспорт */
 .pl-actions{display:flex;gap:.5rem;align-items:center;padding:.5rem 1rem;border-top:1px solid var(--edge);flex-wrap:wrap}
-.ab{font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--edge);border-radius:8px;
+.ab{font-family:var(--fm);font-size:.6875rem;letter-spacing:.08em;border:1px solid var(--edge);border-radius:8px;
   padding:.42rem .62rem;color:var(--ash);transition:.18s;white-space:nowrap}
 .ab:hover{color:var(--ember);border-color:var(--glow)}
 .ab[aria-pressed="true"]{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
@@ -355,7 +372,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .bt:hover{background:var(--glow2);box-shadow:0 0 18px var(--glow)}
 .bt.big{width:3.3rem;height:3.3rem;font-size:1.25rem;background:var(--ember);color:#0e0c07;font-weight:700}
 .bt.big:hover{color:#0e0c07}
-.timecode{font-family:var(--fm);font-size:.66rem;color:var(--ash);white-space:nowrap}
+.timecode{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap}
 .transport .rail{flex:1;height:22px;display:grid;align-items:center;cursor:pointer}
 .rail .tr{position:relative;height:4px;background:var(--edge);border-radius:2px}
 .rail .fill{position:absolute;inset:0 auto 0 0;background:var(--ember);border-radius:2px;width:0%}
@@ -364,7 +381,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .mini-ctl{display:flex;gap:.5rem;align-items:center;margin-left:auto}
 .volwrap{display:flex;align-items:center;gap:.35rem;color:var(--mute)}
 .volwrap input{width:76px;accent-color:var(--ember)}
-.shift{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6rem;color:var(--mute)}
+.shift{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6875rem;color:var(--mute)}
 .shift input{width:84px;accent-color:var(--ember)}
 .shift b{color:var(--ash);min-width:3.4ch;text-align:right;font-weight:400}
 
@@ -373,14 +390,14 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .filesview.on{display:flex}
 .ft{display:flex;gap:.7rem;align-items:center;padding-bottom:.7rem;flex-wrap:wrap}
 .ft h2{font-family:var(--fd);font-size:.98rem;color:var(--ember);letter-spacing:.05em;white-space:nowrap}
-.ft h2 span{color:var(--ash);font-weight:400;font-size:.64rem;letter-spacing:.1em}
+.ft h2 span{color:var(--ash);font-weight:400;font-size:.6875rem;letter-spacing:.1em}
 .ft input{flex:1;min-width:150px;background:var(--surf);border:1px solid var(--edge);color:var(--skin);
   border-radius:10px;padding:.55rem .9rem;font-size:.85rem;outline:none}
 .ft input:focus{border-color:var(--ember)}
-.tmeta{font-family:var(--fm);font-size:.6rem;color:var(--ash);white-space:nowrap}
+.tmeta{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap}
 .tscroll{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--edge2) transparent;padding-right:.35rem;min-height:0}
 .tgroup{margin-bottom:1.05rem}
-.tgroup>h3{display:flex;align-items:baseline;gap:.6rem;font-family:var(--fm);font-size:.62rem;
+.tgroup>h3{display:flex;align-items:baseline;gap:.6rem;font-family:var(--fm);font-size:.6875rem;
   letter-spacing:.16em;text-transform:uppercase;color:var(--ember2);border-bottom:1px solid var(--edge);
   padding-bottom:.32rem;margin-bottom:.5rem}
 .tgroup>h3 .gn{color:var(--mute);letter-spacing:.05em;text-transform:none}
@@ -390,9 +407,9 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .trow .r1{display:flex;align-items:center;gap:.55rem}
 .trow .dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
 .trow .nm{font-family:var(--fm);font-size:.72rem;color:var(--skin);word-break:break-word;min-width:0}
-.trow .sz{margin-left:auto;font-family:var(--fm);font-size:.58rem;color:var(--ash);white-space:nowrap;flex:0 0 auto}
-.trow .tstat{font-family:var(--fm);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;flex:0 0 auto}
-.trow .rl{font-size:.66rem;color:var(--mute);padding-left:1.05rem;line-height:1.5}
+.trow .sz{margin-left:auto;font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap;flex:0 0 auto}
+.trow .tstat{font-family:var(--fm);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;flex:0 0 auto}
+.trow .rl{font-size:.6875rem;color:var(--mute);padding-left:1.05rem;line-height:1.5}
 .trow.live .dot{background:var(--ember);box-shadow:0 0 8px var(--glow)}
 .trow.live .tstat{color:var(--ember)}
 .trow.ok .dot{background:var(--dim)}
@@ -400,10 +417,10 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .trow.soon .dot{background:none;border:1px dashed var(--mute)}
 .trow.soon .tstat{color:var(--mute)}
 .trow.soon{opacity:.72}
-.trow .dlb{font-family:var(--fm);font-size:.62rem;line-height:1;color:var(--ember);border:1px solid var(--edge);
+.trow .dlb{font-family:var(--fm);font-size:.6875rem;line-height:1;color:var(--ember);border:1px solid var(--edge);
   border-radius:7px;padding:.32rem .58rem;margin-left:.45rem;white-space:nowrap;transition:.15s;flex:0 0 auto}
 .trow .dlb:hover,.trow .dlb:focus-visible{border-color:var(--ember);background:var(--glow2);box-shadow:0 0 10px var(--glow2)}
-.tlegend{font-family:var(--fm);font-size:.58rem;color:var(--mute);text-align:center;
+.tlegend{font-family:var(--fm);font-size:.6875rem;color:var(--mute);text-align:center;
   padding-top:.55rem;letter-spacing:.05em;line-height:1.7}
 
 /* ═══ WEBGL фон ═══ */
@@ -429,7 +446,7 @@ dialog.songmodal{background:#0b0908;color:var(--skin);border:1px solid var(--edg
   max-width:min(480px,92vw);padding:1.3rem 1.4rem;line-height:1.6}
 dialog.songmodal::backdrop{background:rgba(0,0,0,.72)}
 dialog.songmodal h3{font-family:var(--fd);font-size:1.05rem;margin-bottom:.2rem;padding-right:2rem}
-dialog.songmodal .sm-meta{font-family:var(--fm);font-size:.6rem;color:var(--ash);margin-bottom:.7rem}
+dialog.songmodal .sm-meta{font-family:var(--fm);font-size:.6875rem;color:var(--ash);margin-bottom:.7rem}
 dialog.songmodal p{font-size:.8rem;color:var(--ash);margin:.4rem 0}
 dialog.songmodal .sm-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
 dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
@@ -453,10 +470,10 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
   .rail{grid-auto-columns:minmax(168px,190px)}
   .catgrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
   .hero h1,.b-title h1{font-size:1.35rem}
-  .btn{padding:.7rem 1rem;font-size:.66rem}
+  .btn{padding:.7rem 1rem;font-size:.6875rem}
   .volwrap,.shift{display:none}
   .stats{display:none}
-  .trow .rl{font-size:.62rem}
+  .trow .rl{font-size:.6875rem}
 }
 @media (prefers-reduced-motion:reduce){
   .cube,.wheel-rotator,.wn{animation:none!important}
@@ -470,8 +487,8 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 .mv-head{position:absolute;top:4.7rem;left:clamp(.9rem,3vw,2.2rem);right:clamp(.9rem,3vw,2.2rem);
   display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;pointer-events:none}
 .mv-head h2{margin:0;font-size:clamp(1.35rem,3.2vw,2.1rem);letter-spacing:.02em;
-  text-shadow:0 2px 22px #000,0 0 40px rgba(212,175,55,.12)}
-.mv-head .cnt{font-family:var(--fm);font-size:.6rem;color:var(--mute);letter-spacing:.14em;
+  text-shadow:0 2px 22px #000,0 0 40px rgba(192,132,68,.12)}
+.mv-head .cnt{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.14em;
   text-transform:uppercase;text-shadow:0 1px 8px #000}
 .mv-meters{display:flex;gap:.45rem;align-items:flex-end;height:92px;width:150px;
   position:absolute;top:5.4rem;right:clamp(.9rem,3vw,2.2rem);pointer-events:none}
@@ -479,19 +496,19 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 .mv-meters .mcol i{display:block;width:100%;height:0;min-height:3px;border-radius:4px 4px 2px 2px;
   background:linear-gradient(180deg,var(--ember),var(--ember2));box-shadow:0 0 14px var(--glow2);
   transition:height .09s linear;align-self:flex-end;margin-top:auto}
-.mv-meters .mcol span{font-family:var(--fm);font-size:.52rem;color:var(--mute);letter-spacing:.16em;text-transform:uppercase}
+.mv-meters .mcol span{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.16em;text-transform:uppercase}
 .mv-controls{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:center;
   background:rgba(6,5,4,.82);border:1px solid var(--edge);border-radius:14px;
   padding:.85rem 1.1rem;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .mgrp{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.mgrp>span{font-family:var(--fm);font-size:.56rem;color:var(--mute);letter-spacing:.16em;
+.mgrp>span{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.16em;
   text-transform:uppercase;margin-right:.25rem}
 .mv-note{max-width:920px;color:var(--ash);font-size:.74rem;line-height:1.7;margin:0 0 4.6rem}
 .mv-note kbd{font-family:var(--fm);border:1px solid var(--edge2);border-radius:4px;padding:0 .3em;font-size:.72rem}
 @media(max-width:640px){
   .mv-meters{top:3.6rem;width:110px;height:70px}
   .mv-controls{gap:.6rem;padding:.7rem .8rem}
-  .mv-note{font-size:.66rem}
+  .mv-note{font-size:.6875rem}
 }
 
 </style>
@@ -501,7 +518,7 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 select{color-scheme:dark}
 select{background:#141110;color:#e8e4df;border:1px solid #2e2823;border-radius:8px;padding:.3rem .5rem;font:inherit}
 option,optgroup{background-color:#141110;color:#e8e4df}
-option:checked,option:hover{background-color:#2a241f;color:#d4af37}
+option:checked,option:hover{background-color:#2a241f;color:#c08444}
 /*</SEL-FIX>*/
 </style>
 <style id="sng-канон-v135">
@@ -509,29 +526,29 @@ option:checked,option:hover{background-color:#2a241f;color:#d4af37}
    Палитра аппа переложена на канон дома (ember/радуга выжжены);
    семантические цвета состояния (ok/bad) сохранены — это юзобилити. */
 :root{
-  --ember:#d4af37; --ember2:#8a6d1d; --coal2:#8a6d1d; --hot:#f2e7c4;
-  --glow:rgba(212,175,55,.5); --glow2:rgba(212,175,55,.14);
-  --spoke-glow:rgba(212,175,55,.5);
+  --ember:#c08444; --ember2:#8a5c2a; --coal2:#8a5c2a; --hot:#e8cba2;
+  --glow:rgba(192,132,68,.5); --glow2:rgba(192,132,68,.14);
+  --spoke-glow:rgba(192,132,68,.5);
   --bg:#0A0A0C; --surf:#101014; --surf2:#16161c;
   --edge:#23232b; --edge2:#2e2e38;
   --skin:#ece9e2; --ash:#9a958c;
 }
 body{background:#0A0A0C !important}
-::selection{background:rgba(212,175,55,.32)}
+::selection{background:rgba(192,132,68,.32)}
 /* ── ПОД КАПОТ: тех-информация живёт под футер, в нативном спойлере ── */
 .sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
   background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-top:1px solid rgba(212,175,55,.22);color:#b9b4aa;
+  border-top:1px solid rgba(192,132,68,.22);color:#b9b4aa;
   font:.75rem/1.55 ui-monospace,'SF Mono',Consolas,monospace}
 .sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;
-  color:#d4af37;letter-spacing:.08em}
+  color:#c08444;letter-spacing:.08em}
 .sng-подкапот>summary::-webkit-details-marker{display:none}
-.sng-подкапот>summary::before{content:'⌇ ';color:#8a6d1d}
-.sng-подкапот>summary:hover{background:rgba(212,175,55,.08)}
-.sng-подкапот[open]>summary{border-bottom:1px solid rgba(212,175,55,.14)}
+.sng-подкапот>summary::before{content:'⌇ ';color:#8a5c2a}
+.sng-подкапот>summary:hover{background:rgba(192,132,68,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(192,132,68,.14)}
 .sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
-.sng-подкапот .тело b{color:#d4af37;font-weight:600}
-.sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
+.sng-подкапот .тело b{color:#c08444;font-weight:600}
+.sng-подкапот a{color:#c08444;text-decoration:none;border-bottom:1px solid rgba(192,132,68,.35)}
 </style><style id="sng-lift-v135">
 /* чип «под капот» занимает нижнюю кромку — штатные панели поднимаем */
 .tabbar{bottom:23px !important}
@@ -575,7 +592,7 @@ html[data-view="player"] #gl{opacity:.35}
 .b-stats .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem;margin:0}
 .b-stats .stat{display:flex;flex-direction:column;gap:.3rem;justify-content:center;
   border:1px solid var(--edge);border-radius:14px;padding:.7rem .85rem;
-  background:rgba(255,255,255,.022);font-size:.62rem;color:var(--ash);letter-spacing:.02em;
+  background:rgba(255,255,255,.022);font-size:.6875rem;color:var(--ash);letter-spacing:.02em;
   transition:border-color .2s,transform .2s}
 .b-stats .stat:hover{border-color:var(--glow);transform:translateY(-2px)}
 .b-stats .stat b{font-family:var(--fd);font-size:1.12rem;color:var(--ember);font-weight:700;line-height:1.1}
@@ -619,13 +636,13 @@ html[data-view="player"] #gl{opacity:.35}
   border:1px solid var(--edge2);border-radius:14px;padding:.4rem;max-height:min(60vh,440px);
   overflow:auto;box-shadow:0 18px 50px rgba(0,0,0,.55)}
 .gs-drop[hidden]{display:none}
-.gs-sec{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;
+.gs-sec{font-family:var(--fm);font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--mute);padding:.5rem .6rem .2rem}
 .gs-item{display:flex;gap:.6rem;align-items:center;width:100%;text-align:left;
   padding:.45rem .6rem;border-radius:9px;color:var(--skin);font-size:.8rem;cursor:pointer}
 .gs-item:hover,.gs-item:focus-visible{background:var(--glow2);color:var(--ember);text-decoration:none}
-.gs-item .cod{font-family:var(--fm);font-size:.6rem;color:var(--ember);min-width:5.4ch}
-.gs-item .m{margin-left:auto;font-family:var(--fm);font-size:.56rem;color:var(--mute);white-space:nowrap}
+.gs-item .cod{font-family:var(--fm);font-size:.6875rem;color:var(--ember);min-width:5.4ch}
+.gs-item .m{margin-left:auto;font-family:var(--fm);font-size:.6875rem;color:var(--mute);white-space:nowrap}
 .gs-empty{padding:.6rem;color:var(--mute);font-size:.74rem}
 
 /* ── мини-плеер: очередь под рукой ── */
@@ -639,14 +656,14 @@ html[data-view="player"] #gl{opacity:.35}
 .q-list{display:flex;flex-direction:column;gap:.35rem;max-height:46svh;overflow:auto;margin:.5rem 0}
 .q-row{display:flex;gap:.5rem;align-items:center;border:1px solid var(--edge);border-radius:10px;
   padding:.45rem .6rem;font-size:.78rem}
-.q-row .qn{font-family:var(--fm);font-size:.58rem;color:var(--mute);min-width:2.2ch}
+.q-row .qn{font-family:var(--fm);font-size:.6875rem;color:var(--mute);min-width:2.2ch}
 .q-row .qt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.q-row .qk{font-family:var(--fm);font-size:.55rem;color:var(--ember);letter-spacing:.1em}
+.q-row .qk{font-family:var(--fm);font-size:.6875rem;color:var(--ember);letter-spacing:.1em}
 .q-row .qx{width:1.7rem;height:1.7rem;border-radius:7px;border:1px solid var(--edge);color:var(--ash);
   display:grid;place-items:center;font-size:.7rem;flex:0 0 auto}
 .q-row .qx:hover{color:#e0483e;border-color:#e0483e}
 .q-empty{color:var(--mute);font-size:.76rem;padding:.6rem 0}
-.eq-row{display:flex;gap:.7rem;align-items:center;font-family:var(--fm);font-size:.66rem;
+.eq-row{display:flex;gap:.7rem;align-items:center;font-family:var(--fm);font-size:.6875rem;
   color:var(--ash);padding:.42rem 0}
 .eq-row span{min-width:5.2ch;color:var(--mute);letter-spacing:.08em}
 .eq-row input{flex:1;accent-color:var(--ember)}
@@ -695,7 +712,7 @@ html[data-view="player"] #sg65nav{display:none !important}
 /* ── УДОБНО КАЖДОМУ (такт v1.55.0): предпочтения человека — классы на <html> ── */
 html.уд-текст-крупно{font-size:18px}
 html.уд-текст-огромно{font-size:20px}
-html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#FFD865;--ember2:#F0C05A;--glow:rgba(255,216,101,.6)}
+html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#F0C878;--ember2:#F0C05A;--glow:rgba(255,216,101,.6)}
 html.уд-тихо *{animation:none!important;transition:none!important}
 html.уд-тихо{scroll-behavior:auto}
 /* крупные цели (уд-крупно — выбор с фасада, один на весь дом): касания шире */
@@ -707,33 +724,74 @@ html.уд-крупно .уд-ряд{padding:15px 0}
 html.уд-крупно .уд-вкл{min-height:48px}
 /* кнопка и панель: стекло + золото канона дома */
 .уд-кнопка{position:fixed;top:12px;right:14px;z-index:2147482000;appearance:none;cursor:pointer;
-  font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;
-  background:rgba(26,29,35,.82);border:1px solid rgba(212,175,55,.55);border-radius:999px;
+  font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;
+  background:rgba(26,29,35,.82);border:1px solid rgba(192,132,68,.55);border-radius:999px;
   padding:12px 18px;min-height:44px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(212,175,55,.3);outline:2px solid #F0D78C;outline-offset:2px}
+.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(192,132,68,.3);outline:2px solid #E8C89C;outline-offset:2px}
 /* в топбаре румы «Удобно» — родной чип апп-бара (мир: настройки в апп-баре) */
-.уд-кнопка.уд-в-топбаре{position:static;z-index:auto;font-family:var(--fm);font-size:.64rem;
+.уд-кнопка.уд-в-топбаре{position:static;z-index:auto;font-family:var(--fm);font-size:.6875rem;
   letter-spacing:.1em;text-transform:uppercase;min-height:0;padding:.36rem .7rem;
   background:none;border:1px solid var(--edge);backdrop-filter:none;-webkit-backdrop-filter:none}
 .уд-кнопка.уд-в-топбаре:hover,.уд-кнопка.уд-в-топбаре:focus-visible{background:none;color:var(--ember);border-color:var(--glow);box-shadow:none;outline-offset:1px}
-.уд-кнопка[aria-expanded="true"]{border-color:#D4AF37}
+.уд-кнопка[aria-expanded="true"]{border-color:#C08444}
 .уд-панель{position:fixed;top:64px;right:14px;z-index:2147482001;width:min(340px,calc(100vw - 28px));
   max-height:calc(100svh - 84px);overflow:auto;background:rgba(20,22,27,.97);color:#C0C8D0;
-  border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:18px 18px 14px;
+  border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:18px 18px 14px;
   box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;margin:0 0 4px}
+.уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;margin:0 0 4px}
 .уд-пояс{font:.78rem/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 12px}
 .уд-ряд{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(240,240,248,.08)}
 .уд-имя{font:.9rem/1.4 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .уд-имя small{display:block;font-weight:400;color:#8A9099;font-size:.75rem}
 .уд-вкл{appearance:none;cursor:pointer;flex:none;min-width:72px;min-height:40px;border-radius:999px;
-  border:1px solid rgba(212,175,55,.55);background:none;color:#8A9099;
+  border:1px solid rgba(192,132,68,.55);background:none;color:#8A9099;
   font:600 .81rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
-.уд-вкл:hover,.уд-вкл:focus-visible{color:#F0D78C;outline:2px solid #F0D78C;outline-offset:2px}
-.уд-вкл[aria-pressed="true"]{background:rgba(212,175,55,.16);color:#F0D78C;border-color:#D4AF37}
+.уд-вкл:hover,.уд-вкл:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
+.уд-вкл[aria-pressed="true"]{background:rgba(192,132,68,.16);color:#E8C89C;border-color:#C08444}
 .уд-статус{margin:10px 0 0;font:.75rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
 .уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
 @media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
+</style>
+<style id="такт-бронза">
+/* ── Такт v1.57.0 «БРОНЗА»: фичи дифа — цели 44px на сенсоре, «наверх», скелетон, лирика S/M/L, fluid-герой ── */
+/* Ж1: платформенные цели на сенсорных экранах (Apple 44pt / Android 48dp) */
+@media (pointer:coarse){
+  .tbtn{min-height:44px;padding:.55rem .85rem}
+  .tab{padding:.6rem .2rem;min-height:44px}
+  .snav{padding:.75rem}
+  .ab{min-height:44px}
+  .fchip{min-height:44px}
+  .уд-кнопка.уд-в-топбаре{min-height:44px}
+  .kl{padding:.45rem .45rem}
+}
+/* Ж4: fluid-заголовок героя (Smashing: clamp(min, vw, max)) */
+.b-title h1{font-size:clamp(1.9rem,1.1rem + 3.2vw,2.7rem);line-height:1.08}
+@media(max-width:640px){.b-title h1{font-size:1.5rem}}
+/* Ж3: кнопка «наверх» (комфорт длинных вьюх, vestibular.org) */
+#наверх{position:fixed;left:12px;bottom:calc(4.4rem + var(--sab));z-index:60;display:none;
+  appearance:none;cursor:pointer;min-height:44px;padding:.5rem .8rem;border-radius:999px;
+  border:1px solid rgba(192,132,68,.55);background:rgba(20,17,14,.92);color:#E8C89C;
+  font:600 .81rem/1 var(--fb);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#наверх.виден{display:inline-flex}
+#наверх:hover,#наверх:focus-visible{color:#F7DDAE;outline:2px solid #E8C89C;outline-offset:2px}
+@media(min-width:821px){#наверх{left:calc(var(--nav-w) + 12px);bottom:.9rem}}
+/* К4: скелетон вьюхи «Файлы», пока модуль 5,6 МБ едет (NN/g: шиммер слева-направо) */
+.скелет{border:1px solid var(--edge);border-radius:12px;padding:1rem;background:var(--surf)}
+.скелет .шапка{height:.9rem;width:38%;border-radius:6px;margin:0 0 .8rem;
+  background:linear-gradient(90deg,#1a1713 25%,#262019 50%,#1a1713 75%);background-size:200% 100%;
+  animation:скелет-шиммер 1.4s linear infinite}
+.скелет .строка{height:.62rem;border-radius:5px;margin:.55rem 0;
+  background:linear-gradient(90deg,#1a1713 25%,#262019 50%,#1a1713 75%);background-size:200% 100%;
+  animation:скелет-шиммер 1.4s linear infinite}
+.скелет .строка.коротка{width:56%}
+@keyframes скелет-шиммер{from{background-position:200% 0}to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.скелет .шапка,.скелет .строка{animation:none}}
+/* К3: лирика S/M/L — классы на kstage */
+.kstage.lr-мелко .kl{font-size:clamp(.9rem,2.4vh,1.2rem)}
+.kstage.lr-крупно .kl{font-size:clamp(1.35rem,4.4vh,2.1rem);line-height:1.34}
+/* К2-хвост: строка лирики честно просит тапа, когда очки выключены */
+body:not(.тэп-вкл) .kl.song{transition:color .3s,background .2s}
+body:not(.тэп-вкл) .kl.song:hover{background:rgba(192,132,68,.08)}
 </style>
 </head>
 <body>
@@ -746,7 +804,7 @@ window.SG_ТВ=ТВ;
 window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
 }());</script>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
-<style>/* канон дома v1.35.0 «СТАНДАРТ»: void + золото, стекло насквозь — сцены и темы data-theme аппа не тронуты */body{background:#0A0A0C !important}.singulyar-canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 22% 18%,rgba(212,175,55,.10) 0%,transparent 42%),radial-gradient(circle at 80% 85%,rgba(212,175,55,.07) 0%,transparent 46%),radial-gradient(circle at 50% 50%,rgba(232,213,141,.04) 0%,transparent 55%),#0A0A0C}</style>
+<style>/* канон дома v1.35.0 «СТАНДАРТ»: void + золото, стекло насквозь — сцены и темы data-theme аппа не тронуты */body{background:#0A0A0C !important}.singulyar-canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 22% 18%,rgba(192,132,68,.10) 0%,transparent 42%),radial-gradient(circle at 80% 85%,rgba(192,132,68,.07) 0%,transparent 46%),radial-gradient(circle at 50% 50%,rgba(232,213,141,.04) 0%,transparent 55%),#0A0A0C}</style>
 <canvas id="gl" aria-hidden="true"></canvas>
 
 <div id="app">
@@ -980,6 +1038,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
     <button class="ab" id="prev" aria-label="Предыдущий язык">← язык</button>
     <button class="ab" id="next" aria-label="Следующий язык">язык →</button>
     <button class="ab" id="btnFull" aria-pressed="false" aria-label="Весь текст (V)">весь текст</button>
+    <button class="ab" id="btnLrcS" aria-label="Размер лирики: мелко, средне, крупно">Аа</button>
     <button class="ab" id="btnLrc" aria-label="Скачать LRC текущего языка">LRC </button>
     <button class="ab" id="btnSansara" aria-pressed="false" title="Сансара: после конца трека — следующий язык по кругу (X)">сансара: выкл</button>
     <button class="ab" id="abRec" aria-pressed="false" title="Запись пения: микрофон + трек в один файл, всё остаётся на твоём устройстве (R)">● запись</button>
@@ -2149,6 +2208,7 @@ function wirePlayer(){
   /* ТЭП */
   $('#btnTap').addEventListener('click',e=>{
     SCORE.on=!SCORE.on;
+    document.body.classList.toggle('тэп-вкл',!!SCORE.on);
     e.currentTarget.classList.toggle('on',SCORE.on);
     e.currentTarget.setAttribute('aria-pressed',String(SCORE.on));
     $('#scorebar').style.display=SCORE.on?'flex':'none';
@@ -2322,7 +2382,7 @@ function wire(){
 
 /* ── ленивые файлы задачи (вынесены из страницы ради старта) ── */
 var __tasksPromise=null;
-function loadTasks(){
+var __LoadTasks=loadTasks;loadTasks=function(){ if(!window.TASKDATA&&window.__скелетФайлов)window.__скелетФайлов(); return __LoadTasks.apply(this,arguments) };function loadTasks(){
   if(window.TASKDATA)return Promise.resolve();
   if(__tasksPromise)return __tasksPromise;
   __tasksPromise=new Promise((res,rej)=>{
@@ -2598,14 +2658,14 @@ $('#btnCard').addEventListener('click',()=>{
       g.drawImage(img,80+(430-img.width*s)/2,105+(430-img.height*s)/2,img.width*s,img.height*s);
       g.restore();
     }else{g.fillStyle='#141009';rr(g,80,105,430,430,26);g.fill()}
-    g.fillStyle='#d4af37';
+    g.fillStyle='#c08444';
     g.font='700 30px system-ui,sans-serif';g.fillText('СИНГУЛЯР·01',560,150);
     g.fillStyle='#ece9e2';
     g.font='700 52px system-ui,sans-serif';
     g.fillText(isTrax?(TRAX_BY[SONG.id]||{}).t||SONG.id:'Когда теряем',560,225);
     g.fillStyle='#98918a';g.font='28px system-ui,sans-serif';
     g.fillText(isTrax?('синтез-фон · '+String(traxLangsOf(SONG.id).length)+' языков corpus'):('голос: '+langName(cur)),560,270);
-    g.fillStyle='#d4af37';g.font='800 96px system-ui,sans-serif';
+    g.fillStyle='#c08444';g.font='800 96px system-ui,sans-serif';
     g.fillText(String(sess>0?sess:best).replace(/\B(?=(\d{3})+(?!\d))/g,' '),560,390);
     g.fillStyle='#98918a';g.font='26px system-ui,sans-serif';
     g.fillText(sess>0?'ТЭП этой сессии':'рекорд ТЭП этого голоса',560,432);
@@ -2613,7 +2673,7 @@ $('#btnCard').addEventListener('click',()=>{
       g.fillStyle='#ece9e2';g.font='30px system-ui,sans-serif';
       g.fillText('точность '+acc+'% · комбо ×'+SCORE.maxCombo,560,492);
     }
-    g.strokeStyle='rgba(212,175,55,.4)';g.lineWidth=2;rr(g,40,40,1120,550,30);g.stroke();
+    g.strokeStyle='rgba(192,132,68,.4)';g.lineWidth=2;rr(g,40,40,1120,550,30);g.stroke();
     g.fillStyle='#6e6862';g.font='22px ui-monospace,monospace';
     g.fillText('одна песня · 157 голосов · одна правда — офлайн, без слежки',560,560);
     cv.toBlob(b=>{if(b)dlBlob(b,'СИНГУЛЯР_ТЭП_'+(isTrax?SONG.id:cur)+'.png')},'image/png');
@@ -2710,21 +2770,21 @@ addEventListener('hashchange',function(){
 });
 
 </script>
-<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#b08d2a;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#b08d2a;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#ab7b42;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#ab7b42;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
 <style>
-#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 111px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(192,132,68,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#C08444;color:#E9CA92;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#D4AF37;font-size:.66rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#C08444;font-size:.6875rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(192,132,68,.14);color:#E9CA92;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
@@ -2892,6 +2952,71 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
   Object.keys(Б).forEach(function(к){ var эл=document.getElementById(к);
     if(эл) эл.setAttribute('aria-label', Б[к].имя); });
   отразить(чит());
+})();
+</script>
+<button type="button" id="наверх" aria-label="Наверх страницы" title="Наверх страницы">↑ наверх</button>
+<script>
+/* Такт v1.57.0 «БРОНЗА»: лирика S/M/L · скелетон «Файлов» · кнопка «наверх». */
+(function(){
+  /* ── лирика S/M/L (память на устройстве: kv.лирика) ── */
+  var kstage=document.querySelector('.kstage');
+  var кнопка=document.getElementById('btnLrcS');
+  var КЛЮЧ='kv.лирика', ступени=['средне','мелко','крупно'];
+  function читаю(){ try{ return localStorage.getItem(КЛЮЧ)||'средне' }catch(e){ return 'средне' } }
+  function ставлю(с){
+    if(!kstage) return;
+    kstage.classList.toggle('lr-мелко', с==='мелко');
+    kstage.classList.toggle('lr-крупно', с==='крупно');
+    if(кнопка){
+      var метка = с==='мелко'?'Аа мелко':(с==='крупно'?'Аа крупно':'Аа');
+      кнопка.textContent=метка;
+      кнопка.setAttribute('aria-label','Размер лирики: сейчас '+с+'. Нажми, чтобы сменить');
+    }
+  }
+  if(кнопка){
+    ставлю(читаю());
+    кнопка.addEventListener('click',function(){
+      var сейчас=читаю();
+      var след=ступени[(ступени.indexOf(сейчас)+1)%ступени.length];
+      try{ localStorage.setItem(КЛЮЧ,след) }catch(e){}
+      ставлю(след);
+      try{ if(window.SNG_ТИХО!==true){} }catch(e){}
+    });
+  }
+  /* ── скелетон «Файлов», пока модуль едет ── */
+  window.__скелетФайлов=function(){
+    var w=document.getElementById('taskScroll'); if(!w) return;
+    var d=document.createElement('div'); d.className='скелет'; d.setAttribute('aria-hidden','true');
+    var т='<div class="шапка"></div>';
+    for(var i=0;i<7;i++) т+='<div class="строка'+(i%2?' коротка':'')+'"></div>';
+    d.innerHTML=т; w.replaceChildren(d);
+  };
+  /* ── кнопка «наверх»: длинные вьюхи, появляется после 500px ── */
+  var нав=document.getElementById('наверх');
+  function жёлоб(){ return document.scrollingElement || document.documentElement }
+  function кто_скроллит(){
+    var в=document.querySelector('.view.on');
+    if(в && в.scrollHeight>в.clientHeight+40) return в;
+    var м=document.getElementById('main');
+    if(м && м.scrollHeight>м.clientHeight+40) return м;
+    return жёлоб();
+  }
+  if(нав){
+    function обнов(){
+      var э=кто_скроллит();
+      var верх = э===жёлоб() ? (window.scrollY||0) : э.scrollTop;
+      нав.classList.toggle('виден', верх>500);
+    }
+    ['scroll','resize'].forEach(function(t){ window.addEventListener(t,обнов,{passive:true}) });
+    document.addEventListener('click',function(e){
+      if(e.target && e.target.id==='наверх' || e.target && e.target.closest && e.target.closest('#наверх')){
+        var э=кто_скроллит();
+        if(э===жёлоб()) window.scrollTo({top:0,behavior:(document.documentElement.classList.contains('уд-тихо')?'auto':'smooth')});
+        else э.scrollTo({top:0,behavior:(document.documentElement.classList.contains('уд-тихо')?'auto':'smooth')});
+      }
+    });
+    setInterval(обнов,800);
+  }
 })();
 </script>
 <script>
