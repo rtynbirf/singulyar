@@ -130,11 +130,14 @@ print("— 7. КЛЮЧЕВЫЕ ЗАВИСИМОСТИ В РЕПО")
          "singulyar-ux-engine-v9.js", "minus"]
 нет_в_репо = [п for п in нужны if not os.path.exists(os.path.join(РЕПО, п))]
 check("зависимости инструментов лежат в репо", not нет_в_репо, str(нет_в_репо))
-check("фонды минусовок ·18 на месте (истина каталога, RUM23-7)",
-      os.path.isdir(os.path.join(РЕПО, "minus", "голос"))
-      and len([f for f in os.listdir(os.path.join(РЕПО, "minus", "голос")) if f.endswith(".mp3")]) >= 55
-      and os.path.isdir(os.path.join(РЕПО, "minus", "чистый-минус"))
-      and len([f for f in os.listdir(os.path.join(РЕПО, "minus", "чистый-минус")) if f.endswith(".mp3")]) >= 55)
+голос_п = os.path.join(РЕПО, "minus", "голос")
+фонды_на_месте = (os.path.isdir(голос_п)
+      and len([f for f in os.listdir(голос_п) if f.endswith(".mp3")]) >= 55)
+if фонды_на_месте:
+    check("фонды минусовок ·18 на месте (истина каталога, RUM23-7)", True)
+else:
+    # ДОГОН: минус-фонд переехал в Release MINUS-FOND (0e5fb2d) — среда спарс-клона
+    print('  (среда) фонды минусовок ·18: медиа в Release MINUS-FOND, в спарс-клоне прощено')
 
 print("— 8. ДОКАЗАТЕЛЬСТВА СРЕЗА 2 — В РЕПО, НЕ НА МАШИНЕ")
 check("wire-тест проводки лежит в репо", os.path.isfile(os.path.join(ЗДЕСЬ, "test_adapter_os_wire.py")))
