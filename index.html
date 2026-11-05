@@ -219,20 +219,24 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
   </section>
   
   
+  <!-- Такт v1.52.0 «ИОН» (слово владельца: «ИОН САМ РАЗЛЕТАЛСЯ НА ОСКОЛКИ»):
+       кристалл сам рассыпается на 45 дверей-осколков и нити связей при приходе —
+       на лице дома двери и связи; касание ядра — СОБРАТЬ ион, повторное — РАССЫПАТЬ.
+       Двери-осколки открываются и перетаскиваются («куда поставил — там и стоит»). -->
 <section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
     
-    <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="false"
+    <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="true"
             aria-controls="осколкиСлой"
-            aria-label="Кристалл SINGULYAR — рассыпать на двери дома">
+            aria-label="Кристалл SINGULYAR — собрать осколки обратно">
       <img id="crystalHero" src="./КРИСТАЛЛ.webp" width="500" height="420" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
     </button>
-    <p class="тихо-подсказка" id="статусОсколков" aria-live="polite">коснись кристалла — рассыплется на двери дома</p>
+    <p class="тихо-подсказка" id="статусОсколков" aria-live="polite">ион сам рассыпается на 45 дверей · касание — собрать · ещё касание — рассыпать</p>
     <div id="осколкиСлой" class="осколки-слой" hidden></div>
     <h1 class="sng-crystal-title" style="margin-top:6px">SINGULYAR</h1>
     <p class="aio-sub">Ambient Intent Organism</p>
     <div class="подчерк" aria-hidden="true"><i></i></div>
     <p class="motto">Смысл один. Представление — твоё.</p>
-    <p class="тихо-подсказка" style="margin-top:2px"><b data-реестр="дверей">43</b> дверь · <b data-реестр="песен">62</b> песни · <b data-реестр="языков">200</b> языков</p>
+    <p class="тихо-подсказка" style="margin-top:2px"><b data-реестр="дверей">45</b> дверь · <b data-реестр="песен">62</b> песни · <b data-реестр="языков">200</b> языков</p>
     <div class="obj-row">
       <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
       <a class="obj-chip" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">◇ Установить дом — 2 минуты</a>
@@ -253,9 +257,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
       <div id="намерениеОтвет" class="намерение-ответ" aria-live="polite"></div>
     </section>
   </section>
-  
 
->
   <script>
   /* ДВЕРИ строит ядро SNG из манифеста (манифест — истина; ноль innerHTML).
      Нить под капотом: на лице её нет — движок дома открывает по нити.
