@@ -748,23 +748,44 @@ dialog#panel .p-tabs button{border-radius:12px;min-height:50px;display:flex;flex
   align-items:center;justify-content:center;gap:3px;padding:6px 4px;font-size:10.5px;
   letter-spacing:.07em;border-bottom:none;text-align:center;width:100%}
 dialog#panel .p-tabs button .tab-ico{font-size:17px;line-height:1}
-dialog#panel .p-tabs button.on{box-shadow:none;color:#e8c89c;
-  /* v1.63.0 «ПЕРЕЛИВ» (С165): слово владельца «Я ДЛЯ ЧЕГО ТЕБЕ ДАЛ ДИАПОЗОН ПАЛИТРЫ В ПОЛОСЕ? ЧТОБ ТЫ ВСЁ СДЕЛАЛ В ОДНОМ ТОНЕ?=) НУ СДЕЛАЙ ТЫ ИХ ПЕРЕЛЕВНЫМИ СТЕКЛЯННЫМИ ТЕБЕ ЧТО ЖАЛКО?» — стекло из трёх слоёв: блик ходит туда-сюда, под ним весь диапазон бронзы владельца #665231→#987B4F→#B08D57→#E8C89C и объём (светлый верх, тёмный низ) */
+@property --опал{syntax:'<angle>';inherits:false;initial-value:45deg}
+dialog#panel .p-tabs button.on{box-shadow:none;position:relative;color:#e8c89c;
+  /* v1.64.0 «ШЕДЕВР» (С166): слово владельца «ПОСМОТРИ КАК В ЛУЧШИХ ТРЕНДАХ МИРОВЫХ ПРАКТИК ДЕЛАЮТ И ЗАБУБЕНЬ ЛУЧШЕ ЧЕМ У НИХ У ВСЕХ ВМЕСТЕ ВЗЯТЫХ» — опал-стекло из шести слоёв по канонам Apple Liquid Glass (WWDC25) и голографии-2026, но щедрее:
+     (1) ГЛАВНЫЙ БЛИК идёт ПО ДИАГОНАЛИ (дрейф X+Y, 105°), медленный люкс 7.2s;
+     (2) ЭХО-БЛИК встречный (75°, противоход) — перекрестье света, ритм разведён;
+     (3) ОПАЛ-КОНИКА вращается 13s (registered @property, soft-light) — жемчужная игра;
+     (4) весь ДИАПАЗОН бронзы владельца #665231→#987B4F→#B08D57→#E8C89C поперёк полосы;
+     (5) ОБЪЁМ (светлый верх, тёмный низ);
+     (6) ГРЕЙН (feTurbulence, overlay) — против бандинга, дорогой рендер;
+     + backdrop blur+saturate (преломление, Apple), спекулярная кромка-бевел, дыхание свечения, отклик руки (hover/focus). Канон не тронут: --amber #B08D57, диапазон, крем-текст #e8c89c (контраст 7.1). */
   background-color:rgba(176,141,87,.12);
   background-image:
-    linear-gradient(105deg,rgba(232,200,156,0) 14%,rgba(240,200,120,.22) 30%,rgba(232,200,156,.40) 40%,rgba(176,141,87,.12) 52%,rgba(240,200,120,.20) 64%,rgba(232,200,156,0) 82%),
+    linear-gradient(105deg,rgba(232,200,156,0) 12%,rgba(240,200,120,.20) 28%,rgba(232,200,156,.42) 38%,rgba(176,141,87,.10) 50%,rgba(240,200,120,.18) 62%,rgba(232,200,156,0) 80%),
+    linear-gradient(75deg,rgba(232,200,156,0) 30%,rgba(176,141,87,.16) 46%,rgba(240,200,120,.14) 54%,rgba(232,200,156,0) 72%),
+    conic-gradient(from var(--опал,45deg) at 50% 50%,rgba(232,200,156,.15),rgba(102,82,49,.11),rgba(240,200,120,.17),rgba(102,82,49,.11),rgba(232,200,156,.15)),
     linear-gradient(90deg,rgba(102,82,49,.40) 0%,rgba(152,123,79,.30) 22%,rgba(176,141,87,.24) 50%,rgba(152,123,79,.30) 78%,rgba(102,82,49,.40) 100%),
-    linear-gradient(180deg,rgba(232,200,156,.16) 0%,rgba(176,141,87,.05) 42%,rgba(0,0,0,.28) 100%);
-  background-size:250% 100%,100% 100%,100% 100%;
-  background-position:0% 0,0 0,0 0;
+    linear-gradient(180deg,rgba(232,200,156,.16) 0%,rgba(176,141,87,.05) 42%,rgba(0,0,0,.28) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/></filter><rect width='140' height='140' filter='url(%23g)'/></svg>");
+  background-size:220% 260%,240% 220%,300% 300%,100% 100%,100% 100%,140px 140px;
+  background-position:0% 0%,100% 100%,50% 50%,0 0,0 0,0 0;
+  background-blend-mode:normal,normal,soft-light,normal,normal,overlay;
   border-color:rgba(176,141,87,.55);
-  box-shadow:inset 0 1px 0 rgba(232,200,156,.38),inset 0 -1px 0 rgba(0,0,0,.5),0 0 24px rgba(176,141,87,.16);
+  box-shadow:inset 0 1.5px 0 rgba(232,200,156,.50),inset 0 -1px 0 rgba(232,200,156,.10),inset 0 -10px 22px rgba(0,0,0,.34),0 6px 18px rgba(0,0,0,.30),0 0 22px rgba(176,141,87,.13);
   text-shadow:0 1px 3px rgba(0,0,0,.65),0 0 9px rgba(0,0,0,.3);
-  animation:переливПолоса 4.6s ease-in-out infinite alternate}
-@keyframes переливПолоса{0%{background-position:0% 0,0 0,0 0}100%{background-position:100% 0,0 0,0 0}}
-/* сдвиг фаз: шапки групп и строки переливаются вразнобой — стекло живое, а не строевой ряд */
-dialog#panel .pgroup button.on{animation-duration:5.6s}
-dialog#panel .seg button.on{animation-duration:4.2s}
+  backdrop-filter:blur(10px) saturate(150%);-webkit-backdrop-filter:blur(10px) saturate(150%);
+  transition:filter .3s ease;
+  animation:переливПолоса 7.2s ease-in-out infinite alternate,опалХод 13s linear infinite}
+dialog#panel .p-tabs button.on:hover,dialog#panel .p-tabs button.on:focus-visible{filter:brightness(1.09) saturate(1.06)}
+@keyframes переливПолоса{
+  0%{background-position:0% 0%,100% 100%,50% 50%,0 0,0 0,0 0;
+     box-shadow:inset 0 1.5px 0 rgba(232,200,156,.50),inset 0 -1px 0 rgba(232,200,156,.10),inset 0 -10px 22px rgba(0,0,0,.34),0 6px 18px rgba(0,0,0,.30),0 0 22px rgba(176,141,87,.13)}
+  100%{background-position:100% 100%,0% 0%,50% 50%,0 0,0 0,0 0;
+     box-shadow:inset 0 1.5px 0 rgba(232,200,156,.50),inset 0 -1px 0 rgba(232,200,156,.10),inset 0 -10px 22px rgba(0,0,0,.34),0 6px 18px rgba(0,0,0,.30),0 0 32px rgba(176,141,87,.22)}}
+@keyframes опалХод{to{--опал:405deg}}
+/* сдвиг фаз: каждый ряд стекла в своём ритме; строки — blur полегче (телефон владельца) */
+dialog#panel .pgroup button.on{animation-duration:8.7s,13s}
+dialog#panel .seg button.on{animation-duration:6.3s,13s;backdrop-filter:blur(7px) saturate(140%);-webkit-backdrop-filter:blur(7px) saturate(140%)}
+@media (prefers-reduced-transparency:reduce){dialog#panel .p-tabs button.on{backdrop-filter:none;-webkit-backdrop-filter:none;background-color:rgba(176,141,87,.32)}}
 dialog#panel .p-body{grid-area:body;padding:10px 20px 26px}
 dialog#panel .p-справка{grid-area:help;border-left:1px solid #ffffff12;padding:14px 16px 18px;
   overflow-y:auto;min-width:0;scrollbar-width:none}
@@ -17167,12 +17188,17 @@ dialog#panel .p-tabs .pg-чипы::-webkit-scrollbar{display:none}
 dialog#panel .p-tabs .pg-чип{flex:none;width:auto;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:6px 12px;border-radius:99px;border:1px solid #ffffff18;background:#ffffff0a;color:var(--dim,#A7A8A8);font:800 11.5px/1.1 var(--f,system-ui,sans-serif);letter-spacing:.05em;cursor:pointer;white-space:nowrap;box-shadow:none;text-align:center}
 dialog#panel .p-tabs .pg-чип:hover{color:var(--text,#BABAB9);border-color:#ffffff2e;background:#ffffff14}
 dialog#panel .p-tabs .pg-чип.on{color:#060606;
+  /* v1.64.0 «ШЕДЕВР»: чип — тот же опал в малом калибре: вращающаяся коника (soft-light) поверх диапазона, диагональный ход, бевел; текст #060606 — контраст 5.1 держать */
   background-color:var(--amber,#B08D57);
-  background-image:linear-gradient(135deg,#987B4F 0%,#B08D57 30%,#E8C89C 50%,#B08D57 70%,#987B4F 100%);
-  background-size:220% 100%;background-position:0% 0;
+  background-image:
+    conic-gradient(from var(--опал,45deg) at 50% 50%,rgba(240,200,120,.34),rgba(102,82,49,.22),rgba(240,200,120,.30),rgba(102,82,49,.20),rgba(240,200,120,.34)),
+    linear-gradient(135deg,#987B4F 0%,#B08D57 30%,#E8C89C 50%,#B08D57 70%,#987B4F 100%);
+  background-size:280% 280%,220% 100%;background-position:50% 50%,0% 0%;
+  background-blend-mode:soft-light,normal;
   border-color:transparent;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(0,0,0,.35),0 0 14px rgba(176,141,87,.30);
-  animation:переливХод 3.6s ease-in-out infinite alternate}
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.40),inset 0 -1px 0 rgba(255,255,255,.14),0 0 14px rgba(176,141,87,.30);
+  animation:переливЧипДиаг 5.4s ease-in-out infinite alternate,опалХод 15s linear infinite}
+@keyframes переливЧипДиаг{0%{background-position:50% 50%,0% 0}100%{background-position:50% 50%,100% 100%}}
 @keyframes переливХод{0%{background-position:0% 0}100%{background-position:100% 0}}
 /* тихий режим дома: перелив замирает, стекло и диапазон остаются (канон «спокойное движение», v1.63.0) */
 html.уд-тихо dialog#panel .p-tabs button.on,html.уд-тихо dialog#panel .p-tabs .pg-чип.on,html.уд-тихо dialog h3,html.уд-тихо dialog#panel .pgroup button.on,html.уд-тихо dialog#panel .seg button.on{animation:none!important}
