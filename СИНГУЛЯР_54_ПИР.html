@@ -20,9 +20,9 @@
 /* v11.35 «ЛИЦО»: чужой бежево-бирюзовый самодельный дизайн снят по приказу владельца
    «СТИЛЬ ЧЕЛОВЕКА НА ВСЕХ СТРАНИЦАХ ДОЛЖЕН БЫТЬ УЗНАВАЕМЫМ» — страница носит канон
    дома СТЕКЛО·СЕРЕБРО·ЗОЛОТО (singulyar-design-v3.css): void #0A0A0C, серебро текстов,
-   золото #D4AF37 — единственный акцент, стекло с тонкой светлой рамкой, семантика
+   золото #B08D57 — единственный акцент, стекло с тонкой светлой рамкой, семантика
    ошибок остаётся ошибками. Все селекторы и ID страницы сохранены — поменяли только краску. */
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#0A0A0C;--fg:#C0C8D0;--panel:rgba(26,29,35,.55);--panel-solid:#1A1D23;--line:rgba(240,240,248,.14);--accent:#D4AF37;--gold-hi:#F5A623;--gold-pale:#F0D78C;--focus:#F5D58F;--red:#E4736B;--dim:#8A9099}
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;--bg:#0A0A0C;--fg:#C0C8D0;--panel:rgba(26,29,35,.55);--panel-solid:#1A1D23;--line:rgba(240,240,248,.14);--accent:#B08D57;--gold-hi:#B08D57;--gold-pale:#E8C89C;--focus:#E8C89C;--red:#E4736B;--dim:#8A9099}
 *{box-sizing:border-box}
 [hidden]{display:none!important} /* латка С135-2: hidden сильнее любого display */
 body{margin:0;background:var(--bg);color:var(--fg)}
@@ -558,14 +558,14 @@ $('моёИмя').addEventListener('change', сохранитьПамять);
 <p class="sr-only">Дом СИНГУЛЯР: <span data-реестр="дверей">43</span> дверей · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков</p>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
@@ -632,6 +632,6 @@ $('моёИмя').addEventListener('change', сохранитьПамять);
 </details>
 </nav>
 <!-- такт v11.32 «ПИР» (С110, ключ ㉕; СТОП-ГОРН ×2: их v11.29 «КОНТУР» (С107, c302e672, PAT №33), их v11.30 «ЩИТ» (С108, 9ffceec, PAT №28) и их v11.31 «ТЕМП» (С109, c224ef3, PAT №28) встали между моими fetch и пушами — приняты целиком, мой такт перенумерован честно v11.29→v11.31→v11.32/С107→С109→С110/v180→v182→v183 (прецедент v10.91/v11.03/v11.21/v11.28); приказ владельца trace 1a13a36f98eeb3ad: «РАБОТАЙ СО СТАРЫМ КЛЮЧЁМ … МНЕ НУЖНА БУДЕТ РАБОТАЮЩАЯ СИСТЕМА ВИДЕОКОНФЕРЕНЦИИ АДИО ТЕКСТОВЫЕ СООБЩЕНИЯ БЕЗ ПОСРЕДНИКОВ ТОЛЬКО ПИР ТУ ПИР!!! … ПОЛНОСТЬЮ ПЕРЕДЕЛАЙ ВСЕ СТРАНИЦЫ СВЯЗАННЫЕ СО СВЯЗЬЮ»): дверь ·54 ПИР — живая P2P-связь (видео+аудио+текст+экран), ядро js/pir-core.js (pir-core/0.1 — релейный слой лестницы mesh-wire/0.1 линии М1, 0 сети при импорте И-01), транспорт БИБЛИОТЕКИ/trystero-nostr.bundle.mjs (self-hosted, MIT; релеи — только рукопожатие, ключ комнаты шифрует SDP), глухой режим — рукопожатие кодами без сети сигналинга; обвязка по канону ·38: КОРД, CSP-постур А + connect-src wss:, canonical/og, sg-registry, навигатор SG65, такт-штамп -->
-<!-- такт v11.35 «ЛИЦО» (С113, ключ ㉕): приказ владельца trace 1a13a87b2ecf7185 «КТО ТЕБЕ СКАЗАЛ ТЯНУТЬ СВОЙ ДИЗАЙН И ПОРТИТЬ ЛИЦО ЧЕЛОВЕКА? СТИЛЬ ЧЕЛОВЕКА НА ВСЕХ СТРАНИЦАХ ДОЛЖЕН БЫТЬ УЗНАВАЕМЫМ»: чужой бежево-бирюзовый самодельный дизайн снят — страница носит канон дома СТЕКЛО·СЕРЕБРО·ЗОЛОТО (singulyar-design-v3.css подключён, токены перекрашены: void #0A0A0C, серебро, золото #D4AF37 — единственный акцент, стекло, семантика ошибок честная); все селекторы/ID/функционал ·54 не тронуты; футер говорит правду (рождена v11.32, а не «v11.29»); штамп на правду такта. Функционал ПИР не менялся — только лицо. -->
+<!-- такт v11.35 «ЛИЦО» (С113, ключ ㉕): приказ владельца trace 1a13a87b2ecf7185 «КТО ТЕБЕ СКАЗАЛ ТЯНУТЬ СВОЙ ДИЗАЙН И ПОРТИТЬ ЛИЦО ЧЕЛОВЕКА? СТИЛЬ ЧЕЛОВЕКА НА ВСЕХ СТРАНИЦАХ ДОЛЖЕН БЫТЬ УЗНАВАЕМЫМ»: чужой бежево-бирюзовый самодельный дизайн снят — страница носит канон дома СТЕКЛО·СЕРЕБРО·ЗОЛОТО (singulyar-design-v3.css подключён, токены перекрашены: void #0A0A0C, серебро, золото #B08D57 — единственный акцент, стекло, семантика ошибок честная); все селекторы/ID/функционал ·54 не тронуты; футер говорит правду (рождена v11.32, а не «v11.29»); штамп на правду такта. Функционал ПИР не менялся — только лицо. -->
 </body>
 </html>

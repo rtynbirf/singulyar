@@ -22,14 +22,14 @@
 <meta name="description" content="СИНГУЛЯР ·17 «ЗАЛ»: P2P-экран зала без сервера — BroadcastChannel + localStorage-фолбэк. Большой экран показывает слова, колбаски и счёт; пульт управляет ·16 СУФЛЁР. Ноль сети, ноль зависимостей, ноль innerHTML.">
 <link rel="icon" href="icons/icon-192.png">
 <style>
-:root{--bg:#0A0A0C;--panel:#1A1D23;--line:#2A2B2D;--tx:#E8E8E8;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#ef4444;--green:#2FA36B;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+:root{--bg:#0A0A0C;--panel:#1A1D23;--line:#2A2B2D;--tx:#E8E8E8;--dim:#8A9099;--teal:#B08D57;--teal2:#E8C89C;--amber:#B08D57;--red:#ef4444;--green:#2FA36B;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:60px}
 a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
 .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
 header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#121418,#0A0A0C)}
 .hd{display:flex;align-items:center;gap:14px;padding:16px 0}
-.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#B08D57,#E8C89C,#B08D57);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
 .hd b{font-size:17px;display:block}
 .hd span{color:var(--dim);font-size:12.5px;display:block}
 .badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#1A1508;white-space:nowrap}
@@ -229,11 +229,11 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var
 
   <footer>СИНГУЛЯР ·17 «ЗАЛ» · KARAOKE_TREND.txt «Подсистема 1: Бессерверный P2P-экран зала» (BroadcastChannel + Air-Gapped QR/WebRTC) ·
   github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
-<section id="зал-эфир" style="margin:1.2rem 0;padding:1rem 1.1rem;border:1px solid #D4AF37;border-radius:12px;background:#0A0A0C;color:#E8E2D0" aria-labelledby="зал-эфир-заг">
-<h2 id="зал-эфир-заг" style="margin:.1rem 0 .5rem;font-size:1.05rem;color:#D4AF37">ЭФИР ДОМА · mesh-wire/0.1 <span style="color:#8b93a3;font-weight:400">(М1, этап 2 — такт v11.29 «КОНТУР»)</span></h2>
+<section id="зал-эфир" style="margin:1.2rem 0;padding:1rem 1.1rem;border:1px solid #B08D57;border-radius:12px;background:#0A0A0C;color:#E8E2D0" aria-labelledby="зал-эфир-заг">
+<h2 id="зал-эфир-заг" style="margin:.1rem 0 .5rem;font-size:1.05rem;color:#B08D57">ЭФИР ДОМА · mesh-wire/0.1 <span style="color:#8b93a3;font-weight:400">(М1, этап 2 — такт v11.29 «КОНТУР»)</span></h2>
 <p style="margin:.2rem 0 .6rem;color:#b9c2cf;font-size:.93rem">Лестница: вещание (вкладки этого браузера, BroadcastChannel) → данные (мост КС5) → релей (КС8). При импорте — ноль подключений; эфир открывается только по твоей кнопке.</p>
 <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-<button id="зал-эфир-открыть" style="border:1px solid #D4AF37;background:#1c1408;color:#FFD97A;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit">⏵ ОТКРЫТЬ ЭФИР</button>
+<button id="зал-эфир-открыть" style="border:1px solid #B08D57;background:#1c1408;color:#E8C89C;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit">⏵ ОТКРЫТЬ ЭФИР</button>
 <button id="зал-эфир-пилот" style="border:1px solid #3a4350;background:transparent;color:#C9D2DC;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>✈ ПОСЛАТЬ ПИЛОТ</button>
 <button id="зал-эфир-закрыть" style="border:1px solid #9b2c2c;background:transparent;color:#d98a8a;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>⏹ ЗАКРЫТЬ</button>
 </div>
@@ -813,7 +813,7 @@ class HallRenderer {
             const y = this.midiToY(n.p, H), h = 16 * dpr;
             const active = s.pos >= n.s && s.pos <= n.e;
             cx.globalAlpha = active ? 1 : 0.45;
-            cx.fillStyle = n.g ? '#F5A623' : this.noteMidiColor(n.p);
+            cx.fillStyle = n.g ? '#B08D57' : this.noteMidiColor(n.p);
             const rr = 6 * dpr, w = Math.max(4 * dpr, x1 - x0);
             cx.beginPath();
             if (cx.roundRect) cx.roundRect(x0, y - h / 2, w, h, rr); else cx.rect(x0, y - h / 2, w, h);
@@ -827,7 +827,7 @@ class HallRenderer {
         }
         /* курсор */
         const cxp = ((s.pos - t0) / span) * W;
-        cx.strokeStyle = 'rgba(212,175,55,.8)'; cx.lineWidth = 2 * dpr;
+        cx.strokeStyle = 'rgba(176,141,87,.8)'; cx.lineWidth = 2 * dpr;
         cx.beginPath(); cx.moveTo(cxp, 0); cx.lineTo(cxp, H); cx.stroke();
         this.ball(s, W, H, dpr);
     }
@@ -839,11 +839,11 @@ class HallRenderer {
         const rad = 11 * dpr;
         const cl = Math.max(0.25, Math.min(1, s.pitch.clarity || 0));
         const g = this.cx.createRadialGradient(x, y, 1, x, y, rad * 2.2);
-        g.addColorStop(0, 'rgba(212,175,55,' + (0.5 * cl) + ')');
-        g.addColorStop(1, 'rgba(212,175,55,0)');
+        g.addColorStop(0, 'rgba(176,141,87,' + (0.5 * cl) + ')');
+        g.addColorStop(1, 'rgba(176,141,87,0)');
         this.cx.fillStyle = g;
         this.cx.beginPath(); this.cx.arc(x, y, rad * 2.2, 0, Math.PI * 2); this.cx.fill();
-        this.cx.fillStyle = '#D4AF37';
+        this.cx.fillStyle = '#B08D57';
         this.cx.beginPath(); this.cx.arc(x, y, rad, 0, Math.PI * 2); this.cx.fill();
     }
     midiToY(m, H) {
@@ -1510,34 +1510,34 @@ registerProcessor('phone-pitch-processor', PhonePitchProcessor);
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
 
-<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(176,141,87,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#B08D57;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#B08D57;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}
 </style>
 <style id="сг47-стиль">
-.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
-.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель{border:1px solid rgba(176,141,87,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#B08D57}
 .сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
 .сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
-.сг47-панель label{display:block;font-size:13px;color:#dea968}
-.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель label{display:block;font-size:13px;color:#B08D57}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(176,141,87,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
 .сг47-панель textarea{min-height:64px;resize:vertical}
-.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button{background:#B08D57;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
 .сг47-панель button:hover{filter:brightness(1.08)}
 .сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
 .сг47-панель .сг47-отказ{color:#e88}
-.сг47-панель a{color:#dea968}
+.сг47-панель a{color:#B08D57}
 @media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
 </style>
 <!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
@@ -1571,18 +1571,18 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 }catch(е){}})();
 </script>
 <style id="сг47-стиль">
-.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
-.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель{border:1px solid rgba(176,141,87,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#B08D57}
 .сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
 .сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
-.сг47-панель label{display:block;font-size:13px;color:#dea968}
-.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель label{display:block;font-size:13px;color:#B08D57}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(176,141,87,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
 .сг47-панель textarea{min-height:64px;resize:vertical}
-.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button{background:#B08D57;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
 .сг47-панель button:hover{filter:brightness(1.08)}
 .сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
 .сг47-панель .сг47-отказ{color:#e88}
-.сг47-панель a{color:#dea968}
+.сг47-панель a{color:#B08D57}
 @media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
 </style>
 <!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
@@ -1624,18 +1624,18 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 }catch(е){}})();
 </script>
 <style id="сг47-стиль">
-.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
-.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель{border:1px solid rgba(176,141,87,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#B08D57}
 .сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
 .сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
-.сг47-панель label{display:block;font-size:13px;color:#dea968}
-.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель label{display:block;font-size:13px;color:#B08D57}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(176,141,87,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
 .сг47-панель textarea{min-height:64px;resize:vertical}
-.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button{background:#B08D57;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
 .сг47-панель button:hover{filter:brightness(1.08)}
 .сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
 .сг47-панель .сг47-отказ{color:#e88}
-.сг47-панель a{color:#dea968}
+.сг47-панель a{color:#B08D57}
 @media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
 </style>
 <!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->

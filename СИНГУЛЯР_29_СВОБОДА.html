@@ -31,7 +31,7 @@
 <style>
 /* ═══════════════════════════════════════════════════════════════════
    КОМНАТА ·29 «СВОБОДА» поверх моста v3.0 — только раскладка.
-   Канон Spatial Glass: void #0A0A0C, стекло, золото #D4AF37 —
+   Канон Spatial Glass: void #0A0A0C, стекло, золото #B08D57 —
    единственный акцент; 0 картинок — живой холст DOM-примитивов.
    WCAG 2.2: цели ≥24px, фокус виден и не перекрыт, семантика
    нативная, движение уважает prefers-reduced-motion.
@@ -42,12 +42,12 @@ a{color:var(--teal2,#C8CCD2);text-decoration:none} a:hover{text-decoration:under
 .wrap{max-width:1080px;margin:0 auto;padding:0 14px}
 header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:ui-monospace,Consolas,monospace;flex:none}
+.hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#B08D57,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:ui-monospace,Consolas,monospace;flex:none}
 .hd b{font-size:16px;display:block;line-height:1.2}
 .hd span{color:var(--dim);font-size:12px;display:block}
-.badge{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
+.badge{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:#E8C89C;border:1px solid rgba(176,141,87,.45);border-radius:999px;padding:5px 12px;background:rgba(176,141,87,.08);white-space:nowrap}
 h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:34px 0 12px}
-h1 em{font-style:normal;background:var(--grad-gold,#D4AF37);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1 em{font-style:normal;background:var(--grad-gold,#B08D57);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 h2{font-size:clamp(19px,2.6vw,24px);margin:38px 0 10px}
 h2 em{font-style:normal;color:var(--dim);font-size:.62em;font-family:ui-monospace,Consolas,monospace;letter-spacing:.08em}
 h3{font-size:16px;margin:18px 0 8px}
@@ -56,41 +56,41 @@ h3{font-size:16px;margin:18px 0 8px}
 .essence b{color:var(--text-primary)}
 /* ── ШАГ 1: НАМЕРЕНИЕ — нативные радиокнопки, цели ≥44px ── */
 fieldset{border:var(--border-subtle);border-radius:16px;padding:14px 16px;margin:16px 0 0;background:var(--glass-dark)}
-legend{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E8D5A8;padding:0 8px}
+legend{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E8C89C;padding:0 8px}
 .слова{display:flex;flex-wrap:wrap;gap:10px}
 .слово{position:relative;display:inline-block}
 .слово input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
 .слово label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:9px 18px;border-radius:999px;border:1px solid rgba(240,240,248,.18);background:rgba(240,240,248,.03);color:#C0C8D0;cursor:pointer;transition:border-color .2s,color .2s;user-select:none}
 .слово label::before{content:"";width:7px;height:7px;border-radius:50%;background:rgba(240,240,248,.25);transition:background .2s,box-shadow .2s}
-.слово input:checked + label{border-color:rgba(212,175,55,.60);color:#F0D78C}
-.слово input:checked + label::before{background:#D4AF37;box-shadow:0 0 10px rgba(212,175,55,.55)}
-.слово input:focus-visible + label{outline:2px solid rgba(212,175,55,.75);outline-offset:3px}
-.слово:hover label{border-color:rgba(212,175,55,.45);color:#F0D78C}
+.слово input:checked + label{border-color:rgba(176,141,87,.60);color:#E8C89C}
+.слово input:checked + label::before{background:#B08D57;box-shadow:0 0 10px rgba(176,141,87,.55)}
+.слово input:focus-visible + label{outline:2px solid rgba(176,141,87,.75);outline-offset:3px}
+.слово:hover label{border-color:rgba(176,141,87,.45);color:#E8C89C}
 .слово.плюс label{border-style:dashed}
-.слово.плюс input:checked + label{border-color:rgba(212,175,55,.85)}
+.слово.плюс input:checked + label{border-color:rgba(176,141,87,.85)}
 /* ── ШАГ 2: МНОГООБРАЗИЕ — реестр примитивов ── */
 .возможности{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}
 .возможность{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid rgba(240,240,248,.16);background:rgba(240,240,248,.03);color:#C0C8D0;cursor:pointer;transition:border-color .2s}
-.возможность input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
-.возможность input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
-.возможность:hover{border-color:rgba(212,175,55,.45)}
+.возможность input{width:18px;height:18px;accent-color:#B08D57;cursor:pointer}
+.возможность input:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:2px}
+.возможность:hover{border-color:rgba(176,141,87,.45)}
 .возможность[data-статична]{cursor:default;opacity:.72}
 .реестр{display:grid;grid-template-columns:1fr;gap:12px;margin:16px 0 0}
 @media(min-width:760px){.реестр{grid-template-columns:1fr 1fr}}
 .примитив{border:var(--border-subtle);border-radius:16px;background:var(--glass-card);padding:14px 16px;transition:border-color .2s,transform var(--dur-fast,.16s) var(--ease-spring,ease)}
-.примитив:hover{border-color:rgba(212,175,55,.35)}
-.примитив.выбран{border-color:rgba(212,175,55,.55);box-shadow:0 0 0 1px rgba(212,175,55,.25),0 6px 22px rgba(0,0,0,.4)}
+.примитив:hover{border-color:rgba(176,141,87,.35)}
+.примитив.выбран{border-color:rgba(176,141,87,.55);box-shadow:0 0 0 1px rgba(176,141,87,.25),0 6px 22px rgba(0,0,0,.4)}
 .примитив .верх{display:flex;align-items:center;gap:10px}
 .примитив .верх b{font-size:15.5px}
-.примитив .верх input{width:19px;height:19px;accent-color:#D4AF37;cursor:pointer;flex:none}
-.примитив .верх input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.примитив .верх input{width:19px;height:19px;accent-color:#B08D57;cursor:pointer;flex:none}
+.примитив .верх input:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:2px}
 .примитив .верх .запрет{margin-left:auto;display:inline-flex;align-items:center;gap:6px;min-height:26px;font-size:11.5px;color:#C0C8D0;cursor:pointer;font-family:ui-monospace,Consolas,monospace}
 .примитив .верх .запрет input{width:15px;height:15px;accent-color:#B24C4C;cursor:pointer}
 .примитив .верх .запрет input:focus-visible{outline:2px solid rgba(178,76,76,.8);outline-offset:2px}
 .примитив p{margin:7px 0 0;color:var(--text-secondary);font-size:13.5px;line-height:1.5}
 .примитив .мета{margin:9px 0 0;display:flex;flex-wrap:wrap;gap:6px;font-family:ui-monospace,Consolas,monospace;font-size:11px}
 .примитив .мета span{border:1px solid rgba(240,240,248,.14);border-radius:999px;padding:3px 9px;color:#AEB6BF;background:rgba(240,240,248,.03)}
-.примитив .мета .даст{border-color:rgba(212,175,55,.4);color:#E8D5A8}
+.примитив .мета .даст{border-color:rgba(176,141,87,.4);color:#E8C89C}
 .примитив .недостаток{margin:9px 0 0;font-size:12.5px;color:#D8A0A0;display:none}
 .примитив.урезан .недостаток{display:block}
 .примитив.урезан{opacity:.68}
@@ -99,41 +99,41 @@ legend{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing
 @media(min-width:900px){.живой-узел{grid-template-columns:minmax(0,1fr) 340px}}
 .предложения{display:grid;gap:14px}
 .манифест-карта{border:var(--border-subtle);border-radius:18px;background:var(--glass-card);padding:16px 18px}
-.манифест-карта.жива{border-color:rgba(212,175,55,.6);box-shadow:0 0 0 1px rgba(212,175,55,.28),0 10px 34px rgba(0,0,0,.5)}
-.манифест-карта .статус{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:4px 12px;background:rgba(212,175,55,.08)}
-.манифест-карта.жива .статус{background:rgba(212,175,55,.18);color:#F0D78C}
+.манифест-карта.жива{border-color:rgba(176,141,87,.6);box-shadow:0 0 0 1px rgba(176,141,87,.28),0 10px 34px rgba(0,0,0,.5)}
+.манифест-карта .статус{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8C89C;border:1px solid rgba(176,141,87,.45);border-radius:999px;padding:4px 12px;background:rgba(176,141,87,.08)}
+.манифест-карта.жива .статус{background:rgba(176,141,87,.18);color:#E8C89C}
 .манифест-карта h3{margin:12px 0 4px;font-size:17px}
 .манифест-карта .строка{color:var(--text-secondary);font-size:13.5px;margin:4px 0}
 .манифест-карта .строка b{color:var(--text-primary);font-weight:600}
 .манифест-карта .чипсы{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
-.манифест-карта .чипсы span{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;border:1px solid rgba(212,175,55,.35);border-radius:999px;padding:4px 11px;color:#E8D5A8;background:rgba(212,175,55,.06)}
+.манифест-карта .чипсы span{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;border:1px solid rgba(176,141,87,.35);border-radius:999px;padding:4px 11px;color:#E8C89C;background:rgba(176,141,87,.06)}
 .манифест-карта .чипсы span.чужой{border-color:rgba(240,240,248,.16);color:#AEB6BF;background:rgba(240,240,248,.03)}
-.манифест-карта .чипсы span.добавка{border-style:dashed;border-color:rgba(212,175,55,.55);color:#F0D78C}
+.манифест-карта .чипсы span.добавка{border-style:dashed;border-color:rgba(176,141,87,.55);color:#E8C89C}
 .предупреждение{margin:12px 0 0;padding:10px 14px;border-radius:12px;border:1px solid rgba(178,76,76,.45);background:rgba(178,76,76,.08);color:#D8A0A0;font-size:13px;display:none}
 .предупреждение.видно{display:block}
-.расширение-строка{display:flex;align-items:center;gap:10px;margin:12px 0 0;padding:10px 14px;border:1px dashed rgba(212,175,55,.45);border-radius:12px;font-size:13.5px;color:#F0D78C;min-height:44px}
-.расширение-строка input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
-.расширение-строка input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.расширение-строка{display:flex;align-items:center;gap:10px;margin:12px 0 0;padding:10px 14px;border:1px dashed rgba(176,141,87,.45);border-radius:12px;font-size:13.5px;color:#E8C89C;min-height:44px}
+.расширение-строка input{width:18px;height:18px;accent-color:#B08D57;cursor:pointer}
+.расширение-строка input:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:2px}
 .решение{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;align-items:center}
-button.действие{min-height:44px;padding:11px 22px;border-radius:12px;border:1px solid rgba(212,175,55,.55);background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.10));color:#F0D78C;font-size:14.5px;font-weight:600;cursor:pointer;transition:filter .2s,transform var(--dur-fast,.16s) var(--ease-spring,ease)}
+button.действие{min-height:44px;padding:11px 22px;border-radius:12px;border:1px solid rgba(176,141,87,.55);background:linear-gradient(180deg,rgba(176,141,87,.22),rgba(176,141,87,.10));color:#E8C89C;font-size:14.5px;font-weight:600;cursor:pointer;transition:filter .2s,transform var(--dur-fast,.16s) var(--ease-spring,ease)}
 button.действие:hover{filter:brightness(1.15)}
 button.действие:active{transform:translateY(1px)}
-button.действие:focus-visible{outline:2px solid rgba(212,175,55,.85);outline-offset:3px}
+button.действие:focus-visible{outline:2px solid rgba(176,141,87,.85);outline-offset:3px}
 button.действие[disabled]{opacity:.42;cursor:not-allowed}
 button.тихое{min-height:44px;padding:10px 18px;border-radius:12px;border:1px solid rgba(240,240,248,.2);background:rgba(240,240,248,.04);color:#C0C8D0;font-size:13.5px;cursor:pointer}
-button.тихое:hover{border-color:rgba(212,175,55,.45);color:#F0D78C}
-button.тихое:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:3px}
+button.тихое:hover{border-color:rgba(176,141,87,.45);color:#E8C89C}
+button.тихое:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:3px}
 .память-выбор{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid rgba(240,240,248,.16);background:rgba(240,240,248,.03);color:#C0C8D0;font-size:13.5px;cursor:pointer}
-.память-выбор input{width:18px;height:18px;accent-color:#D4AF37;cursor:pointer}
-.память-выбор input:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px}
+.память-выбор input{width:18px;height:18px;accent-color:#B08D57;cursor:pointer}
+.память-выбор input:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:2px}
 /* СЦЕНА — векторные стеклянные плоскости на орбитах (0 картинок) */
-.сцена{border:var(--border-subtle);border-radius:20px;background:radial-gradient(120% 90% at 50% 8%,rgba(212,175,55,.07),rgba(10,10,12,0) 55%),var(--glass-dark);min-height:340px;position:relative;overflow:hidden;display:grid;place-items:center;padding:18px}
-.сцена .ядро{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#F5D98A,#D4AF37 55%,#8C6D1F);box-shadow:0 0 44px rgba(212,175,55,.5),inset 0 2px 8px rgba(255,255,255,.35);display:grid;place-items:center;color:#0A0A0C;font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.1em;text-align:center;position:relative;z-index:2}
+.сцена{border:var(--border-subtle);border-radius:20px;background:radial-gradient(120% 90% at 50% 8%,rgba(176,141,87,.07),rgba(10,10,12,0) 55%),var(--glass-dark);min-height:340px;position:relative;overflow:hidden;display:grid;place-items:center;padding:18px}
+.сцена .ядро{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#F5D98A,#B08D57 55%,#665231);box-shadow:0 0 44px rgba(176,141,87,.5),inset 0 2px 8px rgba(255,255,255,.35);display:grid;place-items:center;color:#0A0A0C;font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.1em;text-align:center;position:relative;z-index:2}
 .орбита{position:absolute;left:50%;top:50%;border:1px solid rgba(240,240,248,.10);border-radius:50%;translate:-50% -50%}
 .орбита.o1{width:200px;height:200px}.орбита.o2{width:296px;height:296px}.орбита.o3{width:392px;height:392px}
 .планета{position:absolute;left:50%;top:50%;transform-origin:0 0;animation:вращение var(--период,26s) linear infinite}
-.планета i{display:block;transform:translate(-50%,-50%);border:1px solid rgba(240,240,248,.22);background:linear-gradient(160deg,rgba(240,240,248,.22),rgba(240,240,248,.05) 52%,rgba(212,175,55,.18));border-radius:10px;color:#E8E8E8;font-style:normal;font-family:ui-monospace,Consolas,monospace;font-size:10.5px;padding:6px 10px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.45);animation:вращение var(--период,26s) linear infinite reverse}
-.планета.золотая i{border-color:rgba(212,175,55,.55);color:#F0D78C;filter:drop-shadow(0 0 8px rgba(212,175,55,.35))}
+.планета i{display:block;transform:translate(-50%,-50%);border:1px solid rgba(240,240,248,.22);background:linear-gradient(160deg,rgba(240,240,248,.22),rgba(240,240,248,.05) 52%,rgba(176,141,87,.18));border-radius:10px;color:#E8E8E8;font-style:normal;font-family:ui-monospace,Consolas,monospace;font-size:10.5px;padding:6px 10px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.45);animation:вращение var(--период,26s) linear infinite reverse}
+.планета.золотая i{border-color:rgba(176,141,87,.55);color:#E8C89C;filter:drop-shadow(0 0 8px rgba(176,141,87,.35))}
 @keyframes вращение{from{rotate:0deg}to{rotate:360deg}}
 @media (prefers-reduced-motion: reduce){.планета,.планета i{animation:none}}
 @media (prefers-reduced-transparency: reduce){.сцена,.манифест-карта,.примитив{background:#14171C}}
@@ -143,26 +143,26 @@ button.тихое:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-o
 .новое-слово{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 0}
 .новое-слово label{font-size:13.5px;color:var(--dim)}
 .новое-слово input[type=text]{min-height:44px;padding:10px 16px;border-radius:12px;border:1px solid rgba(240,240,248,.2);background:rgba(240,240,248,.04);color:#E8E8E8;font-size:15px;width:min(260px,60vw)}
-.новое-слово input[type=text]:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:2px;border-color:rgba(212,175,55,.5)}
+.новое-слово input[type=text]:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:2px;border-color:rgba(176,141,87,.5)}
 .просвет-строка{margin:14px 0 0;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--dim)}
-.просвет-строка b{color:#E8D5A8;font-weight:600}
+.просвет-строка b{color:#E8C89C;font-weight:600}
 /* ── ПОД КАПОТ ── */
 details.капот{border:var(--border-subtle);border-radius:16px;background:var(--glass-dark);margin:26px 0 0;padding:0}
-details.капот summary{cursor:pointer;list-style:none;padding:15px 20px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8D5A8;display:flex;align-items:center;gap:10px;min-height:44px}
+details.капот summary{cursor:pointer;list-style:none;padding:15px 20px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#E8C89C;display:flex;align-items:center;gap:10px;min-height:44px}
 details.капот summary::-webkit-details-marker{display:none}
-details.капот summary::before{content:"▸";transition:rotate .2s;color:#D4AF37}
+details.капот summary::before{content:"▸";transition:rotate .2s;color:#B08D57}
 details.капот[open] summary::before{rotate:90deg}
-details.капот summary:focus-visible{outline:2px solid rgba(212,175,55,.75);outline-offset:-4px;border-radius:16px}
+details.капот summary:focus-visible{outline:2px solid rgba(176,141,87,.75);outline-offset:-4px;border-radius:16px}
 details.капот .внутри{padding:4px 20px 20px;font-size:14px;color:var(--text-secondary)}
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
 th,td{border:1px solid rgba(240,240,248,.12);padding:8px 10px;text-align:left;vertical-align:top}
-th{color:#E8D5A8;font-weight:600;background:rgba(212,175,55,.06);font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.06em}
-td code{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#F0D78C;background:rgba(212,175,55,.07);border-radius:6px;padding:1px 6px}
+th{color:#E8C89C;font-weight:600;background:rgba(176,141,87,.06);font-family:ui-monospace,Consolas,monospace;font-size:11.5px;letter-spacing:.06em}
+td code{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#E8C89C;background:rgba(176,141,87,.07);border-radius:6px;padding:1px 6px}
 pre{background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.12);border-radius:12px;padding:14px 16px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#C8CCD2}
 footer{margin-top:48px;border-top:var(--border-subtle);padding-top:18px;color:var(--dim);font-size:12.5px;font-family:ui-monospace,Consolas,monospace}
 .журнал{margin:12px 0 0;padding:10px 14px;border-radius:12px;border:1px dashed rgba(240,240,248,.2);font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--dim);display:none}
 .журнал.видно{display:block}
-.журнал b{color:#E8D5A8}
+.журнал b{color:#E8C89C}
 </style>
 </head>
 <body>
@@ -598,17 +598,17 @@ function обновитьПросвет() {
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <script defer src="./singulyar-ux-engine-v9.js"></script>
-<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(176,141,87,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#B08D57;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#B08D57;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}

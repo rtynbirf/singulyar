@@ -21,7 +21,7 @@
 <style>
   :root{
     --фон:#0A0A0C; --карта:#14161C; --край:rgba(240,240,248,.14);
-    --текст:#C0C8D0; --тускло:#8A9099; --зол:#D4AF37; --зол2:#F0D78C;
+    --текст:#C0C8D0; --тускло:#8A9099; --зол:#B08D57; --зол2:#E8C89C;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--фон);color:var(--текст);
@@ -30,15 +30,15 @@
   .лист{max-width:860px;margin:0 auto}
   h1{font-size:clamp(28px,6vw,40px);margin:.2em 0 0;text-align:center;color:#EDEDEF;letter-spacing:.06em}
   .подчерк{display:flex;align-items:center;gap:12px;margin:14px auto 0;width:min(300px,70vw)}
-  .подчерк::before,.подчерк::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0),rgba(212,175,55,.75))}
-  .подчерк::after{background:linear-gradient(90deg,rgba(212,175,55,.75),rgba(212,175,55,0))}
-  .подчерк i{width:7px;height:7px;background:var(--зол2);transform:rotate(45deg);flex:none;box-shadow:0 0 10px rgba(240,215,140,.6)}
+  .подчерк::before,.подчерк::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(176,141,87,0),rgba(176,141,87,.75))}
+  .подчерк::after{background:linear-gradient(90deg,rgba(176,141,87,.75),rgba(176,141,87,0))}
+  .подчерк i{width:7px;height:7px;background:var(--зол2);transform:rotate(45deg);flex:none;box-shadow:0 0 10px rgba(232,200,156,.6)}
   .подзаг{text-align:center;color:var(--тускло);margin-top:10px;font-size:16px}
   h2{font-size:24px;margin:1.6em 0 .5em;padding-left:12px;border-left:4px solid var(--зол);color:#E8E8E8}
   h3{font-size:19px;color:var(--зол2);margin:1.2em 0 .3em}
   .карта{background:var(--карта);border:1px solid var(--край);border-radius:16px;
     padding:16px 20px;margin:14px 0;box-shadow:inset 0 1px 0 rgba(240,240,248,.06)}
-  .сейчас{border-color:rgba(212,175,55,.55);box-shadow:0 0 24px rgba(212,175,55,.12),inset 0 1px 0 rgba(240,240,248,.06)}
+  .сейчас{border-color:rgba(176,141,87,.55);box-shadow:0 0 24px rgba(176,141,87,.12),inset 0 1px 0 rgba(240,240,248,.06)}
   .шаг{display:inline-block;background:linear-gradient(90deg,var(--зол),var(--зол2));
     color:#0A0A0C;font-weight:800;border-radius:999px;padding:2px 14px;font-size:15px;
     vertical-align:middle;margin-right:8px}
@@ -48,12 +48,12 @@
     border-radius:12px;padding:10px;margin:10px 0}
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:17px}
   td,th{border:1px solid var(--край);padding:8px 10px;text-align:left;vertical-align:top}
-  th{background:rgba(212,175,55,.10);color:var(--зол2)}
+  th{background:rgba(176,141,87,.10);color:var(--зол2)}
   .имя{font-weight:700}
   .гость{color:var(--тускло)}
   ul,ol{padding-left:24px}
   li{margin:.35em 0}
-  .честно{border-left:4px solid var(--зол);background:rgba(212,175,55,.06);border-radius:0 12px 12px 0;
+  .честно{border-left:4px solid var(--зол);background:rgba(176,141,87,.06);border-radius:0 12px 12px 0;
     padding:10px 16px;margin:12px 0;color:#E8E2C8;font-size:17px}
   .зел{color:var(--зол2);font-weight:700}
   footer{margin-top:50px;text-align:center;color:var(--тускло);font-size:15px}
@@ -61,10 +61,10 @@
 
   header{position:sticky;top:0;z-index:40;border-bottom:var(--border-subtle,1px solid rgba(240,240,248,.14));background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .hd{display:flex;align-items:center;gap:12px;padding:10px 0}
-  .hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#D4AF37,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:var(--mono,ui-monospace,Consolas,monospace);flex:none}
+  .hd .logo{width:40px;height:40px;border-radius:11px;background:conic-gradient(from 210deg,#F0F0F0,#B08D57,#C8CCD2,#F0F0F0);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:14px;font-family:var(--mono,ui-monospace,Consolas,monospace);flex:none}
   .hd b{font-size:16px;display:block;line-height:1.2;color:#E8E8E8}
   .hd span{color:var(--dim,#8A9099);font-size:12px;display:block}
-  .badge{margin-left:auto;font-family:var(--mono,ui-monospace,Consolas,monospace);font-size:11.5px;color:#E8D5A8;border:1px solid rgba(212,175,55,.45);border-radius:999px;padding:5px 12px;background:rgba(212,175,55,.08);white-space:nowrap}
+  .badge{margin-left:auto;font-family:var(--mono,ui-monospace,Consolas,monospace);font-size:11.5px;color:#E8C89C;border:1px solid rgba(176,141,87,.45);border-radius:999px;padding:5px 12px;background:rgba(176,141,87,.08);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="singulyar-design-v3.css">
   <link rel="manifest" href="./manifest.webmanifest">
@@ -218,17 +218,17 @@ try{
 </script>
 <script defer src="./singulyar-modules.js"></script>
 
-<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(176,141,87,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#B08D57;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#B08D57;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
 @media print{#sg65nav{display:none}}

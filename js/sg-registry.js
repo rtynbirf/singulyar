@@ -102,7 +102,7 @@
         var печать = document.createElement('div');
         печать.setAttribute('data-сг-лик', 'v11.34');
         печать.setAttribute('aria-hidden', 'true');
-        печать.style.cssText = 'position:fixed;left:10px;bottom:10px;width:clamp(38px,5.2vmin,56px);height:clamp(38px,5.2vmin,56px);z-index:2147483000;pointer-events:none;opacity:.93;border-radius:50%;background:rgba(16,18,24,.82);box-shadow:0 2px 10px rgba(0,0,0,.35),inset 0 0 0 1.5px rgba(212,175,55,.85);';
+        печать.style.cssText = 'position:fixed;left:10px;bottom:10px;width:clamp(38px,5.2vmin,56px);height:clamp(38px,5.2vmin,56px);z-index:2147483000;pointer-events:none;opacity:.93;border-radius:50%;background:rgba(16,18,24,.82);box-shadow:0 2px 10px rgba(0,0,0,.35),inset 0 0 0 1.5px rgba(176,141,87,.85);';
         var svg = document.createElementNS(NS, 'svg');
         svg.setAttribute('viewBox', '0 0 48 48');
         svg.setAttribute('role', 'img');
@@ -113,11 +113,11 @@
           svg.appendChild(э);
         }
         /* лицо человека: голова, глаза, спокойная улыбка, плечи */
-        добавь('circle', { cx: '24', cy: '19', r: '9.5', fill: 'none', stroke: '#E8C56B', 'stroke-width': '2' });
-        добавь('circle', { cx: '20.6', cy: '17.4', r: '1.5', fill: '#E8C56B' });
-        добавь('circle', { cx: '27.4', cy: '17.4', r: '1.5', fill: '#E8C56B' });
-        добавь('path', { d: 'M20 21.6 Q24 24.8 28 21.6', fill: 'none', stroke: '#E8C56B', 'stroke-width': '1.8', 'stroke-linecap': 'round' });
-        добавь('path', { d: 'M13 40 Q24 29.5 35 40', fill: 'none', stroke: '#E8C56B', 'stroke-width': '2', 'stroke-linecap': 'round' });
+        добавь('circle', { cx: '24', cy: '19', r: '9.5', fill: 'none', stroke: '#E8C89C', 'stroke-width': '2' });
+        добавь('circle', { cx: '20.6', cy: '17.4', r: '1.5', fill: '#E8C89C' });
+        добавь('circle', { cx: '27.4', cy: '17.4', r: '1.5', fill: '#E8C89C' });
+        добавь('path', { d: 'M20 21.6 Q24 24.8 28 21.6', fill: 'none', stroke: '#E8C89C', 'stroke-width': '1.8', 'stroke-linecap': 'round' });
+        добавь('path', { d: 'M13 40 Q24 29.5 35 40', fill: 'none', stroke: '#E8C89C', 'stroke-width': '2', 'stroke-linecap': 'round' });
         печать.appendChild(svg);
         document.body.appendChild(печать);
       } catch (е) { /* печать молчит */ }
@@ -134,7 +134,7 @@
       if (document.querySelector('style[data-сг-дизайн]')) return;
       var стиль = document.createElement('style');
       стиль.setAttribute('data-сг-дизайн', 'v11.34');
-      стиль.textContent = 'html{-webkit-text-size-adjust:100%}body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}a,button,summary,[role=button],input[type=submit],input[type=button]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:3px solid #D4AF37!important;outline-offset:2px!important;border-radius:4px}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}';
+      стиль.textContent = 'html{-webkit-text-size-adjust:100%}body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}a,button,summary,[role=button],input[type=submit],input[type=button]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible,[role=button]:focus-visible{outline:3px solid #B08D57!important;outline-offset:2px!important;border-radius:4px}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}';
       var голова = document.head || document.documentElement;
       if (голова) голова.appendChild(стиль);
     } catch (е) { /* слой не обязателен для жизни комнаты */ }

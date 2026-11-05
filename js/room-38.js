@@ -158,14 +158,14 @@
           var центр = в * 0.56;
           var ампл = в * 0.30;
           var град = ctx.createLinearGradient(0, 0, ш, 0);
-          град.addColorStop(0, 'rgba(212,175,55,.30)');
-          град.addColorStop(0.65, 'rgba(212,175,55,.85)');
-          град.addColorStop(1, 'rgba(240,215,140,1)');
+          град.addColorStop(0, 'rgba(176,141,87,.30)');
+          град.addColorStop(0.65, 'rgba(176,141,87,.85)');
+          град.addColorStop(1, 'rgba(232,200,156,1)');
           ctx.strokeStyle = град;
           ctx.lineWidth = 2;
           ctx.lineJoin = 'round';
           ctx.lineCap = 'round';
-          try { ctx.shadowColor = 'rgba(212,175,55,.35)'; ctx.shadowBlur = живо ? 8 : 0; } catch (е) {}
+          try { ctx.shadowColor = 'rgba(176,141,87,.35)'; ctx.shadowBlur = живо ? 8 : 0; } catch (е) {}
           ctx.beginPath();
           for (var х = 0; х <= ш; х += 2) {
             var фаза = ((т / 1000) * УДАРОВ_СЕК + (х / ш) * ПЕРИОДОВ_НА_ЭКРАН) % 1;
@@ -179,7 +179,7 @@
           /* ведущая точка удара у правого края */
           var фПрав = ((т / 1000) * УДАРОВ_СЕК + ПЕРИОДОВ_НА_ЭКРАН) % 1;
           var уПрав = центр - форма(фПрав) * ампл;
-          ctx.fillStyle = '#F0D78C';
+          ctx.fillStyle = '#E8C89C';
           ctx.beginPath();
           ctx.arc(ш - 4, уПрав, 3, 0, Math.PI * 2);
           ctx.fill();
