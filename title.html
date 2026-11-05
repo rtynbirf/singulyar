@@ -251,7 +251,7 @@ function renderTitle(){
         <div class="orig-title">${title.orig}</div>
         <span class="status-tag ${statusClass}">${statusText}</span>
         <span class="status-tag">${title.eps === 1 ? '1 эпизод' : title.eps + ' эпизодов'}</span>
-        ${title.premium ? '<span class="status-tag" style="background:#3a2a1a;color:#ffd680">★ Premium на bldub</span>' : '<span class="status-tag status-released">Бесплатно на bldub</span>'}
+        ${title.status === 'airing' ? '<span class="status-tag" style="background:#2a3a1a;color:#c8f0a0">Онгоинг</span>' : title.status === 'soon' ? '<span class="status-tag" style="background:#1a2a3a;color:#a0c8f0">Скоро</span>' : '<span class="status-tag status-released">Вышел</span>'}
         <dl class="meta-grid">
           <dt>Год:</dt><dd>${title.y}</dd>
           <dt>Страна:</dt><dd>${flag} ${country}</dd>
