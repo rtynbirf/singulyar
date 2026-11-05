@@ -3,7 +3,7 @@ on:
   push:
     branches: [rumu]
   pull_request:
-    branches: [main]
+    branches: [rumu]
   workflow_dispatch:
 
 permissions:
