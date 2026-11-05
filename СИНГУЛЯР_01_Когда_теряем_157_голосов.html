@@ -670,6 +670,59 @@ html[data-view="player"] #sg65nav{display:none !important}
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
+
+<!-- Такт v1.54.0/1.55.0 «УДОБНО КАЖДОМУ»: предпочтения человека ставятся ДО первой краски —
+     ноль вспышки, ноль сети; ключ kv.удобно живёт на устройстве (закон дома).
+     Спокойное движение — класс html.уд-тихо (+ честный флаг ядра SNG_ТИХО, где ядро живёт). -->
+<script>
+(function(){
+  try{
+    var с=null; try{ с=JSON.parse(localStorage.getItem('kv.удобно')||'null') }catch(e){}
+    var д=document.documentElement;
+    if(!с){
+      try{ if(window.matchMedia&&matchMedia('(prefers-contrast: more)').matches) д.classList.add('уд-контраст'); }catch(e){}
+      return;
+    }
+    if(с.текст==='крупно') д.classList.add('уд-текст-крупно');
+    if(с.текст==='огромно') д.classList.add('уд-текст-огромно');
+    if(с.контраст) д.classList.add('уд-контраст');
+    if(с.крупно) д.classList.add('уд-крупно');
+    if(с.тихо){ д.classList.add('уд-тихо'); window.SNG_ТИХО=true; }
+  }catch(e){}
+})();
+</script>
+<style id="уд-стиль">
+/* ── УДОБНО КАЖДОМУ (такт v1.55.0): предпочтения человека — классы на <html> ── */
+html.уд-текст-крупно body{font-size:18px}
+html.уд-текст-огромно body{font-size:20px}
+html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#FFD865;--ember2:#F0C05A;--glow:rgba(255,216,101,.6)}
+html.уд-тихо *{animation:none!important;transition:none!important}
+html.уд-тихо{scroll-behavior:auto}
+/* кнопка и панель: стекло + золото канона дома */
+.уд-кнопка{position:fixed;top:12px;right:14px;z-index:2147482000;appearance:none;cursor:pointer;
+  font:600 14px/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;
+  background:rgba(26,29,35,.82);border:1px solid rgba(212,175,55,.55);border-radius:999px;
+  padding:12px 18px;min-height:44px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(212,175,55,.3);outline:2px solid #F0D78C;outline-offset:2px}
+.уд-кнопка[aria-expanded="true"]{border-color:#D4AF37}
+.уд-панель{position:fixed;top:64px;right:14px;z-index:2147482001;width:min(340px,calc(100vw - 28px));
+  max-height:calc(100svh - 84px);overflow:auto;background:rgba(20,22,27,.97);color:#C0C8D0;
+  border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:18px 18px 14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.уд-панель h2{font:700 15px/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#F0D78C;margin:0 0 4px}
+.уд-пояс{font:12.5px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 12px}
+.уд-ряд{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(240,240,248,.08)}
+.уд-имя{font:14.5px/1.4 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.уд-имя small{display:block;font-weight:400;color:#8A9099;font-size:12px}
+.уд-вкл{appearance:none;cursor:pointer;flex:none;min-width:72px;min-height:40px;border-radius:999px;
+  border:1px solid rgba(212,175,55,.55);background:none;color:#8A9099;
+  font:600 13px/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.уд-вкл:hover,.уд-вкл:focus-visible{color:#F0D78C;outline:2px solid #F0D78C;outline-offset:2px}
+.уд-вкл[aria-pressed="true"]{background:rgba(212,175,55,.16);color:#F0D78C;border-color:#D4AF37}
+.уд-статус{margin:10px 0 0;font:12px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
+.уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
+@media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
+</style>
 </head>
 <body>
 <script id="sg-tv-sound">/* v11.34 «ЛИК» ТБ-1: телевизор не играет Opus/webm и глушит WebAudio-граф — дом честно уходит на mp3 и прямой звук элемента (приказ владельца: «НЕ РАБОТАЕТ МУЗЫКА НА ТВ В ПК ЕСТЬ НА ТВ НЕТ») */
@@ -2726,6 +2779,94 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
+
+<!-- Такт v1.55.0 «НИТЬ ЦЕЛА»: панель «Удобно» въехала в первую руму (слово владельца:
+     «ЛЮДИ НЕ ЧЕЛОВЕК… ЮЗАТЬ БУДЕМ НЕ МЫ С ТОБОЙ, А ЛЮДИ»). Тот же ключ kv.удобно, что
+     на лице дома — выбор один на весь дом. Esc и «Готово» закрывают. -->
+<button type="button" id="удобноКнопка" class="уд-кнопка" aria-haspopup="dialog" aria-expanded="false" aria-controls="удобно"
+        title="Сделать дом удобным: текст, контраст, движение">Удобно</button>
+<div id="удобно" class="уд-панель" role="dialog" aria-modal="true"
+     aria-label="Сделать дом удобным: текст, контраст, движение" hidden>
+  <h2>Сделать удобным</h2>
+  <p class="уд-пояс">Глаза и руки у всех разные. Выбор помнится на этом устройстве — ноль сети, ноль облаков.</p>
+  <div class="уд-ряд">
+    <span class="уд-имя">Крупный текст<small>шрифт +2 пикселя</small></span>
+    <button type="button" class="уд-вкл" id="удТекстКрупно" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Огромный текст<small>шрифт +4 пикселя</small></span>
+    <button type="button" class="уд-вкл" id="удТекстОгромно" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Высокий контраст<small>белый текст, яркое золото</small></span>
+    <button type="button" class="уд-вкл" id="удКонтраст" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Спокойное движение<small>без плавных переливов</small></span>
+    <button type="button" class="уд-вкл" id="удТихо" aria-pressed="false">выкл</button>
+  </div>
+  <p class="уд-статус" id="удСтатус" aria-live="polite"></p>
+  <div class="уд-хвост">
+    <button type="button" id="удСброс" class="уд-вкл" title="Забыть мой выбор на этом устройстве">Забыть</button>
+    <button type="button" id="удГотово" class="уд-вкл">Готово</button>
+  </div>
+</div>
+<script>
+(function(){
+  var КЛЮЧ='kv.удобно';
+  var кн=document.getElementById('удобноКнопка'); if(!кн) return;
+  var п=document.getElementById('удобно'); if(!п) return;
+  var статус=document.getElementById('удСтатус');
+  var Б={
+    'удТекстКрупно':  {к:'текст', з:'крупно',  имя:'Крупный текст'},
+    'удТекстОгромно': {к:'текст', з:'огромно', имя:'Огромный текст'},
+    'удКонтраст':     {к:'контраст', з:true,   имя:'Высокий контраст'},
+    'удТихо':         {к:'тихо',     з:true,   имя:'Спокойное движение'}
+  };
+  function чит(){ try{ return JSON.parse(localStorage.getItem(КЛЮЧ)||'{}') }catch(e){ return {} } }
+  function пиш(с){ try{ localStorage.setItem(КЛЮЧ, JSON.stringify(с)) }catch(e){} }
+  function класс(имя,вкл){ document.documentElement.classList.toggle(имя, !!вкл) }
+  function применить(с){
+    класс('уд-текст-крупно', с.текст==='крупно');
+    класс('уд-текст-огромно', с.текст==='огромно');
+    класс('уд-контраст', !!с.контраст);
+    класс('уд-тихо', !!с.тихо);
+  }
+  function отразить(с){
+    Object.keys(Б).forEach(function(к){
+      var б=Б[к], эл=document.getElementById(к); if(!эл) return;
+      var вкл = (б.к==='текст') ? (с.текст===б.з) : !!с[б.к];
+      эл.setAttribute('aria-pressed', вкл?'true':'false');
+      эл.textContent = вкл?'вкл':'выкл';
+    });
+  }
+  function нажать(к){
+    var с=чит(), б=Б[к], было;
+    if(б.к==='текст'){ было=(с.текст===б.з); с.текст = было?null:б.з; }
+    else { было=!!с[б.к]; с[б.к]=!было; }
+    if(!с.текст) delete с.текст;
+    пиш(с); применить(с); отразить(с);
+    if(статус) статус.textContent = б.имя + (было?' выключено':' включено') + ' · запомнено на устройстве';
+  }
+  function открыть(){ п.hidden=false; кн.setAttribute('aria-expanded','true');
+    var п1=п.querySelector('button'); if(п1) п1.focus(); }
+  function закрыть(){ п.hidden=true; кн.setAttribute('aria-expanded','false'); кн.focus(); }
+  кн.addEventListener('click', function(){ п.hidden?открыть():закрыть(); });
+  Object.keys(Б).forEach(function(к){
+    var эл=document.getElementById(к);
+    if(эл) эл.addEventListener('click', function(){ нажать(к); });
+  });
+  var г=document.getElementById('удГотово'); if(г) г.addEventListener('click', закрыть);
+  var сб=document.getElementById('удСброс');
+  if(сб) сб.addEventListener('click', function(){
+    try{ localStorage.removeItem(КЛЮЧ) }catch(e){}
+    применить({}); отразить({});
+    if(статус) статус.textContent='выбор забыт — дом в каноне';
+  });
+  document.addEventListener('keydown', function(e){ if((e.key==='Escape'||e.key==='Esc')&&!п.hidden) закрыть(); });
+  отразить(чит());
+})();
+</script>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.60</span> «<span data-реестр="такт">НИТЬ ЦЕЛА</span>» · кэш <span data-реестр="кэш">v221</span></div>
 </body>
 </html>
