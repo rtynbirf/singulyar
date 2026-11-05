@@ -52,7 +52,7 @@
    Лучшие практики: Spotify-навигация (side+tabbar+mini-player), KaraFun-фичи
    (tempo/vocal-guide/queue/scoring), Sing King-лирика, ДНК КУБ-2026 (уголь/эмбер). */
 :root{
-  --coal:#000; --bg:#070605; --surf:#0d0b09; --surf2:#141110; --edge:#221e1b; --edge2:#2e2823;
+  --coal:#000; --bg:#000; --surf:#0a0a0c; --surf2:#16161c; --edge:#23232b; --edge2:#2e2e38;
   --skin:#e8e4df; --ash:#98918a; --mute:#8b857e /* такт v1.56.0: AA ≥4.5 на всех поверхностях дома (было #6e6862, 3.3) */; --dim:rgba(232,228,223,.34);
   --ember:#c08444; --ember2:#8a5c2a; --glow:rgba(192,132,68,.55); --glow2:rgba(192,132,68,.18);
   --ok:#7ec97e; --fd:"Unbounded","Manrope",system-ui,sans-serif;
@@ -79,7 +79,7 @@ input,select{font:inherit}
   grid-template:"top" var(--top-h) "main" 1fr "bar" auto / 1fr}
 .topbar{grid-area:top;position:relative;z-index:70;display:flex;align-items:center;gap:.6rem;
   padding:calc(.4rem + var(--sat)) 1rem .4rem;border-bottom:1px solid var(--edge);
-  background:linear-gradient(180deg,rgba(7,6,5,.96),rgba(7,6,5,.86))}
+  background:linear-gradient(180deg,rgba(0,0,0,.96),rgba(0,0,0,.86))}
 .brand{display:flex;align-items:baseline;gap:.45rem;font-family:var(--fd);font-weight:700;
   font-size:.9rem;letter-spacing:.05em;white-space:nowrap;cursor:pointer}
 .brand .sub{color:var(--ash);font-weight:400;font-size:.6875rem}
@@ -102,7 +102,7 @@ input,select{font:inherit}
 /* side-nav (десктоп) */
 .sidenav{position:fixed;top:var(--top-h);left:0;bottom:0;width:var(--nav-w);z-index:40;
   display:flex;flex-direction:column;gap:.15rem;padding:1rem .65rem;border-right:1px solid var(--edge);
-  background:rgba(5,4,3,.7);overflow-y:auto}
+  background:rgba(0,0,0,.7);overflow-y:auto}
 .snav{display:flex;align-items:center;gap:.7rem;padding:.55rem .75rem;border-radius:10px;
   color:var(--ash);font-size:.84rem;letter-spacing:.02em;transition:.15s;text-align:left;width:100%}
 .snav .ic{width:1.15rem;text-align:center;font-size:.95rem;flex:0 0 auto}
@@ -128,7 +128,7 @@ input,select{font:inherit}
 /* tabbar (мобильный) */
 .tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:65;grid-auto-flow:column;
   padding:.35rem .5rem calc(.35rem + var(--sab));gap:.2rem;border-top:1px solid var(--edge);
-  background:rgba(5,4,3,.96);backdrop-filter:blur(12px)}
+  background:rgba(0,0,0,.96);backdrop-filter:blur(12px)}
 .tab{display:grid;justify-items:center;gap:.15rem;padding:.35rem .2rem;border-radius:10px;
   color:var(--mute);font-family:var(--fm);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase}
 .tab .ic{font-size:1.05rem;line-height:1}
@@ -137,7 +137,7 @@ input,select{font:inherit}
 /* ═══ МИНИ-ПЛЕЕР (везде, кроме player) ═══ */
 .mini{position:fixed;left:.75rem;right:.75rem;bottom:calc(3.6rem + var(--sab));z-index:55;
   display:flex;align-items:center;gap:.7rem;padding:.5rem .7rem;border:1px solid var(--edge2);
-  border-radius:14px;background:rgba(13,11,9,.96);backdrop-filter:blur(14px);
+  border-radius:14px;background:rgba(10,10,12,.96);backdrop-filter:blur(14px);
   box-shadow:0 10px 34px rgba(0,0,0,.55);cursor:pointer;transition:.2s}
 @media(min-width:821px){.mini{left:calc(var(--nav-w) + .75rem);bottom:.9rem;max-width:640px}}
 .mini:hover{border-color:var(--glow)}
@@ -168,7 +168,7 @@ input,select{font:inherit}
 .hero-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.3rem}
 .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.78rem;
   letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.78rem 1.25rem;min-height:3rem;transition:.2s;border:1px solid transparent}
-.btn.primary{background:var(--ember);color:#0e0c07;font-weight:700;box-shadow:0 6px 26px var(--glow2)}
+.btn.primary{background:var(--ember);color:#0a0a0c;font-weight:700;box-shadow:0 6px 26px var(--glow2)}
 .btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 34px var(--glow)}
 .btn.ghost{border-color:var(--edge2);color:var(--skin)}
 .btn.ghost:hover{border-color:var(--ember);color:var(--ember)}
@@ -205,7 +205,7 @@ input,select{font:inherit}
   padding:.6rem;transition:.18s;position:relative;overflow:hidden}
 .card:hover{border-color:var(--glow);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
 .card .thumb{position:relative;aspect-ratio:16/9;border-radius:9px;overflow:hidden;
-  background:radial-gradient(120% 150% at 20% 0%,#241609 0%,#0a0806 58%);display:grid;place-items:center}
+  background:radial-gradient(120% 150% at 20% 0%,#16161c 0%,#000 58%);display:grid;place-items:center}
 .card .thumb .glyph{font-family:var(--fd);font-size:1.6rem;color:var(--ember2);opacity:.8}
 .card .thumb .rank{position:absolute;top:.4rem;left:.45rem;font-family:var(--fd);font-weight:800;
   font-size:1.5rem;color:rgba(232,228,223,.16);-webkit-text-stroke:1px var(--edge2)}
@@ -213,7 +213,7 @@ input,select{font:inherit}
   letter-spacing:.12em;text-transform:uppercase;background:rgba(0,0,0,.72);border:1px solid var(--edge2);
   color:var(--ash);border-radius:5px;padding:.14rem .4rem}
 .card.live .thumb .badge{color:var(--ember);border-color:var(--glow)}
-.card.live .thumb{background:radial-gradient(120% 150% at 20% 0%,#2c1c0a 0%,#0c0805 60%);
+.card.live .thumb{background:radial-gradient(120% 150% at 20% 0%,#23232b 0%,#000 60%);
   box-shadow:inset 0 0 40px rgba(192,132,68,.12)}
 .card.live .thumb .glyph{color:var(--ember);opacity:1;text-shadow:0 0 18px var(--glow)}
 .card .tt{font-size:.8rem;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;
@@ -254,7 +254,7 @@ input,select{font:inherit}
 .chstat{font-family:var(--fm);font-size:.6875rem;letter-spacing:.05em;color:var(--mute);padding:0 clamp(1rem,4vw,3rem) .35rem;text-transform:none}
 .chstat b{color:var(--ember);font-weight:400}
 /* TRAX: караоке любой песни */
-.badge.btxt{color:#0d0a06;background:var(--ember);border-color:var(--ember);font-weight:700}
+.badge.btxt{color:#0a0a0c;background:var(--ember);border-color:var(--ember);font-weight:700}
 .player.song-trax #btnLangs2,.player.song-trax #prev,.player.song-trax #next{opacity:.28;pointer-events:none}
 .player.song-trax .langchip{cursor:not-allowed}
 #traxBar .ab{cursor:pointer}
@@ -295,7 +295,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .lgrid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
   gap:.5rem;padding:.4rem clamp(1rem,4vw,3rem) 1.2rem;align-content:start}
 .gi{display:flex;flex-direction:column;gap:.14rem;border:1px solid var(--edge);border-radius:9px;padding:.5rem .65rem;
-  text-align:left;transition:.15s;background:rgba(14,11,8,.6)}
+  text-align:left;transition:.15s;background:rgba(10,10,12,.6)}
 .gi:hover{border-color:var(--glow)}
 .gi.cur{border-color:var(--ember);box-shadow:0 0 14px var(--glow2)}
 .gi b{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -303,7 +303,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .gi.cur span{color:var(--ember)}
 
 /* ═══ PLAYER: полноэкранный караоке ═══ */
-.player{position:fixed;inset:0;z-index:72;background:radial-gradient(120vmax 90vmax at 50% -10%,#171006 0%,#000 60%);
+.player{position:fixed;inset:0;z-index:72;background:#000;
   display:flex;flex-direction:column;transform:translateY(103%);transition:transform .5s cubic-bezier(.6,0,.25,1)}
 .player.open{transform:translateY(0)}
 .pl-top{display:flex;align-items:center;gap:.6rem;padding:calc(.55rem + var(--sat)) 1rem .55rem;border-bottom:1px solid var(--edge)}
@@ -371,8 +371,8 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .bt{width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--ember);color:var(--ember);
   display:grid;place-items:center;font-size:1.05rem;transition:.2s;flex:0 0 auto}
 .bt:hover{background:var(--glow2);box-shadow:0 0 18px var(--glow)}
-.bt.big{width:3.3rem;height:3.3rem;font-size:1.25rem;background:var(--ember);color:#0e0c07;font-weight:700}
-.bt.big:hover{color:#0e0c07}
+.bt.big{width:3.3rem;height:3.3rem;font-size:1.25rem;background:var(--ember);color:#0a0a0c;font-weight:700}
+.bt.big:hover{color:#0a0a0c}
 .timecode{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap}
 .transport .rail{flex:1;height:22px;display:grid;align-items:center;cursor:pointer}
 .rail .tr{position:relative;height:4px;background:var(--edge);border-radius:2px}
@@ -403,7 +403,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
   padding-bottom:.32rem;margin-bottom:.5rem}
 .tgroup>h3 .gn{color:var(--mute);letter-spacing:.05em;text-transform:none}
 .trow{display:flex;flex-direction:column;gap:.1rem;border:1px solid var(--edge);border-radius:10px;
-  background:rgba(14,11,8,.6);padding:.48rem .7rem;margin-bottom:.35rem;transition:border-color .15s}
+  background:rgba(10,10,12,.6);padding:.48rem .7rem;margin-bottom:.35rem;transition:border-color .15s}
 .trow:hover{border-color:var(--glow)}
 .trow .r1{display:flex;align-items:center;gap:.55rem}
 .trow .dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
@@ -427,15 +427,15 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 /* ═══ WEBGL фон ═══ */
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 body.no-webgl #gl{display:none}
-body.no-webgl{background:radial-gradient(120vmax 90vmax at 50% 18%,#1a1208 0%,#000 62%)}
+body.no-webgl{background:#000}
 html[data-motion="off"] #gl{display:none}
 #app{isolation:isolate}
 
 /* ═══ toast / help / dialog ═══ */
 .toast{position:fixed;left:50%;bottom:calc(6.2rem + var(--sab));transform:translateX(-50%);z-index:90;
-  background:#141009;border:1px solid var(--ember);color:var(--ember);border-radius:10px;
+  background:#101014;border:1px solid var(--ember);color:var(--ember);border-radius:10px;
   padding:.55rem 1rem;font-size:.74rem;letter-spacing:.04em;transition:opacity .4s;max-width:92vw;text-align:center;z-index:95}
-dialog.help{background:#0b0908;color:var(--skin);border:1px solid var(--edge);border-radius:14px;
+dialog.help{background:#0a0a0c;color:var(--skin);border:1px solid var(--edge);border-radius:14px;
   max-width:min(600px,92vw);padding:1.4rem 1.5rem;line-height:1.65}
 dialog.help::backdrop{background:rgba(0,0,0,.72)}
 dialog.help h2{font-family:var(--fd);font-size:1.05rem;margin-bottom:.7rem;color:var(--ember)}
@@ -443,7 +443,7 @@ dialog.help p,dialog.help li{font-size:.82rem;color:var(--ash);margin:.35rem 0}
 dialog.help b{color:var(--skin)}
 dialog.help kbd{font-family:var(--fm);border:1px solid var(--edge2);border-radius:4px;padding:0 .3em;font-size:.72rem}
 dialog.help .close-row{text-align:right;margin-top:.8rem}
-dialog.songmodal{background:#0b0908;color:var(--skin);border:1px solid var(--edge);border-radius:16px;
+dialog.songmodal{background:#0a0a0c;color:var(--skin);border:1px solid var(--edge);border-radius:16px;
   max-width:min(480px,92vw);padding:1.3rem 1.4rem;line-height:1.6}
 dialog.songmodal::backdrop{background:rgba(0,0,0,.72)}
 dialog.songmodal h3{font-family:var(--fd);font-size:1.05rem;margin-bottom:.2rem;padding-right:2rem}
@@ -499,7 +499,7 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
   transition:height .09s linear;align-self:flex-end;margin-top:auto}
 .mv-meters .mcol span{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.16em;text-transform:uppercase}
 .mv-controls{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:center;
-  background:rgba(6,5,4,.82);border:1px solid var(--edge);border-radius:14px;
+  background:rgba(0,0,0,.82);border:1px solid var(--edge);border-radius:14px;
   padding:.85rem 1.1rem;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .mgrp{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
 .mgrp>span{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.16em;
@@ -517,9 +517,9 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 /*<SEL-FIX> v1: нативные выпадающие списки = тёмный дизайн страницы */
 :root{color-scheme:dark}
 select{color-scheme:dark}
-select{background:#141110;color:#e8e4df;border:1px solid #2e2823;border-radius:8px;padding:.3rem .5rem;font:inherit}
-option,optgroup{background-color:#141110;color:#e8e4df}
-option:checked,option:hover{background-color:#2a241f;color:#c08444}
+select{background:#0a0a0c;color:#e8e4df;border:1px solid #2e2e38;border-radius:8px;padding:.3rem .5rem;font:inherit}
+option,optgroup{background-color:#0a0a0c;color:#e8e4df}
+option:checked,option:hover{background-color:#23232b;color:#c08444}
 /*</SEL-FIX>*/
 </style>
 <style id="sng-канон-v135">
@@ -527,7 +527,7 @@ option:checked,option:hover{background-color:#2a241f;color:#c08444}
    Палитра аппа переложена на канон дома (ember/радуга выжжены);
    семантические цвета состояния (ok/bad) сохранены — это юзобилити. */
 :root{
-  --ember:#c08444; --ember2:#8a5c2a; --coal2:#8a5c2a; --hot:#e8cba2;
+  --ember:#c08444; --ember2:#8a5c2a; --coal2:#8a5c2a; --hot:#E8C89C;
   --glow:rgba(192,132,68,.5); --glow2:rgba(192,132,68,.14);
   --spoke-glow:rgba(192,132,68,.5);
   --bg:#0A0A0C; --surf:#101014; --surf2:#16161c;
@@ -627,7 +627,7 @@ html[data-view="player"] #gl{opacity:.35}
 #gsearchIn{min-height:2.75rem}
 .scorebar input{min-height:2.75rem}
 .skip-link{position:absolute;left:.8rem;top:-3.4rem;z-index:300;transition:top .2s ease;
-  background:#0b0908;border:1px solid var(--ember);border-radius:10px;
+  background:#0a0a0c;border:1px solid var(--ember);border-radius:10px;
   padding:.55rem .95rem;color:var(--ember);font-size:.78rem;letter-spacing:.04em}
 .skip-link:focus,.skip-link:focus-visible{top:calc(.6rem + var(--sat));text-decoration:none}
 .catgrid .card{content-visibility:auto;contain-intrinsic-size:auto 250px}
@@ -717,7 +717,7 @@ html[data-view="player"] #sg65nav{display:none !important}
 /* ── УДОБНО КАЖДОМУ (такт v1.55.0): предпочтения человека — классы на <html> ── */
 html.уд-текст-крупно{font-size:18px}
 html.уд-текст-огромно{font-size:20px}
-html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#F0C878;--ember2:#F0C05A;--glow:rgba(255,216,101,.6)}
+html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#F0C878;--ember2:#E8C89C;--glow:rgba(192,132,68,.6)}
 html.уд-тихо *{animation:none!important;transition:none!important}
 html.уд-тихо{scroll-behavior:auto}
 /* крупные цели (уд-крупно — выбор с фасада, один на весь дом): касания шире */
@@ -775,18 +775,18 @@ html.уд-крупно .уд-вкл{min-height:48px}
 /* Ж3: кнопка «наверх» (комфорт длинных вьюх, vestibular.org) */
 #наверх{position:fixed;left:12px;bottom:calc(4.4rem + var(--sab));z-index:60;display:none;
   appearance:none;cursor:pointer;min-height:44px;padding:.5rem .8rem;border-radius:999px;
-  border:1px solid rgba(192,132,68,.55);background:rgba(20,17,14,.92);color:#E8C89C;
+  border:1px solid rgba(192,132,68,.55);background:rgba(10,10,12,.92);color:#E8C89C;
   font:600 .81rem/1 var(--fb);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #наверх.виден{display:inline-flex}
-#наверх:hover,#наверх:focus-visible{color:#F7DDAE;outline:2px solid #E8C89C;outline-offset:2px}
+#наверх:hover,#наверх:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
 @media(min-width:821px){#наверх{left:calc(var(--nav-w) + 12px);bottom:.9rem}}
 /* К4: скелетон вьюхи «Файлы», пока модуль 5,6 МБ едет (NN/g: шиммер слева-направо) */
 .скелет{border:1px solid var(--edge);border-radius:12px;padding:1rem;background:var(--surf)}
 .скелет .шапка{height:.9rem;width:38%;border-radius:6px;margin:0 0 .8rem;
-  background:linear-gradient(90deg,#1a1713 25%,#262019 50%,#1a1713 75%);background-size:200% 100%;
+  background:linear-gradient(90deg,#16161c 25%,#23232b 50%,#16161c 75%);background-size:200% 100%;
   animation:скелет-шиммер 1.4s linear infinite}
 .скелет .строка{height:.62rem;border-radius:5px;margin:.55rem 0;
-  background:linear-gradient(90deg,#1a1713 25%,#262019 50%,#1a1713 75%);background-size:200% 100%;
+  background:linear-gradient(90deg,#16161c 25%,#23232b 50%,#16161c 75%);background-size:200% 100%;
   animation:скелет-шиммер 1.4s linear infinite}
 .скелет .строка.коротка{width:56%}
 @keyframes скелет-шиммер{from{background-position:200% 0}to{background-position:-200% 0}}
@@ -809,7 +809,7 @@ window.SG_ТВ=ТВ;
 window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
 }());</script>
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
-<style>/* канон дома v1.35.0 «СТАНДАРТ»: void + золото, стекло насквозь — сцены и темы data-theme аппа не тронуты */body{background:#0A0A0C !important}.singulyar-canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 22% 18%,rgba(192,132,68,.10) 0%,transparent 42%),radial-gradient(circle at 80% 85%,rgba(192,132,68,.07) 0%,transparent 46%),radial-gradient(circle at 50% 50%,rgba(232,213,141,.04) 0%,transparent 55%),#0A0A0C}</style>
+<style>/* канон дома v1.35.0 «СТАНДАРТ»: void + золото, стекло насквозь — сцены и темы data-theme аппа не тронуты */body{background:#0A0A0C !important}.singulyar-canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#000}</style>
 <canvas id="gl" aria-hidden="true"></canvas>
 
 <div id="app">
@@ -1060,7 +1060,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
     <a class="ab" id="srcYt" target="_blank" rel="noopener" href="#">YouTube </a>
     <span class="spacer"></span>
     <span class="p-note">язык:</span>
-    <select id="traxLangSel" aria-label="Язык караоке" style="background:#0d0b09;color:#e8e4df;border:1px solid #2e2823;border-radius:8px;padding:.25rem .4rem;font:inherit;font-size:.78rem;max-width:9.5rem"></select>
+    <select id="traxLangSel" aria-label="Язык караоке" style="background:#0a0a0c;color:#e8e4df;border:1px solid #2e2e38;border-radius:8px;padding:.25rem .4rem;font:inherit;font-size:.78rem;max-width:9.5rem"></select>
     <span class="p-note" id="traxNote">минусовки — аудио-библиотека в ФАЙЛАХ </span>
   </div>
   <span class="sr-only" id="live" aria-live="polite"></span>
@@ -2654,7 +2654,7 @@ $('#btnCard').addEventListener('click',()=>{
   const cv=document.createElement('canvas');cv.width=1200;cv.height=630;
   const g=cv.getContext('2d');
   const grd=g.createRadialGradient(600,-90,90,600,320,940);
-  grd.addColorStop(0,'#1b1206');grd.addColorStop(.55,'#0a0806');grd.addColorStop(1,'#000');
+  grd.addColorStop(0,'#0a0a0c');grd.addColorStop(.55,'#000');grd.addColorStop(1,'#000');
   g.fillStyle=grd;g.fillRect(0,0,1200,630);
   const done=(img)=>{
     if(img&&img.width){
@@ -2662,7 +2662,7 @@ $('#btnCard').addEventListener('click',()=>{
       const s=Math.max(430/img.width,430/img.height);
       g.drawImage(img,80+(430-img.width*s)/2,105+(430-img.height*s)/2,img.width*s,img.height*s);
       g.restore();
-    }else{g.fillStyle='#141009';rr(g,80,105,430,430,26);g.fill()}
+    }else{g.fillStyle='#101014';rr(g,80,105,430,430,26);g.fill()}
     g.fillStyle='#c08444';
     g.font='700 30px system-ui,sans-serif';g.fillText('СИНГУЛЯР·01',560,150);
     g.fillStyle='#ece9e2';
@@ -2783,7 +2783,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 .95rem/1.2 var(--fm),system-ui,-apple-system,'Segoe UI',sans-serif}
 #sg65nav .sg65a{display:inline-flex;align-items:center;gap:.55rem;font-size:.95rem;min-height:4rem;padding:.9rem 1.6rem;border-radius:999px;border:1px solid rgba(192,132,68,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#C08444;color:#E9CA92;outline:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#C08444;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
 #sg65nav .sg65menu{font-size:.8rem}
@@ -2791,7 +2791,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 #sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
 #sg65nav .sg65menu b{color:#C08444;font-size:.6875rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(192,132,68,.14);color:#E9CA92;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(192,132,68,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:.9rem 1rem}}
 @media print{#sg65nav{display:none}}
@@ -3037,6 +3037,6 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
   });
 })();
 </script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.63</span> «<span data-реестр="такт">ОДНА ШКАЛА</span>» · кэш <span data-реестр="кэш">v224</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.64</span> «<span data-реестр="такт">ЧЁРНЕЕ НОЧИ</span>» · кэш <span data-реестр="кэш">v225</span></div>
 </body>
 </html>
