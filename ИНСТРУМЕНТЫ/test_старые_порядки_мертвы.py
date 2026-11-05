@@ -93,8 +93,8 @@ iEt, iEn = коды.index('et'), коды.index('en')
         'С145: sr kk de uk en zh hi es fr ar pt ja ko it' in сыр)
 
 sw = Ст['sw15.js']
-проверь('sw15: кэш поднят — законсервированное старьё у владельца умирает (v212, пины такта v11.57 «ДВЕРЬ НАРУЖУ», TH-AUDIO-44c и FLAGMAN-01: v211→v212, PR#48)',
-        "S15_CACHE = 's15-orkestrator-v212'" in sw)
+проверь('sw15: кэш поднят — законсервированное старьё у владельца умирает (v213, пины такта v11.57 «ДВЕРЬ НАРУЖУ», TH-AUDIO-44c, FLAGMAN-01: v211→v212 PR#48 и FLAGMAN-01b a11y: v212→v213)',
+        "S15_CACHE = 's15-orkestrator-v213'" in sw)
 проверь('sw15: стейл-гонка навигаций мертва — стейл только на упавшей сети (С147)',
         "Promise.race" not in sw[sw.find("req.mode === 'navigate'"):sw.find("req.mode === 'navigate'")+1500])
 проверь('·31: лицо перезагружается само при смене св-воркера (С147)',

@@ -873,7 +873,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
 </div>
 
 <!-- ═══ ПЛЕЕР ═══ -->
-<div class="player" id="player" role="dialog" aria-label="Караоке-плеер">
+<div class="player" id="player" role="dialog" aria-label="Караоке-плеер" tabindex="-1" inert aria-hidden="true">
   <div class="pl-top">
     <button class="iconb" id="plBack" aria-label="Назад">↓</button>
     <div style="min-width:0"><div class="pl-title" id="plTitle">Когда теряем</div>
@@ -1725,7 +1725,7 @@ function openPlayer(code){
   }
   if(S.view!=='player')S.lastView=S.view;
   showView('player');
-  $('#player').classList.add('open');
+  $('#player').classList.add('open');plA11yOpen();
   renderLang(code||cur);
   const heard=new Set(store.get('heard',[]));heard.add(cur);store.set('heard',[...heard]);
   /* предложение продолжить */
@@ -1743,7 +1743,7 @@ function openTrax(id){
   setTraxLang(traxLangCode);   // восстанавливает сохранённый язык песни
   if(S.view!=='player')S.lastView=S.view;
   showView('player');
-  const pl=$('#player');pl.classList.add('open','song-trax');
+  const pl=$('#player');pl.classList.add('open','song-trax');plA11yOpen();
   $('#traxBar').style.display='flex';
   $('#srcYt').href='https://youtu.be/'+id;
   $('#srcOwn').classList.remove('on');$('#srcPad').classList.add('on');
@@ -1752,8 +1752,11 @@ function openTrax(id){
   audio.pause();
   padSrc(id).then(u=>{if(SONG.mode==='trax'&&SONG.id===id&&!ownURL&&audio.src!==u){const was=audio.currentTime;audio.src=u;toast('синтез-фон готов · '+t.t.slice(0,40),1600)}}).catch(()=>{});
 }
+/* FLAGMAN-01b a11y: закрытый плеер не существует для скринридера и Tab-порядка */
+function plA11yOpen(){const PL=$('#player');PL.inert=false;PL.removeAttribute('aria-hidden');PL.setAttribute('aria-modal','true');try{PL.focus({preventScroll:true})}catch(e){}}
+function plA11yClose(){const PL=$('#player');PL.inert=true;PL.setAttribute('aria-hidden','true');PL.removeAttribute('aria-modal')}
 function closePlayer(){
-  $('#player').classList.remove('open');
+  $('#player').classList.remove('open');plA11yClose();
   /* возврат из trax к живому треку: лирика/языки/источник не остаются протухшими */
   if(SONG.mode==='trax'){
     SONG.mode='live';SONG.id=null;traxLang=null;cur=localStorage.getItem('s01.lang')||'ru-orig';
@@ -1766,6 +1769,7 @@ function closePlayer(){
   }
   const back=S.lastView&&S.lastView!=='player'?S.lastView:'home';
   showView(back);
+  try{$('#mini').focus({preventScroll:true})}catch(e){}
 }
 function resumeAt(t){
   const el=document.createElement('button');el.className='btn ghost';el.textContent='▶ продолжить с '+fmtT(t);
@@ -1933,6 +1937,7 @@ function wirePlayer(){
   $('#btnPlay').addEventListener('click',()=>{audio.paused?kick():audio.pause()});
   $('#miniPlay').addEventListener('click',e=>{e.stopPropagation();audio.paused?kick():audio.pause()});
   $('#mini').addEventListener('click',()=>openPlayer(cur));
+  $('#mini').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openPlayer(cur)}});
   $('#btnBack10').addEventListener('click',()=>{audio.currentTime=Math.max(0,audio.currentTime-10);kick()});
   $('#btnFwd10').addEventListener('click',()=>{audio.currentTime=Math.min(audio.duration-1,audio.currentTime+10);kick()});
   $('#btnFav').addEventListener('click',e=>{
@@ -1994,7 +1999,7 @@ function wirePlayer(){
     rail.addEventListener('pointermove',mv);rail.addEventListener('pointerup',up)});
   /* языки в плеере */
   $('#btnLangs2').addEventListener('click',()=>{closePlayerTab();showView('langs')});
-  function closePlayerTab(){$('#player').classList.remove('open')}
+  function closePlayerTab(){$('#player').classList.remove('open');plA11yClose()}
   $('#prev').addEventListener('click',()=>{if(SONG.mode==='trax'){cycleTraxLang(-1);return}ORDER=langOrder();openPlayer(ORDER[(ORDER.indexOf(cur)-1+ORDER.length)%ORDER.length])});
   $('#next').addEventListener('click',()=>{if(SONG.mode==='trax'){cycleTraxLang(1);return}ORDER=langOrder();openPlayer(ORDER[(ORDER.indexOf(cur)+1)%ORDER.length])});
   $('#traxLangSel').addEventListener('change',e=>setTraxLang(e.target.value));

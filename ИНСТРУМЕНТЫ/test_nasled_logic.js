@@ -137,8 +137,8 @@ test('пульт: вкладка НАСЛЕДСТВО в HTML дома — aria-
 
 test('гварды дома: глобалы только __НАСЛЕД*, кэш поднят', () => {
   assert.ok(src.includes("__НАСЛЕД={вер:'v11.56'"), 'экспорт версией (рождение модуля — летопись, не трогается)');
-  assert.ok(src.includes("s15-orkestrator-v212"), 'APP кэш догнал дом (TH-AUDIO-44c: v208→v211, FLAGMAN-01: v211→v212, PR#48)');
+  assert.ok(src.includes("s15-orkestrator-v213"), 'APP кэш догнал дом (TH-AUDIO-44c: v208→v211, FLAGMAN-01: v211→v212 PR#48, FLAGMAN-01b a11y: v212→v213)');
   const sw = fs.readFileSync(path.join(__dirname, '..', 'sw15.js'), 'utf-8');
-  assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-v212';"), 'S15_CACHE v212 (TH-AUDIO-44c → FLAGMAN-01, PR#48)');
+  assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-v213';"), 'S15_CACHE v213 (TH-AUDIO-44c → FLAGMAN-01 PR#48 → FLAGMAN-01b a11y)');
   assert.ok(!/ЗАКОН_ПОРЯДОК[\s\S]{0,400}НАСЛЕД/.test(src), 'порядок языков не тронут');
 });
