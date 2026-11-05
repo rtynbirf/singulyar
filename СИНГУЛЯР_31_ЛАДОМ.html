@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" data-motion="on">
 <!-- латка честности версий (поверх их v11.57 «ДВЕРЬ НАРУЖУ» (С154) и их TH-AUDIO-44b/44c — их байты целы, такт/версия их не тронуты): страж закона языков (test_zakon_yazykov_ladom 21/22) поймал дрейф — такт v11.57 (С154) поднял data/versions.json до 11.57 «ДВЕРЬ НАРУЖУ», TH-AUDIO-44c поднял sw15 S15_CACHE до v211, а штампы зала ·31 (титул/og/window.APP) остались v11.56 «НАСЛЕДСТВО»/v208; выровнено РОДНЫМ цехом правды (ИНСТРУМЕНТЫ/цех_правды.py --apply, только маркеры СНГ:ПРАВДА, идемпотентно: второй ход 0 байт): титул/og/APP = реестру v11.57 «ДВЕРЬ НАРУЖУ»/s15-orkestrator-v211; пины стражей догнали дом (skvoz 28/28, старые_порядки 70/70, nasled 11/11 — кэшные пины v211, подпись рождения __НАСЛЕД={вер:'v11.56'} НЕ тронута — летопись модуля); ПОРЯДОК ЯЗЫКОВ НЕ ТРОНУТ НИ НА ЙОТУ: канон==залу==селекту 289=289=289, первые четыре РУС→СРБ→КАЗ→НЕМ, дубли отсутствуют (проба скриптом по свежему main) -->
+<!-- такт v1.63.0 «ПЕРЕЛИВ» (С165): слово владельца «Я ДЛЯ ЧЕГО ТЕБЕ ДАЛ ДИАПОЗОН ПАЛИТРЫ В ПОЛОСЕ? ЧТОБ ТЫ ВСЁ СДЕЛАЛ В ОДНОМ ТОНЕ?=) НУ СДЕЛАЙ ТЫ ИХ ПЕРЕЛЕВНЫМИ СТЕКЛЯННЫМИ ТЕБЕ ЧТО ЖАЛКО?» — полосы пульта ·31 больше не один тон: шапки открытых групп (948×56), выбранные строки (447×56), чипы групп и заголовок «⚙ ПУЛЬТ» стали стеклом — три слоя (движущийся блик-перелив 250% + весь диапазон бронзы #665231→#987B4F→#B08D57→#E8C89C + стеклянный объём), светлая грань сверху/тёмная снизу, кромка и свечение rgba(176,141,87,…); фазы шапок/строк/чипов разведены (5.6/4.2/3.6 c), заголовок ходит крем-золотом 6.4 c; тихий режим (html.уд-тихо, prefers-reduced-motion) перелив замирает — стекло и диапазон остаются. Замер: scripts/скрин_пульта.py + такт_163_перелив.py -->
 <!-- такт v1.61.0 «ПУЛЬТ В БРОНЗЕ» (С163): слово владельца «В САМОМ ПУЛЬТУ КРУПНЫЕ ПОЛОСЫ ЦВЕТА БРОНЗА» + «ВСЕ ЦВЕТА ИМЕЮТ ТЕПЛОВУЮ ГАММУ=)» — рума ·31 не проходила бронза-такты v1.57/1.60: в пульте крупные полосы старого золота #B08D57/rgba(176,141,87,…). Тёплая гамма сохранена, краска приведена к бронза-канону v1.60 (hue 36°): #B08D57→#B08D57, rgba(212,175,55,…)→rgba(176,141,87,…), #B08D26→#987B4F, #E3C97A/rgb(227,201,122)→#E8C89C, #8C6D1F→#665231 (светлые темы, контраст 6.37≥AA, было 4.15), свечения/чипы/ползунки/шапки групп — бронза на чёрном OLED; история-комменты «→» не тронуты. Пульт-телефон ЛАДОМ — той же рукой. Замер: scripts/скрин_пульта.py (живой хром, тёплые площади числом) -->
 <!-- такт v11.56 «НАСЛЕДСТВО» (С153): приказ владельца 2026-10-18 «НУЖНО ВСЕ ФУНКЦИИ С ЭТИХ СТРАНИЦ ФИЩКИ ФИЧИ ИНТЕГРИРОВАТЬ В 31 РУМУ!!! ПРОДУБЛИРУЙ ФУНКЦИИ С ЭТИХ СТРАНИЦ В 31 РУМЕ» (по списку страниц-дублей: ревизия 31 сироты + двери-дубли RUVSON) — ИСПОЛНЕН: новая вкладка пульта «НАСЛЕДСТВО» (ptab-nasl/ppanel-nasl — группа подхватывается __ПУЛЬТ_ГРУППЫ и СКВОЗЬ сами, статические HTML-байты, aria-канон дома) + модуль naslScript (window.__НАСЛЕД; чистая математика — window.__НАСЛЕД_ЯДРО для node-теста): ТЭП-сцена (порт ·32 СЦЕНА: ядро S32_ЯДРО — ИДЕАЛ ±80 мс ×3, ТОЧНО ±350 мс, комбо-множитель 1+min(n,10)*0.1, слоговые веса, ближайшее неспетое), СУФЛЁР (порт ·16 СУФЛЁР: UltraStar-парсер, автокорреляция питча через кадр, центы с заворотом октавы, медиана-события голоса, счёт покрытия 50/100/200 центов, DTW-лента Сакоэ-Чибы для сшивки эталонов, память эталона kv31.nasl.уст), ЗВЕЗДА·ИЗБРАННОЕ·ИСТОРИЯ (порт ·01/·02 РЕЗОНАНС: kv31.nasl.избр/гист, ряды избранное/недавнее/частое, честный пуск через __КАРАОКЕ_ВКЛЮЧИ), ЗАЛ СОБЫТИЯ (порт ·18 СОБЫТИЕ: PeerJS-зал kv31-zal-КОД, фазы СБОР→ПЕНИЕ→ОБЗОР, MediaRecorder-записи гостей, IndexedDB kv31.nasl.db, копия кода), ФАБРИКА ТОНОВ (порт ·02 ФАБРИКА: 12 нот осциллятором, 4 волны, октавы 1–7, метроном 40–240 BPM, первая доля звонче), БРАЙЛЬ-СТРОКА (порт HARMONIA: aria-live текущая/следующая строка из SONG.cues для брайль-дисплеев); честно НЕ переселено: YT-стек ·01/·02 (требует ослабления CSP — инвариант дома нерушим; песни дом играет своим фондом minus/ — та же функция, своя вода), материя-декор и макеты без функций, демо-стенды OMNISPEAKER/SEARCH (живые двери ·41/·36 покрывают), профиль/журнал/клап HARMONIA (уже живы: ПРОФИЛЬ/ЖУРНАЛ/РУКИ), ПУЛЬТ_31_РУМА_v1.0 (приёмка самого ·31), дубль ·53 (жив ·53); гварды: 0 innerHTML (createElement/textContent), CSP не ослаблен, клавиши дома не заняты (ТАП — кнопкой: Space/Enter дома не отбираются), I-01 isTrusted, хранилище kv31.nasl.*, глобалы только __НАСЛЕД* (КАЗНА-ДОМ ^__), ПОРЯДОК ЯЗЫКОВ не тронут ни на йоту; APP v11.56, кэш v207→v208 -->
 <!-- такт v11.55 «СВОЙ ПЕРЕВОД» (С152; поверх их v11.54 «ПРАВДА КОДОВ» (С151, латка) — их байты целы (ISO-фиксы канона hun→huz, cap→cji, oak→oaa, tsr→tkr, tdx→tin, bpt→kap, bpx→bph, khf→khufi; их летопись; их кэш v206), мой такт честно перенумерован v11.54→v11.55/С151→С152/кэш v206→v207 — прецедент v10.91/v11.21/С121/С124/С128; СТОП-ГОРН: их latka-c151 встала между моим досье и пушем): приказ владельца «ТЫ С ГОЛОВОЙ ДРУЖИШЬ? ТАМ 60+ ПЕСЕН!!! ТАМ У КАЖДОЙ ДОЛЖЕН БЫТЬ СВОЙ ПЕРЕВОД!!! А НЕ НА 60+ ПЕСЕН ПЕРЕВОД ОДНОЙ Просто люби!!!» и «ТЫ СДЕЛАЛ ТОЛЬКО В ВЫБОРЕ А ТЕКСТ ТО НА ЭКРАНЕ РУССКИЙ А НЕ ВЫБРАННЫЙ» — исполнен до духа: (1) ОСЬ-ЗАКОН вернулся (v10.5, закон дома): строка канона живёт в таблице «ЯЗЫК СТРОК» ТОЛЬКО если у текущей песни есть её перевод (arr.length===ось) — ни одной мёртвой строки, ноль русского под чужим именем, у каждой песни СВОИ языки в каноне I-12 (их ISO-фиксы канона целы); v11.53 показывала все 289 у всех песен — перевод одной песни натягивался на 60+ — исправлено; (2) дому вкатан ПЕРЕВОД КАНОНА на ось «Просто люби» (40 строк): голова канона целиком (НЕМЕЦКИЙ + 15 республик: УКРАИНСКИЙ, БЕЛОРУССКИЙ, УЗБЕКСКИЙ, ГРУЗИНСКИЙ, АЗЕРБАЙДЖАНСКИЙ, ЛИТОВСКИЙ, МОЛДАВСКИЙ, ЛАТЫШСКИЙ, КИРГИЗСКИЙ, ТАДЖИКСКИЙ, АРМЯНСКИЙ, ТУРКМЕНСКИЙ, ЭСТОНСКИЙ), народы СССР (УЙГУРСКИЙ, ТАТАРСКИЙ, БАШКИРСКИЙ, ЧУВАШСКИЙ, КАРАКАЛПАКСКИЙ, КУМЫКСКИЙ, ЯКУТСКИЙ), хвост по носителям (АНГЛИЙСКИЙ, КИТАЙСКИЙ, ХИНДИ, ИСПАНСКИЙ, ФРАНЦУЗСКИЙ, БЕНГАЛЬСКИЙ, АРАБСКИЙ, ПОРТУГАЛЬСКИЙ, УРДУ, ИНДОНЕЗИЙСКИЙ, ПАНДЖАБИ, ЯПОНСКИЙ, МАРАТХИ, ЯВАНСКИЙ, ТУРЕЦКИЙ, ТЕЛУГУ, КОРЕЙСКИЙ, ВЬЕТНАМСКИЙ, ТАМИЛЬСКИЙ, ПЕРСИДСКИЙ + ПОЛЬСКИЙ, НИДЕРЛАНДСКИЙ, РУМЫНСКИЙ, ГРЕЧЕСКИЙ, ВЕНГЕРСКИЙ, ЧЕШСКИЙ, СЛОВАЦКИЙ, ДАТСКИЙ, ШВЕДСКИЙ, НОРВЕЖСКИЙ, ФИНСКИЙ) — машинный свод «ДОНЕСТИ СМЫСЛ, НЕ БУКВЫ», редактура за людьми; канон 1–18 поёт дословно ru → sr → kk → de → uk → be → uz → ka → az → lt → mo → lv → ky → tg → hy → tk → ku; таблица дома = 179 строк, 0 непоющих; (3) память МАЛЫША: партии подписываются песней (з.песня), старые без метки играют только на дому; (4) установщик караоке: таблица песни = её собственные языки в каноне + собранное вне канона в хвост; (5) поверка: 45/45 JS node --check, все вкатанные языки 40/40 строк, порядок LANGS = ЗАКОН_ПОРЯДОК (их); APP v11.55, кэш v206→v207 (sw15 S15_CACHE) -->
@@ -637,8 +638,11 @@ body[data-scene="day"] .big,body[data-scene="day"] .round.bigplay{color:#fff}
 dialog::before{content:"";position:absolute;top:0;left:20px;right:20px;height:1px;pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(176,141,87,.55) 50%,transparent)}
 dialog h3{font-family:ui-monospace,Consolas,'Courier New',monospace;letter-spacing:.2em;
-  background:linear-gradient(135deg,#e8c89c,#B08D57 55%,#e8c89c);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  /* v1.63.0 «ПЕРЕЛИВ»: заголовок — перелив ряда #806947→#B08D57→#e8c89c→#F0C878 (крем-канон)→#806947 по тексту */
+  background:linear-gradient(100deg,#806947 0%,#B08D57 16%,#e8c89c 30%,#F0C878 38%,#e8c89c 46%,#B08D57 60%,#806947 74%,#e8c89c 88%,#B08D57 100%);
+  background-size:240% 100%;background-position:0% 0;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:переливХод 6.4s ease-in-out infinite alternate}
 /* v10.7 «ЧЕТВЁРКА» (приказ владельца: «ПУЛЬТ СРАЗУ ВОВЕСЬ ЭКРАН, УБЕРИ РАЗВЕРНУТЬ, ЭСКЕЙБ — ВЫЙТИ ИЗ МЕНЮ»):
    один честный режим — весь экран; vh стоит перед dvh (ТВ-Chromium 76 знает только vh) */
 dialog#panel{padding:0;overflow:hidden;background:var(--panel2);
@@ -744,8 +748,23 @@ dialog#panel .p-tabs button{border-radius:12px;min-height:50px;display:flex;flex
   align-items:center;justify-content:center;gap:3px;padding:6px 4px;font-size:10.5px;
   letter-spacing:.07em;border-bottom:none;text-align:center;width:100%}
 dialog#panel .p-tabs button .tab-ico{font-size:17px;line-height:1}
-dialog#panel .p-tabs button.on{box-shadow:none;
-  background:linear-gradient(90deg,rgba(176,141,87,.22),rgba(176,141,87,.04))}
+dialog#panel .p-tabs button.on{box-shadow:none;color:#e8c89c;
+  /* v1.63.0 «ПЕРЕЛИВ» (С165): слово владельца «Я ДЛЯ ЧЕГО ТЕБЕ ДАЛ ДИАПОЗОН ПАЛИТРЫ В ПОЛОСЕ? ЧТОБ ТЫ ВСЁ СДЕЛАЛ В ОДНОМ ТОНЕ?=) НУ СДЕЛАЙ ТЫ ИХ ПЕРЕЛЕВНЫМИ СТЕКЛЯННЫМИ ТЕБЕ ЧТО ЖАЛКО?» — стекло из трёх слоёв: блик ходит туда-сюда, под ним весь диапазон бронзы владельца #665231→#987B4F→#B08D57→#E8C89C и объём (светлый верх, тёмный низ) */
+  background-color:rgba(176,141,87,.12);
+  background-image:
+    linear-gradient(105deg,rgba(232,200,156,0) 14%,rgba(240,200,120,.22) 30%,rgba(232,200,156,.40) 40%,rgba(176,141,87,.12) 52%,rgba(240,200,120,.20) 64%,rgba(232,200,156,0) 82%),
+    linear-gradient(90deg,rgba(102,82,49,.40) 0%,rgba(152,123,79,.30) 22%,rgba(176,141,87,.24) 50%,rgba(152,123,79,.30) 78%,rgba(102,82,49,.40) 100%),
+    linear-gradient(180deg,rgba(232,200,156,.16) 0%,rgba(176,141,87,.05) 42%,rgba(0,0,0,.28) 100%);
+  background-size:250% 100%,100% 100%,100% 100%;
+  background-position:0% 0,0 0,0 0;
+  border-color:rgba(176,141,87,.55);
+  box-shadow:inset 0 1px 0 rgba(232,200,156,.38),inset 0 -1px 0 rgba(0,0,0,.5),0 0 24px rgba(176,141,87,.16);
+  text-shadow:0 1px 3px rgba(0,0,0,.65),0 0 9px rgba(0,0,0,.3);
+  animation:переливПолоса 4.6s ease-in-out infinite alternate}
+@keyframes переливПолоса{0%{background-position:0% 0,0 0,0 0}100%{background-position:100% 0,0 0,0 0}}
+/* сдвиг фаз: шапки групп и строки переливаются вразнобой — стекло живое, а не строевой ряд */
+dialog#panel .pgroup button.on{animation-duration:5.6s}
+dialog#panel .seg button.on{animation-duration:4.2s}
 dialog#panel .p-body{grid-area:body;padding:10px 20px 26px}
 dialog#panel .p-справка{grid-area:help;border-left:1px solid #ffffff12;padding:14px 16px 18px;
   overflow-y:auto;min-width:0;scrollbar-width:none}
@@ -17147,7 +17166,17 @@ dialog#panel .p-tabs .pg-чипы{display:flex;flex:none;gap:6px;align-items:cen
 dialog#panel .p-tabs .pg-чипы::-webkit-scrollbar{display:none}
 dialog#panel .p-tabs .pg-чип{flex:none;width:auto;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:6px 12px;border-radius:99px;border:1px solid #ffffff18;background:#ffffff0a;color:var(--dim,#A7A8A8);font:800 11.5px/1.1 var(--f,system-ui,sans-serif);letter-spacing:.05em;cursor:pointer;white-space:nowrap;box-shadow:none;text-align:center}
 dialog#panel .p-tabs .pg-чип:hover{color:var(--text,#BABAB9);border-color:#ffffff2e;background:#ffffff14}
-dialog#panel .p-tabs .pg-чип.on{color:#060606;background:var(--amber,#B08D57);border-color:transparent}
+dialog#panel .p-tabs .pg-чип.on{color:#060606;
+  background-color:var(--amber,#B08D57);
+  background-image:linear-gradient(135deg,#987B4F 0%,#B08D57 30%,#E8C89C 50%,#B08D57 70%,#987B4F 100%);
+  background-size:220% 100%;background-position:0% 0;
+  border-color:transparent;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(0,0,0,.35),0 0 14px rgba(176,141,87,.30);
+  animation:переливХод 3.6s ease-in-out infinite alternate}
+@keyframes переливХод{0%{background-position:0% 0}100%{background-position:100% 0}}
+/* тихий режим дома: перелив замирает, стекло и диапазон остаются (канон «спокойное движение», v1.63.0) */
+html.уд-тихо dialog#panel .p-tabs button.on,html.уд-тихо dialog#panel .p-tabs .pg-чип.on,html.уд-тихо dialog h3,html.уд-тихо dialog#panel .pgroup button.on,html.уд-тихо dialog#panel .seg button.on{animation:none!important}
+@media (prefers-reduced-motion:reduce){html dialog#panel .p-tabs button.on,html dialog#panel .p-tabs .pg-чип.on,html dialog h3,html dialog#panel .pgroup button.on,html dialog#panel .seg button.on{animation:none!important}}
 dialog#panel .p-tabs .pgroup{scroll-margin-top:64px}   /* СНГ:ПОДРУКОЙ v11.42 — автоскролл кладёт заголовок под полосой чипов, а не под ней */
 dialog#panel .p-tabs .pg-чип{scroll-margin-top:0}
 </style>
