@@ -6,7 +6,7 @@
   MANIFEST: {"schema": "ruvson-singularity-01-platform", "version": "3.0.0", "song": {"title": "Когда теряем", "artist": "OutShadow feat RUVSON", "videoId": "rWpYxmFjm9g", "duration": 230.883, "source": "youtube", "audioCodec": "aac-lc/mp4 192k (из webm/opus 160k master)"}, "texts": {"origin": "YouTube ASR + автоперевод (черновики) -> SRT -> LRC", "count": 157, "status": "черновик; смысловая редактура — Фаза 3"}, "engine": {"clock": "audio.currentTime (двойные часы)", "wipe": "word-weight + first-word rule", "scroll": "spring + 300ms anticipate", "visual": "WebGL2 particles, fallback CSS", "minus": "center-cancel (L-R) — классический караоке-приём", "score": "ТЭП: тап-синк по словам, очки × реакция × комбо (СИНГУЛЯР v2)", "navigation": "sidenav + tabbar + mini-player (Spotify-паттерн)",
     "flagship": "v3.0 «ФЛАГМАН» — синтез мировых практик: сансара (авто-круг 157 голосов), очередь вечера, звук под зал (3 полосы WebAudio), запись пения локально (mic+mix → файл), карточка рекорда ТЭП (PNG), ambient-канвас по вьюхам, bento-герой, мгновенный поиск, PWA-установка, WCAG 2.2 (фокус/цели/reduced-motion); файлы задачи — ленивый same-origin модуль", "matter": "Фаза 2 «Эмерджентная материя»: 9261 частица, морф куб/колесо/сфера, бас-сер-вер, демо-сигнал", "catalog": "61 видео канала @ruvson_music — точные данные каталога канала (просмотры/длительности/даты на 30.09.2026, антигаллюцинация: сверка сумм и ID)", "trax": "КАРАОКЕ ВСЕХ ПЕСЕН × ЯЗЫКИ: корпус 61/61 (чистовики 57/61, 4 — ASR-ось); TRAXML — до 12 языков на песню (LLM-переводы реальных текстов, синхронные тайминги от ru-orig); звук: вшитый мастер (Когда теряем) / синтез-фон OfflineAudioContext по сиду песни / свой файл; сдвиг ±600мс", "taskfiles": "вьюха ФАЙЛЫ: артефакты вшиты + внешние ссылки аудио-библиотеки; офлайн"}}
   ПРАВА: аудио — мастер автора (вшит локально); тексты — чистовики.
-  АВТОНОМНОСТЬ: 0 внешних запросов; шрифты системные; работает офлайн.
+  АВТОНОМНОСТЬ: звук — фонд дома (raw/minus-fond, ACAO:*); шрифты системные; работает офлайн.
 ══════════════════════════════════════════════════════════════════ -->
 <!-- такт v10.93 «ПОРЯДОК» (С69; СТОП-ГОРН ×3: их v10.92 «СВОИ» (С68, c6e1442) принята целиком — их ход первым, мой такт перенумерован честно v10.92→v10.93, С68→С69, кэш v148→v149: ЗАКОН ЯЗЫКОВ I-12 — порядок языков перепечён по закону владельца (было: алфавит — ru 113-м, sr 126-м, kk 67-м, de 25-м; FEATURED ставил en вторым). Стало: ru-orig+ru → sr → kk → de → СССР-15 (uk be uz ka az lt lv ky tg hy tk et) → народы СССР (ba os tt ug yi) → хвост по носителям убыв.; порядок печёный (ЗАКОН_ПОРЯДОК) — машина не пересортировывает; TRAXML (12 языков × 61 песня) перепечен так же. Канон — ДАННЫЕ/ПОРЯДОК_ЯЗЫКОВ.json. -->
 <html data-motion="on" lang="ru">
@@ -14,7 +14,7 @@
 <!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
 <meta charset="utf-8"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://huggingface.co https://*.hf.co https://raw.githubusercontent.com https://filebin.net">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: https://raw.githubusercontent.com; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://huggingface.co https://*.hf.co https://raw.githubusercontent.com https://filebin.net">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
@@ -1007,6 +1007,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
   <div class="close-row"><button class="tbtn" id="helpClose">понятно</button></div>
 </dialog>
 
+<script src="./js/minus-fond.js"></script>
 <script>
 'use strict';
 'use strict';
@@ -1121,7 +1122,9 @@ let demAnalyser=null,demFreq=null,demoNodes=null; /* демо-сигнал ма�
 /* полосы Фазы 2: бас качает масштаб, середина крутит, верх зажигает цвет */
 const BAND={b:0,m:0,t:0};
 function initAudio(){
-  EMB_URL=new URL(AUDIO_URL, location.href).href;
+  /* FLAGMAN-02: crossOrigin ДО src — raw-фонд в графе жив без тейнта (TH-AUDIO-44c) */
+  audio.crossOrigin='anonymous';
+  EMB_URL=(window.minusUrl?window.minusUrl(AUDIO_URL):new URL(AUDIO_URL, location.href).href);
   audio.src=EMB_URL;
   audio.style.display='none'; document.body.appendChild(audio);
 }
@@ -1629,6 +1632,23 @@ function encodeWAV(chL,chR,sr){
   for(let i=0;i<n;i++){v.setInt16(44+i*4,clamp(chL[i],-1,1)*32767,true);v.setInt16(46+i*4,clamp(chR[i],-1,1)*32767,true)}
   return new Blob([b],{type:'audio/wav'});
 }
+/* FLAGMAN-02: лестница фонда дома для TRAX — как в ·32: голос → чистый-минус → синтез */
+function traxFond(id){
+  if(ownURL)return;
+  const t=TRAX_BY[id]; if(!t)return;
+  const MU=window.minusUrl||(s=>'minus/'+s);
+  const chain=(id==='9ys_TVEtda8')?['./minus/prosto-lubi.mp3']
+    :(id==='Qb8xb0vUYDg')?[MU('сборник/сборник-01.mp3')]
+    :[MU('голос/'+id+'.mp3'),MU('чистый-минус/'+id+'.mp3')];
+  let step=0;
+  const pick=()=>{ if(SONG.mode!=='trax'||SONG.id!==id||ownURL)return;
+    if(step>=chain.length){padSrc(id).then(u=>{if(SONG.mode==='trax'&&SONG.id===id&&!ownURL){audio.src=u;toast('фонда нет рядом — играет синтез-фон',2200)}}).catch(()=>{});return}
+    audio.onerror=()=>{audio.onerror=null;step++;pick()};
+    audio.src=chain[step];
+    toast(step?'натуральная минусовка (голоса нет рядом) · '+t.t.slice(0,40):'фонд дома · '+t.t.slice(0,40),1900);
+  };
+  pick();
+}
 async function padSrc(id){
   if(PADS[id])return PADS[id];
   const t=TRAX_BY[id],dur=t.d+2;
@@ -1748,9 +1768,9 @@ function openTrax(id){
   $('#srcYt').href='https://youtu.be/'+id;
   $('#srcOwn').classList.remove('on');$('#srcPad').classList.add('on');
   const nl=1+traxLangsOf(id).filter(c=>c!=='ru').length;
-  $('#traxNote').textContent='языков: '+nl+' · минусовки — аудио-библиотека в ФАЙЛАХ';
+  $('#traxNote').textContent='языков: '+nl+' · звук — фонд дома (голос → минус)';
   audio.pause();
-  padSrc(id).then(u=>{if(SONG.mode==='trax'&&SONG.id===id&&!ownURL&&audio.src!==u){const was=audio.currentTime;audio.src=u;toast('синтез-фон готов · '+t.t.slice(0,40),1600)}}).catch(()=>{});
+  traxFond(id);
 }
 /* FLAGMAN-01b a11y: закрытый плеер не существует для скринридера и Tab-порядка */
 function plA11yOpen(){const PL=$('#player');PL.inert=false;PL.removeAttribute('aria-hidden');PL.setAttribute('aria-modal','true');try{PL.focus({preventScroll:true})}catch(e){}}
@@ -2527,7 +2547,7 @@ addEventListener('hashchange',function(){
 });
 
 </script>
-<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: word-weight + first-word rule · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>0 внешних запросов</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:11px/1 ui-monospace,Consolas,monospace;color:#6e6862"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#8a6d1d;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#8a6d1d;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: word-weight + first-word rule · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:11px/1 ui-monospace,Consolas,monospace;color:#6e6862"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#8a6d1d;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#8a6d1d;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
