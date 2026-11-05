@@ -153,7 +153,7 @@
     if (панельУзел) return панельУзел;
     var стекло = сл(document.body, 'div', null, null,
       'position:fixed;left:10px;right:10px;bottom:10px;z-index:2147483647;max-width:620px;margin:0 auto;' +
-      'background:rgba(16,18,24,.94);border:1px solid rgba(192,132,68,.45);border-radius:14px;' +
+      'background:rgba(16,18,24,.94);border:1px solid rgba(176,141,87,.45);border-radius:14px;' +
       'box-shadow:0 18px 50px rgba(0,0,0,.6),inset 0 1px 0 rgba(240,240,248,.08);padding:14px 16px;' +
       'font:12.5px/1.55 ui-monospace,Consolas,monospace;color:#C0C8D0;backdrop-filter:blur(8px)');
     стекло.setAttribute('role', 'alertdialog');
@@ -176,7 +176,7 @@
       var к = сл(ряд, 'button', null, имя,
         'appearance:none;cursor:pointer;background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.22);' +
         'border-radius:9px;color:#C0C8D0;font:11px/1 ui-monospace,monospace;letter-spacing:.08em;padding:8px 12px');
-      к.addEventListener('mouseenter', function () { к.style.borderColor = 'rgba(192,132,68,.6)'; к.style.color = '#E8C89C'; });
+      к.addEventListener('mouseenter', function () { к.style.borderColor = 'rgba(176,141,87,.6)'; к.style.color = '#E8C89C'; });
       к.addEventListener('mouseleave', function () { к.style.borderColor = 'rgba(240,240,248,.22)'; к.style.color = '#C0C8D0'; });
       к.addEventListener('click', действие);
       return к;
@@ -215,7 +215,7 @@
       if (document.getElementById('снг-корд-глоток')) return;
       var гл = сл(document.body, 'button', null, '◇',
         'appearance:none;position:fixed;right:12px;bottom:12px;z-index:2147483647;width:34px;height:34px;' +
-        'border-radius:50%;border:1px solid rgba(192,132,68,.55);background:rgba(16,18,24,.9);color:#E8C89C;' +
+        'border-radius:50%;border:1px solid rgba(176,141,87,.55);background:rgba(16,18,24,.9);color:#E8C89C;' +
         'font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.5)');
       гл.id = 'снг-корд-глоток';
       гл.setAttribute('aria-label', 'Сбои дома — открыть панель корда');

@@ -54,7 +54,7 @@
 :root{
   --coal:#000; --bg:#000; --surf:#0a0a0c; --surf2:#16161c; --edge:#23232b; --edge2:#2e2e38;
   --skin:#e8e4df; --ash:#98918a; --mute:#8b857e /* такт v1.56.0: AA ≥4.5 на всех поверхностях дома (было #6e6862, 3.3) */; --dim:rgba(232,228,223,.34);
-  --ember:#c08444; --ember2:#8a5c2a; --glow:rgba(192,132,68,.55); --glow2:rgba(192,132,68,.18);
+  --ember:#B08D57; --ember2:#806947; --glow:rgba(176,141,87,.55); --glow2:rgba(176,141,87,.18);
   --ok:#7ec97e; --fd:"Unbounded","Manrope",system-ui,sans-serif;
   --fb:"Manrope","Golos Text",system-ui,sans-serif;
   --fm:"JetBrains Mono","SF Mono",monospace,sans-serif;
@@ -184,7 +184,7 @@ input,select{font:inherit}
 .cube{position:absolute;inset:0;transform-style:preserve-3d;animation:cspin 26s linear infinite}
 @keyframes cspin{from{transform:rotateX(-24deg) rotateY(0)}to{transform:rotateX(-24deg) rotateY(360deg)}}
 .face{position:absolute;inset:6%;border:1.5px solid var(--ember);background:
-  linear-gradient(135deg,rgba(192,132,68,.09),rgba(0,0,0,.55));box-shadow:inset 0 0 34px rgba(192,132,68,.13)}
+  linear-gradient(135deg,rgba(176,141,87,.09),rgba(0,0,0,.55));box-shadow:inset 0 0 34px rgba(176,141,87,.13)}
 .f-front{transform:translateZ(50%)} .f-back{transform:rotateY(180deg) translateZ(50%)}
 .f-right{transform:rotateY(90deg) translateZ(50%)} .f-left{transform:rotateY(-90deg) translateZ(50%)}
 .f-top{transform:rotateX(90deg) translateZ(50%)} .f-bottom{transform:rotateX(-90deg) translateZ(50%)}
@@ -214,7 +214,7 @@ input,select{font:inherit}
   color:var(--ash);border-radius:5px;padding:.14rem .4rem}
 .card.live .thumb .badge{color:var(--ember);border-color:var(--glow)}
 .card.live .thumb{background:radial-gradient(120% 150% at 20% 0%,#23232b 0%,#000 60%);
-  box-shadow:inset 0 0 40px rgba(192,132,68,.12)}
+  box-shadow:inset 0 0 40px rgba(176,141,87,.12)}
 .card.live .thumb .glyph{color:var(--ember);opacity:1;text-shadow:0 0 18px var(--glow)}
 .card .tt{font-size:.8rem;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;min-height:2.15em}
@@ -230,7 +230,7 @@ input,select{font:inherit}
 /* большие карточки живого трека */
 .feat{display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:1.2rem;align-items:center;
   margin:0 clamp(1rem,4vw,3rem);border:1px solid var(--glow);border-radius:18px;padding:1.1rem;
-  background:linear-gradient(120deg,rgba(192,132,68,.08),rgba(10,8,6,.6) 55%);box-shadow:0 0 60px var(--glow2)}
+  background:linear-gradient(120deg,rgba(176,141,87,.08),rgba(10,8,6,.6) 55%);box-shadow:0 0 60px var(--glow2)}
 .feat .art{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
 .feat .art img{width:100%;height:100%;object-fit:cover;display:block}
 .feat .art .playov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.25);
@@ -278,7 +278,7 @@ input,select{font:inherit}
 @keyframes wr{to{transform:rotate(360deg)}}
 html[data-motion="off"] .wheel-rotator{animation:none}
 .wn{position:absolute;width:1.6vmin;height:1.6vmin;min-width:9px;min-height:9px;margin:-.8vmin 0 0 -.8vmin;
-  border-radius:50%;border:1px solid rgba(192,132,68,.5);background:rgba(0,0,0,.35);
+  border-radius:50%;border:1px solid rgba(176,141,87,.5);background:rgba(0,0,0,.35);
   animation:wr 240s linear infinite reverse;display:grid;place-items:center;cursor:pointer;transition:border-color .2s}
 .wn i{width:.42vmin;height:.42vmin;min-width:3px;min-height:3px;border-radius:50%;background:var(--dim);transition:.2s}
 .wn:hover .nm,.wn:focus-visible .nm{opacity:1}
@@ -288,7 +288,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
   font-size:.6875rem;letter-spacing:.06em;color:var(--ember);background:rgba(0,0,0,.86);border:1px solid var(--edge);
   border-radius:6px;padding:.18rem .5rem;opacity:0;pointer-events:none;transition:.15s;z-index:40}
 .axis{position:absolute;left:50%;top:50%;width:12%;height:12%;transform:translate(-50%,-50%);border-radius:50%;
-  border:1px solid var(--edge);background:radial-gradient(circle,rgba(192,132,68,.16),rgba(0,0,0,.7) 70%);
+  border:1px solid var(--edge);background:radial-gradient(circle,rgba(176,141,87,.16),rgba(0,0,0,.7) 70%);
   display:grid;place-items:center;z-index:9;cursor:pointer;transition:.25s}
 .axis:hover{border-color:var(--ember)}
 .axis b{font-family:var(--fm);font-size:.6875rem;letter-spacing:.16em;color:var(--ember);font-weight:400;text-align:center;line-height:1.5}
@@ -488,7 +488,7 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 .mv-head{position:absolute;top:4.7rem;left:clamp(.9rem,3vw,2.2rem);right:clamp(.9rem,3vw,2.2rem);
   display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;pointer-events:none}
 .mv-head h2{margin:0;font-size:clamp(1.35rem,3.2vw,2.1rem);letter-spacing:.02em;
-  text-shadow:0 2px 22px #000,0 0 40px rgba(192,132,68,.12)}
+  text-shadow:0 2px 22px #000,0 0 40px rgba(176,141,87,.12)}
 .mv-head .cnt{font-family:var(--fm);font-size:.6875rem;color:var(--mute);letter-spacing:.14em;
   text-transform:uppercase;text-shadow:0 1px 8px #000}
 .mv-meters{display:flex;gap:.45rem;align-items:flex-end;height:92px;width:150px;
@@ -519,7 +519,7 @@ dialog.songmodal .sm-x{position:absolute;top:.8rem;right:.9rem}
 select{color-scheme:dark}
 select{background:#0a0a0c;color:#e8e4df;border:1px solid #2e2e38;border-radius:8px;padding:.3rem .5rem;font:inherit}
 option,optgroup{background-color:#0a0a0c;color:#e8e4df}
-option:checked,option:hover{background-color:#23232b;color:#c08444}
+option:checked,option:hover{background-color:#23232b;color:#B08D57}
 /*</SEL-FIX>*/
 </style>
 <style id="sng-канон-v135">
@@ -527,29 +527,29 @@ option:checked,option:hover{background-color:#23232b;color:#c08444}
    Палитра аппа переложена на канон дома (ember/радуга выжжены);
    семантические цвета состояния (ok/bad) сохранены — это юзобилити. */
 :root{
-  --ember:#c08444; --ember2:#8a5c2a; --coal2:#8a5c2a; --hot:#E8C89C;
-  --glow:rgba(192,132,68,.5); --glow2:rgba(192,132,68,.14);
-  --spoke-glow:rgba(192,132,68,.5);
+  --ember:#B08D57; --ember2:#806947; --coal2:#806947; --hot:#E8C89C;
+  --glow:rgba(176,141,87,.5); --glow2:rgba(176,141,87,.14);
+  --spoke-glow:rgba(176,141,87,.5);
   --bg:#0A0A0C; --surf:#101014; --surf2:#16161c;
   --edge:#23232b; --edge2:#2e2e38;
   --skin:#ece9e2; --ash:#9a958c;
 }
 body{background:#0A0A0C !important}
-::selection{background:rgba(192,132,68,.32)}
+::selection{background:rgba(176,141,87,.32)}
 /* ── ПОД КАПОТ: тех-информация живёт под футер, в нативном спойлере ── */
 .sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
   background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-top:1px solid rgba(192,132,68,.22);color:#b9b4aa;
+  border-top:1px solid rgba(176,141,87,.22);color:#b9b4aa;
   font:.75rem/1.55 ui-monospace,'SF Mono',Consolas,monospace}
 .sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;
-  color:#c08444;letter-spacing:.08em}
+  color:#B08D57;letter-spacing:.08em}
 .sng-подкапот>summary::-webkit-details-marker{display:none}
-.sng-подкапот>summary::before{content:'⌇ ';color:#8a5c2a}
-.sng-подкапот>summary:hover{background:rgba(192,132,68,.08)}
-.sng-подкапот[open]>summary{border-bottom:1px solid rgba(192,132,68,.14)}
+.sng-подкапот>summary::before{content:'⌇ ';color:#806947}
+.sng-подкапот>summary:hover{background:rgba(176,141,87,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(176,141,87,.14)}
 .sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
-.sng-подкапот .тело b{color:#c08444;font-weight:600}
-.sng-подкапот a{color:#c08444;text-decoration:none;border-bottom:1px solid rgba(192,132,68,.35)}
+.sng-подкапот .тело b{color:#B08D57;font-weight:600}
+.sng-подкапот a{color:#B08D57;text-decoration:none;border-bottom:1px solid rgba(176,141,87,.35)}
 </style><style id="sng-lift-v135">
 /* чип «под капот» занимает нижнюю кромку — штатные панели поднимаем */
 .tabbar{bottom:23px !important}
@@ -717,7 +717,7 @@ html[data-view="player"] #sg65nav{display:none !important}
 /* ── УДОБНО КАЖДОМУ (такт v1.55.0): предпочтения человека — классы на <html> ── */
 html.уд-текст-крупно{font-size:18px}
 html.уд-текст-огромно{font-size:20px}
-html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#F0C878;--ember2:#E8C89C;--glow:rgba(192,132,68,.6)}
+html.уд-контраст{--skin:#FFFFFF;--ash:#D8DDE3;--mute:#C4CAD1;--dim:rgba(255,255,255,.55);--ember:#F0C878;--ember2:#E8C89C;--glow:rgba(176,141,87,.6)}
 html.уд-тихо *{animation:none!important;transition:none!important}
 html.уд-тихо{scroll-behavior:auto}
 /* крупные цели (уд-крупно — выбор с фасада, один на весь дом): касания шире */
@@ -730,18 +730,18 @@ html.уд-крупно .уд-вкл{min-height:48px}
 /* кнопка и панель: стекло + золото канона дома */
 .уд-кнопка{position:fixed;top:12px;right:14px;z-index:2147482000;appearance:none;cursor:pointer;
   font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;
-  background:rgba(26,29,35,.82);border:1px solid rgba(192,132,68,.55);border-radius:999px;
+  background:rgba(26,29,35,.82);border:1px solid rgba(176,141,87,.55);border-radius:999px;
   padding:12px 18px;min-height:44px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(192,132,68,.3);outline:2px solid #E8C89C;outline-offset:2px}
+.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(176,141,87,.3);outline:2px solid #E8C89C;outline-offset:2px}
 /* в топбаре румы «Удобно» — родной чип апп-бара (мир: настройки в апп-баре) */
 .уд-кнопка.уд-в-топбаре{position:static;z-index:auto;font-family:var(--fm);font-size:.6875rem;
   letter-spacing:.1em;text-transform:uppercase;min-height:2.75rem;display:inline-flex;align-items:center;padding:.36rem .8rem;
   background:none;border:1px solid var(--edge);backdrop-filter:none;-webkit-backdrop-filter:none}
 .уд-кнопка.уд-в-топбаре:hover,.уд-кнопка.уд-в-топбаре:focus-visible{background:none;color:var(--ember);border-color:var(--glow);box-shadow:none;outline-offset:1px}
-.уд-кнопка[aria-expanded="true"]{border-color:#C08444}
+.уд-кнопка[aria-expanded="true"]{border-color:#B08D57}
 .уд-панель{position:fixed;top:64px;right:14px;z-index:2147482001;width:min(340px,calc(100vw - 28px));
   max-height:calc(100svh - 84px);overflow:auto;background:rgba(20,22,27,.97);color:#C0C8D0;
-  border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:18px 18px 14px;
+  border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:18px 18px 14px;
   box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;margin:0 0 4px}
 .уд-пояс{font:.78rem/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 12px}
@@ -749,10 +749,10 @@ html.уд-крупно .уд-вкл{min-height:48px}
 .уд-имя{font:.9rem/1.4 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .уд-имя small{display:block;font-weight:400;color:#8A9099;font-size:.75rem}
 .уд-вкл{appearance:none;cursor:pointer;flex:none;min-width:72px;min-height:40px;border-radius:999px;
-  border:1px solid rgba(192,132,68,.55);background:none;color:#8A9099;
+  border:1px solid rgba(176,141,87,.55);background:none;color:#8A9099;
   font:600 .81rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
 .уд-вкл:hover,.уд-вкл:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
-.уд-вкл[aria-pressed="true"]{background:rgba(192,132,68,.16);color:#E8C89C;border-color:#C08444}
+.уд-вкл[aria-pressed="true"]{background:rgba(176,141,87,.16);color:#E8C89C;border-color:#B08D57}
 .уд-статус{margin:10px 0 0;font:.75rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
 .уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
 @media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
@@ -775,7 +775,7 @@ html.уд-крупно .уд-вкл{min-height:48px}
 /* Ж3: кнопка «наверх» (комфорт длинных вьюх, vestibular.org) */
 #наверх{position:fixed;left:12px;bottom:calc(4.4rem + var(--sab));z-index:60;display:none;
   appearance:none;cursor:pointer;min-height:44px;padding:.5rem .8rem;border-radius:999px;
-  border:1px solid rgba(192,132,68,.55);background:rgba(10,10,12,.92);color:#E8C89C;
+  border:1px solid rgba(176,141,87,.55);background:rgba(10,10,12,.92);color:#E8C89C;
   font:600 .81rem/1 var(--fb);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #наверх.виден{display:inline-flex}
 #наверх:hover,#наверх:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
@@ -796,7 +796,7 @@ html.уд-крупно .уд-вкл{min-height:48px}
 .kstage.lr-крупно .kl{font-size:clamp(1.35rem,4.4vh,2.1rem);line-height:1.34}
 /* К2-хвост: строка лирики честно просит тапа, когда очки выключены */
 body:not(.тэп-вкл) .kl.song{transition:color .3s,background .2s}
-body:not(.тэп-вкл) .kl.song:hover{background:rgba(192,132,68,.08)}
+body:not(.тэп-вкл) .kl.song:hover{background:rgba(176,141,87,.08)}
 </style>
 </head>
 <body>
@@ -2663,14 +2663,14 @@ $('#btnCard').addEventListener('click',()=>{
       g.drawImage(img,80+(430-img.width*s)/2,105+(430-img.height*s)/2,img.width*s,img.height*s);
       g.restore();
     }else{g.fillStyle='#101014';rr(g,80,105,430,430,26);g.fill()}
-    g.fillStyle='#c08444';
+    g.fillStyle='#B08D57';
     g.font='700 30px system-ui,sans-serif';g.fillText('СИНГУЛЯР·01',560,150);
     g.fillStyle='#ece9e2';
     g.font='700 52px system-ui,sans-serif';
     g.fillText(isTrax?(TRAX_BY[SONG.id]||{}).t||SONG.id:'Когда теряем',560,225);
     g.fillStyle='#98918a';g.font='28px system-ui,sans-serif';
     g.fillText(isTrax?('синтез-фон · '+String(traxLangsOf(SONG.id).length)+' языков corpus'):('голос: '+langName(cur)),560,270);
-    g.fillStyle='#c08444';g.font='800 96px system-ui,sans-serif';
+    g.fillStyle='#B08D57';g.font='800 96px system-ui,sans-serif';
     g.fillText(String(sess>0?sess:best).replace(/\B(?=(\d{3})+(?!\d))/g,' '),560,390);
     g.fillStyle='#98918a';g.font='26px system-ui,sans-serif';
     g.fillText(sess>0?'ТЭП этой сессии':'рекорд ТЭП этого голоса',560,432);
@@ -2678,7 +2678,7 @@ $('#btnCard').addEventListener('click',()=>{
       g.fillStyle='#ece9e2';g.font='30px system-ui,sans-serif';
       g.fillText('точность '+acc+'% · комбо ×'+SCORE.maxCombo,560,492);
     }
-    g.strokeStyle='rgba(192,132,68,.4)';g.lineWidth=2;rr(g,40,40,1120,550,30);g.stroke();
+    g.strokeStyle='rgba(176,141,87,.4)';g.lineWidth=2;rr(g,40,40,1120,550,30);g.stroke();
     g.fillStyle='#6e6862';g.font='22px ui-monospace,monospace';
     g.fillText('одна песня · 157 голосов · одна правда — офлайн, без слежки',560,560);
     cv.toBlob(b=>{if(b)dlBlob(b,'СИНГУЛЯР_ТЭП_'+(isTrax?SONG.id:cur)+'.png')},'image/png');
@@ -2775,23 +2775,23 @@ addEventListener('hashchange',function(){
 });
 
 </script>
-<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#ab7b42;text-decoration:none;padding:.55rem .7rem;display:inline-block">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#ab7b42;text-decoration:none;padding:.55rem .7rem;display:inline-block">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#B08D57;text-decoration:none;padding:.55rem .7rem;display:inline-block">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#B08D57;text-decoration:none;padding:.55rem .7rem;display:inline-block">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
 <style>
 #sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 .95rem/1.2 var(--fm),system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-flex;align-items:center;gap:.55rem;font-size:.95rem;min-height:4rem;padding:.9rem 1.6rem;border-radius:999px;border:1px solid rgba(192,132,68,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
-#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#C08444;color:#E8C89C;outline:none}
+#sg65nav .sg65a{display:inline-flex;align-items:center;gap:.55rem;font-size:.95rem;min-height:4rem;padding:.9rem 1.6rem;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
 #sg65nav .sg65menu{font-size:.8rem}
 #sg65nav .sg65menu a{min-height:2.75rem;display:flex;align-items:center;padding:.35rem .6rem;border-radius:8px}
-#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
-#sg65nav .sg65menu b{color:#C08444;font-size:.6875rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:.6875rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
-#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(192,132,68,.14);color:#E8C89C;outline:none}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
 #sg65nav .sg65here{opacity:.6}
 @media (max-width:480px){#sg65nav .sg65a{padding:.9rem 1rem}}
 @media print{#sg65nav{display:none}}
@@ -3037,6 +3037,6 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
   });
 })();
 </script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.64</span> «<span data-реестр="такт">ЧЁРНЕЕ НОЧИ</span>» · кэш <span data-реестр="кэш">v225</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.65</span> «<span data-реестр="такт">НАСТОЯЩАЯ БРОНЗА</span>» · кэш <span data-реестр="кэш">v226</span></div>
 </body>
 </html>
