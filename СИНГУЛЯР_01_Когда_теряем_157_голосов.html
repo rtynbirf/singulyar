@@ -2522,7 +2522,8 @@ addEventListener('hashchange',function(){
   if(sg&&TRAX_BY[sg]){openTrax(sg);return}
   if(hl&&LANGS[hl])cur=hl;
   if(v==='player'||(hl&&!v)){openPlayer(cur);return}
-  if(v)showView(['catalog','langs','files','matter','home'].includes(v)?v:'home');
+  /* FLAGMAN-01c честность истории: Back после глубокой ссылки плеера — оверлей закрывается сам */
+  if(v){if($('#player').classList.contains('open'))closePlayer();showView(['catalog','langs','files','matter','home'].includes(v)?v:'home')}
 });
 
 </script>
