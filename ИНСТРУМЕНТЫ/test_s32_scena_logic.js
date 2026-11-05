@@ -116,7 +116,7 @@ test('корпус: 64 песни фонда, у всех текст, тайми
      владельца «нарезать как архив по частям, при произведении подставлять часть за частью») */
   /* v11.52: спарс-клон (≈2 ГБ minus/ не выкачан) не содержит медиа — фонд-проверки
      становятся средовыми (в полном клоне владельца и в репе фонды на месте). */
-  const среда_без_minus = !fs.existsSync(path.join(ROOT, 'minus'));
+  const среда_без_minus = !fs.existsSync(path.join(ROOT, 'minus', 'голос')); /* ДОГОН: фонд в Release MINUS-FOND (0e5fb2d), у спарс-клона minus/ полупуст — гарда по главному фонду голос/ */
   const голос = среда_без_minus ? new Set() : new Set(fs.readdirSync(path.join(ROOT, 'minus', 'голос')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
   const чистый = среда_без_minus ? new Set() : new Set(fs.readdirSync(path.join(ROOT, 'minus', 'чистый-минус')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
   const корень = среда_без_minus ? new Set() : new Set(fs.readdirSync(path.join(ROOT, 'minus')).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)));
