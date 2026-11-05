@@ -166,8 +166,8 @@ input,select{font:inherit}
 .hero h1 em{font-style:normal;color:var(--ember)}
 .hero .lede{color:var(--ash);font-size:.92rem;line-height:1.65;max-width:34rem}
 .hero-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.3rem}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.72rem;
-  letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.78rem 1.25rem;transition:.2s;border:1px solid transparent}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.78rem;
+  letter-spacing:.12em;text-transform:uppercase;border-radius:12px;padding:.78rem 1.25rem;min-height:3rem;transition:.2s;border:1px solid transparent}
 .btn.primary{background:var(--ember);color:#0e0c07;font-weight:700;box-shadow:0 6px 26px var(--glow2)}
 .btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 34px var(--glow)}
 .btn.ghost{border-color:var(--edge2);color:var(--skin)}
@@ -195,6 +195,7 @@ input,select{font:inherit}
 .rowhead h2{font-family:var(--fd);font-size:1rem;letter-spacing:.02em}
 .rowhead .see{margin-left:auto;font-family:var(--fm);font-size:.6875rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ash)}
+.rowhead .see{display:inline-flex;align-items:center;min-height:2.75rem}
 .rowhead .see:hover{color:var(--ember)}
 .rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(196px,220px);gap:.65rem;
   overflow-x:auto;padding:.2rem clamp(1rem,4vw,3rem) .6rem;scroll-snap-type:x mandatory;scrollbar-width:none}
@@ -219,7 +220,7 @@ input,select{font:inherit}
   -webkit-box-orient:vertical;overflow:hidden;min-height:2.15em}
 .card .meta{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6875rem;color:var(--mute)}
 .card .meta .vw{color:var(--ash)}
-.card .fav{position:absolute;bottom:.55rem;right:.55rem;width:1.7rem;height:1.7rem;border-radius:50%;
+.card .fav{position:absolute;bottom:.55rem;right:.55rem;width:2.75rem;height:2.75rem;border-radius:50%;
   display:grid;place-items:center;font-size:.8rem;color:var(--mute);border:1px solid var(--edge);transition:.15s}
 .card .fav:hover,.card .fav.on{color:var(--ember);border-color:var(--ember)}
 .card .fav.on::after{content:"";position:absolute}
@@ -310,10 +311,10 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .pl-top .pl-sub{font-family:var(--fm);font-size:.6875rem;color:var(--ash);white-space:nowrap}
 .pl-top .grow{flex:1}
 .langchip{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.6875rem;
-  letter-spacing:.1em;border:1px solid var(--glow);color:var(--ember);border-radius:999px;padding:.3rem .65rem;
+  letter-spacing:.1em;border:1px solid var(--glow);color:var(--ember);border-radius:999px;padding:.3rem .65rem;min-height:2.75rem;
   transition:.15s;white-space:nowrap}
 .langchip:hover{background:var(--glow2)}
-.iconb{width:2.15rem;height:2.15rem;border-radius:50%;border:1px solid var(--edge);color:var(--ash);
+.iconb{width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--edge);color:var(--ash);
   display:grid;place-items:center;font-size:.9rem;transition:.15s;flex:0 0 auto}
 .iconb:hover{color:var(--ember);border-color:var(--glow)}
 .iconb.on{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
@@ -367,7 +368,7 @@ html[data-motion="off"] .wheel-rotator{animation:none}
 .ab:hover{color:var(--ember);border-color:var(--glow)}
 .ab[aria-pressed="true"]{color:var(--ember);border-color:var(--ember);background:var(--glow2)}
 .transport{display:flex;align-items:center;gap:.7rem;padding:.4rem 1rem .55rem}
-.bt{width:2.7rem;height:2.7rem;border-radius:50%;border:1px solid var(--ember);color:var(--ember);
+.bt{width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid var(--ember);color:var(--ember);
   display:grid;place-items:center;font-size:1.05rem;transition:.2s;flex:0 0 auto}
 .bt:hover{background:var(--glow2);box-shadow:0 0 18px var(--glow)}
 .bt.big{width:3.3rem;height:3.3rem;font-size:1.25rem;background:var(--ember);color:#0e0c07;font-weight:700}
@@ -620,7 +621,11 @@ html[data-view="player"] #gl{opacity:.35}
 
 /* ── фокус и цели (WCAG 2.2: 2.4.11/2.4.13, target-size) ── */
 :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:8px}
-.fchip,.ab,.tbtn,.dlb,.snav,.tab,.iconb{min-width:24px;min-height:24px}
+/* ШКАЛА ДОМА v1 (соразмерность, слово владельца «ПОРЖИ НАД СОРАЗМЕРНОСТЬЮ КНОПОК»): M чипы/иконки 2.75rem · L действия/навигация 3rem · XL тумбы дома 4rem */
+.fchip,.ab,.tbtn,.dlb,.tab,.iconb{min-width:2.75rem;min-height:2.75rem}
+.snav{min-height:3rem}
+#gsearchIn{min-height:2.75rem}
+.scorebar input{min-height:2.75rem}
 .skip-link{position:absolute;left:.8rem;top:-3.4rem;z-index:300;transition:top .2s ease;
   background:#0b0908;border:1px solid var(--ember);border-radius:10px;
   padding:.55rem .95rem;color:var(--ember);font-size:.78rem;letter-spacing:.04em}
@@ -730,7 +735,7 @@ html.уд-крупно .уд-вкл{min-height:48px}
 .уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(192,132,68,.3);outline:2px solid #E8C89C;outline-offset:2px}
 /* в топбаре румы «Удобно» — родной чип апп-бара (мир: настройки в апп-баре) */
 .уд-кнопка.уд-в-топбаре{position:static;z-index:auto;font-family:var(--fm);font-size:.6875rem;
-  letter-spacing:.1em;text-transform:uppercase;min-height:0;padding:.36rem .7rem;
+  letter-spacing:.1em;text-transform:uppercase;min-height:2.75rem;display:inline-flex;align-items:center;padding:.36rem .8rem;
   background:none;border:1px solid var(--edge);backdrop-filter:none;-webkit-backdrop-filter:none}
 .уд-кнопка.уд-в-топбаре:hover,.уд-кнопка.уд-в-топбаре:focus-visible{background:none;color:var(--ember);border-color:var(--glow);box-shadow:none;outline-offset:1px}
 .уд-кнопка[aria-expanded="true"]{border-color:#C08444}
@@ -2770,23 +2775,25 @@ addEventListener('hashchange',function(){
 });
 
 </script>
-<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#ab7b42;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#ab7b42;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
+<details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·01 «ФЛАГМАН» v3.0</b> · платформа караоке: одна песня × 157 голосов<br>манифест платформы 3.0.0 · аудио: MP3 320, фонд дома (minus/голос/rWpYxmFjm9g.mp3) · часы: audio.currentTime · вайп слов: измеренные оси КАРАОКЕ v11.10 «ПОВЕРКА ФОНДА» — пословно (флагман + 60/61 каталога; оси перемерены «от голоса» против mp3 фонда whisper+Нидлман–Вунш, затвор качества по тексту); фолбэк word-weight + first-word rule; строка встаёт с опережением 150 мс · скролл: spring + 300 мс anticipate · визуал: WebGL2 частицы (морф куб/колесо/сфера) · минус-вокал: center-cancel (L−R) · очки: ТЭП (тап-синхронность × реакция × комбо) · каталог: 61 видео канала, данные сверены по ID и суммам · TRAX: 61/61 ru (чистовики 57/61), до 12 языков на песню · <b>звук — фонд дома (raw/minus-fond, ACAO:*)</b> · шрифты системные · работает офлайн · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:.69rem/1 ui-monospace,Consolas,monospace;color:#8b857e"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#ab7b42;text-decoration:none;padding:.55rem .7rem;display:inline-block">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#ab7b42;text-decoration:none;padding:.55rem .7rem;display:inline-block">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
 <script>
 /* дом ставится в офлайн целиком — с любой двери */
 try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
 </script>
 <style>
-#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 111px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
-#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(192,132,68,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 .95rem/1.2 var(--fm),system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-flex;align-items:center;gap:.55rem;font-size:.95rem;min-height:4rem;padding:.9rem 1.6rem;border-radius:999px;border:1px solid rgba(192,132,68,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
 #sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#C08444;color:#E9CA92;outline:none}
 #sg65nav summary{list-style:none}
 #sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{font-size:.8rem}
+#sg65nav .sg65menu a{min-height:2.75rem;display:flex;align-items:center;padding:.35rem .6rem;border-radius:8px}
 #sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(192,132,68,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
 #sg65nav .sg65menu b{color:#C08444;font-size:.6875rem;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
 #sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
 #sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(192,132,68,.14);color:#E9CA92;outline:none}
 #sg65nav .sg65here{opacity:.6}
-@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media (max-width:480px){#sg65nav .sg65a{padding:.9rem 1rem}}
 @media print{#sg65nav{display:none}}
 </style>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
@@ -3030,6 +3037,6 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
   });
 })();
 </script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.62</span> «<span data-реестр="такт">БРОНЗА</span>» · кэш <span data-реестр="кэш">v223</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.63</span> «<span data-реестр="такт">ОДНА ШКАЛА</span>» · кэш <span data-реестр="кэш">v224</span></div>
 </body>
 </html>

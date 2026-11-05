@@ -124,7 +124,7 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 #дом h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:0.7812rem;vertical-align:middle;margin-left:8px}
 .дом-тихо{color:var(--dim);font-size:0.8438rem;margin:0 0 20px}
 .двери{display:flex;flex-wrap:wrap;gap:9px 12px;justify-content:center;max-width:860px;margin:0 auto 30px}
-.дверь{font-family:var(--mono);font-size:0.7812rem;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-block}
+.дверь{font-family:var(--mono);font-size:0.7812rem;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;min-height:2.75rem;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-flex;align-items:center;justify-content:center}
 .дверь i{font-style:normal;color:var(--teal);margin-right:7px}
 .дверь:hover{border-color:rgba(192,132,68,.55);color:#E8C89C}
 /* ЖИВАЯ НИТЬ: пройденная дверь светится золотом — память пути, не замок (Human-First) */
@@ -140,11 +140,11 @@ main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margi
 .намерение-вход{margin:26px auto 0;max-width:640px;text-align:center}
 .намерение-вопрос{font-family:Georgia,'PT Serif',serif;font-size:clamp(17px,2.4vw,22px);color:#E8C89C;margin:0 0 12px}
 .намерение-форма{display:flex;gap:8px;justify-content:center}
-.намерение-ввод{flex:1;min-width:0;background:rgba(26,29,35,.55);border:1px solid rgba(192,132,68,.35);border-radius:10px;color:#EDEFF4;font-family:Georgia,'PT Serif',serif;font-size:1rem;padding:11px 14px;outline:none}
+.намерение-ввод{flex:1;min-width:0;background:rgba(26,29,35,.55);border:1px solid rgba(192,132,68,.35);border-radius:10px;color:#EDEFF4;font-family:Georgia,'PT Serif',serif;font-size:1rem;padding:11px 14px;min-height:2.75rem;outline:none}
 .намерение-ввод:focus-visible{border-color:#C08444;box-shadow:0 0 0 2px rgba(192,132,68,.25)}
 .намерение-ввод::placeholder{color:#8A9099}
-.намерение-кнопка{background:linear-gradient(135deg,#C08444,#A9743C);border:0;border-radius:10px;color:#0A0A0C;font-size:1.125rem;font-weight:700;padding:0 16px;cursor:pointer}
-.намерение-сам{margin-top:10px;background:none;border:1px solid rgba(192,132,68,.35);border-radius:999px;color:#E8C89C;font-family:Georgia,'PT Serif',serif;font-size:0.875rem;padding:7px 18px;cursor:pointer}
+.намерение-кнопка{background:linear-gradient(135deg,#C08444,#A9743C);border:0;border-radius:10px;color:#0A0A0C;font-size:1.125rem;font-weight:700;padding:0 16px;min-height:2.75rem;cursor:pointer}
+.намерение-сам{margin-top:10px;background:none;border:1px solid rgba(192,132,68,.35);border-radius:999px;color:#E8C89C;font-family:Georgia,'PT Serif',serif;font-size:0.875rem;padding:7px 18px;min-height:2.75rem;cursor:pointer}
 .намерение-сам:hover{border-color:#C08444}
 .намерение-ответ{margin-top:12px;display:grid;gap:8px;text-align:left}
 .намерение-ответ a{display:block;background:rgba(26,29,35,.55);border:1px solid rgba(192,132,68,.22);border-radius:10px;color:#EDEFF4;text-decoration:none;padding:10px 14px}
@@ -934,6 +934,6 @@ if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.
 })();
 </script>
 
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.62</span> «<span data-реестр="такт">БРОНЗА</span>» · кэш <span data-реестр="кэш">v223</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.63</span> «<span data-реестр="такт">ОДНА ШКАЛА</span>» · кэш <span data-реестр="кэш">v224</span></div>
 </body>
 </html>
