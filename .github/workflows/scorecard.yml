@@ -9,7 +9,7 @@ on:
   schedule:
     - cron: '30 5 * * 3' # еженедельно, среда 05:30 UTC
   push:
-    branches: [main]
+    branches: [rumu]
   workflow_dispatch:
 
 permissions: read-all
