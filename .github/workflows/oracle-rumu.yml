@@ -5,21 +5,31 @@ on:
   pull_request:
     branches: [rumu]
   workflow_dispatch:
-
 permissions:
   statuses: write
-
 jobs:
   oracle:
     runs-on: ubuntu-latest
     steps:
-      - name: Pass
-        run: echo "СИНГУЛЯР РУМУ — sovereign check passed"
+      - name: Сверка пина тела (MANIFEST.json клетки rumu)
+        run: |
+          set -e
+          TARGET="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$TARGET" ]; then TARGET="${{ github.sha }}"; fi
+          PIN=$(curl -fsSL https://raw.githubusercontent.com/rtynbirf/rumu/main/MANIFEST.json | python3 -c 'import json,sys;print(json.load(sys.stdin)["body"]["body_pin"])')
+          echo "пин rumu: ${PIN} | текущий: ${TARGET}"
+          if [ "$PIN" != "$TARGET" ]; then
+            echo "ПИН УСТАРЕЛ: тело rumu ушло вперёд. Обнови body_pin в rumu/MANIFEST.json (живой пин — make pins в ядре cell-swarm)."
+            exit 2
+          fi
+          echo "ПИН СВЕРЕН: тело rumu на месте."
       - name: Set status
         if: always()
         run: |
-          curl -X POST \
+          STATE="success"; DESC="пин тела rumu сверен"
+          if [ "${{ job.status }}" != "success" ]; then STATE="failure"; DESC="пин тела rumu устарел — обнови MANIFEST.json (make pins в cell-swarm)"; fi
+          curl -s -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}" \
-            -d "{\"state\": \"success\", \"context\": \"Оракулы дома зелёные\", \"description\": \"Sovereign РУМУ check passed\", \"target_url\": \"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+            -d "{\"state\": \"$STATE\", \"context\": \"Оракулы дома зелёные\", \"description\": \"$DESC\", \"target_url\": \"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
