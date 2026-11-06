@@ -3,10 +3,11 @@
   СИНГУЛЯР·02 «РЕЗОНАНС» × 157 голосов — автономный организм · канон v1.35.0 «СТАНДАРТ»
   Целое знает части · часть знает целое · от души к душе · от человека человеку
   ────────────────────────────────────────────────────────────────────
-  MANIFEST: {"schema":"ruvson-singularity-02","version":"2.0.1",
+  MANIFEST: {"schema":"ruvson-singularity-02","version":"2.0.2",
     "base":"СИНГУЛЯР·01 v1.1.0 (ядро проверено: node --check OK)",
     "song":{"title":"Когда теряем","artist":"OutShadow feat RUVSON","duration":230.883},
     "new":[
+      "МАЭСТРО — плеер фонда: бар now-playing, шкаф-очередь 63 с поиском, seek-слайдер, меш/повтор, шторка ОС (мировые практики)",
       "РЕЗОНАНС — одна строка в шести голосах синхронно (одна правда становится видимой)",
       "ПУЛЬС — память организма: слышано N/157, прогресс сингулярности %",
       "СОЗВЕЗДИЕ — услышанные узлы спицами света (паутина коллектива растёт)",
@@ -456,7 +457,41 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
   </div>
 </main>
 
-<div class="songs" id="songs" role="list" aria-label="Песни: одна живая, остальные заглушки"></div>
+<div class="songs" id="songs" role="list" aria-label="Эшелон песен: флагман и 62 песни фонда — тап играет"></div>
+
+<div class="плеер" id="плеер" role="region" aria-label="Плеер фонда: очередь песен дома">
+  <div class="п-обложка" id="пОбложка" aria-hidden="true"><span class="п-букв">♪</span><span class="экв"><i></i><i></i><i></i></span></div>
+  <div class="п-инфо">
+    <span class="п-назв" id="пНазв">Когда теряем</span>
+    <span class="п-под" id="пПод">флагман · 157/157 голосов</span>
+  </div>
+  <div class="п-центр">
+    <div class="п-ряд">
+      <button class="п-кн" id="пПред" aria-label="Предыдущая песня (P)"></button>
+      <button class="п-кн п-кн-гл" id="пПуск" aria-label="Играть или пауза (пробел)"><span class="п-и-плей"></span><span class="п-и-пауза" hidden></span></button>
+      <button class="п-кн" id="пСлед" aria-label="Следующая песня (N)"></button>
+      <button class="п-кн" id="пМеш" aria-pressed="false" aria-label="Перемешать (S)"></button>
+      <button class="п-кн" id="пПовт" aria-pressed="false" data-реж="0" aria-label="Повтор: выкл (R)"></button>
+    </div>
+    <div class="п-ход-ряд">
+      <span class="п-время" id="пТек">0:00</span>
+      <div class="п-ход-обёртка"><div class="п-буфер" id="пБуфер"></div><input type="range" class="п-ход" id="пХод" min="0" max="1000" step="1" value="0" aria-label="Позиция песни"/></div>
+      <span class="п-время" id="пВсего">0:00</span>
+    </div>
+  </div>
+  <div class="п-право">
+    <button class="п-кн" id="пТихо" aria-label="Звук вкл или выкл (M)"></button>
+    <input type="range" class="п-гром" id="пГром" min="0" max="100" step="1" value="90" aria-label="Громкость"/>
+    <button class="п-кн п-кн-шкаф" id="пШкафКн" aria-expanded="false" aria-controls="шкаф" aria-label="Очередь песен: открыть или закрыть (O)"><span class="п-шкфтекст">ОЧЕРЕДЬ</span></button>
+  </div>
+</div>
+
+<div class="шкаф" id="шкаф" role="dialog" aria-label="Очередь песен фонда" hidden>
+  <div class="ш-шапка"><b>ОЧЕРЕДЬ ФОНДА</b><span class="ш-счёт" id="шСчёт"></span><button class="п-кн" id="шЗакрыть" aria-label="Закрыть очередь (Esc)">✕</button></div>
+  <input type="search" class="ш-поиск" id="шПоиск" placeholder="найти песню…" aria-label="Поиск по песням" autocomplete="off"/>
+  <div class="ш-список" id="шСписок" role="listbox" aria-label="Песни фонда"></div>
+</div>
+<span class="п-скр" aria-live="polite" id="пЖиви"></span>
 
 <p class="legend"><b>I–V</b> пять кругов голосов · <b>157</b> языков · одна правда ·
 спицы света — услышанные голоса · <b>R</b> — резонанс строки ·
@@ -1145,7 +1180,8 @@ function buildSongs(){
     btn.classList.add('on'); btn.setAttribute('aria-pressed','true'); btn.classList.remove('soon');
   }
   audio.addEventListener('ended',function q(){
-    const all=$$('#songs .sc').filter(x=>x.dataset.c);
+    if(window.__плеерДалее){ window.__плеерДалее(); return; } /* С170: МАЭСТРО ведёт очередь (меш/повтор/стоп) */
+    const all=$$('#songs .sc').filter(x=>x.dataset.c); /* фолбэк С169 — если модуль не встал */
     if(!all.length) return;
     const cur=all.find(x=>x.classList.contains('on'));
     (all[(cur?all.indexOf(cur):-1)+1]||all[0]).click();
@@ -1253,7 +1289,285 @@ function wire(){
   const hl=hash.get('lang');
   if(hl&&LANGS[hl]){openPanel(hl)}
   requestAnimationFrame(frame);
+
+/* ═══ С170 «МАЭСТРО» · ПЛЕЕР ФОНДА: навигация выбора композиции + пульт по мировым практикам ═══
+   Spotify/Apple Music — постоянный бар now-playing и очередь с поиском; Deque — seek
+   как настоящий слайдер (aria-valuetext, клавиатура); MDN MediaSession — prev/next/
+   seekto + setPositionState; сломанный файл — честный тост и автопропуск (очередь
+   не глохнет). Единый канал — куб (audio в WebAudio-графе, пульс живёт); контур
+   флагмана au/Clock не задет. Память: s01.п-трек/п-гром/п-меш/п-повт. */
+(function(){
+  var ICON={
+    пред:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6h2.2v12H7zM19 6l-9 6 9 6z" fill="currentColor"/></svg>',
+    след:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 6H17v12h-2.2zM5 6l9 6-9 6z" fill="currentColor"/></svg>',
+    плей:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5l11 6.5-11 6.5z" fill="currentColor"/></svg>',
+    пауза:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
+    меш:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c4.5 0 6 10 11 10H21"/><path d="M18 14l3 3-3 3"/><path d="M3 17h3.5c1.7 0 3-1.6 4.1-3.3"/><path d="M21 7h-3.5c-1.7 0-3 1.6-4.1 3.3"/><path d="M18 4l3 3-3 3"/></svg>',
+    повт:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
+    гром:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    тихо:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M16 9l6 6M22 9l-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    шкаф:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h9"/></svg>'
+  };
+  var ФЛАГ={t:'Когда теряем',m:'флагман · 157/157 голосов',flag:true};
+  var TR=[ФЛАГ].concat(PLACEHOLDERS.filter(function(p){return p.id;}));
+  var пНазв=document.getElementById('пНазв'), пПод=document.getElementById('пПод'),
+      пТек=document.getElementById('пТек'), пВсего=document.getElementById('пВсего'),
+      пХод=document.getElementById('пХод'), пБуфер=document.getElementById('пБуфер'),
+      пПуск=document.getElementById('пПуск'), пПред=document.getElementById('пПред'),
+      пСлед=document.getElementById('пСлед'), пМеш=document.getElementById('пМеш'),
+      пПовт=document.getElementById('пПовт'), пТихо=document.getElementById('пТихо'),
+      пГром=document.getElementById('пГром'), пШкафКн=document.getElementById('пШкафКн'),
+      шкаф=document.getElementById('шкаф'), шПоиск=document.getElementById('шПоиск'),
+      шСписок=document.getElementById('шСписок'), шСчёт=document.getElementById('шСчёт'),
+      шЗакрыть=document.getElementById('шЗакрыть'), пЖиви=document.getElementById('пЖиви'),
+      пОбложка=document.getElementById('пОбложка');
+  пПред.innerHTML=ICON.пред; пСлед.innerHTML=ICON.след;
+  пПуск.querySelector('.п-и-плей').innerHTML=ICON.плей;
+  пПуск.querySelector('.п-и-пауза').innerHTML=ICON.пауза;
+  пМеш.innerHTML=ICON.меш; пПовт.innerHTML=ICON.повт; пТихо.innerHTML=ICON.гром;
+  пШкафКн.insertAdjacentHTML('afterbegin',ICON.шкаф);
+  document.body.classList.add('п-вкл');
+
+  var fmt=function(s){ if(!isFinite(s)||s<0)s=0; s=Math.round(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); };
+  var idx=Math.min(TR.length-1, store.get('п-трек',0)||0); if(idx<0)idx=0;
+  var меш=!!store.get('п-меш',false), повт=store.get('п-повт',0)||0;
+  var тянем=false, ждали=false, ошибок=0;
+  audio.volume=Math.min(1,Math.max(0,(store.get('п-гром',90)||90)/100));
+  пГром.value=Math.round(audio.volume*100);
+
+  function srcТр(tr){
+    return tr.flag ? (window.minusUrl?window.minusUrl(AUDIO_URL):new URL(AUDIO_URL,location.href).href)
+                   : (tr.u||window.minusUrl('minus/голос/'+tr.id+'.mp3'));
+  }
+  function куэИндекс(){
+    var c=(audio.dataset&&audio.dataset.cue)||'';
+    if(c){ var i=TR.findIndex(function(x){return x.id===c;}); if(i>=0)return i; }
+    return 0;
+  }
+  function меткаТрека(tr){
+    try{ if('mediaSession' in navigator){ navigator.mediaSession.metadata=new MediaMetadata({title:tr.t,artist:'RUVSON',
+      album:tr.flag?'СИНГУЛЯР · 157 голосов':'СИНГУЛЯР · фонд',
+      artwork:[{src:'data:image/jpeg;base64,'+COVER_B64,sizes:'512x512',type:'image/jpeg'}]}); } }catch(e){}
+  }
+  function показать(){
+    var tr=TR[idx];
+    пНазв.textContent=tr.t;
+    пПод.textContent=tr.flag?'флагман · 157/157 голосов':tr.m;
+  }
+  function подсветить(){
+    var live=document.querySelector('#songs .sc.live');
+    $$('#songs .sc').forEach(function(x){
+      if(x.classList.contains('live'))return;
+      x.classList.remove('on'); x.setAttribute('aria-pressed','false');
+    });
+    var tr=TR[idx];
+    if(tr.flag){
+      if(live){ live.classList.add('on'); live.setAttribute('aria-pressed','true'); }
+      if(!пОбложка.dataset.обл){ пОбложка.dataset.обл='1';
+        пОбложка.style.background='url(data:image/jpeg;base64,'+COVER_B64+') center/cover'; }
+      пОбложка.classList.add('п-обл-флаг');
+    } else {
+      пОбложка.classList.remove('п-обл-флаг');
+      var card=document.querySelector('#songs .sc[data-c="'+tr.id+'"]');
+      if(card){ card.classList.add('on'); card.setAttribute('aria-pressed','true'); card.classList.remove('soon'); }
+    }
+    if(шкаф&&!шкаф.hidden) рисоватьСписок();
+  }
+  function состояние(){
+    var играет=!audio.paused&&!audio.ended;
+    пПуск.querySelector('.п-и-плей').hidden=играет;
+    пПуск.querySelector('.п-и-пауза').hidden=!играет;
+    пПуск.setAttribute('aria-pressed',String(!audio.paused));
+    пОбложка.classList.toggle('п-играет',играет);
+  }
+  function огласить(текст){ try{ пЖиви.textContent=текст; }catch(e){} }
+  function играть(i){
+    idx=((i%TR.length)+TR.length)%TR.length;
+    var tr=TR[idx];
+    try{ ensureCtx(); }catch(e){}
+    audio.dataset.cue=tr.flag?'':(tr.id||'');
+    audio.dataset.foreign=tr.flag?'0':'1';
+    audio.src=srcТр(tr);
+    ждали=true; ошибок=0;
+    audio.play().catch(function(){ ждали=false; });
+    меткаТрека(tr); показать(); подсветить(); состояние();
+    store.set('п-трек',idx);
+    огласить('Играет: '+tr.t);
+    if(шкаф&&!шкаф.hidden){
+      var т=шСписок.querySelector('.ш-строка.тек');
+      if(т)т.scrollIntoView({block:'nearest'});
+    }
+  }
+  function пускПауза(){
+    if(!audio.paused){ try{ audio.pause(); }catch(e){} return; }
+    if(куэИндекс()===idx&&audio.src){ try{ ensureCtx(); }catch(e){} kick(); return; }
+    играть(idx);
+  }
+  window.__плеерДалее=function(){
+    if(повт===2){ try{ audio.currentTime=0; audio.play(); }catch(e){} return; }
+    var н;
+    if(меш){
+      н=idx;
+      if(TR.length>1){ while(н===idx) н=Math.floor(Math.random()*TR.length); }
+    } else н=idx+1;
+    if(!меш&&н>=TR.length){
+      if(повт===1){ н=0; }
+      else { ждали=false; огласить('Дослушано: '+TR[idx].t);
+        try{ toast('очередь доиграла · ⟳ повторит всю'); }catch(e){}
+        return; }
+    }
+    играть(н);
+  };
+  window.__плеерСинхрон=function(){ /* тап по эшелону (playCue) — бар догоняет честно */
+    var i=куэИндекс();
+    if(i!==idx){ idx=i; показать(); store.set('п-трек',idx); }
+    подсветить();
+  };
+
+  audio.addEventListener('play',function(){ ждали=true; состояние(); window.__плеерСинхрон(); огласить('Играет: '+TR[idx].t); });
+  audio.addEventListener('pause',function(){ ждали=false; состояние(); });
+  audio.addEventListener('canplay',function(){ ошибок=0; ждали=false; });
+  audio.addEventListener('error',function(){
+    if(!ждали) return;
+    ждали=false; ошибок++;
+    if(ошибок>7){ try{ toast('фонд не отвечает · проверь связь'); }catch(e){} return; }
+    try{ toast(TR[idx].t+' · файл не отвечает · пропускаю'); }catch(e){}
+    setTimeout(function(){ играть(idx+1); },350);
+  });
+
+  function ходВПолосу(){
+    var d=audio.duration;
+    if(!isFinite(d)||d<=0){ if(!тянем){ пХод.value=0; пХод.style.setProperty('--п','0%'); } пТек.textContent=fmt(audio.currentTime); пВсего.textContent='0:00'; return; }
+    var fr=Math.min(1000,Math.round(audio.currentTime/d*1000));
+    if(!тянем){ пХод.value=fr; пХод.style.setProperty('--п',(fr/10)+'%'); }
+    пТек.textContent=fmt(audio.currentTime); пВсего.textContent=fmt(d);
+    пХод.setAttribute('aria-valuetext',fmt(audio.currentTime)+' из '+fmt(d));
+    try{ if('mediaSession' in navigator) navigator.mediaSession.setPositionState({duration:d,position:Math.min(audio.currentTime,d),playbackRate:audio.playbackRate}); }catch(e){}
+  }
+  audio.addEventListener('timeupdate',ходВПолосу);
+  audio.addEventListener('loadedmetadata',ходВПолосу);
+  audio.addEventListener('progress',function(){
+    try{ var b=audio.buffered; if(b&&b.length){ пБуфер.style.width=Math.min(100,Math.round(b.end(b.length-1)/(audio.duration||1)*100))+'%'; } }catch(e){}
+  });
+  пХод.addEventListener('input',function(){
+    тянем=true;
+    var d=audio.duration;
+    if(isFinite(d)&&d>0){
+      var c=пХод.value/1000*d;
+      пТек.textContent=fmt(c);
+      пХод.style.setProperty('--п',(пХод.value/10)+'%');
+      пХод.setAttribute('aria-valuetext',fmt(c)+' из '+fmt(d));
+    }
+  });
+  пХод.addEventListener('change',function(){
+    тянем=false;
+    var d=audio.duration;
+    if(isFinite(d)&&d>0){ try{ audio.currentTime=пХод.value/1000*d; }catch(e){} }
+  });
+
+  function тихоВид(){
+    пТихо.innerHTML=(audio.muted||audio.volume===0)?ICON.тихо:ICON.гром;
+    пТихо.setAttribute('aria-pressed',String(audio.muted||audio.volume===0));
+    пГром.style.setProperty('--п',пГром.value+'%');
+  }
+  пГром.addEventListener('input',function(){
+    audio.volume=пГром.value/100;
+    audio.muted=(audio.volume===0);
+    store.set('п-гром',пГром.value);
+    тихоВид();
+  });
+  пТихо.addEventListener('click',function(){
+    audio.muted=!audio.muted;
+    if(!audio.muted&&audio.volume===0){ audio.volume=.6; пГром.value=60; store.set('п-гром',60); }
+    тихоВид();
+  });
+
+  function мешВид(){ пМеш.classList.toggle('on',меш); пМеш.setAttribute('aria-pressed',String(меш)); }
+  function повтВид(){
+    пПовт.classList.toggle('on',повт!==0);
+    пПовт.dataset.реж=String(повт);
+    пПовт.setAttribute('aria-pressed',String(повт!==0));
+    пПовт.setAttribute('aria-label','Повтор: '+(повт===0?'выкл':повт===1?'вся очередь':'одна песня')+' (R)');
+  }
+  пМеш.addEventListener('click',function(){ меш=!меш; store.set('п-меш',меш); мешВид(); try{toast(меш?'перемешка включена':'перемешка выключена');}catch(e){} });
+  пПовт.addEventListener('click',function(){ повт=(повт+1)%3; store.set('п-повт',повт); повтВид();
+    try{toast(повт===0?'повтор выключен':повт===1?'повтор всей очереди':'повтор одной песни');}catch(e){} });
+
+  пПуск.addEventListener('click',пускПауза);
+  пПред.addEventListener('click',function(){
+    if(audio.currentTime>3&&куэИндекс()===idx){ try{ audio.currentTime=0; }catch(e){} огласить('С начала: '+TR[idx].t); }
+    else играть(idx-1);
+  });
+  пСлед.addEventListener('click',function(){ играть(idx+1); });
+
+  function рисоватьСписок(){
+    var q=(шПоиск.value||'').trim().toLowerCase(), n=0;
+    шСписок.innerHTML='';
+    TR.forEach(function(tr,i){
+      if(q&&tr.t.toLowerCase().indexOf(q)<0)return;
+      n++;
+      var b=document.createElement('button');
+      b.type='button';
+      b.className='ш-строка'+(i===idx?' тек':'');
+      b.setAttribute('role','option');
+      b.setAttribute('aria-selected',String(i===idx));
+      b.innerHTML='<span class="ш-номер">'+(i===idx?'<span class="экв"><i></i><i></i><i></i></span>':String(i))+'</span>'
+        +'<span class="ш-тело"><span class="ш-т">'+tr.t+'</span><span class="ш-м">'+(tr.flag?'флагман · 157/157':tr.m)+'</span></span>'
+        +'<span class="ш-вст" aria-hidden="true">▶</span>';
+      b.addEventListener('click',function(){ играть(i); });
+      шСписок.appendChild(b);
+    });
+    шСчёт.textContent=q?(n+' из '+TR.length):(TR.length+' песен');
+  }
+  function шкафОткрыть(){
+    шкаф.hidden=false; пШкафКн.setAttribute('aria-expanded','true');
+    рисоватьСписок();
+    var т=шСписок.querySelector('.ш-строка.тек');
+    if(т)т.scrollIntoView({block:'center'});
+    шПоиск.focus();
+  }
+  function шкафЗакрыть(){
+    шкаф.hidden=true; пШкафКн.setAttribute('aria-expanded','false');
+    try{ пШкафКн.focus(); }catch(e){}
+  }
+  пШкафКн.addEventListener('click',function(){ if(шкаф.hidden)шкафОткрыть(); else шкафЗакрыть(); });
+  шЗакрыть.addEventListener('click',шкафЗакрыть);
+  шПоиск.addEventListener('input',рисоватьСписок);
+
+  /* клавиши: пробел/N/P/M/O/S/R — латиница и кириллица; «/» и Esc — шкаф;
+     в полях ввода клавиши дома молчат (мировая практика) */
+  document.addEventListener('keydown',function(e){
+    if(e.ctrlKey||e.metaKey||e.altKey)return;
+    var т=e.target;
+    if(т&&(т.matches('input,textarea,select')||т.isContentEditable)){
+      if(e.key==='Escape'&&шкаф&&!шкаф.hidden)шкафЗакрыть();
+      return;
+    }
+    var наКнопке=т&&т.closest&&т.closest('button,a,[role="slider"],summary');
+    if(e.key===' '&&!наКнопке){ e.preventDefault(); пускПауза(); return; }
+    if(e.key==='n'||e.key==='N'||e.key==='т'||e.key==='Т'){ играть(idx+1); }
+    else if(e.key==='p'||e.key==='P'||e.key==='з'||e.key==='З'){ играть(idx-1); }
+    else if(e.key==='m'||e.key==='M'||e.key==='ь'||e.key==='Ь'){ пТихо.click(); }
+    else if(e.key==='o'||e.key==='O'||e.key==='щ'||e.key==='Щ'){ if(шкаф.hidden)шкафОткрыть(); else шкафЗакрыть(); }
+    else if(e.key==='s'||e.key==='S'||e.key==='ы'||e.key==='Ы'){ пМеш.click(); }
+    else if(e.key==='r'||e.key==='R'||e.key==='к'||e.key==='К'){ пПовт.click(); }
+    else if(e.key==='/'){ e.preventDefault(); if(шкаф.hidden)шкафОткрыть(); }
+    else if(e.key==='Escape'&&!шкаф.hidden){ шкафЗакрыть(); }
+  });
+
+  /* шторка ОС — полный набор (MDN): треки и seekto в дополнение к С168 */
+  try{
+    if('mediaSession' in navigator){
+      try{ navigator.mediaSession.setActionHandler('previoustrack',function(){ играть(idx-1); }); }catch(e){}
+      try{ navigator.mediaSession.setActionHandler('nexttrack',function(){ играть(idx+1); }); }catch(e){}
+      try{ navigator.mediaSession.setActionHandler('seekto',function(d){ if(d&&d.seekTime!=null){ try{ audio.currentTime=d.seekTime; }catch(e){} } }); }catch(e){}
+    }
+  }catch(e){}
+
+  показать(); мешВид(); повтВид(); тихоВид(); состояние(); ходВПолосу();
+  store.set('п-трек',idx);
 })();
+})(); /* закрывает boot-IIFE — его «})();» стояло в якоре A_TAIL и было заменено (урок С170: якорь с закрывающей скобкой обязан вернуть её) */
 
 </script>
 <details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·02 «РЕЗОНАНС» v2.0</b> · автономный организм, эволюция ·01<br>РЕЗОНАНС — одна строка в шести голосах синхронно · ПУЛЬС — память организма (услышано N/157) · СОЗВЕЗДИЕ — узлы спицами света · ДНК-САМОТЕСТ — 9 проверок ядра при загрузке · трек вшит: AAC-LC 192k (5,5 МБ) · минус-вокал: center-cancel · темп и громкость — нативно · визуал: WebGL2 частицы · <b>0 внешних запросов</b> · работает офлайн · один файл · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:11px/1 ui-monospace,Consolas,monospace;color:#6e6862"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#665231;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#665231;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
@@ -1284,6 +1598,116 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 /* С169: играющая песня очереди — бронза-канон (rgba 176,141,87) */
 .sc.on{border-color:#B08D57;box-shadow:0 0 18px rgba(176,141,87,.28)}
 .sc.on .ph-ic{color:#B08D57}
+
+/* ═══ С170 «МАЭСТРО» · плеер фонда: бар now-playing + шкаф-очередь с поиском ═══
+   мировые практики: Spotify/Apple Music (бар, очередь), Deque (seek-слайдер),
+   MDN MediaSession (шторка ОС); бронза-канон hue 36°, OLED #000 поверхностей */
+.п-скр{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#плеер{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(3.4rem + var(--sab));
+  width:min(96vw,980px);display:flex;gap:.75rem;align-items:center;padding:.55rem .8rem;
+  background:rgba(10,8,6,.88);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);
+  border:1px solid rgba(176,141,87,.38);border-radius:16px;
+  box-shadow:0 8px 28px rgba(0,0,0,.55),0 0 24px rgba(176,141,87,.14);
+  font-family:var(--fb);color:#e8e4df}
+@media (prefers-reduced-transparency:reduce){#плеер,#шкаф{backdrop-filter:none;-webkit-backdrop-filter:none;background:#0a0806}}
+.п-обложка{position:relative;flex:0 0 auto;width:3rem;height:3rem;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#1a1508,#665231 48%,#B08D57 130%);color:#F1E3AC;overflow:hidden}
+.п-обложка .п-букв{font-family:var(--fd);font-size:1.15rem;line-height:1}
+.п-обложка.п-обл-флаг .п-букв{display:none}
+.экв{display:none;position:absolute;left:0;right:0;bottom:0;height:38%;align-items:flex-end;justify-content:center;
+  gap:2px;padding:3px 0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent)}
+.экв i{width:3px;background:#E8C89C;border-radius:1px;height:55%;animation:эквХод 1s ease-in-out infinite}
+.экв i:nth-child(2){animation-duration:.72s}
+.экв i:nth-child(3){animation-duration:1.25s}
+@keyframes эквХод{0%,100%{height:22%}50%{height:92%}}
+.п-обложка.п-играет .экв,.ш-строка.тек .экв{display:flex}
+.п-инфо{display:flex;flex-direction:column;min-width:0;flex:0 1 auto;max-width:16rem}
+.п-назв{font-size:.78rem;font-weight:700;letter-spacing:.02em;color:#F1E3AC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.п-под{font-family:var(--fm);font-size:.6rem;color:var(--ash);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.12rem}
+.п-центр{flex:1 1 auto;display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.п-ряд{display:flex;align-items:center;justify-content:center;gap:.2rem}
+.п-кн{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;
+  min-width:2.75rem;min-height:2.75rem;padding:.35rem;border:0;border-radius:10px;background:transparent;
+  color:#e8c89c;cursor:pointer;transition:.18s;font-family:var(--fb)}
+.п-кн svg{width:1.3rem;height:1.3rem;display:block}
+.п-кн:hover,.п-кн:focus-visible{background:rgba(176,141,87,.16);color:#F1E3AC}
+.п-кн:focus-visible{outline:2px solid #E8C89C;outline-offset:1px}
+.п-кн-гл{min-width:3rem;min-height:3rem;border:1px solid rgba(176,141,87,.5);background:rgba(176,141,87,.13);border-radius:12px}
+.п-кн.on{color:#B08D57;background:rgba(176,141,87,.2)}
+#пПовт{position:relative}
+#пПовт[data-реж="2"]::after{content:'1';position:absolute;top:.28rem;right:.34rem;font-size:.5rem;font-weight:700;color:#B08D57}
+.п-ход-ряд{display:flex;align-items:center;gap:.55rem}
+.п-время{font-family:var(--fm);font-size:.62rem;color:var(--ash);min-width:3ch;text-align:center;font-variant-numeric:tabular-nums}
+.п-ход-обёртка{position:relative;flex:1 1 auto;display:flex;align-items:center;min-width:0}
+.п-буфер{position:absolute;left:.5rem;right:.5rem;top:50%;transform:translateY(-50%);height:.4rem;border-radius:.2rem;
+  background:rgba(232,200,156,.09);width:0;pointer-events:none}
+.п-ход,.п-гром{-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer;margin:0;min-height:2.75rem}
+.п-ход{width:100%;height:2.75rem;position:relative;z-index:1}
+.п-гром{width:5rem;height:2.75rem}
+.п-ход::-webkit-slider-runnable-track,.п-гром::-webkit-slider-runnable-track{height:.4rem;border-radius:.2rem;
+  background:linear-gradient(to right,#B08D57 0%,#B08D57 var(--п,0%),rgba(176,141,87,.2) var(--п,0%))}
+.п-ход::-webkit-slider-thumb,.п-гром::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:.95rem;height:.95rem;
+  border-radius:50%;background:#E8C89C;border:0;margin-top:-.275rem;box-shadow:0 0 10px rgba(176,141,87,.55)}
+.п-ход::-moz-range-track,.п-гром::-moz-range-track{height:.4rem;border-radius:.2rem;background:rgba(176,141,87,.2)}
+.п-ход::-moz-range-progress,.п-гром::-moz-range-progress{height:.4rem;border-radius:.2rem;background:#B08D57}
+.п-ход::-moz-range-thumb,.п-гром::-moz-range-thumb{width:.95rem;height:.95rem;border-radius:50%;background:#E8C89C;border:0;
+  box-shadow:0 0 10px rgba(176,141,87,.55)}
+.п-право{flex:0 0 auto;display:flex;align-items:center;gap:.15rem}
+.п-кн-шкаф{border:1px solid rgba(176,141,87,.42)}
+.п-кн-шкаф:hover,.п-кн-шкаф[aria-expanded="true"]{background:rgba(176,141,87,.2)}
+.п-шкфтекст{font-size:.62rem;font-weight:700;letter-spacing:.08em;color:#B08D57}
+/* шкаф-очередь: поиск + список, Esc закрывает, фокус возвращается зову */
+#шкаф{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:calc(8.2rem + var(--sab));
+  width:min(96vw,720px);max-height:min(56vh,30rem);display:flex;flex-direction:column;gap:.5rem;padding:.7rem;
+  background:rgba(9,7,5,.96);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);
+  border:1px solid rgba(176,141,87,.4);border-radius:16px;
+  box-shadow:0 12px 36px rgba(0,0,0,.6),0 0 30px rgba(176,141,87,.16);
+  font-family:var(--fb);color:#e8e4df}
+#шкаф[hidden]{display:none}
+.ш-шапка{display:flex;align-items:center;gap:.6rem}
+.ш-шапка b{font-family:var(--fd);font-size:.72rem;letter-spacing:.1em;color:#B08D57}
+.ш-счёт{font-family:var(--fm);font-size:.6rem;color:var(--ash);flex:1 1 auto}
+.ш-поиск{min-height:2.75rem;border-radius:12px;border:1px solid rgba(176,141,87,.35);background:rgba(0,0,0,.5);
+  color:#F1E3AC;padding:.4rem .8rem;font:600 .8rem/1.2 var(--fb);letter-spacing:.02em}
+.ш-поиск:focus-visible{outline:2px solid #E8C89C;outline-offset:1px;border-color:rgba(176,141,87,.6)}
+.ш-поиск::placeholder{color:var(--ash)}
+.ш-список{overflow-y:auto;display:flex;flex-direction:column;gap:.15rem;overscroll-behavior:contain;padding-right:.15rem}
+.ш-строка{width:100%;display:flex;align-items:center;gap:.7rem;min-height:2.75rem;padding:.35rem .55rem;border:0;
+  border-radius:10px;background:transparent;color:#e8e4df;cursor:pointer;text-align:left;transition:.15s;
+  border-left:2px solid transparent;font-family:var(--fb)}
+.ш-строка:hover,.ш-строка:focus-visible{background:rgba(176,141,87,.12);color:#F1E3AC}
+.ш-строка:focus-visible{outline:2px solid #E8C89C;outline-offset:-2px}
+.ш-строка.тек{background:rgba(176,141,87,.14);border-left-color:#B08D57;color:#F1E3AC}
+.ш-номер{flex:0 0 1.7rem;text-align:center;font-family:var(--fm);font-size:.62rem;color:var(--ash)}
+.ш-строка.тек .ш-номер{color:#B08D57}
+.ш-тело{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+.ш-т{font-size:.74rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ш-м{font-family:var(--fm);font-size:.58rem;color:var(--ash);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ш-вст{flex:0 0 auto;font-size:.7rem;color:rgba(176,141,87,.7);opacity:0;transition:.15s}
+.ш-строка:hover .ш-вст,.ш-строка.тек .ш-вст{opacity:1}
+.ш-строка .экв{position:static;height:1.1rem;background:none;padding:0}
+/* эшелон поднимается над баром; хвосту страницы — воздух */
+body.п-вкл .songs{bottom:calc(8.4rem + var(--sab))}
+body.п-вкл{padding-bottom:calc(13rem + var(--sab))}
+@media (max-width:760px){
+  .п-под,.п-гром,.п-шкфтекст{display:none}
+  .п-инфо{max-width:9.5rem}
+  .п-кн{min-width:2.6rem}
+  .п-кн-гл{min-width:2.9rem;min-height:2.9rem}
+  #плеер{gap:.5rem;padding:.45rem .55rem}
+  #шкаф{bottom:calc(7.8rem + var(--sab));max-height:64vh}
+  body.п-вкл{padding-bottom:calc(12rem + var(--sab))}
+}
+@media (prefers-reduced-motion:reduce){
+  .п-кн,.ш-строка,.ш-вст{transition:none}
+  .экв i{animation:none;height:55%}
+}
+html.уд-тихо .экв i{animation:none;height:55%}
+/* coarse-лестница дома: тап-цели плеера не ниже 2.75rem (защита от инжекта modules — урок С168-2) */
+@media (pointer:coarse){
+  .п-кн,.ш-строка,.ш-поиск{min-height:2.75rem!important}
+  .п-кн{min-width:2.75rem!important}
+}
 </style>
 <!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
 <nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
