@@ -3,7 +3,7 @@
   СИНГУЛЯР·02 «РЕЗОНАНС» × 157 голосов — автономный организм · канон v1.35.0 «СТАНДАРТ»
   Целое знает части · часть знает целое · от души к душе · от человека человеку
   ────────────────────────────────────────────────────────────────────
-  MANIFEST: {"schema":"ruvson-singularity-02","version":"2.0.2",
+  MANIFEST: {"schema":"ruvson-singularity-02","version":"2.0.3",
     "base":"СИНГУЛЯР·01 v1.1.0 (ядро проверено: node --check OK)",
     "song":{"title":"Когда теряем","artist":"OutShadow feat RUVSON","duration":230.883},
     "new":[
@@ -25,7 +25,7 @@
 <!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
 
 <meta charset="utf-8"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: https://raw.githubusercontent.com; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://huggingface.co https://*.hf.co https://raw.githubusercontent.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://i.ytimg.com; media-src 'self' blob: https://raw.githubusercontent.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://huggingface.co https://*.hf.co https://raw.githubusercontent.com https://api.codetabs.com https://api.allorigins.win https://corsproxy.io">
 <script type="speculationrules" id="sg-предчувствие">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
 </script>
@@ -513,6 +513,16 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
   </div>
   <div class="kwrap">
     <div class="kstage" id="kstage" dir="ltr"><div class="kstack" id="kstack"></div></div>
+    <div class="нп" id="нп" hidden>
+      <span class="нп-метка">сейчас играет</span>
+      <b class="нп-титул" id="нпТитул"></b>
+      <span class="нп-под" id="нпПод"></span>
+      <span class="нп-честно" id="нпЧестно"></span>
+      <div class="нп-ряд">
+        <button class="нп-кн" id="нпФлаг" type="button">играть флагман · Когда теряем</button>
+        <a class="нп-кн" id="нпСвязь" target="_blank" rel="noopener">открыть на канале</a>
+      </div>
+    </div>
   </div>
   <div class="res" id="res" aria-label="Резонанс: одна строка в шести голосах">
     <div class="res-head"><span class="rdot" aria-hidden="true"></span>резонанс · одна строка — шесть голосов · одна правда</div>
@@ -1147,7 +1157,8 @@ function buildPlan(){
 
 /* ═══ UI-СБОРКА ═══ */
 function buildSongs(){
-  const c=$('#songs');
+  const c=$('#songs'); c.innerHTML='';
+  const СПИСОК=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS); /* С171: очередь живёт в данных — data/фонд.json */
   const live=document.createElement('button');live.className='sc live';
   live.innerHTML='<img alt="" src="data:image/jpeg;base64,'+COVER_B64+'"/><span><span class="t">Когда теряем</span><br><span class="m">OutShadow feat RUVSON · 157/157 голосов</span></span>';
   live.addEventListener('click',()=>{ /* С169: возврат к флагману — куб-канал снова играет фонд флагмана */
@@ -1159,7 +1170,7 @@ function buildSongs(){
     else { try{audio.pause();}catch(e){} }
     openPanel(cur); });
   c.appendChild(live);
-  PLACEHOLDERS.forEach(p=>{
+  СПИСОК.forEach(p=>{
     const b=document.createElement('button');b.className='sc'+(p.id?'':' soon');
     b.innerHTML='<span class="ph-ic"></span><span><span class="t">'+p.t+'</span><br><span class="m">'+p.m+'</span></span>';
     b.setAttribute('aria-pressed','false');
@@ -1188,6 +1199,7 @@ function buildSongs(){
   });
 
 }
+window.__эшелонПересобрать=buildSongs; /* С171: эшелон пересобирается, когда очередь меняется */
 function buildGrid(){
   const g=$('#grid');g.innerHTML='';
   const q=($('#search').value||'').toLowerCase();
@@ -1309,7 +1321,19 @@ function wire(){
     шкаф:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h9"/></svg>'
   };
   var ФЛАГ={t:'Когда теряем',m:'флагман · 157/157 голосов',flag:true};
-  var TR=[ФЛАГ].concat(PLACEHOLDERS.filter(function(p){return p.id;}));
+  var TR=[];
+  function пересобратьТР(){ /* С171: флагман + свежее с канала + фонд — единая очередь */
+    TR=[ФЛАГ].concat((window.КАНТР||[]),((window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS).filter(function(p){return p.id;})));
+  }
+  пересобратьТР();
+  window.__плеерПерестроить=function(){
+    пересобратьТР();
+    var c=(audio.dataset&&audio.dataset.cue)||'';
+    if(c){ var i=TR.findIndex(function(x){return x.id===c;}); if(i>=0)idx=i; }
+    else { idx=0; } /* cue пуст → играет флагман — бар честен */
+    показать(); подсветить(); store.set('п-трек',idx);
+    if(шкаф&&!шкаф.hidden)рисоватьСписок();
+  };
   var пНазв=document.getElementById('пНазв'), пПод=document.getElementById('пПод'),
       пТек=document.getElementById('пТек'), пВсего=document.getElementById('пВсего'),
       пХод=document.getElementById('пХод'), пБуфер=document.getElementById('пБуфер'),
@@ -1345,8 +1369,8 @@ function wire(){
     return 0;
   }
   function меткаТрека(tr){
-    try{ if('mediaSession' in navigator){ navigator.mediaSession.metadata=new MediaMetadata({title:tr.t,artist:'RUVSON',
-      album:tr.flag?'СИНГУЛЯР · 157 голосов':'СИНГУЛЯР · фонд',
+    try{ if('mediaSession' in navigator){ navigator.mediaSession.metadata=new MediaMetadata({title:tr.t,artist:(tr.flag?'OutShadow feat RUVSON':'RUVSON'),
+      album:(tr.flag?'СИНГУЛЯР · 157 голосов':(tr.yt?'СИНГУЛЯР · канал':'СИНГУЛЯР · фонд')),
       artwork:[{src:'data:image/jpeg;base64,'+COVER_B64,sizes:'512x512',type:'image/jpeg'}]}); } }catch(e){}
   }
   function показать(){
@@ -1384,6 +1408,7 @@ function wire(){
   function играть(i){
     idx=((i%TR.length)+TR.length)%TR.length;
     var tr=TR[idx];
+    if(tr.yt){ игратьКанал(tr); return; } /* С171: релизы канала — через YT IFrame */
     try{ ensureCtx(); }catch(e){}
     audio.dataset.cue=tr.flag?'':(tr.id||'');
     audio.dataset.foreign=tr.flag?'0':'1';
@@ -1398,7 +1423,18 @@ function wire(){
       if(т)т.scrollIntoView({block:'nearest'});
     }
   }
+  function игратьКанал(tr){ /* С171: канал — живая рамка, audio честно освобождён */
+    try{ ensureCtx(); }catch(e){}
+    try{ audio.pause(); }catch(e){}
+    try{ audio.removeAttribute('src'); audio.load(); }catch(e){}
+    audio.dataset.cue=tr.id; audio.dataset.foreign='1';
+    ждали=false; ошибок=0;
+    if(window.__каналПлей)window.__каналПлей(tr);
+    меткаТрека(tr); показать(); подсветить(); состояние(); store.set('п-трек',idx);
+    огласить('Играет: '+tr.t);
+  }
   function пускПауза(){
+    if(window.__каналАктивен&&window.__каналАктивен()){ if(window.__каналТогл)window.__каналТогл(); return; }
     if(!audio.paused){ try{ audio.pause(); }catch(e){} return; }
     if(куэИндекс()===idx&&audio.src){ try{ ensureCtx(); }catch(e){} kick(); return; }
     играть(idx);
@@ -1431,6 +1467,7 @@ function wire(){
     if(!ждали) return;
     ждали=false; ошибок++;
     if(ошибок>7){ try{ toast('фонд не отвечает · проверь связь'); }catch(e){} return; }
+    if(window.__каналФолбэк&&window.__каналФолбэк(TR[idx])) return; /* С171: дом не остаётся без голоса */
     try{ toast(TR[idx].t+' · файл не отвечает · пропускаю'); }catch(e){}
     setTimeout(function(){ играть(idx+1); },350);
   });
@@ -1461,6 +1498,7 @@ function wire(){
   });
   пХод.addEventListener('change',function(){
     тянем=false;
+    if(window.__каналАктивен&&window.__каналАктивен()){ if(window.__каналСик)window.__каналСик(пХод.value/1000); return; }
     var d=audio.duration;
     if(isFinite(d)&&d>0){ try{ audio.currentTime=пХод.value/1000*d; }catch(e){} }
   });
@@ -1471,6 +1509,7 @@ function wire(){
     пГром.style.setProperty('--п',пГром.value+'%');
   }
   пГром.addEventListener('input',function(){
+    if(window.__каналАктивен&&window.__каналАктивен()&&window.__каналГром)window.__каналГром(пГром.value/100);
     audio.volume=пГром.value/100;
     audio.muted=(audio.volume===0);
     store.set('п-гром',пГром.value);
@@ -1478,6 +1517,7 @@ function wire(){
   });
   пТихо.addEventListener('click',function(){
     audio.muted=!audio.muted;
+    if(window.__каналАктивен&&window.__каналАктивен()&&window.__каналГром)window.__каналГром(audio.muted?0:(пГром.value/100));
     if(!audio.muted&&audio.volume===0){ audio.volume=.6; пГром.value=60; store.set('п-гром',60); }
     тихоВид();
   });
@@ -1566,9 +1606,405 @@ function wire(){
 
   показать(); мешВид(); повтВид(); тихоВид(); состояние(); ходВПолосу();
   store.set('п-трек',idx);
+  window.__плеерИскать=function(id){ /* С171: единый вход в очередь по id */
+    var i=TR.findIndex(function(x){return x.id===id;});
+    if(i>=0)играть(i);
+  };
 })();
 })(); /* закрывает boot-IIFE — его «})();» стояло в якоре A_TAIL и было заменено (урок С170: якорь с закрывающей скобкой обязан вернуть её) */
 
+</script>
+<style>
+/* ═══ С171 «ДИСЛОКАЦИЯ» v1.69.0 · панель «сейчас играет» + канал-рельсы ═══
+   Бронза-канон (#B08D57/ряд), OLED-фон, честные подписи; лестница дома
+   (тап-цели ≥2.75rem на coarse); тихий режим не тронут — движения нет. */
+.kwrap{position:relative}
+.panel.нп-режим .kstage,.panel.нп-режим .transport,.panel.нп-режим .res{display:none}
+.panel.нп-режим .p-actions>*:not(.spacer):not(#btnClose){display:none}
+.нп{position:absolute;inset:0;display:flex;flex-direction:column;gap:.55rem;justify-content:center;padding:1.1rem 1.3rem;background:#000;border:1px solid rgba(176,141,87,.38);border-radius:14px;overflow:auto}
+.нп[hidden]{display:none}
+.нп-метка{font:600 .72rem/1 Manrope,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#987B4F}
+.нп-титул{font:600 clamp(1.1rem,3vw,1.5rem)/1.2 Unbounded,Manrope,system-ui,sans-serif;color:#E8C89C}
+.нп-под,.нп-честно{font:500 .85rem/1.45 Manrope,system-ui,sans-serif;color:#b9b2a4}
+.нп-честно{color:#987B4F}
+.нп-ряд{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}
+.нп-кн{display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:.5rem 1rem;border-radius:999px;border:1px solid rgba(176,141,87,.55);background:rgba(10,8,6,.9);color:#E8C89C;font:600 .84rem/1 Manrope,system-ui,sans-serif;cursor:pointer;text-decoration:none}
+.нп-кн:hover,.нп-кн:focus-visible{filter:brightness(1.13)}
+.sc.кан{border:1px solid rgba(176,141,87,.34)}
+.sc.кан .кан-ик{width:2.4rem;height:2.4rem;border-radius:.7rem;display:grid;place-items:center;background:linear-gradient(135deg,rgba(176,141,87,.34),rgba(102,82,49,.26));color:#E8C89C;font-size:1rem;border:1px solid rgba(176,141,87,.42);flex:none}
+.sc.кан .нов{color:#F0C878;font-weight:700}
+.sc.кан.on{border-color:rgba(176,141,87,.8)}
+#канРамка{position:fixed;right:12px;bottom:8.8rem;z-index:2147482000;width:min(356px,calc(100vw - 24px));aspect-ratio:356/200;background:#000;border:1px solid rgba(176,141,87,.5);border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 24px rgba(176,141,87,.14)}
+#канРамка[hidden]{display:none}
+#канРамка iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#канТочка{position:absolute;inset:0}
+#канЖдём{position:absolute;inset:0;display:grid;place-items:center;color:#987B4F;font:600 .8rem/1 Manrope,system-ui,sans-serif;letter-spacing:.08em}
+.ш-дислокация{margin:.55rem 1rem .15rem;font:500 .78rem/1.45 Manrope,system-ui,sans-serif;color:#987B4F}
+.ш-дислокация b{color:#E8C89C;font-weight:600}
+@media(pointer:coarse){.нп-кн{min-height:3rem}.sc.кан{min-height:2.75rem}}
+@media(prefers-reduced-transparency:reduce){.нп,.нп-кн,.sc.кан,#канРамка{backdrop-filter:none}}
+</style>
+
+<script>
+/* ═══ С171 «ДИСЛОКАЦИЯ» (v1.69.0) · МЕХАНИЗМ, ЖИВУЩИЙ В НОГУ СО ВРЕМЕНЕМ ═══
+   Слово владельца: «ДИСЛОКАЦИЯ НА РАЙОНЕ СМЕНИЛАСЬ!! ОН НА СВОЁМ КАНАЛЕ ЮТУБ
+   ДРУГИЕ ВЫЛОЖИЛ В РЕЛИЗ!! НУЖЕН МЕХАНИЗМ ЖИВУЩИЙ В НОГУ СО ВРЕМЕНЕМ!!» и
+   «ИГРАЕТ ОДНО А ТЕКСТ ОТ ДРУГОЙ КНОПКИ И ПРОЧЕЕ СЛЕПЛЕННО ВИДИШЬ?».
+   Синтез мировых практик (исследование 2026-11-06): DOM-события как PubSub —
+   единый источник правды (CSS-Tricks: «use the DOM event API as your PubSub»);
+   YouTube IFrame Player API (developers.google.com: playsinline, минимум
+   200×200, events onStateChange); релиз-рельсы Spotify/Apple Music — свежие
+   релизы первыми в очереди; MDN MediaSession — управление с замка.
+   ДВА ЭТАЖА ПРАВДЫ:
+   1) ЭТАЖ СБОРКИ — data/фонд.json (same-origin; честная очередь фонда + релизы
+      канала на день сборки; кэш сервиса подчищается — очередь не стареет);
+   2) ЭТАЖ СЕЙЧАС — RSS канала @ruvson_music через прокси-каскад
+      (codetabs → allorigins → corsproxy): новый релиз на канале САМ встаёт
+      в очередь с бейджем НОВОЕ и играет через YouTube IFrame (рамка ≥200px).
+   ЕДИНЫЙ КАНАЛ ПРАВДЫ: событие sng:трек — панель, бар, шкаф, эшелон и шторка ОС
+   следуют за звучанием. Прокси мертвы / офлайн → очередь фонда живёт как была. */
+(function(){
+'use strict';
+var ФЛАГМАН='rWpYxmFjm9g';
+var КАНАЛ_ИД='UC_ttWy-FkkslIosKf6Eyqgg';
+var RSS='https://www.youtube.com/feeds/videos.xml?channel_id='+КАНАЛ_ИД;
+var КАНАЛ_ССЫЛ='https://www.youtube.com/watch?v=';
+
+/* ── 1. ЕДИНАЯ ПРАВДА: что играет — то и видно (один факт — одно место) ── */
+window.ДОМ_ГОЛОС={трек:null};
+function дескрипторАудио(){
+  var cue=(audio.dataset&&audio.dataset.cue)||'';
+  var чуж=(audio.dataset&&audio.dataset.foreign==='1');
+  if(!чуж||!cue)return{тип:'флаг',t:'Когда теряем',артист:'OutShadow feat RUVSON'};
+  if(cue.slice(0,3)==='yt:')return{тип:'канал',id:cue};
+  var сп=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS);
+  for(var i=0;i<сп.length;i++){if(сп[i].id===cue)return{тип:'фонд',id:cue,t:сп[i].t,артист:'RUVSON'};}
+  return{тип:'фонд',id:cue,t:cue,артист:'RUVSON'};
+}
+function огласить(d){
+  var ст=window.ДОМ_ГОЛОС.трек;
+  if(d&&ст&&d.тип===ст.тип&&(d.id||null)===(ст.id||null))return;
+  window.ДОМ_ГОЛОС.трек=d;
+  try{document.dispatchEvent(new CustomEvent('sng:трек',{detail:d}));}catch(e){}
+}
+audio.addEventListener('play',function(){огласить(дескрипторАудио());});
+
+/* ── 2. ПАНЕЛЬ: режим текущего трека — нить флагмана или «сейчас играет» ── */
+var панель=document.getElementById('panel');
+var нп=document.getElementById('нп');
+var тТитул=панель.querySelector('.p-title');
+var тАртист=панель.querySelector('.p-artist');
+var ФЛАГ_ТИТУЛ=тТитул.textContent;
+var ФЛАГ_АРТИСТ=тАртист.textContent;
+function панельРежим(){
+  if(!панель.classList.contains('open'))return;
+  var d=window.ДОМ_ГОЛОС.трек;
+  if(!d||d.тип==='флаг'){
+    if(панель.classList.contains('нп-режим'))панель.classList.remove('нп-режим'); /* охранный remove — иначе наблюдатель будит сам себя (Chromium: remove отсутствующего класса даёт мутацию) */
+    if(нп&&!нп.hidden)нп.hidden=true;
+    тТитул.textContent=ФЛАГ_ТИТУЛ; тАртист.textContent=ФЛАГ_АРТИСТ;
+    return;
+  }
+  if(!панель.classList.contains('нп-режим'))панель.classList.add('нп-режим');
+  if(!нп)return;
+  if(нп.hidden)нп.hidden=false;
+  document.getElementById('нпТитул').textContent=d.t||'…';
+  document.getElementById('нпПод').textContent=d.тип==='канал'?'RUVSON · канал · '+датаКрасиво(d.дата):'RUVSON · звук фонда';
+  document.getElementById('нпЧестно').textContent=d.тип==='канал'?'видео с канала — кадр и звук честные':'текст готовится · нить 157 голосов подождёт флагман';
+  var с=document.getElementById('нпСвязь');
+  if(d.тип==='канал'){с.hidden=false;с.href=КАНАЛ_ССЫЛ+(d.yt||'');}
+  else{с.hidden=true;}
+  тТитул.textContent=d.t||'Когда теряем';
+  тАртист.textContent=d.тип==='канал'?'RUVSON · канал':'RUVSON · звук фонда';
+}
+document.addEventListener('sng:трек',панельРежим);
+try{new MutationObserver(function(){панельРежим();}).observe(панель,{attributes:true,attributeFilter:['class']});}catch(e){}
+document.getElementById('нпФлаг').addEventListener('click',function(){
+  try{
+    if(window.__каналСтоп)window.__каналСтоп();
+    audio.dataset.foreign='0'; audio.dataset.cue='';
+    audio.src=window.minusUrl?window.minusUrl(AUDIO_URL):new URL(AUDIO_URL,location.href).href;
+    kick();
+    try{ if('mediaSession' in navigator){ navigator.mediaSession.metadata=new MediaMetadata({title:'Когда теряем',artist:'OutShadow feat RUVSON',
+      album:'СИНГУЛЯР · 157 голосов',artwork:[{src:'data:image/jpeg;base64,'+COVER_B64,sizes:'512x512',type:'image/jpeg'}]});
+      navigator.mediaSession.playbackState='playing'; } }catch(e){}
+    огласить({тип:'флаг',t:'Когда теряем',артист:'OutShadow feat RUVSON'});
+    if(window.__плеерПерестроить)window.__плеерПерестроить();
+  }catch(e){}
+});
+
+/* ── 3. ОЧЕРЕДЬ: этаж сборки (data/фонд.json) + живой канал (RSS) ── */
+var ш=document.getElementById('шкаф'), шПоиск=document.getElementById('шПоиск');
+var шДислокация=null;
+function отметка(всего,источник){
+  try{
+    if(!шДислокация&&ш){ шДислокация=document.createElement('p'); шДислокация.className='ш-дислокация';
+      ш.insertBefore(шДислокация,шПоиск); }
+    if(шДислокация) шДислокация.innerHTML='дислокация канала <b>@ruvson_music</b> · свежих релизов: <b>'+всего+'</b> · источник: '+(источник==='rss'?'канал, проверено сейчас':'этаж сборки');
+  }catch(e){}
+}
+function вставитьКанЭшелон(){
+  var c=document.getElementById('songs'); if(!c)return;
+  Array.prototype.slice.call(c.querySelectorAll('.sc.кан')).forEach(function(x){x.remove();});
+  var жива=c.querySelector('.sc.live');
+  (window.КАНТР||[]).forEach(function(k){
+    var b=document.createElement('button');
+    b.type='button'; b.className='sc кан'; b.dataset.c=k.id;
+    b.setAttribute('aria-pressed','false');
+    b.title='свежий релиз с канала @ruvson_music';
+    b.innerHTML='<span class="кан-ик" aria-hidden="true">▶</span><span><span class="t">'+k.t+
+      '</span><br><span class="m">канал · '+k.дм+(k.дм?' · ':'')+'<span class="нов">НОВОЕ</span></span></span>';
+    b.addEventListener('click',function(){
+      if((audio.dataset&&audio.dataset.cue)===k.id){ if(window.__каналТогл)window.__каналТогл(); return; }
+      if(window.__плеерИскать)window.__плеерИскать(k.id);
+    });
+    c.insertBefore(b,жива);
+  });
+}
+function перепрошивка(){
+  try{ if(window.__эшелонПересобрать)window.__эшелонПересобрать(); }catch(e){}
+  вставитьКанЭшелон();
+  try{ if(window.__плеерПерестроить)window.__плеерПерестроить(); }catch(e){}
+}
+function датаКрасиво(д){ if(!д)return''; var ч=String(д).split('-'); return ч.length===3?(ч[2]+'.'+ч[1]+'.'+ч[0]):д; }
+function вКАНТР(релизы,источник){
+  var слиты=[], вид={};
+  (релизы||[]).forEach(function(e){
+    if(!e.ид||вид[e.ид])return; вид[e.ид]=1;
+    слиты.push({id:'yt:'+e.ид,yt:e.ид,t:e.название||e.ид,m:'канал · НОВОЕ',дата:e.дата||'',дм:датаКрасиво(e.дата)});
+  });
+  слиты.sort(function(a,b){return (b.дата||'').localeCompare(a.дата||'');});
+  window.КАНТР=слиты;
+  перепрошивка();
+  if(слиты.length)отметка(слиты.length,источник||'этаж');
+}
+function чиститьКэшФонда(){
+  if(!(window.caches&&caches.keys))return Promise.resolve();
+  return caches.keys().then(function(имена){
+    return Promise.all(имена.map(function(имя){
+      return caches.open(имя).then(function(к){
+        return к.keys().then(function(з){
+          return Promise.all(з.filter(function(x){return x.url.indexOf('/data/фонд.json')>=0;}).map(function(x){return к.delete(x);}));
+        });
+      });
+    }));
+  }).catch(function(){});
+}
+function этажПрименить(j){
+  if(!j)return;
+  if(j.треки&&j.треки.length)window.ОЧЕРЕДЬ_ДАННЫЕ=j.треки;
+  вКАНТР(j.релизы||[],'этаж');
+}
+function фондЗагрузить(){
+  /* кэш сервиса подчищен → fetch всегда видит свежую правду; офлайн → честный фолбэк на вшитое */
+  чиститьКэшФонда().then(function(){
+    fetch('data/фонд.json',{cache:'no-cache'})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(этажПрименить)
+      .catch(function(){});
+  });
+}
+фондЗагрузить();
+
+/* живой канал: RSS последних 15 загрузок канала; прокси-каскад, первый
+   валидный XML выигрывает; перепроверка каждые 30 минут — в ногу со временем */
+var ПРОКСИ=[
+  function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u);},
+  function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u);},
+  function(u){return 'https://corsproxy.io/?url='+encodeURIComponent(u);}
+];
+function чистоеИмя(с){
+  var х=(с||'').replace(/\s+/g,' ').trim();
+  х=х.replace(/^RUVSON\s*[—–-]+\s*/i,'').replace(/\s*[|·]\s*RUVSON.*$/i,'');
+  х=х.replace(/\((?:New Music|New Remix|Official Audio|Премьера)[^)]*\)/gi,'');
+  х=х.replace(/[🔊🔉‣|]/g,' ');
+  х=х.replace(/\s{2,}/g,' ').trim();
+  return х||с||'без названия';
+}
+function разобратьРСС(текст){
+  if(!текст||текст.indexOf('<entry')<0)return null;
+  var д=null;
+  try{д=(new DOMParser()).parseFromString(текст,'text/xml');}catch(e){return null;}
+  if(!д||д.querySelector('parsererror'))return null;
+  var из=[], эл=д.getElementsByTagName('entry');
+  for(var i=0;i<эл.length;i++){
+    var e=эл[i];
+    var vid=e.getElementsByTagName('yt:videoId')[0];
+    if(!vid||!vid.textContent)continue;
+    var ti=e.getElementsByTagName('title')[0];
+    var pu=e.getElementsByTagName('published')[0];
+    из.push({ид:vid.textContent,название:чистоеИмя(ti?ti.textContent:''),дата:pu?pu.textContent.slice(0,10):''});
+  }
+  return из.length?из:null;
+}
+var рссВзято=false;
+function каналОбновлено(релизы){
+  var вид={}, слиты=[];
+  (window.КАНТР||[]).forEach(function(k){ if(k.yt&&!вид[k.yt]){вид[k.yt]=1;слиты.push(k);} });
+  var извест={}; извест[ФЛАГМАН]=1;
+  var сп=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS);
+  сп.forEach(function(p){if(p.id)извест[p.id]=1;});
+  var новых=0;
+  (релизы||[]).forEach(function(e){
+    if(вид[e.ид]||извест[e.ид])return;
+    вид[e.ид]=1; новых++;
+    слиты.push({id:'yt:'+e.ид,yt:e.ид,t:e.название,m:'канал · НОВОЕ',дата:e.дата||'',дм:датаКрасиво(e.дата)});
+  });
+  слиты.sort(function(a,b){return (b.дата||'').localeCompare(a.дата||'');});
+  window.КАНТР=слиты;
+  перепрошивка();
+  if(новых>0){ отметка(слиты.length,'rss'); try{toast('дислокация: свежих с канала — '+новых);}catch(e){} }
+}
+function rssЖиво(){
+  if(рссВзято)return;
+  ПРОКСИ.forEach(function(п){
+    var упр=null;
+    try{упр=new AbortController();}catch(e){}
+    var та=setTimeout(function(){try{упр.abort();}catch(e){}},12000);
+    fetch(п(RSS),упр?{signal:упр.signal}:{})
+      .then(function(r){clearTimeout(та);return r.ok?r.text():null;})
+      .then(function(т){
+        if(рссВзято)return;
+        var из=разобратьРСС(т);
+        if(из){рссВзято=true; каналОбновлено(из);}
+      })
+      .catch(function(){clearTimeout(та);});
+  });
+}
+rssЖиво();
+try{setInterval(rssЖиво,30*60*1000);}catch(e){}
+
+/* ── 4. ПЛЕЕР КАНАЛА: YouTube IFrame API — живая рамка (≥200px, playsinline) ── */
+var плеер=null, готово=false, грузим=false, текКан=null, тикер=null, рамка=null, ждём=null, страж=null;
+var элПуск=document.getElementById('пПуск'), элТек=document.getElementById('пТек'),
+    элВсего=document.getElementById('пВсего'), элХод=document.getElementById('пХод'),
+    элОбл=document.getElementById('пОбложка');
+function фмт(с){ if(!isFinite(с)||с<0)с=0; с=Math.round(с); return Math.floor(с/60)+':'+String(с%60).padStart(2,'0'); }
+function иконкаИгр(играет){
+  try{
+    if(элПуск){ элПуск.querySelector('.п-и-плей').hidden=играет; элПуск.querySelector('.п-и-пауза').hidden=!играет;
+      элПуск.setAttribute('aria-pressed',String(играет)); }
+    if(элОбл)элОбл.classList.toggle('п-играет',играет);
+  }catch(e){}
+}
+function каналАктивен(){
+  var d=window.ДОМ_ГОЛОС.трек;
+  return !!(d&&d.тип==='канал');
+}
+window.__каналАктивен=каналАктивен;
+window.__каналТогл=function(){ if(!плеер||!текКан)return; try{ (плеер.getPlayerState()===1)?плеер.pauseVideo():плеер.playVideo(); }catch(e){} };
+window.__каналСик=function(доля){ if(!плеер)return; try{ var d=плеер.getDuration(); if(d>0)плеер.seekTo(Math.max(0,Math.min(1,доля))*d,true); }catch(e){} };
+window.__каналГром=function(д){ if(!плеер)return false; try{плеер.setVolume(Math.round(Math.max(0,Math.min(1,д))*100));}catch(e){} return true; };
+window.__каналСтоп=function(){
+  if(плеер){try{плеер.stopVideo();}catch(e){}}
+  текКан=null;
+  if(тикер){clearInterval(тикер);тикер=null;}
+  if(рамка)рамка.hidden=true;
+  иконкаИгр(false);
+};
+window.__каналФолбэк=function(tr){
+  if(!готово||!плеер)return false;
+  if(!tr||!tr.id||tr.flag||tr.yt||tr.id===ФЛАГМАН)return false;
+  try{toast('фонд молчит · играю с канала');}catch(e){}
+  window.__каналПлей({id:'yt:'+tr.id,yt:tr.id,t:tr.t||tr.id,m:'с канала · фонд молчит',дата:'',дм:''});
+  return true;
+};
+window.__каналПлей=function(tr){
+  /* правда прежде техники: панель/бар/шкаф узнают трек сразу, даже если API ещё грузится */
+  огласить({тип:'канал',id:'yt:'+tr.yt,t:tr.t,артист:'RUVSON',yt:tr.yt,дата:tr.дата||''});
+  обеспечитьПлеер();
+  if(готово&&плеер){
+    текКан=tr;
+    if(рамка)рамка.hidden=false;
+    if(ждём)ждём.hidden=true;
+    if(элОбл&&tr.yt){try{элОбл.style.background='url(https://i.ytimg.com/vi/'+tr.yt+'/hqdefault.jpg) center/cover no-repeat';}catch(e){}}
+    try{плеер.loadVideoById(tr.yt); плеер.playVideo();}catch(e){}
+    return;
+  }
+  /* API ещё грузится — рамка ждёт честно; страж 15 с: не встал — открыть релиз */
+  текКан=tr;
+  if(рамка)рамка.hidden=false;
+  if(ждём)ждём.hidden=false;
+  if(элОбл&&tr.yt){try{элОбл.style.background='url(https://i.ytimg.com/vi/'+tr.yt+'/hqdefault.jpg) center/cover no-repeat';}catch(e){}}
+  clearTimeout(страж);
+  страж=setTimeout(function(){
+    if(!готово){
+      if(рамка)рамка.hidden=true;
+      try{window.open(КАНАЛ_ССЫЛ+tr.yt,'_blank','noopener');}catch(e){}
+      try{toast('плеер канала не встал · открыл релиз на YouTube');}catch(e){}
+    }
+  },15000);
+};
+function обеспечитьПлеер(){
+  if(плеер||грузим)return; грузим=true;
+  рамка=document.createElement('div'); рамка.id='канРамка'; рамка.hidden=true;
+  ждём=document.createElement('span'); ждём.id='канЖдём'; ждём.textContent='канал · связь…';
+  var точка=document.createElement('div'); точка.id='канТочка';
+  рамка.appendChild(ждём); рамка.appendChild(точка);
+  document.body.appendChild(рамка);
+  var с=document.createElement('script'); с.src='https://www.youtube.com/iframe_api'; с.async=true;
+  document.head.appendChild(с);
+  window.onYouTubeIframeAPIReady=function(){
+    try{
+      плеер=new YT.Player('канТочка',{
+        width:'356', height:'200',
+        playerVars:{playsinline:1, rel:0},
+        events:{
+          onReady:function(){
+            готово=true;
+            if(ждём)ждём.hidden=true;
+            if(текКан){ try{плеер.loadVideoById(текКан.yt); плеер.playVideo();}catch(e){} }
+          },
+          onStateChange:каналСостояние
+        }
+      });
+    }catch(e){ грузим=false; }
+  };
+}
+function каналСостояние(e){
+  var СТ=window.YT&&YT.PlayerState?YT.PlayerState:{PLAYING:1,PAUSED:2,ENDED:0};
+  if(e.data===СТ.PLAYING){
+    иконкаИгр(true);
+    if(рамка)рамка.hidden=false;
+    if(ждём)ждём.hidden=true;
+    if(текКан)огласить({тип:'канал',id:'yt:'+текКан.yt,t:текКан.t,артист:'RUVSON',yt:текКан.yt,дата:текКан.дата||''});
+    try{ if('mediaSession' in navigator)navigator.mediaSession.playbackState='playing'; }catch(e2){}
+    if(!тикер)тикер=setInterval(канТик,500);
+  } else if(e.data===СТ.PAUSED){
+    иконкаИгр(false);
+    try{ if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused'; }catch(e2){}
+  } else if(e.data===СТ.ENDED){
+    иконкаИгр(false);
+    if(тикер){clearInterval(тикер);тикер=null;}
+    if(window.__плеерДалее)window.__плеерДалее();
+  }
+}
+function канТик(){
+  if(!плеер||!текКан)return;
+  try{
+    var т=плеер.getCurrentTime()||0, д=плеер.getDuration()||0;
+    элТек.textContent=фмт(т); элВсего.textContent=фмт(д);
+    if(д>0){
+      var fr=Math.min(1000,Math.round(т/д*1000));
+      if(document.activeElement!==элХод){ элХод.value=fr; элХод.style.setProperty('--п',(fr/10)+'%'); }
+      элХод.setAttribute('aria-valuetext',фмт(т)+' из '+фмт(д));
+    }
+    try{ if('mediaSession' in navigator)navigator.mediaSession.setPositionState({duration:д,position:Math.min(т,д),playbackRate:1}); }catch(e2){}
+  }catch(e){}
+}
+/* чужая песня зазвучала — рамка канала честно гаснет */
+document.addEventListener('sng:трек',function(e){
+  if(e&&e.detail&&e.detail.тип!=='канал'&&window.__каналСтоп)window.__каналСтоп();
+});
+/* шторка ОС: play/pause/seekto следуют за каналом; треки/prev/next — у МАЭСТРО честно */
+try{
+  if('mediaSession' in navigator){
+    try{navigator.mediaSession.setActionHandler('play',function(){ if(каналАктивен()){window.__каналТогл();} else { try{kick();}catch(e){} } });}catch(e){}
+    try{navigator.mediaSession.setActionHandler('pause',function(){ if(каналАктивен()){window.__каналТогл();} else { try{audio.pause();}catch(e){} } });}catch(e){}
+    try{navigator.mediaSession.setActionHandler('seekto',function(d){ if(d&&d.seekTime!=null){ if(каналАктивен()){ try{плеер.seekTo(d.seekTime,true);}catch(e){} } else { try{audio.currentTime=d.seekTime;}catch(e){} } } });}catch(e){}
+  }
+}catch(e){}
+})();
 </script>
 <details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СИНГУЛЯР·02 «РЕЗОНАНС» v2.0</b> · автономный организм, эволюция ·01<br>РЕЗОНАНС — одна строка в шести голосах синхронно · ПУЛЬС — память организма (услышано N/157) · СОЗВЕЗДИЕ — узлы спицами света · ДНК-САМОТЕСТ — 9 проверок ядра при загрузке · трек вшит: AAC-LC 192k (5,5 МБ) · минус-вокал: center-cancel · темп и громкость — нативно · визуал: WebGL2 частицы · <b>0 внешних запросов</b> · работает офлайн · один файл · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото</div></details><div class="sng-нить-футер" style="position:fixed;right:12px;bottom:26px;z-index:89;font:11px/1 ui-monospace,Consolas,monospace;color:#6e6862"><a href="index.html" title="Хаб дома · кристалл ·00" style="color:#665231;text-decoration:none">⌂ хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания" style="color:#665231;text-decoration:none">¶ документация</a></div><script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
 <script>
