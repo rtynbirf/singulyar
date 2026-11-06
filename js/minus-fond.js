@@ -15,6 +15,17 @@
     /* сегментное кодирование: кириллица в пути честная, слэши не трогаем */
     return BASE + s.split('/').map(encodeURIComponent).join('/');
   }
+  /* С172 «ВСТРЕЧАЕТ ФЛАГМАН»: вторая дверь фонда — jsDelivr отдаёт те же
+     git-блобы ветки minus-fond (проверено: 206, audio/mpeg, ACAO:*, Range).
+     raw.githubusercontent дрожит у части провайдеров — фонд не имеет права
+     молчать, когда есть вторая дверь. Пути — те же, что и у первички. */
+  var MIRROR = 'https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@minus-fond/minus/';
+  function minusUrlMirror(rel) {
+    var s = String(rel).replace(/^\.\//, '').replace(/^minus\//, '');
+    return MIRROR + s.split('/').map(encodeURIComponent).join('/');
+  }
   window.minusUrl = minusUrl;
+  window.minusUrlMirror = minusUrlMirror;
   window.MINUS_FOND_TAG = 'MINUS-FOND-2026-10-30';
+  window.MINUS_FOND_MIRROR_TAG = 'MINUS-MIRROR-2026-11-06';
 })();
