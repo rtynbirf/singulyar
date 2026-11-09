@@ -1,0 +1,11 @@
+{
+  "source_sha256": "c8f2ea86138d0ffa2e97a46524214be3016a9f6404a864aab59f15d2457dd8a3",
+  "integrated_sha256": "a85b0aac42f0977af4ec40219291fec58f9e8fd2893ac2dae400544dbc852741",
+  "source_preserved": true,
+  "practice_count": 100,
+  "agent_role_count": 20,
+  "unique_practice_ids": 100,
+  "node_syntax_check": "passed",
+  "browser_e2e": "not run",
+  "deployed": false
+}

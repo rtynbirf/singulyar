@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ts_Tsonga",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ts_Tsonga.srt",
+ "юниты": [
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Madyambu lamantshwa exitolo xa kofi",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Nkungu wo tiya wu n’okisela tindlu. [vuyimbeleri]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ndzi famba-famba etindhawini ta vaakelani laha ku nga ni switsundzuxo",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ndzi hlanyisa",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Laha eka ximun’wana xo kufumela",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Vuxika byi funengeta moya-xiviri",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Laha vutomi byi hahaka ku fana na nseve lowu hundzeke masiku, lama hundzeke",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "hina",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Hi hlengelete maphepha, hi rivala leswaku ha yini hi",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "hi hanya",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Naswona minkarhi hinkwayo a swi vonaka onge, [vuyimbeleri]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "ku ha ri na mpfumawulo wa C emahlweni",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Ntsena u lombile nkarhi",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "a yi nyiki nchumu",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Naswona hi xitshuketa [vuyimbeleri] byi wela embilwini ya mina",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ayisi yo titimela",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Hi dyondza ku tlangela [vuyimbeleri] loko hi hluriwa",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "loko rivoni ra munhu ri timeka endzhaku ka nyangwa",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Hi tshukatshukisa mavoko endzhaku ka switimela leswi sukaka, hi ringeta",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "kombela nhlamulo ya nkarhi lowu hundzeke",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Hi dyondza ku rhandza loko ku titimela, [vuyimbeleri]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "loko ku ri ni nkuma emavokweni ya wena, ku nga ri nsimbi. HI",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "loko ntsena a ndzi swi tivile ka ha ri emahlweni, [vuyimbeleri]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "ndlela leyi leyi nga erivaleni yi nga ta vava ha yona emoyeni",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "ku vilela",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "A nga vulanga, [vuyimbeleri] a nga angarhanga, a nga ri na nkarhi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Lowu i nsusumeto lowu nga heriki",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Ndzi hlayise hinkwaswo leswaku ndzi ta swi hlayisa endzhaku, mbilu ya mina a hi ya van’wana",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ku pfuriwile. [vuyimbeleri]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Hi lwa na ndzhuti",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "hi hisa hi swilo leswitsongo leswi nga riki na nchumu",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Naswona a wu swi voni leswaku xirhami xi tshamiseka njhani",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "emakatleni ya hina",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Kambe ntsako a wu le ku hatima ka fasitere ra xitolo",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri] ku nga ri eka ntlawa wa swibalo, kambe hi ku rhula",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "ntiyiso wa maxaka, eku kufumela ka wona exikarhi ka swidzedze. Kambe",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "hi tlangela ntsena leswi [vuyimbeleri] se byi nga swona",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "a swi koteki ku tlhelela",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Ku ya emahlweni na nkarhi wa mina wo leha",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "naswona hakanyingi [vuyimbeleri] i ndlela leyi nga riki na xikongomelo",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "hi dyondza ku tlangela loko hi lahlekeriwa hi [vuyimbeleri]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "loko rivoni ra munhu ri timeka endzhaku ka nyangwa",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Hi tshukatshukisa mavoko endzhaku ka [vuyimbeleri] switimela leswi sukeke",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "ku ringeta ku kombela nhlamulo ya nkarhi lowu hundzeke",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Hi dyondza ku rhandza [vuyimbeleri] loko byi horile",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "loko ku ri ni nkuma emavokweni, [vuyimbeleri] naswona e-e",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "nsimbhi. HI",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Loko ntsena a ndzi swi tivile ka ha ri emahlweni leswaku yi ta rhurhumela njhani",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "gome leri leri nga erivaleni emoyeni",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Fonela vanhu va khale, u va angarha",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "loko pulse yi ri karhi yi ba",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Swivilelo a swi hundze, ndzi le ka leswi namuntlha",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Ndza khongela",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Hikuva tinsimu hinkwato ti na makumu",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "eku heteleleni, un’we",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ku yimbelela]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Hina [vuyimbeleri] hi tshama hi ri eku tsundzukeni ka swiendlakalo swa nkoka",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "hi tshama hi rivariwile",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Hi dyondza ku tlangela loko hi lahlekeriwa",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "loko vuyimbeleri bya munhu byi huma endzhaku ka nyangwa",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "rivoni",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Hi tshukatshukisa mavoko endzhaku ka switimela leswi sukaka, hi ringeta",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "kombela nhlamulo ya nkarhi lowu hundzeke",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Hi dyondza ku rhandza, [vuyimbeleri]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "loko yi hola, loko ku ri ni nkuma emavokweni ni",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "kristala ya [vuyimbeleri] leyi tshovekeke. Ndzi fanele ndzi swi khathalela",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "leswi nga kona, loko hi ri lahawani, ku fikela",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "yi haha ​​yi famba",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "moya-xiviri wu nghena ekule",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[vuyimbeleri]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

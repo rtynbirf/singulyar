@@ -1,0 +1,16 @@
+{
+  "name": "singulyar-universal-karaoke-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prototype for cross-language karaoke: WebRTC audio, signaling, text and demo TTS UI",
+  "scripts": {
+    "start": "node src/server.js",
+    "check": "node --check src/server.js && node --check src/phrasebook.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

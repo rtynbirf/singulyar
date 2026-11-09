@@ -1,0 +1,13 @@
+OMNISPEAKER-1 Mechanical Assembly & 3D Printing Guide
+
+1. 3D Printing Settings:
+   - Body & Chamber: PETG, 0.2mm layer height, 4 perimeter walls, 35% Gyroid infill.
+   - Passive Radiator Membrane: TPU 95A, 100% infill, 2 perimeter walls.
+   - Acoustic Cone Reflector: PETG/PLA+, 0.16mm layer height, smooth surface ironing enabled.
+
+2. Assembly Steps:
+   a. Install TAS5805M amplifier and Tang Band 3" speaker into chamber using butyl acoustic sealant.
+   b. Mount TPU passive radiator to side 85mm opening using M3 screws and gasket.
+   c. Insert silicone O-rings (8x) into microphone top ring holes and seat XMOS XU316 board.
+   d. Secure 45-degree acoustic dispersion cone above speaker driver.
+   e. Connect HLK-LD2450 mmWave sensor to internal UART mounting bracket.

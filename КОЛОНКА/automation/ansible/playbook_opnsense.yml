@@ -1,0 +1,8 @@
+---
+- name: Apply OPNsense Rules via REST API
+  hosts: routers_opnsense
+  gather_facts: no
+  tasks:
+    - name: Display OPNsense Manual Integration Instructions
+      debug:
+        msg: "Please refer to docs/13_NETWORK_ROUTING_OPENWRT_OPNSENSE.md and config/net/opnsense_rules_guide.md for floating firewall rule setup."

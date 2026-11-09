@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ee_Ewe",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ee_Ewe.srt",
+ "юниты": [
+  {
+   "text": "[hadzidzi]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Fiẽ yeye le kɔfidzraƒea",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Afu gã aɖe ƒoa aƒewo. [hadzidzi]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Metsa le nuto siwo me ŋkuɖodzinuwo le la me",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "na nye tagbɔ gblẽ",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Afisi le kele si me dzoxɔxɔ le me",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Dzomeŋɔli tsyɔa luʋɔ dzi",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Afisi agbe dzo le abe aŋutrɔ ene to ŋkekewo ŋu, va yi",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "mí",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Míeƒo pepawo nu ƒu, eye míeŋlɔ nusita míewɔe be",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "míele agbe",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Eye edzena ɣesiaɣi be, [hadzidzi]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "gbeɖiɖi si nye C gakpɔtɔ le ŋgɔ",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Ðeko wodo ɣeyiɣi",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "menaa naneke o",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Eye kasia [hadzidzi] gena ɖe nye dzi dzi",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "tsikpe fafɛ",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Míesrɔ̃a ŋudzedzekpɔkpɔ ɖe [hadzidzi] ŋu ne míebu",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "ne ame aɖe ƒe akaɖi tsi le ʋɔtrua megbe",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Míeʋuʋua asi le keteke siwo dzona la yome, henɔa agbagba dzem",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "ɖe kuku na nusiwo dzɔ va yi be woaɖo eŋu",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Míesrɔ̃a lɔlɔ̃ ne vuvɔ le wɔwɔm, [hadzidzi]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "ne aŋɔ le wò asibidɛwo me, ke menye gakpo o. KU ƉE",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "ne ɖe menya do ŋgɔ, [hadzidzi]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "alesi ame sia si me kɔ la awɔ veve le luʋɔ me",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "blanuiléle",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Megblɔ be, [hadzidzi] mekpla asi kɔ nɛ o, ɣeyiɣi menɔ esi o",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Esia nye nusi ʋãa ame tegbee",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Medzra nusianu ɖo na emegbe, nye dzi menye ame bubuwo tɔ o",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ʋu. [hadzidzi]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Míele avu wɔm kple vɔvɔli",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "míetɔa dzo le nu suesuesue ƒuƒluwo ta",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Eye màte ŋu akpɔ alesi vuvɔa le to ɖom o",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "le míaƒe abɔta",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Gake dzidzɔkpɔkpɔ mele fiase ƒe fesre ƒe keklẽ me o",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi] menye le gaxɔgbalẽvi gbogbo aɖewo me o, ke boŋ le ɖoɖoezizi me",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "ƒometɔwo ƒe nyateƒe, le woƒe dzoxɔxɔ le ahomwo dome me. Gake",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "nusi [hadzidzi] nye xoxo koe míekpɔa ŋudzedze ɖe eŋu",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "manya wɔ be woatrɔ ayi o",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Nye ɣeyiɣi didi la dzi yiyi",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "eye zi geɖe la, [hadzidzi] nyea mɔ si gɔmesese aɖeke mele o",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "míesrɔ̃a ŋudzedzekpɔkpɔ ne míebu [hadzidzi]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "ne ame aɖe ƒe akaɖi tsi le ʋɔtrua megbe",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Míeʋuʋua asi le keteke siwo dzo la megbe le [hadzidzi] megbe",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "agbagbadzedze be yeaɖe kuku na nusiwo dzɔ va yi be woaɖo eŋu",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Míesrɔ̃a alesi míalɔ̃ [hadzidzi] ne efa",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "ne afi le asibidɛwo me, [hadzidzi] eye ​​menye nenema o",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "ga. KU ƉE",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Ne ɖe menya alesi wòawɔ hũ ɖe eme do ŋgɔ hafi",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "blanuiléle sia si dzena gaglãa le luʋɔ me",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Yɔ ame tsitsiawo, kpla asi kɔ na wo",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "esime ʋu ƒe sisi le ƒoƒom",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Mina nuxaxaawo nava yi, nyee nye esia egbea",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Medoa gbe ɖa",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Elabena nuwuwu le hadzidziwo katã ŋu",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "mlɔeba la, ɖeka",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Mí [hadzidzi] gakpɔtɔ le ŋkuɖoɖo nu vevi aɖewo dzi",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "míenɔa anyi woŋlɔ be",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Míesrɔ̃a alesi míakpɔ ŋudzedze ɖe nu ŋu ne míebu",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "ne ame aɖe ƒe haƒoƒo do le ʋɔtrua megbe",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "kekeli",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Míeʋuʋua asi le keteke siwo dzona la yome, henɔa agbagba dzem",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "ɖe kuku na nusiwo dzɔ va yi be woaɖo eŋu",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Míesrɔ̃a lɔlɔ̃, [hadzidzi]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "ne efa, ne aŋɔ nɔ asibidɛwo me kple",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi] ƒe kristalo si gbã. Ele be makpɔ edzi",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "nusi li, esime míele afisia, vaseɖe",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "dzo dzoe",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "luʋɔ yi didiƒe ʋĩ",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[hadzidzi]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

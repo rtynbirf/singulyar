@@ -1,0 +1,34 @@
+# ============================================================
+# ПРОФИЛЬ 5 · ДАННЫЕ/СЕТЬ/УТИЛИТЫ — анализ, облака, порядок
+# ============================================================
+
+# анализ данных и графики
+pip:pandas
+pip:numpy
+pip:matplotlib
+
+# сеть и планирование
+pip:aiohttp
+pip:apscheduler
+pip:apprise
+
+# архиватор №1
+winget:7zip.7zip
+
+# Git — без него ни одна репа GitHub не подтянется =)
+winget:Git.Git
+
+# GitHub CLI — клиент узла C65 (gh codespace port-forward) и всякое с репами
+winget:GitHub.cli
+
+# облака одной командой (S3, Google Drive, Dropbox и десятки других)
+winget:Rclone.Rclone
+
+# качалка на максималках (докачка, параллельные потоки)
+winget:aria2.aria2
+
+# мгновенный поиск файлов по всему диску
+winget:voidtools.Everything
+
+# свежий PowerShell (старый останется, просто появится получше)
+winget:Microsoft.PowerShell

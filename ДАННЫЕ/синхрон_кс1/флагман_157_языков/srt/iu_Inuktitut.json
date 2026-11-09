@@ -1,0 +1,254 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "iu_Inuktitut",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/iu_Inuktitut.srt",
+ "юниты": [
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Thick fog dissolves houses. [ᓂᔾᔭᐅᑦ]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "ᕿᓚᒥᑯᓗᒃ ᕿᓚᒥᑯᓗᒃ ᕿᓚᒥᑯᓗᒃ ᐃᖅᑲᐅᒪᓇᖅᑐᖃᖅᑎᓪᓗᒍ",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ᓯᕘᕋᓕᖅᑎᑉᐸᙵ",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ᓇᓂ ᐅᖅᑰᔪᒥ ᐅᐱᕐᖔᒥ",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "ᐅᑭᐅᖅ ᑕᕐᓂᕐᒥᒃ ᒪᑐᓯᕙᒻᒪᑦ",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "ᐅᕙᒍᑦ",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "ᐃᓅᒐᑦᑕ",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "ᐊᑐᖅᑐᐊᕋᑖᖅᑕᕋ ᐱᕕᒃᓴᖅ",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "ᑐᓂᓯᕙᙱᓚᖅ ᑭᓱᑐᐃᓐᓇᕐᒥᒃ",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "when there is ash in your palms, not steel. ᒥᒃᓵᓄᑦ",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "ᓄᒫᓱᖕᓂᖅ",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "ᐅᖃᓚᐅᓐᖏᑦᑐᖅ, [ᓂᔾᔭᐅᓯᔭᕐᓂᖅ] ᐃᕿᐊᓱᓚᐅᓐᖏᒻᒪᑦ, ᐱᕕᖃᓚᐅᓐᖏᒻᒪᑦ",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "ᑭᓱᓕᒫᓂᒃ ᓴᓂᕐᕙᐃᓚᐅᖅᐳᖓ ᐅᐊᑦᑎᐊᕈᒧᑦ, ᐆᒻᒪᑎᒐ ᐊᓯᓐᓄᑦ ᑐᕌᖓᙱᓚᖅ",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ᒪᑐᐃᖅᑕᐅᔪᖅ. [ᓂᔾᔭᐅᑦ]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "ᑐᐃᑦᑎᓐᓂ",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "ᑭᓯᐊᓂ ᖁᕕᐊᓇᕐᓂᖅ ᓂᐅᕕᕐᕕᐅᑉ ᐃᒐᓛᖓᓃᙱᓚᖅ",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "ᓱᓕᓂᖏᑦ ᐃᓚᒋᔭᐅᔪᑦ, ᐅᖅᑰᓯᕙᓪᓕᐊᑎᓪᓗᒋᑦ ᐊᓄᕌᖅᑎᓪᓗᒍ. ᑭᓯᐊᓂ",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "ᐅᑎᕆᐊᒃᓴᖅ ᐊᔪᕐᓇᖅᑐᖅ",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "ᑲᔪᓯᓗᖓ ᑕᑭᔪᒥᒃ",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "ᑐᖁᖓᔪᖃᖅᑎᓪᓗᒍ ᐸᐅᕐᖓᕐᓂ, [ᓂᔾᔭᐅᓯᔭᕐᓂᖅ] ᐊᒻᒪᓗ ᐋᒡᒐ",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "ᓴᕕᕋᔭᒃ. ᒥᒃᓵᓄᑦ",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "ᑐᒃᓯᐊᖅᐳᖓ",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "ᐃᓱᐊᓂ, ᐊᑕᐅᓯᖅ",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ᐃᙱᖅᑐᖅ]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "ᐳᐃᒍᖅᑕᐅᓯᒪᓪᓗᑕ ᐃᒃᓯᕙᐅᑕᖃᕋᑦᑕ",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "ᐅᕿᑦᑐᖅ",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "ᓂᒡᓕᓇᖅᓯᑎᓪᓗᒍ, ᑐᖁᖓᔪᖃᖅᑎᓪᓗᒍ ᐸᐅᕐᖓᕐᓂ ᐊᒻᒪ",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "ᓯᖁᒥᓯᒪᔪᖅ [ᓂᔾᔭᐅᓯᔭᕐᓂᖅ] ᑯᕆᔅᑕᓪ. ᑲᒪᒋᔭᕆᐊᖃᖅᑕᕋ",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "ᖃᖓᑕᓚᐅᖅᑐᖅ",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "ᑕᕐᓂᖅ ᐅᖓᓯᒃᑐᒧᑦ",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[ᓂᔾᔭᐅᑦ]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

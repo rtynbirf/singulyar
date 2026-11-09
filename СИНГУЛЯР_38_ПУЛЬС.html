@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://huggingface.co https://*.hf.co">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="ПУЛЬС ·38 — живая диагностика дома СИНГУЛЯР: кардиограмма пульса 62, сервис-воркер, кэши, память устройства, AI на устройстве и честный реестр версий дома.">
+<title>СИНГУЛЯР ·38 — Пульс дома</title>
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_38_%D0%9F%D0%A3%D0%9B%D0%AC%D0%A1.html">
+<meta property="og:title" content="СИНГУЛЯР ·38 — Пульс дома">
+<meta property="og:description" content="ПУЛЬС ·38 — живая диагностика дома СИНГУЛЯР: кардиограмма пульса 62, сервис-воркер, кэши, память устройства, AI на устройстве и честный реестр версий дома.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_38_%D0%9F%D0%A3%D0%9B%D0%AC%D0%A1.html">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/КРИСТАЛЛ.webp">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="./singulyar-design-v3.css">
+<style>
+/* ПУЛЬС ·38 — дверные стили (общий канон держит singulyar-design-v3.css;
+   здесь только то, чего в общем листе нет). Void, стекло+золотая грань,
+   глифы, ноль эмодзи, ноль картинок: кардиограмма рисуется кодом. */
+:root{color-scheme:dark;--фг:#E8E8E8;--сереб:#C0C8D0;--туск:#8A9099;--карт:#14161C;--лин:rgba(240,240,248,.16);--зол:#B08D57;--золт:#E8C89C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,sans-serif;background:#0A0A0C;color:var(--сереб)}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--лин);background:rgba(10,10,12,.88)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0;flex-wrap:wrap}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#B08D57,#E8C89C,#B08D57);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:ui-monospace,Consolas,monospace}
+.hd b{font-size:17px;display:block;color:var(--фг)}
+.hd span{color:var(--туск);font-size:12.5px;display:block}
+.badge{margin-left:auto;padding:6px 11px;border:1px solid rgba(176,141,87,.5);border-radius:999px;color:var(--золт);font:11.5px/1.4 ui-monospace,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}
+main{max-width:900px;margin:auto;padding:26px 18px 60px}
+h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.05;margin:.25em 0;color:var(--фг)}
+h1 em,h2 em{color:var(--туск);font-style:normal;font-weight:400}
+h2{margin-top:2.1rem;font-size:1.25rem;color:var(--фг)}
+a{color:var(--зол)}
+.lead{color:var(--сереб)}
+.счёт-под{color:var(--туск);font:12.5px/1.55 ui-monospace,Consolas,monospace;margin:6px 0}
+.панель{background:var(--карт);border:1px solid var(--лин);border-radius:18px;padding:18px 20px;margin:16px 0;overflow:hidden}
+.кнопки{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.действие{appearance:none;cursor:pointer;background:rgba(240,240,248,.04);border:1px solid rgba(240,240,248,.22);border-radius:10px;color:var(--фг);font:12.5px/1.2 ui-monospace,Consolas,monospace;letter-spacing:.06em;padding:12px 16px;min-height:44px;min-width:44px;transition:border-color .2s,color .2s;display:inline-block;text-decoration:none}
+.действие:hover{border-color:rgba(176,141,87,.6);color:var(--золт)}
+.действие-золото{border-color:rgba(176,141,87,.55);color:var(--золт)}
+.действие:disabled{opacity:.55;cursor:progress}
+.действие:focus-visible,a:focus-visible,progress:focus-visible{outline:3px solid var(--зол);outline-offset:2px}
+/* показатели дома */
+.показатели{margin:6px 0}
+.показ{padding:10px 0;border-bottom:1px solid rgba(240,240,248,.08)}
+.показ:last-child{border-bottom:0}
+dt{color:var(--золт);font:600 13px/1.5 ui-monospace,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}
+dd{margin:4px 0 0;color:var(--сереб)}
+.глиф{color:var(--зол);margin:0 2px}
+.внутрь{white-space:nowrap}
+/* таблицы: кэши и реестр */
+.таблица-обёртка{overflow-x:auto;border:1px solid var(--лин);border-radius:14px;background:var(--карт)}
+.таблица{border-collapse:collapse;width:100%;min-width:520px;font:13px/1.5 ui-monospace,Consolas,monospace}
+.таблица th{color:var(--туск);text-transform:uppercase;letter-spacing:.08em;text-align:left;font-weight:600;padding:10px 12px;border-bottom:1px solid var(--лин);white-space:nowrap}
+.таблица td{padding:9px 12px;border-bottom:1px solid rgba(240,240,248,.07);vertical-align:top;word-break:break-word;color:var(--сереб)}
+.таблица tr:last-child td{border-bottom:0}
+.таблица tr.защищён td:first-child{box-shadow:inset 3px 0 0 rgba(176,141,87,.7)}
+.таблица tr.сейчас td{background:rgba(176,141,87,.06)}
+.таблица td.золото{color:var(--золт)}
+.таблица td.сбой{color:var(--золт)}
+.метка{display:inline-block;margin-left:8px;padding:3px 8px;border:1px solid rgba(176,141,87,.5);border-radius:999px;color:var(--золт);font:11px/1.4 ui-monospace,Consolas,monospace;white-space:nowrap}
+.визуально-скрытый{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* кардиограмма и прогресс */
+.холст-пульс{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--лин);margin:14px 0}
+.прогресс{width:100%;height:14px;accent-color:#B08D57}
+.низ{text-align:center;margin:22px 0 8px}
+.низ a{color:var(--зол);text-decoration:none;border-bottom:1px solid rgba(176,141,87,.4)}
+.штамп{text-align:center;color:var(--туск);font:11.5px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px}
+.границы p{margin:10px 0}
+@media (max-width:560px){.badge{margin-left:0}}
+@media (prefers-reduced-motion: reduce){.действие,.действие:hover{transition:none}}
+</style>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0A0A0C">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<script defer src="js/sg-registry.js"></script><script defer src="js/room-38.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#осн">К основному содержанию</a>
+<header>
+  <div class="wrap hd">
+    <div class="logo" aria-hidden="true">S</div>
+    <div><b>ПУЛЬС</b><span>·38 · живая диагностика: воркер, кэши, память, слух и мозг на устройстве</span></div>
+    <span class="badge">·38 · ПУЛЬС · такт «<span data-реестр="такт">ПОСАДКА</span>» · кэш <span data-реестр="кэш">v179</span></span>
+  </div>
+</header>
+<main id="осн" class="wrap">
+  <h1>ПУЛЬС <em>— дом слышит себя</em></h1>
+  <p class="lead">Дом — не сайт, а организм: у него есть сторож-воркер, память кэшей, слух и мозг прямо на твоём устройстве. ПУЛЬС — дверь диагностики: она не чинит и не хвастает, она честно показывает, как дом живёт сейчас, здесь, у тебя в руках.</p>
+
+  <h2>Кардиограмма <em>62 удара в минуту</em></h2>
+  <canvas class="холст-пульс" id="пульсКардио" role="img" aria-label="Живой холст: золотая синусоида пульса дома — 62 удара в минуту, рисуется кодом, без картинок"></canvas>
+  <p class="счёт-под" id="пульсПодпись" aria-live="polite">живой холст: золотая синусоида пульса дома, 62 уд/мин; рисуется кодом, ноль картинок и ноль сети; скрытая вкладка ставит паузу.</p>
+
+  <h2>Показатели дома <em>каждая строка — правда этого устройства</em></h2>
+  <div class="панель">
+    <dl class="показатели">
+      <div class="показ">
+        <dt>Сервис-воркер</dt>
+        <dd aria-live="polite" id="свСостояние">…спрашиваю дом…</dd>
+        <dd aria-live="polite">поколение кэша: <span id="свПоколение">…</span></dd>
+        <dd>
+          <button type="button" class="действие действие-золото" id="свОбновить" hidden>ОБНОВИТЬ ДОМ</button>
+          <span class="счёт-под" id="свПодсказка" aria-live="polite"></span>
+        </dd>
+      </div>
+      <div class="показ">
+        <dt>Связь</dt>
+        <dd aria-live="polite" id="свСвязь">…слушаю флаг сети…</dd>
+      </div>
+      <div class="показ">
+        <dt>Память</dt>
+        <dd aria-live="polite" id="свПамять">…спрашиваю квоту…</dd>
+      </div>
+      <div class="показ">
+        <dt>Двери</dt>
+        <dd aria-live="polite" id="свДвери">…читаю реестр дома…</dd>
+      </div>
+      <div class="показ">
+        <dt>Документы дома</dt>
+        <dd aria-live="polite" id="свДоки" style="white-space:pre-wrap">…пробы документации: ТЗ, дорога, архитектура, Малыш…</dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2>Кэши дома <em>что лежит на устройстве</em></h2>
+  <p class="счёт-под">вес — приближение по заголовкам content-length; тела файлов ПУЛЬС не читает; «—» — браузер не сказал вес.</p>
+  <div class="таблица-обёртка">
+    <table class="таблица">
+      <caption class="визуально-скрытый">Кэши дома: имя, число ключей, примерный вес; защищённые помечены золотом</caption>
+      <thead><tr><th scope="col">имя</th><th scope="col">ключей</th><th scope="col">примерный вес</th></tr></thead>
+      <tbody id="телоКэшей">
+        <tr><td colspan="3" class="счёт-под">…перебираю кэши дома…</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="счёт-под" id="кэшиИтог" aria-live="polite"></p>
+
+  <h2>AI НА УСТРОЙСТВЕ <em>— абсолют</em></h2>
+  <div class="панель">
+    <dl class="показатели">
+      <div class="показ">
+        <dt>Библиотека <span class="глиф" aria-hidden="true">⌕</span> transformers.js @3.7.5</dt>
+        <dd aria-live="polite" id="айБиблиотека">…проверяю кэши…</dd>
+      </div>
+      <div class="показ">
+        <dt>Слух <span class="глиф" aria-hidden="true">◇</span> whisper-tiny</dt>
+        <dd aria-live="polite" id="айСлух">…проверяю кэши…</dd>
+      </div>
+      <div class="показ">
+        <dt>Мозг <span class="глиф" aria-hidden="true">◈</span> Qwen 0.5B, 6 частей</dt>
+        <dd aria-live="polite"><span id="айМозг">…проверяю кэши…</span> <a class="внутрь" href="./СИНГУЛЯР_19_ЧЕЛОВЕК.html">догрузить в ·19 ЧЕЛОВЕК →</a></dd>
+      </div>
+    </dl>
+    <div class="кнопки">
+      <button type="button" class="действие действие-золото" id="кнопкаПрогреть">ПРОГРЕТЬ СЛУХ (whisper-tiny, ~60 МБ)</button>
+    </div>
+    <p class="счёт-под" id="строкаПрогрева" aria-live="polite">греется только по твоему клику — дом не трогает сеть без человека (I-01 «Человек решает»).</p>
+    <p><progress id="прогрессСлуха" class="прогресс" max="1" value="0" hidden aria-label="Прогресс прогрева слуха: байты и файлы весов whisper-tiny"></progress></p>
+  </div>
+
+  <h2>РЕЕСТР ВЕРСИЙ <em>летопись дома</em></h2>
+  <p class="счёт-под" id="реестрСтатус" aria-live="polite">…читаю data/versions.json — родное, из кэша дома…</p>
+  <div class="таблица-обёртка">
+    <table class="таблица">
+      <caption class="визуально-скрытый">Реестр версий дома: поколение кэша, такт, дата, что сделано</caption>
+      <thead><tr><th scope="col">поколение кэша</th><th scope="col">такт</th><th scope="col">дата</th><th scope="col">сделано</th></tr></thead>
+      <tbody id="телоРеестра">
+        <tr><td colspan="4" class="счёт-под">…открываю летопись…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Честные границы ПУЛЬСА <em>без прикрас</em></h2>
+  <div class="панель границы">
+    <p>ПУЛЬС видит только это устройство и только то, что браузер сам отдаёт своим страницам: сервис-воркер, Cache Storage, квоту хранения, флаг сети. Ни других устройств, ни других людей, ни комнат за стеной — дом слышит себя, но никого не подслушивает.</p>
+    <p>На file:// половина показателей недоступна: Cache Storage, воркер и точная квота браузер локальным файлам не открывает — строки честно скажут «проверить нельзя». Открой дом по сети один раз, поставь его воркером — и ПУЛЬС увидит всё.</p>
+    <p>Веса кэшей — приближение по заголовкам content-length: тела файлов ПУЛЬС не читает и не пересчитывает, а ответы без заголовка помечает «—». И главное: дверь ничего никуда не отправляет — ноль аналитики, ноль форм, ноль запросов к чужим серверам без твоего клика на прогрев.</p>
+  </div>
+
+  <p class="низ"><a href="./index.html" title="Домой — лицо дома: кристалл, намерение, нить Ариадны">⌂ дом · хаб ·00</a></p>
+  <p class="штамп">·38 · ПУЛЬС · такт «<span data-реестр="такт">ПОСАДКА</span>» · кэш <span data-реестр="кэш">v179</span></p>
+</main>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a class="sg65here" aria-current="page" href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<b>Новые двери</b>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_53_%D0%A1%D0%92%D0%AF%D0%97%D0%AC_%D0%A7%D0%95%D0%9B%D0%9E%D0%92%D0%95%D0%9A%D0%90.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_54_%D0%9F%D0%98%D0%A0.html">·54 ПИР</a>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_43_%D0%95%D0%94%D0%98%D0%9D%D0%9E%D0%95_%D0%9E%D0%9A%D0%9D%D0%9E_%D0%9A%D0%9E%D0%9C%D0%9C%D0%A3%D0%9D%D0%98%D0%9A%D0%90%D0%A6%D0%98%D0%98.html">·55 ЕДИНОЕ ОКНО</a>
+<a href="../">·56 МЕГА-ПЛЕЕР</a>
+</div>
+</details>
+</nav>
+
+<script defer src="js/opfs-core.js"></script>
+<!-- такт v11.23 «СТОЙКОСТЬ» (С101, PAT №27): ПВ1 — OPFS+persist для фонограмм: канон opfs-core/0.1 (28/28 проб) портом js/opfs-core.js — window.__ОПФС: хранилище дома без вытеснения (каталог «фонограммы»), закрепить() — только по явному действию -->
+</body>
+</html>

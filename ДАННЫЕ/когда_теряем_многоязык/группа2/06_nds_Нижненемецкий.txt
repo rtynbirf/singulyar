@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Нижненемецкий · КОД: nds · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 06 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: Plattdüütsch (Neddersassisch) — север Германии и восток Нидерландов, региональный язык по Европейской хартии; норма Sass'sche Schriewwies (Гамбург); современной лексики в аттестованном словаре нет — описательно: кофейня — Kaffeehuus («кофейный дом»), витрина — Woren achter Glas («товар за стеклом»), «не успел» — to laat wesen («слишком поздно»), «в долг» — up Borg («под залог»), эхо — Naklang («послезвук»), пульс — Puls (заимств.).
+
+01. Nieg Avend in't Kaffeehuus. En leddigen Nebel lööst de Hüüs op. Ik wanner dör de Veertels, wo de olen Dagen in'n Kopp een dull maakt, wo sik in'n warm Vörjohr Winter över de Seel leggt.
+[ниг авенд инт каффехус. эн леддиген небель лёст де хюс оп. ик ваннер дёр де феертельс, во де олен даген инн копп ен дулл маакт, во зик инн варм фёрьор винтер ёвер де зеель леггт]
+
+02. Dat Leven föög as en Piel vörbi — an de Dagen vörbi, an uns vörbi. Wi harn Papeers tosamenleggt un dorbi vergeten, warüm wi överhoopt leevt; un dat seeg ut, as wenn vörut jümmers noch en »do« klingt.
+[дат левен фёог ас ен пиль фёрби — ан де даген фёрби, ан унс фёрби. ви харн папеерс тозаменлеггт ун дорби фергетен, варюм ви ёверхоопт левет; ун дат зег ут, ас вен фёрут юммерс них ен до кингт]
+
+03. Man de Tied gifft nicks up Borg. Un op een Slag leggt sik iskoolt Ies up dat Hart.
+[ман де тит гифт никс уп борг. ун оп ен слаг леггт зик исколт иес уп дат харт]
+
+04. Wi leert eerst achten, wenn wi wat verleert — wenn achter de Dör för en annern dat Licht utgeiht. Wi winckt de Töög na, de al fohren sünd, un beden üm een Antwoord vun dat Verleden.
+[ви леерт еерст ахтен, вен ви ват ферлеерт — вен ахтер де дёр фёр ен аннерн дат лихт утгайт. ви винкт де тёг на, де ал форен зюнд, ун беден юм ен антворд фон дат ферладен]
+
+05. Wi leert leev hebben, wenn dat koolt warrt — wenn in de Hand Asch liggt un keen Stahl. O, kunn man blot vörher weten, wo later de Droovheit, so kloor as Glas, in de Seel queelt.
+[ви леерт леив хеббен, вен дат колт варрт — вен ин де ханд аш ликгт ун кейн шталь. о, кунн ман блот фёрхер ветен, во латер де дроовхайт, со клор ас глас, ин де зеель квелет]
+
+06. Nich seggt, nümms ümfaten, to laat wesen — dat is de ewige Wies. Du harrst allens för later schovt, un dat Hart för annere Lüüd harrst du nich apendoon.
+[них зеггт, юммс юмфатен, то лаат везен — дат ис де евиге вис. ду харрст алленс фёр латер шовт, ун дат харт фёр аннере люйд харрст ду них апендон]
+
+07. Wi fecht mit en Schadden, vergloht in ledige Kram, un wi seht nich, wo sik Riep op uns Schullern leggt.
+[ви фехт мит ен шадден, ферглот ин ледиге крам, ун ви зет них, во зик рип оп унс шуллерн леггт]
+
+08. Man Glück is nich in't Blinken vun Woren achter Glas, nich in en Bunt Papeergeld — aver in de stille Wohrheit vun de egen Lüüd, in ehr Warmte midden in de Störm.
+[ман глюк ис них инт блинкен фон ворен ахтер глас, них ин ен бунт папеергельд — авер ин де стилле ворхайт фон де еген люйд, ин ер вармте мидден ин де стёрм]
+
+09. Aver achten doot wi blot, wat sik nich mehr torüchhalen lett, un gaht wieter up unsen langen Weg, de faken keen Sinn hett.
+[авер ахтен доот ви блот, ват зик них меер торюххален летт, ун гаит виетер уп унзен ланген вег, де факен кейн зин хетт]
+
+10. Ropp de Olen an, faat se in dien Arm, solang de Puls noch slait. Lat all de Groll vörbi gahn — för dat bed ik vundaag.
+[ропп де олен ан, фаат зе ин дин арм, соланг де пульс них слайт. лат алле де гролл фёрби ган — фёр дат бед ик вундааг]
+
+11. Denn dat Enn vun all Leder is amenn een un dessülvig: wi blievt in de Köpp vun de Lüüd, as Naklang vun de Vergetenen, un sittet dor.
+[ден дат энн фон алле ледер ис амэнн ен ун десзюлвиг: ви блиевт ин де кёпп фон де люйд, ас накланг фон де фергетенен, ун зиттет дор]
+
+12. Wenn man blot bewohren kunn, wat is — so lang wi hier sünd, ehr de Seel in de Fiern flecht.
+[вен ман блот беворен кунн, ват ис — со ланг ви хир зюнд, ер де зеель ин де фирн флегхт]
+
+───
+
+СЛОВАРЬ МАЛЫША (nds · 12 слов + фраза):
+время → Tied [тит]
+туман → Nebel (средненижнен. nevel «мгла»; Düstern у Sass — «потёмки, сумрак», не туман) [небель]
+воспоминание → olen Dagen in'n Kopp («старые дни в голове»; отдельного слова в Sass нет — честная описательная глосса, блок 01) [олен даген инн копп]
+весна → Vörjohr (букв. «предгодье» — ранняя пора года) [фёрьор]
+свет → Licht [лихт]
+поезд → Tog, мн. Töög (рядом употр. Bahn) [тёг]
+ответ → Antwoord [антворд]
+сердце → Hart [харт]
+лёд → Ies [иес]
+печаль → Droovheit (от droov «печальный, унылый») [дроовхайт]
+иней → Riep [рип]
+пульс → Puls (заимств.; блок 10: solang de Puls noch slait) [пульс]
+когда теряем? → Wann verleert wi? (вопрос к блоку 04: wenn wi wat verleert) [ван ферлеерт ви?]

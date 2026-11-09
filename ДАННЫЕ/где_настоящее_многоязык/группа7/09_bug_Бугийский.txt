@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Бугийский · КОД: bug · ГРУППА 7 · язык 09 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: латиница (традиционное письмо — лонтара ᨅᨔ ᨕᨘᨁᨗ, Basa Ugi, сегодня основное — латиница); норма Южного Сулавеси с индонезийскими заимствованиями; «настоящее» — nyata (заимств. из индон.), «экран» — layar (заимств.), «одиночество» — kesepian (заимств.); «весны» как сезона нет (тропики) — описательно masa bunga «пора цветов»; дождь ugi и ночь bongi — собственные юго-сулавесийские слова (засвидетельствованы); «где» — téga (по свадеш-списку Соппенга).
+
+01. Iye memang kemajuan: itta bangun jaringan otak, pangkalan ri Mars, tinggal ri metaverse, buakang update salama'na sekali swipé, dapa semuana sekaligus. Itta bisa.
+[ие меманг кэмаджуан: итта бангун джаринган отак, пангкалан ри Марс, тинггал ри метаверс, буаканг упдате саламана сэкали свипе, дапа сэмуана сэкалигус. итта биса]
+
+02. Itta sampé ri batas keinginan — ri lino tanpa jedha, tanpa jarak.
+[итта сампэ ри батас кэингинан — ри лино танпа джэдха, танпа джарак]
+
+03. Semuana jadi makin dékat makin cépat, tapi ri dalem jadi sépi.
+[сэмуана джади макин дэкат макин чэпат, тапи ри далем джади сэпи]
+
+04. Itta terbang makin cépat, gonta-ganti kata sandi. Itta sendiri lupa peranna.
+[итта тэрбанг макин чэпат, гонта-ганти ката санда. итта сэндири лупа пэранна]
+
+05. Tapi jawab uwa', lia layar iye: téga yang nyata skarang?
+[тапи джаваб ува, лия лаяр ие: тэга янг ньята скаранг?]
+
+06. Ri sini tau ri sana — téga bau ugi, téga rumput ri masa bunga? Nyata ta' cuma ri ulu.
+[ри сини тау ри сана — тэга бау уги, тэга румпут ри маса бунга? ньята та чума ри улу]
+
+07. Itta tahu ampir semuana yang bisa pelajari. Tapi téga yang nyata? Téga itta cari?
+[итта таху ампир сэмуана янг биса пэладжари. тапи тэга янг ньята? тэга итта чари?]
+
+08. Semuana yang bau masa bunga pun tutup beton, itta ukur hidup pakai jumbla notifikasi.
+[сэмуана янг бау маса бунга пун тутуп бэтон, итта укур хидуп пакаи джумбла нотификаси]
+
+09. Menre sama layar, bangkit sama layar. Itta tarjebak ri loop autopilot.
+[мэнрэ сама лаяр, бангкит сама лаяр. итта тарджэбак ри луп автоипилот]
+
+10. Itta pun bisa apus jarak, tapi ta' bisa apus kesepian — makin jarang denga saling.
+[итта пун биса апус джарак, тапи та биса апус кэсэпиан — макин джаранг дэнга салин]
+
+11. Ellong, bongi masih bongi, itta péré diam, senang ta' perlu unduh file?
+[эллонг, бонги масих бонги, итта пэрэ диам, сэнанг та пэрлу ндух файл?]
+
+12. Kalau satu hari layar padam — jawab uwa': téga yang nyata? Ri sini tau ri sana?
+[калау сату хари лаяр падам — джаваб ува: тэга янг ньята? ри сини тау ри сана?]
+
+───
+СЛОВАРЬ МАЛЫША (bug):
+настоящее → nyata (заимств. из индон.) [ньята]
+экран → layar (заимств.) [лаяр]
+дождь → ugi [уги]
+весна → masa bunga («пора цветов», описательно) [маса бунга]
+трава → rumput (заимств.; местн. aru — диал. Соппенг) [румпут]
+бетон → beton (заимств.) [бэтон]
+уведомление → notifikasi (заимств.) [нотификаси]
+пароль → kata sandi (заимств.) [ката санда]
+ночь → bongi [бонги]
+одиночество → kesepian (заимств. из индон.) [кэсэпиан]
+счастье → senang (заимств. из индон.) [сэнанг]
+где? → téga [тэга]
+где настоящее? → téga yang nyata? [тэга янг ньята?]

@@ -1,0 +1,27 @@
+# ============================================================
+# ПРОФИЛЬ 3 · AI/LLM — нейросети: и в облаке, и локально
+# Из категорий «AI/LLM CLI» и «Python-библиотеки» каталога.
+# ============================================================
+
+# официальные SDK к большим моделям
+pip:openai
+pip:anthropic
+pip:google-genai
+pip:ollama
+
+# llm — универсальный фронтенд Simon Willison к любым API
+pip:llm
+
+# AI-парное программирование прямо в терминале
+pip:aider-chat
+
+# локальный ИИ: Hugging Face
+pip:huggingface_hub
+pip:transformers
+pip:accelerate
+
+# локальный Whisper (распознавание речи) — тяжёлый: тянет torch, но оно того стоит
+pip:openai-whisper
+
+# Ollama — запуск локальных моделей одной командой (ollama pull / ollama run)
+winget:Ollama.Ollama

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚡ СИНГУЛЯР РУМУ — Title Loader</title>
+<style>
+body{margin:0;background:#0a0f0c;color:#e0e6e3;font:15px/1.5 sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.loader{text-align:center}
+.brand{font-size:24px;color:#00ff9e;font-weight:bold;margin-bottom:12px}
+.status{color:#7a8a84}
+.error{color:#ff6b6b;margin-top:12px}
+a{color:#00ff9e}
+</style>
+</head>
+<body>
+<div class="loader">
+  <div class="brand">⚡ СИНГУЛЯР РУМУ</div>
+  <div class="status" id="status">🤖 Загружаю страницу тайтла...</div>
+  <div class="error" id="error"></div>
+</div>
+<script>
+// Get ?id=N from URL
+const params = new URLSearchParams(location.search);
+const id = params.get('id') || '0';
+const ep = params.get('ep') || '1';
+
+const statusEl = document.getElementById('status');
+const errorEl = document.getElementById('error');
+
+// Fetch the actual title.html from raw.githubusercontent (correct version, no CDN cache)
+const rawUrl = 'https://raw.githubusercontent.com/rtynbirf/singulyar/rumu/title.html';
+
+statusEl.textContent = '🤖 Загружаю с raw.githubusercontent.com...';
+
+fetch(rawUrl)
+  .then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.text();
+  })
+  .then(html => {
+    statusEl.textContent = '✓ Загружено, рендерю...';
+    // Replace entire document with fetched HTML
+    document.open();
+    document.write(html);
+    document.close();
+  })
+  .catch(e => {
+    statusEl.textContent = '✗ Ошибка загрузки';
+    errorEl.innerHTML = 'Не удалось загрузить title.html с raw.githubusercontent<br>' +
+      'Причина: ' + e.message + '<br><br>' +
+      'Открой напрямую: <a href="https://raw.githubusercontent.com/rtynbirf/singulyar/rumu/title.html?id=' + id + '">raw URL</a><br>' +
+      'Или запусти локально: <code>python3 tracker_proxy.py</code>';
+  });
+</script>
+</body>
+</html>

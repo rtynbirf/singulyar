@@ -1,0 +1,14 @@
+{
+  "total_artifacts": 8,
+  "by_status": {
+    "КОНЦЕПЦИЯ": 1,
+    "ПСЕВДОКОД": 1,
+    "СИМУЛЯТОР": 1,
+    "ЛОКАЛЬНЫЙ RUNNABLE MVP": 2,
+    "СЕРВИСНЫЙ КАРКАС": 1,
+    "РАСШИРЕННЫЙ КАРКАС": 1,
+    "ДУБЛИКАТ": 1
+  },
+  "emergent_additions": ["EvidenceState controller", "source-count invariant", "full TZ", "roadmap 0-16", "trends 2025-2026"],
+  "date": "2026-10-12"
+}

@@ -1,0 +1,278 @@
+/* ==========================================================================
+   СИНГУЛЯР — дизайн-система v3.1 «Ambient OS · СТЕКЛО·СЕРЕБРО·ЗОЛОТО» — МОСТ
+   Источник истины: ФУНДАМЕНТ владельца (SINGULYAR_MASTER_SPEC, 2026-10-05) —
+   канон лица: чёрный void, серебряный кристалл, тёплое золотое ядро, спокойный
+   UI вокруг. Палитры макетов: фон #050508–#2D3436, тексты-серебро
+   #C0C0C8/#E8E8E8/#F0F0F8, акценты — ТОЛЬКО золото #B08D57/#B08D57/#E8C89C/
+   #B08D57/#B08D57/#B08D57/#B08D57/#E8C89C/#C8B896; материалы: стекло
+   (glassmorphism, тонкая светлая рамка), серебро (полированный металл), золото.
+   Слово владельца: «КАК В КОРЕЛ ДРО… МАКЕТАМИ СТЕКЛО СЕРЕБРО ЗОЛОТО».
+   Версия моста: 3.3.0 · такт v1.32.0 «ОСКОЛКИ»
+   (база v3.1 «СТЕКЛО·СЕРЕБРО·ЗОЛОТО»; изменения — в конце файла).
+   --------------------------------------------------------------------------
+   ЧЕСТНЫЕ АДАПТАЦИИ под законы дома (офлайн-принцип, accessibility-first):
+   1) БЕЗ внешних шрифтов — системный стек (0 внешних сетевых запросов);
+   2) БЕЗ универсального ресета — у каждой комнаты свои сбросы, чужие не трогаем;
+   3) семантический --red комнат НЕ перекрашен — ошибки остаются ошибками;
+      --green (успех/онлайн) переведён в спокойный изумруд без неона;
+   4) тяжёлые аппы (·01, ·02 РЕЗОНАНС, ·02 ФАБРИКА) мост НЕ подключают —
+      их калиброванные сцены и темы data-theme не тронуты;
+   5) имя СИНГУЛЯР и сущность дома не меняются — обновляются аватары,
+      бирки, ярлыки (слово владельца «СУЩНОСТЬ НЕ МЕНЯЕТСЯ!!!»);
+   6) рекомендация №5 отчёта: нейтральный фон + ОДИН акцент — акцент = золото.
+   ИЗМЕНЕНИЕ v3.3.0 (слово владельца такта v1.32.0): блок «AURA — HUMAN-FIRST»
+   (режимные атрибуты подложки, ◐ Высокий контраст / ⤢ Крупные элементы)
+   ВЫЖЖЕН — владелец назвал его бессмысленным; accessibility остаётся встроенным
+   свойством (ФУНДАМЕНТ: keyboard, focus, reduced-motion, контраст тем — без
+   отдельных «режимов для особых людей» и без видимых переключателей на лице).
+   ========================================================================== */
+
+/* 1. ТОКЕНЫ v3.1 (документация владельца, дословно) */
+:root{
+  --bg-base:#0A0A0C;            /* тёмная матовая подложка — макеты 01/06 */
+  --bg-depth:#121418;           /* глубина градиента — макет 02 */
+  --glass-dark:rgba(18,20,24,.66);
+  --glass-card:rgba(26,29,35,.55);
+  --glass-elevated:rgba(36,40,48,.75);
+
+  --gold:#B08D57;               /* классическое золото — макеты 06/12 */
+  --gold-hi:#B08D57;            /* тёплое золото — макет 02 */
+  --gold-soft:#B08D57;          /* золото-песок — макеты 04/11/13 */
+  --gold-pale:#E8C89C;          /* светлое золото — макет 09 */
+  --gold-deep:#B08D57;          /* бронза — макет 10 */
+  --gold-champagne:#C8B896;     /* старое золото — макет 15 */
+  --grad-gold:linear-gradient(135deg,#B08D57 0%,#B08D57 100%);
+
+  --silver:#C8CCD2;             /* полированное серебро */
+  --silver-bright:#F0F0F0;      /* герой-серебро — макеты 03/15 */
+  --silver-dim:#8A9099;         /* киккеры макета 02 */
+  --grad-silver:linear-gradient(135deg,#F0F0F0 0%,#C8CCD2 100%);
+
+  --facet-atlas:#B08D57;        /* шесть фасетов КРИСТАЛЛА — гамма золота */
+  --facet-flow:#B08D57;
+  --facet-resonance:#B08D57;
+  --facet-aura:#E8C89C;
+  --facet-mesh:#C8B896;
+  --facet-vault:#B08D57;
+  --facet-brain:#C8CCD2;        /* МОЗГ — серебро нейросети */
+
+  --text-primary:#C0C8D0;       /* серебро основного текста */
+  --text-hero:#E8E8E8;          /* серебро заголовков — макеты 04/14 */
+  --text-secondary:#9CA3AF;
+  --text-muted:#6B7178;
+
+  --border-subtle:1px solid rgba(240,240,248,.14);  /* тонкая светлая рамка стекла */
+  --border-active:1px solid rgba(240,240,248,.30);
+  --glow-gold:0 0 24px rgba(176,141,87,.22);
+  --glow-silver:0 0 18px rgba(200,204,210,.14);
+
+  --blur-sm:blur(12px);
+  --blur-md:blur(20px);
+  --blur-lg:blur(36px);
+
+  --ease-spring:cubic-bezier(.16,1,.3,1);
+  --dur-fast:150ms;
+  --dur-fluid:400ms;
+
+  /* МОСТ на переменные комнат: перекрашено ТОЛЬКО то, что жило на переменной */
+  --bg:#0A0A0C;          /* матовая подложка макетов */
+  --panel:#1A1D23;       /* панельный фон макетов 04/05/08 */
+  --panel2:#121418;
+  --tx:#C0C8D0;          /* серебро */
+  --dim:#8A9099;         /* серебро-dim макета 02 */
+  --teal:#B08D57;        /* главный акцент → золото (ОДИН акцент, отчёт №5) */
+  --teal2:#E8C89C;       /* второй тон → светлое золото */
+  --amber:#B08D57;       /* золото-хай макета 02 */
+  --green:#2FA36B;       /* семантика успеха — спокойный, без неона */
+  --violet:#8A94B8;      /* холодная периферия лучей — макеты 04/14 */
+}
+
+/* 2. ФОН И КИНЕТИЧЕСКИЙ ХОЛСТ — стеклянные плоскости в перспективе
+      + тёплое золотое свечение платформы (титульный макет 01) */
+body{background:var(--bg-base);color:var(--text-primary)}
+.singulyar-canvas-bg{
+  position:fixed;top:0;right:0;bottom:0;left:0;z-index:-1;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(ellipse 62% 34% at 50% 92%, rgba(176,141,87,.11) 0%, transparent 60%),
+    radial-gradient(circle 38% at 12% 6%, rgba(200,204,210,.05) 0%, transparent 70%),
+    radial-gradient(circle 30% at 88% 12%, rgba(200,204,210,.04) 0%, transparent 70%),
+    radial-gradient(circle 46% at 50% 40%, rgba(18,20,24,.0) 0%, transparent 100%),
+    linear-gradient(180deg,#0D0E11 0%,var(--bg-base) 58%,#070709 100%);
+  animation:singulyarDrift 26s ease-in-out infinite alternate;
+}
+.singulyar-canvas-bg::before,
+.singulyar-canvas-bg::after{
+  content:"";position:absolute;pointer-events:none;
+  border:1px solid rgba(240,240,248,.055);
+  background:linear-gradient(165deg,rgba(240,240,248,.028),rgba(240,240,248,.006) 60%);
+  box-shadow:inset 0 1px 0 rgba(240,240,248,.04);
+}
+.singulyar-canvas-bg::before{
+  width:44vmax;height:30vmax;top:-14vmax;left:8vmax;transform:rotate(-14deg);
+  animation:singulyarPane 44s ease-in-out infinite alternate;
+}
+.singulyar-canvas-bg::after{
+  width:38vmax;height:24vmax;bottom:-10vmax;right:6vmax;transform:rotate(11deg);
+  animation:singulyarPane 52s ease-in-out infinite alternate-reverse;
+}
+@keyframes singulyarDrift{
+  0%{filter:brightness(1)}
+  50%{filter:brightness(1.07)}
+  100%{filter:brightness(.97)}
+}
+@keyframes singulyarPane{
+  0%{transform:rotate(-14deg) translateY(0)}
+  100%{transform:rotate(-12.4deg) translateY(2.2vmax)}
+}
+@media (prefers-reduced-motion: reduce){
+  .singulyar-canvas-bg,.singulyar-canvas-bg::before,.singulyar-canvas-bg::after{animation:none}
+}
+
+/* 3. СТЕКЛЯННЫЕ ПРИМИТИВЫ (макеты: тонкая светлая рамка, матовое стекло) */
+.glass-panel{
+  background:var(--glass-dark);
+  backdrop-filter:var(--blur-md);
+  -webkit-backdrop-filter:var(--blur-md);
+  border:var(--border-subtle);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 20px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(240,240,248,.05);
+  transition:all var(--dur-fluid) var(--ease-spring);
+}
+.glass-card{
+  background:var(--glass-card);
+  backdrop-filter:var(--blur-sm);
+  -webkit-backdrop-filter:var(--blur-sm);
+  border:var(--border-subtle);
+  border-radius:14px;
+  padding:20px;
+  transition:transform var(--dur-fast) var(--ease-spring),border var(--dur-fast);
+}
+.glass-card:hover{transform:translateY(-4px);border:var(--border-active)}
+
+/* 4. ФАСЕТ-БЕЙДЖИ (шесть фасетов КРИСТАЛЛА + МОЗГ) — гамма золота и серебра */
+.facet-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:20px;
+  font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;
+}
+.facet-badge[data-facet="atlas"]    {background:rgba(176,141,87,.13);  color:var(--facet-atlas);    border:1px solid var(--facet-atlas)}
+.facet-badge[data-facet="flow"]     {background:rgba(176,141,87,.13);  color:var(--facet-flow);     border:1px solid var(--facet-flow)}
+.facet-badge[data-facet="resonance"]{background:rgba(200,160,95,.13);  color:var(--facet-resonance);border:1px solid var(--facet-resonance)}
+.facet-badge[data-facet="aura"]     {background:rgba(232,200,156,.12); color:var(--facet-aura);     border:1px solid var(--facet-aura)}
+.facet-badge[data-facet="mesh"]     {background:rgba(200,184,150,.12); color:var(--facet-mesh);     border:1px solid var(--facet-mesh)}
+.facet-badge[data-facet="vault"]    {background:rgba(212,165,116,.12); color:var(--facet-vault);    border:1px solid var(--facet-vault)}
+.facet-badge[data-facet="brain"]    {background:rgba(200,204,210,.10); color:var(--facet-brain);    border:1px solid var(--facet-brain)}
+
+/* 5. (вымещено) AURA — HUMAN-FIRST — выжжено словом владельца такта v1.32.0:
+      отдельный видимый «режим для особых людей» противоречит канону.
+      Accessibility встроена: клавиатура, фокус, reduced-motion, контраст. */
+
+
+/* ==========================================================================
+   ОСКОЛКИ — добавки v3.3.0 (такт v1.32.0). Канон незыблем:
+   золото #B08D57 — единственный акцент, стекло с тонкой светлой рамкой,
+   void обязателен. Кристалл — кнопка; осколки-двери — настоящий DOM.
+   ========================================================================== */
+/* Кристалл-кнопка: появление — чистое, без рамок; говорит фокус и курсор */
+#crystalTitle{position:relative}
+.кристалл-кнопка{appearance:none;border:0;padding:0;background:none;cursor:pointer;
+  display:block;position:relative;border-radius:50%;-webkit-tap-highlight-color:transparent;
+  transition:filter .55s ease,transform .55s var(--ease-spring)}
+.кристалл-кнопка canvas{display:block}
+/* свеча лица: наведение — тихое золотое дыхание (и картина, и живая канва) */
+.кристалл-кнопка:hover{filter:drop-shadow(0 0 18px rgba(176,141,87,.22))}
+.кристалл-кнопка:focus-visible{outline:2px solid #E8C89C;outline-offset:10px;border-radius:50%}
+/* рассыпанное ядро: стекло уходит в тень — свет несут осколки-двери */
+.кристалл-кнопка.рассыпан{filter:brightness(.5) saturate(.65);transform:scale(.92)}
+.кристалл-кнопка.рассыпан:hover{filter:brightness(.58) saturate(.7)}
+/* Тихая подсказка лица — воздух канона: мелко, тускло, по делу (С136: серебро дома — контраст ≥4.5, было #5A6068) */
+.тихо-подсказка{margin:16px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim,#8A9099)}
+@media (max-width:640px){.тихо-подсказка{letter-spacing:.1em;font-size:10px}}
+@media (prefers-reduced-motion: reduce){
+  .кристалл-кнопка{transition:none}
+}
+
+
+/* ==========================================================================
+   РЕБРЕНДИНГ КРИСТАЛЛ — добавки v3.2.0 (такт v1.30.0). Канон незыблем:
+   золото #B08D57 — единственный акцент, стекло с тонкой светлой рамкой,
+   void обязателен. Тренд-база сети 2026: дозированный Liquid Glass (урок
+   юзабилити: не всё стеклянное — кромка и контраст прежде прозрачности),
+   metallics/silver chrome в заголовках, Bento Grids 2.0, scroll-driven
+   анимации на нативном CSS (без JS-нагрузки). Всё добавляющее — комнаты
+   не переписаны, семантика --red/--green не тронута.
+   ========================================================================== */
+:root{
+  --chrome-grad:linear-gradient(180deg,#FDFDFE 0%,#C8CCD2 46%,#8A9099 72%,#E8EAEE 100%);
+  --crystal-core:#E8C89C;
+  --void-lg:84px;                   /* фолбэк chrome76 (clamp появился в 79-м) */
+  --void-lg:clamp(44px,7vw,84px);   /* Comfort Guardrails: обязательный воздух */
+  --void-md:52px;                   /* фолбэк chrome76 */
+  --void-md:clamp(28px,4.5vw,52px);
+}
+/* Титул SINGULYAR — антиква + хром-серебро (как на эталоне владельца) */
+.sng-crystal-title{
+  font-family:Georgia,'Palatino Linotype','Book Antiqua','Times New Roman',serif;
+  letter-spacing:.32em;font-weight:600;text-indent:.32em;
+  background:var(--chrome-grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* Дозированный Liquid Glass: подсветка верхней кромки поверх прежнего стекла */
+.glass-panel{box-shadow:inset 0 1px 0 rgba(240,240,248,.10)}
+/* Scroll-луч прогресса — нативный CSS scroll-timeline, ноль JS */
+@supports (animation-timeline: scroll()){
+  .sng-beam{position:fixed;top:0;left:0;height:2px;width:100%;
+    transform-origin:0 50%;z-index:80;pointer-events:none;
+    background:linear-gradient(90deg,rgba(176,141,87,0),#B08D57 40%,#E8C89C);
+    animation:sng-beam-grow linear both;animation-timeline:scroll()}
+  @keyframes sng-beam-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion: reduce){.sng-beam{display:none}}
+}
+/* Bento Grid 2.0 — карта модулей: плитки по числу каналов, сканируемость */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.bento>*{grid-column:span 2}
+@media(max-width:900px){.bento{grid-template-columns:repeat(2,1fr)}.bento>*{grid-column:span 1}}
+@media(max-width:560px){.bento{grid-template-columns:1fr}}
+/* Void-ритм секций (Guardrails): воздух прежде плотности */
+main.glass-void>section{margin-top:var(--void-md)}
+
+/* ═══ Такт v1.38.0 «СВОБОДА» — добавки в конец (комнаты не переписываются) ═══
+   Мировая практика 2026 (View Transitions, MPA): двери дома переходят плавно,
+   нативно, без фреймворка; браузер без поддержки просто открывает дверь. */
+@view-transition{navigation:auto}
+
+/* prefers-reduced-transparency (тренд доступности 2026): стекло уплотняется,
+   читаемость прежде прозрачности — урок канона «контраст прежде стекла». */
+@media (prefers-reduced-transparency: reduce){
+  .glass-panel,.glass-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:#14171C}
+}
+
+/* ── VIEW TRANSITIONS (v1.44.0 «ПОЛИМАТ»): морф дверей без сети ──
+   Прогрессивное улучшение: браузер без поддержки просто игнорирует;
+   prefers-reduced-motion уважаем — движение только кто попросил. */
+@media (prefers-reduced-motion: no-preference){
+  @view-transition{navigation:auto}
+}
+
+
+/* ═══ ДОСТУПНОСТЬ КАК СЛОЙ — такт v11.47 «ЗАКРЫТО» (Э-2/ТЗ-3, аудит дома 2026-10-14) ═══
+   Смысл один — представление твоё: слой наследуется каждой дверью, подключившей дизайн дома.
+   Скип-ссылку ставит ядро (singulyar-modules.js) там, где есть <main>; стиль — здесь. */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2147483647;background:#0A0A0C;color:#B08D57;
+  padding:12px 18px;border:2px solid #B08D57;border-radius:0 0 8px 0;font-size:16px;font-weight:700;text-decoration:none}
+.skip-link:focus{left:0}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:3px solid #B08D57;outline-offset:2px;border-radius:4px}
+@media (forced-colors: active){
+  .skip-link{background:CanvasText;color:Canvas;border-color:CanvasText}
+  :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid Highlight;outline-offset:2px}
+}
+@media (prefers-contrast: more){
+  :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:4px double #FFFFFF;outline-offset:2px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+  .skip-link{transition:none}
+}

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>СИНГУЛЯР — Документация дома · открытый код · открытые знания</title>
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%94%D0%9E%D0%9A%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%90%D0%A6%D0%98%D0%AF.html">
+<meta property="og:title" content="СИНГУЛЯР — Документация дома · открытый код · открытые знания">
+<meta property="og:description" content="Вся документация СИНГУЛЯРА в одном месте: инструкции, архитектура, протоколы, отчёты, открытый код с комментариями, тесты, данные на многих языках. Здесь каждый сам хозяин — бери, читай, проверяй.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%94%D0%9E%D0%9A%D0%A3%D0%9C%D0%95%D0%9D%D0%A2%D0%90%D0%A6%D0%98%D0%AF.html">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="Вся документация СИНГУЛЯРА в одном месте: инструкции, архитектура, протоколы, отчёты, открытый код с комментариями, тесты, данные на многих языках. Здесь каждый сам хозяин — бери, читай, проверяй.">
+<meta name="theme-color" content="#0A0A0C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<style>
+:root{--bg:#0A0A0C;--panel:rgba(255,255,255,.035);--line:rgba(240,240,248,.14);--tx:#C0C8D0;--dim:#8A9099;--gold:#B08D57;--gold2:#E8C89C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);background:rgba(10,10,12,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#B08D57,#E8C89C,#B08D57);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}.hd span{color:var(--dim);font-size:12.5px;display:block}
+h1{font-size:clamp(24px,4.5vw,36px);line-height:1.15;margin:30px 0 10px}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{color:var(--dim);font-size:16.5px}
+.lead b{color:var(--tx)}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--gold);font-family:var(--mono);font-size:12px;margin-left:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+details summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:10px;align-items:baseline;font-size:16px;flex-wrap:wrap}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:'▸';color:var(--gold);font-family:var(--mono)}
+details[open] summary::before{content:'▾'}
+details summary small{color:var(--dim);font-weight:400;font-size:13px}
+details .тело{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(176,141,87,.3)}
+a:hover{border-bottom-color:var(--gold)}
+.строка{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border:1px solid transparent;border-radius:10px}
+.строка:hover{border-color:var(--line);background:rgba(176,141,87,.05)}
+.строка b{color:var(--gold2);font-size:15px;font-weight:600;font-family:var(--mono)}
+.строка span{color:var(--dim);font-size:13.5px}
+.код{font-family:var(--mono);background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--gold2);word-break:break-all}
+.ok-блок{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;margin:16px 0;color:var(--dim)}
+.ok-блок b{color:var(--gold)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding:16px 0 26px;color:var(--dim);font-size:12.5px}
+</style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
+</head>
+<body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<header><div class="wrap hd">
+  <div class="logo">S·</div>
+  <div><b>ДОКУМЕНТАЦИЯ ДОМА</b><span>открытый код · открытые знания: бери, читай, проверяй — здесь каждый сам хозяин</span></div>
+  <div class="badge">открытый код · офлайн</div>
+</div></header>
+
+<main class="wrap">
+  <h1>Знания дома — <em>открыты</em>. Всё лежит в паблике.</h1>
+  <p class="lead">Сайт открыт: <b>код, документы, тесты, данные</b> — всё лежит в публичном репозитории
+  и на этих страницах. Документы написаны простыми словами; код снабжён подробными комментариями.
+  Тексты флагманской песни открыты на <b><span data-реестр="языков">200</span> языках</b> — что казах, что чечен, что суахили:
+  знания может брать любой. Это закон дома.</p>
+  <div class="код">репозиторий: github.com/rtynbirf/singulyar · сайт: rtynbirf.github.io/singulyar</div>
+
+  <h2>Начало <em>первый шаг</em></h2>
+  <details open><summary>Установка и старт <small>как поставить дом на своё устройство</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" title="Штатная установка как приложения: Android, iPhone, Windows, macOS, Linux"><b>ИНСТРУКЦИЯ_УСТАНОВКИ.html</b><span>поставить как приложение на телефон, планшет, ноутбук, ПК — шаги по платформам</span></a>
+      <a class="строка" href="ИНСТРУКЦИЯ_ДОМА.html" title="Как устроен дом и как им пользоваться: комнаты, осколки, меню"><b>ИНСТРУКЦИЯ_ДОМА.html</b><span>как устроен дом: комнаты, кристалл, осколки, меню дома, горячие клавиши</span></a>
+      <a class="строка" href="ИНСТРУКЦИЯ_СТАРТ.md" title="Стартовая инструкция: с чего начать знакомство со вселенной"><b>ИНСТРУКЦИЯ_СТАРТ.md</b><span>с чего начать: первый вход, первые шаги по комнатам</span></a>
+      <a class="строка" href="README.md" title="Главный файл репозитория: что такое СИНГУЛЯР, как устроен, как собирается"><b>README.md</b><span>лицо репозитория: что это, зачем, как собирается</span></a>
+      <a class="строка" href="СИНГУЛЯР_37_О_ДОМЕ.html" title="О доме человеческим языком: что это, кому, как войти — самое короткое объяснение"><b>СИНГУЛЯР_37_О_ДОМЕ.html</b><span>·37 О ДОМЕ — что это и как начать, за три минуты, без жаргона</span></a>
+      <a class="строка" href="СИНГУЛЯР_35_ВОПРОСЫ.html" title="Частые вопросы и честные ответы: дом, установка, пение, приватность, фонд, техника"><b>СИНГУЛЯР_35_ВОПРОСЫ.html</b><span>·35 ВОПРОСЫ — частые вопросы и честные ответы по всему дому</span></a>
+      <a class="строка" href="СИНГУЛЯР_36_СЛОВАРЬ.html" title="Живой глоссарий дома: такт, корд, нить, ТЭП — человеческим языком"><b>СИНГУЛЯР_36_СЛОВАРЬ.html</b><span>·36 СЛОВАРЬ — что такое такт, корд, нить: живой глоссарий</span></a>
+      <a class="строка" href="СИНГУЛЯР_38_ПУЛЬС.html" title="Пульс дома: версии, кэши, AI на устройстве — живая диагностика"><b>СИНГУЛЯР_38_ПУЛЬС.html</b><span>·38 ПУЛЬС — здоровье дома: версии, кэши, AI, живая диагностика</span></a>
+    </div>
+  </details>
+
+  <!--СНГ:АТЛАС-START-->
+  <h2>ТЗ · живое техническое задание <em>обещания дома человеку</em></h2>
+  <details><summary>docs/ТЗ.md — что дом обещает <small>10 историй с критериями приёмки; чекбокс снимается проверкой</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/СИНТЕЗ.md" title="Дом одним взглядом: что это, закон, устройство, ритм такта, карта знания, состояние, дорога"><b>docs/СИНТЕЗ.md</b><span>синтез: законы, комод, такты, свод обещаний, куда идёт — быстрый вход в документацию</span></a>
+      <a class="строка" href="docs/ТЗ.md" title="Живое ТЗ: US-01 офлайн · US-02 приватность · US-03 навигация · US-04 караоке · US-05 Малыш · US-06 пульт · US-07 человек в центре · US-08 знания открыты · US-09 фонд · US-10 треки"><b>docs/ТЗ.md</b><span>живое задание: user stories + Gherkin-критерии, закон СИНГУЛЯРА над всеми приоритетами</span></a>
+      <a class="строка" href="docs/ДОРОЖНАЯ_КАРТА.md" title="Дорожная карта: сделано за всё время и что предстоит — 🚧 в работе, 📋 запланировано"><b>docs/ДОРОЖНАЯ_КАРТА.md</b><span>дорога: иммерсивное (точка присутствия, стриминг Малыша) → пёрышки → дальняя карта</span></a>
+      <a class="строка" href="CHANGELOG.md" title="Летопись тактов по Keep a Changelog: Added / Changed / Fixed, свежее сверху"><b>CHANGELOG.md</b><span>летопись тактов дома — вся история, свежее сверху</span></a>
+    </div>
+  </details>
+
+  <h2>Как устроено и как выпускается <em>комод и ритуал</em></h2>
+  <details><summary>docs/ — архитектура и ритуал такта <small>объяснение «почему так» + инструкция 8 стадий</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/АРХИТЕКТУРА.md" title="Комод: ящики (С23–С29) → мост (delete + defineProperty) → вещи (window-глобали); кэш-поколения; CSP-шрам v10.52"><b>docs/АРХИТЕКТУРА.md</b><span>комод-архитектура: 65 мостов / 65 вещей, память kv.*, мозги на устройстве</span></a>
+      <a class="строка" href="docs/РИТУАЛ_ТАКТА.md" title="Ритуал такта: досье → патчер → vm-тест → цех → пушер со СТОП-ГОРНОМ → отрез → ЭП-06 → журнал"><b>docs/РИТУАЛ_ТАКТА.md</b><span>8 стадий такта, чек-лист, ловушки (CSP, кэш, анкоры, Git Data API)</span></a>
+      <a class="строка" href="docs/adr/0001-изоляция-ящиков.md" title="ADR-0001: изоляция семей ящиками (script-блоки) — MADR"><b>adr/0001-изоляция-ящиков.md</b><span>почему ящики: конфликт глобалей структурно невозможен</span></a>
+      <a class="строка" href="docs/adr/0002-мост-delete-defineproperty.md" title="ADR-0002: мост через delete + defineProperty — вещи иммутабельны"><b>adr/0002-мост-delete-defineproperty.md</b><span>65 мостов = 65 вещей: стираем и закрепляем</span></a>
+      <a class="строка" href="docs/adr/0003-pwa-без-сборщика.md" title="ADR-0003: PWA без сборщика — исходник = изделие"><b>adr/0003-pwa-без-сборщика.md</b><span>ноль билд-степов; дисциплина пре-кэша на такте</span></a>
+      <a class="строка" href="docs/README.md" title="Карта документации: какой файл о чём и для кого"><b>docs/README.md</b><span>карта docs/: типы знаний, правила папки, соседи</span></a>
+    </div>
+  </details>
+
+  <h2>Наставления агентам <em>Малыш и братья</em></h2>
+  <details><summary>docs/МАЛЫШ.md + AGENTS.md + llms.txt <small>дом читаем человеком и машиной</small></summary>
+    <div class="тело">
+      <a class="строка" href="docs/МАЛЫШ.md" title="Наставления младшему агенту: карта дома, как дом дышит тактами, ловушки, FAQ жильца"><b>docs/МАЛЫШ.md</b><span>учебник Малыша: карта 31 двери, шрамы (CSP, кэш, патчи), наука старшего, частые вопросы</span></a>
+      <a class="строка" href="AGENTS.md" title="Правила для AI-агентов: незыблемое (закон, комод, CSP, кэш, Git Data API), команды, конвенции"><b>AGENTS.md</b><span>свод правил агентов: что не ломать, как тестировать, где истина</span></a>
+      <a class="строка" href="docs/llms.txt" title="Машинная карта знаний дома: секции для LLM + как отвечать"><b>docs/llms.txt</b><span>карта знаний для LLM: факты атомами, числа из data/versions.json</span></a>
+    </div>
+  </details>
+  <!--СНГ:АТЛАС-END-->
+
+  <h2>Архитектура и модули <em>как устроено внутри</em></h2>
+  <details><summary>Документы об устройстве дома <small>24 документа — от модулей до угроз</small></summary>
+    <div class="тело">
+      <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_МОДУЛЕЙ.md" title="Архитектура модулей: как комнаты связаны и на чём держатся"><b>АРХИТЕКТУРА_МОДУЛЕЙ.md</b><span>карта модулей: кто на ком стоит, где границы</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/SINGULYAR_v2.0/README.md" title="АРСЕНАЛ v2.0: прототип дома одним файлом, тест-комплект, ROADMAP/TZ/DOCUMENTATION"><b>АРСЕНАЛ v2.0 · README</b><span>оглавление арсенала владельца и его связи с домом</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/SINGULYAR_v2.0/SINGULYAR_v2.0.html" title="Прототип «суверенный дом одним файлом» v2.0: OPFS, persist, Web Crypto, ноль сети"><b>SINGULYAR_v2.0.html</b><span>прототип v2.0 — открыть двойным кликом, работает без сервера</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/SINGULYAR_v2.0/test_suite.js" title="In-Browser Test Runner v2.0: пробы AudioWorklet/OPFS/WebCrypto/WebRTC/SW прямо на устройстве"><b>test_suite.js</b><span>диагностика железа устройства — вставить в консоль любой страницы</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ТРАНСПОРТ/README.md" title="Каналы дома без Wi-Fi: QR-рукопожатие, фонтанные капли, merkle-доказательства, каскад деградации, ультразвуковой FSK"><b>ТРАНСПОРТ · README</b><span>air-gapped транспорт: 5 QR-эмуляторов + ультразвуковой пилот</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОМНИСПИКЕР/README.md" title="IaC OMNISPEAKER-1 v3: flash_sd, cloud-init, kiosk-юнит, nginx, Docker, ECDSA-паспорт узла"><b>ОМНИСПИКЕР · README</b><span>железо колонки ·42: 10 файлов v3, паспорт узла P-256</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СПРАВОЧНИК_41_ДВЕРЬ.md" title="Офлайн-справочник: 41 автономная дверь и технологический фундамент (381 строка)"><b>СПРАВОЧНИК_41_ДВЕРЬ.md</b><span>долгая память дома — в пре-кэше, открывается без сети</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ВЕС_ДЕПЛОЯ_РАСЧЁТЫ.md" title="П.5: деплой 1209 МБ > лимита Pages 1 ГБ — расчёты I-01/I-02/I-03"><b>ВЕС_ДЕПЛОЯ_РАСЧЁТЫ.md</b><span>арифметика веса: битрейт/mp3/Releases — решение за владельцем</span></a>
+      <a class="строка" href="СИНГУЛЯР_31_ЛАДОМ.html" title="ЛАДОМ ·31: пульт вечера — Parameter Control Subsystem"><b>ЛАДОМ ·31</b><span>пульт вечера: реестр параметров, simple/full, всё обратимо; простота — режим представления, не урезание</span></a>
+      <a class="строка" href="СИНГУЛЯР_32_СЦЕНА.html" title="СЦЕНА ·32: караоке фонда дома — все минусовки фонда, тексты вшиты, слово-вайп, ТЭП-очки"><b>СЦЕНА ·32</b><span>караоке фонда дома: <span data-реестр="песен">62</span> локальные минусовки + тексты <span data-реестр="песен">62</span> песен (ASR-черновики), слово-вайп по весам, ТЭП (ИДЕАЛ/ТОЧНО/комбо/рекорд), темп/сдвиг/громкость обратимы, мост слова ·16/·20; такт v1.46.0</span></a>
+      <a class="строка" href="СИНГУЛЯР_33_ФОНД.html" title="ФОНД ·33: общак дома — счётчик открытой цепи, аноним или летопись, мастер счёта одной кнопкой"><b>ФОНД ·33</b><span>общак дома: счётчик открытой цепи по клику (мульти-узел), аноним первичен или летопись, локальный QR; мастер счёта «ОДНА КНОПКА» v1.49.0 — BIP39/BIP32/BIP84 чистым JS, ключи рождаются и умирают на устройстве, доказано векторами 10/10</span></a>
+      <a class="строка" href="СИНГУЛЯР_34_ДОМ_ФОНДА.html" title="ДОМ ФОНДА ·34: хартия фонда Хелены Келлер — наследие, миссия, десять прав жертвователя, независимость"><b>ДОМ ФОНДА ·34</b><span>хартия фонда: наследие Хелены Келлер (1880–1968), миссия и 4 программы, десять прав жертвователя (AFP с усилением), честное стекло независимости; такт v1.48.0</span></a>
+      <a class="строка" href="index.html" title="АРИАДНА v1.49.0: поисковая машина на лице — намерение словами → дверь"><b>АРИАДНА (лицо)</b><span>поиск по дому вместо пульта фонотеки: двери + песни фонда + документы, намерение → дверь, честная пустота, опечатки прощаются (Левенштейн), обучение подопечного чипами; музыка живёт в дверях ·15 ·16 ·18 ·32; такт v1.49.0</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ИНЖЕНЕРНЫЙ_ПАРАМЕТР.md" title="Инженерный инвариант параметров I-11: PARAMETER→DISCOVERABLE→INSPECTABLE→CONTROLLABLE→PERSISTENT→REVERSIBLE"><b>ИНЖЕНЕРНЫЙ_ПАРАМЕТР.md</b><span>закон I-11: смена представления не уменьшает множество функций; цепочка capability API→REQUEST→RESULT→VERDICT; ISO/IEC 25010-aligned профиль</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md" title="Систематизация вселенной: полный реестр сущностей и связей"><b>СИСТЕМАТИЗАЦИЯ_ВСЕЛЕННОЙ.md</b><span>полный реестр вселенной: сущности и связи</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СВОД_ЗАКОНОВ.md" title="Свод законов дома I-01..I-10: закон живёт в коде и доказывается тестом (машиночитаемая копия — рядом .json)"><b>СВОД_ЗАКОНОВ.md</b><span>свод законов дома: инварианты I-01..I-10, каждый доказан тестом</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ЗАКАЛКА_ЧЁРНЫЙ_ЭКРАН.md" title="ЗАКАЛКА v1.42.0: страховочный КОРД в каждой странице — чёрный экран смерти снят; хранилище-гард, JSON-гард, тихий режим; воркер v52 с потолком кэша против кирпича"><b>ЗАКАЛКА_ЧЁРНЫЙ_ЭКРАН.md</b><span>закалка v1.42.0: КОРД (панель «Нить порвалась — дом держит», журнал сбоев, тихий режим), воркер v52 с потолком кэша — против чёрного экрана и кирпича</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ХОЗЯИН_СПРАВКИ_И_ПУЛЬТ.md" title="ХОЗЯИН v1.45.0: справки при наведении вместо эха ярлыка (ux-engine v9.5), сквозная навигация в каждой комнате, пульт музыки над шаром (ПЛЕЙ/ПАУЗА/СТОП/РЕПИТ/СЛУЧАЙНО, локальный фонд minus/), уборка YouTube-хвостов из названий песен"><b>ХОЗЯИН_СПРАВКИ_И_ПУЛЬТ.md</b><span>хозяин v1.45.0: справки не эхо, дом проходится насквозь, музыка над шаром — 62 местные песни, ноль сети</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СТАЛЬ_НИТИ_И_ЯДРО.md" title="СТАЛЬ v1.43.0: нити ·30 ТКАНЬ симметричны в обе стороны, ядро офлайна неприкасаемо при вытеснении (воркер v53), регресс догнал жизнь (19 дверей · 23 нити из манифеста), песочница ·18 несёт легенду глифов; node --test 22 файла зелёные, закалка 20/20"><b>СТАЛЬ_НИТИ_И_ЯДРО.md</b><span>сталь v1.43.0: нити выровнены, ядро SW неприкасаемо, тесты выведены из манифеста — каждый косячок прибит с тестом</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME_v2.md" title="Синтез Human Runtime v2: 39 пунктов ТЗ старших товарищей — разобраны и сворены с кодом"><b>СИНТЕЗ_HUMAN_RUNTIME_v2.md</b><span>синтез v2: 39/39 пунктов внешнего ТЗ — что взято, что честно отклонено</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ТКАНЬ_СВОЙ_ПУТЬ.md" title="ТКАНЬ · свой путь: ТЗ P2P Human Information Fabric реализовано ядром без зависимостей + дверь ·30; Атари-пиктограммы выкурены"><b>ТКАНЬ_СВОЙ_ПУТЬ.md</b><span>ткань v1.41.0: 7 модулей (O-01..O-06, R-01..R-07, MEANING ≠ TRANSPORT) + выкур пиктограмм по всему дому</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ЖИВАЯ_НИТЬ.md" title="Живая нить: связи дверей и память пути — идея внешней ИИ, воплощённая в каноне дома"><b>ЖИВАЯ_НИТЬ.md</b><span>нить как маршрут: связи дверей в манифесте, линии между осколками, визиты</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/РЕВИЗИЯ_РУМ.md" title="Ревизия рум: по одной странице за такт до бела — в коде и в эстетике; карта всех рум и порядок обхода"><b>РЕВИЗИЯ_РУМ.md</b><span>ревизия: карта рум, что выкурено, порядок обхода; RUМА-1 — ноль живых innerHTML</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/АРХИТЕКТУРА_22_СВЯЗЬ.md" title="Архитектура связи ·22: шифрование, каналы, звонки"><b>АРХИТЕКТУРА_22_СВЯЗЬ.md</b><span>связь ·22: каналы, шифры, звонки</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/THREAT_MODEL_КРИПТА_22.md" title="Модель угроз крипты ·22: что защищаем и от кого"><b>THREAT_MODEL_КРИПТА_22.md</b><span>модель угроз крипты ·22: что защищаем и от кого</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СИНТЕЗ_HUMAN_RUNTIME.md" title="Синтез Human Runtime: человек в центре исполнения"><b>СИНТЕЗ_HUMAN_RUNTIME.md</b><span>Human Runtime: человек — центр исполнения</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ADAPTER_OS.md" title="Adapter OS: адаптер операционной системы дома"><b>ADAPTER_OS.md</b><span>Adapter OS: адаптер ОС дома</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СОБЫТИЕ_18_TURN.md" title="Событие ·18: семантические события и их повороты"><b>СОБЫТИЕ_18_TURN.md</b><span>событие ·18: семантические события</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СВОЙ_БАНК_НА_ЛАДОНИ.md" title="Свой банк на ладони ·25: устройство кошелька"><b>СВОЙ_БАНК_НА_ЛАДОНИ.md</b><span>банк на ладони ·25: устройство кошелька</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md" title="Мастер-план: путь к 157 языкам"><b>МАСТЕР-ПЛАН_RUVSON_157_ЯЗЫКОВ.md</b><span>мастер-план: путь к 157 языкам</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md" title="Стратегия v1: видение дома"><b>СТРАТЕГИЯ_v1_МОЁ_ВИДЕНИЕ.md</b><span>стратегия v1: видение дома</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_ПОЛНЫЙ.md" title="Полный отчёт о проделанной работе по всем тактам"><b>ОТЧЁТ_ПОЛНЫЙ.md</b><span>полный отчёт: все такты и итоги</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md" title="Отчёт по связи, ревизия 15"><b>ОТЧЁТ_СВЯЗЬ_РЕВИЗИЯ_15.md</b><span>отчёт по связи ·22, ревизия 15</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md" title="Отчёт по оркестратору ·15, ревизия 14"><b>ОТЧЁТ_РЕВИЗИЯ_14_ОРКЕСТРАТОР_15.md</b><span>отчёт по оркестратору ·15, ревизия 14</span></a>
+      <a class="строка" href="ДОКУМЕНТЫ/SUSTAINABILITY/README.md" title="Устойчивость дома: финансирование, управление, прозрачность"><b>SUSTAINABILITY/</b><span>устойчивость: политика финансирования, управление, прозрачность, готовность к грантам</span></a>
+    </div>
+  </details>
+
+  <h2>Протоколы и стандарты <em>промышленные образцы</em></h2>
+  <details><summary>Протокол вывода на экран <small>как дом рисует себя на любом устройстве</small></summary>
+    <div class="тело">
+      <a class="строка" href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html" title="Протокол вывода на экран — живая страница"><b>ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html</b><span>стандарт вывода: живой холст, темы, доступность — в виде страницы</span></a>
+      <a class="строка" href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.md" title="Протокол вывода на экран — исходник"><b>ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.md</b><span>исходник протокола для чтения и правки</span></a>
+    </div>
+  </details>
+
+  <h2>Открытый код <em>читай, проверяй, улучшай</em></h2>
+  <details><summary>Ядро дома <small>5 файлов — весь движок вселенной</small></summary>
+    <div class="тело">
+      <a class="строка" href="index.html" title="Лицо дома: кристалл на пьедестале — живой холст, ноль картинок"><b>index.html</b><span>лицо дома: кристалл ·00, осколки, нить Ариадны</span></a>
+      <a class="строка" href="singulyar-modules.js" title="Ядро модулей: кристалл, осколки, связи дверей, карта — с подробными комментариями"><b>singulyar-modules.js</b><span>ядро SNG: кристалл, осколки, живая нить, карта 18 дверей</span></a>
+      <a class="строка" href="singulyar-ux-engine-v9.js" title="UX-движок: подсказки везде, меню дома, перетаскивание, доступность"><b>singulyar-ux-engine-v9.js</b><span>движок v9: подсказки везде, меню дома, таскающиеся кнопки</span></a>
+      <a class="строка" href="singulyar-design-v3.css" title="Дизайн-система: void + стекло + золото, темы, доступность"><b>singulyar-design-v3.css</b><span>дизайн-система дома: void, стекло, золото</span></a>
+      <a class="строка" href="sw15.js" title="Сервис-воркер: офлайн-кеш дома — cache-first"><b>sw15.js</b><span>сервис-воркер: дом живёт офлайн</span></a>
+      <a class="строка" href="manifest.webmanifest" title="Манифест PWA: имя, иконки, цвета"><b>manifest.webmanifest</b><span>манифест приложения</span></a>
+      <a class="строка" href="server/README.md" title="Серверная часть: что делает и чего не делает"><b>server/README.md</b><span>сервер: что делает и чего не делает</span></a>
+    </div>
+  </details>
+  <details><summary>Тесты <small>17 наборов — запускается командой node файл</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_modules_logic.js" title="Тест логики ядра модулей"><b>test_modules_logic.js</b><span>логика ядра модулей</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_svyazi_niti.js" title="Тест ЖИВОЙ НИТИ: связи дверей, память пути"><b>test_svyazi_niti.js</b><span>живая нить: связи, визиты, путь</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_bridge_logic.js" title="Тест логики моста"><b>test_bridge_logic.js</b><span>логика моста</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_logic.js" title="Тест логики СУФЛЁРА ·16"><b>test_s16_logic.js</b><span>логика ·16 СУФЛЁР</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s16_golden_voice.js" title="Тест золотого голоса ·16"><b>test_s16_golden_voice.js</b><span>золотой голос ·16</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s17_fusion.js" title="Тест сборки ·17 ЗАЛ"><b>test_s17_fusion.js</b><span>фьюжн ·17 ЗАЛ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s18_logic.js" title="Тест логики СОБЫТИЯ ·18"><b>test_s18_logic.js</b><span>логика ·18 СОБЫТИЕ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s19_human.js" title="Тест ЧЕЛОВЕКА ·19"><b>test_s19_human.js</b><span>логика ·19 ЧЕЛОВЕК</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s20_logic.js" title="Тест ФОНЕТИКИ ·20"><b>test_s20_logic.js</b><span>логика ·20 ФОНЕТИКА</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s21_logic.js" title="Тест ОБЩЕНИЯ ·21"><b>test_s21_logic.js</b><span>логика ·21 ОБЩЕНИЕ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s22_logic.js" title="Тест СВЯЗИ ·22 — самый крупный набор"><b>test_s22_logic.js</b><span>логика ·22 СВЯЗЬ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s24_logic.js" title="Тест ПОЧТЫ ·24"><b>test_s24_logic.js</b><span>логика ·24 ПОЧТА</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s25_logic.js" title="Тест КОШЕЛЬКА ·25"><b>test_s25_logic.js</b><span>логика ·25 КОШЕЛЁК</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/test_s26_logic.js" title="Тест ЛИНИИ ·26"><b>test_s26_logic.js</b><span>логика ·26 ЛИНИЯ</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/singulyar-stress-harness-v2.js" title="Стресс-стенд: гонки, нагрузки, дедлоки"><b>singulyar-stress-harness-v2.js</b><span>стресс-стенд: гонки и нагрузки</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/check_page_scripts.js" title="Проверка скриптов страниц"><b>check_page_scripts.js</b><span>проверка скриптов страниц</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/check_s16_syntax.js" title="Проверка синтаксиса ·16"><b>check_s16_syntax.js</b><span>синтаксис ·16</span></a>
+    </div>
+  </details>
+
+  <h2>Данные и языки <em>200 голосов — что казах, что суахили</em></h2>
+  <details><summary>Мультиязычный корпус <small>тексты флагмана на <span data-реестр="языков">200</span> языках — открыто</small></summary>
+    <div class="тело">
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/INDEX.md" title="Индекс корпуса: 157 языков, где какой файл"><b>флагман_157_языков/INDEX.md</b><span>индекс корпуса: все 157 языков с путями</span></a>
+      <a class="строка" href="ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md" title="Как устроен мультиязык в доме"><b>ДАННЫЕ/ИНДЕКС_МУЛЬТИЯЗЫК.md</b><span>устройство мультиязыка: как читать и добавлять языки</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/kk_Kazakh.txt" title="Пример: текст на казахском"><b>…/kk_Kazakh.txt</b><span>пример: казахский</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/sw_Swahili.txt" title="Пример: текст на суахили"><b>…/sw_Swahili.txt</b><span>пример: суахили</span></a>
+      <a class="строка" href="ДАННЫЕ/флагман_157_языков/txt/ru-orig_Russian_Original.txt" title="Оригинал: русский исходник, с которого пошли все переводы"><b>…/ru-orig_Russian_Original.txt</b><span>оригинал: русский исходник всех 157 переводов</span></a>
+    </div>
+  </details>
+
+  <h2>Инструменты <em>установщик и граббер</em></h2>
+  <details><summary>Инструменты дома <small>как юзать — по шагам</small></summary>
+    <div class="тело">
+      <a class="строка" href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/КАК_ЮЗАТЬ_УСТАНОВЩИК.md" title="Установщик: как разворачивать инструменты по профилям"><b>КАК_ЮЗАТЬ_УСТАНОВЩИК.md</b><span>установщик: профили и шаги</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/УСТАНОВЩИК/ЕДИНЫЙ_КАТАЛОГ_2444_ИНСТРУМЕНТОВ.md" title="Каталог 2444 инструментов с описаниями"><b>ЕДИНЫЙ_КАТАЛОГ_2444_ИНСТРУМЕНТОВ.md</b><span>каталог 2444 инструментов</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/КАК_ЮЗАТЬ_GRABBER.md" title="Граббер: как собирать контент по шагам"><b>КАК_ЮЗАТЬ_GRABBER.md</b><span>граббер: пошагово</span></a>
+      <a class="строка" href="ИНСТРУМЕНТЫ/АЛГОРИТМ_RUVSON_GRABBER.md" title="Алгоритм граббера изнутри"><b>АЛГОРИТМ_RUVSON_GRABBER.md</b><span>алгоритм граббера изнутри</span></a>
+      <a class="строка" href="БИБЛИОТЕКИ/кристалл/README.md" title="Библиотека кристалл: ядро, мосты, крипта, журнал"><b>БИБЛИОТЕКИ/кристалл/</b><span>библиотека «кристалл»: ядро, мосты, крипта</span></a>
+      <a class="строка" href="БИБЛИОТЕКИ/adapter-os/README.md" title="Adapter OS: установка и интеграция"><b>БИБЛИОТЕКИ/adapter-os/</b><span>Adapter OS: интеграция и контракты</span></a>
+    </div>
+  </details>
+
+  <div class="ok-блок">
+    <b>Честно о языках:</b> документы дома написаны по-русски простыми словами, код снабжён
+    подробными комментариями по-русски. Тексты флагманской песни открыты на <span data-реестр="языков">200</span> языках — от казахского
+    до суахили. Перевод документации на другие языки — открытая работа: возьми любой документ,
+    переведи, прими — дом примет твой труд. Здесь каждый сам хозяин.
+  </div>
+</main>
+
+<footer><div class="wrap">СИНГУЛЯР · документация дома · открытый код, открытые знания ·
+<a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> ·
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" title="Установить дом как приложение">установка</a> ·
+github.com/rtynbirf/singulyar</div></footer>
+<script defer src="./singulyar-ux-engine-v9.js"></script><script>
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+</script>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#B08D57;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(176,141,87,.14);color:#E8C89C;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(176,141,87,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#B08D57}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#B08D57}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(176,141,87,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#B08D57;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#B08D57}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-диаг" aria-labelledby="сг47-диаг-заголовок">
+<h2 id="сг47-диаг-заголовок">Самодиагностика дома — In-Browser Test Suite <em>(ПВ8, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Пять проб устройства — считаются здесь и сейчас; канон-донор test_suite.js (байт-в-байт из ДОКУМЕНТЫ/ПОЛИМАТ_ВИТОК_2/прототип_SINGULYAR_v2.0/) живёт в js/ и дублирует вердикт в консоли.</p>
+<button type="button" id="сг47-диаг-кнопка">Проверить устройство</button>
+<div class="сг47-ответ" id="сг47-диаг-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): ПВ8 — самодиагностика в ·45 (те же пробы, что у донора) */
+(function(){try{
+ var кнопка=document.getElementById('сг47-диаг-кнопка'),ответ=document.getElementById('сг47-диаг-ответ');
+ if(!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  var строки=[];
+  function проба(имя,ок){строки.push((ок?'PASS':'FAIL')+' · '+имя);return ок}
+  try{
+   var Аудио=window.AudioContext||window.webkitAudioContext;
+   var аудио=false;
+   if(Аудио){try{var контекст=new Аудио();аудио=!!(контекст.audioWorklet);контекст.close&&контекст.close()}catch(е){аудио=false}}
+   проба('AudioWorklet (звук вне Main Thread)',аудио);
+  }catch(е){проба('AudioWorklet (звук вне Main Thread)',false)}
+  try{проба('OPFS (фонограммы без вытеснения)',!!(navigator.storage&&navigator.storage.getDirectory))}catch(е){проба('OPFS',false)}
+  try{проба('Web Crypto (паспорта/подписи)',!!(window.crypto&&window.crypto.subtle))}catch(е){проба('Web Crypto',false)}
+  try{проба('WebRTC (зал/ПИР без посредников)',!!window.RTCPeerConnection)}catch(е){проба('WebRTC',false)}
+  try{проба('Service Worker (офлайн-first)',('serviceWorker' in navigator))}catch(е){проба('Service Worker',false)}
+  var красных=0;for(var i=0;i<строки.length;i++){if(строки[i].indexOf('FAIL')===0)красных++}
+  ответ.textContent=строки.join('\n')+'\nИтог: '+(5-красных)+'/5';
+  if(красных)ответ.className='сг47-ответ сг47-отказ';
+ });
+}catch(е){}})();
+</script>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a class="sg65here" aria-current="page" href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+<b>Новые двери</b>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_53_%D0%A1%D0%92%D0%AF%D0%97%D0%AC_%D0%A7%D0%95%D0%9B%D0%9E%D0%92%D0%95%D0%9A%D0%90.html">·53 СВЯЗЬ ЧЕЛОВЕКА</a>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_54_%D0%9F%D0%98%D0%A0.html">·54 ПИР</a>
+<a href="%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_43_%D0%95%D0%94%D0%98%D0%9D%D0%9E%D0%95_%D0%9E%D0%9A%D0%9D%D0%9E_%D0%9A%D0%9E%D0%9C%D0%9C%D0%A3%D0%9D%D0%98%D0%9A%D0%90%D0%A6%D0%98%D0%98.html">·55 ЕДИНОЕ ОКНО</a>
+<a href="../">·56 МЕГА-ПЛЕЕР</a>
+</div>
+</details>
+</nav>
+<script defer src="js/test-suite.js"></script>
+<script defer src="js/sg-registry.js"></script>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>» · кэш <span data-реестр="кэш">v173</span></div>
+</body>
+</html>

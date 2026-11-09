@@ -1,0 +1,16 @@
+Содержимое архива
+
+README_RU.md — 5416 bytes
+docs/ADR_RU.md — 2710 bytes
+docs/ARCHITECTURE_RU.md — 6041 bytes
+docs/FEATURE_CATALOG_100_RU.md — 8052 bytes
+docs/RESEARCH_NOTES_RU.md — 4758 bytes
+docs/ROADMAP_RU.md — 6521 bytes
+docs/SECURITY_PRIVACY_RU.md — 3523 bytes
+docs/TECHNICAL_SPEC_RU.md — 10985 bytes
+docs/TEST_PLAN_RU.md — 5290 bytes
+index.html — 19287 bytes
+package.json — 413 bytes
+src/phrasebook.js — 885 bytes
+src/server.js — 4376 bytes
+tests/SMOKE_TESTS_RU.md — 2041 bytes
