@@ -1,0 +1,24 @@
+{
+  "manifest_version": "0.2.0",
+  "name": "singulyar",
+  "kind": "body",
+  "role": "тело РУМУ живёт веткой rumu этого репо; носитель имени — репо rtynbirf/rumu (архив-саркофаг) и живой SHA-пин в геноме cell-swarm",
+  "body": {
+    "ref": "rumu",
+    "body_digest": "sha256-cee93585e43d2359dec26075f0d2615a4d4c334042c79cb9ab77ee9622fecb14",
+    "body_checked_at": "2026-11-09T15:22:02Z",
+    "body_head_at_check": "3b178e1e7f6f751530d30739c3bcc8fde240033b",
+    "digest_method": "sha256 над отсортированными строками «path\\tmode\\tblob_sha» всех записей живого дерева ветки (git/trees?recursive=1 или git ls-tree -r) — content-addressed: помечает содержимое, не момент",
+    "entries_at_check": 2295,
+    "carrier": {
+      "name_repo": "rtynbirf/rumu",
+      "live_sha_pin": "cell-swarm/swarm.json → cells[singulyar].pin (pin_ref: rumu)",
+      "note": "носитель-саркофаг read-only: его MANIFEST.body_pin — датированный снимок по дизайну; живой контур = этот MANIFEST + oracle-rumu + геном"
+    }
+  },
+  "tools": {
+    "sync": "tools/carrier_body_sync.py --check (верификация живьём) / --write (сознательный перепин)",
+    "digest": "tools/body_digest.py (--ref <git-ref> | --api <head>)"
+  },
+  "laws_ref": "пять законов роя: README.md и docs/adr/ ядра (cell-swarm)"
+}
