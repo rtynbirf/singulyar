@@ -5,6 +5,8 @@
 
 **Живой сайт (PWA):** https://rtynbirf.github.io/singulyar/
 
+[![Оракулы дома зелёные](https://github.com/rtynbirf/singulyar/actions/workflows/oracle-rumu.yml/badge.svg)](https://github.com/rtynbirf/singulyar/actions/workflows/oracle-rumu.yml)
+
 <!--СНГ:АТЛАС-ПРАВДА--> Исторические числа дверей в абзацах ниже (18/19/21/22/23) — летопись своего такта; истина — здесь и в `data/versions.json`.
 
 ## Текущее состояние дома (одна правда)
