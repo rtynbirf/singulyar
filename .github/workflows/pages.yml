@@ -33,6 +33,19 @@ jobs:
           # не-фатально: при отказе просто предупреждаем (гонка остаётся, но деплой живёт)
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+      - name: "Бирка деплоя: SHA выкладки в meta sng-deploy-sha (ПРАВДА-2, F-019 — след деплоя на живом лице)"
+        run: |
+          python3 - <<'EOF'
+          import pathlib
+          п = pathlib.Path('index.html')
+          т = п.read_text(encoding='utf-8')
+          якорь = '<!--СНГ:SHA-ДЕПЛОЯ-МЕСТО-->'
+          мета = '<meta name="sng-deploy-sha" content="${{ github.sha }}">'
+          assert якорь in т, 'якорь СНГ:SHA-ДЕПЛОЯ-МЕСТО не найден в index.html — прод не трогаем вслепую'
+          п.write_text(т.replace(якорь, мета, 1), encoding='utf-8', newline='')
+          print('sng-deploy-sha =', '${{ github.sha }}')
+          EOF
+          # правка живёт только в копии выкладки: в git SHA не пишется (след деплоя — на проде)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
