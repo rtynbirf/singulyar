@@ -49,7 +49,7 @@ console.log("=== ОРАКУЛ v10.61 «РУЧКИ» ===");
 /* ── стиль ── */
 чек("стиль ручек: блок + сетка", raw.includes('<style id="ручкиСтиль">') && raw.includes("#ручкиСетка{display:grid"));
 чек("цели ≥44px (откат-чип)", raw.includes(".ручка-откат{display:inline-flex;align-items:center;min-height:44px"));
-чек("фокус-кольцо канона дома", raw.includes('.ручка:focus-visible{outline:2px solid #D4AF37'));
+чек("фокус-кольцо канона дома (бронза #B08D57 — такт v1.62 «жёлтое — в бронзу»)", raw.includes('.ручка:focus-visible{outline:2px solid #B08D57'));
 чек("гард reduced-motion", raw.includes("@media (prefers-reduced-motion: reduce){#ручкиСетка .ручка,.ручка-откат{transition:none}}"));
 
 /* ── казна и проба ── */

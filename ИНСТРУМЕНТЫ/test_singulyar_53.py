@@ -153,7 +153,17 @@ class TestКомплектПесочница(unittest.TestCase):
         sums = ПАКЕТ / "SHA256SUMS"
         if not sums.exists():
             self.skipTest("SHA256SUMS отсутствует")
-        r = subprocess.run(["sha256sum", "-c", "SHA256SUMS"],
+        # ЧИСТАЯ ИСТОРИЯ (перезапуск rumu): зип-огрызки СБОРКИ_ИСТОРИЯ/ ампутированы
+        # из дерева — manifest остался, хэши живых файлов обязаны сходиться;
+        # отсутствовать вправе только ампутированное (чужой пропуск = красный)
+        записи = (sums.parent / "SHA256SUMS").read_text(encoding="utf-8").splitlines()
+        отсутствуют = [
+            стр.split("  ", 1)[1] for стр in записи
+            if стр.strip() and not (sums.parent / стр.split("  ", 1)[1]).exists()
+        ]
+        самозванцы = [п for п in отсутствуют if not п.startswith("СБОРКИ_ИСТОРИЯ/")]
+        self.assertEqual(самозванцы, [], "в SHA256SUMS отсутствуют файлы вне ампутированных сборок: %s" % самозванцы)
+        r = subprocess.run(["sha256sum", "-c", "--ignore-missing", "SHA256SUMS"],
                            cwd=sums.parent, capture_output=True, text=True, timeout=120)
         self.assertEqual(r.returncode, 0, r.stdout[-2000:])
 

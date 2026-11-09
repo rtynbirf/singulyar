@@ -8,7 +8,9 @@ import sys, os, re, json, subprocess
 import numpy as np, av
 from faster_whisper import WhisperModel
 
-REPO = '/home/z/my-project/download/singulyar'
+# закон «инструкция без автора»: репо выводится из места самого инструмента,
+# никакого пути машины автора (страж test_instruction_alone.py, п.4)
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def span(src):
     ci0 = src.find('"cues"')

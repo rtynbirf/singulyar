@@ -16,7 +16,9 @@
 """
 import os, re, json, sys, time, statistics, urllib.request
 
-REPO = '/home/z/my-project/download/singulyar'
+# закон «инструкция без автора»: репо выводится из места самого инструмента,
+# никакого пути машины автора (страж test_instruction_alone.py, п.4)
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AXDIR = os.path.join(REPO, 'КАРАОКЕ')
 FOND = '/tmp/sync/fond'
 BASE = 'https://raw.githubusercontent.com/rtynbirf/singulyar/minus-fond/minus/'
