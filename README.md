@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="banner.png" alt="singulyar — Офлайн-вселенная караоке RUVSON: 64 песни" width="100%">
+</div>
+
 # СИНГУЛЯР — офлайн-вселенная караоке RUVSON
 
 <p align="center"><img src=".github/social-preview.png" alt="singulyar" width="100%"></p>
