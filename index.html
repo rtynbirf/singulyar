@@ -34,7 +34,7 @@
 <meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: автономные двери, фонд песен, мультиязычный корпус. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
 <meta name="theme-color" content="#000000">
 <!--СНГ:ПРАВДА-НАЧАЛО-->
-<meta name="sng-build" content="v1.60.0 · согласовано с ГОТОВНОСТЬ.manifest.json · такт v11.75 «ВСТРЕЧАЕТ ФЛАГМАН» · кэш v237 · 2026-11-06 · SHA деплоя: meta sng-deploy-sha (ставит pages.yml)">
+<meta name="sng-build" content="v1.60.0 · согласовано с ГОТОВНОСТЬ.manifest.json · такт v11.75 «ВСТРЕЧАЕТ ФЛАГМАН» · кэш v238 · 2026-11-06 · SHA деплоя: meta sng-deploy-sha (ставит pages.yml)">
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 <!--СНГ:SHA-ДЕПЛОЯ-МЕСТО--> <!-- pages.yml заменяет комментарий на <meta name="sng-deploy-sha" content="SHA"> при выкладке (F-019) -->
 <meta name="color-scheme" content="dark">
@@ -231,6 +231,22 @@ html.уд-тихо{scroll-behavior:auto}
 .уд-статус{margin:10px 0 0;font:.75rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
 .уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
 @media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
+/* ВАЛНА W1 «РИТУАЛ ОБНОВЛЕНИЯ ЧЕЛОВЕКА» (ТЗ §1, файл 24 §5): карточка согласия — та же рука, что уд-панель (стекло/бронза); снизу по центру, не перекрывает уд-панель (z-index ниже её кнопки) */
+.рит-панель{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:505;width:min(420px,calc(100vw - 28px));
+  background:rgba(20,22,27,.97);color:#C0C8D0;border:1px solid rgba(176,141,87,.5);border-radius:14px;padding:16px 18px 14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.рит-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;margin:0 0 4px}
+.рит-пояс{font:.78rem/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 10px}
+.рит-строка{font:.85rem/1.5 ui-monospace,Consolas,monospace;color:#C0C8D0;margin:0 0 12px}
+.рит-строка span{color:#E8C89C}
+.рит-хвост{display:flex;gap:10px;justify-content:space-between}
+.рит-войти,.рит-позже{appearance:none;cursor:pointer;min-height:44px;border-radius:999px;padding:0 16px;
+  font:600 .84rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.рит-войти{flex:1;border:1px solid #B08D57;background:rgba(176,141,87,.16);color:#E8C89C}
+.рит-войти:hover,.рит-войти:focus-visible{background:rgba(176,141,87,.28);outline:2px solid #E8C89C;outline-offset:2px}
+.рит-позже{border:1px solid rgba(176,141,87,.55);background:none;color:#8A9099}
+.рит-позже:hover,.рит-позже:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
+@media (prefers-reduced-motion: reduce){.рит-панель{transition:none!important}}
 </style>
 <link rel="preload" href="./fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href="./fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
@@ -859,6 +875,118 @@ if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.
     <button type="button" id="удГотово" class="уд-вкл">Готово</button>
   </div>
 </div>
+<!-- ВАЛНА W1 «РИТУАЛ ОБНОВЛЕНИЯ ЧЕЛОВЕКА» (ТЗ §1, файл 24 §5; латка ЛКГ-1 оставила ключ S15_ВХОД_В_ТАКТ без UI — эта карточка и есть UI): числа ТОЛЬКО от воркера (S15_ВЕДОМОСТЬ/такт из кэша нового поколения), ноль выдуманных; отказ не теряется — новая установка показывает снова (гашение на сессию по поколению) -->
+<div id="ритуалТакта" class="рит-панель" role="dialog" aria-modal="true" aria-labelledby="ритуалЗаголовок" hidden>
+  <h2 id="ритуалЗаголовок">Дом обновился</h2>
+  <p class="рит-пояс">Новый такт прошёл приёмку и ждёт твоего слова. Пока не вошёл — дом живёт на прежнем такте.</p>
+  <p class="рит-строка">такт <span id="ритуалТактИмя">—</span> · кэш <span id="ритуалПоколение">—</span> · ядро <span id="ритуалЯдро">—</span></p>
+  <div class="рит-хвост">
+    <button type="button" id="ритуалВойти" class="рит-войти">Войти в новый такт</button>
+    <button type="button" id="ритуалПозже" class="рит-позже">Позже</button>
+  </div>
+</div>
+<p id="ритуалЖивая" class="sr-only" aria-live="polite"></p>
+<script>
+(function(){
+  try{
+    if(!('serviceWorker' in navigator)) return;
+    var панель=document.getElementById('ритуалТакта'),
+        тактЭл=document.getElementById('ритуалТактИмя'),
+        покЭл=document.getElementById('ритуалПоколение'),
+        ядроЭл=document.getElementById('ритуалЯдро'),
+        войти=document.getElementById('ритуалВойти'),
+        позже=document.getElementById('ритуалПозже'),
+        живая=document.getElementById('ритуалЖивая');
+    if(!панель||!тактЭл||!покЭл||!ядроЭл||!войти||!позже||!живая) return;
+    var гашеноеПоколение=null;
+    function гашено(п){ try{return sessionStorage.getItem('ритуал-позже')===String(п);}catch(e){return false;} }
+    function отложить(п){ try{sessionStorage.setItem('ритуал-позже',String(п));}catch(e){} }
+    function спрятать(){ панель.hidden=true; }
+    /* числа — только от воркера/его кэша: S15_ВЕДОМОСТЬ (поколение, ядро) + такт из versions.json кэша нового поколения; ноль выдуманных чисел */
+    function показать(в){
+      if(!в||!в.поколение||гашено(в.поколение)) return;
+      тактЭл.textContent=в.такт||'—';
+      покЭл.textContent=String(в.поколение);
+      ядроЭл.textContent=(в.ядро>0)?(в.ядро+'/'+в.ядро):'—';
+      панель.hidden=false;
+      гашеноеПоколение=String(в.поколение);
+      живая.textContent='Дом обновился: такт '+тактЭл.textContent+', кэш '+покЭл.textContent+', ядро '+ядроЭл.textContent;
+      войти.focus();
+    }
+    function тактИзКэша(имя){
+      if(!имя||!window.caches) return Promise.resolve('');
+      return caches.has(имя).then(function(есть){
+        if(!есть) return '';
+        return caches.open(имя).then(function(c){
+          return c.match('./data/versions.json').then(function(r){
+            if(!r) return '';
+            return r.json().then(function(j){ return (j&&j.дом&&j.дом.такт)?String(j.дом.такт):''; }).catch(function(){ return ''; });
+          });
+        });
+      }).catch(function(){ return ''; });
+    }
+    function спроситьВедомость(w){
+      return new Promise(function(ok){
+        var т=null;
+        var наСообщение=function(e){
+          if(e.data&&e.data.type==='S15_ВЕДОМОСТЬ'){
+            navigator.serviceWorker.removeEventListener('message',наСообщение);
+            if(т) clearTimeout(т); ok(e.data);
+          }
+        };
+        navigator.serviceWorker.addEventListener('message',наСообщение);
+        w.postMessage({type:'S15_ВЕДОМОСТЬ'});
+        т=setTimeout(function(){ navigator.serviceWorker.removeEventListener('message',наСообщение); ok(null); },1500);
+      });
+    }
+    function проверить(){
+      navigator.serviceWorker.getRegistration().then(function(r){
+        if(!r||!r.waiting||!navigator.serviceWorker.controller) return; /* без контролёра — первая установка, ритуала нет */
+        спроситьВедомость(r.waiting).then(function(в){
+          if(!в||!в.поколение) return;
+          тактИзКэша(в.кэш).then(function(такт){ показать({такт:такт,поколение:в.поколение,ядро:в.ядро}); });
+        });
+      }).catch(function(){});
+    }
+    /* согласие — ключ активации (закон ЛКГ-1); лицо перезагрузится само (латка С147) */
+    войти.addEventListener('click',function(){
+      navigator.serviceWorker.getRegistration().then(function(r){
+        if(r&&r.waiting) r.waiting.postMessage({type:'S15_ВХОД_В_ТАКТ'});
+      }).catch(function(){});
+      спрятать();
+    });
+    позже.addEventListener('click',function(){ if(гашеноеПоколение) отложить(гашеноеПоколение); спрятать(); });
+    /* фокус-ловушка диалога (ARIA APG) — той же рукой, что уд-панель; Escape = «Позже» */
+    document.addEventListener('keydown',function(e){
+      if(панель.hidden) return;
+      if(e.key==='Escape'||e.key==='Esc'){ if(гашеноеПоколение) отложить(гашеноеПоколение); спрятать(); return; }
+      if(e.key!=='Tab') return;
+      var bs=[].filter.call(панель.querySelectorAll('button'),function(b){return !b.disabled});
+      if(!bs.length) return;
+      var п1=bs[0],посл=bs[bs.length-1];
+      if(e.shiftKey&&document.activeElement===п1){ e.preventDefault(); посл.focus(); }
+      else if(!e.shiftKey&&document.activeElement===посл){ e.preventDefault(); п1.focus(); }
+    });
+    /* честный отказ приёмки — объявить живой зоне, не молчать */
+    navigator.serviceWorker.addEventListener('message',function(e){
+      var м=e&&e.data;
+      if(м&&м.type==='S15_ПРИЁМКА'&&м.годен===false){ живая.textContent='Приёмка нового такта не прошла — дом живёт на прежнем. Так честно.'; }
+    });
+    проверить();
+    navigator.serviceWorker.getRegistration().then(function(r){
+      if(!r) return;
+      r.addEventListener('updatefound',function(){
+        var н=r.installing; if(!н) return;
+        н.addEventListener('statechange',function(){
+          if(н.state==='installed'&&navigator.serviceWorker.controller) setTimeout(проверить,400);
+        });
+      });
+    }).catch(function(){});
+    /* страж/скриншоты: честные ручки того же ритуала, без обхода воркера */
+    window.__ритуалТакта={показать:показать,спрятать:спрятать,проверить:проверить};
+  }catch(e){}
+})();
+</script>
 <script>
 (function(){
   var КЛЮЧ='kv.удобно';
@@ -938,7 +1066,7 @@ if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.
 </script>
 
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em"><!--СНГ:ПРАВДА-НАЧАЛО-->
-ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v237</span> · сборка <span data-реестр="деплой">SHA при выкладке</span>
+ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v238</span> · сборка <span data-реестр="деплой">SHA при выкладке</span>
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 </body>
 </html>
