@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Астурийский · КОД: ast · КОРПУС · ПЕСНЯ 2 · ГРУППА 2 · язык 13 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: asturianu — романский язык Астурии (Испания); норма Academia de la Llingua Asturiana (1980, DALLA). Современная лексика — описательно: кофейня=cafetería, витрина=escaparate, купюры=fexu de billetes, поезд=tren (vagón de fierro); пульс=pulsu, ответ=respuesta, печаль=morriña (аттестовано DALLA).
+
+01. Una tarde nueva na cafetería. La borrina erma disuelve les cases. Ando pelos barrios onde les alcordances vuelven llocu, onde na primavera caliente l'iviernu cubre l'alma.
+[уна тарде нуэва на кафетерия. ла боррина эрма дисуэльве лес касес. андо пэлос барриос онде лес алькорданзес вуэльвен льоку, онде на примавэра кальенте льеберну кубре льальма]
+
+02. Onde la vida volaba como una flecha pasando de llargu peles dates, pasando de llargu por nós. Aforrábamos papeles escaeciendo pa qué vivimos, y paecía: siempre más alantre inda sona un «do».
+[онде ла бида волаба комо уна флэча пасандо де льяргу пэлес датес, пасандо де льяргу пор нос. афоррабамос папэлес эскаэсьендо па ке бибимос, и паэсия: сьембрэ мас алантре инда сона ун до]
+
+03. Namái el tiempu en préstamu nun da nada. Y de repente sobre'l corazón cai un xelu fríu.
+[намай эль тьемпу эн прэстаму нун да нада. и де рэпэнтэ собрель корасон кай ун шэлу фриу]
+
+04. Aprendemos a valorar cuando perdemos — cuando tres la puerta s'apaga'l lluz de daquién. Saludamos cola mano los trenes que se foron, intentando arrincar al pasáu una respuesta.
+[апрэндэмос а балорар куандо пэрдэмос — куандо трэс ла пуэрта сапагаль льус де дакьен. салудамос кола мано лос трэнес ке се форон, интэндандо арринкар аль пасау уна рэспуэста]
+
+05. Aprendemos a amar cuando s'enfria — cuando nes palmes hai ceniza y non aceru. O, saber enantes cómo va doler en l'alma esa morriña tresparente.
+[апрэндэмос а амар куандо сэнфриа — куандо нес пальмес ай сэниза и нон асэру. о, сабэр энантес комо ва долэр эн льальма эса морринья треспарэнте]
+
+06. Nun dixi, nun abracé, nun llegué a tiempu — esti ye'l motivu eternu. Too guardaba pa dempués, el corazón pa los otros nunca abrí.
+[нун диши, нун абрасе, нун льеге а тьемпу — эсти йель мотиву этэрну. то гуардаба па дэмпуэс, эль корасон па лос отрос нунка абри]
+
+07. Llutramos cola solombra, ardimos en menudencies ermes, y nun se ve cómo la xada posa nos nuesos costazos.
+[льутрамос кола сольомбра, ардимос эн менудэнсьес эрмес, и нун се бе комо ла шада поса нос нуэсос костазос]
+
+08. La dicha nun ta nel rellumu del escaparate, nin en dengún fexu de billetes, sinón na verdá sele de los nuesos, nel so calor ente les borrafes.
+[ла дича нун та нель рельюму дель эскапарате, нин эн дэнгун фешу де бильетес, синон на вердад селе де лос нуэсос, нель со калор энте лес боррафес]
+
+09. Pero namái valoramos lo que yá ye imposible devolver, siguiendo el nuesu camín llargu y munches vegaes ensin sentíu.
+[пэро намай балорамос ло ке йа йе импосибле дэвольвер, сигьендо эль нуэсу камин льяргу и мунчес бегэес энсин сэнтиу]
+
+10. Llama a los vieyos, abraza, mientres el pulsu entá bate. Que les ofenses pasen — por esto rezo güei.
+[льяма а лос бьейос, абраза, мьентрес эль пульсу энта бате. ке лас офенсес пасен — пор эсто рэсо гуэй]
+
+11. Porque'l final de toles canciones a la fin ye unu: quedamos na memoria, como ecu de los escaecíos, tamos sentaos.
+[поркель финаль де толес кансьонес а ла фин йе уну: кедамос на мемориа, комо эку де лос эскаэсиос, тамос сэнтаос]
+
+12. Curiar lo que hai — mentres tamos equí, mentres l'alma nun vola lloñe.
+[куриар ло ке ай — мэнтрес тамос эки, мэнтрес льальма нун вола льонье]
+
+───
+
+СЛОВАРЬ МАЛЫША (ast · 12 слов + фраза):
+время → tiempu [тьемпу]
+туман → borrina [боррина]
+воспоминание → alcordanza [алькорданза]
+весна → primavera [примавэра]
+свет → lluz [льюс]
+поезд → tren (описательно: vagón de fierro) [трэн]
+ответ → respuesta [рэспуэста]
+сердце → corazón [корасон]
+лёд → xelu [шэлу]
+печаль → morriña/tristura [морринья/тристура]
+иней → xada [шада]
+пульс → pulsu (описательно: latíu del corazón) [пульсу]
+когда теряем? → cuando perdemos [куандо пэрдэмос]

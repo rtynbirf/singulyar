@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Мэнский · КОД: gv · ГРУППА 7 · язык 20 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: кельтский (гойдельский), норма Gaelg; «настоящее» — kiart (правильный/истинный), «экран» — screeen (заимств.), «одиночество» — lonsagh; порядок слов VSO, предлоги сливаются (rish, 'syn, da'n, t'eh). Транскрипция: gh→х, aa→э/а, oi→ий, th→т.
+
+01. Nish, shen biennaght: ta shin troggal lionraghyn-ynsee, ta bun er Maars, ta shin neshaghey 'syn theihll chummit, ta shin fosley yn Voaldyn dy bragh lesh un swip as geddyn ooilley ec yn traa cheddin. Ta shin abyl.
+[ниш, шен бьеннахт: та шин троггал льёнрагин-ынсэ, та бун эр Маарс, та шин нешаген син тейл хаммит, та шин фослей ын Вёлдын дэ браг леш ун свип эс геддин олье эк ын траа хедин. та шин абыл]
+
+02. Ta shin roshtyn jerrey ny miannaghyn — 'syn theihll gyn stad as gyn foddid.
+[та шин роштын джеррей на мианагин — син тейл гын стад эс гын фоддид]
+
+03. Ta ooilley ny s'glossey as ny s'bieaue, agh sthie t'eh ny smoo reaid.
+[та улье на с-глоссей эс на с-бьеу, ах стье те на сму реайд]
+
+04. Ta shin etlagh ny s'bieaue as ny s'bieaue, caghlaaghey ny connairaghyn. Ta shin hene er n'ancooinaghtyn ny paartaghyn ain.
+[та шин этлах на с-бьеу эс на с-бьеу, кахлааген на коннайрагин. та шин хене эр н-анкуйнагтын на партагин айн]
+
+05. Agh freggyr dou, cur my ner da'n screeen shoh: c'raad t'eh kiart nish?
+[ах фреггэр ду, кур мы нер дан скриин хо: крад те кьярт ниш?]
+
+06. Aynshoh ny shen — c'raad ta soar ny fliaghey, c'raad ta faiyr 'syn arragh? Cha nel kiart 'syn chione ny lomarcan.
+[айнхо на шен — крад та соар на фльяха, крад та файр син аррах? ха нел кьярт син хионэ на ломаркан]
+
+07. Ta shin toiggal begnagh ooilley ny oddagh shin toiggal. Agh c'raad t'eh kiart? C'raad dy gheddyn eh?
+[та шин тейггал бегнах улье на оддах шин тейггал. ах крад те кьярт? крад дэ геддин э?]
+
+08. Ta shin er chur ooilley ny row soar arragh sthie 'syn conclaaid, as ta shin towsey y vea lesh earroo ny rundinaghyn.
+[та шин эр хур улье на рау соар аррах стье син конкляд, эс та шин таусей э вей леш ерру на рундинагин]
+
+09. Ta shin cadley rish y screeen as ta shin girree rish. Ta shin goll mygeayrt er ash as er ash, myr autopilot.
+[та шин кадлей риш э скриин эс та шин гиррей риш. та шин голл мыгейрт эр эш эс эр эш, мыр автопайлот]
+
+10. Ta shin er n'ynsagh glennaghey ny foddidyn, agh cha nel shin er n'ynsagh glennaghey lonsagh — as ta shin clashtyn y cheilley ny s'goan as ny s'goan.
+[та шин эр н-ынсах гленнаген на фоддидин, ах ха нел шин эр н-ынсах гленнаген лонцах — эс та шин кладтын э хейле на с-гоан эс на с-гоан]
+
+11. Vel oo cooinaghtyn raad va'n oie ny oie, va shin reaid, as cha row maynrys feme er laadyn sheese myr fill?
+[вел у куйнагтын рад ван ий на ий, ва шин реайд, эс ха рау мэнрис феме эр ладин шейсе мыр фил?]
+
+12. As my vees y screeen mow dy kinjagh — insh dou: c'raad t'eh kiart? Aynshoh ny shen?
+[эс мы веес э скриин моу дэ киньях — инш ду: крад те кьярт? айнхо на шен?]
+
+───
+СЛОВАРЬ МАЛЫША (gv):
+настоящее → kiart (правильный/истинный) [кьярт]
+экран → screeen (заимств.) [скриин]
+дождь → fliaghey [фльяха]
+весна → arragh [аррах]
+трава → faiyr [файр]
+бетон → conclaaid (заимств.) [конкляд]
+уведомление → rundin (сообщение/извещение) [рундин]
+пароль → connair (тайное слово) [коннэр]
+ночь → oie [ий]
+одиночество → lonsagh [лонсах]
+счастье → maynrys [мэнрис]
+где? → c'raad [крад]
+где настоящее? → c'raad t'eh kiart? [крад те кьярт?]

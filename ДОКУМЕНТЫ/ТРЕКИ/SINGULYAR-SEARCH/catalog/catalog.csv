@@ -1,0 +1,9 @@
+id,artifact,type,status,key_content
+A,# SINGULYAR SEARCH — эмерджентный поисковый.txt,Концепция,КОНЦЕПЦИЯ,"Принципы, слои, алгоритм ESE, мультиагентность, техстек, этапы, метрики, gate"
+B,Prototype emergent search engine.txt,Диалог+псевдокод,ПСЕВДОКОД,"6 агентов: архитектор, поисковик, граф-строитель, верификатор, селектор, синтезатор"
+C,ТЫ ПОЛИМАТ=МУЛЬТИАГЕНТ...txt,Симулятор,СИМУЛЯТОР,"Evidence, Claim, SearchAgent, VerificationAgent, CoordinatorAgent, U(a)"
+D,Emergent search engine prototyping.txt (первый),Локальный MVP,ЛОКАЛЬНЫЙ RUNNABLE MVP,"singulyar.py: add/search, BM25, FTS5, UNKNOWN"
+E,Emergent search engine prototyping.txt (второй),Локальный параллельный MVP,ЛОКАЛЬНЫЙ RUNNABLE MVP,"5 ролей: lexical, phrase, coverage, provenance, challenge"
+F,Emergent search engine prototype.txt,Сервисный каркас,СЕРВИСНЫЙ КАРКАС,"FastAPI + OpenSearch + PostgreSQL + RRF + /ingest /search /ask"
+G,## SINGULYAR SEARCH v2.txt,Расширенный каркас,РАСШИРЕННЫЙ КАРКАС,"vector index, evidence graph, claim/source/evidence/test/verdict, BEIR"
+H,Emergent search engine prototyping.txt (последний),Дубликат,ДУБЛИКАТ,Повтор D/E

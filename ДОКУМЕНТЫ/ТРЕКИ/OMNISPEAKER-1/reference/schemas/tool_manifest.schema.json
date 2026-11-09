@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HostToolManifest",
+  "description": "Манифест инструментов, подписанный хостом. Поля risk/reversible заявленные MCP-сервером игнорируются.",
+  "type": "object",
+  "required": ["manifest_version", "tools", "signature"],
+  "properties": {
+    "manifest_version": {"type": "string"},
+    "signature": {"type": "string"},
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "server", "risk", "side_effects", "reversible", "idempotent", "input_schema"],
+        "properties": {
+          "name": {"type": "string", "pattern": "^[A-Za-z0-9_.-]{1,128}$"},
+          "server": {"type": "string"},
+          "risk": {"enum": ["safe", "low", "medium", "high", "critical", "forbidden"]},
+          "side_effects": {"type": "boolean"},
+          "reversible": {"type": "boolean"},
+          "idempotent": {"type": "boolean"},
+          "cloud": {"type": "boolean"},
+          "data_class": {"enum": ["none", "personal", "health", "biometric", "financial"]},
+          "compensation": {"type": ["string", "null"]},
+          "scopes": {"type": "array", "items": {"type": "string"}},
+          "input_schema": {"type": "object"}
+        }
+      }
+    }
+  }
+}

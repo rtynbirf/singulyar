@@ -1,0 +1,18 @@
+{
+  "name": "singular-server",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SINGULAR SERVER v1 — сервер связей СИНГУЛЯРА: личность (ECDSA), мои люди, приглашения в зал ·18, временные записи 7 дней → память, GC. Signaling — только события, не живой звук.",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test ../ИНСТРУМЕНТЫ/test_s19_human.js"
+  },
+  "dependencies": {},
+  "optionalDependencies": {
+    "web-push": "^3.6.7"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HARMONIA event (harm/0.1)",
+  "type": "object",
+  "required": ["schema", "title", "bpm", "timeline"],
+  "properties": {
+    "schema": { "const": "harm/0.1" },
+    "title": { "type": "string", "minLength": 1 },
+    "author": { "type": "string" },
+    "license": { "type": "string" },
+    "bpm": { "type": "number", "minimum": 30, "maximum": 240 },
+    "beatsPerLine": { "type": "integer", "minimum": 1 },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["beat", "type", "data"],
+        "properties": {
+          "beat": { "type": "number", "minimum": 0 },
+          "type": { "enum": ["text", "accent", "scene", "prompt", "pause"] },
+          "data": { "type": "object" },
+          "alt": { "type": "string", "description": "Текстовая расшифровка маркера (обязательна для text и prompt)" }
+        },
+        "allOf": [
+          { "if": { "properties": { "type": { "enum": ["text", "prompt"] } } }, "then": { "required": ["alt"] } }
+        ]
+      }
+    }
+  }
+}

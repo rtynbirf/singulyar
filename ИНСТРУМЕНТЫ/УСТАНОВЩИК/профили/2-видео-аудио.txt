@@ -1,0 +1,29 @@
+# ============================================================
+# ПРОФИЛЬ 2 · ВИДЕО/АУДИО — для канала и музыки (@ruvson_music)
+# Из категории «Мультимедиа» единого каталога.
+# ============================================================
+
+# скачивальщики
+pip:gallery-dl
+pip:streamlink
+
+# теги и метаданные аудио
+pip:mutagen
+pip:eyed3
+
+# обработка аудио и видео из Python
+pip:pydub
+pip:moviepy
+
+# локальное распознавание речи (транскрипты без интернета)
+pip:faster-whisper
+
+# менеджер музыкальной библиотеки с автотегированием
+pip:beets
+
+# программы уровня «про»
+winget:ImageMagick.ImageMagick
+winget:MediaArea.MediaInfo
+winget:MoritzBunkus.MKVToolNix
+winget:HandBrake.HandBrakeCLI
+winget:ExifTool.ExifTool

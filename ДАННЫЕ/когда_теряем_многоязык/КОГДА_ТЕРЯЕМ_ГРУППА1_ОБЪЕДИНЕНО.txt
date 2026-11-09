@@ -1,0 +1,1388 @@
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» · ПЕСНЯ 2 · ГРУППА 1 · ОБЪЕДИНЁННЫЙ МАСТЕР-ФАЙЛ
+20 языков: конланги первой волны · древние (Вульфила, клинопись,
+деванагари, маштоц, саидский) · новоарамейский (сирийский шрифт).
+Смысл один — языков сотни.
+Внутри: манифест группы + полные тексты всех 20 файлов.
+════════════════════════════════════════════════════════
+
+МАНИФЕСТ ГРУППЫ 1 — «КОГДА ТЕРЯЕМ» НА 20 ЯЗЫКАХ
+RUVSON · СИНГУЛЯР · конвейер многоязычия · ПЕСНЯ 2 (rWpYxmFjm9g)
+
+════════════════════════════════════════════════════════
+ПРИНЦИП: ЛУНА · АЙ · МУН
+Языки разные — СУЩНОСТЬ ОДНА. Сущность не множится.
+Каждая строка всех 20 файлов несёт ОДИН И ТОТ ЖЕ смысл
+следующего 12-строчного каркаса (соответствует ru-orig):
+════════════════════════════════════════════════════════
+
+01. Новый вечер в кофейне. Пустой туман растворяет дома. Я по кварталам
+    брожу, где воспоминания сводят с ума, где тёплой весной душу
+    накрывает зима.
+02. Где жизнь летела стрелой мимо дат, мимо нас. Мы копили бумажки,
+    забывая, зачем мы живём, — и казалось: всегда впереди ещё звучит «до».
+03. Только время в долг ничего не даёт. И вдруг на сердце ложится
+    холодный лёд.
+04. Мы учимся ценить, когда теряем, — когда за дверью гаснет чей-то свет.
+    Мы машем вслед ушедшим поездам, пытаясь вымолить у прошлого ответ.
+05. Мы учимся любить, когда стынет, — когда в ладонях пепел, а не сталь.
+    О, если б знать заранее, как будет ныть в душе эта прозрачная печаль.
+06. Не сказал, не обнял, не успел — это вечный мотив. Всё берёг на потом,
+    сердце для других не отворил.
+07. Мы сражаемся с тенью, сгораем в пустых мелочах, и не видно,
+    как иней садится на наших плечах.
+08. Только счастье не в блеске витрины, не в пачке купюр, а в тихой правде
+    родных, в их тепле среди бурь.
+09. Но мы ценим лишь то, что уже невозможно вернуть, продолжая свой
+    длинный и часто бессмысленный путь.
+10. Позвони старикам, обними, пока бьётся пульс. Пусть обиды пройдут —
+    я за это сегодня молюсь.
+11. Потому что финал у всех песен в итоге один: мы остаёмся в памяти,
+    эхом забытых, сидим.
+12. Беречь бы то, что есть, — пока мы здесь, пока не улетела душа вдаль.
+
+════════════════════════════════════════════════════════
+СОСТАВ ГРУППЫ 1 ПЕСНИ 2 (20 языков; не дублируют флагман 157)
+Тема: СТЕРЖНЕВЫЕ ЯЗЫКИ КОНВЕЙЕРА — конланги первой волны
+(токипона, волапюк, интерлингва, идо, новиаль, ложбан,
+интерлингве, лингва франка нова, котава, африхили), древние
+(готский — Вульфила, древнескандинавский, шумерский — ePSD,
+коптский — саидский, пали — деванагари, грабар — маштоц,
+аккадский, хеттский, авестийский), новоарамейский (сирийский
+шрифт).
+════════════════════════════════════════════════════════
+
+ 01. Токипона                       (tok) → 01_tok_Токипона.txt                      (Конланг · pu-лексикон)
+ 02. Волапюк                        (vo ) → 02_vo_Волапюк.txt                        (Конланг · Шлейер 1879)
+ 03. Интерлингва                    (ia ) → 03_ia_Интерлингва.txt                    (Конланг · IALA 1951)
+ 04. Идо                            (io ) → 04_io_Идо.txt                            (Конланг · эсперантидо)
+ 05. Новиаль                        (nov) → 05_nov_Новиаль.txt                       (Конланг · Есперсен 1928)
+ 06. Ложбан                         (jbo) → 06_jbo_Ложбан.txt                        (Конланг · gimste)
+ 07. Интерлингве                    (ie ) → 07_ie_Интерлингве.txt                    (Конланг · де Валль)
+ 08. Лингва франка нова             (lfn) → 08_lfn_Лингва_франка_нова.txt            (Конланг · Elefen)
+ 09. Котава                         (avk) → 09_avk_Котава.txt                        (Конланг · априорный)
+ 10. Африхили                       (afh) → 10_afh_Африхили.txt                      (Конланг · суахили-базис)
+ 11. Готский                        (got) → 11_got_Готский.txt                       (Германский · древний (Вульфила))
+ 12. Древнескандинавский            (non) → 12_non_Древнескандинавский.txt           (Германский · древний)
+ 13. Шумерский                      (sux) → 13_sux_Шумерский.txt                     (Изолят · клинопись (ePSD))
+ 14. Коптский                       (cop) → 14_cop_Коптский.txt                      (Египетский · саидский)
+ 15. Пали                           (pi ) → 15_pi_Пали.txt                           (Индоарийский · средний (деванагари))
+ 16. Классический армянский         (xcl) → 16_xcl_Классический_армянский.txt        (Армянский · грабар (маштоц))
+ 17. Аккадский                      (akk) → 17_akk_Аккадский.txt                     (Семитский · клинопись)
+ 18. Хеттский                       (hit) → 18_hit_Хеттский.txt                      (Анатолийский · клинопись)
+ 19. Авестийский                    (ae ) → 19_ae_Авестийский.txt                    (Иранский · древний)
+ 20. Новоарамейский                 (aii) → 20_aii_Новоарамейский.txt                (Семитский · сирийский шрифт)
+
+Примечание: мёртвые языки (got, non, sux, cop, pi, xcl, akk, hit, ae)
+и малодокументированные — наилучшее доступное приближение с точным
+смысловым каркасом; современная лексика передана описательно на
+аттестованных корнях (честные пометы в файлах); поправки носителей
+и специалистов приветствуются.
+Каждый файл включает СЛОВАРЬ МАЛЫША — 12 слов песни (время, туман,
+воспоминание, весна, свет, поезд, ответ, сердце, лёд, печаль, иней,
+пульс) и фраза «когда теряем?» для офлайн-плеера.
+
+════════════════════════════════════════════════════════
+ЛУНА · АЙ · МУН — ДОКАЗАТЕЛЬСТВО В БЛОКЕ 04 ВО ВСЕХ 20 ЯЗЫКАХ
+Один вопрос «когда теряем?» — двадцать обличий:
+════════════════════════════════════════════════════════
+
+токипона: tenpo weka la mi kama sona: ijo li pona — suno pi jan ante li pini lon monsi lupa. mi tawa e luka tawa tomo tawa pini, mi alasa e toki sin tan toki pini.
+волапюк: Lärnobs ad valörön, kü lüvobs — kü po yaned lit eka perikon. Vätobs vagones ägolöles, steifölö ad begön gesagi de tim bäldik.
+интерлингва: Nos apprende a appreciar quando nos perde, — quando detra le porta se extingue le lumine de alcuno. Nos face signos al trainos partite, tentante implorar del passato un responsa.
+идо: Ni lernas estimar kande ni perdas, — kande exter ula pordo ula lumo extingeskas. Ni adias per la manuo la forinta treni, implorante ula respondo de la pasinto.
+новиаль: Nus ha lernat valuta kand nus perda — kand lume de kelki extingua trans li porte. Nus salua trenes kel ha pasat, probant extraka un responde fro lo pasate.
+ложбан: .i mi'a cilre lo ka se vamji ca lo nu mi'a cirko — ca lo nu lo gusni be lo prenu cu claxu bu'u lo vorme .i mi'a xance slilu lo pu cliva trene gi'e troci lo nu lo purci cu danfu
+интерлингве: Noi aprende apreciar quande noi perde — quande li luce de quelcun extinte detra li porte. Noi saluta li trenes ja partit, probant implorar un responde del passe.
+лингва франка нова: Nos aprende valua cuando nos perde — cuando, pos la porta, la lus de algun estui. Nos saluta con la mano la trenes ci ia parti, pregante a la pasada per un responde.
+котава: Min tid grupesik: kotcoba tid zolonaf, edje coba me tid — edje tanoy awalt me tir. Kan vestara va dimafa ava ke edje.
+африхили: Tunajifunza kutunza, kama tunapoteza — kama mwanga wa mtu fulani unazima nyuma ya mlango. Tunatikisa mikono kwa magari ya moshi yaliyopita, tukiomba jibu la zamani.
+готский: 𐌻𐌰𐌹𐍃𐌰𐌼 𐌳𐌿 𐌼𐌹𐌺𐌹𐌻𐌾𐌰𐌽, 𐌷𐍅𐌰𐌽 𐍆𐍂𐌰𐌻𐌹𐌿𐌽𐌰𐌼, — 𐌷𐍅𐌰𐌽 𐌷𐌹𐌽𐌳𐌰𐌽𐌰 𐌳𐌰𐌿𐍂 𐌻𐌹𐌿𐌷𐌰𐌳 𐌷𐍅𐌰𐍂𐌾𐌹𐌶𐌿𐌷 𐌲𐌰𐍃𐍅𐌹𐌽𐌳𐌹𐌸. 𐍅𐌴𐌹𐍃 𐍅𐌰𐌲𐌰𐌼 𐌷𐌰𐌽𐌳𐌿𐌽𐍃 𐌸𐌰𐌹𐌼 𐌴𐌹𐍃𐌰𐍂𐌽𐌰𐍆𐌰𐌷𐌰𐌼 𐍆𐍂𐌰𐌼𐌲𐌰𐌲𐌲𐌰𐌽𐌰𐌼, 𐌱𐌹𐌳𐌾𐌰𐌽𐌳𐌰𐌽𐍃 𐌸𐌰𐌼𐌼𐌰 𐌰𐌹𐍂𐌹𐍃𐌾𐌰𐌼𐌼𐌰 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄.
+древнескандинавский: Lærum vér að meta, þá er vér töpum, — þá er slokknar ljós nökkurs fyrir dyrum. Vinkum til járnvagna er farit hafa, ok biðjum fornan tíma um svar.
+шумерский: bar-enden-a kù-bi zu-enden — ig bar-a ud ba-šub-a. gigir an-bar ĝen-a bar-šè gu3-de2-enden; ud ul-li2-a-ta ki-bur2 šu ti-enden.
+коптский: Ⲉⲣⲉⲛⲙⲁⲛⲧⲁⲛⲉ ⲛⲧⲉⲛⲧⲓⲙⲁⲛ, ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲉⲣⲉⲛⲕⲱ ⲉⲃⲟⲗ — ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲟⲩⲟⲉⲓⲛ ⲙⲟⲩⲁⲓ ϥϩⲱⲃ ϧⲁⲧⲉ ⲡⲣⲁϫⲉ. Ⲧⲉⲛⲧⲟⲩⲛⲥ ⲛⲧⲉⲛϧⲉⲓⲧ ϫⲓⲛ ⲛⲣⲁⲧ ⲙⲡⲥⲓⲇⲏⲣⲟⲛ ⲉⲧⲃⲱⲕ; ⲛⲧⲉⲛϣⲓⲛⲉ ⲛⲁⲡⲟⲕⲣⲓⲥⲓⲥ ϧⲉⲛ ⲡⲥⲟⲡ ⲉⲧⲃⲱⲕ.
+пали: मयं गरुं कातुं सिक्खाम यदा नस्साम — यदा कस्सचि आलोको द्वारस्स बहि निब्बायति। गतानं अयोयानानं पच्छा हत्थे पसारयाम, अतीतस्स उत्तरं याचितुं उस्सहन्ता।
+классический армянский: Սովորեալք ենք գնահատել, երբ կորուցանեմք, — երբ դռան ետեւ մէկու լոյսը մարի: Ձեռք թափահարեմք երկաթե կառքերուն, որոնք գնացան, փորձելով աղերսել անցեալէն պատասխան:
+аккадский: Nilammed ninaṣṣar, inūma nihalluqu — inūma nuūrum ša šānim ina daltim imût. Nizzaz warki narkabtī ša parzillim ša ilqû, nimaḫḫar tērtam ša māḫrim.
+хеттский: Kuwapi lāumeni, aššul šāumeni — per piran kuitkki šiuat akki. Eruwa barzilaš arḫa pāntari tarnummen, taruppar mugāumeni.
+авестийский: Xšnāsāmaide, kadā vīdāma — kadā haca nmānā raocah noit astī. Ayō.raθaēibiiō yat̰ vī.yātā, vāxš bārāma: cistāt̰ paitiš vaocā.
+новоарамейский: ܚܢܢ ܠܡܕܝܢ ܠܢܛܪ ܟܕ ܚܣܝܢ، — ܟܕ ܒܪ ܬܪܐ ܢܛܦܐ ܢܘܗܪܐ ܕܚܕ ܐܢܫܐ. ܚܢܢ ܩܝܡܝܢ ܒܪ ܩܛܪܐ ܕܥܒܪܝ̈ܢ، ܒܥܝܢ ܡܥܢܝܬܐ ܡܢ ܡܕܡ ܕܥܒܪ.
+
+Один вопрос. Двадцать обличий. Сущность не множится.
+
+════════════════════════════════════════════════════════
+ДОРОЖНАЯ КАРТА ПЕСНИ 2
+════════════════════════════════════════════════════════
+
+База песни 2: флагман 157 переводов (ДАННЫЕ/флагман_157_языков/).
+Группа 1 добавляет 20 → 177 языков.
+Цель (решение владельца): 200 языков на песню — до цели осталось
+23 языка: группа 2 (20) + 3 из группы 3.
+
+ПРАВИЛО КОНВЕЙЕРА (для каждой песни):
+  mp4 → minus .webm (2 полюса: MIN 24k mono / MAX 510k stereo)
+      → полные метаданные в контейнере (автономия файла)
+      → ru-orig (txt + srt, ASR)
+      → 12-строчный смысловой каркас → группы по 20 языков
+      → СЛОВАРЬ МАЛЫША в каждом файле
+      → каждая дверь СИНГУЛЯРА поёт без сети на любом языке.
+
+Статус: ГРУППА 1 ПЕСНИ 2 ГОТОВА. «Когда теряем» — 177 языков.
+Следующая — по команде «ДАЛЕЕ».
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 01 / 20: 01_tok_Токипона.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Токипона · КОД: tok · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 01 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: pu-лексикон (~120 слов); кофейня — tomo moku («место еды»), поезд — tomo tawa («движущийся дом»), туман — kon lete, лёд — ko telo, иней — ko lete; лексика сверена с опорой песни 1 (где настоящее, tok, группа 6).
+
+01. tenpo pimeja sin lon tomo moku. kon lete li weka e tomo mute. mi tawa lon nasin mute, toki pini li pana e pilin nasa tawa mi; tenpo kasi li seli, taso tenpo lete li kama tawa pilin mi.
+[тэмпо пимэжа син лон тамо моку. кон лэтэ ли вэка э тамо мутэ. ми тава лон насин мутэ, токи пини ли пана э пилын наса тава ми; тэмпо каси ли сэли, тасо тэмпо лэтэ ли кама тава пилын ми]
+
+02. tenpo pi lon mi li tawa wawa, li weka e tenpo pini mute, li weka e mi mute. mi awen jo e mani lipu, mi sona ala e tan pi lon mi. mi pilin: kalama open li awen lon sinpin, tenpo ale.
+[тэмпо пи лон ми ли тава вава, ли вэка э тэмпо пини мутэ, ли вэка э ми мутэ. ми авен джо э мани липу, ми сона ала э тан пи лон ми. ми пилын: калама опен ли авен лон синпин, тэмпо алэ]
+
+03. tenpo li pana ala e ijo sama mani pi tenpo kama. tenpo lili la ko telo lete li kama, li anpa lon pilin mi.
+[тэмпо ли пана ала э ийо сама мани пи тэмпо кама. тэмпо лили ла ко тэло лэтэ ли кама, ли анпа лон пилын ми]
+
+04. tenpo weka la mi kama sona: ijo li pona — suno pi jan ante li pini lon monsi lupa. mi tawa e luka tawa tomo tawa pini, mi alasa e toki sin tan toki pini.
+[тэмпо вэка ла ми кама сона: ийо ли пона — суно пи джан антэ ли пини лон монси лупа. ми тава э лука тава тамо тава пини, ми аласа э токи син тан токи пини]
+
+05. tenpo lete la mi kama sona e pilin pona — luka mi la ko pi seli pini li lon, kiwen wawa li lon ala. a, mi wile sona lon tenpo pini: pilin ike kon ni li awen ike e insa mi.
+[тэмпо лэтэ ла ми кама сона э пилын пона — лука ми ла ко пи сэли пини ли лон, кивен вава ли лон ала. а, ми вилэ сона лон тэмпо пини: пилын икэ кон ни ли авен икэ э инса ми]
+
+06. mi toki ala, mi poka ala e jan, tenpo li pini tawa pali — toki ni li kama sin tenpo ale. mi awen jo e ale tawa tenpo kama; pilin mi li open ala tawa jan ante.
+[ми токи ала, ми пока ала э джан, тэмпо ли пини тава пали — токи ни ли кама син тэмпо алэ. ми авен джо э алэ тава тэмпо кама; пилын ми ли опен ала тава джан антэ]
+
+07. mi utala e pimeja, seli li moli e mi lon ijo lili pi jo ala — ko lete li anpa lon poka sijelo mi mute, mi lukin ala e ona.
+[ми утала э пимэжа, сэли ли моли э ми лон ийо лили пи джо ала — ко лэтэ ли анпа лон пока сийэло ми мутэ, ми лукын ала э она]
+
+08. pona li lon ala lon suno pi sinpin esun, li lon ala lon mani lipu mute — ona li lon toki lon lili pi jan poka; seli pi jan poka li tawa mi lon tenpo pi kon wawa.
+[пона ли лон ала лон суно пи синпин эсун, ли лон ала лон мани липу мутэ — она ли лон токи лон лили пи джан пока; сэли пи джан пока ли тава ми лон тэмпо пи кон вава]
+
+09. taso mi lukin pona e ijo taso pi kama ala sin. mi awen tawa lon nasin suli — mute la ona li pona ala.
+[тасо ми лукын пона э ийо тасо пи кама ала син. ми авен тава лон насин сули — мутэ ла она ли пона ала]
+
+10. o toki tawa jan suli kepeken ilo toki, o poka e jan, lawa li tawa. pilin ike o weka — mi toki tawa sewi lon tenpo ni.
+[о токи тава джан сули кепекен ило токи, о пока э джан, лава ли тава. пилын икэ о вэка — ми токи тава сэви лон тэмпо ни]
+
+11. tan ni: pini pi kalama musi ale li sama — mi awen lon toki pini, mi sama kalama kama sin pi jan weka, mi awen lon.
+[тан ни: пини пи калама муси алэ ли сама — ми авен лон токи пини, ми сама калама кама син пи джан вэка, ми авен лон]
+
+12. o awen jo e ijo lon — mi lon ni la, kon mi li tawa weka ala.
+[о авен джо э ийо лон — ми лон ни ла, кон ми ли тава вэка ала]
+
+───
+
+СЛОВАРЬ МАЛЫША (tok · 12 слов + фраза):
+время → tenpo [тэмпо]
+туман → kon lete (холодный воздух) [кон лэтэ]
+воспоминание → toki pini (прошлые слова) [токи пини]
+весна → tenpo kasi (сезон растений) [тэмпо каси]
+свет → suno [суно]
+поезд → tomo tawa (движущийся дом) [тамо тава]
+ответ → toki sin (новое слово) [токи син]
+сердце → pilin (чувство) [пилын]
+лёд → ko telo (твёрдая вода) [ко тэло]
+печаль → pilin ike (плохое чувство) [пилын икэ]
+иней → ko lete (холодная пыль) [ко лэтэ]
+пульс → tawa pi lawa (движение сердца) [тава пи лава]
+когда теряем? → tenpo weka la [тэмпо вэка ла]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 02 / 20: 02_vo_Волапюк.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Волапюк · КОД: vo · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 02 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: классический Шлейер (1879–1890); кофейня — dom kafa («дом кофе»), витрина — fenät seledöpa («окно лавки»), купюры — papüramon (papür+mon), пульс — ladetabatäd (ladet+batäd); лексика сверена с опорой песни 1 (где настоящее, vo, группа 6).
+
+01. Soar nulik in dom kafa. Nubül vagik klonon domis. Begolob da tops, kö memods tefulükons obi, kö in säl warmik nifatid klonon lani.
+[соар нулик ин дом кафа. нубюль вагик клонон домис. бэголоб да топс, кё мэмодс тэфулюконс оби, кё ин сэль вармик нифатид клонон лани]
+
+02. Kö lif äfliton äso sagit — fagü dats, fagü obs. Äkonletobs pülis, glötolö, demü kis lifobs — e äbinos äso if ai föfo nog tonon «do».
+[кё лиф эфлитон эсо сагит — фагю дас, фагю обс. эконлэтобс пюлис, глётолё, дэмю кис лифобс — э эбинос эсо иф ай фёфо ног тонон «до»]
+
+03. Te temp in döt nosi givon. E süpo glad koldik legon oki sui ladet.
+[тэ тэмп ин дёт носи гивон. э сюпо глад колдик лэгон оки суи ладэт]
+
+04. Lärnobs ad valörön, kü lüvobs — kü po yaned lit eka perikon. Vätobs vagones ägolöles, steifölö ad begön gesagi de tim bäldik.
+[лэрнобс ад валёрён, кю лювобс — кю по юнэд лит эка пэрикон. вятобс вагонэс эголёлэс, стайфёлё ад бэгён гэсаги дэ тим бэлдик]
+
+05. Lärnobs ad löfön, kü koldikon — kü in nams dabinon sabük, no stal. O, if äsevobsöv büo, lio odolon in lan dol kleilik at.
+[лэрнобс ад лёфён, кю колдикон — кю ин намс дабинон сабюк, но стал. о, иф эсэвобсёв бюо, лио одолон ин лан дол клайлик ат]
+
+06. No äsagob, no äbradob, no äplöpob tü tim — atos binon tonod laidülik. Äkipedob vali pro poso, no ämaifükob ladeti pro votans.
+[но эсагоб, но эбрадоб, но эплёпоб тю тим — атос бинон тонод лаидюлик. экипэдоб вали про посо, но эмаифюкоб ладэти про вотанс]
+
+07. Komipobs ta jafod, filikobs mo in dins smalik vagik, e no logobs, lio frost seidon oki sui blöts obsik.
+[комипобс та яфод, филикобс мо ин динс смалик вагик, э но логобс, лио фрост сайдон оки суи блётс обсик]
+
+08. Ab läb no binon in lit fenäta seledöpa, no in papüramon, ab in verat seilik flenas obas, in ladets warmik omsik vü storms.
+[аб лэб но бинон ин лит фэнэта сэлэдёпа, но ин папюрамон, аб ин вэрат сайлик флэнас обас, ин ладэтс вармик омсик вю штормс]
+
+09. Ab valörobs te utosi, keli ya no kanobs gegivön — fovölö vegi obsiki luniki e suvo nesiniki.
+[аб валёробс тэ утоси, кэли юа но канобс гэгивён — фовёлё вэги обсики луники э суво нэсиники]
+
+10. Vokolöd bäldanis, bradolöd omis — du ladetabatäd nog dabinon. Misanks mogolonsös — adelo plegob demü atos.
+[воколёд бэлданис, брадолёд омис — ду ладэтабатяд ног дабинон. мисанкс моголонсёс — адэло плэгоб дэмю атос]
+
+11. Bi fino fin kanitas valikas binon bal: blibobs in memod, äso tonäd utanas, kelis eglötoy, seadobs.
+[би фино фин канитас валикас бинон бал: блибобс ин мэмод, эсо тоняд утанас, кэлис эглётою, сэадобс]
+
+12. Kipedobsös utosi, kel dabinon — du binobs is, jü lan efliton fagio.
+[кипэдобсёс утоси, кэл дабинон — ду бинобс ис, ю лан эфлитон фагио]
+
+───
+
+СЛОВАРЬ МАЛЫША (vo · 12 слов + фраза):
+время → temp [тэмп]
+туман → nubül (облачко) [нубюль]
+воспоминание → memod [мэмод]
+весна → säl [сэль]
+свет → lit [лит]
+поезд → vagon [вагон]
+ответ → gesag [гэсаг]
+сердце → ladet [ладэт]
+лёд → glad [глад]
+печаль → dol [дол]
+иней → frost [фрост]
+пульс → ladetabatäd (биение сердца) [ладэтабатяд]
+когда теряем? → kü lüvobs? [кю лювобс?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 03 / 20: 03_ia_Интерлингва.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Интерлингва · КОД: ia · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 03 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+
+01. Un nove vespere in le cafeteria. Un bruma vacue dissolve le casas. Io vaga per le quartieros, ubi le memorias face perder le mente, ubi, in le primavera calide, un hiberno coperi le anima.
+[ун новэ вэспэрэ ин ле кафэтэриа. ун брума вакуэ диссольвэ ле касас. ио вага пэр ле куартьерос, уби ле мэморьяс фаче пэрдэр ле мэнтэ, уби, ин ле примавэра калидэ, ун хибэрно копэри ле анима]
+
+02. Ubi le vita volava como un flecha preter le datas e preter nos. Nos accumulava billettes, oblidante proque nos vive, — e il pareva: sempre avante ancora sona le «do».
+[уби ле вита волава комо ун флеча прэтэр ле датас э прэтэр нос. нос аккумулава биллеттэс, облидантэ прокэ нос вивэ, — э иль парэва: сэмпрэ авантэ анкора сона ле «до»]
+
+03. Solmente le tempore, prestate, non da nihil. E de subito un glacie frigide se depone super le corde.
+[сольмэнтэ ле тэмпорэ, прэстатэ, нон да нийль. э дэ субито ун глачьэ фригидэ сэ дэпонэ супер ле кордэ]
+
+04. Nos apprende a appreciar quando nos perde, — quando detra le porta se extingue le lumine de alcuno. Nos face signos al trainos partite, tentante implorar del passato un responsa.
+[нос апрэндэ а аппречиар куандо нос пэрдэ, — куандо дэтра ле порта сэ экстингуэ ле луминэ де алькуно. нос фаче синьос аль трайнос партитэ, тэнтантэ имплорар дэль пассато ун рэспонса]
+
+05. Nos apprende a amar quando toto se gela, — quando in le palmas il ha cinere, e non aciero. Oh, si on poteva saper in avante como dolera in le anima iste tristessa transparente.
+[нос апрэндэ а амар куандо тотто сэ жэла, — куандо ин ле пальмас иль ха чинере, э нон ачьэро. о, си он потэва сапэр ин авантэ комо долэра ин ле анима истэ тристэсса транспарэнтэ]
+
+06. Io non diceva, non embrassava, non habeva tempore — isto es le motivo eternal. Io reservava toto pro plus tarde, non aperiva le corde pro le alteres.
+[ио нон дичэва, нон эмбрассава, нон хабэва тэмпорэ — исто эс ле мотиво этэраль. ио рэсэрвава тотто про плюс тардэ, нон апэрива ле кордэ про ле альтэрэс]
+
+07. Nos combatte contra le umbra, nos arde in le bagatellas vacue, e on non vide como le gelo se posa super nostre spatulas.
+[нос комбаттэ контра ле умбра, нос ардэ ин ле багатэллас вакуэ, э он нон видэ комо ле жэло сэ поса супер нострэ спатулас]
+
+08. Ma le felicitate non es in le splendor del vitrina, non in un fascio de billettes, ma in le calme veritate del caros, in lor calor inter le tempestas.
+[ма ле феличитатэ нон эс ин ле сплендор дэль витрина, нон ин ун фасчо де биллеттэс, ма ин ле кальмэ веритатэ дэль карос, ин лор калор интер ле тэмпэстас]
+
+09. Ma nos apprecia solmente lo que jam es impossibile a retornar, continuante nostre longe e sovente insensate via.
+[ма нос аппречиа сольмэнтэ ло кэ жа эс импоссибилэ а рэторнар, континуантэ нострэ лонжэ э совэнтэ инсэнсатэ виа]
+
+10. Telephona al vetulos, embrassa durante que le pulso bate. Que le rancores passa — pro isto io prega hodie.
+[тэлэфона аль вэтулос, эмбрасса дурантэ кэ ле пульсо батэ. кэ ле ранкорэс пасса — про исто ио прэга ходиэ]
+
+11. Proque le final de tote le cantos al fin es le mesme: nos resta in le memoria, como le echo del oblidates, nos siede.
+[прокэ ле финал де тоттэ ле кантос аль фин эс ле мэсмэ: нос рэста ин ле мэморья, комо ле эко дэль облидатэс, нос сьедэ]
+
+12. On deberea preservar lo que es, — durante que nos es ci, durante que le anima non ha volate lontan.
+[он дэбэрэа прэсэрвар ло кэ эс, — дурантэ кэ нос эс чи, дурантэ кэ ле анима нон ха волатэ лонтан]
+
+───
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → tempore [тэмпорэ]
+туман → bruma [брума]
+воспоминание → memoria [мэморья]
+весна → primavera [примавэра]
+свет → lumine [луминэ]
+поезд → traino [трайно]
+ответ → responsa [рэспонса]
+сердце → corde [кордэ]
+лёд → glacie [глачье]
+печаль → tristessa [тристэсса]
+иней → gelo [жэло]
+пульс → pulso [пульсо]
+ФРАЗА: «когда теряем?» → «Quando nos perde?» [куандо нос пэрдэ]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 04 / 20: 04_io_Идо.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Идо · КОД: io · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 04 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: идо (де Бофрон, 1907): существительные -o/-i, прилагательные -a, наречия -e; глаголы -as/-is/-os/-ar/-ez; c = «ц» (glacio → глацио); кофейня = kafeerio (от kafeo); ответ = respondo; эхо = eco.
+
+01. Nova vespero en la kafeerio. Vaka brumo dissolvas domi. Me vagas tra la kvarteri ube memori frenezigas me, ube dum varma printempo la vinto kovras l'anmo.
+[нова вэспэро эн ла кафээрио. вака брумо диссолвас доми. мэ вагас тра ла квартери убэ мэмори фрэнэзигас мэ, убэ дум варма принтэмпо ла винто коврас ланмо]
+
+02. Ube vivo flugis quaza sago preter dati, preter ni. Ni kumulis bilieti, obliviante pro quo ni vivas, — e semblis ke sempre avane ankore sonas la noto «do».
+[убэ биво флугис куаза саго прэтэр дати, прэтэр ни. ни кумулис билиэти, обливиантэ про кво ни вивас, — э сэмблис кэ сэмплэ аванэ анкорэ сонас ла ното «до»]
+
+03. Nur tempo pruntita donas nulo. E subite sur la kordio kuvas kolda glacio.
+[нур тэмпо прунтита донас нуло. э субитэ сур ла кордио кувас колда глацио]
+
+04. Ni lernas estimar kande ni perdas, — kande exter ula pordo ula lumo extingeskas. Ni adias per la manuo la forinta treni, implorante ula respondo de la pasinto.
+[ни лэрнас эстимар кандэ ни пэрдас, — кандэ экстер ула пордо ула лумо экстингескас. ни адиас пэр ла мануо ла форинта трэни, имплорантэ ула рэспондо дэ ла пасинто]
+
+05. Ni lernas amar kande koldeskas, — kande en la palmi esas cindro, ne stalo. Ho, se ni savus plu frue, quala ca diafana tristeso doloros en l'anmo.
+[ни лэрнас амар кандэ колдескас, — кандэ эн ла палми эсас циндро, нэ стало. о, сэ ни савус плу фруэ, квала ца диафана тристэсо долорос эн ланмо]
+
+06. Me ne dicis, ne brakizis, ne sucesis — to esas eterna motivo. Me gardis omno por pose, kordio por altri me ne apertis.
+[мэ нэ дицис, нэ бракизис, нэ суцэсис — то эсас этэрна мотиво. мэ гардис омно пор позэ, кордио пор алтри мэ нэ апэртис]
+
+07. Ni kombatas kontre la ombro, ni konsumesas en vaka bagateli, e on ne vidas quale frosto sidas sur nia shultri.
+[ни комбатас контрэ ла омбро, ни консумесас эн вака багатэли, э он нэ видас квалэ фростьо сидас сур ния шультри]
+
+08. Nur feliceso ne esas en la brilo di vitrino, ne en pako di bilieti, ma en la trankvila verajo di nia kari, en lia varmeso inter la tempesti.
+[нур фэлицэсо нэ эсас эн ла брило ди витрино, нэ эн пако ди билиэти, ма эн ла транквила верайо ди ния кари, эн лиа вармэсо интер ла тэмпэсти]
+
+09. Ma ni estimas nur to quo ja ne plu povas retrovenar, durante nia longa e ofte sensenca voyajo.
+[ма ни эстимас нур то кво йа нэ плу повас рэтровэнар, дурантэ ния лонга э офтэ сэнсэнца вояйо]
+
+10. Telefonez a la oldi, brakizez li, dum ke la pulso batas. Ke l'ofensi pasos — me prias pro to hodie.
+[тэлэфонэз а ла олди, бракизэз ли, дум кэ ла пульсо батас. кэ лофэнси пасос — мэ приас про то ходиэ]
+
+11. Pro ke la fino di omna kansoni fine esas un: ni restas en la memoro, kom eco di obliviti ni sidas.
+[про кэ ла фино ди омна кансони финэ эсас ун: ни рэстас эн ла мэморо, ком эцо ди обливити ни сидас]
+
+12. Ni devus protektar to quo esas, — dum ni esas hike, ante ke l'anmo flugos fore.
+[ни дэвус протэктар то кво эсас, — дум ни эсас хикэ, антэ кэ ланмо флугос форэ]
+
+───
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → tempo [тэмпо]
+туман → brumo [брумо]
+воспоминание → memoro [мэморо]
+весна → printempo [принтэмпо]
+свет → lumo [лумо]
+поезд → treno [трэно]
+ответ → respondo [рэспондо]
+сердце → kordio [кордио]
+лёд → glacio [глацио]
+печаль → tristeso [тристэсо]
+иней → frosto [фростьо]
+пульс → pulso [пульсо]
+ФРАЗА: «когда теряем?» → «Kande ni perdas?» [кандэ ни пэрдас?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 05 / 20: 05_nov_Новиаль.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Новиаль · КОД: nov · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 05 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: Отто Есперсен (1928/1930): презенс -a, прошедшее -ed, будущее -en, перфект ha + -t; «когда» — kand, «весна» — primavere, «свет» — lume (по опоре песни 1); терять — perda.
+
+01. Novi vespre in kafe-dom. Vakui neblo disolva domes. Me vagra per kvartales, u memores fa me foli, u in varmi primavere vintre kovra lu anime.
+[нови вэспрэ ин кафэ-дом. вакуи нэбло дисолва домэс. ме вагра пэр кварталэс, у мэморэс фа мэ фоли, у ин варми примавэрэ винтрэ ковра лу анимэ]
+
+02. U vive voled kom flese preter dates, preter nus. Nus kolekted banknotes, obliviante pro quo nus viva — e omno semblad: sempre avan ankore sona «do».
+[у вивэ волед ком флэсэ прэтэр датэс, прэтэр нус. нус колэктэд банкнотэс, обливиантэ про кво нус вива — э омно сэмблад: сэмпрэ аван анкорэ сона «до»]
+
+03. Sol tempe da nulo kom lone. E subite koldi glacie poza se sur nia korde.
+[сол тэмпэ да нуло ком лонэ. э субитэ колди гласиэ поза сэ сур ниа кордэ]
+
+04. Nus ha lernat valuta kand nus perda — kand lume de kelki extingua trans li porte. Nus salua trenes kel ha pasat, probant extraka un responde fro lo pasate.
+[нус ха лэрнат валута канд нус пэрда — канд лумэ дэ келки экстингуа транс ли портэ. нус салуа трэнэс кель ха пасат, пробант экстрака ун рэспондэ фро ло пасатэ]
+
+05. Nus ha lernat ama kand omno fria — kand in palmas es cinere, no stale. O, se me poted sabe ante, qualim ti transparanti tristeso doloren in lu anime!
+[нус ха лэрнат ама канд омно фриа — канд ин палмас эс цинэрэ, но сталэ. о, сэ мэ потэд сабэ антэ, квалим ти транспаранти тристэзо долорэн ин лу анимэ]
+
+06. Me no dikted, no brakised, no atinted in tempe — to es eterni motivo. Me gardad omno por plu tarde, no aperted korde por altres.
+[мэ но диктэд, но бракизэд, но атинтэд ин тэмпэ — то эс этерни мотиво. мэ гардад омно пор плу тардэ, но апэртэд кордэ пор альтрэс]
+
+07. Nus kombata kontre umbre, nus arda in vakui bagateles, e on no vida kome frosto sida sur nia epaules.
+[нус комбата контрэ умбрэ, нус арда ин вакуи багатэлэс, э он но вида комэ фросто сида сур ниа эполэс]
+
+08. Sol felisite no es in brilo de vitrine, no in pakete de banknotes — ma in kalmi vere de los kel nus ama, in sen varmeso inter tempestes.
+[сол фэлизитэ но эс ин брило де витринэ, но ин пакэтэ де банкнотэс — ма ин кальми вэрэ дэ лос кель нус ама, ин сэн вармэсо интер тэмпэстэс]
+
+09. Ma nus valuta sol lo kel nus ja no pote returna, continuant nia longi e ofte absurdi voyaje.
+[ма нус валута сол ло кель нус йа но потэ рэтурна, континуант ниа лонги э офтэ абсурди вояжэ]
+
+10. Telefona a nia oldes, brakisa los, dum pulso bata. Lasa ofenses pasa — por to me prega in ti die.
+[тэлэфона а ниа олдэс, бракиза лос, дум пульсо бата. ласа офэнсэс паса — пор то мэ прэга ин ти диэ]
+
+11. Pro ke li fine de omni kansones, in fine, es unu: nus resta in memore, kom eko de omno kel es obliviat — e sida.
+[про кэ ли финэ дэ омни кансонэс, ин финэ, эс уну: нус рэста ин мэморэ, ком эко дэ омно кель эс обливиат — э сида]
+
+12. Nus deva garda omno kel es — dum nus es here, ante ke lu anime flia in distantie.
+[нус дэва гарда омно кель эс — дум нус эс хэрэ, антэ кэ лу анимэ флиа ин дистантиэ]
+
+───
+
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → tempe [тэмпэ]
+туман → neblo [нэбло]
+воспоминание → memore [мэморэ]
+весна → primavere [примавэрэ]
+свет → lume [лумэ]
+поезд → tren [трэн]
+ответ → responde [рэспондэ]
+сердце → korde [кордэ]
+лёд → glacie [гласиэ]
+печаль → tristeso [тристэзо]
+иней → frosto [фросто]
+пульс → pulso [пульсо]
+ФРАЗА: «когда теряем?» → «Kand nus perda?» [канд нус пэрда?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 06 / 20: 06_jbo_Ложбан.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Ложбан · КОД: jbo · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 06 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: только аттестованные gismu (gimste/CLL); tanru/veljvo: пепел — lo se jelca («пережжённое»; kerfa в gimste = мех, не пепел), тень — manku tarmi, витрина — vecnu canpa, обнять — xance jgari, буря — brife joi carvi, прозрачный — klina, сегодня — cabdei; лексика сверена с опорой песни 1 (где настоящее, jbo, группа 6).
+
+01. .i lo cabna nicte cu cnino bu'u lo ckafi zdani .i lo kunti vapsi cu gasnu lo nu lo zdani cu tolviska .i mi cadzu lo tcadu pagbu poi lo se morji cu gasnu lo nu mi fenki .i bu'u lo glare vensa ku lo lenku dunra cu snipa lo menli
+[.и ло цабна ництэ цу цнино бу'у ло цкафи здани .и ло кунти вапси цу гасну ло ну ло здани цу толвиска .и ми цадзу ло ткаду пагбу пои ло сэ морджи цу гасну ло ну ми фэнки .и бу'у ло глярэ вэнса ку ло лэнку дунра цу снипа ло мэнли]
+
+02. .i lo jmive pu sutra vofli .i lo tcika joi mi'a cu sepli .i mi'a jmaji lo jdini gi'e na morji lo du'u mu'i ma mi jmive .i mi'a pu jinvi lo du'u lo krasi be lo zgike cu zvati lo ba temci
+[.и ло дживэ пу сутра вофли .и ло цика джой ми'а цу сэпли .и ми'а джмажи ло дждини гихэ на морджи ло ду'у му'и ма ми дживэ .и ми'а пу джинви ло ду'у ло краси бэ ло згикэ цу звати ло ба тэмци]
+
+03. .i lo temci cu dunda no da .i pa re'u lo lenku bisli cu snipa lo risna
+[.и ло тэмци цу дунда но да .и па рэ'у ло лэнку бисли цу снипа ло рисна]
+
+04. .i mi'a cilre lo ka se vamji ca lo nu mi'a cirko — ca lo nu lo gusni be lo prenu cu claxu bu'u lo vorme .i mi'a xance slilu lo pu cliva trene gi'e troci lo nu lo purci cu danfu
+[.и ми'а цилрэ ло ка сэ вамджи ца ло ну ми'а цирко — ца ло ну ло гусни бэ ло прэну цу клашу бу'у ло вормэ .и ми'а хансэ слилу ло пу клива трэнэ гихэ троци ло ну ло пурци цу данфу]
+
+05. .i mi'a cilre lo ka prami ca lo nu co'u glare — ca lo nu lo xance cu ganse lo se jelca gi'e na'e jinme .i ganai mi'a pu djuno pu lo fasnu — lo klina badri cu ba bilma lo menli
+[.и ми'а цилрэ ло ка прами ца ло ну цо'у глярэ — ца ло ну ло хансэ цу гансэ ло сэ джэлца гихэ на'э джинмэ .и ганай ми'а пу джуно пу ло фасну — ло клина бадри цу ба билма ло мэнли]
+
+06. .i mi'a na cusku fi da .i mi'a na xance jgari .i mi'a na ka'e snada ca lo tcika .i ti vitno fasnu .i mi'a pu punji ro da lo ba temci gi'e na kalri lo risna pe lo drata
+[.и ми'а на цуску фи да .и ми'а на хансэ джгари .и ми'а на ка'э снада ца ло цика .и ти витно фасну .и ми'а пу пунджи ро да ло ба тэмци гихэ на калри ло рисна пэ ло драта]
+
+07. .i mi'a damba lo manku tarmi gi'e jelca ca lo kunti cmalu dacti gi'e na viska lo nu lo lenku bisli cu snipa mi'a
+[.и ми'а дамба ло манку тарми гихэ джэлца ца ло кунти цмалу дакти гихэ на виска ло ну ло лэнку бисли цу снипа ми'а]
+
+08. .i ku'i lo ka gleki na zvati lo carmi gusni pe lo vecnu canpa .i na zvati lo jdini .i zvati lo smaji jetnu pe lo lanzu .e lo glare pe lo lanzu ca lo brife joi carvi
+[.и ку'и ло ка глэки на звати ло царми гусни пэ ло вэцну цанпа .и на звати ло дждини .и звати ло смажи джэтну пэ ло ланзу .э ло глярэ пэ ло ланзу ца ло брифэ джой царви]
+
+09. .i ku'i mi'a viska po'o lo vamji be lo dacti poi na ka'e xruti .i mi'a ca'o klama lo clani klaji poi so'i roi claxu smuni
+[.и ку'и ми'а виска по'о ло вамджи бэ ло дакти пои на ка'э хрути .и ми'а ца'о клама ло клани клахи пои со'и рой клашу смуни]
+
+10. .i ko tavla lo dzena .i ko xance jgari ca lo nu lo risna cu darxi .i curmi lo nu lo fengu cinmo cu cliva .i mi cabdei djica ti
+[.и ко тавла ло дзэна .и ко хансэ джгари ца ло ну ло рисна цу дархи .и цурми ло ну ло фэнгу цинмо цу клива .и ми цабдей джица ти]
+
+11. .i ki'u bo lo fanmo be ro zgike cu du pa da .i mi'a stali bu'u lo se morji gi'e tirna lo cliva poi na se morji
+[.и ки'у бо ло фанмо бэ ро згикэ цу ду па да .и ми'а стали бу'у ло сэ морджи гихэ тирна ло клива пои на сэ морджи]
+
+12. .i e'o mi'a bandu lo ca zvati .i ca lo nu mi'a jmive vi .i pu lo nu lo menli cu vofli klama lo sepli
+[.и э'о ми'а банду ло ца звати .и ца ло ну ми'а дживэ ви .и пу ло ну ло мэнли цу вофли клама ло сэпли]
+
+───
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → temci [тэмци]
+туман → vapsi (пар/испарение) [вапси]
+воспоминание → morji (помнить) [морджи]
+весна → vensa [вэнса]
+свет → gusni [гусни]
+поезд → trene [трэнэ]
+ответ → danfu [данфу]
+сердце → risna [рисна]
+лёд → bisli [бисли]
+печаль → badri (грусть) [бадри]
+иней → lenku bisli (холодный лёд) [лэнку бисли]
+пульс → risna darxi (сердце бьёт) [рисна дархи]
+ФРАЗА: «когда теряем?» → ca ma mi cirko? [ца ма ми цирко?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 07 / 20: 07_ie_Интерлингве.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Интерлингве · КОД: ie · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 07 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: интерлингве / окциденталь (Эдгар де Валль, 1922): существительные без окончаний, множественное -s/-es, прошедшее и причастие -t, будущее — va + инфинитив (грамматика по опоре песни 1); весна = vere, иней = givre, песня = canto, эхо = echo.
+
+01. Nov vesper in li café. Vacue brume dissolve li domes. Yo vaga tra li quartales, u memories fa nos mat, u in calid vere hiverne covre li anime.
+[нов веспере ин ли кафе. вакуе бруме диссольве ли домес. йо вага тра ли кварталес, у мемориес фа нос мат, у ин калид вере хиверне ковре ли аниме]
+
+02. U li vive passat quam un strale preter li dates, preter nos. Noi amassat paperes, obliviant pro quo noi vive, — e it semblat: sempre devant ancor sona «do».
+[у ли виве пассат куам ун страле претер ли датес, претер нос. ной амассат паперес, обливиант про кво ной виве, — э ит семблат: семпре девант анкор сона «до»]
+
+03. Sol témpor in debite dona nil. E strax sur li corde se pone frigid glacie.
+[соль темпор ин дебите дона ниль. э стракс сур ли корде се поне фригид глацие]
+
+04. Noi aprende apreciar quande noi perde — quande li luce de quelcun extinte detra li porte. Noi saluta li trenes ja partit, probant implorar un responde del passe.
+[ной апренде апрециар кванде ной перде — кванде луце де келькун экстинте детра ли порте. ной салюта ли тренес жа партит, пробант имплорар ун респонде дель пассе]
+
+05. Noi aprende amar quande it gela — quande in nor palmas es cinere, ne aciere. O, si noi savet to ante, qualmen ci transparent tristitie va doler in nor anime!
+[ной апренде амар кванде ит джела — кванде ин нор пальмас эс цинере, не ациере. о, си ной савет то анте, квалмен чи транспарент триститие ва долер ин нор аниме!]
+
+06. Ne dit, ne embrassat, ne havet témpor — to es li etern motif. Yo guardat omnicos por plu tard, ne apertat li corde por altris.
+[не дит, не эмбрассат, не хавет темпор — то эс ли этерн мотив. йо гуардат омникос пор плу тард, не апертат ли корде пор альтрис]
+
+07. Noi combatte contra li ombre, noi arda in vacue petit coses, e on ne vide qualmen givre se depone sur nor spatures.
+[ной комбатте контра ли омбре, ной арда ин вакуе петит косес, э он не виде квалмен дживре се депоне сур нор спатурес]
+
+08. Támen felicitá ne sta in un vitrine brillant, ne in un pacchet de billetes, ma in li quiet veritá de nor parentes, in lor calore inter li tempestes.
+[тамен фелицита не ста ин ун витрине бриллант, не ин ун паччет де биллетес, ма ин ли квиет верита де нор парентес, ин лор калоре интер ли темпестес]
+
+09. Ma noi aprecia sol to que jam es impossibil retornar, continuant nor long viage sovente sin sens.
+[ма ной апрециа соль то ке жам эс импоссибиль реторнар, континуант нор лонг виадже совенте син сенс]
+
+10. Telefona al oldes, embrassa, dum li pulso batte. Que li ofendes passa — yo prega por to hodie.
+[телефона аль ольдес, эмбрасса, дум ли пульсо батте. ке ли офендес пасса — йо прега пор то ходие]
+
+11. Pro que li final de omni cantos al fine es un sol: noi resta in memorie quam echo del obliviats, noi sede.
+[про ке ли финал де омни кантос аль фине эс ун соль: ной реста ин меморие куам эчо дель обливиатс, ной седе]
+
+12. Si noi vell guardar to que es — dum noi es ci, dum li anime ne ha volat lontan.
+[си ной велл гуардар то ке эс — дум ной эс чи, дум ли аниме не ха волат лонтан]
+
+───
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → témpor [темпор]
+туман → brume [бруме]
+воспоминание → memorie [меморие]
+весна → vere [вере]
+свет → luce [луце]
+поезд → tren [трен]
+ответ → responde [респонде]
+сердце → corde [корде]
+лёд → glacie [гляцие]
+печаль → tristitie [триститие]
+иней → givre [дживре]
+пульс → pulso [пульсо]
+ФРАЗА: «когда теряем?» → «Quande noi perde?» [кванде ной перде?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 08 / 20: 08_lfn_Лингва_франка_нова.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Лингва франка нова · КОД: lfn · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 08 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: грамматика Elefen (Джордж Буре, 1998); лёд — aqua dur (твёрдая вода, описательно), иней — aqua dur de matina (утренний лёд), обнять — teni forte en bracos (сильно держать в руках).
+
+01. Un sera nova en la cafe. La brume vacua dissolve la casas. Me vaga tra la cuartales, do la memorias fa me fol, do en la primavera calda la inverno covre la anima.
+[ун сэра нова эн ла кафэ. ла брюме вакуа диссолвэ ла касас. мэ вага тра ла куарталес, до ла мемориас фа мэ фол, до эн ла примавэра калда ла инвэрно коврэ ла анима]
+
+02. Do la vida ia vola como un flexa, pasante la datas, pasante nos. Nos ia acumula paperetos, obliante per cual nos vive — e lo ia pare: sempre a ante, la nota musical «do» ancora sona.
+[до ла выда иа воля комо ун флеша, пасантэ ла датас, пасантэ нос. нос иа акумула паперэтос, облиантэ пер квал нос вибэ — э ло иа парэ: сэмплэ а антэ, ла нота музикаль «до» анкора сона]
+
+03. La tempo emprestada no dona nada. E de subita, sur la cor desende un aqua dur e fria.
+[ла тэмпо эмпрэстада но дона нада. э дэ субита, сур ла кор дэсендэ ун аква дур э фриа]
+
+04. Nos aprende valua cuando nos perde — cuando, pos la porta, la lus de algun estui. Nos saluta con la mano la trenes ci ia parti, pregante a la pasada per un responde.
+[нос апрэндэ валуа куандо нос пэрдэ — куандо, пос ла порта, ла лус дэ алгун эстуй. нос салута кон ла мано ла тренес си иа парти, прэгантэ а ла пасада пер ун рэспондэ]
+
+05. Nos aprende ama cuando tota deveni fria — cuando en la palmas on ave sende, no metal dur. O, si nos ta sabe en avance, como esta tristia trasparente va dole en la anima.
+[нос апрэндэ ама куандо тота дэвэни фриа — куандо эн ла палмас он авэ сэндэ, но мэтал дур. о, си нос та сабэ эн аванс, комо эста тристия траспарэнтэ ва долэ эн ла анима]
+
+06. No ia dise, no ia teni forte en sua bracos, no ia ave tempo — esta es un motif eterna. On ia conserva tota per pos, on no ia abri la cor a otras.
+[но иа дизэ, но иа тэни фортэ эн суа бракос, но иа авэ тэмпо — эста эс ун мотиф этэрна. он иа консэрва тота пер пос, он но иа абри ла кор а отрас]
+
+07. Nos combate la ombra, nos arde en cosetas vacua, e on no vide como la aqua dur de matina posa sur nosa spalas.
+[нос комбатэ ла омбра, нос ардэ эн козэтас вакуа, э он но видэ комо ла аква дур дэ матина поза сур носа спалас]
+
+08. Ma la felisia no es en la brilia de la vitrina, no en un paceta de biletas, ma en la cosa vera e silente de la personas cara, en sua calor entre la tempestas.
+[ма ла фэлиция но эс эн ла брилия дэ ла витрина, но эн ун пасэта дэ билетас, ма эн ла коза вэра э сидэнтэ дэ ла персонас кара, эн суа калор энтрэ ла тэмпэстас]
+
+09. Ma nos valua sola lo ci on no pote plu returna, continuante nosa viaje longa e frecuente sin sensa.
+[ма нос валуа сола ло си он но потэ плу рэтурна, континуантэ носа виажэ лонга э фрэкуэнтэ син сэнса]
+
+10. Telefona a la personas vea, teni los forte en tua bracos, en cuando la pulso bate. Ta ce la ofendes pasa — me prega per esta oji.
+[тэлефона а ла персонас вэа, тэни лос фортэ эн туа бракос, эн куандо ла пулсо батэ. та сэ ла офэндэс паса — мэ прэга пер эста оджи]
+
+11. Car la fini de tota cantas es, a la fini, la mesma: nos resta en la memoria, como un eco de los ci es obliada, sentante.
+[кар ла фини дэ тота кантас эс, а ла фини, ла мэсма: нос рэста эн ла мемория, комо ун эко дэ лос си эс облиада, сэнтантэ]
+
+12. Nos ta proteje lo ci es — en cuando nos es asi, en cuando la anima no ia vola via a lonta.
+[нос та протэжэ ло си эс — эн куандо нос эс аси, эн куандо ла анима но иа воля виа а лонта]
+
+───
+
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → tempo [тэмпо]
+туман → brume [брюме]
+воспоминание → memoria [мемория]
+весна → primavera [примавэра]
+свет → lus [лус]
+поезд → tren [трен]
+ответ → responde [рэспондэ]
+сердце → cor [кор]
+лёд → aqua dur [аква дур]
+печаль → tristia [тристия]
+иней → aqua dur de matina (утренний лёд) [аква дур дэ матина]
+пульс → pulso [пулсо]
+ФРАЗА: «когда теряем?» → Cuando nos perde? [куандо нос пэрдэ?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 09 / 20: 09_avk_Котава.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Котава · КОД: avk · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 09 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: опора — файл песни 1 «Где настоящее» (avk, группа 7): грамматика и лексика аттестованы. Корни kotava.org из опоры: miel, awalt, tanoy, min, me, tir/tid, tiyir, koe, va, kan, ta, ke, bat/ban, lize, anton, ota, teza, mukot, vala, bera, eama, barda, azil, koyar, betar, gruper, renar, vestar, lavar, siki, kitapek, ava, edje, jin, rotir, boza, blira, kenta, xo, coba, remo; добавлены из словаря kotava.org: ugal (время), dim- (обратно). Грамматика по опоре: SVO, прямое дополнение через va, определяющее слово следует за определяемым (ke-генитив), времена — настоящее нулевое (tir/tid), прошедшее tiyir/tiyid; конечных глаголов, кроме tir/tid/tiyir/rotir, нет — смысл через именования: -ara (действие), -sa/-ena (причастие), -sik (деятель), -uca (состояние), me (не) перед сказуемым. Нет в опоре и словаре — описательно: кофейня — xo ke vala ke eama (место воды растения), туман — boza ke vala (пузырь воды), дома — xo (места), бумажки/купюры — ota (числа), воспоминание — coba ke edje (вещь того времени), поезд — koyasa azil (идущее железо), ответ — dimafa ava (обратное слово), сердце и душа — koef xo (внутреннее место), лёд — azilafa vala (железная вода), печаль — lavuca (состояние плача), иней — azilafa eama (железное растение), пульс — blira ke koef xo (жизнь сердца), старики — lo koyasik (много-прошедшие), родные — renasik (любящие), терять — coba me tid (вещей нет), пепел — taw (пыль), зима — me berafa barda (не-тёплое время года), финал — mukot (цель). Часть корней дана описательно — точный аттестованный эквивалент нами не гарантируется.
+
+01. Reaf miel koe xo ke vala ke eama. Boza ke vala tir betasa va kot xo. Jin tir koyasik koe lo kenta, lize coba ke edje tid me grupena, lize berafa barda me tid — koef xo tid azilaf.
+[реаф миэль куэ ксо кэ вала кэ эама. боза кэ вала тир бэтаса ва кот ксо. джин тир койасик куэ ло кэнта, лизэ цоба кэ эджэ тид мэ груупэна, лизэ бэрафа барда мэ тид — куэф ксо тид азилаф]
+
+02. Koyara ke blira tiyir — min tid grupesik va ota, me grupesik va mukot ke blira. A rotir: blira tid lize, me edje.
+[койара кэ блира тийир — мин тид груупэсик ва ота, мэ груупэсик ва мукот кэ блира. а ротир: блира тид лизэ, мэ эджэ]
+
+03. Anton ugal tir; coba me tid ta min. A re, koef xo tid azilafa vala.
+[антон угал тир; цоба мэ тид та мин. а рэ, куэф ксо тид азилафа вала]
+
+04. Min tid grupesik: kotcoba tid zolonaf, edje coba me tid — edje tanoy awalt me tir. Kan vestara va dimafa ava ke edje.
+[мин тид груупэсик: котцоба тид золонаф, эджэ цоба мэ тид — эджэ таной авальт мэ тир. кан вэстара ва димафа ава кэ эджэ]
+
+05. Min tid renasik, edje kotcoba tid azilaf — edje koe min taw tir, me azil. A lavuca tid lize, me grupena edje.
+[мин тид рэнасик, эджэ котцоба тид азилаф — эджэ куэ мин тау тир, мэ азил. а лавуца тид лизэ, мэ груупэна эджэ]
+
+06. Ava me tiyid, renara me tiyid, ugal me tiyid — batcoba tid teza ke blira. Kotcoba tid ta edje; koef xo tid me grupena.
+[ава мэ тийид, ренара мэ тийид, угал мэ тийид — батцоба тид тэза кэ блира. котцоба тид та эджэ; куэф ксо тид мэ груупэна]
+
+07. Min tid vestasik va coba me tir; lavara tid koe boza. A azilafa eama tid, me grupena.
+[мин тид вэстасик ва цоба мэ тир; лавара тид куэ боза. а азилафа эама тид, мэ груупэна]
+
+08. Renuca me tid koe awalt ke siki, me tid koe ota — renuca tid koe berafa teza ke renasik, edje lavara.
+[рэнуца мэ тид куэ авальт кэ сики, мэ тид куэ ота — рэнуца тид куэ бэрафа тэза кэ рэнасик, эджэ лавара]
+
+09. A min tid grupesik va coba me rotir betena — koyara tid lo, mukot tid me grupena.
+[а мин тид груупэсик ва цоба мэ ротир бэтэна — койара тид ло, мукот тид мэ груупэна]
+
+10. Bat ava ta lo koyasik; renara ta renasik; edje blira ke koef xo tid. Renara me tiyid, re tid me — batcoba tid zolonaf.
+[бат ава та ло койасик; ренара та рэнасик; эджэ блира кэ куэф ксо тид. ренара мэ тийид, рэ тид мэ — батцоба тид золонаф]
+
+11. Mukot ke kot ava tid tanoy: min tid koe coba ke edje — me grupena.
+[мукот кэ кот ава тид таной: мин тид куэ цоба кэ эджэ — мэ груупэна]
+
+12. Kotcoba re tid zolonaf — edje min tid lize, edje koef xo koe remo taw me tir.
+[котцоба рэ тид золонаф — эджэ мин тид лизэ, эджэ куэф ксо куэ рэмо тау мэ тир]
+
+───
+
+СЛОВАРЬ МАЛЫША (avk · 12 слов + фраза):
+время → ugal [угал]
+туман → boza ke vala (пузырь воды; описательно) [боза кэ вала]
+воспоминание → coba ke edje (вещь того времени; описательно) [цоба кэ эджэ]
+весна → berafa barda (тёплое время года; из опоры песни 1) [бэрафа барда]
+свет → awalt (свет дня; описательно) [авальт]
+поезд → koyasa azil (идущее железо; описательно) [койаса азил]
+ответ → dimafa ava (обратное слово; описательно) [димафа ава]
+сердце → koef xo (внутреннее место; описательно) [куэф ксо]
+лёд → azilafa vala (железная вода; описательно) [азилафа вала]
+печаль → lavuca (состояние плача; от lavar + -uca) [лавуца]
+иней → azilafa eama (железное растение; описательно) [азилафа эама]
+пульс → blira ke koef xo (жизнь сердца; описательно) [блира кэ куэф ксо]
+ФРАЗА: «когда теряем?» → Edje coba me tid? [эджэ цоба мэ тид?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 10 / 20: 10_afh_Африхили.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Африхили · КОД: afh · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 10 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: базис — Atobrah, Afrihili (1970): usiku, moja, sisi, wapi, nini, jua; служебное и глагольное — по суахилийской модели, как в опоре песни 1 (ni, na, kwa, bila, si, -na-, -me-, -li-, ha-, -nge-, локатив -ni, множ. ma-). Слова вне аттестованного лексикона Африхили — широко аттестованные суахилийские корни (помета «суах.») или описательные обороты: туман — utu (дымка), воспоминание — kumbukumbu (память, от kumbuka), весна — masika (сезон дождей, как в опоре), свет — mwanga, поезд — gari la moshi (повозка дыма), лёд — barafu, иней — barafu nyepesi (лёгкий лёд), печаль — huzuni, пульс — mapigo (удары, от kupiga — бить). Вопросы — как в опоре (wapi, nini); «когда?» — lini (суах.). Честная помета — там, где слово не входит в аттестованный лексикон Afrihili.
+
+01. Jioni mpya katika mkahawa. Utu mtupu unafuta nyumba. Ninatembea mitaani, kumbukumbu zinachanganya kichwa; katika masika ya joto, msimu wa baridi unashika roho.
+[джиони мпья катика мкахава. уту мтупу унафута нюмба. нинатэмбеа митаани, кумбукумбу зиначанганья кичва; катика масика я джото, мсиму ва бариди унашика рохо]
+
+02. Maisha yalipita kama mshale — yamepishana na tarehe, yamepishana na sisi. Tulikusanya karatasi za pesa, tukisahau kwa nini tunaishi; na ilionekana: mbele, kila wakati, «do» bado inasikika.
+[маиша йалипита кама мшале — йамепишана на тарэхэ, йамепишана на сиси. туликусанья каратаси за песа, тукисахау ква нини тунаиши; на илионэкана: мбеле, кила вакати, «до» бадо инасикика]
+
+03. Wakati peke yake haupi kitu kwa deni. Na ghafla barafu baridi inatua juu ya moyo.
+[вакати пеке яке хаупи киту ква дени. на гхафла барафу бариди инатуа джуу я мойо]
+
+04. Tunajifunza kutunza, kama tunapoteza — kama mwanga wa mtu fulani unazima nyuma ya mlango. Tunatikisa mikono kwa magari ya moshi yaliyopita, tukiomba jibu la zamani.
+[тунаджифунза кутунза, кама тунапотеза — кама мванга ва мту фулани уназима нюма я мланго. тунатикиса миконо ква магари я моши йалийопита, тукиомба джибу ла замани]
+
+05. Tunajifunza kupenda, kama moyo unapoa — mikononi kuna majivu, si chuma. Ole, tungelijua mapema: huzuni hii inayoonekana itauma roho sana.
+[тунаджифунза купенда, кама мойо унапоа — миконони куна мадживу, си чума. оле, тунгелиджуа мапэма: хузуни хии инайоонэкана итаума рохо сана]
+
+06. Hukusema, hukumbatia, hukupata nafasi — hii ni wimbo wa milele. Uliweka yote kwa baadaye, hukufungua moyo kwa wengine.
+[хукусэма, хукумбатия, хукупата нафаси — хии ни вимбо ва миллеле. уливэка йоте ква баадайе, хукуфунгуа мойо ква венгине]
+
+07. Tunapigana na kivuli, tunateketea katika vitu vidogo tupu, na hatuoni kama barafu nyepesi inatua juu ya mabega yetu.
+[тунапигана на кивули, тунатэкэтэа катика виту видого тупу, на хатуони кама барафу ньепеси инатуа джуу я мабега йету]
+
+08. Furaha haipo katika mng'ao wa dirisha la duka, si katika karatasi nyingi za pesa, bali katika ukweli tulivu wa ndugu, katika joto lao katikati ya dhoruba.
+[фураха хаипо катика мнгао ва дириша ла дука, си катика каратаси ньинги за песа, бали катика уквели туливу ва ндугу, катика джото лао катикати я дхоруба]
+
+09. Lakini tunatunza yale tu ambayo hayawezi kurudishwa tena, tukiendelea safari yetu ndefu, mara nyingi bila maana.
+[лаки ни тунатунза йале ту амбайо хайавези курудишва тэна, тукиэндэлеа сафари йету ндэфу, мара ньинги била маана]
+
+10. Piga simu kwa wazee, kumbatia, wakati mapigo ya moyo bado yapo. Majuto yapite — mimi leo ninasali kwa hili.
+[пига симу ква вазээ, кумбатия, вакати мапиго я мойо бадо йапо. маджуто йапитэ — мими лео нинасали ква хили]
+
+11. Kwa sababu mwisho wa nyimbo zote ni mmoja: tunabaki katika kumbukumbu, kama mwangwi wa waliosahauliwa — tunakaa.
+[ква сабабу мвишо ва ньимбо зоте ни ммоджа: тунабаки катика кумбукумбу, кама мвангви ва валиосахаулива — тунакаа]
+
+12. Tungetunza yale yaliyopo — bado tupo hapa, kabla roho haijaenda mbali.
+[тунгетунза йале йалийопо — бадо тупо хапа, кабла рохо хаиджаэнда мбали]
+
+───
+
+СЛОВАРЬ МАЛЫША (12 слов + фраза):
+время → wakati (в опоре: «Sasa ni wakati mpya») [вакати]
+туман → utu (дымка, мгла; суах.) [уту]
+воспоминание → kumbukumbu (память; суах., от kumbuka — помнить) [кумбукумбу]
+весна → masika (сезон дождей; суах., как в опоре) [масика]
+свет → mwanga (суах.) [мванга]
+поезд → gari la moshi (повозка дыма; описательно) [гари ла моши]
+ответ → jibu (в опоре: «Jibu mi») [джибу]
+сердце → moyo (суах.) [мойо]
+лёд → barafu (суах.) [барафу]
+печаль → huzuni (суах.) [хузуни]
+иней → barafu nyepesi (лёгкий лёд; описательно) [барафу ньепеси]
+пульс → mapigo (удары сердца; суах., от kupiga — бить) [мапиго]
+ФРАЗА: «когда теряем?» → Lini tunapoteza? [лини тунапотеза?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 11 / 20: 11_got_Готский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Готский · КОД: got · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 11 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: реконструкция на грамматике Вульфилы (IV в.); кофейня — hus warmis drankis («дом тёплого напитка»), поезд — eisarnafahs («железная повозка»), бумажки — skattans (деньги), витрина — skaja, «до» — liuþ (песня); весна — mela blomis из опоры песни 1; транскрипция: þ→т, hw→хв.
+
+01. 𐌽𐌹𐌿𐌾𐌹𐍃 𐌰𐌽𐌳𐌰𐌽𐌰𐌷𐍄𐍃 𐌹𐌽 𐌷𐌿𐍃𐌰 𐍅𐌰𐍂𐌼𐌹𐍃 𐌳𐍂𐌰𐌽𐌺𐌹𐍃. 𐌼𐌹𐌻𐌷𐌼𐌰 𐌻𐌰𐌿𐍃 𐍆𐌰𐍂𐌽𐌹𐌼𐌴𐌹𐌸 𐌷𐌿𐍃𐌰. 𐌹𐌺 𐍅𐌰𐌽𐌳𐌾𐌰𐌳𐌰 𐌸𐌰𐌹𐍂𐌷 𐍅𐌹𐌲𐌰𐌼, 𐌸𐌰𐍂𐌴𐌹 𐌲𐌰𐌼𐌿𐌽𐌳𐌴𐌹𐍃 𐍄𐌰𐍅𐌾𐌰𐌽𐌳 𐌼𐌹𐌺 𐌿𐌽𐍆𐍂𐍉𐌽𐌳𐌰𐌽𐌰, 𐌸𐌰𐍂𐌴𐌹 𐌹𐌽 𐍅𐌰𐍂𐌼𐌰𐌼𐌼𐌰 𐌼𐌴𐌻𐌰 𐌱𐌻𐍉𐌼𐌹𐍃 𐍅𐌹𐌽𐍄𐍂𐌿𐍃 𐌲𐍂𐌴𐌹𐍀𐌹𐌸 𐍃𐌰𐌹𐍅𐌰𐌻𐌰𐌽.
+[ниуйис анданахтс ин хуса вармис дранкис. мильхма лаус фарнимейт хуса. ик вандяда таирх вигам, тарей гамундейс тауьянд мик унфрондана, тарей ин вармамма мела бломис винтрус грейпит сайвалан.]
+
+02. 𐌻𐌹𐌱𐌰𐌹𐌽𐍃 𐍆𐌻𐌹𐌿𐌲 𐍃𐍀𐍂𐌰𐌿𐍄𐍉 𐍆𐍂𐌰𐌼 𐌳𐌰𐌲𐌰𐌼 𐌾𐌰𐌷 𐍆𐍂𐌰𐌼 𐌿𐌽𐍃𐌹𐍃. 𐍅𐌴𐌹𐍃 𐍃𐌺𐌰𐍄𐍄𐌰𐌽𐍃 𐌽𐌴𐌼𐌿𐌼, 𐍆𐌰𐍂𐌲𐌴𐌹𐍄𐌰𐌽𐌳𐌰𐌽𐍃 𐌳𐌿𐌷𐍅𐌴 𐌻𐌹𐌱𐌰𐌼, — 𐌾𐌰𐌷 𐌸𐌿𐌲𐌺𐌹𐌳𐌰 𐌿𐌽𐍃: 𐍃𐌹𐌽𐍄𐌴𐌹𐌽 𐍆𐌰𐌿𐍂𐌰 𐌻𐌹𐌿𐌸 𐌲𐌰𐌷𐌰𐌿𐍃𐌾𐌰𐌳𐌰.
+[либайнс флиуг спрауто фрам дагам йах фрам унсис. веис скаттанс немум, фаргейтанданс духве лимам, — йах тугкида унс: синтейн фаура лиут гахаусьяда.]
+
+03. 𐌰𐌺𐌴𐌹 𐌼𐌴𐌻 𐌽𐌹 𐌲𐌹𐌱𐌹𐌳 𐍅𐌰𐌹𐌷𐍄 𐌳𐌿 𐌻𐌰𐌽𐍃. 𐌾𐌰𐌷 𐍃𐌿𐌽𐍃 𐌺𐌰𐌻𐌳𐍃 𐌴𐌹𐍃 𐌻𐌹𐌲𐌰𐌸 𐌰𐌽𐌰 𐌷𐌰𐌹𐍂𐍄𐍉.
+[акей мел ни гибит вайхт ду ланс. йах сунс калдс эйс лигат ана хаирто.]
+
+04. 𐌻𐌰𐌹𐍃𐌰𐌼 𐌳𐌿 𐌼𐌹𐌺𐌹𐌻𐌾𐌰𐌽, 𐌷𐍅𐌰𐌽 𐍆𐍂𐌰𐌻𐌹𐌿𐌽𐌰𐌼, — 𐌷𐍅𐌰𐌽 𐌷𐌹𐌽𐌳𐌰𐌽𐌰 𐌳𐌰𐌿𐍂 𐌻𐌹𐌿𐌷𐌰𐌳 𐌷𐍅𐌰𐍂𐌾𐌹𐌶𐌿𐌷 𐌲𐌰𐍃𐍅𐌹𐌽𐌳𐌹𐌸. 𐍅𐌴𐌹𐍃 𐍅𐌰𐌲𐌰𐌼 𐌷𐌰𐌽𐌳𐌿𐌽𐍃 𐌸𐌰𐌹𐌼 𐌴𐌹𐍃𐌰𐍂𐌽𐌰𐍆𐌰𐌷𐌰𐌼 𐍆𐍂𐌰𐌼𐌲𐌰𐌲𐌲𐌰𐌽𐌰𐌼, 𐌱𐌹𐌳𐌾𐌰𐌽𐌳𐌰𐌽𐍃 𐌸𐌰𐌼𐌼𐌰 𐌰𐌹𐍂𐌹𐍃𐌾𐌰𐌼𐌼𐌰 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄.
+[лайсам ду микильян, хван фралиунам, — хван хиндана даур лиухад хварйизух гасвиндит. веис вагам хандунс тайм эйсарнафахам фрамгагганам, бидьянданс тамма айрисьямма андахафт.]
+
+05. 𐌻𐌰𐌹𐍃𐌰𐌼 𐌳𐌿 𐍆𐍂𐌹𐌾𐍉𐌽, 𐌷𐍅𐌰𐌽 𐌰𐌻 𐍅𐌰𐌹𐍂𐌸𐌹𐌸 𐌺𐌰𐌻𐌳𐍃, — 𐌷𐍅𐌰𐌽 𐌰𐍃𐌺𐌰 𐌻𐌹𐌲𐌹𐌸 𐌹𐌽 𐌷𐌰𐌽𐌳𐌿𐌼, 𐌽𐌹 𐌴𐌹𐍃𐌰𐍂𐌽. 𐍉, 𐌾𐌰𐌱𐌰𐌹 𐍅𐌹𐍃𐍃𐌴𐌹𐌼𐌰 𐍆𐌰𐌿𐍂𐌰, 𐌷𐍅𐌰𐌹𐌳𐌴 𐍃𐌰𐌿𐍂𐌲𐌰 𐍃𐌰𐌹𐌷𐍅𐍉𐌱𐍃 𐌱𐌴𐌹𐍄𐌹𐌸 𐍃𐌰𐌹𐍅𐌰𐌻𐌰𐌹!
+[лайсам ду фрийон, хван ал ваиртит калдс, — хван аска лигит ин хандум, ни эйсарн. о, яйбай виссеима фаура, хваиде саурга сайхвобс бейтит сайвалай!]
+
+06. 𐌽𐌹 𐌵𐌰𐌸, 𐌽𐌹 𐌺𐌽𐌿𐍃𐍃𐌹𐌳𐌰, 𐌽𐌹 𐍃𐍀𐍂𐌰𐌿𐍄𐍉 𐍅𐌰𐌹𐍂𐌸𐌹𐌳𐌰 — 𐌸𐌰𐍄𐌰 𐌻𐌹𐌿𐌸 𐌰𐌹𐍅𐌴𐌹𐌽 𐌹𐍃𐍄. 𐌰𐌻𐌻𐌰𐍄𐌰 𐌲𐌰𐍅𐌹𐍄𐌰𐌹𐌳𐌰 𐌳𐌿 𐍃𐍀𐌴𐌳𐌹𐍃, 𐌷𐌰𐌹𐍂𐍄𐍉 𐌰𐌽𐌸𐌰𐍂𐌰𐌹𐌼 𐌽𐌹 𐌿𐍃𐌻𐌿𐌺𐌹𐌳𐌰.
+[ни кват, ни кнуссида, ни спрауто ваиртида — тата лиут айвейн ист. аллата гавитаида ду спедис, хаирто антарайм ни услукида.]
+
+07. 𐍅𐌴𐌹𐍃 𐍅𐌹𐌲𐌰𐌼 𐍅𐌹𐌸𐍂𐌰 𐍃𐌺𐌰𐌳𐍅𐌰𐌽, 𐌱𐍂𐌹𐌽𐌽𐌰𐌼 𐌹𐌽 𐌻𐌰𐌿𐍃𐌰𐌹𐌼 𐌻𐌴𐌹𐍄𐌹𐌻𐌰𐌹𐌼, 𐌾𐌰𐌷 𐌽𐌹 𐍃𐌰𐌹𐌷𐍅𐌰𐌳𐌰, 𐌷𐍅𐌰𐌹𐌳𐌴 𐌺𐌰𐌻𐌳𐍃 𐌴𐌹𐍃 𐍃𐌹𐍄𐌹𐌸 𐌰𐌽𐌰 𐍃𐌺𐌿𐌻𐌳𐌿𐌼 𐌿𐌽𐍃𐌰𐍂𐌰𐌹𐌼.
+[вейс вигам витра скадван, бриннам ин лаусайм лейтилайм, йах ни сайхвада, хваиде калдс эйс ситит ана скулдум унсарайм.]
+
+08. 𐌰𐌺𐌴𐌹 𐌰𐌿𐌳𐌰𐌲𐌹 𐌽𐌹 𐌹𐍃𐍄 𐌹𐌽 𐌻𐌹𐌿𐌷𐌰𐌳𐌰𐌼 𐌸𐌹𐌶𐍉𐍃 𐍃𐌺𐌰𐌾𐍉𐍃, 𐌽𐌹 𐌹𐌽 𐍃𐌺𐌰𐍄𐍄𐌰𐌼, 𐌰𐌺 𐌹𐌽 𐍃𐍄𐌹𐌻𐌻𐌰𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍃𐍅𐌴𐍃𐌰𐌽𐌴, 𐌹𐌽 𐍅𐌰𐍂𐌼𐌾𐌰𐌹 𐌹𐌶𐌴 𐌹𐌽 𐍅𐌹𐌽𐌳𐌰𐌼.
+[акей аудаги ни ист ин лиухадам тизос скайос, ни ин скаттам, ак ин стиллай суньяй свесане, ин вармьяй изе ин виндам.]
+
+09. 𐌰𐌺𐌴𐌹 𐌼𐌹𐌺𐌹𐌻𐌾𐌰𐌼 𐌸𐌰𐍄𐌰 𐌰𐌹𐌽𐌰𐍄𐌰, 𐌸𐌰𐍄𐌴𐌹 𐌽𐌹 𐌼𐌰𐌲 𐍆𐌰𐌿𐍂𐌸𐌰𐌽 𐌰𐍆𐍄𐍂𐌰 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽, 𐌲𐌰𐌲𐌲𐌰𐌽𐌳𐌰𐌽𐍃 𐍅𐌹𐌲 𐍃𐌴𐌹𐌽𐌰𐌽𐌰 𐌻𐌰𐌽𐌲𐌰𐌽𐌰 𐌾𐌰𐌷 𐌿𐍆𐍄𐍉 𐌿𐌽𐍆𐍂𐍉𐌽𐌳𐌰𐌽𐌰.
+[акей микильян тата айната, тарей ни маг фауртан афтра гавандьян, гагганданс виг сейнана лангана йах уфто унфрондана.]
+
+10. 𐍅𐍉𐍀𐌰𐌹𐌸 𐌸𐌰𐌹𐌼 𐍃𐌹𐌽𐌹𐍃𐍄𐌰𐌼, 𐌺𐌽𐌿𐍃𐍃𐌰𐌹𐌸 𐌹𐌽𐍃, 𐌼𐌴𐌸𐌸𐌰𐌽𐌴𐌹 𐌷𐌰𐌹𐍂𐍄𐍉 𐍃𐍄𐌰𐌿𐍄𐌹𐌸. 𐍅𐍂𐍉𐌷𐍃𐍉𐍃 𐌲𐌰𐌻𐌴𐌹𐌸𐌰𐌹𐌽𐌰 — 𐌹𐌺 𐌱𐌹𐌳𐌾𐌰 𐌷𐌹𐌼𐌼𐌰 𐌳𐌰𐌲𐌰 𐍆𐌰𐌿𐍂 𐌸𐌰𐍄𐌰.
+[вопайт тайм синистам, кнуссайт инс, меттаней хаирто стаутит. врохсос галейтаина — ик бидья химма дага фаур тата.]
+
+11. 𐌸𐌰𐌽𐌺𐌴𐌹 𐌰𐌽𐌳𐌹 𐌰𐌻𐌻𐌰𐌹𐌼 𐌻𐌹𐌿𐌸𐌰𐌼 𐌰𐌹𐌽𐍃 𐌹𐍃𐍄: 𐍅𐌴𐌹𐍃 𐌲𐌰𐍃𐍄𐌰𐌽𐌳𐌰𐌼 𐌹𐌽 𐌲𐌰𐌼𐌿𐌽𐌳𐌰𐌹, 𐍃𐍅𐌴 𐍃𐍄𐌹𐌱𐌽𐌰 𐌸𐌹𐌶𐌴 𐍆𐌰𐍂𐌲𐌴𐌹𐍄𐌰𐌽𐌰𐌽𐌴, 𐍃𐌹𐍄𐌰𐌼.
+[танкеи анди аллайм лиутам айнс ист: веис гастандам ин гамундай, све стибна тизе фаргейтанане, ситам.]
+
+12. 𐍅𐌹𐍄𐌰𐌹𐌳𐌴𐌳𐌹𐌼𐌰 𐌸𐌰𐍄𐌰 𐌸𐌰𐍄𐌴𐌹 𐌹𐍃𐍄, — 𐌼𐌴𐌸𐌸𐌰𐌽𐌴𐌹 𐍃𐌹𐌾𐌿𐌼 𐌷𐌴𐍂, 𐌿𐌽𐌸𐌴 𐍃𐌰𐌹𐍅𐌰𐌻𐍉 𐍆𐌻𐌰𐌿𐌷 𐍆𐌰𐌹𐍂𐍂𐌰.
+[витаидедима тата тарей ист, — меттаней сиюм хер, унте сайвало флаух фаирра.]
+
+───
+
+СЛОВАРЬ МАЛЫША (got · 12 слов + фраза):
+время → 𐌼𐌴𐌻 (mel) [мел]
+туман → 𐌼𐌹𐌻𐌷𐌼𐌰 (milhma) [мильхма]
+воспоминание → 𐌲𐌰𐌼𐌿𐌽𐌳𐌹 (gamundi) [гамунди]
+весна → 𐌼𐌴𐌻 𐌱𐌻𐍉𐌼𐌹𐍃 (mel blomis, время цветения) [мел бломис]
+свет → 𐌻𐌹𐌿𐌷𐌰𐌳 (liuhad) [лиухад]
+поезд → 𐌴𐌹𐍃𐌰𐍂𐌽𐌰𐍆𐌰𐌷𐍃 (eisarnafahs, железная повозка) [эйсарнафахс]
+ответ → 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐍃 (andahafts) [андахафтс]
+сердце → 𐌷𐌰𐌹𐍂𐍄𐍉 (hairto) [хаиртō]
+лёд → 𐌴𐌹𐍃 (eis) [эйс]
+печаль → 𐍃𐌰𐌿𐍂𐌲𐌰 (saurga) [саурга]
+иней → 𐌺𐌰𐌻𐌳𐍃 𐌴𐌹𐍃 (kalds eis) [калдс эйс]
+пульс → 𐌷𐌰𐌹𐍂𐍄𐍉𐍃 𐍃𐍄𐌰𐌿𐍄𐌴𐌹𐌽𐍃 (hairtos stauteins) [хаиртос стаутайнс]
+ФРАЗА: «когда теряем?» → 𐌷𐍅𐌰𐌽 𐍆𐍂𐌰𐌻𐌹𐌿𐌽𐌰𐌼? (hwan fraliunam?) [хван фралиунам?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 12 / 20: 12_non_Древнескандинавский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Древнескандинавский · КОД: non · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 12 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: нормализованная орфография классических изданий (стиль Эдды); járnvagn «поезд» = железная повозка; кофейня — hús heitra drekku («дом горячего напитка»); бумажки — spillingar (деньги); витрина — gluggi (окно); лексика сверена с опорой песни 1 (где настоящее, non, группа 6).
+
+01. Nýtt kvöld í húsi heitra drekku. Tóm þoka leysir upp húsin. Geng ek um götur, þar er minningar reka hugann villtan, þar er vetr setr sálina, þótt hlýtt sé í vóri.
+[нютт квольд и хуси хейтра дрекку. тоум тока лейсир уп хусин. генг эк ум гётур, тар эр миннингар река хуган вилтан, тар эр ветр сетр саулина, тоутт хлютт се и воури]
+
+02. Flaug lífit sem ör fram hjá dögum ok fram hjá oss; hirðum vér spillingar ok gleymum hví vér lifum, — ok þótti oss, at fyrsta hljóð lagsins hljómaði æ fyrir framan.
+[флауг лифит сем ёр фрам йау дёгум ок фрам йау осс; хирдум вэр спиллингар ок глеймум хви вэр лифум, — ок тоутти осс, ат фюрста лйоуд лагсинс лйоумади э фюрир фраман]
+
+03. Tími einn gefr engu í láni. Ok brátt kemr kaldur íss á hjarta.
+[тими эйнн гевр энгу и лауни. ок браутт кэмр калдюр исс ау хйарта]
+
+04. Lærum vér að meta, þá er vér töpum, — þá er slokknar ljós nökkurs fyrir dyrum. Vinkum til járnvagna er farit hafa, ok biðjum fornan tíma um svar.
+[лэрум вэр ад мета, тау эр вэр тёпум, — тау эр слоккнар лйос нёккурс фюрир дюрум. винкум тиль йаурнвагна эр фарит хава, ок бидйум форнан тима ум свар]
+
+05. Lærum vér að elska þá er frýr, — þá er aska liggr í höndum en eigi stál. Ó, ef vita mætti fyrir, hversu sorg sú gegnsæ mun þrýsta í sálina!
+[лэрум вэр ад элска тау эр фрюр, — тау эр аска лигр и хёндум эн эйги стаул. оу, эф вита метти фюрир, хверсю сорг су гегнсэ мун трюста и саулина]
+
+06. Eigi sagði ek, eigi faðmaði ek, of seint kom ek, — þat er eilíft kvæði. Bjó ek allt til síðari tíma, en eigi opnaði hjartað fyrir öðrum.
+[эйги сагди эк, эйги фадмади эк, оф сейнт ком эк, — тат эр эйлифт квэди. бйоу эк алт тиль сидари тима, эн эйги опнади хйартад фюрир ёдрум]
+
+07. Berjumst við skugga, brennum í tómum smámunum, ok ekki sést, hvé hrími setst á axlir várar.
+[берьюмст вид скугга, бреннум и тоумум смаумунум, ок екки сест, хве хрими сетст ау акслир ваурар]
+
+08. En heppnin er eigi í ljóma glugga, eigi í spillingum, heldr í hljóðri sannleika nánstra, í hlýju þeirra milli storma.
+[эн хеппнин эр эйги и лйоума глюгга, эйги и спиллингум, хельдр и лйоудри саннлейка наунстра, и хлюю тейрра милли сторма]
+
+09. En vér meta þat eitt, er eigi má til baka fá, meðan vér göngum langa leið, oft án skyns.
+[эн вэр мета тат эйтт, эр эйги мау тиль бака фау, медан вэр гёнгум ланга лейд, офт аун скюнс]
+
+10. Kalla á gamla menn, faðma þá, meðan hjartslátturinn slær. Bið ek þess í dag, at kærur gangi hjá.
+[калла ау гамла менн, фадма тау, медан хйартслауттуринн слэр. бид эк тесс и даг, ат кэрур ганги йау]
+
+11. Því at endir allra kvæða er til loks einn: vér sitjum eftir í minningum, sem fjarlægt hljóð.
+[тви ат эндир аллра квэда эр тиль локс эйнн: вэр ситйум эфтир и миннингум, сем фьярлэкт лйоуд]
+
+12. Varðveita ættum vér þat, er til er, — meðan vér erum hér, áðr en sálin flýgr braut.
+[вардвейта эттум вэр тат, эр тиль эр, — медан вэр эрум хер, аудр эн саулин флюгр браут]
+
+───
+
+СЛОВАРЬ МАЛЫША (non · 12 слов + фраза):
+время → tími [тими]
+туман → þoka [тока]
+воспоминание → minning [миннинг]
+весна → vór [воур]
+свет → ljós [лйоус]
+поезд → járnvagn (железная повозка) [йаурнвагн]
+ответ → svar [свар]
+сердце → hjarta [хйарта]
+лёд → íss [исс]
+печаль → sorg [сорг]
+иней → hrím [хрим]
+пульс → hjartsláttur [хйартслауттур]
+ФРАЗА: «когда теряем?» → Hvenær töpum við? [хвенэр тёпум вид]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 13 / 20: 13_sux_Шумерский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Шумерский · КОД: sux · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 13 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: транслитерация по нормам ePSD (эмегирь), стиль опоры песни 1 (иммаген, -дэн, al-, nu-); современность — описательная реконструкция: e2 kaš «дом напитка» для кофейни, gigir an-bar «железная колесница» для поезда, igi-du8 «решётка окна» для витрины, lìm bil3-a «сожжённая пыль» для пепла, igi-bala «взгляд на эпоху» для воспоминания, im «облако» для тумана (лёд im sig-ga — «холодное облако», иней im sig).
+
+01. gi6 gibil e2 kaš-a — im-e e2 búr-búr; uru-a gèn-gèn-enden, igi-bala-a geštug2-gu10 gig-ga; šeg3-ka kúm-a ud sig-ga šà-gu10 al-dab5.
+[гий гибил э каш-а — им-э э бур-бур; уру-а ген-ген-эндэн, игибала-а гештуг-гу гиг-га; шег-ка кум-а уд сиг-га ша-гу ал-даб.]
+
+02. nam-ti ti-gin7 ul4-ul4 im-ma-ĝen — ud igi-bar-a, ge26-ne igi-bar-a; kù-babbar ĝar-ĝar-enden, nam-ti a-na-àm ak-enden nu-zu — igi-šè u4-ul-li2-a-šè gu3 im-ma-gen.
+[намти ти-гин улу иммаген — уд игибар-а, гэнэ игибар-а; ку-баббар гар-гар-эндэн, намти анам ак-эндэн нузу — игише ууллиа-ше гу иммаген.]
+
+03. ud ur5-gin7 na-me nu-šum2; u4-ba šà-a im sig-ga al-ĝar.
+[уд ур-гин намэ ну-шум; уба ша-а им сиг-га ал-гар.]
+
+04. bar-enden-a kù-bi zu-enden — ig bar-a ud ba-šub-a. gigir an-bar ĝen-a bar-šè gu3-de2-enden; ud ul-li2-a-ta ki-bur2 šu ti-enden.
+[бар-эндэн-а куби зу-эндэн — иг бар-а уд башуб-а. гигир ан-бар ген-а бар-ше гудэ-эндэн; уд уллиа-та кибур шу ти-эндэн.]
+
+05. ud sig-ga-a ki áĝ2 zu-enden — šu-a lìm bil3-a, an-bar nu-me. igi-bar-a zu-enden he2-em — ir im-gin7 šà-a al-gig.
+[уд сиг-га-а киаг зу-эндэн — шу-а лим биль-а, ан-бар нумэ. игибар-а зу-эндэн хэ-эм — ир им-гин ша-а ал-гиг.]
+
+06. inim nu-du11, šu-tag nu-ak, u4 nu-tuku — ù-bi gu3 u4-ul-li2-a. na-me u4-šè ba-dab5; šà lu2-ne-še3 bur2 nu-ak.
+[иним ну-ду, шу-таг ну-ак, у нутуку — у-би гу ууллиа. намэ у-ше ба-даб; ша лунэ-ше бур ну-ак.]
+
+07. gidim-da gul-gul-enden, nig2 tur-tur nu-ĝál-a bil3-enden; im sig á gu10-ne-a al-ĝar — igi-bar nu-ak.
+[гидим-да гул-гул-эндэн, ниг тур-тур нугаль-а биль-эндэн; им сиг а гу-нэ-а ал-гар — игибар ну-ак.]
+
+08. nig2-sa6-ga igi-du8 ul-a nu-ĝál, pisan kù-babbar-a nu-ĝál — inim zi gu3 nu-tuku-a, lu2 ki-áĝ2 kúm-a, lil2 mah-a.
+[нигсага игиду ул-а нугаль, писан ку-баббар-а нугаль — иним зи гу нутуку-а, лу киаг кум-а, лиль мах-а.]
+
+09. ge26-ne nig2 gur nu-ĝál-a kù ak-enden; kaskal gíd-gu10-šè gèn-enden — igi-šè igi-šè umuš nu-tuku.
+[гэнэ ниг кур нугаль-а ку ак-эндэн; каскал гид-гу-ше ген-эндэн — игише игише умуш нутуку.]
+
+10. ab-ba-ene-ra gu3-de2; šu-tag, šà-gub-šè. ir gig-ga he2-zal — ud-ba ù-bi-šè šu-gu10 il2-dè-en.
+[абба-энэ-ра гудэ; шу-таг, ша-губ-ше. ир гиг-га хэ-заль — уба у-би-ше шугу иль-дэн.]
+
+11. ù-bi-šè nam-nar til3-bi diš-am3: igi-bala-a tuš-enden, lu2 nu-zu-a gu3-gin7.
+[у-би-ше намнар тиль-би диш-ам: игибала-а туш-эндэн, лу нузу-а гу-гин.]
+
+12. nig2 ĝál-la he2-dab5-enden — ge26-ne ki-a tuš-a-šè, zi igi-šè bar-a-šè.
+[ниг галь-ла хэ-даб-эндэн — гэнэ ки-а туш-а-ше, зи иги-ше бар-а-ше.]
+
+───
+
+СЛОВАРЬ МАЛЫША (sux · 12 слов + фраза):
+время → ud (день/время) [уд]
+туман → im (облако/мгла) [им]
+воспоминание → igi-bala (взгляд на эпоху) [игибала]
+весна → šeg3-ka (сезон дождей) [шег-ка]
+свет → ud (свет и день — одно слово) [уд]
+поезд → gigir an-bar (железная колесница) [гигир ан-бар]
+ответ → ki-bur2 (разгадка) [кибур]
+сердце → šà [ша]
+лёд → im sig-ga (холодное облако) [им сиг-га]
+печаль → ir (слеза) [ир]
+иней → im sig (холодная мгла) [им сиг]
+пульс → šà-gub (сердце бьётся) [ша-губ]
+когда теряем? → Ud-da bar-enden? [уд-да бар-эндэн?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 14 / 20: 14_cop_Коптский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Коптский · КОД: cop · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 14 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: саидский диалект, стиль опоры песни 1; греч. заимствования — норма коптского (ⲗⲩⲡⲏ «печаль», ⲁⲡⲟⲕⲣⲓⲥⲓⲥ «ответ», ⲭⲓⲱⲛ «лёд», ⲙⲛⲏⲙⲏ «воспоминание», ⲁⲥⲡⲁⲍⲉ «обнять», ⲙⲓⲥⲉⲓⲛ «обида», ⲗⲁⲓⲗⲁⲡ «буря», ϫⲁⲣⲧⲏⲥ «бумага», ⲯⲩⲭⲏ «душа»); современность — описательно: кофейня = ⲏⲓ ⲙⲡⲟⲧⲟⲛⲉ «дом напитка», поезд = ⲣⲁⲧ ⲙⲡⲥⲓⲇⲏⲣⲟⲛ «повозка железа», витрина = ⲟⲩⲱⲛⲏ ⲉⲧⲟⲩⲟⲉⲓⲛ «камень, который сияет», купюры = ⲟⲩⲙⲏϣ ⲛϫⲁⲣⲧⲏⲥ «множество бумаг», иней = ⲭⲓⲱⲛ ⲙⲡⲟⲩϩⲟⲣⲓ «лёд утра», туман = ⲕⲁⲕⲉ «мгла», зима = ϫⲟⲩⲟ «стужа»; терять = ⲕⲱ ⲉⲃⲟⲗ «отпускать» — лексическая рифма с «забытые» (ⲛⲉⲧⲟⲩⲕⲱ ⲉⲃⲟⲗ); «когда?» = ⲟⲩⲥⲟⲡ «в какое время»; «улететь» передано ⲃⲱⲕ ⲉⲟⲩⲁϣ «уйти далеко».
+
+01. Ⲟⲩⲣⲁϣⲙⲏ ⲛϩⲃⲏⲩⲉ ϧⲉⲛ ⲡⲏⲓ ⲙⲡⲟⲧⲟⲛⲉ — ⲟⲩⲕⲁⲕⲉ ⲙⲙⲟⲛ ⲛⲟⲩⲟⲉⲓⲛ ϥϩⲉⲙ ⲛⲛⲏⲓ. Ⲁⲛⲟⲕ ⲉⲓⲃⲱⲕ ϧⲉⲛ ⲛⲙⲁ ⲙⲡϣⲙⲏⲛ, ⲙⲁ ⲉⲣⲉ ⲛⲙⲛⲏⲙⲏ ⲣ ⲟⲩⲙⲏϯ ϧⲉⲛ ⲧⲁⲯⲩⲭⲏ; ϧⲉⲛ ⲡⲉⲓⲁⲣ ⲉⲧⲧⲁϩⲟ ϫⲟⲩⲟ ϥⲉⲓ ⲉϩⲣⲁⲓ ϧⲉⲛ ⲧⲁⲯⲩⲭⲏ.
+[урашме нхвиуэ хен пхи мпотоне — укаке ммоун нуоуэйн фхем ннхи. анок ейвок хен нма мпшмин, ма эре нмними р умити хен тапсухи; хен пейар еттахо джу фей эрай хен тапсухи]
+
+02. Ⲁⲡⲱⲛϩ ϣⲟⲩⲟ ϫⲓⲛ ⲛϩⲟⲟⲩⲉ, ϫⲓⲛ ⲁⲛⲟⲛ. Ⲁⲛⲓⲣⲉ ⲟⲩⲙⲏϣ ⲛϫⲁⲣⲧⲏⲥ — ⲟⲩⲃⲉ ⲛⲧⲉⲛⲱⲛϩ, ⲙⲙⲟⲛ ⲛⲙⲛⲏⲙⲏ. Ⲟⲩⲟϩ ⲛⲉ ⲟⲩⲱⲧⲁ ϣⲟⲟⲡ ϧⲉⲛ ⲡⲙⲁ ⲉⲧⲙⲙⲁⲩ, ϧⲉⲛ ⲛⲉϩⲟⲟⲩⲉ ⲧⲏⲣⲟⲩ.
+[апёнх шоу джин нхоуэ, джин анон. анире умиш нджартис — уве нтенёнх, ммоун нмними. уоо нэ уота шооп хен пма етммау, хен нехоуэ тиру]
+
+03. Ⲟⲩⲟϩ ⲡⲥⲟⲡ ϥϯ ⲁⲛ ⲛⲟⲩⲟⲛ ϧⲉⲛ ⲟⲩⲕⲉⲥⲟⲡ. Ⲟⲩⲟϩ ϧⲉⲛ ⲟⲩⲱⲣⲁ ⲁⲭⲓⲱⲛ ⲙⲡϫⲟⲩⲟ ϣⲙⲟⲟⲥ ϩⲓϫⲉⲛ ϯϩⲏⲧ.
+[уоо псп фти ан нуоун хен оукесоп. уоо хен уора ахион мпджоу шмус хиджен титхит]
+
+04. Ⲉⲣⲉⲛⲙⲁⲛⲧⲁⲛⲉ ⲛⲧⲉⲛⲧⲓⲙⲁⲛ, ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲉⲣⲉⲛⲕⲱ ⲉⲃⲟⲗ — ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲟⲩⲟⲉⲓⲛ ⲙⲟⲩⲁⲓ ϥϩⲱⲃ ϧⲁⲧⲉ ⲡⲣⲁϫⲉ. Ⲧⲉⲛⲧⲟⲩⲛⲥ ⲛⲧⲉⲛϧⲉⲓⲧ ϫⲓⲛ ⲛⲣⲁⲧ ⲙⲡⲥⲓⲇⲏⲣⲟⲛ ⲉⲧⲃⲱⲕ; ⲛⲧⲉⲛϣⲓⲛⲉ ⲛⲁⲡⲟⲕⲣⲓⲥⲓⲥ ϧⲉⲛ ⲡⲥⲟⲡ ⲉⲧⲃⲱⲕ.
+[эренмантанэ нтентиман, хен усоп еренков эвол — хен усоп уоуэйн муай фхов хате прадже. тентоунс нтенхит джин нрат мпсидирон етвок; нтеншине напокрисис хен псп етвок]
+
+05. Ⲉⲣⲉⲛⲙⲁⲛⲧⲁⲛⲉ ⲛⲧⲉⲛⲙⲉⲣⲉ, ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲡϫⲟⲩⲟ ϣⲟⲟⲡ ϧⲉⲛ ϯϩⲏⲧ — ϧⲉⲛ ⲟⲩⲥⲟⲡ ⲟⲩⲥⲡⲟⲇⲟⲥ ϧⲟⲟⲡ ϧⲉⲛ ⲧⲉⲛϧⲉⲓⲧ, ⲟⲩⲟϩ ⲙⲙⲟⲛ ⲛⲥⲓⲇⲏⲣⲟⲛ ⲁⲛ. Ⲟ ⲉϣⲱⲡⲉ ⲛⲧⲉⲛⲥⲟⲩⲱⲛ ϫⲉ ⲟⲩⲙⲏϯ ϧⲉⲛ ⲧⲁⲯⲩⲭⲏ ϧⲉⲛ ⲧⲗⲩⲡⲏ ⲉⲧⲟⲩⲟⲉⲓⲛ!
+[эренмантанэ нтэнмэрэ, хен усоп пджоу шооп хен титхит — хен усоп усподос хооп хен тенхит, уоо ммоун нсидирон ан. о эшопе нтенсоун дже умити хен тапсухи хен тлюпи етуоуэйн!]
+
+06. Ⲙⲡⲉⲛϫⲱ ⲁⲛ, ⲙⲡⲉⲛⲁⲥⲡⲁⲍⲉ ⲁⲛ, ⲙⲙⲟⲛ ⲛⲟⲩⲥⲟⲡ ⲁⲛ — ⲡⲁⲓ ϣⲟⲟⲡ ϧⲉⲛ ⲛⲉϩⲟⲟⲩⲉ ⲧⲏⲣⲟⲩ. Ⲛⲧⲉⲛϫⲓⲧ ⲛⲧⲁⲓⲧⲏⲣⲥ ⲉⲟⲩⲕⲉⲥⲟⲡ; ⲙⲡⲉⲛⲟⲩⲟⲛ ⲙⲡⲉⲛϩⲏⲧ ⲁⲛ ⲛⲛⲕⲉⲣⲱⲙⲉ.
+[мпенджо ан, мпенаспазэ ан, ммоун нусоп ан — пай шооп хен нехоуэ тиру. нтенджит нтайтис эоукесоп; мпеноун мпенхит ан ннкермиме]
+
+07. Ⲉⲣⲉⲛⲙⲁⲭⲏ ϧⲁⲧⲉ ⲧⲁⲥⲕⲓⲁ; ⲛⲙⲟⲩ ϧⲉⲛ ⲛϣⲁϫⲉ ⲛⲕⲟⲩⲓ ⲉⲧⲙⲙⲟⲛ ⲛϩⲏⲧ — ⲟⲩⲟϩ ⲙⲙⲟⲛ ⲧⲉⲛⲛⲁⲩ ⲁⲛ ϫⲉ ⲭⲓⲱⲛ ⲙⲡⲟⲩϩⲟⲣⲓ ϥϣⲙⲟⲟⲥ ϩⲓⲧⲛ.
+[эренмахи хате таскиа; нму хен ншаджэ нкуи етммоун нхит — уоо ммоун теннау ан дже хион мпухори фшмус хитн]
+
+08. Ⲟⲩⲣⲁϣⲉ ⲇⲉ ⲙⲙⲟⲛ ⲁⲛ ϧⲉⲛ ⲟⲩⲱⲛⲏ ⲉⲧⲟⲩⲟⲉⲓⲛ, ⲙⲙⲟⲛ ⲁⲛ ϧⲉⲛ ⲟⲩⲙⲏϣ ⲛϫⲁⲣⲧⲏⲥ — ⲁⲗⲗⲁ ϧⲉⲛ ⲧⲁⲗⲏⲑⲓⲁ ⲙⲡⲟⲩϫⲁⲓ ⲙⲡⲛⲉⲙⲉⲣⲓⲧⲥ, ϧⲉⲛ ⲛⲟⲩⲧⲁϩⲟ ϧⲉⲛ ⲛⲗⲁⲓⲗⲁⲡ.
+[ураше де ммоун ан хен умоунэ етуоуэйн, ммоун ан хен умиш нджартис — алла хен талисия мпуджай мпнемеритс, хен нутахо хен нлайлап]
+
+09. Ⲟⲩⲟϩ ⲛⲧⲉⲛⲧⲓⲙⲁⲛ ⲡⲉⲧⲙⲙⲟⲛ ⲛϩⲃⲏⲩ ⲁⲛ — ⲉⲣⲉⲛⲃⲱⲕ ϧⲉⲛ ⲡⲉⲛⲙⲟⲓⲧ ⲉⲧⲟⲩⲁϣ.
+[уоо нтентиман петммоун нхвиу ан — эренвок хен пенмоит етуаш]
+
+10. Ⲙⲟⲩϯ ⲉⲛⲉⲓⲱⲧ, ⲁⲣⲓ ⲁⲥⲡⲁⲍⲉ — ϣⲁ ⲡϩⲏⲧ ⲉϥϣⲟⲩⲟ. Ⲙⲁⲣⲉⲡⲙⲓⲥⲉⲓⲛ ⲃⲱⲕ ⲉⲃⲟⲗ — ⲁⲛⲟⲕ ⲁⲓϣⲗⲏⲗ ⲉⲧⲃⲉⲡⲁⲓ ϧⲉⲛ ⲙⲡⲁⲓⲟⲩ.
+[мути энэйот, ари аспазэ — ша пхит ефшоу. марепмисеин вок эвол — анок айшлил етбепай хен мпаиу]
+
+11. Ⲉⲧⲃⲉ ⲡⲁⲓ: ⲡϫⲱⲣⲕ ⲙⲡⲟⲩⲱⲧⲁ ⲧⲏⲣⲟⲩ ⲟⲩⲁⲓ ⲡⲉ — ⲉⲛⲱⲛϩ ϧⲉⲛ ⲛⲙⲛⲏⲙⲏ, ϧⲉⲛ ⲡⲃⲱ ⲙⲡⲛⲉⲧⲟⲩⲕⲱ ⲉⲃⲟⲗ, ⲁⲛⲟⲛ ϩⲙⲟⲟⲥ.
+[етбепай: пджорк мпуота тиру уай пэ — енёнх хен нмними, хен пбо мпнетоуков эвол, анон хмус]
+
+12. Ⲙⲁⲣⲉⲛϫⲓⲧ ⲡⲁⲓⲉⲧϧⲟⲟⲡ — ϣⲁⲛⲧⲉ ⲁⲛⲟⲛ ϩⲟⲟⲡ ϧⲉⲛ ⲡⲙⲁ, ϣⲁⲛⲧⲉⲣⲉ ⲧⲯⲩⲭⲏ ⲃⲱⲕ ⲉⲡⲙⲁ ⲉⲧⲟⲩⲁϣ.
+[маренджит пайетхооп — шанте анон хооп хен пма, шантерет тапсухи вок епма етуаш]
+
+───
+
+СЛОВАРЬ МАЛЫША (cop · 12 слов + фраза):
+время → ⲥⲟⲡ (время/случай) [соп]
+туман → ⲕⲁⲕⲉ (мгла) [какэ]
+воспоминание → ⲙⲛⲏⲙⲏ (память, греч.) [мними]
+весна → ⲡⲉⲓⲁⲣ (из опоры песни 1) [пейар]
+свет → ⲟⲩⲟⲉⲓⲛ (сияние) [уоуэйн]
+поезд → ⲣⲁⲧ ⲙⲡⲥⲓⲇⲏⲣⲟⲛ (повозка железа) [рат мпсидирон]
+ответ → ⲁⲡⲟⲕⲣⲓⲥⲓⲥ (греч.) [апокрисис]
+сердце → ϩⲏⲧ [хит]
+лёд → ⲭⲓⲱⲛ (снег/лёд, греч.) [хион]
+печаль → ⲗⲩⲡⲏ (греч.) [люпи]
+иней → ⲭⲓⲱⲛ ⲙⲡⲟⲩϩⲟⲣⲓ (лёд утра) [хион мпухори]
+пульс → ϩⲏⲧ ⲉϥϣⲟⲩⲟ (бегающее сердце) [хит ефшоу]
+когда теряем? → ⲟⲩⲥⲟⲡ ⲛⲧⲉⲛⲕⲱ ⲉⲃⲟⲗ? [усоп нтенков эвол?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 15 / 20: 15_pi_Пали.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Пали · КОД: pi · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 15 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: деванагари, канонический стиль Типитаки; современное — описательно: «кофейня» — bhattāgāra (дом еды), «поезд» — ayoyāna (железный транспорт: ayo = железо, yāna = транспорт), «витрина» — ālokapaṭala (световая завеса), «купюры» — dhana, «телефон» — dūrasadda (далёкий звук), нота «до» — paṭhamasaddo (первый звук); воспоминание — sati (память, решение опоры).
+
+01. नवं सायन्हं भत्तागारे। सुञ्ञो मेघो गेहानि ओगाहेति। अहं विठीसु विचरामि, यत्थ सतियो उम्मादं करोन्ति, यत्थ उण्हेन वसन्तेन हेमन्तो चित्तं पतिच्छादेति।
+[навам саянхам бхаттагаре. сунньо мегхо гехани огахети. ахам витхису вичарами, яттха сатийо уммадам каронти, яттха унхена васантена хеманто читтам патиччхадети.]
+
+02. यत्थ जीवितं सरा इव वेगेन अगमासि, काले च अम्हे च अतिक्कमित्वा। मयं धनानि सञ्चिम्ह, किस्सत्थाय जीवाम तं पमुस्सन्ता; मञ्ञिम्ह च: पुरतो सब्बदा एव पठमो सद्दो सद्दति।
+[яттха дживитам сара ива вегена агамаси, кале ча амхе ча атиккамитва. майам дханани саньчимха, киссаттхая дживам там памуссанта; маньнимха ча: пурато саббада ева патхамо саддо саддати.]
+
+03. कालो पन इणं किञ्चि न ददाति। अथ च अकस्मा हदये सितं हिमं पतिट्ठहति।
+[кало пан инам кинчи на дадати. атха ча акасма хадае ситам химам патиттхахати.]
+
+04. मयं गरुं कातुं सिक्खाम यदा नस्साम — यदा कस्सचि आलोको द्वारस्स बहि निब्बायति। गतानं अयोयानानं पच्छा हत्थे पसारयाम, अतीतस्स उत्तरं याचितुं उस्सहन्ता।
+[майам гарум катум сиккхама яда нассама — яда кассачи алоко дварасса бахи ниббаяти. гатанам айойананам паччха хаттхе пасараям, атитасса уттарам ячитум уссаханта.]
+
+05. मयं सिनेहं कातुं सिक्खाम यदा सीतिभोति — यदा हत्थेसु भस्मं अत्थि, अयो न। अहो वत मयं पुब्बेव जानेय्याम, कथं अयं पसन्नो सोको चित्ते तापेस्सति।
+[майам синехам катум сиккхама яда ситибхоти — яда хаттхесу бхасмам аттхи, айо на. ахо ват майам пуббева джанейама, катхам айам пассанно соко читте тапессати.]
+
+06. न अभणिं, न आलिङ्गिं, न कालं लभिं — एसो सस्सतो सद्दो। सब्बं पच्छाय निक्खिपिं, परानं हदयं न विवरिं।
+[на абханим, на алингим, на калам лабхим — есо сассато саддо. саббам паччхая никхипим, паранам хадаям на виварим.]
+
+07. मयं छायाहि सङ्गामेम, सुञ्ञेसु खुद्दकेसु वत्थूसु दय्हाम; न च पस्साम, कथं अम्हाकं अंसेसु तुसारो पतिट्ठहति।
+[майам чхаяхи сангамем, сунньесу худдакесу ваттхусу дайхам; на ча пассам, катхам амхакам амсесу тусаро патиттхахати.]
+
+08. सुखं पन न आलोकपटलस्स ओभासे, न धनानं निचये; अथ खो ञातीनं सन्तसच्चे, तेसं उण्हे महावातानं मज्झे।
+[сукхам пан на алокапаталасса обхасе, на дханам никае; атха кхо ньятинам сантасачче, тесам унхе махаватанам маджже.]
+
+09. मयं पन गरुं करोम तदेव, यं पुन आहरितुं न सक्का; अम्हाकं दीघं कुदाचनं अत्थविरहितं मग्गं चरन्ता।
+[майам пан гарум карома тадева, ям пун ахаритум на сакка; амхакам дигхам кудачанам аттхавирахитам маггам чаранта.]
+
+10. महल्लकानं दूरसद्दं करोहि, आलिङ्ग, याव हदयकम्पो पवत्तति। उपनाहा पस्सन्तु — अहं अज्ज तस्सत्थाय याचामि।
+[махаллаканам дурасаддам карохи, алинга, ява хадаякампо паваттати. упанаха пассанту — ахам аджж тассаттхая ячами.]
+
+11. यतो हि सब्बगीतानं परियोसानं एकं येव: मयं सतिया तिट्ठाम, पमुस्सितानं घोसा विय निसिन्ना।
+[ято хи саббагитанам парийосанам экам ева: майам сатия титтхам, памусситанам гхоса вия нисинна.]
+
+12. यं अत्थि तं रक्खेय्याम — याव मयं इध, याव चित्तं दूरं न अगमासि।
+[ям аттхи там раккхейам — ява майам идха, ява читтам дурам на агамаси.]
+
+───
+
+СЛОВАРЬ МАЛЫША (pi):
+время → कालो [кало]
+туман → मेघो [мегхо]
+воспоминание → सति (память; решение опоры песни 1) [сати]
+весна → वसंतो [васанто]
+свет → आलोको [алоко]
+поезд → अयोयानं (компаунд: «железный транспорт»; ayo = железо, yāna = транспорт) [айойанам]
+ответ → उत्तरं [уттарам]
+сердце → हदयं [хадаям]
+лёд → हिमो [химо]
+печаль → सोको [соко]
+иней → तुसारो [тусаро]
+пульс → हदयकम्पो (компаунд: «дрожание сердца»; kampa = дрожь) [хадаякампо]
+ФРАЗА: «когда теряем?» → यदा नस्साम? (yadā = когда; nassāma = 1 pl наст. от nassati «теряться») [яда нассама?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 16 / 20: 16_xcl_Классический_армянский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Классический армянский (грабар) · КОД: xcl · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 16 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: классическое правописание маштоца; современное — описательно на грабарской лексике: кофейня = խօսակցութեան տուն (дом беседы), поезд = երկաթե կառք (железная повозка), витрина = պատուհաս լոյսոյ (окно света), купюры = թղթիկք (бумажки); «позвони» = գոչե հեռաւոր ձայնով (позови дальним голосом); иней = առաւօտոյ սառոյց (утренний лёд), пульс = սրտի զարնութիւն (биение сердца); сталь → երկաթ (железо), «ныть» → ցաւիլ (болеть). Формы — конъюнктив на -եմ/-եմք, падежи грабара, сверены с опорой песни 1 (07_xcl).
+
+01. Նոր երեկոյ է խօսակցութեան տունը: Դատարկ մառախուպը տուները լուծէ: Թափառեմ թաղերու մէջ, ուր յիշատակք մոլորեցնեն միտք, ուր տաք գարնան ձմեռն ծածկէ հոգին:
+[нор ерекой э хōсакцутян дуны. датарк марахупы дунеры луцэ. тхапхаррем тхагхеру медж, ур йишатакх молорецнен миткх, ур такх гарнан дзмерн цацкэ хогин]
+
+02. Կեանքը սլաքի պէս անցաւ յամսակէտերու կողեւ, մեր կողեւ: Թղթիկք հաւաքեցանք, մոռանալով՝ ինչու ապրեմք, — եւ թուէր՝ միշտ յառաջ դեռ հնչէ «դո»:
+[кянкхы слакхи пэс анцав йамсакэтэру когхев, мер когхев. тхгхтикх хавакхецанкх, морраналов — инчу апремкх, — ев тхуэр, мишт йаррадж дерр хнчэ «до»]
+
+03. Միայն ժամը ոչինչ չի տայ փոխառութեամբ: Եւ անսպասելի՝ սառն սառոյց դրուեցաւ սրտի վերայ:
+[миайн жамы очинч чи тай пхохаррутхямб. ев анспасели — саррн сарройц друецав срти верай]
+
+04. Սովորեալք ենք գնահատել, երբ կորուցանեմք, — երբ դռան ետեւ մէկու լոյսը մարի: Ձեռք թափահարեմք երկաթե կառքերուն, որոնք գնացան, փորձելով աղերսել անցեալէն պատասխան:
+[совореальк енк гнахател, ерб коруцанемкх, — ерб дрран етев меку лойсы мари. дзеркх тхапхаремкх еркатхе карркхерун, оронкх гнацан, пхордзелов агхерсел анцялэн патасхан]
+
+05. Սովորեալք ենք սիրել, երբ սառի, — երբ ափերու մէջ մոխիր է, ոչ երկաթ: Ո՛հ, եթէ իմանայի նախապէս, թէ ինչպէս ցաւի հոգիին մէջ այս թափանցիկ տրտմութիւնը:
+[совореальк енк сирел, ерб сарри, — ерб апхеру медж мохир э, оч еркатх. ōх, етэ иманайи нахапэс, тэ инчпэс цави хогийин медж айс тхапханцик тртмутюн]
+
+06. Չասացի, չգրկեցի, չհասայ — այս է յաւիտենական երգի խօսքը: Զամենայն պահեցի առ վաղու, սիրտս ուրիշներուն չբանայ:
+[часаци, чгркеци, чхасай — айс э йавитенакан ерги хōскхы. заменаин пахеци арр вагху, сиртс уришнерун чбанай]
+
+07. Կռուեմք ստուերի դէմ, այրեմք դատարկ մանրուքներու մէջ, եւ ոչ ոք տեսնէ՝ ինչպէս առաւօտոյ սառոյցն նստի մեր ուսերին վերայ:
+[крруемкх стуери дэм, айремкх датарк манрукхнеру медж, ев оч окх теснэ — инчпэс аравōтой сарройцн нсти мер усерин верай]
+
+08. Բայց երջանկութիւնը ոչ պատուհաս լոյսոյ փայլի մէջ է, ոչ թղթիկներու կապոցի, այլ մերձաւորաց լուռ ճշմարտութեան մէջ, իրենց ջերմութիւնը փոթորիկներու մէջ:
+[айц ерджанкутюн оч патухас лойсой пхайли медж э, оч тхгхтикхнеру капоци, айл мертзавораци лурр чшмарутян медж, иренц джермутюн пхотхорикхнеру медж]
+
+09. Բայց գնահատեմք միայն այն, ինչ այլեւս անհնար է ետ դառնալ, շարունակելով մեր երկար եւ յաճախ անիմաստ ճամբան:
+[айц гнахатемкх миайн айн, инч айлевс анхнар э ет даррнал, шарунакелов мер еркар ев йачах анимаст чамбан]
+
+10. Գոչե հեռաւոր ձայնով ծերերուն, գրկե զիրենք, մինչեւ սրտիս զարնութիւնը դեռ կայ: Թող վիրավորանքները անցնին — այսօր աղօթեմ զայս:
+[гоче еравор дзайнов церерун, грке зиренкх, минчев сртис зарнутюн дерр кай. тхогх вираворанкхнеры анцнин — айсōр агхōтхем зайс]
+
+11. Զի վերջը ամենայն երգերու մէկն է վերջապէս. մնամք յիշատակի մէջ, մոռացուածներու արձագանգ՝ նստած:
+[зи верджы аменайн ергеру мекн э верджапэс. мнамкх йишатаки медж, моррацуацнеру ардзаганг — нстац]
+
+12. Պահեմք զայն, զի ունիմք, — մինչեւ հոս ենք, մինչեւ հոգին չթռչի հեռու:
+[пахемкх зайн, зи унимкх, — минчев хос енк, минчев хогин чтхрчи еру]
+
+───
+
+СЛОВАРЬ МАЛЫША (xcl, 12 слов + фраза):
+время → ժամ [жам]
+туман → մառախուպ [марахуп]
+воспоминание → յիշատակ [йишатак]
+весна → գարուն [гарун]
+свет → լոյս [лойс]
+поезд → երկաթե կառք [еркатʰе каррʰкʰ]
+ответ → պատասխանի [патасхани]
+сердце → սիրտ [сирт]
+лёд → սառոյց [сарройцʰ]
+печаль → տրտմութիւն [тртмутʰюн]
+иней → առաւօտոյ սառոյց [аравōтой сарройцʰ]
+пульс → սրտի զարնութիւն [срти зарнутʰюн]
+ФРАЗА: «когда теряем?» → Երբ կորուցանեմք? [Ерб коруцʰанемкʰ?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 17 / 20: 17_akk_Аккадский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Аккадский (старовавилонский) · КОД: akk · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 17 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: клинопись передана латинской транслитерацией (š→ш, ṣ→с, ṭ→т); язык мёртв — современность (кофейня, поезд, витрина, купюры) передана описательно на аттестованной лексике: кофейня = bīt šikarim (дом пива/таверна), поезд = narkabtu ša parzillim (колесница железа), витрина = parakkum (парадный подиум), купюры = kaspum (серебро); лёд и иней — через стужу (kāṣum; иней = ṣērum kāṣum «утренняя стужа»); пепел → qutārum (дым), сталь → parzillum (железо); «ныть» → uššab (сидеть в сердце); «машем вслед» → nizzaz warki (стоим позади ушедших); «обними» → ṣibat qātišunu (возьми за руку). Формы упрощены, корни аттестованы по CAD / Хаммурапи / Гильгамеш, сверены с опорой песни 1 (15_akk).
+
+01. Ereb šamši eššum ina bīt šikarim. Erpetum bītātim ubbal. Allak ina rubṣātim, ašar zikrū ṭēmī ubbalû, u ina Nisannim ina libbim simānu ša kāṣim.
+[эреб шамши эшшум ина бит шикарим. эрпетум битатим уббал. аллак ина рубсатим, ашар зикру тэми уббалу, у ина нисаним ина либбим симану ша касим]
+
+02. Balāṭum maḫriš illik, ūmātim u nīni ubbal. Kaspam nipḫur, nimšû aššum mînim niballaṭ — u nizkur: arkānum dāriš ūmum bašî.
+[балатум махриш иллик, уматим у нину уббал. каспам нипхур, нимшу ашшум миним нибаллат — у низкур: арканум дариш умум баши]
+
+03. Simānum ana ḫubullim mimma ul inaddin. U ištēn ūmim ina libbi kāṣum dannum.
+[симану ана хубуллим мимма ул инаддин. у иштэн умим ина либби касум даннум]
+
+04. Nilammed ninaṣṣar, inūma nihalluqu — inūma nuūrum ša šānim ina daltim imût. Nizzaz warki narkabtī ša parzillim ša ilqû, nimaḫḫar tērtam ša māḫrim.
+[нилламмед нинассар, инума нихаллуку — инума нууру ша шаним ина далтим имут. низзаз варки наркабти ша парзиллим ша илку, нимаххар тэртам ша махрим]
+
+05. Nilammed nirammû, inūma kāṣi — inūma ina qātini qutārum, ul parzillum. Lu nīdē māḫar, kīma tašīrtum šuātu ina libbim uššab.
+[нилламмед нирамму, инума каси — инума ина катини кутарум, ул парзиллум. лу нидэ махар, кима таширту шуату ина либбим ушшаб]
+
+06. Ul aqbī, ul aṣbat qātam, ul akšud — anniam awātum dārtum. Mimma ana arkam aškun, ul eptē libbam ana awīlam šānam.
+[ул акби, ул аспат катам, ул акшуд — анниам аватум дартум. мимма ана аркам ашкун, ул эптэ либбам ана авилам шанам]
+
+07. Nittāḫaz itti ṣilli, nimût ina šuḫrātim, u ul nīdē: ṣērum kāṣum ina kappīni.
+[ниттахаз итти силли, нимут ина шухратим, у ул нидэ: сэрум касум ина каппини]
+
+08. Ṭūbum ul ina namrurtim ša parakkim, ul ina kaspim — ina kittim elli ša kimtīm, ina ṭūbišunu ina meḫim.
+[тубум ул ина намруртим ша паракким, ул ина каспим — ина киттим элли ша кимтим, ина тубишуну ина махим]
+
+09. U ninaṣṣar mimma ša lā itūr — nillak harrānam arkam ša ṭēmam lā išû.
+[у нинассар мимма ша ла итур — ниллак харранам аркам ша тамам ла ишу]
+
+10. Šasû šībī, ṣibat qātišunu, adi napīštum illak. Lemuttum lillik — aššum annim ūmam akarrab.
+[шашу шиби, сибат катишуну, ади напишту иллик. лемуттум лиллик — ашшум анним умам аккараб]
+
+11. Aššum zamārātum ana gimrim ištēnim itūrû: ina zikrim nuššab, kīma zikri ša lā iqabbû.
+[ашшум замаратум ана гимрим иштэним итуру: ина зикрим нушшаб, кима зикри ша ла икаббу]
+
+12. Ṭābam ninaṣṣar mimma bašû — adi nīnu balṭū, adi napīštum ana rūqim lā illik.
+[табам нинассар мимма башу — ади нину балту, ади напишту ана руким ла иллик]
+
+───
+
+СЛОВАРЬ МАЛЫША (akk, 12 слов + фраза):
+время → simānu [симану]
+туман → erpetu (туча) [эрпету]
+воспоминание → zikru (память/имя) [зикру]
+весна → Nisannu (месяц Нисан, пора весны) [нисанну]
+свет → nuūru (свет дня) [нууру]
+поезд → narkabtu ša parzillim (колесница железа) [наркабту ша парзиллим]
+ответ → tērtu (весть/решение) [тэрту]
+сердце → libbu [либбу]
+лёд → kāṣum (стужа; отдельного слова «лёд» CAD не даёт — честная замена) [касум]
+печаль → tašīrtu (плач) [таширту]
+иней → ṣērum kāṣum (утренняя стужа) [сэрум касум]
+пульс → napīštu (жизнь/дыхание — признак жизни) [напишту]
+ФРАЗА: «когда теряем?» → Inūma nihalluqu? [инума нихаллуку]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 18 / 20: 18_hit_Хеттский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Хеттский (нешили) · КОД: hit · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 18 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: клинопись передана латинской транслитерацией (ḫ→х; цифра 1 = «один», как в опоре); язык мёртв — современность описательно на аттестованных корнях; корни и формы сверены с опорой песни 1 (kuwapi, kuit, ēšzi, meḫur, nekuz meḫur, kir, hamešḫa, šiuat/šiuaš, nepis wātar, tarnummen, munnawen, tuppi, šāk-, tē, akk-); туман — слово дождя опоры + tepu «малый»; лёд и иней — gimant (зима/стужа, одно слово); тень, пепел, душа — описательно (šiuaš lē kuit, tuḫḫui, kir); формы предположительны.
+
+01. Nekuz meḫur — per ekuwanzi. Nepis wātar tepu per tarnai. Peda peda pāimi: kuwapi šāktar kir arḫa pāizzi, kuwapi hamešḫa aššuli gimant kir tiyazzi.
+[некуз мэхур — пер экуванзи. непис ватар тэпу пер тарнай. пэда пэда пайми: кувапи шактар кир арха паиззи, кувапи хамешха ашшули гимант кир тияззи.]
+
+02. Meḫur hūwāizzi arḫa tarnummen — kuwat ēšumeni, šāk lē; guškin munnawen, meḫur=ma parā ēšzi: uettar parā ištamašzi.
+[мэхур хувайззи арха тарнуммен — куват эшумени, шак лэ; гушкин муннавен, мэхур=ма пара эшци: уэддар пара иштамашзи.]
+
+03. Meḫur kuitkki lē pai — tarnummar lē; imma gimant kir tiyazzi.
+[мэхур куйткки лэ пай — тарнуммар лэ; имма гимант кир тияззи.]
+
+04. Kuwapi lāumeni, aššul šāumeni — per piran kuitkki šiuat akki. Eruwa barzilaš arḫa pāntari tarnummen, taruppar mugāumeni.
+[кувапи лаумени, ашшул шаумени — пер пиран куйткки шиуат акки. эрува барзилаш арха пантари тарнуммен, таруппар мугаумени.]
+
+05. Kuwapi gimant tiyazzi, aššul kir tiyawen — keššara tuḫḫui ēšzi, barzil lē. Mān šāumeni: watkuššar kir tiyazzi.
+[кувапи гимант тияззи, ашшул кир тиявэн — кешшара туххуй эшци, барзил лэ. ман шаумени: ваткушшар кир тияззи.]
+
+06. Uettar lē tarnawen, kittā lē tarnawen, meḫur lē ēšta — uettar=ma anda ēšzi. Kuitkki meḫur tarnawen: kir anda lē tiyawen.
+[уэддар лэ тарнавен, китта лэ тарнавен, мэхур лэ эшта — уэддар=ма анда эшци. куйткки мэхур тарнавен: кир анда лэ тиявэн.]
+
+07. Šiuat lē kuit hanti paweni, kuitkki tepu anda akkumeni; gimant tiyazzi — šakuwa lē aušzi.
+[шиуат лэ куйт ханти павени, куйткки тэпу анда аккумени; гимант тияззи — шакува лэ аушци.]
+
+08. Assu lē tuppi šiuaš, lē=ma guškin; assu=ma aššul uettar, kir aššuli ḫuwantazšša.
+[ассу лэ туппи шиуаш, лэ=ма гушкин; ассу=ма ашшул уэддар, кир ашшули хуванташша.]
+
+09. Kuit arḫa lē tarnummen, kuit=ma kir tiyawen; parā paweni mekki, uettar lē ēšzi.
+[куйт арха лэ тарнуммен, куйт=ма кир тиявэн; пара павени мекки, уэддар лэ эшци.]
+
+10. Šuhhaš peda pāi, uettar tē, kittā; kir hūwāi kuwapi. Watkuššar arḫa pāitu — nu mugāḫḫi kāša.
+[шуххаш пэда пай, уэддар тэ, китта; кир хувай кувапи. ваткушшар арха паиту — ну мугаххи каша.]
+
+11. Uettar tarnummar 1 ēšzi: šāktari kittāweni, kuis šāk lē.
+[уэддар тарнуммар иа эшци: шактари киттавени, куис шак лэ.]
+
+12. Kuit ēšzi kir tiyawen, tarnummen lē — kuwapi kāša wēš, kuwapi kir parā lē hūwāi.
+[куйт эшци кир тиявэн, тарнуммен лэ — кувапи каша веш, кувапи кир пара лэ хувай.]
+
+───
+
+СЛОВАРЬ МАЛЫША (hit, 12 слов + фраза):
+время → meḫur (время/час; в опоре: nekuz meḫur — вечер) [мэхур]
+туман → nepis wātar tepu (малая небесная вода — слово дождя из опоры + tepu «малый») [непис ватар тэпу]
+воспоминание → šāktar (то, что держит душа; от šāk- «знать») [шактар]
+весна → hamešḫa (форма опоры песни 1) [хамешха]
+свет → šiuat (день/свет; в опоре: tuppi šiuaš — свет таблички) [шиуат]
+поезд → eruwa barzilaš (железная колесница; barzil — железо) [эрува барзилаш]
+ответ → taruppar (от-говор) [таруппар]
+сердце → kir [кир]
+лёд → gimant (зима/стужа) [гимант]
+печаль → watkuššar (тоска-тревога сердца) [ваткушшар]
+иней → gimant (зимняя изморозь; одно слово со льдом) [гимант]
+пульс → kir hūwāi (сердце бежит) [кир хувай]
+ФРАЗА: «когда теряем?» → Kuwapi lāumeni? [кувапи лаумени?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 19 / 20: 19_ae_Авестийский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Авестийский · КОД: ae · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 19 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: язык Гат, латинская транслитерация (ā ē ō ə š θ ą), транскрипция кириллицей (θ→т, š→ш, ə→э, ō→о); современной лексики нет — честная архаика: «кофейня» — nmāna āpō («дом напитка»), «бумага» — urvarā.kərətā («резаная трава»), «поезд» — ayō.raθa («металло-колесница»; ayā- = металл, raθa = колесница), «пепел» — ātarš vī.marətā («огонь погасший»), «иней» и «лёд» — sīta (архаика не различает), «весна» — urvarā vaxšaite (решение опоры песни 1), «любить» — zərədā (букв. «сердцевать», от zərəd «сердце»).
+
+01. Nauuō xšap, nmāna āpō: aŋhra astī, nmānąm vī.dārayeiti. Vīsā vīsā pairi.yāmi — yat̰ cistiš xratūm vī.dārən, yat̰ vohū urvarā vaxšaite, sītā urunąm paiti bārāt̰.
+[наууо хшап, нмана апо: ангра асти, нманам ви-дарайеити. виса виса пайри-ями — йат цистиш хратум ви-дарэн, йат воху урвара вахшайте, сита урунам пайти барат]
+
+02. Gāēθā īšuā yāt̰ — haca xšapąm, haca mā. Urvarā.kərətā bārāma, vaēdāmaide noit, kāmā gāēθā bārāma; āat̰ vāēnā: frā, vispa xšapā, nauuō vāxš vaēdā.
+[гаэта ишуа йат — хаца хшапам, хаца ма. урвара-кэрэта барома, ваэдамайде ноит, кама гаэта барома; аат ваэна: фра, виспа хшапа, наууо вахш ваэда]
+
+03. Zruuān noit dāt̰, noit paiti.dā. Āat̰ sītā zərədā auuā.astī.
+[зрууан ноит дат, ноит пайти-да. аат сита зэрэда аууа-асти]
+
+04. Xšnāsāmaide, kadā vīdāma — kadā haca nmānā raocah noit astī. Ayō.raθaēibiiō yat̰ vī.yātā, vāxš bārāma: cistāt̰ paitiš vaocā.
+[хшнасомайде, када видама — када хаца нмана раоча ноит асти. айо-ратаэибио йат ви-йата, вахш барома: цистат пайтиш ваоца]
+
+05. Xšnāsāmaide zərədā — kadā zərədō sītā astī, kadā dastā ātarš vī.marətā asti, ayā noit. Vaēdāma: kū duš.xvarənō vāēnā urunąm tarsaiiā.
+[хшнасомайде зэрэда — када зэрэдо сита асти, када даста атэрш ви-марэта асти, айа ноит. ваэдама: ку душ-хварэно ваэна урунам тарсайия]
+
+06. Sāxvan noit vaocāt̰, gərəbāt̰ noit, zruuān noit astā — yat̰ šyaoθnā amerətātā astī. Vispa gərəbāt̰ paiti nauuō xšap, zərədō vī.dāt̰ noit aēibiiō.
+[саксван ноит ваоцат, гэрэбат ноит, зрууан ноит аста — йат шйаотна амерэтата асти. виспа гэрэбат пайти наууо хшап, зэрэдо ви-дат ноит аэибио]
+
+07. Aŋhra haca drujəmaide — ātəršā marəma, dāmā noit vīsā; sītā bāzā auuā.astī, vāēnā noit.
+[ангра хаца друджемаиде — атэрша марема, дама ноит виса; сита база аууа-асти, ваэна ноит]
+
+08. Xvarənō noit raočā dāmąm, noit urvarā.kərətąm — aša vohū nmānā, sāxvan noit, haca vātā.
+[хварэно ноит раоча дамам, ноит урвара-кэрэтам — аша воху нмана, саксван ноит, хаца вата]
+
+09. Āat̰ xšnāsāma aēuuā — yat̰ vī.dāt̰: paiti.dā noit astī. Yāma darəγō dūraiiō, xšapā xšapā — xratū noit.
+[аат хшнасома аэуа — йат ви-дат: пайти-да ноит асти. йама дарэго дураийо, хшапа хшапа — храту ноит]
+
+10. Vaocā nmānīm, gərəbā aēibiiō — yāuua zərədō.tars astī. Duš.xvarənō vī.yān — adā yazaiiā.
+[ваоца нманим, гэрэба аэибио — йаууа зэрэдо-тарс асти. душ-хварэно ви-ян — ада язайия]
+
+11. Yat̰ vispa sāxvā aēuuā auua.yān: cistaiiā həntā — vāxš vaēdā noit — auuā astā.
+[йат виспа саксва аэуа аууа-ян: цистайия хэнта — вахш ваэда ноит — аууа аста]
+
+12. Gərəbā yat̰ astī — yāuua adā həntā, yāuua urunō noit vī.yātā dūraiiō.
+[гэрэба йат асти — йаууа ада хэнта, йаууа уруно ноит ви-йата дураийо]
+
+───
+
+СЛОВАРЬ МАЛЫША (ae):
+время → zruuān- (время — аттестовано 100%) [зрууан]
+туман → aŋhra- (мгла, мрак; ср. aŋhra.mainiiu — «дух-мрак» Гат) [ангра]
+воспоминание → cisti- (знание, понимание — «знание прошлого») [цисти]
+весна → urvarā vaxšaite (описательно: «время, когда растёт трава» — из опоры песни 1) [урвара вахшайте]
+свет → raocah- (свет) [раоча]
+поезд → ayō.raθa- (компаунд: «металло-колесница»; ayā- = металл, raθa = колесница) [айо-рата]
+ответ → paitiš (ответ, возражение; paiti = «в ответ») [пайтиш]
+сердце → zərəd- (сердце) [зэрэд]
+лёд → sīta- (холод, мороз) [сита]
+печаль → duš.xvarənō (несчастие; duš- = «дурно», xvarənō = блаженство) [душ-хварэно]
+иней → sīta- (одно слово с «лёдом» — архаика не различает) [сита]
+пульс → zərədō.tars- («трепет сердца»; tars- = трепетать) [зэрэдо-тарс]
+ФРАЗА: «когда теряем?» → Kadā vīdāma? (kadā = когда; vī.dā- = отдавать/раздавать) [када видама?]
+
+
+════════════════════════════════════════════════════════
+ФАЙЛ 20 / 20: 20_aii_Новоарамейский.txt
+════════════════════════════════════════════════════════
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Новоарамейский (ассирийский, сурет) · КОД: aii · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 20 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: норма — разговорный сурет (восточный неоарамейский), сирийское письмо без огласовок; сверено с опорой песни 1 (14_aii: ܫܪܪܐ шрара, ܡܛܪܐ митра, ܠܠܝܐ лелйа, ܢܘܗܪܐ нухра). «Печаль» — ܚܣܪܘܬܐ (от корня ܚܣܪ «терять» — горевание о потере); «весна» — ܪܒܝܥܐ (классический арабизм; в песне 1 — ܢܒܐܣܐ); «поезд» — ܩܛܪܐ и «кофейня» — ܒܝܬ ܩܗܘܐ (живые заимствования: тур. qatar, араб. qahwa); «витрина» — ܢܘܗܪܐ ܕܓܢܙܐ («блеск сокровищницы»); «купюра» — ܦܠܛܐ ܕܟܣܦܐ («лист серебра»); «иней» — ܓܠܝܕܐ ܛܠܐ («утренний лёд», ܛܠܐ = роса); «машем вслед» → ܩܝܡܝܢ ܒܪ («стоим позади» — как в опоре песни 1); «ныть» — ܟܐܒܐ (болит). Презенс — причастие на -ܝܢ / k-форма, копулы ܝܠܗ иле / ܗܘܐ хва.
+
+01. ܪܡܫܐ ܚܕܬܐ ܒܒܝܬ ܩܗܘܐ. ܥܒܐ ܪܝܩܐ ܒܠܥܐ ܠܒܝܬܐ. ܐܢܐ ܗܠܟܝܢ ܒܟܠ ܫܘܩܐ، ܐܝܟܐ ܕܘܟܪܢܐ ܚܕܪܝܢ ܒܪܝܫܝ، ܐܝܟܐ ܒܪܒܝܥܐ ܚܡܐ ܣܬܘܐ ܡܟܣܐ ܠܢܫܡܬܝ.
+[рамша хадта б-бет кахва. ʿаба рика блʿа л-бате. ана халкин б-куль шуке, айка дукрана хадрин б-реши, айка б-рабиʿа хамма сатва макса л-нашмати]
+
+02. ܚܝܐ ܪܚܛܐ ܐܝܟ ܚܨܐ، ܡܢ ܝܘܡܐ ܠܝܘܡܐ ܘܡܢܢ. ܚܢܢ ܟܢܫܝܢ ܦܠܛܐ ܕܟܣܦܐ، ܢܫܝܢ ܠܡܐ ܚܝܝܢ — ܘܚܫܒܝܢ: ܩܠܐ ܕ«ܕܘ» ܥܕܟܝܠ ܩܝܡ ܩܕܡܝܬܐ.
+[хайе рахта айк хуца, мин йома л-йома в-миннан. хнан кнашин пелта д-кеспа, нашин л-ма хаййин — в-хашбин: кала д-«до» ʿадкил кайим кадмита]
+
+03. ܥܕܢܐ ܒܠܚܘܕ ܠܐ ܝܗܒ ܠܢ ܡܕܝܡ ܒܪܝܒܐ. ܘܦܛܐܝܬ ܥܠ ܠܒܐ ܢܦܠܐ ܓܠܝܕܐ ܩܪܝܐ.
+[ʿадна бльхуд ла йахав лан мидим б-рибба. в-птаит ʿал либа нафла галида карйа]
+
+04. ܚܢܢ ܠܡܕܝܢ ܠܢܛܪ ܟܕ ܚܣܝܢ، — ܟܕ ܒܪ ܬܪܐ ܢܛܦܐ ܢܘܗܪܐ ܕܚܕ ܐܢܫܐ. ܚܢܢ ܩܝܡܝܢ ܒܪ ܩܛܪܐ ܕܥܒܪܝ̈ܢ، ܒܥܝܢ ܡܥܢܝܬܐ ܡܢ ܡܕܡ ܕܥܒܪ.
+[хнан ламдин л-нтар кад хасин, — кад бар тара нтапе нухра д-хад анша. хнан каймин бар катра д-ʿварин, баʿйин маʿнята мин мидим д-ʿвар]
+
+05. ܚܢܢ ܠܡܕܝܢ ܠܚܘܒܐ ܟܕ ܩܪܝܐ، — ܟܕ ܒܐܦܐܢ ܦܚܪܐ ܘܠܐ ܦܪܙܠܐ. ܗܐ ܠܘ ܝܕܥܝܢ ܡܢ ܩܕܡܝܬܐ، ܐܝܟܢܐ ܚܣܪܘܬܐ ܫܦܝܛܬܐ ܟܐܒܐ ܒܢܫܡܬܢ.
+[хнан ламдин л-хубба кад карйа, — кад б-эфан пахра в-ла парзла. ха лу йадʿин мин кадмита, айканна хасрута шапита кʿава б-нашман]
+
+06. ܠܐ ܐܡܪܝܢ، ܠܐ ܚܒܩܝܢ، ܠܐ ܡܛܝܢ — ܗܢܐ ܩܠܐ ܕܩܝܡ ܠܥܠܡ. ܟܠ ܡܕܡ ܗܘܐ ܢܛܪܝܢ ܠܬܡܢ، ܠܐ ܦܬܚܝܢ ܠܠܒܐ ܠܚܪܢܐ.
+[ла амрин, ла хабикин, ла мтин — хана кала д-кайим л-ʿлам. куль мидим хва нтарин л-таман, ла птахин л-либа л-храна]
+
+07. ܚܢܢ ܩܪܒܝܢ ܥܡ ܛܠܠܐ، ܢܛܦܝܢ ܒܙܥܘܪܐ ܪܝܩܐ، ܘܠܐ ܡܬܚܙܐ ܕܓܠܝܕܐ ܛܠܐ ܢܦܠܐ ܥܠ ܟܬܦܐܢ.
+[хнан кравин ʿим тлала, нтапин б-зʿуре рике, в-ла митхзе д-галида тала нафла ʿал ктафан]
+
+08. ܐܠܐ ܚܕܘܬܐ ܠܐ ܝܠܗ ܒܢܘܗܪܐ ܕܓܢܙܐ، ܠܐ ܒܦܠܛܐ ܕܟܣܦܐ، ܐܠܐ ܒܫܪܪܐ ܫܬܝܩܬܐ ܕܩܪܝܒܐ، ܒܚܡܡܐ ܕܗܢܘܢ ܒܓܘ ܪܘܚܐ ܥܙܝܐ.
+[эла хьдута ла иле б-нухра д-ганза, ла б-пелта д-кеспа, эла б-шрара штайката д-криве, б-хамма д-хонун б-гу руха ʿазза]
+
+09. ܐܠܐ ܚܢܢ ܝܗܒܝܢ ܬܓܡܐ ܒܠܚܘܕ ܠܡܕܡ ܕܠܐ ܐܬܝܐ ܬܘܒ، ܐܙܠܝܢ ܒܐܘܪܚܐ ܐܪܝܟܐ، ܣܓܝ ܙܒܢܐ ܕܠܐ ܬܘܥܝܐ.
+[эла хнан йахавин тегма бльхуд л-мидим д-ла атйа тов, аззин б-урха арейха, саги завна д-ла тавʿйа]
+
+10. ܩܪܝ ܠܣܒܝܐ، ܚܒܩ ܐܢܘܢ، ܥܕܡܐ ܕܚܘܛܠܐ ܕܠܒܐ ܡܚܝܐ. ܪܘܓܙܐ ܢܥܒܪܘܢ — ܨܠܘܬܝ ܝܘܡܐ ܥܠ ܗܢܐ ܝܠܗ.
+[кри л-савйе, хабик аннун, ʿадма д-хутла д-либа мхайа. ругзе нʿбарун — цлюти йома ʿал хана иле]
+
+11. ܡܛܠ ܕܣܘܦܐ ܕܟܠ ܙܡܪܬܐ ܚܕܐ ܝܠܗ: ܚܢܢ ܩܝܡܝܢ ܒܕܘܟܪܢܐ، ܐܝܟ ܕܡܝܬܐ ܕܢܫܝܐ، ܝܬܒܝܢ.
+[метвул д-софа д-куль змара хда иле: хнан каймин б-дукрана, айк дамита д-нише, йатвин]
+
+12. ܠܘ ܢܛܪܝܢ ܡܕܡ ܕܐܝܬ، — ܥܕܡܐ ܕܚܢܢ ܗܪܟܐ، ܥܕܡܐ ܕܢܫܡܬܢ ܦܪܚܐ ܠܪܘܚܩܘܬܐ.
+[лу нтарин мидим д-ит, — ʿадма д-хнан харка, ʿадма д-нашман парха л-рухикюта]
+
+───
+
+СЛОВАРЬ МАЛЫША (aii, 12 слов + фраза):
+время → ܥܕܢܐ (ʿadnā) [ʿадна]
+туман → ܥܒܐ (ʿabā, облако) [ʿаба]
+воспоминание → ܕܘܟܪܢܐ (dukrānā; и «память») [дукрана]
+весна → ܪܒܝܥܐ (rabiʿā, арабизм классический; в песне 1 — ܢܒܐܣܐ нбаса) [рабиʿа]
+свет → ܢܘܗܪܐ (nūhrā) [нухра]
+поезд → ܩܛܪܐ (qatrā, заимств. из тур. qatar) [катра]
+ответ → ܡܥܢܝܬܐ (maʿnyātā) [маʿнята]
+сердце → ܠܒܐ (lebba) [либа]
+лёд → ܓܠܝܕܐ (glīdā) [галида]
+печаль → ܚܣܪܘܬܐ (ḥasrūtā, от корня ܚܣܪ «терять») [хасрута]
+иней → ܓܠܝܕܐ ܛܠܐ («утренний лёд», ܛܠܐ = роса) [галида тала]
+пульс → ܚܘܛܠܐ ܕܠܒܐ («биение сердца») [хутла д-либа]
+ФРАЗА: «когда теряем?» → ܐܡܬܝ ܟܚܣܝܢ ܝܠܢ؟ (amtāy k-ḥasīn ilan?) [амтай к-хасин илан?]
+
+

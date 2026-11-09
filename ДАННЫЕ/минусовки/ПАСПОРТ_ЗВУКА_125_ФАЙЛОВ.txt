@@ -1,0 +1,160 @@
+ПАСПОРТ ЗВУКА ДОМА «СИНГУЛЯР» — ВСЕ ТРЕКИ ЗВУЧАТ (протокол такта v10.66 «ПОЛЮСА»)
+====================================================================================================
+Дата проверки: 2026-10-12 · способ: каждый файл скачан из репозитория через GitHub raw API
+и ПОЛНОСТЬЮ декодирован ffmpeg (ffmpeg -v error -i ФАЙЛ -f null -) — 0 ошибок декодирования.
+Инструмент: scripts/verify_all_audio.py (ffprobe + полное декодирование, отчёт с sha256).
+
+ИТОГ: 125 из 125 файлов звучат целиком, битых 0.
+Объём аудио в репо: 275 MB · длительности треков: 114.7 с … 600.0 с (медиана 200 с).
+
+ДВА ПОЛЮСА У ВСЕХ 62 ПЕСЕН (факт):
+  МАКС: minus/{id}.mp3 — 61 mp3-мастер концертных треков (всего в minus/ 62 mp3: ещё и резерв
+        minus/9ys_TVEtda8.mp3 «Просто люби») + minus/prosto-lubi.max.webm — настоящий webm-мастер
+        «Просто люби» (Opus, стерео) для караоке-дома.
+  МИН:  minus/min/{id}.webm — 61 файл Opus 24 кбит/с моно 48 кГц + minus/prosto-lubi.min.webm
+        = 62 МИН-полюса, по одному на каждую песню.
+
+ЖИВОЙ ТЕСТ ПЛЕЕРА (GitHub Pages, ворота ·31 ЛАДОМ v10.66, headless-браузер 2026-10-12):
+  · страница грузится, плейлист зала: 62 песни, ЗДОРОВЬЕ 161/161;
+  · ПУСК играет (кнопка ▶→⏸), трек стримится с GitHub Pages;
+  · ПОЛЮС МАКС→МИН на караоке: GET minus/prosto-lubi.min.webm → 200, звук не прерван, кнопка честная (aria-pressed);
+  · СЛЕДУЮЩАЯ: «2 / 62 · Я сам себе судья», концертный режим, GET minus/min/1BZs_wUPn1s.webm → 206;
+  · ПОЛЮС МИН→МАКС на концертном: GET minus/1BZs_wUPn1s.mp3 → 206 — на лету, позиция песни сохранена;
+  · НАЗАД: перемотка в начало (прошло >3 с — практика Spotify/YouTube);
+  · память kv31.pol: и МАКС, и МИН переживают перезагрузку страницы;
+  · РЕЛАКС: панели гаснут при пении, касание возвращает (замысел дома выполняется).
+
+ПОЛЮС ПЕРЕКЛЮЧАЕТСЯ ТРЕМЯ СПОСОБАМИ: кнопка МАКС/МИН в доке, клавиша V (и «м» русская),
+голос «макс/мин/полюс/качество». Фолбэк честный: файла МИН нет рядом — играет МАКС.
+
+====================================================================================================
+ТАБЛИЦА 125 ФАЙЛОВ: путь · песня · полюс · размер · длительность · кодек · sha256(16)
+====================================================================================================
+--- МАКС-мастера mp3 (minus/) ---
+minus/HupAWAt7CmQ.mp3                | А время капает               | МАКС (mp3-мастер)        |    2.77 MB |  173.0 с | mp3 1ch      | 7dba0e38ad01b9a5
+minus/t9h3cCPCKoo.mp3                | А что если ДА                | МАКС (mp3-мастер)        |    3.76 MB |  235.1 с | mp3 1ch      | 11bdb98be3b26ce8
+minus/VfnGUIhaK2Y.mp3                | А что если да                | МАКС (mp3-мастер)        |    2.85 MB |  178.1 с | mp3 1ch      | f5d939805df7f1f8
+minus/kziwaat2nu4.mp3                | Ангел без крыльев            | МАКС (mp3-мастер)        |    3.95 MB |  247.0 с | mp3 1ch      | 32204c9f81f70efb
+minus/ugjp6iaNplo.mp3                | Бой с собой                  | МАКС (mp3-мастер)        |    2.43 MB |  152.0 с | mp3 1ch      | caf4e3578f61f3c2
+minus/n5IFJ-g1Rtc.mp3                | В чём смысл                  | МАКС (mp3-мастер)        |    4.48 MB |  280.0 с | mp3 1ch      | 5fe6876be09ebcbf
+minus/G7L2d0Z5xfY.mp3                | Вера остаётся                | МАКС (mp3-мастер)        |    2.82 MB |  176.0 с | mp3 1ch      | 7f06cb39f9bb8324
+minus/eA-fyeSkavI.mp3                | Вне зоны доступа             | МАКС (mp3-мастер)        |    3.33 MB |  208.0 с | mp3 1ch      | f9cca53ca0555dcd
+minus/YaY-ZJVXFjI.mp3                | Время как вода               | МАКС (mp3-мастер)        |    2.37 MB |  148.0 с | mp3 1ch      | af75b79151dd2b3c
+minus/gMASVVNFr_A.mp3                | Время покажет                | МАКС (mp3-мастер)        |    3.06 MB |  191.0 с | mp3 1ch      | 3bff04a4fc5c9641
+minus/_PCJ6fMfeRM.mp3                | Всё начинается с тебя        | МАКС (mp3-мастер)        |    3.52 MB |  220.0 с | mp3 1ch      | 8b56a806b36f0bdb
+minus/shs0TiOwx-M.mp3                | Где настоящее                | МАКС (mp3-мастер)        |    4.24 MB |  265.0 с | mp3 1ch      | f65f8d71d510b7ee
+minus/GB31hcDi3lo.mp3                | Гордость нас убивает         | МАКС (mp3-мастер)        |    3.06 MB |  191.0 с | mp3 1ch      | e8fb05a258151d7d
+minus/LCADfnI8F-s.mp3                | Действуй сейчас              | МАКС (mp3-мастер)        |    2.47 MB |  154.0 с | mp3 1ch      | 90468c6ae0645b57
+minus/OHaRQj9PLUY.mp3                | Дорога мой Учитель           | МАКС (mp3-мастер)        |    2.56 MB |  160.0 с | mp3 1ch      | 7241a23b50babf7d
+minus/Y7Wy_JBkz7A.mp3                | Живи как умеешь              | МАКС (mp3-мастер)        |    3.76 MB |  235.1 с | mp3 1ch      | d5f27f8c1d823262
+minus/fJwb931iJVg.mp3                | Живи сейчас                  | МАКС (mp3-мастер)        |    4.27 MB |  267.1 с | mp3 1ch      | 9a5258184e84ec4c
+minus/QpeYJU83XiQ.mp3                | Жизнь не прощает             | МАКС (mp3-мастер)        |    3.07 MB |  192.0 с | mp3 1ch      | ae6e9a5e75b05e42
+minus/TRcxZ7jfPsA.mp3                | Когда Теряем                 | МАКС (mp3-мастер)        |    4.02 MB |  251.0 с | mp3 1ch      | 69c52347e087f7b6
+minus/X90mDPOhvKc.mp3                | Когда погаснут огни          | МАКС (mp3-мастер)        |    2.99 MB |  187.0 с | mp3 1ch      | 0ebec2610022a8db
+minus/rWpYxmFjm9g.mp3                | Когда теряем (флагман ★)     | МАКС (mp3-мастер)        |    3.70 MB |  230.9 с | mp3 2ch      | c5b8951511d15cbe
+minus/X_-M_cjCFVg.mp3                | Когда ты удобен              | МАКС (mp3-мастер)        |    4.26 MB |  266.0 с | mp3 1ch      | 933ef7ee93a89992
+minus/eOMrrezWEZM.mp3                | Код перемен                  | МАКС (mp3-мастер)        |    3.03 MB |  189.1 с | mp3 1ch      | 5104357e5bc10895
+minus/JRTUNak53nU.mp3                | Компас на Дом                | МАКС (mp3-мастер)        |    3.25 MB |  203.1 с | mp3 1ch      | 441a4b9dd6d3c0ba
+minus/KvzORszfsg8.mp3                | Крик в тишине                | МАКС (mp3-мастер)        |    3.55 MB |  222.0 с | mp3 1ch      | 64c1f84170893f31
+minus/M9o3ZIlhHrU.mp3                | Люди в Масках                | МАКС (mp3-мастер)        |    2.53 MB |  158.0 с | mp3 1ch      | 711735d111cee83c
+minus/TkmSZp1dfBE.mp3                | Меня не сломать              | МАКС (mp3-мастер)        |    4.16 MB |  260.1 с | mp3 1ch      | d1bf42dde8480cae
+minus/pv3GAlLG9Lk.mp3                | Нас учат потери              | МАКС (mp3-мастер)        |    4.07 MB |  254.0 с | mp3 1ch      | 4881be3d5fb30962
+minus/ahmGGM-P0CA.mp3                | Начать сначала               | МАКС (mp3-мастер)        |    2.58 MB |  161.0 с | mp3 1ch      | 0880967bcb090676
+minus/MSqK5ig-alE.mp3                | Не Угасай                    | МАКС (mp3-мастер)        |    2.32 MB |  145.0 с | mp3 1ch      | 065d209e5e97305b
+minus/2g5n6B0bc2Q.mp3                | Не вам жить мою жизнь        | МАКС (mp3-мастер)        |    1.84 MB |  114.7 с | mp3 1ch      | ea4562c6acc17e2b
+minus/d2b72nYLiT8.mp3                | Не жди завтра                | МАКС (mp3-мастер)        |    3.14 MB |  196.1 с | mp3 1ch      | 9615fb16a2e700d6
+minus/8zG2LBAn1AI.mp3                | Не играй в любовь            | МАКС (mp3-мастер)        |    3.58 MB |  224.0 с | mp3 1ch      | fbb1eecd56ea661b
+minus/pervLR9m-vk.mp3                | Не спеши осуждать            | МАКС (mp3-мастер)        |    3.58 MB |  224.0 с | mp3 1ch      | ce9b716a1d2b3c71
+minus/WMU46n--Z-s.mp3                | Не теряй шанс                | МАКС (mp3-мастер)        |    2.40 MB |  150.1 с | mp3 1ch      | 5f6139336a6c303b
+minus/cFHsQ-LP3ns.mp3                | Не тех мы ценим              | МАКС (mp3-мастер)        |    2.91 MB |  182.1 с | mp3 1ch      | c7579d44f184b26e
+minus/q57MLk0Uf9c.mp3                | Неудача — не конец           | МАКС (mp3-мастер)        |    3.38 MB |  211.0 с | mp3 1ch      | 8fad6fec6bbedebe
+minus/_gNbMCINv1Y.mp3                | О чём мечтаешь ты            | МАКС (mp3-мастер)        |    5.12 MB |  320.0 с | mp3 1ch      | cf284b8a05685f7e
+minus/LqMrrKqK3AE.mp3                | Одиночество среди людей      | МАКС (mp3-мастер)        |    3.91 MB |  244.0 с | mp3 1ch      | 9df0509bf7576875
+minus/POiQQ21I5n0.mp3                | Оставайся молодым            | МАКС (mp3-мастер)        |    4.10 MB |  256.0 с | mp3 1ch      | 1fe51ab9076f6ca7
+minus/PIyWwF0t4wQ.mp3                | Остаться человеком           | МАКС (mp3-мастер)        |    2.85 MB |  178.1 с | mp3 1ch      | 4a9c8b75cfeff2c2
+minus/TobJGYOPlnw.mp3                | Остаться человеком           | МАКС (mp3-мастер)        |    3.20 MB |  200.1 с | mp3 1ch      | b912bee235d86aa4
+minus/yK2aPehxmK8.mp3                | Пленники прошлого            | МАКС (mp3-мастер)        |    3.07 MB |  192.0 с | mp3 1ch      | 8bad4abc34488fc6
+minus/9ys_TVEtda8.mp3                | Просто люби                  | МАКС (mp3-мастер)        |    3.76 MB |  235.1 с | mp3 1ch      | 68cc0524f9f88449
+minus/6woWDYcu1QY.mp3                | Разгадка в небесах           | МАКС (mp3-мастер)        |    1.84 MB |  114.7 с | mp3 1ch      | e71cade2fa0ee004
+minus/Qb8xb0vUYDg.mp3                | Сборник Музыки со Смыслом    | МАКС (mp3-мастер)        |    9.60 MB |  600.0 с | mp3 1ch      | c171f8689e55192b
+minus/KFnJwNv008s.mp3                | Свет в темноте               | МАКС (mp3-мастер)        |    2.99 MB |  187.0 с | mp3 1ch      | bcdb206e8a9efe29
+minus/VwoK5U0qOys.mp3                | Сердце в Огне                | МАКС (mp3-мастер)        |    1.98 MB |  124.0 с | mp3 1ch      | db621cfd90d0e369
+minus/KfKHWdiX3S4.mp3                | Смысл жизни прост            | МАКС (mp3-мастер)        |    2.63 MB |  164.1 с | mp3 1ch      | f652394c3276266c
+minus/WIrhIrDQvwY.mp3                | Страх не слабость            | МАКС (mp3-мастер)        |    4.13 MB |  258.0 с | mp3 1ch      | 0c8d5e4c993b7eba
+minus/8RRRYysSIHg.mp3                | Суть проста                  | МАКС (mp3-мастер)        |    1.84 MB |  114.7 с | mp3 1ch      | f429d97485915c08
+minus/vUb40twffCI.mp3                | Там где ты                   | МАКС (mp3-мастер)        |    2.93 MB |  183.0 с | mp3 1ch      | 4aa9433d84455aa5
+minus/V-IaCbDUKao.mp3                | Твоё плавание не вечно       | МАКС (mp3-мастер)        |    3.81 MB |  238.0 с | mp3 1ch      | dd80c0b79be2e31f
+minus/lkXLeITEtGA.mp3                | Тень ушедших                 | МАКС (mp3-мастер)        |    3.71 MB |  232.1 с | mp3 1ch      | d830e9632acab76a
+minus/_E91VEQ-8lM.mp3                | Тишина спасает               | МАКС (mp3-мастер)        |    3.52 MB |  220.0 с | mp3 1ch      | a072a51d222aaab2
+minus/b_36rlzEIKk.mp3                | Ты Главный игрок             | МАКС (mp3-мастер)        |    4.66 MB |  291.0 с | mp3 1ch      | 49b6bb06e590d4f5
+minus/_KwlGQNmC1Q.mp3                | Ты одна дала                 | МАКС (mp3-мастер)        |    3.06 MB |  191.0 с | mp3 1ch      | a5828e17d2d05e78
+minus/pP3Kk2_FHbE.mp3                | Цени время                   | МАКС (mp3-мастер)        |    4.29 MB |  268.0 с | mp3 1ch      | 3bb6f97d15f53b69
+minus/EFaMUciH3Do.mp3                | Цени моменты                 | МАКС (mp3-мастер)        |    2.78 MB |  174.0 с | mp3 1ch      | 2349cd66f47b9b7a
+minus/R0SOJreGbhM.mp3                | Цени моменты                 | МАКС (mp3-мастер)        |    2.43 MB |  152.0 с | mp3 1ch      | db3de9c012b8cc58
+minus/z3RcsfHajP8.mp3                | Я сам себе враг              | МАКС (mp3-мастер)        |    3.23 MB |  202.0 с | mp3 1ch      | 414e927580f54d2a
+minus/1BZs_wUPn1s.mp3                | Я сам себе судья             | МАКС (mp3-мастер)        |    2.10 MB |  131.0 с | mp3 1ch      | 5a9beb495ee533f7
+--- МИН-полюса opus (minus/min/ + prosto-lubi.min.webm) ---
+minus/min/1BZs_wUPn1s.webm           | Я сам себе судья             | МИН (opus 24k mono)      |    0.56 MB |  131.1 с | opus 1ch     | aca05ceaa4381e3a
+minus/min/2g5n6B0bc2Q.webm           | Не вам жить мою жизнь        | МИН (opus 24k mono)      |    0.48 MB |  114.7 с | opus 1ch     | 6847568843274b5e
+minus/min/6woWDYcu1QY.webm           | Разгадка в небесах           | МИН (opus 24k mono)      |    0.46 MB |  114.7 с | opus 1ch     | c7f7f04e5b419c46
+minus/min/8RRRYysSIHg.webm           | Суть проста                  | МИН (opus 24k mono)      |    0.46 MB |  114.7 с | opus 1ch     | 13e9aad707225be8
+minus/min/8zG2LBAn1AI.webm           | Не играй в любовь            | МИН (opus 24k mono)      |    0.90 MB |  224.0 с | opus 1ch     | d9302223b55b67fc
+minus/min/EFaMUciH3Do.webm           | Цени моменты                 | МИН (opus 24k mono)      |    0.74 MB |  174.0 с | opus 1ch     | f4146d7a48fef974
+minus/min/G7L2d0Z5xfY.webm           | Вера остаётся                | МИН (opus 24k mono)      |    0.72 MB |  176.0 с | opus 1ch     | 5e025022b1059687
+minus/min/GB31hcDi3lo.webm           | Гордость нас убивает         | МИН (opus 24k mono)      |    0.81 MB |  191.0 с | opus 1ch     | 6997a7818d660bda
+minus/min/HupAWAt7CmQ.webm           | А время капает               | МИН (opus 24k mono)      |    0.70 MB |  173.0 с | opus 1ch     | 3e797c97e049761c
+minus/min/JRTUNak53nU.webm           | Компас на Дом                | МИН (opus 24k mono)      |    0.88 MB |  203.0 с | opus 1ch     | f2f9147302719e00
+minus/min/KFnJwNv008s.webm           | Свет в темноте               | МИН (opus 24k mono)      |    0.75 MB |  187.0 с | opus 1ch     | 40d4f39174fc9bb8
+minus/min/KfKHWdiX3S4.webm           | Смысл жизни прост            | МИН (opus 24k mono)      |    0.68 MB |  164.0 с | opus 1ch     | fef913cab812dc60
+minus/min/KvzORszfsg8.webm           | Крик в тишине                | МИН (opus 24k mono)      |    0.91 MB |  222.0 с | opus 1ch     | 4b0c0720f64b78d1
+minus/min/LCADfnI8F-s.webm           | Действуй сейчас              | МИН (opus 24k mono)      |    0.64 MB |  154.0 с | opus 1ch     | 3f69910a5257cafc
+minus/min/LqMrrKqK3AE.webm           | Одиночество среди людей      | МИН (opus 24k mono)      |    0.98 MB |  244.0 с | opus 1ch     | 58fac5f6b9bdb6f1
+minus/min/M9o3ZIlhHrU.webm           | Люди в Масках                | МИН (opus 24k mono)      |    0.63 MB |  158.0 с | opus 1ch     | cd348dd39ee185a4
+minus/min/MSqK5ig-alE.webm           | Не Угасай                    | МИН (opus 24k mono)      |    0.62 MB |  145.0 с | opus 1ch     | 372bfd3a733abc8a
+minus/min/OHaRQj9PLUY.webm           | Дорога мой Учитель           | МИН (opus 24k mono)      |    0.68 MB |  160.0 с | opus 1ch     | 067e07679066407e
+minus/min/PIyWwF0t4wQ.webm           | Остаться человеком           | МИН (opus 24k mono)      |    0.75 MB |  178.0 с | opus 1ch     | a508ccde51306c6f
+minus/min/POiQQ21I5n0.webm           | Оставайся молодым            | МИН (opus 24k mono)      |    1.07 MB |  256.0 с | opus 1ch     | 907dd0c49f1ebcaa
+minus/min/Qb8xb0vUYDg.webm           | Сборник Музыки со Смыслом    | МИН (opus 24k mono)      |    2.53 MB |  600.0 с | opus 1ch     | 993a5f5c782200f2
+minus/min/QpeYJU83XiQ.webm           | Жизнь не прощает             | МИН (opus 24k mono)      |    0.81 MB |  192.0 с | opus 1ch     | 86308e3762ac82bc
+minus/min/R0SOJreGbhM.webm           | Цени моменты                 | МИН (opus 24k mono)      |    0.63 MB |  152.0 с | opus 1ch     | 5bdabcd8e99465f0
+minus/min/TRcxZ7jfPsA.webm           | Когда Теряем                 | МИН (opus 24k mono)      |    1.04 MB |  251.0 с | opus 1ch     | 004a904c633347a4
+minus/min/TkmSZp1dfBE.webm           | Меня не сломать              | МИН (opus 24k mono)      |    1.08 MB |  260.0 с | opus 1ch     | a6133a3f27954f51
+minus/min/TobJGYOPlnw.webm           | Остаться человеком           | МИН (opus 24k mono)      |    0.81 MB |  200.0 с | opus 1ch     | b45e585041dfc964
+minus/min/V-IaCbDUKao.webm           | Твоё плавание не вечно       | МИН (opus 24k mono)      |    0.99 MB |  238.0 с | opus 1ch     | 513042484929af26
+minus/min/VfnGUIhaK2Y.webm           | А что если да                | МИН (opus 24k mono)      |    0.74 MB |  178.0 с | opus 1ch     | 9b93e20302ac4b47
+minus/min/VwoK5U0qOys.webm           | Сердце в Огне                | МИН (opus 24k mono)      |    0.51 MB |  124.0 с | opus 1ch     | 3d471af9a781361f
+minus/min/WIrhIrDQvwY.webm           | Страх не слабость            | МИН (opus 24k mono)      |    1.05 MB |  258.0 с | opus 1ch     | d91560149b701b65
+minus/min/WMU46n--Z-s.webm           | Не теряй шанс                | МИН (opus 24k mono)      |    0.60 MB |  150.0 с | opus 1ch     | 77025cc3ddbdfa06
+minus/min/X90mDPOhvKc.webm           | Когда погаснут огни          | МИН (opus 24k mono)      |    0.78 MB |  187.0 с | opus 1ch     | accda2eecc5cd5a0
+minus/min/X_-M_cjCFVg.webm           | Когда ты удобен              | МИН (opus 24k mono)      |    1.06 MB |  266.0 с | opus 1ch     | af5e05e5e13adb57
+minus/min/Y7Wy_JBkz7A.webm           | Живи как умеешь              | МИН (opus 24k mono)      |    0.94 MB |  235.0 с | opus 1ch     | 6033ec6412137e75
+minus/min/YaY-ZJVXFjI.webm           | Время как вода               | МИН (opus 24k mono)      |    0.59 MB |  148.0 с | opus 1ch     | 34215eab8ca3a678
+minus/min/_E91VEQ-8lM.webm           | Тишина спасает               | МИН (opus 24k mono)      |    0.92 MB |  220.0 с | opus 1ch     | 2792c873fd7c90f5
+minus/min/_KwlGQNmC1Q.webm           | Ты одна дала                 | МИН (opus 24k mono)      |    0.76 MB |  191.0 с | opus 1ch     | 9575e9b51f1574cd
+minus/min/_PCJ6fMfeRM.webm           | Всё начинается с тебя        | МИН (opus 24k mono)      |    0.95 MB |  220.0 с | opus 1ch     | fe22bcbe15f3151f
+minus/min/_gNbMCINv1Y.webm           | О чём мечтаешь ты            | МИН (opus 24k mono)      |    1.32 MB |  320.0 с | opus 1ch     | 2c43bcb5f1840d57
+minus/min/ahmGGM-P0CA.webm           | Начать сначала               | МИН (opus 24k mono)      |    0.67 MB |  161.0 с | opus 1ch     | 91abfee6264ae139
+minus/min/b_36rlzEIKk.webm           | Ты Главный игрок             | МИН (opus 24k mono)      |    1.25 MB |  291.0 с | opus 1ch     | b1535c956c1a6d5e
+minus/min/cFHsQ-LP3ns.webm           | Не тех мы ценим              | МИН (opus 24k mono)      |    0.73 MB |  182.0 с | opus 1ch     | 15066d9ad012e8a0
+minus/min/d2b72nYLiT8.webm           | Не жди завтра                | МИН (opus 24k mono)      |    0.82 MB |  196.0 с | opus 1ch     | 0cc8a2f251fb3caa
+minus/min/eA-fyeSkavI.webm           | Вне зоны доступа             | МИН (opus 24k mono)      |    0.84 MB |  208.0 с | opus 1ch     | 39f08530ad81ed44
+minus/min/eOMrrezWEZM.webm           | Код перемен                  | МИН (opus 24k mono)      |    0.75 MB |  189.0 с | opus 1ch     | 2721318429f0e271
+minus/min/fJwb931iJVg.webm           | Живи сейчас                  | МИН (opus 24k mono)      |    1.08 MB |  267.0 с | opus 1ch     | 65431d7a1417c62d
+minus/min/gMASVVNFr_A.webm           | Время покажет                | МИН (opus 24k mono)      |    0.79 MB |  191.0 с | opus 1ch     | 0ece3d8be02f13f6
+minus/min/kziwaat2nu4.webm           | Ангел без крыльев            | МИН (opus 24k mono)      |    0.99 MB |  247.0 с | opus 1ch     | 01964f2ff0ae3047
+minus/min/lkXLeITEtGA.webm           | Тень ушедших                 | МИН (opus 24k mono)      |    0.95 MB |  232.0 с | opus 1ch     | fba72b9ec363703d
+minus/min/n5IFJ-g1Rtc.webm           | В чём смысл                  | МИН (opus 24k mono)      |    1.18 MB |  280.0 с | opus 1ch     | 8b6556fcb2066fd3
+minus/min/pP3Kk2_FHbE.webm           | Цени время                   | МИН (opus 24k mono)      |    1.09 MB |  268.0 с | opus 1ch     | 305e977f5e541f2a
+minus/min/pervLR9m-vk.webm           | Не спеши осуждать            | МИН (opus 24k mono)      |    0.92 MB |  224.0 с | opus 1ch     | f8e15764a4307449
+minus/min/pv3GAlLG9Lk.webm           | Нас учат потери              | МИН (opus 24k mono)      |    1.06 MB |  254.0 с | opus 1ch     | a316b169c2cbaead
+minus/min/q57MLk0Uf9c.webm           | Неудача — не конец           | МИН (opus 24k mono)      |    0.84 MB |  211.0 с | opus 1ch     | 632cc9f50db9ebb0
+minus/min/rWpYxmFjm9g.webm           | Когда теряем (флагман ★)     | МИН (opus 24k mono)      |    0.11 MB |  230.9 с | opus 1ch     | 71943528d5e7ad97
+minus/min/shs0TiOwx-M.webm           | Где настоящее                | МИН (opus 24k mono)      |    1.08 MB |  265.0 с | opus 1ch     | 81e017df8139886e
+minus/min/t9h3cCPCKoo.webm           | А что если ДА                | МИН (opus 24k mono)      |    1.02 MB |  235.0 с | opus 1ch     | 47fb4c8a378cb53f
+minus/min/ugjp6iaNplo.webm           | Бой с собой                  | МИН (opus 24k mono)      |    0.66 MB |  152.0 с | opus 1ch     | ca42a7f1f9dfd13b
+minus/min/vUb40twffCI.webm           | Там где ты                   | МИН (opus 24k mono)      |    0.72 MB |  183.0 с | opus 1ch     | 932e7a9a3ffdb366
+minus/min/yK2aPehxmK8.webm           | Пленники прошлого            | МИН (opus 24k mono)      |    0.81 MB |  192.0 с | opus 1ch     | ed23ebb65af92c07
+minus/min/z3RcsfHajP8.webm           | Я сам себе враг              | МИН (opus 24k mono)      |    0.84 MB |  202.0 с | opus 1ch     | bdaec1952e50ee03
+minus/prosto-lubi.min.webm           | Просто люби                  | МИН (opus 24k mono)      |    0.82 MB |  234.2 с | opus 1ch     | 027b275d96880c8f
+--- МАКС-мастер webm «Просто люби» ---
+minus/prosto-lubi.max.webm           | Просто люби                  | МАКС (webm-мастер)       |   14.59 MB |  234.2 с | opus 2ch     | 1027e64cd4a4a77f

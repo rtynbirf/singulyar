@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Южносаамский · КОД: sma · ГРУППА 7 · язык 06 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: латиница, южносаамская норма (Норвегия/Швеция); «настоящее» — reelnie (заимств. норв. reell), «счастье» — liehkie, «ночь» — naestie, «весна» — gaehtjie, «дождь» — aarvoe; одиночество, экран, трава, «или», «там» — ensomhete, skjerme, gresse, eller, dtasse (заимств./условно); техн. лексика отсутствует → норвежские заимствования (fremgang, maskiine, distanse, pause, stille, rolle, autopilote, fiila) и описания (пароль — raaktebaakoe «скрытое слово», «вечный май» → iehke gaehtjie «вечная весна», «метавселенная» → jeatjeb eatneme «другой мир», «погаснет» → «не даёт света», «в голове» → datnesne «в тебе»); «одним свайпом» опущено; грамматика упрощена, часть основ реконструирована (ïedtedh, unnonedh, сравн. laegep, pierkep, stillep).
+
+01. Jea, dánne lea fremgange: ididie dårrebe maskiine jih basese Mársasne, ealamebe jeatjeb eatnemese, aalkedebe iehke gaehtjie jih åådtjebe ïalla dánne. Ididie dátte maahtebe.
+[йеа, дянне леа фремганге: идидие дорребе маскийне йих басесе марсасне, эаламебе йеатяб еатнемесе, аалкедебе иэхке гэхтье йих оодтьебе ыалла дянне. идидие датте маахтебе]
+
+02. Ididie båatijebe ønske råajoese — eatnemese mahke pause jih mahke distanse.
+[идидие боатийебе ёнске раайоэсе — еатнемесе махке паусе йих махке дистансе]
+
+03. Ïalla leere laegep jih pierkep — gaskesne leere stillep.
+[ыалла леере лягеп йих пьеркеп — гаскесне леере стиллеп]
+
+04. Ïalla pierkep ididie raaktebaakoe byttebe — ididie rolle unnonebe.
+[ыалла пьеркеп идидие раактебаакуэ быттебе — идидие ролле уннонебе]
+
+05. Vaarje manne, vaesseme dátte skjerme: gustie dánne leere reelnie?
+[ваарйе манне, ваэсеме датте шерме: густие дянне леере реэльние?]
+
+06. Diesse eller dtasse — gustie aarvoe, gustie gresse gaehtjese? Reelnie edtjie duvries datnesne.
+[диесе эллер дтассе — густие аарвуэ, густие гресе гэхтьесе? реэльние едтйие дувриес датнесне]
+
+07. Ididie ïedtebe ïalla mïhke maahtebe ïedtedh. Gustie leere reelnie? Gustie vaessedh reelnie?
+[идидие ыедтебе ыалла михке маахтебе ыедтедх. густие леере реэльние? густие ваэседх реэльние?]
+
+08. Ïalla mïhke leeje gaehtjese, dánne leere betongesne, jih ellie ididie målebe meldinge.
+[ыалла михке лейе гэхтьесе, дянне леере бетонесне, йих эллие идидие моелебе мельдине]
+
+09. Naestie båetie skjerme jearke, daejve båetie skjerme jearke — ididie ealamebe autopilote ringesne.
+[нэстие боатие шерме еарке, дэйве боатие шерме еарке — идидие эаламебе аутопилоте рингесне]
+
+10. Ididie maahtebe sihkoodh distanse — edtjie maahtedh sihkoodh ensomhete, jih ididie gulhtsebe unnep jih unnep.
+[идидие маахтебе сихкудх дистансе — едтйие маахтедх сихкудх энсомхете, йих идидие гулхтсебе уннеп йих уннеп]
+
+11. Muitte datne: naestie leeje naestie, ididie duvries stille — jih liehkie båetie mahke fiila?
+[муитте датне: нэстие лейе нэстие, идидие дувриес стилле — йих лиэхкие боатие махке фийла?]
+
+12. Jih jos okta daejve skjerme edtjie sneahke — vaarje manne: gustie leere reelnie? Diesse eller dtasse?
+[йих йос окта дэйве шерме едтйие снеахке — ваарйе манне: густие леере реэльние? диесе эллер дтассе?]
+
+───
+СЛОВАРЬ МАЛЫША (sma):
+настоящее → reelnie (заимств. норв. reell) [реэльние]
+экран → skjerme (заимств. норв. skjerm) [шерме]
+дождь → aarvoe [аарвуэ]
+весна → gaehtjie [гэхтье]
+трава → gresse (заимств. норв. gress) [гресе]
+бетон → betonge (заимств. норв. betong) [бетонге]
+уведомление → meldinge (заимств. норв. melding) [мелдинге]
+пароль → raaktebaakoe (скрытое слово) [раактебаакуэ]
+ночь → naestie [нэстие]
+одиночество → ensomhete (заимств. норв. ensomhet) [энсомхете]
+счастье → liehkie [лиэхкие]
+где? → gustie [густие]
+где настоящее? → gustie leere reelnie? [густие леере реэльние?]

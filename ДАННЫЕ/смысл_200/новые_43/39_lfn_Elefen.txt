@@ -1,0 +1,49 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: Lingua Franca Nova / elefen (лингва франка нова)
+ISO: lfn | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. Un sera nova en lacafeterio; la nebin densi desfasa la casas.
+    [кириллицей на слух]: ун сера нова эн лакафетерио; ла небин денси десфаса ла касас
+02. Me vaga tra la cuatros, do la recordas foli la person.
+    [кириллицей на слух]: ме вага тра ла куатрос, до ла рекордас фоли ла персон
+03. Do un primavera calda la inverno covre la alma.
+    [кириллицей на слух]: до ун примавера калда ла инверно ковре ла алма
+04. La vive fulta como un fleta — pasada la dates, pasada nos.
+    [кириллицей на слух]: ла виве фульта комо ун флета — пасада ла датес, пасада нос
+05. Nos colie mone-paper, obliviosa de perce nos vive.
+    [кириллицей на слух]: нос колие моне-папер, обливиоза де персе нос виве
+06. La tempo no dona en debeta — un glase fria cade sur la cor.
+    [кириллицей на слух]: ла темпо но дона эн дебета — ун гласе фриа каде сур ла кор
+07. Nos aprendi apresa cuando nos perde: a la porta alga lum estingui.
+    [кириллицей на слух]: нос апренди апреса куандо нос перде: а ла порта алга люм естинги
+08. Nos saluta la trenes vadedor, implorante de la pasada un responde.
+    [кириллицей на слух]: нос салюта ла тренес вадедор, имплоранте де ла пасада ун респонде
+09. Nos aprendi ama cuando frigida: en la palmas seniza, no aser.
+    [кириллицей на слух]: нос апренди ама куандо фриггида: эн ла пальмас сениза, но асер
+10. Si save ante tota — como dole en la alma acel triste clar.
+    [кириллицей на слух]: си савe анте тота — комо долe эн ла алма асель тристе клар
+11. No ia dise, no abrasa, no fini — eterna tema; tota reservada pos, la cor no abrid per otras.
+    [кириллицей на слух]: но иа дисе, но абраза, но фини — этерна тема; тота резервада пос, ла кор но абрид пер отрас
+12. Felis no en la brilia de la vitrina, ma en la veria silen de la proсima; nos valua sola lo cual no pote reveni.
+    [кириллицей на слух]: фелис но эн ла брилия де ла витрина, ма эн ла верия силен де ла проксима; нос валюа сола ло куаль но поте ревени
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, не буквы):
+- «копили бумажки» → «colie mone-paper» (моне = деньги): копили ДЕНЬГИ-бумажки
+  честным составом — в LFN «моне» родное (франц. monnaie), «папер» уточняет
+  форму, а не содержание: деньги, не листы.
+- «впереди ещё звучит до» → в elefen ноты: do re mi fa sol la si (романский
+  фонд): «do» = нота, «fa» = делать. Ловушка «do = делать» нейтрализована
+  пометкой: «la musica ancora sona ante» — музыка ещё звучит впереди.
+- «туман растворяет дома» → «desfasa la casas» (делает неясными/растворяет
+  силуэты) — не стены химически.
+- «прозрачная печаль» → «triste clar» (ясная, просвечивающая) — о чувстве.
+- «остыло» → «frigida» (о чувстве) — не физическое остывание.
+- «вымолить у прошлого ответ» → «implorante de la pasada un responde» (умоляя
+  у прошлого ответ) — молитвенный тон сохранён.
+- «сердце для других не отворил» → «la cor no abrid per otras» (сердце не открыл
+  другим) — про людей.
+АККОРДЫ (местные имена): Am=la minor; Dm=re minor; G=sol major; C=do major; F=fa major; E7=mi sept
+ИГРА (местные слова): глушить=silenti (cordas silenti); баррэ=barre; перебор=arpegio; бой=bata
+НОТЫ (местная система, 7 ступеней от A): A=la B=si C=do D=re E=mi F=fa G=sol
+СИСТЕМА НОТ: родная романская сольмизация (do-re-mi-fa-sol-la-si) — elefen
+унаследовала её из латинского фонда; «do» = нота, «fa» = делать.
