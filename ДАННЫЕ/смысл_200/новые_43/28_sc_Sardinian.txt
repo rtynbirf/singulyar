@@ -1,0 +1,40 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: sardu (сардинский)
+ISO: sc | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. Sero nou in su cafè: sa nebìa apagat sos contornos de sas domos.
+    [кириллицей на слух]: сэ́ро но́у ин су кафе́ — са неби́а апага́т сос конто́рнос де сас до́мос
+02. B'ojo a ghirare pro sos bighinados, inue sos regordos ti leadant de su cabu.
+    [кириллицей на слух]: бóджо а гира́ре про сос бигина́дос, инуэ́ сос рего́рдос ти леа́дант де су ка́бу
+03. Inue in su beranu caentu s'ierru ti cùbrit s'anima.
+    [кириллицей на слух]: инуэ́ ин су бера́ну каэ́нту сьéрру ти ку́брит са́нима
+04. Sa bida est bolada che una sagitta — lassende a pustis is datas e a nois.
+    [кириллицей на слух]: са би́да эст вола́да ке у́на саги́тта — лассе́нде а пу́стис ис да́тас э а но́ис
+05. Semus amassande dinare, ismentighende pro ite semus bivos.
+    [кириллицей на слух]: сэ́мус амаса́нде дина́ре, изментиге́нде про и́те сэ́мус би́вос
+06. Su tempu niente non dat a mutu; subra su coro si ponet s'astra fritta.
+    [кириллицей на слух]: су тэ́мпу нье́нте нон дат а му́ту; су́бра су ко́ро си по́нет са́стра фри́тта
+07. Imparamus a apreziare cando perdimus: a pustis de sas janas si atuetat sa luche de calancunu.
+    [кириллицей на слух]: импара́мус а апрезье́ре ка́ндо перди́мус: а пу́стис де сас я́нас си атуэ́тат са лу́ке де кальянку́ну
+08. Faghimus sinnu a is trenos andados, pregande a su passadu una resposta.
+    [кириллицей на слух]: фаги́мус си́нну а ис трэ́нос анда́дос, прега́нде а су пасса́ду у́на респо́ста
+09. Imparamus a amare cando s'amore si est frigiu: in is manus cinera, no atzaru.
+    [кириллицей на слух]: импара́мус а амаре́ ка́ндо само́ре си эст фри́ю: ин ис ма́нус чине́ра, но атса́ру
+10. Si aìamus ischidu in antis, comente at a dolere in s'anima cussa tristura clara e cheta.
+    [кириллицей на слух]: си ая́мус иски́ду ин а́нтис, комэ́нте ат а долэ́ре ин са́нима ку́сса тристу́ра кла́ра э ке́та
+11. Non apo naradu, non apo abbratzadu, non apo lòmpidu a tempus — su motivu de semper: totu l'apo lassadu pro a pustis, su coro a àteros non l'apo abertu.
+    [кириллицей на слух]: нон а́по нара́ду, нон а́по аббра́цаду, нон а́по ло́мпиду а тэ́мпус — су мо́тиву де сэ́мпер: то́ту ла́по ласса́ду про а пу́стис, су ко́ро а а́терос нон ла́по абэ́рту
+12. S'alegria non est in su brillu de sa vetrina, ma in sa veridade cheta de is nostros; apreziamus petzi cussu chi non torrat prus.
+    [кириллицей на слух]: салегри́а нон эст ин су бри́лу де са ветри́на, ма ин са верида́де ке́та де ис но́строс; апрезья́мус пэ́тци ку́ссу ки нон то́ррат прус
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, 3–6 примечаний):
+- «копили бумажки» → semus amassande dinare: dinare = ДЕНЬГИ (от лат. denarius); amassare = ссыпать в кучу, копить. Копили деньги, не бумаги.
+- «впереди ещё звучит до» → in antis ancara sonat sa nota do: у сардов сольмизация do re mi fa sol la si, «do» — нота, не глагол (делать = fagher). Метафора «всё ещё впереди» сохранена, ловушка №1 обойдена.
+- «туман растворяет дома» → sa nebìa apagat sos contornos de sas domos: туман «гасит» очертания домов (apagare — гасить свет), силуэты, не стены.
+- «машем вслед поездам» → faghimus sinnu a is trenos andados: машем тем, что ушло навсегда; прощание с упущенным, не просто жест.
+- «вымаливая» → pregande: от pregare (молить/молиться) — выпрашиваем молитвой ответ у прошлого.
+- «прозрачная печаль» → tristura clara e cheta: светлая и тихая грусть о чувстве — ясность настроения, не прозрачность стекла.
+АККОРДЫ (местные имена; игровой свод дома для пения, не транскрипция оригинала): Am=La minore; Dm=Re minore; G=Sol majore; C=Do majore; F=Fa majore; E7=Mi settima (Mi7)
+ИГРА (местные слова): глушить=istudare (sas cordas); баррэ=capo; перебор=pinzare sas cordas; бой='a botta
+НОТЫ (местная система, 7 ступеней от A): A=la; B=si; C=do; D=re; E=mi; F=fa; G=sol
+СИСТЕМА НОТ: сольмизация do re mi fa sol la si — нота «до» = do, аккорды зовутся по сольмизации (La minore).

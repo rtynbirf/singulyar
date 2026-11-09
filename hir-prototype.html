@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>SINGULYAR — Human Intent Runtime</title>
+<meta name="description" content="HIR · прототип рантайма намерений: намерение → событие → представление → честный статус транспорта; исходный текст не затирается, «сохранено локально» ≠ «доставлено»">
+<style>
+:root{--bg:#101514;--panel:#1b2220;--panel2:#26302c;--fg:#f2f5ef;--muted:#b9c5bd;--line:#46534b;--accent:#c9f27a;--ink:#17200d;--focus:#ffd66b;font:16px/1.5 system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0,#294035,transparent 50%),var(--bg);color:var(--fg)}body.hc{--bg:#000;--panel:#000;--panel2:#111;--fg:#fff;--muted:#fff;--line:#fff;--accent:#ff0;--ink:#000;--focus:#0ff}
+header,main,footer{max-width:1100px;margin:auto;padding:1rem}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:1rem}.brand{display:flex;gap:.7rem;align-items:center}.gem{border:1px solid var(--accent);border-radius:50%;width:42px;height:42px;display:grid;place-items:center;color:var(--accent);font-size:1.4rem}.eyebrow{color:var(--accent);font-size:.75rem;letter-spacing:.14em;font-weight:800;text-transform:uppercase}.pill{border:1px solid var(--line);border-radius:99px;padding:.35rem .7rem;font-size:.8rem}.hero{padding:2.6rem 0 1.5rem;max-width:800px}.hero h1{font-size:clamp(2.5rem,7vw,5.5rem);line-height:.94;letter-spacing:-.05em;margin:.5rem 0 1rem}.hero p{font-size:1.15rem;color:var(--muted)}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:1rem}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:1.1rem;min-width:0}.stack{display:grid;gap:.8rem}.panel h2{font-size:1.2rem;margin:.1rem 0 .5rem}.muted{color:var(--muted)}.small{font-size:.86rem}.notice{border-left:3px solid var(--accent);background:var(--panel2);padding:.75rem;border-radius:0 10px 10px 0}input,textarea,select,button{font:inherit;border-radius:11px;padding:.75rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);max-width:100%}input,textarea,select{width:100%}button{cursor:pointer;background:var(--panel2)}button.primary{background:var(--accent);color:var(--ink);font-weight:800;border-color:var(--accent)}:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.intent{display:grid;grid-template-columns:1fr auto;gap:.5rem}.chips,.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}.chips button{font-size:.85rem;padding:.45rem .65rem}.peer,.bubble{border:1px solid var(--line);border-radius:12px;padding:.7rem;background:var(--panel2)}.peer{display:flex;align-items:center;justify-content:space-between;gap:.6rem}.messages{display:grid;gap:.5rem;max-height:260px;overflow:auto}.meta{font-size:.75rem;color:var(--muted)}.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}.module{border:1px solid var(--line);border-radius:13px;padding:.8rem}.module b{display:block;margin:.25rem 0}.module p{font-size:.85rem;color:var(--muted);margin:0}.icon{font-size:1.3rem;color:var(--accent)}.foot{border-top:1px solid var(--line);margin-top:2rem;padding-top:1rem;color:var(--muted);font-size:.85rem}.largeText{font-size:1.3rem}
+@media(max-width:750px){.grid{grid-template-columns:1fr}.modules{grid-template-columns:1fr 1fr}}@media(max-width:450px){.modules{grid-template-columns:1fr}.intent{grid-template-columns:1fr}header{align-items:flex-start}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style><style id="sng-a11y">.skip-link{position:fixed;top:-100px;left:8px;z-index:10000;background:#0A0A0C;color:#F5D061;padding:12px 20px;border:2px solid #F5D061;border-radius:8px;text-decoration:none;font:600 16px/1.2 system-ui,sans-serif}.skip-link:focus{top:8px}:focus-visible{outline:3px solid #D4AF37;outline-offset:2px}@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}</style>
+</head><body>
+<a class="skip-link" href="#осн">К основному содержанию</a>
+<header><div class="brand"><div class="gem" aria-hidden="true">◇</div><div><div class="eyebrow">SINGULYAR / LAB</div><strong>Среда совместного действия</strong> · <a href="СИНГУЛЯР_31_ЛАДОМ.html" style="color:inherit;opacity:.8">← в дом</a></div></div><span class="pill">● Локальный прототип</span></header>
+<main id="осн"><section class="hero"><div class="eyebrow">Не человек под систему</div><h1>Система<br>под человека.</h1><p>Общее намерение. Разные способы участия. Смысл отделён от представления и канала связи.</p><div class="notice"><b>Граница честности:</b> прототип демонстрирует локальный сценарий на одном устройстве. Реальная передача сообщений, WebRTC и сквозное шифрование не реализованы.</div></section>
+<div class="grid"><section class="panel stack"><div><div class="eyebrow">01 / Намерение</div><h2>Что хотите сделать вместе?</h2></div><form id="intentForm" class="stack"><div class="intent"><input id="intent" aria-label="Ваше намерение" placeholder="Например: поговорить с близким"><button class="primary">Предложить следующий шаг</button></div><div class="chips"><button type="button" data-i="Написать близкому человеку">Написать близкому</button><button type="button" data-i="Общаться текстом и голосом">Текст + голос</button><button type="button" data-i="Сделать что-то вместе">Сделать вместе</button><button type="button" data-i="Сохранить воспоминание">Сохранить воспоминание</button></div></form><div id="intentResult" class="notice" role="status" aria-live="polite">Система предложит шаг, но не выполнит внешнее действие без подтверждения.</div><div><div class="eyebrow">02 / Отношения</div><h2>Ваш круг</h2></div><form id="peerForm" class="row"><div style="flex:1;min-width:150px"><label for="peerName">Имя контакта</label><input id="peerName" maxlength="60" required placeholder="Например, Мама"></div><button>Добавить</button></form><div id="peers" class="stack" aria-live="polite"></div><p class="muted small">Это локальные записи. Приглашение и связь с другим устройством не выполняются.</p></section>
+<section class="panel stack"><div><div class="eyebrow">03 / Представление</div><h2>Один смысл — разные формы</h2></div><div><label for="repr">Предпочитаемое представление</label><select id="repr"><option value="text">Текст</option><option value="speech">Текст + озвучивание</option><option value="large">Крупный текст</option></select></div><div><label for="rate">Скорость речи</label><select id="rate"><option value=".8">Медленнее</option><option value="1" selected>Обычная</option><option value="1.15">Быстрее</option></select></div><div class="row"><label><input type="checkbox" id="hc" style="width:auto"> Повышенный контраст</label><label><input type="checkbox" id="lt" style="width:auto"> Увеличить текст</label></div><div id="messages" class="messages" aria-label="Локальный демо-диалог" aria-live="polite"></div><form id="msgForm" class="stack"><label for="msg">Сообщение</label><textarea id="msg" rows="3" maxlength="2000" required placeholder="Останется на этом устройстве"></textarea><div class="row"><button class="primary">Добавить в диалог</button><button type="button" id="speak">Озвучить последнее</button></div></form><div id="live" class="muted small" role="status" aria-live="polite"></div></section></div>
+<section class="panel" style="margin-top:1rem"><div class="eyebrow">04 / Архитектурное ядро</div><h2>Возможности — не отдельные миры</h2><div class="modules"><article class="module"><span class="icon">⌁</span><b>Намерение</b><p>Свободный ввод, исходный текст сохраняется.</p></article><article class="module"><span class="icon">◉</span><b>Отношения</b><p>Явное создание и удаление локальных связей.</p></article><article class="module"><span class="icon">↔</span><b>Представления</b><p>Текст, озвучивание, крупный текст.</p></article><article class="module"><span class="icon">⌂</span><b>Локальная память</b><p>Экспорт и удаление данных под контролем человека.</p></article><article class="module"><span class="icon">⇄</span><b>Транспорт</b><p>Будущие адаптеры: LAN, WebRTC, relay; ограничения явны.</p></article><article class="module"><span class="icon">✓</span><b>Доказательства</b><p>Каждое обещание связывается с кодом и тестом.</p></article></div></section>
+<section class="panel stack" style="margin-top:1rem"><div class="eyebrow">05 / Паспорт · НАМЕРЕНИЕ</div><h2>Дверь и её связь с ADAPTER-OS</h2><p class="muted small">Паспорт двери ·41: живые факты о её устройстве и связях, без обещаний без дела. Обновляется тактом.</p>
+<div class="peer"><span><b>·51 ADAPTER-OS</b> · срез 6 «MeaningRouter на шину» (такт v10.74 «СВОД»)<br><span class="muted small">Смешение кандидатов на один смысл решено детерминированной политикой: выбор = preferred человека &gt; capability-full &gt; priority &gt; id. Тесты против живых файлов: 38/38 GREEN + регресс 4/4; конверт <code>meaning.router</code> честно ложится в шину (<code>bus.log()</code>); отказ честный — никого готового → selected:null, render не зовётся.</span></span><a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 →</a></div>
+<div class="peer"><span><b>Доказательства среза</b> · код и тест<br><span class="muted small">Ядро: <code>БИБЛИОТЕКИ/adapter-os/src/core.mjs</code> (MeaningRouter.route — тотальная сортировка кандидатов); мост: <code>bridge.mjs</code> (<code>os.routeMixed</code>); тест: <code>ИНСТРУМЕНТЫ/test_meaning_router.mjs</code> (RED 12 OK / 5 FAIL до проводки → GREEN после). Полная летопись: <code>ДОКУМЕНТЫ/ADAPTER_OS.md</code>, «Срез 6».</span></span><a href="ДОКУМЕНТАЦИЯ.html">доки →</a></div>
+<p class="muted small">Честные границы: контракты без реализаций (OCR / локальный Whisper / gaze / Брайль / Demucs) остаются EXPERIMENTAL, пока модель не спиннена и не проходит контрактные тесты — строки карты ADAPTER-OS (А3).</p></section>
+<section class="panel stack" style="margin-top:1rem"><div class="eyebrow">06 / Память и контроль</div><h2>Ваши данные</h2><p class="muted">Используется localStorage браузера — это не защищённое хранилище. Не сохраняйте секреты.</p><div class="row"><button id="export">Экспорт JSON</button><button id="clear">Удалить локальные данные</button></div></section><footer class="foot">SINGULYAR / LAB · Prototype 0.1.0 · Без внешних библиотек. Не production.</footer></main>
+<script>
+(()=>{'use strict';const K='sng_hir_v01', $=id=>document.getElementById(id), defaults={peers:[],messages:[],prefs:{repr:'text',rate:'1',hc:false,lt:false}};let s;try{s={...defaults,...JSON.parse(localStorage.getItem(K)||'{}')}}catch{s={...defaults}}s.peers||=[];s.messages||=[];s.prefs={...defaults.prefs,...s.prefs};const save=()=>{try{localStorage.setItem(K,JSON.stringify(s));$('live').textContent='Сохранено локально.'}catch{$('live').textContent='Не удалось сохранить данные.'}},say=t=>$('live').textContent=t,escapeText=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));function peers(){const r=$('peers');r.replaceChildren();if(!s.peers.length){r.textContent='Пока контактов нет.';r.className='muted small';return}r.className='stack';s.peers.forEach(p=>{const d=document.createElement('div');d.className='peer';const n=document.createElement('span');n.textContent=p.name+' · локально';const b=document.createElement('button');b.textContent='Удалить';b.setAttribute('aria-label','Удалить '+p.name);b.onclick=()=>{s.peers=s.peers.filter(x=>x.id!==p.id);peers();save()};d.append(n,b);r.append(d)})}function messages(){const r=$('messages');r.replaceChildren();if(!s.messages.length){r.textContent='Диалог пуст.';r.className='messages muted small';return}r.className='messages';s.messages.slice(-40).forEach(m=>{const d=document.createElement('div');d.className='bubble'+(($('lt').checked||$('repr').value==='large')?' largeText':'');const meta=document.createElement('div');meta.className='meta';meta.textContent='Вы · '+m.time;const body=document.createElement('div');body.textContent=m.text;d.append(meta,body);r.append(d)});r.scrollTop=r.scrollHeight}function speak(t){if(!('speechSynthesis'in window)){say('Синтез речи недоступен; текст сохранён.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='ru-RU';u.rate=Number($('rate').value)||1;speechSynthesis.speak(u);say('Запрошено озвучивание браузером; наличие голоса зависит от устройства.')}
+$('intentForm').onsubmit=e=>{e.preventDefault();const v=$('intent').value.trim();if(!v)return;let next='Следующий шаг: уточните участников и желаемый результат. Ничего не отправлено.';if(/напис|сообщ|поговор|общат/i.test(v))next='Следующий шаг: добавьте контакт, составьте сообщение и выберите представление. Удалённая передача не реализована.';if(/сохран|воспомин/i.test(v))next='Следующий шаг: уточните, что сохранить. Резервная копия автоматически не создаётся.';$('intentResult').textContent='Намерение: «'+v+'». '+next};document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{$('intent').value=b.dataset.i;$('intent').focus()});
+$('peerForm').onsubmit=e=>{e.preventDefault();const n=$('peerName').value.trim();if(!n)return;s.peers.push({id:Date.now()+Math.random(),name:n});$('peerName').value='';peers();save();say('Добавлена только локальная запись; контакт не приглашён.')};
+$('msgForm').onsubmit=e=>{e.preventDefault();const t=$('msg').value.trim();if(!t)return;s.messages.push({text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});$('msg').value='';messages();save();if($('repr').value==='speech')speak(t)};
+$('speak').onclick=()=>{const m=s.messages.at(-1);m?speak(m.text):say('Сначала добавьте сообщение.')};$('repr').onchange=()=>{s.prefs.repr=$('repr').value;messages();save()};$('rate').onchange=()=>{s.prefs.rate=$('rate').value;save()};$('hc').onchange=()=>{document.body.classList.toggle('hc',$('hc').checked);s.prefs.hc=$('hc').checked;save()};$('lt').onchange=()=>{s.prefs.lt=$('lt').checked;messages();save()};
+$('export').onclick=()=>{const u=URL.createObjectURL(new Blob([JSON.stringify({exportedAt:new Date().toISOString(),state:s},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='singulyar-export.json';a.click();URL.revokeObjectURL(u);say('Экспорт подготовлен.')};
+$('clear').onclick=()=>{if(!confirm('Удалить локальные контакты, сообщения и настройки прототипа?'))return;localStorage.removeItem(K);s=JSON.parse(JSON.stringify(defaults));$('repr').value='text';$('rate').value='1';$('hc').checked=false;$('lt').checked=false;document.body.classList.remove('hc');peers();messages();save();say('Данные прототипа очищены.')};
+$('repr').value=s.prefs.repr;$('rate').value=s.prefs.rate;$('hc').checked=s.prefs.hc;$('lt').checked=s.prefs.lt;document.body.classList.toggle('hc',s.prefs.hc);peers();messages();
+})();
+</script>
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-нит" aria-labelledby="сг47-нит-заголовок">
+<h2 id="сг47-нит-заголовок">Нить Ариадны · рантайм намерений — hir-core/0.1 <em>(ПВ6, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Напиши намерение словами — N-граммный классификатор подскажет дверь дома. Всё локально: 0 сети, 0 случайности; уверенность — честная оценка косинуса, ноль — честный отказ выдумывать дверь.</p>
+<label for="сг47-нит-вход">Намерение словами</label>
+<input type="text" id="сг47-нит-вход" placeholder="например: включи тишину" autocomplete="off">
+<button type="button" id="сг47-нит-кнопка">Распознать</button>
+<div class="сг47-ответ" id="сг47-нит-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): ПВ6 — hir-core/0.1 как рантайм Нити Ариадны (·41) */
+(function(){try{
+ var вход=document.getElementById('сг47-нит-вход'),кнопка=document.getElementById('сг47-нит-кнопка'),ответ=document.getElementById('сг47-нит-ответ');
+ if(!вход||!кнопка||!ответ)return;
+ function идти(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__НИТЬ_ИНТЕНТ;
+   if(!порт){ответ.textContent='Порт hir-core/0.1 не загрузился — честный отказ, без выдумки.';ответ.className+=' сг47-отказ';return;}
+   var класс=порт.создатьДомашний();
+   var р=класс.распознать(вход.value);
+   if(!р.намерение){ответ.textContent='Похоже, намерения здесь нет (уверенность 0) — дверь не выдумываем.';return;}
+   var стр='Дверь дома: «'+р.намерение+'» · уверенность '+р.уверенность.toFixed(3);
+   if(р.альтернативы&&р.альтернативы.length){стр+='\nАльтернативы: '+р.альтернативы.map(function(а){return а.намерение+' ('+а.оценка.toFixed(3)+')'}).join(', ')}
+   ответ.textContent=стр;
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className+=' сг47-отказ'}
+ }
+ кнопка.addEventListener('click',идти);
+ вход.addEventListener('keydown',function(е){if(е&&е.key==='Enter'){идти()}});
+}catch(е){}})();
+</script>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a class="sg65here" aria-current="page" href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+</div>
+</details>
+</nav>
+<script defer src="js/hir-core.js"></script>
+<script defer src="js/sg-registry.js"></script>
+</body></html>

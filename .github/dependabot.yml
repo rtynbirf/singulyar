@@ -1,0 +1,9 @@
+# Dependabot (латка С128 поверх такта v11.49 «ЗАКРЫТИЕ»): еженедельные обновления
+# версий GitHub Actions (пины SHA обновляются вместе с комментарием-версией —
+# правило обновления пинов см. CONTRIBUTING.md / дорожная карта R1.3).
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evidence",
+  "type": "object",
+  "required": ["id", "content", "source"],
+  "properties": {
+    "id": { "type": "string" },
+    "content": { "type": "string" },
+    "source": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "version": { "type": "string" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "kind": { "type": "string", "enum": ["support", "oppose"] }
+  }
+}

@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!-- такт v10.84 «КРУГ СВОИХ» (С59; приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): Л5-P3.1 — локальные профили отношений и согласия, общая с ·23. Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js (krug-profiles/0.1; тесты 22/22 зовут тот же файл через node:vm; 0 сети · 0 document · 0 eval — хранилище снаружи адаптером). Первый контакт — как было: QR/код, рукопожатие HELLO по открытому каналу P2P записывает профиль (первая/последняя встреча, встреч, согласие «спрошено»). Повторный контакт — без повторного QR: зал держит рендеву krug-<ключ> (детерминирован от ключа устройства) — мост вкладок того же браузера (чистый офлайн) + комната Nostr-релеев между устройствами (как звонки ·23; релеям нужен интернет — честная пометка, сам контакт остаётся P2P); через рендеву зал доставляет СВЕЖИЙ оффер WebRTC — канал встаёт как при QR. Закон согласия одинаков на обеих сторонах: «разрешено» — без вопроса; «спрошено»/незнакомец — вопрос человеку; «запрещено» — честный отказ, не молчание; «забыть» удаляет профиль по-настоящему. STATE/CMD/Синхрон не тронуты -->
+<!-- такт v10.82 «СХОДИМОСТЬ» (С57; приказ владельца «СИНТЕЗИРУЙ ИНТЕГРИРУЙ СВЯЗЫВАЙ ВСЁ И ВСЯ»): Л5-P3 multi-device sync — очередь событий + CRDT, общая с залом ·17. Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js (GSet/ORSet/LWW + SyncPeer; тесты 18/18 в треке) — тот же файл, что гоняют тесты: грузится классическим script-тегом, работает и на https, и на file://. Панель «Синхрон»: 👏 хлопки (GSet), ★ метки «вернусь» — тумблер (ORSet), ♪ просьба следующей (LWW) — сходятся во всех окнах через транспорт ver:1 (дедуп src:seq на приёмнике + свой у реплики), опоздавшее окно догоняет снимком (CRDTHI→CRDTSNAP), офлайн-окно доотправляет из журнала при встрече (online/visibility); повторы доставки не меняют результат (идемпотентные слияния); журнал живёт в памяти окна — честно. STATE/CMD/WebRTC не тронуты -->
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' wss://nostr.oxtr.dev wss://nos.lol wss://relay.damus.io wss://nostr.sathoarder.com wss://nostr.islandarea.net">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР ·17 — ЗАЛ · P2P двойной экран · офлайн</title>
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_17_%D0%97%D0%90%D0%9B.html">
+<meta property="og:title" content="СИНГУЛЯР ·17 — ЗАЛ · P2P двойной экран · офлайн">
+<meta property="og:description" content="СИНГУЛЯР ·17 «ЗАЛ»: P2P-экран зала без сервера — BroadcastChannel + localStorage-фолбэк. Большой экран показывает слова, колбаски и счёт; пульт управляет ·16 СУФЛЁР. Ноль сети, ноль зависимостей, ноль innerHTML.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_17_%D0%97%D0%90%D0%9B.html">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="СИНГУЛЯР ·17 «ЗАЛ»: P2P-экран зала без сервера — BroadcastChannel + localStorage-фолбэк. Большой экран показывает слова, колбаски и счёт; пульт управляет ·16 СУФЛЁР. Ноль сети, ноль зависимостей, ноль innerHTML.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0A0A0C;--panel:#1A1D23;--line:#2A2B2D;--tx:#E8E8E8;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#ef4444;--green:#2FA36B;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:60px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#121418,#0A0A0C)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#1A1508;white-space:nowrap}
+h1{font-size:clamp(24px,4.2vw,36px);line-height:1.18;margin:26px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:18px;margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:860px;font-size:15.5px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.btn{display:inline-block;font-family:var(--mono);font-size:13px;background:var(--teal);color:#0A0A0C;border-radius:10px;padding:9px 14px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn.gray{background:var(--panel);color:var(--tx);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stat>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{font-family:var(--mono);font-size:26px;display:block}
+.stat i{color:var(--dim);font-size:11.5px;font-style:normal;text-transform:uppercase;letter-spacing:.6px}
+#bigword{font-size:clamp(38px,8vw,92px);font-weight:800;line-height:1.1;min-height:1.2em;text-align:center;padding:18px 8px 8px;letter-spacing:.5px}
+#nextwords{text-align:center;color:var(--dim);font-size:clamp(15px,2.4vw,24px);min-height:1.6em;padding-bottom:12px}
+#songtitle{font-family:var(--mono);color:var(--teal2);text-align:center;font-size:15px}
+.stage{position:relative;background:#0A0A0C;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:16px 0}
+.stage canvas{display:block;width:100%;height:300px}
+.progress{height:8px;background:var(--panel);border-radius:99px;overflow:hidden;margin:10px 0}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width .2s linear}
+.status{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px;color:var(--dim);margin:10px 0}
+.status b{color:var(--tx)}
+.live{color:var(--green);font-weight:700}
+.waiting{color:var(--amber);font-weight:700}
+.rating{font-family:var(--mono);font-size:15px;margin-left:8px;padding:3px 10px;border-radius:8px;background:#1A1508;color:var(--teal);display:inline-block}
+.rating.PERFECT{color:#0A0A0C;background:var(--amber)}
+.rating.GOOD{color:#0A0A0C;background:var(--teal)}
+.rating.MISS{background:#2a1216;color:var(--red)}
+.hint{color:var(--dim);font-size:13px}
+.panelbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.qrbox{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin:10px 0}
+.qrbox canvas{background:#fff;border-radius:10px;image-rendering:pixelated;max-width:280px;height:auto}
+.qrbox .col{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+textarea.code{width:100%;min-height:64px;background:#0A0A0C;color:var(--teal);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:12px/1.5 var(--mono);resize:vertical}
+.p2p-state{font-family:var(--mono);font-size:13px}
+.p2p-state.open{color:var(--green)} .p2p-state.wait{color:var(--amber)}
+/* оверлей телефона-микрофона */
+#phonePanel{display:none;position:fixed;inset:0;background:var(--bg);z-index:50;overflow-y:auto;padding:16px 14px 90px}
+#phonePanel.on{display:block}
+#phonePanel h2{margin-top:8px}
+.pw{font-size:clamp(34px,9vw,64px);font-weight:800;line-height:1.15;text-align:center;min-height:1.2em;margin:8px 0}
+.pnext{text-align:center;color:var(--dim);font-size:15px;min-height:1.5em;margin-bottom:10px}
+.pstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.pstat>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center}
+.pstat b{font-family:var(--mono);font-size:20px;display:block}
+.pstat i{color:var(--dim);font-size:10.5px;font-style:normal;text-transform:uppercase;letter-spacing:.5px}
+.plevel{height:10px;background:var(--panel);border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.plevel>div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--teal2))}
+.premote{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
+.premote .btn{text-align:center;padding:12px 0;font-size:15px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:16px 0;color:var(--dim);font-size:12.5px}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+</style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0A0A0C">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+</head>
+<body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<header><div class="wrap hd">
+  <div class="logo" aria-hidden="true">·17</div>
+  <div><b>СИНГУЛЯР ·17 «ЗАЛ» — P2P двойной экран</b><span>экран зала + пульт · BroadcastChannel + localStorage · без сервера</span></div>
+  <div class="badge">офлайн · 0 запросов · 0 innerHTML</div>
+</div></header>
+
+<main class="wrap">
+  <h1>Открой <em>два окна</em> — зал увидит песню</h1>
+  <p class="lead">Это окно — большой экран зала. В ·16 «СУФЛЁР» включи галочку «⌇ в зал» — слова, колбаски
+  и счёт полетят сюда без единого сервера (BroadcastChannel, фолбэк — localStorage). Из этого окна можно
+  рулить плеером СУФЛЁРА кнопками пульта. Телевизор с браузером = экран зала; ноутбук/телефон = сцена.</p>
+
+  <div class="stat" role="status" aria-live="polite">
+    <div><b id="stConn" class="waiting">—</b><i>канал</i></div>
+    <div><b id="stScore">000000</b><i>счёт</i></div>
+    <div><b id="stCombo">×0</b><i>комбо</i></div>
+    <div><b id="stMic">—</b><i>голос</i></div>
+    <div><b id="stMsgs">0</b><i>пакетов</i></div>
+  </div>
+
+  <div class="stage"><canvas id="hallCanvas" aria-hidden="true"></canvas></div>
+  <div class="progress" aria-hidden="true"><div id="pbar"></div></div>
+  <div id="songtitle">песня: —</div>
+  <div id="bigword">…</div>
+  <div id="nextwords"></div>
+
+  <div class="row" style="justify-content:center">
+    <span id="lastRating" class="rating" style="display:none"></span>
+  </div>
+
+  <h2>Пульт <em>команды летят в ·16 СУФЛЁР</em></h2>
+  <div class="row">
+    <button class="btn" id="cmdPlay">▶ играть</button>
+    <button class="btn gray" id="cmdPause">⏸ пауза</button>
+    <button class="btn gray" id="cmdStop">⏹ стоп</button>
+    <button class="btn ghost" id="cmdBack">−5 с</button>
+    <button class="btn ghost" id="cmdFwd">+5 с</button>
+  </div>
+  <p class="hint">Команды применяются в том окне СУФЛЁРА, где включена трансляция. Зал ничего не скачивает и не играет — он только показывает.</p>
+
+  <h2>Демо <em>проверка зала без СУФЛЁРА</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <button class="btn ghost" id="btnDemo">◇ тест-демо (синтетический источник)</button>
+      <button class="btn gray" id="btnDemoOff" disabled>⏹ выключить демо</button>
+    </div>
+    <p class="hint">Демо имитирует источник: поток STATE с нотами, счётом и словами. Так проверяют зал на одном
+    устройстве — второе окно с «ЗАЛом» должно оживить в ту же секунду.</p>
+  </div>
+
+  <h2>⤳ Телефон = микрофон и пульт <em>air-gapped WebRTC · SQ1-SQ2 · по ТЗ KARAOKE_TREND</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <button class="btn" id="btnP2pHost">⌇ создать пару с телефоном</button>
+      <span class="p2p-state wait" id="p2pState">канал: —</span>
+    </div>
+    <div id="p2pHostBox" style="display:none">
+      <div class="qrbox">
+        <canvas id="p2pQr" aria-label="QR для телефона"></canvas>
+        <div class="col">
+          <p class="hint">1) Наведи камеру телефона на QR — откроется эта же страница ·17 в режиме микрофона
+          (нужен https-сайт или один Wi-Fi). 2) Телефон покажет <b>код-ответ</b> — вставь его ниже или отсканируй камерой ПК.</p>
+          <textarea class="code" id="p2pOfferOut" readonly aria-label="код-оффер"></textarea>
+          <button class="btn gray" id="btnP2pCopy">¶ скопировать оффер</button>
+        </div>
+      </div>
+      <div class="row">
+        <textarea class="code" id="p2pAnswerIn" placeholder="вставь сюда код-ответ с телефона (SQ1.…)" aria-label="код-ответ"></textarea>
+      </div>
+      <div class="row">
+        <button class="btn" id="btnP2pAccept">⌇ соединить по ответу</button>
+        <button class="btn ghost" id="btnP2pScan">◈ сканировать ответ камерой ПК</button>
+        <video id="p2pScanVideo" playsinline muted style="display:none;max-width:240px;border-radius:10px"></video>
+      </div>
+    </div>
+    <p class="hint">Сигналинг (QR/код) передаётся один раз любым способом — дальше связь чистый P2P:
+    <code>RTCPeerConnection(iceServers: [])</code>, DataChannel <code>singulyar_p2p_data</code>
+    (ordered: false, maxRetransmits: 0). Ни роутера-сервера, ни облака: голос и команды летят напрямую.</p>
+  </div>
+
+  <div class="status" id="hallStatus" role="status" aria-live="polite">
+    <b>Как соединить:</b> 1) открой этот файл/страницу во втором окне или на ТВ;
+    2) в ·16 СУФЛЁР включи «⌇ в зал»; 3) этот экран оживёт. На сайте (https) работает всегда;
+    на file:// — Chrome обычно да, Firefox/Safari изолируют file-вкладки (тогда запускай локальный
+    сервер: <code>python -m http.server</code>).
+  </div>
+
+  <h2>Протокол <em>открытый, версионированный</em></h2>
+  <p class="hint">Канал <code>singulyar-hall</code>, пакеты <code>{ver:1, t:HELLO|STATE|CMD|BYE|CRDT|CRDTHI|CRDTSNAP, src, seq, ts, v:значение для seek, …}</code>.
+  Транспорт-двойник: BroadcastChannel + localStorage-события, дедуп по <code>src:seq</code>. Зал — только
+  рендер и пульт; аудио всегда живёт в окне сцены (·16). CRDT-конверты несут свой <code>src</code> реплики —
+  транспорт их не перезаписывает.</p>
+
+  <h2>Синхрон <em>CRDT · сходится во всех окнах</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <button class="btn ghost" id="btnClapSync">👏 хлопок</button>
+      <button class="btn ghost" id="btnMarkSync">★ метка «вернусь»</button>
+      <button class="btn ghost" id="btnReqSync">♪ просить следующей</button>
+    </div>
+    <div class="row">
+      <span class="p2p-state open" id="syncClaps">👏 0</span>
+      <span class="p2p-state open" id="syncMarks">★ 0</span>
+      <span class="p2p-state open" id="syncReq">♪ —</span>
+      <span class="p2p-state wait" id="syncState">синхрон: …</span>
+    </div>
+    <p class="hint">Очередь событий + CRDT (GSet / ORSet / LWW-регистр): каждое окно — своя реплика,
+    сходятся к одному значению без ведущего. ★ — тумблер: второе нажатие снимает метку (OR-set —
+    снимаются наблюдённые теги, новая метка возвращает песню). ♪ — последнее слово побеждает
+    детерминированно (лэмпорт + src). Опоздавшее окно догоняет снимком; офлайн-окно доотправляет
+    журнал при встрече; повторная доставка не меняет результат. Журнал живёт в памяти окна —
+    честно. Канон: <code>ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js</code> — тот же файл,
+    что гоняют тесты трека (18/18). Существующий STATE/CMD не тронут.</p>
+  </div>
+
+  <h2>Круг своих <em>локальные профили · согласие · повторный контакт без QR</em></h2>
+  <div class="panelbox">
+    <div class="row">
+      <span class="p2p-state open" id="krugState">круг: …</span>
+      <button class="btn ghost" id="btnKrugСлушать">◉ слушать круг</button>
+    </div>
+    <div id="krugСписок" aria-live="polite"></div>
+    <p class="hint">Первый контакт — по-прежнему QR/код (физика air-gapped WebRTC: SDP свеж при каждой
+    встрече); рукопожатие по открытому каналу записывает профиль в круг. Повторный контакт — по памяти
+    круга, без повторного QR: зал держит рендеву <code>krug-ключ</code> — мост вкладок того же браузера
+    (чистый офлайн) и комната Nostr-релеев между устройствами (как звонки ·23; релеям нужен интернет —
+    честная пометка, сам контакт остаётся P2P). Через рендеву зал доставляет свежий оффер WebRTC — канал
+    встаёт как при QR. Согласие живёт только на твоём устройстве: «разрешено» впускает без вопроса,
+    «спрошено» спрашивает, «запрещено» — честный отказ, «забыть» удаляет профиль. Канон:
+    <code>ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js</code> — тот же файл, что гоняют тесты
+    трека (22/22).</p>
+  </div>
+
+  <footer>СИНГУЛЯР ·17 «ЗАЛ» · KARAOKE_TREND.txt «Подсистема 1: Бессерверный P2P-экран зала» (BroadcastChannel + Air-Gapped QR/WebRTC) ·
+  github.com/rtynbirf/singulyar · rtynbirf.github.io/singulyar</footer>
+<section id="зал-эфир" style="margin:1.2rem 0;padding:1rem 1.1rem;border:1px solid #D4AF37;border-radius:12px;background:#0A0A0C;color:#E8E2D0" aria-labelledby="зал-эфир-заг">
+<h2 id="зал-эфир-заг" style="margin:.1rem 0 .5rem;font-size:1.05rem;color:#D4AF37">ЭФИР ДОМА · mesh-wire/0.1 <span style="color:#8b93a3;font-weight:400">(М1, этап 2 — такт v11.29 «КОНТУР»)</span></h2>
+<p style="margin:.2rem 0 .6rem;color:#b9c2cf;font-size:.93rem">Лестница: вещание (вкладки этого браузера, BroadcastChannel) → данные (мост КС5) → релей (КС8). При импорте — ноль подключений; эфир открывается только по твоей кнопке.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+<button id="зал-эфир-открыть" style="border:1px solid #D4AF37;background:#1c1408;color:#FFD97A;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit">⏵ ОТКРЫТЬ ЭФИР</button>
+<button id="зал-эфир-пилот" style="border:1px solid #3a4350;background:transparent;color:#C9D2DC;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>✈ ПОСЛАТЬ ПИЛОТ</button>
+<button id="зал-эфир-закрыть" style="border:1px solid #9b2c2c;background:transparent;color:#d98a8a;border-radius:.5rem;padding:.55rem .85rem;cursor:pointer;font:inherit" disabled>⏹ ЗАКРЫТЬ</button>
+</div>
+<p id="зал-эфир-статус" role="status" style="margin:.6rem 0 .3rem;color:#8b93a3;font:12.5px/1.5 ui-monospace,Consolas,monospace">вещание: ждёт · данные: не собраны · релей: не собран</p>
+<ul id="зал-эфир-журнал" aria-live="polite" style="margin:.2rem 0 0;padding-left:1.1rem;color:#b9c2cf;font-size:.9rem"></ul>
+</section>
+<script>
+(function () {
+'use strict';
+var ID = 'зал';
+var провод = null;
+function $(и) { return document.getElementById(ID + '-эфир-' + и); }
+function стр(т) {
+  try {
+    var li = document.createElement('li');
+    li.textContent = '[' + new Date().toLocaleTimeString() + '] ' + т;
+    var ul = $('журнал');
+    ul.insertBefore(li, ul.firstChild);
+    while (ul.children.length > 8) ul.removeChild(ul.lastChild);
+  } catch (e) { /* журнал не роняет зал */ }
+}
+function статусы() {
+  try {
+    if (!провод) { $('статус').textContent = 'вещание: ждёт · данные: не собраны · релей: не собран'; return; }
+    var с = провод.состояние();
+    var ч = [];
+    ['вещание', 'данные', 'релей'].forEach(function (имя) {
+      ч.push(имя + ': ' + (с.слои[имя] || 'не собран'));
+    });
+    $('статус').textContent = ч.join(' · ');
+  } catch (e) { /* статус не роняет зал */ }
+}
+$('открыть').addEventListener('click', async function () {
+  try {
+    if (провод) { статусы(); return; }
+    var мод = await import('./ДОКУМЕНТЫ/ТРЕКИ/МЕТАШАНСОН/src/mesh-wire.mjs');
+    провод = мод.создатьПровод({ слои: [мод.слойВещания({ эфир: 'singlyar-зал/0.1' })] });
+    провод.приПолучении(function (конверт) {
+      try {
+        if (конверт && конверт.тип === 'пилот') стр('пилот от узла ' + конверт.узел + ' · ' + конверт.текст);
+        else стр('конверт чужой схемы — мимо');
+      } catch (e) { /* приём не роняет зал */ }
+    });
+    провод.открыть();
+    $('пилот').disabled = false; $('закрыть').disabled = false; $('открыть').disabled = true;
+    статусы();
+    стр('эфир открыт: вещание живо; данные/релей честно не собраны (мост КС5/релей КС8 — по приказу)');
+  } catch (e) { стр('эфир не открылся: ' + e.message); статусы(); }
+});
+$('пилот').addEventListener('click', function () {
+  try {
+    if (!провод) return;
+    var отчёт = провод.отправить({ тип: 'пилот', узел: ID, текст: 'пилот эфира дома (v11.29 КОНТУР)' });
+    var ч = [];
+    Object.keys(отчёт).forEach(function (имя) { ч.push(имя + '=' + отчёт[имя]); });
+    стр('пилот ушёл: ' + ч.join(', '));
+  } catch (e) { стр('пилот не ушёл: ' + e.message); }
+});
+$('закрыть').addEventListener('click', function () {
+  try {
+    if (провод) {
+      провод.закрыть();
+      var итог = провод.состояние();
+      var ч = [];
+      ['вещание', 'данные', 'релей'].forEach(function (имя) {
+        ч.push(имя + ': ' + (итог.слои[имя] || 'не собран'));
+      });
+      $('статус').textContent = ч.join(' · ');
+      провод = null;
+    }
+    $('пилот').disabled = true; $('закрыть').disabled = true; $('открыть').disabled = false;
+    стр('эфир закрыт по явному действию');
+  } catch (e) { стр('закрытие: ' + e.message); }
+});
+статусы();
+})();
+</script>
+</main>
+
+<div id="phonePanel" role="dialog" aria-label="Телефон-микрофон">
+  <h2>⤳ Телефон зала <em id="phStatus">соединение…</em></h2>
+  <div id="phSong" style="font-family:var(--mono);color:var(--teal2);text-align:center;font-size:13px">—</div>
+  <div class="pw" id="phWord">…</div>
+  <div class="pnext" id="phRating"></div>
+  <div class="pstat">
+    <div><b id="phScore">000000</b><i>счёт</i></div>
+    <div><b id="phCombo">×0</b><i>комбо</i></div>
+    <div><b id="phNote">—</b><i>твой голос</i></div>
+  </div>
+  <div class="plevel"><div id="phLevel"></div></div>
+  <div class="row" style="margin-top:8px">
+    <button class="btn" id="phMic">◉ микрофон</button>
+    <button class="btn gray" id="phMicOff" disabled>стоп</button>
+  </div>
+  <div id="phAnswerBox" style="display:none;margin-top:12px">
+    <p class="hint"><b>Шаг 2.</b> Скопируй код-ответ на экран зала (вставь в поле «соединить по ответу»):</p>
+    <textarea class="code" id="phAnswerOut" readonly aria-label="код-ответ"></textarea>
+    <div class="row"><button class="btn gray" id="phAnswerCopy">¶ скопировать код-ответ</button></div>
+  </div>
+  <h2>Пульт <em>команды на экран зала</em></h2>
+  <div class="premote">
+    <button class="btn" id="phPlay">▶</button>
+    <button class="btn gray" id="phPause">⏸</button>
+    <button class="btn gray" id="phStop">⏹</button>
+    <button class="btn ghost" id="phBack">−5</button>
+    <button class="btn ghost" id="phFwd">+5</button>
+  </div>
+  <p class="hint">Голос шифруется в ноты прямо здесь (McLeod в аудио-потоке телефона) и летит на большой экран
+  по DataChannel — колонки зала не слышат телефон, фидбэка нет. Экран держит связь, пока вкладка открыта.</p>
+  <div class="row" style="margin-top:20px"><button class="btn gray" id="phExit">✕ отключиться</button></div>
+</div>
+
+<script src="ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js"></script>
+<script src="ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js"></script>
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·17 «ЗАЛ» — единый файл. Архитектура:
+   1. TRANSPORT — BroadcastChannel + localStorage-фолбэк, дедуп по src:seq
+   2. STATE    — последний STATE источника: песня, позиция, слова, счёт, голос
+   3. RENDER   — большой текст (DOM-фабрика), canvas-колбаски, прогресс, HUD
+   4. REMOTE   — пульт: CMD play/pause/stop/seek в окно сцены (·16)
+   5. DEMO     — синтетический источник для проверки зала без СУФЛЁРА
+   6. QRP2P    — свой QR-энкодер (ECC L, v1–40) + air-gapped WebRTC DataChannel:
+                 телефон = микрофон (McLeod на борту) и пульт зала
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 0. QR-ЭНКОДЕР: byte mode, ECC L, версии 1–40, автопробег масок ───────
+   0 зависимостей; таблицы сверены матрица-в-матрицу с эталонной реализацией
+   (python-qrcode) по всем 8 маскам: v1/v3/v10/v16/v17. */
+const QR_CAPL=[17,32,53,78,106,134,154,192,230,271,321,367,425,458,520,586,644,718,792,858,929,1003,1091,1171,1273,1367,1465,1528,1628,1732,1840,1952,2068,2188,2303,2431,2563,2699,2809,2953];
+const QR_ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+const QR_BLOCKS=[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]];
+class SingulyarQR {
+    constructor() { this._gf(); }
+    _gf() {
+        this.EXP = new Uint8Array(512); this.LOG = new Uint8Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) { this.EXP[i] = x; this.LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+        for (let i = 255; i < 512; i++) this.EXP[i] = this.EXP[i - 255];
+    }
+    gmul(a, b) { return (a === 0 || b === 0) ? 0 : this.EXP[this.LOG[a] + this.LOG[b]]; }
+    rsEcc(data, ecLen) {
+        const g = new Uint8Array(ecLen + 1); g[0] = 1;
+        for (let i = 0; i < ecLen; i++) {
+            const a = this.EXP[i];
+            for (let j = Math.min(i + 1, ecLen); j >= 1; j--) g[j] = g[j - 1] ^ this.gmul(g[j], a);
+            g[0] = this.gmul(g[0], a);
+        }
+        const gg = new Uint8Array(ecLen + 1);
+        for (let j = 0; j <= ecLen; j++) gg[j] = g[ecLen - j];
+        const buf = new Uint8Array(data.length + ecLen);
+        buf.set(data, 0);
+        for (let i = 0; i < data.length; i++) {
+            const f = buf[i];
+            if (f === 0) continue;
+            for (let j = 1; j <= ecLen; j++) buf[i + j] ^= this.gmul(gg[j], f);
+        }
+        return buf.slice(data.length);
+    }
+    pickVersion(len) {
+        for (let v = 1; v <= 40; v++) if (QR_CAPL[v - 1] >= len) return v;
+        throw new Error('QR: данные не влезают (' + len + ' Б)');
+    }
+    buildCodewords(bytes, v) {
+        const bits = [];
+        const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+        put(4, 4); put(bytes.length, v < 10 ? 8 : 16);
+        for (const b of bytes) put(b, 8);
+        const blocks = QR_BLOCKS[v - 1];
+        let dataTotal = 0;
+        for (let i = 0; i < blocks.length; i += 3) dataTotal += blocks[i] * blocks[i + 2];
+        for (let i = 0; i < Math.min(4, dataTotal * 8 - bits.length); i++) bits.push(0);
+        while (bits.length % 8) bits.push(0);
+        const out0 = [];
+        for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; out0.push(b); }
+        let pad = 0xEC;
+        while (out0.length < dataTotal) { out0.push(pad); pad = pad === 0xEC ? 0x11 : 0xEC; }
+        const specs = [];
+        for (let i = 0; i < blocks.length; i += 3) for (let k = 0; k < blocks[i]; k++) specs.push({ d: blocks[i + 2], e: blocks[i + 1] - blocks[i + 2] });
+        const dbs = [], ecs = [];
+        let pos = 0;
+        for (const s of specs) { const ch = out0.slice(pos, pos + s.d); pos += s.d; dbs.push(ch); ecs.push(this.rsEcc(ch, s.e)); }
+        const out = [];
+        const maxD = Math.max.apply(null, dbs.map(b => b.length));
+        for (let i = 0; i < maxD; i++) for (const b of dbs) if (i < b.length) out.push(b[i]);
+        const maxE = Math.max.apply(null, ecs.map(b => b.length));
+        for (let i = 0; i < maxE; i++) for (const b of ecs) if (i < b.length) out.push(b[i]);
+        return out;
+    }
+    makeMatrix(v) {
+        const size = 21 + (v - 1) * 4;
+        const m = [], fn = [];
+        for (let r = 0; r < size; r++) { m.push(new Uint8Array(size)); fn.push(new Uint8Array(size)); }
+        const setFn = (r, c) => { if (r >= 0 && r < size && c >= 0 && c < size) fn[r][c] = 1; };
+        const finder = (r0, c0) => {
+            for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+                const r = r0 + dr, c = c0 + dc;
+                if (r < 0 || r >= size || c < 0 || c >= size) continue;
+                const dark = (dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6) && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+                m[r][c] = dark ? 1 : 0; setFn(r, c);
+            }
+        };
+        finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+        const al = QR_ALIGN[v - 1] || [];
+        const inFinder = (r, c) => (r <= 7 && c <= 7) || (r <= 7 && c >= size - 8) || (r >= size - 8 && c <= 7);
+        for (let i = 0; i < al.length; i++) for (let j = 0; j < al.length; j++) {
+            const r = al[i], c = al[j];
+            if (inFinder(r, c)) continue;
+            for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+                const dark = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+                m[r + dr][c + dc] = dark ? 1 : 0; setFn(r + dr, c + dc);
+            }
+        }
+        for (let i = 8; i < size - 8; i++) {
+            if (!fn[6][i]) { m[6][i] = i % 2 === 0 ? 1 : 0; setFn(6, i); }
+            if (!fn[i][6]) { m[i][6] = i % 2 === 0 ? 1 : 0; setFn(i, 6); }
+        }
+        m[size - 8][8] = 1; setFn(size - 8, 8);
+        for (let i = 0; i < 9; i++) { setFn(8, i); setFn(i, 8); }
+        for (let i = 0; i < 8; i++) { setFn(8, size - 1 - i); setFn(size - 1 - i, 8); }
+        if (v >= 7) {
+            let rem = v;
+            for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) & 1) * 0x1F25;
+            const vb = ((v << 12) | rem) >>> 0;
+            for (let i = 0; i < 18; i++) {
+                const dark = ((vb >> i) & 1) === 1;
+                const a = Math.floor(i / 3), bc = (i % 3) + size - 11;
+                m[bc][a] = dark; setFn(bc, a); m[a][bc] = dark; setFn(a, bc);
+            }
+        }
+        return { m, fn, size };
+    }
+    formatBits(mask) {
+        const data = (1 << 3) | mask;   /* ECC L = 01 */
+        let rem = data;
+        for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) & 1) * 0x537;
+        return ((data << 10) | rem) ^ 0x5412;
+    }
+    placeData(ctx, cw) {
+        const { m, fn, size } = ctx;
+        let i = 0, bit = 7;
+        const nextBit = () => { if (i >= cw.length) return 0; const b = (cw[i] >> bit) & 1; if (bit-- === 0) { bit = 7; i++; } return b; };
+        for (let right = size - 1; right >= 1; right -= 2) {
+            if (right === 6) right = 5;
+            for (let vert = 0; vert < size; vert++) {
+                for (let j = 0; j < 2; j++) {
+                    const c = right - j;
+                    const up = ((right + 1) & 2) === 0;
+                    const r = up ? size - 1 - vert : vert;
+                    if (!fn[r][c]) m[r][c] = nextBit();
+                }
+            }
+        }
+    }
+    applyMask(ctx, mask) {
+        const { m, size } = ctx;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) {
+            if (ctx.fn[r][c]) continue;
+            let f = false;
+            switch (mask) {
+                case 0: f = (r + c) % 2 === 0; break;
+                case 1: f = r % 2 === 0; break;
+                case 2: f = c % 3 === 0; break;
+                case 3: f = (r + c) % 3 === 0; break;
+                case 4: f = (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; break;
+                case 5: f = ((r * c) % 2) + ((r * c) % 3) === 0; break;
+                case 6: f = (((r * c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+                case 7: f = (((r + c) % 2) + ((r * c) % 3)) % 2 === 0; break;
+            }
+            if (f) m[r][c] ^= 1;
+        }
+    }
+    drawFormat(ctx, mask) {
+        const { m, size } = ctx;
+        const bits = this.formatBits(mask);
+        const dk = (i) => ((bits >> i) & 1) === 1;
+        for (let i = 0; i < 15; i++) {
+            if (i < 6) m[i][8] = dk(i); else if (i < 8) m[i + 1][8] = dk(i); else m[size - 15 + i][8] = dk(i);
+            if (i < 8) m[8][size - 1 - i] = dk(i); else if (i < 9) m[8][7] = dk(i); else m[8][14 - i] = dk(i);
+        }
+        m[size - 8][8] = 1;
+    }
+    penalty(m, size) {
+        let p = 0;
+        const line = (get) => {
+            let run = 1;
+            for (let i = 1; i <= size; i++) {
+                if (i < size && get(i) === get(i - 1)) run++;
+                else { if (run >= 5) p += 3 + (run - 5); run = 1; }
+            }
+        };
+        for (let r = 0; r < size; r++) line((c) => m[r][c]);
+        for (let c = 0; c < size; c++) line((r) => m[r][c]);
+        for (let r = 0; r < size - 1; r++) for (let c = 0; c < size - 1; c++) {
+            const v = m[r][c];
+            if (v === m[r][c + 1] && v === m[r + 1][c] && v === m[r + 1][c + 1]) p += 3;
+        }
+        const pat = [1, 0, 1, 1, 1, 0, 1];
+        const win = (get, i) => {
+            for (let k = 0; k < 7; k++) if (get(i + k) !== pat[k]) return false;
+            const l4 = [get(i - 4), get(i - 3), get(i - 2), get(i - 1)];
+            const r4 = [get(i + 7), get(i + 8), get(i + 9), get(i + 10)];
+            const light = (a) => a.every((x) => x === 0);
+            const lOK = i >= 4 && light(l4), rOK = i + 11 <= size && light(r4);
+            return (lOK || rOK) ? 40 : 0;
+        };
+        for (let r = 0; r < size; r++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[r][x]), i);
+        for (let c = 0; c < size; c++) for (let i = 0; i + 7 <= size; i++) p += win((x) => (x < 0 || x >= size ? -1 : m[x][c]), i);
+        let dark = 0;
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) dark += m[r][c];
+        p += Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
+        return p;
+    }
+    encode(text) {
+        const bytes = Array.from(new TextEncoder().encode(String(text)));
+        const v = this.pickVersion(bytes.length);
+        const cw = this.buildCodewords(bytes, v);
+        const ctx = this.makeMatrix(v);
+        this.placeData(ctx, cw);
+        let best = null, bestP = Infinity, bestMask = 0;
+        for (let mask = 0; mask < 8; mask++) {
+            const t = { m: ctx.m.map((row) => Uint8Array.from(row)), fn: ctx.fn, size: ctx.size };
+            this.applyMask(t, mask); this.drawFormat(t, mask);
+            const p = this.penalty(t.m, ctx.size);
+            if (p < bestP) { bestP = p; best = t; bestMask = mask; }
+        }
+        return { version: v, size: ctx.size, mask: bestMask, modules: best.m };
+    }
+    toCanvas(cv, text, px) {
+        const q = this.encode(text);
+        const quiet = 3, scale = px || Math.max(2, Math.floor(300 / (q.size + 6)));
+        const dim = (q.size + quiet * 2) * scale;
+        cv.width = dim; cv.height = dim;
+        cv.style.width = Math.min(280, dim) + 'px';
+        const cx = cv.getContext('2d');
+        cx.fillStyle = '#ffffff'; cx.fillRect(0, 0, dim, dim);
+        cx.fillStyle = '#000000';
+        for (let r = 0; r < q.size; r++) for (let c = 0; c < q.size; c++) if (q.modules[r][c]) cx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+        return q;
+    }
+}
+
+/* ── 0b. УПАКОВКА SDP: deflate → base64url (SQ1/SQ2), фолбэк b64 (SQ0) ─── */
+const SDP_B64 = (u8) => {
+    let bin = '';
+    for (let i = 0; i < u8.length; i++) bin += String.fromCharCode(u8[i]);
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+const SDP_UNB64 = (s) => {
+    const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return u8;
+};
+async function sdPack(obj) {
+    const raw = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream === 'function') {
+        for (const [fmt, tag] of [['deflate-raw', 'SQ1'], ['deflate', 'SQ2']]) {
+            try {
+                const st = new Blob([raw]).stream().pipeThrough(new CompressionStream(fmt));
+                const buf = new Uint8Array(await new Response(st).arrayBuffer());
+                return tag + '.' + SDP_B64(buf);
+            } catch (e) { /* пробуем следующий формат */ }
+        }
+    }
+    return 'SQ0.' + SDP_B64(raw);
+}
+async function sdUnpack(str) {
+    str = String(str || '').trim().replace(/\s+/g, '');
+    const dot = str.indexOf('.');
+    if (dot < 0) throw new Error('код без формата (нужен SQ1./SQ2./SQ0.)');
+    const tag = str.slice(0, dot), buf = SDP_UNB64(str.slice(dot + 1));
+    if (tag === 'SQ0') return JSON.parse(new TextDecoder().decode(buf));
+    const fmt = tag === 'SQ1' ? 'deflate-raw' : 'deflate';
+    const st = new Blob([buf]).stream().pipeThrough(new DecompressionStream(fmt));
+    return JSON.parse(new TextDecoder().decode(await new Response(st).arrayBuffer()));
+}
+
+/* ── 0c. HALLP2P: air-gapped WebRTC DataChannel (по ТЗ SingulyarP2PStage) ── */
+class HallP2P {
+    constructor(handlers) {
+        this.h = handlers || {};
+        this.pc = null; this.dc = null; this.role = null;
+    }
+    _iceDone(pc) {
+        return new Promise((resolve) => {
+            if (pc.iceGatheringState === 'complete') return resolve();
+            const to = setTimeout(resolve, 2500);   /* host-кандидаты собираются быстро */
+            pc.addEventListener('icegatheringstatechange', () => {
+                if (pc.iceGatheringState === 'complete') { clearTimeout(to); resolve(); }
+            });
+        });
+    }
+    _wireDc(dc) {
+        this.dc = dc;
+        dc.onopen = () => { if (this.h.onOpen) this.h.onOpen(); };
+        dc.onclose = () => { if (this.h.onClose) this.h.onClose(); };
+        dc.onmessage = (e) => {
+            try { const m = JSON.parse(e.data); if (this.h.onMsg) this.h.onMsg(m); } catch (err) { /* битый пакет — игнор */ }
+        };
+    }
+    async hostCreate() {
+        this.role = 'host';
+        this.pc = new RTCPeerConnection({ iceServers: [] });
+        this.dc = this.pc.createDataChannel('singulyar_p2p_data', { ordered: false, maxRetransmits: 0 });
+        this._wireDc(this.dc);
+        await this.pc.setLocalDescription(await this.pc.createOffer());
+        await this._iceDone(this.pc);
+        return sdPack({ type: this.pc.localDescription.type, sdp: this.pc.localDescription.sdp });
+    }
+    async clientJoin(code) {
+        this.role = 'client';
+        const offer = await sdUnpack(code);
+        this.pc = new RTCPeerConnection({ iceServers: [] });
+        this.pc.ondatachannel = (e) => this._wireDc(e.channel);
+        await this.pc.setRemoteDescription({ type: offer.type, sdp: offer.sdp });
+        await this.pc.setLocalDescription(await this.pc.createAnswer());
+        await this._iceDone(this.pc);
+        return sdPack({ type: this.pc.localDescription.type, sdp: this.pc.localDescription.sdp });
+    }
+    async hostAccept(code) {
+        if (this.role !== 'host' || !this.pc) throw new Error('сначала создай пару');
+        const ans = await sdUnpack(code);
+        await this.pc.setRemoteDescription({ type: ans.type, sdp: ans.sdp });
+    }
+    send(t, d) {
+        if (this.dc && this.dc.readyState === 'open') { try { this.dc.send(JSON.stringify({ t, d })); } catch (e) {} }
+    }
+    close() {
+        if (this.dc) { try { this.dc.close(); } catch (e) {} }
+        if (this.pc) { try { this.pc.close(); } catch (e) {} }
+        this.dc = null; this.pc = null; this.role = null;
+    }
+}
+
+/* ── 1. ТРАНСПОРТ ────────────────────────────────────────────────────────── */
+class HallTransport {
+    constructor(onMsg) {
+        this.onMsg = onMsg;
+        this.seen = new Map();          /* src:seq → ts, дедуп двойного транспорта */
+        this.mode = '—';
+        this.bc = null;
+        try {
+            this.bc = new BroadcastChannel('singulyar-hall');
+            this.bc.onmessage = (e) => this.recv(e.data, 'bc');
+            this.mode = 'bc';
+        } catch (e) { this.bc = null; }
+        /* localStorage-фолбэк (и второй канал для bc-браузеров) */
+        this.lsKey = 'singulyar-hall';
+        if (!this._lsHandler) {
+            this._lsHandler = (e) => { if (e.key === this.lsKey && e.newValue) { try { this.recv(JSON.parse(e.newValue), 'ls'); } catch (_) {} } };
+            window.addEventListener('storage', this._lsHandler);
+        }
+        window.addEventListener('unload', () => { if (this.bc) { try { this.bc.postMessage({ ver: 1, t: 'BYE', src: this.src }); } catch (_) {} } });
+    }
+    recv(msg, via) {
+        if (!msg || msg.ver !== 1) return;
+        const id = msg.src + ':' + msg.seq;
+        if (id === 'undefined:undefined') return;
+        if (this.seen.has(id)) return;
+        this.seen.set(id, Date.now());
+        if (this.seen.size > 400) { const cut = Date.now() - 30000; for (const [k, t] of this.seen) if (t < cut) this.seen.delete(k); }
+        this.mode = via;
+        this.onMsg(msg);
+    }
+    send(msg) {
+        if (msg.ver === undefined) msg.ver = 1;
+        if (msg.seq === undefined) msg.seq = ++HallTransport._seq;
+        if (!msg.src) msg.src = HallTransport._src;
+        if (this.bc) { try { this.bc.postMessage(msg); } catch (_) {} }
+        try { localStorage.setItem(this.lsKey, JSON.stringify(msg)); } catch (_) {}
+    }
+}
+HallTransport._src = 'hall-' + Math.random().toString(36).slice(2, 8);
+HallTransport._seq = 0;
+
+/* ── 2. СОСТОЯНИЕ ────────────────────────────────────────────────────────── */
+class HallState {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.song = null; this.playing = false;
+        this.pos = 0; this.dur = 0;
+        this.score = 0; this.combo = 0; this.rating = '';
+        this.pitch = null;               /* {midi, cents, clarity} */
+        this.word = ''; this.next = [];
+        this.notes = [];                 /* [{s,e,p,g,w}] — окно вокруг курсора */
+        this.updated = 0;
+    }
+    apply(msg) {
+        const d = msg.d || {};
+        if (msg.t === 'HELLO') { this.hello = Date.now(); return; }
+        if (msg.t !== 'STATE') return;
+        this.song = d.song || this.song;
+        this.playing = !!d.playing;
+        this.pos = d.pos || 0; this.dur = d.dur || 0;
+        if (d.score !== undefined) this.score = d.score;
+        if (d.combo !== undefined) this.combo = d.combo;
+        if (d.rating !== undefined) this.rating = d.rating;
+        if (d.pitch !== undefined) this.pitch = d.pitch;
+        if (d.word !== undefined) this.word = d.word;
+        if (d.next !== undefined) this.next = d.next;
+        if (d.notes !== undefined) this.notes = d.notes;
+        this.updated = Date.now();
+    }
+    live() { return this.updated && (Date.now() - this.updated) < 2500; }
+}
+
+/* ── 3. РЕНДЕР ───────────────────────────────────────────────────────────── */
+class HallRenderer {
+    constructor(state) {
+        this.state = state;
+        this.el = {};
+        ['stConn','stScore','stCombo','stMic','stMsgs','bigword','nextwords','songtitle',
+         'pbar','lastRating','hallCanvas','hallStatus'].forEach(id => this.el[id] = document.getElementById(id));
+        this.cv = this.el.hallCanvas;
+        this.cx = this.cv.getContext('2d');
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.msgCount = 0;
+    }
+    resize() {
+        const r = this.cv.getBoundingClientRect();
+        this.cv.width = Math.max(320, r.width * (window.devicePixelRatio || 1));
+        this.cv.height = 300 * (window.devicePixelRatio || 1);
+    }
+    noteMidiColor(p) { const hue = (p % 12) * 30; return 'hsl(' + hue + ',70%,62%)'; }
+    frame() {
+        const s = this.state;
+        this.msgCountEl = this.msgCount;
+        /* HUD */
+        this.el.stConn.textContent = s.live() ? 'в эфире' : (this.transport ? this.transport.mode : '—');
+        this.el.stConn.className = s.live() ? 'live' : 'waiting';
+        this.el.stScore.textContent = String(s.score).padStart(6, '0');
+        this.el.stCombo.textContent = '×' + s.combo;
+        this.el.stMic.textContent = s.pitch && s.pitch.midi ? (s.pitch.src === 'p2p' ? '⤳ нота ' + s.pitch.midi : 'нота ' + s.pitch.midi) : (s.live() ? 'тихо' : '—');
+        this.el.stMsgs.textContent = String(this.msgCount);
+        this.el.songtitle.textContent = 'песня: ' + (s.song || '—') + (s.live() ? (s.playing ? ' · ▶ играет' : ' · ⏸ пауза') : ' · ожидание');
+        /* слова */
+        this.el.bigword.textContent = s.word || (s.live() ? '…' : '…');
+        this.el.nextwords.textContent = s.next && s.next.length ? s.next.slice(0, 6).join(' · ') : '';
+        /* рейтинг */
+        const lr = this.el.lastRating;
+        if (s.rating) {
+            lr.style.display = 'inline-block';
+            if (lr.textContent !== s.rating) { lr.textContent = s.rating; lr.className = 'rating ' + s.rating; }
+        } else lr.style.display = 'none';
+        /* прогресс */
+        const pr = s.dur > 0 ? Math.min(100, (s.pos / s.dur) * 100) : 0;
+        this.el.pbar.style.width = pr.toFixed(2) + '%';
+        this.draw();
+    }
+    draw() {
+        const s = this.state, cx = this.cx, W = this.cv.width, H = this.cv.height, dpr = window.devicePixelRatio || 1;
+        cx.clearRect(0, 0, W, H);
+        /* сетка октавных линий */
+        cx.strokeStyle = 'rgba(31,43,58,.55)'; cx.lineWidth = 1;
+        for (let m = 48; m <= 84; m += 12) {
+            const y = this.midiToY(m, H);
+            cx.beginPath(); cx.moveTo(0, y); cx.lineTo(W, y); cx.stroke();
+        }
+        if (!s.notes.length) {
+            cx.fillStyle = 'rgba(143,163,179,.5)';
+            cx.font = (15 * dpr) + 'px system-ui';
+            cx.textAlign = 'center';
+            cx.fillText(s.live() ? 'нотная карта не передаётся — монитор голоса' : 'ожидание трансляции из ·16 СУФЛЁР', W / 2, H / 2);
+            this.ball(s, W, H, dpr);
+            return;
+        }
+        /* колбаски: окно ±6 с вокруг позиции */
+        const span = 12, t0 = s.pos - 6;
+        for (const n of s.notes) {
+            const x0 = ((n.s - t0) / span) * W, x1 = ((n.e - t0) / span) * W;
+            if (x1 < 0 || x0 > W) continue;
+            const y = this.midiToY(n.p, H), h = 16 * dpr;
+            const active = s.pos >= n.s && s.pos <= n.e;
+            cx.globalAlpha = active ? 1 : 0.45;
+            cx.fillStyle = n.g ? '#F5A623' : this.noteMidiColor(n.p);
+            const rr = 6 * dpr, w = Math.max(4 * dpr, x1 - x0);
+            cx.beginPath();
+            if (cx.roundRect) cx.roundRect(x0, y - h / 2, w, h, rr); else cx.rect(x0, y - h / 2, w, h);
+            cx.fill();
+            if (n.w && (x1 - x0) > 46 * dpr) {
+                cx.globalAlpha = active ? 1 : 0.75;
+                cx.fillStyle = '#E8E8E8'; cx.font = (13 * dpr) + 'px system-ui'; cx.textAlign = 'left';
+                cx.fillText(n.w, x0 + 6 * dpr, y - h);
+            }
+            cx.globalAlpha = 1;
+        }
+        /* курсор */
+        const cxp = ((s.pos - t0) / span) * W;
+        cx.strokeStyle = 'rgba(212,175,55,.8)'; cx.lineWidth = 2 * dpr;
+        cx.beginPath(); cx.moveTo(cxp, 0); cx.lineTo(cxp, H); cx.stroke();
+        this.ball(s, W, H, dpr);
+    }
+    ball(s, W, H, dpr) {
+        /* шар вокалиста: позиция по X = прогресс окна, по Y = нота */
+        if (!s.pitch || !s.pitch.midi) return;
+        const y = this.midiToY(s.pitch.midi + (s.pitch.cents || 0) / 100, H);
+        const x = W * 0.5;
+        const rad = 11 * dpr;
+        const cl = Math.max(0.25, Math.min(1, s.pitch.clarity || 0));
+        const g = this.cx.createRadialGradient(x, y, 1, x, y, rad * 2.2);
+        g.addColorStop(0, 'rgba(212,175,55,' + (0.5 * cl) + ')');
+        g.addColorStop(1, 'rgba(212,175,55,0)');
+        this.cx.fillStyle = g;
+        this.cx.beginPath(); this.cx.arc(x, y, rad * 2.2, 0, Math.PI * 2); this.cx.fill();
+        this.cx.fillStyle = '#D4AF37';
+        this.cx.beginPath(); this.cx.arc(x, y, rad, 0, Math.PI * 2); this.cx.fill();
+    }
+    midiToY(m, H) {
+        const lo = 46, hi = 86;
+        return H - ((Math.max(lo, Math.min(hi, m)) - lo) / (hi - lo)) * (H - 40 * (window.devicePixelRatio || 1)) - 20 * (window.devicePixelRatio || 1);
+    }
+}
+
+/* ── 4. ПРИЛОЖЕНИЕ ───────────────────────────────────────────────────────── */
+class HallApp {
+    constructor() {
+        window.__HALL = this;   /* отладка и автотесты */
+        this.state = new HallState();
+        this.renderer = new HallRenderer(this.state);
+        this.renderer.transport = null;
+        this.transport = new HallTransport((m) => this.onMsg(m));
+        this.renderer.transport = this.transport;
+        this.bindUI();
+        this.initP2P();
+        this.initSync();
+        this.initKrug();
+        this.loop = this.loop.bind(this);
+        requestAnimationFrame(this.loop);
+        this.helloTimer = setInterval(() => {
+            this.transport.send({ t: 'HELLO', role: 'hall' });
+        }, 1000);
+    }
+    onMsg(msg) {
+        this.renderer.msgCount++;
+        if (msg.t === 'STATE') this.state.apply(msg);
+        else if (msg.t === 'HELLO') this.state.hello = Date.now();
+        else if (msg.t === 'CRDT' && this.sync) { if (this.sync.recv(msg)) this.renderSync(); }
+        else if (msg.t === 'CRDTHI' && this.sync) { try { this.transport.send({ t: 'CRDTSNAP', d: this.sync.snapshot() }); } catch (_) {} }
+        else if (msg.t === 'CRDTSNAP' && this.sync) { try { this.sync.mergeSnapshot(msg.d); } catch (_) {} }
+    }
+    sendCmd(cmd, v) {
+        this.transport.send({ t: 'CMD', cmd, v });
+    }
+    bindUI() {
+        const el = this.renderer.el;
+        document.getElementById('cmdPlay').addEventListener('click', () => this.sendCmd('play'));
+        document.getElementById('cmdPause').addEventListener('click', () => this.sendCmd('pause'));
+        document.getElementById('cmdStop').addEventListener('click', () => this.sendCmd('stop'));
+        document.getElementById('cmdBack').addEventListener('click', () => this.sendCmd('seek', -5));
+        document.getElementById('cmdFwd').addEventListener('click', () => this.sendCmd('seek', 5));
+        document.getElementById('btnDemo').addEventListener('click', () => this.demoOn());
+        document.getElementById('btnDemoOff').addEventListener('click', () => this.demoOff());
+    }
+    /* ── 4d. СИНХРОН (v10.82 «СХОДИМОСТЬ», Л5-P3): очередь событий + CRDT ──
+       Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/sync-crdt.js. Конверты
+       {ver:1,t:'CRDT',src,seq,d} идут через транспорт зала (дедуп src:seq и на
+       приёмнике, и в реплике — двойная защита). Реплика сессионная (id случаен
+       на окно — два окна одного происхождения иначе делили бы один id); журнал
+       в памяти окна; опоздавшие догоняют снимком CRDTHI→CRDTSNAP. */
+    initSync() {
+        const st = document.getElementById('syncState');
+        const say = (txt, cls) => { if (st) { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); } };
+        if (!window.SyncCRDT || !window.SyncCRDT.SyncPeer) { say('синхрон: модуль не встал — зал работает как раньше'); return; }
+        try {
+            const rid = 'r-' + Math.random().toString(36).slice(2, 10);
+            this.sync = new window.SyncCRDT.SyncPeer({
+                id: rid,
+                send: (env) => this.transport.send(env),
+                onRemote: () => this.renderSync()
+            });
+            const bClap = document.getElementById('btnClapSync');
+            const bMark = document.getElementById('btnMarkSync');
+            const bReq  = document.getElementById('btnReqSync');
+            if (bClap) bClap.addEventListener('click', () => { this.sync.op('ginc', { key: 'claps', by: 1 }); this.renderSync(); });
+            if (bMark) bMark.addEventListener('click', () => {
+                const song = String((this.state && this.state.song) || 'без песни').slice(0, 80);
+                const live = this.sync.members('marks').indexOf(song) !== -1;
+                this.sync.op(live ? 'orrem' : 'oradd', { key: 'marks', el: song });   /* тумблер честный */
+                this.renderSync();
+            });
+            if (bReq) bReq.addEventListener('click', () => {
+                const song = String((this.state && this.state.song) || 'любую').slice(0, 80);
+                this.sync.op('lww', { key: 'req', v: song });
+                this.renderSync();
+            });
+            const flush = () => { if (this.sync) { this.sync.flush(); this.renderSync(); } };
+            window.addEventListener('online', flush);
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) flush(); });
+            setTimeout(() => { try { this.transport.send({ t: 'CRDTHI' }); } catch (_) {} flush(); }, 700);
+            say('синхрон: жив', 'open');
+        } catch (e) { this.sync = null; say('синхрон: честный отказ — ' + String((e && e.message) || 'неизвестно')); }
+        this.renderSync();
+    }
+    renderSync() {
+        if (!this.sync) return;
+        let s = null; try { s = this.sync.stats(); } catch (_) { return; }
+        const c = document.getElementById('syncClaps'), m = document.getElementById('syncMarks'), q = document.getElementById('syncReq');
+        if (c) c.textContent = '👏 ' + (this.sync.value('claps') || 0);
+        const mm = this.sync.members('marks') || [];
+        if (m) m.textContent = '★ ' + mm.length + (mm.length ? ' · ' + String(mm[mm.length - 1]).slice(0, 18) : '');
+        const req = this.sync.value('req');
+        if (q) q.textContent = '♪ ' + (req === null || req === undefined || req === '' ? '—' : String(req).slice(0, 18));
+        const st = document.getElementById('syncState');
+        if (st) st.textContent = 'синхрон: ' + s.id + ' · лэмпорт ' + s.lamport + ' · журнал ' + s.pending + ' · принято ' + s.applied + ' · транспорт ' + (this.transport ? this.transport.mode : '—');
+    }
+    /* ── 4b. P2P: хост-экран + телефон-микрофон (air-gapped WebRTC) ── */
+    initP2P() {
+        const st = document.getElementById('p2pState');
+        const setSt = (txt, cls) => { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); };
+        this.p2p = new HallP2P({
+            onOpen: () => {
+                setSt('канал: ● телефон подключён', 'open');
+                document.getElementById('phStatus').textContent = 'связь есть';
+                /* КРУГ (v10.84): рукопожатие записывает профиль — первая встреча круга */
+                this.krugЗдравствуйте(this.p2p.role === 'host' ? 'зал' : 'телефон');
+                /* хост шлёт компактный STATE телефону 4 Гц */
+                this.p2pTimer = setInterval(() => {
+                    const s = this.state;
+                    this.p2p.send('STATE', { song: s.song, playing: s.playing, pos: Math.round((s.pos || 0) * 10) / 10,
+                        dur: Math.round((s.dur || 0) * 10) / 10, score: s.score, combo: s.combo,
+                        word: s.word, rating: s.rating });
+                }, 250);
+            },
+            onClose: () => {
+                setSt('канал: разорван', 'wait');
+                if (this.p2pTimer) { clearInterval(this.p2pTimer); this.p2pTimer = null; }
+            },
+            onMsg: (m) => this.onP2pMsg(m)
+        });
+        document.getElementById('btnP2pHost').addEventListener('click', async () => {
+            try {
+                setSt('канал: готовим оффер…');
+                const code = await this.p2p.hostCreate();
+                const base = location.href.split('#')[0];
+                const url = base + '#join=' + code;
+                document.getElementById('p2pHostBox').style.display = 'block';
+                document.getElementById('p2pOfferOut').textContent = code;
+                new SingulyarQR().toCanvas(document.getElementById('p2pQr'), url);
+                setSt('канал: ждём код-ответ с телефона');
+            } catch (e) { setSt('канал: ошибка — ' + e.message); }
+        });
+        document.getElementById('btnP2pCopy').addEventListener('click', () => {
+            const ta = document.getElementById('p2pOfferOut');
+            ta.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            if (navigator.clipboard) navigator.clipboard.writeText(ta.textContent).catch(() => {});
+        });
+        document.getElementById('btnP2pAccept').addEventListener('click', async () => {
+            try {
+                await this.p2p.hostAccept(document.getElementById('p2pAnswerIn').value);
+                setSt('канал: соединяемся…');
+            } catch (e) { setSt('канал: плохой ответ — ' + e.message); }
+        });
+        document.getElementById('btnP2pScan').addEventListener('click', () => this.p2pScan());
+        /* телефонный режим: #join=<оффер> */
+        const m = location.hash.match(/^#join=(.+)$/);
+        if (m) this.phoneMode(decodeURIComponent(m[1]));
+    }
+    onP2pMsg(m) {
+        if (m && m.t === 'HELLO') { this.krugВстретил(m.d); return; }   /* КРУГ v10.84 */
+        if (this.p2p.role !== 'host') {   /* телефон: STATE от зала */
+            if (m.t === 'STATE') this.phoneApply(m.d || {});
+            return;
+        }
+        if (m.t === 'PITCH') {
+            const d = m.d || {};
+            this.state.pitch = d.midi ? { midi: d.midi, cents: d.cents || 0, clarity: d.clarity || 0, src: 'p2p' } : null;
+            this.renderer.msgCount++;
+        } else if (m.t === 'CMD') {
+            /* пульт телефона → обычный транспорт зала → ·16 */
+            this.sendCmd((m.d || {}).cmd, (m.d || {}).v);
+            this.renderer.msgCount++;
+        }
+    }
+    async p2pScan() {
+        const v = document.getElementById('p2pScanVideo');
+        try {
+            if (typeof window.BarcodeDetector !== 'function') throw new Error('в этом браузере нет BarcodeDetector — вставь код текстом');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            v.style.display = 'block'; v.srcObject = stream; await v.play();
+            const det = new window.BarcodeDetector({ formats: ['qr_code'] });
+            const tick = async () => {
+                if (!stream.active) return;
+                try {
+                    const codes = await det.detect(v);
+                    if (codes.length && codes[0].rawValue) {
+                        stream.getTracks().forEach((t) => t.stop()); v.style.display = 'none';
+                        document.getElementById('p2pAnswerIn').value = codes[0].rawValue;
+                        document.getElementById('btnP2pAccept').click();
+                        return;
+                    }
+                } catch (e) { /* кадр не готов */ }
+                setTimeout(tick, 200);
+            };
+            tick();
+        } catch (e) {
+            v.style.display = 'none';
+            this.setP2pHint('◈ ' + e.message);
+        }
+    }
+    setP2pHint(msg) {
+        const box = document.getElementById('p2pHostBox');
+        if (!box) return;
+        let p = document.getElementById('p2pScanHint');
+        if (!p) { p = document.createElement('p'); p.id = 'p2pScanHint'; p.className = 'hint'; box.appendChild(p); }
+        p.textContent = msg;
+    }
+    /* ── 4e. КРУГ СВОИХ (v10.84, Л5-P3.1): локальные профили отношений и согласия ──
+       Канон ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/src/krug-profiles.js (тесты 22/22). Первый
+       контакт — QR/код как было (HELLO по каналу P2P). Повторный — без QR: рендеву
+       krug-<ключ зала> по мосту вкладок (тот же браузер, офлайн) и/или комнате релеев
+       (между устройствами, как звонки ·23); зал выносит через рендеву СВЕЖИЙ оффер
+       WebRTC. Согласие: разрешено → без вопроса; спросено/незнакомец → вопрос; запрещено
+       → честный отказ; забыть → настоящее удаление. Синхрон (4d) и P2P (4b) не тронуты. */
+    initKrug() {
+        const К = window.КругПрофили;
+        const st = document.getElementById('krugState');
+        const say = (txt, cls) => { if (st) { st.textContent = txt; st.className = 'p2p-state ' + (cls || 'wait'); } };
+        if (!К || !К.встреча) { say('круг: модуль не встал — зал работает как раньше'); return; }
+        try {
+            this.krugАдаптер = {
+                load: () => { try { return JSON.parse(localStorage.getItem('krug.profiles.v1') || 'null'); } catch (e) { return null; } },
+                save: (с) => { try { localStorage.setItem('krug.profiles.v1', JSON.stringify(с)); } catch (e) { /* честно: сессия */ } }
+            };
+            const ран = (typeof crypto !== 'undefined' && crypto.getRandomValues)
+                ? () => { const а = new Uint8Array(1); crypto.getRandomValues(а); return а[0] / 256; }
+                : undefined;
+            this.krugМой = К.устройство(this.krugАдаптер, ран);
+            this.krugСлушает = false;
+            this.krugТихо = {};      /* ключ → «до-какого-мс молчим» — двойная доставка (мост+релеи) */
+            this.krugОжидают = {};   /* ключ → { имя, роль } — зов, ждущий решения человека */
+            this.krugСети = [];      /* мост вкладок: BroadcastChannel-ы рендеву */
+            this.krugРелейПочта = null; this.krugРелейКомната = null;
+            this.krugЖдуЗала = null; this.krugДелегат = false; this.krugТик = null;
+            say('круг: мой ключ ' + String(this.krugМой.key).slice(0, 8) + '…', 'open');
+            document.getElementById('btnKrugСлушать').addEventListener('click', () => this.krugСлушатьToggle());
+            const список = document.getElementById('krugСписок');
+            список.addEventListener('click', (е) => {
+                const т = е.target.closest('[data-действие]');
+                if (!т) return;
+                const д = т.getAttribute('data-действие'), к = т.getAttribute('data-ключ');
+                this.krugКнопка(д, к);
+            });
+            this.krugДелегат = true;
+            this.krugКраска();
+        } catch (e) { say('круг: честный отказ — ' + String((e && e.message) || 'неизвестно')); }
+    }
+    krugКнопка(действие, ключ) {
+        const К = window.КругПрофили;
+        if (!К || !ключ) return;
+        try {
+            if (действие === 'разрешить') { К.согласие(this.krugАдаптер, ключ, 'разрешено'); this.krugКраска(); }
+            else if (действие === 'запретить') { К.согласие(this.krugАдаптер, ключ, 'запрещено'); this.krugКраска(); }
+            else if (действие === 'забыть') { К.забыть(this.krugАдаптер, ключ); this.krugКраска(); }
+            else if (действие === 'принять') {
+                delete this.krugОжидают[ключ];
+                К.согласие(this.krugАдаптер, ключ, 'разрешено');
+                this.krugКраска();
+                this.krugВышлиОффер(ключ);
+            } else if (действие === 'нет') {
+                delete this.krugОжидают[ключ];   /* честно: не запрещаем навсегда — просто не впустили сейчас */
+                this.krugКраска();
+            } else if (действие === 'вернуться') {
+                const п = К.профиль(this.krugАдаптер, ключ);
+                this.krugВернуться(ключ, п ? п.имя : 'зал');
+            }
+        } catch (e) { const st = document.getElementById('krugState'); if (st) st.textContent = 'круг: ' + String(e.message || e); }
+    }
+    krugКраска() {
+        const К = window.КругПрофили;
+        if (!К || !this.krugДелегат) return;
+        const коробка = document.getElementById('krugСписок');
+        if (!коробка) return;
+        let хтмл = '';
+        Object.keys(this.krugОжидают).forEach((к) => {
+            const з = this.krugОжидают[к];
+            хтмл += '<div class="row"><span class="p2p-state wait">зовёт: ' + (з.имя || 'устройство') +
+                ' (' + String(к).slice(0, 8) + '…)</span>' +
+                '<button class="btn ghost" data-действие="принять" data-ключ="' + к + '">принять</button>' +
+                '<button class="btn gray" data-действие="нет" data-ключ="' + к + '">нет</button></div>';
+        });
+        let список = [];
+        try { список = К.список(this.krugАдаптер); } catch (e) { список = []; }
+        список.forEach((п) => {
+            хтмл += '<div class="row"><span class="p2p-state open">' +
+                (п.имя || 'устройство') + ' · ' + (п.роль || '—') + ' · встреч ' + п.встреч +
+                ' · ' + п.согласие + ' · ' + String(п.key).slice(0, 8) + '…</span>' +
+                '<button class="btn ghost" data-действие="разрешить" data-ключ="' + п.key + '">✓ разрешить</button>' +
+                '<button class="btn gray" data-действие="запретить" data-ключ="' + п.key + '">✕ запретить</button>' +
+                '<button class="btn gray" data-действие="забыть" data-ключ="' + п.key + '">забыть</button>' +
+                (п.роль === 'зал' && п.согласие !== 'запрещено'
+                    ? '<button class="btn ghost" data-действие="вернуться" data-ключ="' + п.key + '">↩ вернуться в зал</button>'
+                    : '') +
+                '</div>';
+        });
+        if (!хтмл) хтмл = '<p class="hint">пока пусто: круг наполнится после первого рукопожатия (QR/код — как было)</p>';
+        коробка.textContent = хтмл;
+        const б = document.getElementById('btnKrugСлушать');
+        if (б) б.textContent = this.krugСлушает ? '◉ слушаю круг (нажми — закрыть)' : '◉ слушать круг';
+    }
+    krugРазошли(сообщение) {
+        (this.krugСети || []).forEach((с) => { try { с.канал.postMessage(сообщение); } catch (e) { /* канал закрылся */ } });
+        if (this.krugРелейПочта) { try { this.krugРелейПочта.send(сообщение); } catch (e) { /* релеи отстали */ } }
+    }
+    krugСлушатьToggle() {
+        if (this.krugСлушает) { this.krugСлушаниеЗакрой('круг закрыт'); return; }
+        const К = window.КругПрофили;
+        if (!К || !this.krugАдаптер) return;
+        try {
+            const имяРендеву = К.рендеву(this.krugМой.key);
+            this.krugСети = [];
+            try {
+                const бч = new BroadcastChannel(имяРендеву);
+                бч.onmessage = (е) => this.krugПриём(е.data, 'мост');
+                this.krugСети.push({ имя: 'мост', канал: бч });
+            } catch (e) { /* нет BroadcastChannel — останутся релеи */ }
+            this.krugСлушает = true;
+            this.krugРелеиВступи(имяРендеву);
+            this.krugКраска();
+        } catch (e) {
+            this.krugСлушаниеЗакрой('круг: честный отказ — ' + String(e.message || e));
+        }
+    }
+    async krugРелеиВступи(имяРендеву) {
+        let тр = null;
+        try { тр = await import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs'); } catch (e) { тр = null; }
+        if (!тр || !this.krugСлушает || !this.krugСети) return;   /* слушание уже закрыто — честно уходим */
+        try {
+            const комната = тр.joinRoom(
+                { appId: 'singular-krug-v1',
+                  relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+                  rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] } },
+                имяРендеву);
+            const почта = комната.makeAction('круг');
+            почта.onMessage = (д) => this.krugПриём(д, 'релеи');
+            this.krugРелейКомната = комната; this.krugРелейПочта = почта;
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: слушаю — мост вкладок + релеи (сигналинг через интернет, контакт P2P)'; st.className = 'p2p-state open'; }
+        } catch (e) {
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: слушаю — мост вкладок (релеи не встали: ' + String(e.message || e).slice(0, 60) + ')'; st.className = 'p2p-state open'; }
+        }
+    }
+    krugСлушаниеЗакрой(текст) {
+        this.krugСлушает = false;
+        (this.krugСети || []).forEach((с) => { try { с.канал.close(); } catch (e) {} });
+        this.krugСети = [];
+        if (this.krugРелейКомната) { try { this.krugРелейКомната.leave(); } catch (e) {} }
+        this.krugРелейКомната = null; this.krugРелейПочта = null;
+        this.krugОжидают = {};
+        if (this.krugТик) { clearTimeout(this.krugТик); this.krugТик = null; }
+        const st = document.getElementById('krugState');
+        if (st && текст) { st.textContent = 'круг: ' + текст; st.className = 'p2p-state wait'; }
+        this.krugКраска();
+    }
+    async krugВернуться(ключ, имя) {
+        const К = window.КругПрофили;
+        if (!К || !this.krugАдаптер) return;
+        const р = К.повторныйКонтакт(this.krugАдаптер, ключ);
+        if (р.причина === 'запрещено') {
+            const st = document.getElementById('krugState');
+            if (st) { st.textContent = 'круг: зал «' + имя + '» у тебя под запретом — сними запрет в списке круга'; st.className = 'p2p-state wait'; }
+            return;
+        }
+        if (р.вопрос) {
+            const ок = window.confirm('Круг: вернуться в зал «' + имя + '»? Согласие этому кругу ещё не дано.');
+            if (!ок) return;
+            try { К.согласие(this.krugАдаптер, ключ, 'разрешено'); } catch (e) { /* не бывает — профиль есть */ }
+        }
+        if (!р.ok || !р.рендеву) {   /* незнакомец — вернуться некуда, честно */
+            const st = document.getElementById('krugState');
+            if (st) st.textContent = 'круг: профиль исчез — первый контакт заново (QR)';
+            this.krugКраска();
+            return;
+        }
+        try {
+            this.krugЖдуЗала = { ключ: ключ, имя: имя };
+            this.krugСети = [];
+            try {
+                const бч = new BroadcastChannel(р.рендеву);
+                бч.onmessage = (е) => this.krugПриём(е.data, 'мост');
+                this.krugСети.push({ имя: 'мост', канал: бч });
+            } catch (e) { /* останутся релеи */ }
+            const st = document.getElementById('krugState');
+            const скажу = (т, к) => { if (st) { st.textContent = т; st.className = 'p2p-state ' + (к || 'wait'); } };
+            скажу('круг: зову зал «' + имя + '» по рендеву (без QR)…');
+            try { const тр = await import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs');
+                const комната = тр.joinRoom(
+                    { appId: 'singular-krug-v1',
+                      relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+                      rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] } },
+                    р.рендеву);
+                const почта = комната.makeAction('круг');
+                почта.onMessage = (д) => this.krugПриём(д, 'релеи');
+                this.krugРелейКомната = комната; this.krugРелейПочта = почта;
+            } catch (е) { /* релеи не встали — мост вкладок остаётся */ }
+            this.krugРазошли({ t: 'КРУГ_ЗОВ', key: this.krugМой.key, имя: 'телефон', роль: 'телефон' });
+            this.krugТик = setTimeout(() => {
+                if (this.krugЖдуЗала) {
+                    this.krugЖдуЗала = null;
+                    this.krugСлушаниеЗакрой('зал молчит — он должен держать «слушать круг» включённым');
+                }
+            }, 20000);
+        } catch (e) {
+            this.krugЖдуЗала = null;
+            this.krugСлушаниеЗакрой('круг: честный отказ — ' + String(e.message || e));
+        }
+    }
+    krugПриём(д, откуда) {
+        const К = window.КругПрофили;
+        if (!К || !д || typeof д !== 'object' || !д.t) return;
+        if (String(д.key) === (this.krugМой && this.krugМой.key)) return;   /* своё эхо не едят */
+        const st = document.getElementById('krugState');
+        if (д.t === 'КРУГ_ЗОВ') {
+            if (!this.krugСлушает) return;   /* зал не слушает — зовы честно мимо */
+            const до = this.krugТихо[д.key] || 0;
+            if (до > Date.now()) return;     /* двойная доставка (мост+релеи) уже обработана */
+            this.krugТихо[д.key] = Date.now() + 30000;
+            try { К.встреча(this.krugАдаптер, { key: String(д.key), имя: String(д.имя || '').slice(0, 40), роль: String(д.роль || 'телефон').slice(0, 12) }, Date.now()); } catch (e) { return; }
+            const п = К.профиль(this.krugАдаптер, String(д.key));
+            if (п && п.согласие === 'разрешено') { this.krugВышлиОффер(String(д.key)); }
+            else if (п && п.согласие === 'запрещено') {
+                this.krugРазошли({ t: 'КРУГ_ОТКАЗ', key: this.krugМой.key, причина: 'запрещено' });
+            } else {
+                this.krugОжидают[String(д.key)] = { имя: String(д.имя || 'устройство'), роль: String(д.роль || 'телефон') };
+                if (st) { st.textContent = 'круг: зов от «' + (д.имя || 'устройства') + '» — жмёт ли он «принять» — решаешь ты'; st.className = 'p2p-state wait'; }
+            }
+            this.krugКраска();
+        } else if (д.t === 'КРУГ_ОФФЕР') {
+            if (!this.krugЖдуЗала || String(д.key) !== this.krugЖдуЗала.ключ) return;
+            if (this.krugТихо['о:' + д.key] > Date.now()) return;
+            this.krugТихо['о:' + д.key] = Date.now() + 30000;
+            const з = this.krugЖдуЗала;
+            (async () => {
+                try {
+                    const ответ = await this.p2p.clientJoin(String(д.код || ''));
+                    this.krugРазошли({ t: 'КРУГ_ОТВЕТ', key: this.krugМой.key, код: ответ });
+                    if (st) { st.textContent = 'круг: ответ ушёл — канал встаёт (без QR)'; st.className = 'p2p-state wait'; }
+                    this.krugТик = setTimeout(() => { if (this.krugЖдуЗала) { this.krugЖдуЗала = null; this.krugСлушаниеЗакрой('круг: зал не подтвердил'); } }, 20000);
+                } catch (е) {
+                    this.krugЖдуЗала = null;
+                    this.krugСлушаниеЗакрой('круг: оффер не взялся — ' + String(е.message || е));
+                }
+            })();
+        } else if (д.t === 'КРУГ_ОТВЕТ') {
+            (async () => {
+                try {
+                    await this.p2p.hostAccept(String(д.код || ''));
+                    if (st) { st.textContent = 'круг: связываемся…'; st.className = 'p2p-state wait'; }
+                } catch (е) { if (st) { st.textContent = 'круг: плохой ответ — ' + String(е.message || е); st.className = 'p2p-state wait'; } }
+            })();
+        } else if (д.t === 'КРУГ_ОТКАЗ') {
+            this.krugЖдуЗала = null;
+            this.krugСлушаниеЗакрой('зал ответил: ' + String(д.причина || 'отказ'));
+        }
+    }
+    async krugВышлиОффер(ключГостя) {
+        const st = document.getElementById('krugState');
+        try {
+            if (this.p2p && this.p2p.pc) this.p2p.close();
+            const код = await this.p2p.hostCreate();
+            this.krugРазошли({ t: 'КРУГ_ОФФЕР', key: this.krugМой.key, код: код });
+            if (st) { st.textContent = 'круг: оффер ушёл через рендеву (без QR) — жду ответ'; st.className = 'p2p-state wait'; }
+        } catch (e) { if (st) { st.textContent = 'круг: оффер не собрался — ' + String(e.message || e); st.className = 'p2p-state wait'; } }
+    }
+    krugЗдравствуйте(роль) {
+        if (!this.p2p || !this.krugМой) return;
+        try { this.p2p.send('HELLO', { key: this.krugМой.key, имя: роль === 'зал' ? 'зал ·17' : 'телефон', роль: роль }); } catch (e) { /* канал ещё не открыт */ }
+    }
+    krugВстретил(д) {
+        const К = window.КругПрофили;
+        if (!К || !д || !this.krugАдаптер || !this.krugМой) return;
+        if (String(д.key) === this.krugМой.key) return;   /* сам себя не записывают */
+        try {
+            К.встреча(this.krugАдаптер, { key: String(д.key), имя: String(д.имя || '').slice(0, 40), роль: String(д.роль || '').slice(0, 12) }, Date.now());
+            this.krugКраска();
+        } catch (e) { /* битый hello — честно игнор */ }
+    }
+    /* ── 4c. РЕЖИМ ТЕЛЕФОНА: #join=<оффер> — микрофон + пульт ── */
+    async phoneMode(offerCode) {
+        document.getElementById('phonePanel').classList.add('on');
+        const st = document.getElementById('phStatus');
+        try {
+            const answer = await this.p2p.clientJoin(offerCode);
+            document.getElementById('phAnswerBox').style.display = 'block';
+            document.getElementById('phAnswerOut').textContent = answer;
+            st.textContent = 'покажи код-ответ залу';
+            document.getElementById('phAnswerCopy').addEventListener('click', () => {
+                const ta = document.getElementById('phAnswerOut');
+                ta.select();
+                try { document.execCommand('copy'); } catch (e) {}
+                if (navigator.clipboard) navigator.clipboard.writeText(ta.textContent).catch(() => {});
+            });
+        } catch (e) { st.textContent = 'ошибка: ' + e.message; }
+        const micBtn = document.getElementById('phMic');
+        micBtn.addEventListener('click', () => this.phoneMicOn());
+        document.getElementById('phMicOff').addEventListener('click', () => this.phoneMicOff());
+        document.getElementById('phPlay').addEventListener('click', () => this.p2p.send('CMD', { cmd: 'play' }));
+        document.getElementById('phPause').addEventListener('click', () => this.p2p.send('CMD', { cmd: 'pause' }));
+        document.getElementById('phStop').addEventListener('click', () => this.p2p.send('CMD', { cmd: 'stop' }));
+        document.getElementById('phBack').addEventListener('click', () => this.p2p.send('CMD', { cmd: 'seek', v: -5 }));
+        document.getElementById('phFwd').addEventListener('click', () => this.p2p.send('CMD', { cmd: 'seek', v: 5 }));
+        document.getElementById('phExit').addEventListener('click', () => {
+            this.phoneMicOff(); this.p2p.close();
+            document.getElementById('phonePanel').classList.remove('on');
+            try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+        });
+    }
+    async phoneMicOn() {
+        const st = document.getElementById('phStatus');
+        try {
+            this.stream = await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 }
+            });
+            const AC17 = window.AudioContext || window.webkitAudioContext;
+            if (!AC17) throw new Error('S17_NO_AUDIO_CTX: Web Audio недоступен — телефон-микрофон не поднимется; зал играет напрямую (ложим то, что доступно)'); /* v11.41 «ДОСТУПНО»: честный текст вместо TypeError */
+            this.ac = new AC17();
+            if (this.ac.state === 'suspended') await this.ac.resume();
+            const blob = new Blob([PHONE_WORKLET], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            await this.ac.audioWorklet.addModule(url);
+            URL.revokeObjectURL(url);
+            const src = this.ac.createMediaStreamSource(this.stream);
+            this.node = new AudioWorkletNode(this.ac, 'phone-pitch-processor');
+            let frame = 0, lastMidi = null;
+            this.node.port.onmessage = (e) => {
+                const { pitch, clarity, rms } = e.data;
+                document.getElementById('phLevel').style.width = Math.min(100, (rms || 0) * 600) + '%';
+                if (((frame++) % 3) !== 0) return;   /* ~15 Гц в DataChannel */
+                let midi = null, cents = 0;
+                if (pitch) {
+                    const raw = 69 + 12 * Math.log2(pitch / 440);
+                    midi = Math.round(raw); cents = Math.round((raw - midi) * 100);
+                }
+                if (midi !== lastMidi || midi !== null) {   /* смена ноты — сразу */
+                    document.getElementById('phNote').textContent = midi ? 'нота ' + midi : '—';
+                    lastMidi = midi;
+                }
+                this.p2p.send('PITCH', { hz: pitch ? Math.round(pitch * 10) / 10 : null, midi, cents, clarity: Math.round((clarity || 0) * 100) / 100, rms: Math.round((rms || 0) * 1000) / 1000 });
+            };
+            src.connect(this.node);   /* НЕ в destination — фидбэка нет */
+            micBtn.disabled = true; document.getElementById('phMicOff').disabled = false;
+            st.textContent = '◉ поёшь — ноты летят в зал';
+        } catch (e) {
+            const code = e && e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED' : e && e.name === 'NotFoundError' ? 'S15_DEVICE_MISSING' : 'S15_MIC_ERROR';
+            st.textContent = '[' + code + '] ' + e.message;
+        }
+    }
+    phoneMicOff() {
+        if (this.stream) this.stream.getTracks().forEach((t) => t.stop());
+        if (this.ac) this.ac.close();
+        this.stream = null; this.ac = null; this.node = null;
+        document.getElementById('phMic').disabled = false;
+        document.getElementById('phMicOff').disabled = true;
+        document.getElementById('phLevel').style.width = '0%';
+    }
+    phoneApply(d) {
+        document.getElementById('phSong').textContent = 'песня: ' + (d.song || '—') + (d.playing ? ' · ▶' : ' · ⏸');
+        document.getElementById('phWord').textContent = d.word || '…';
+        document.getElementById('phScore').textContent = String(d.score || 0).padStart(6, '0');
+        document.getElementById('phCombo').textContent = '×' + (d.combo || 0);
+        document.getElementById('phRating').textContent = d.rating || '';
+    }
+    loop() {
+        this.renderer.frame();
+        requestAnimationFrame(this.loop);
+    }
+    /* ── 5. ДЕМО-ИСТОЧНИК ── */
+    demoOn() {
+        if (this.demo) return;
+        const words = ['когда', 'теряем', 'всё', 'сразу', 'мгновенья', 'ценой', 'весом', 'годы', 'помни', 'свет'];
+        const demoNotes = [];
+        let beat = 0.5;
+        for (let i = 0; i < 64; i++) {
+            const p = 60 + Math.round(7 * Math.sin(i / 3.4)) + (i % 5 === 4 ? 12 : 0);
+            demoNotes.push({ s: i * beat, e: i * beat + beat * 0.94, p, g: i % 8 === 7, w: words[i % words.length] });
+        }
+        let seq = 0, score = 0, combo = 0;
+        this.demo = setInterval(() => {
+            const pos = (Date.now() / 1000) % (64 * beat);
+            const cur = demoNotes.find(n => pos >= n.s && pos <= n.e);
+            const r = Math.random();
+            if (cur) { combo = r > 0.15 ? combo + 1 : 0; score += 100 * Math.min(Math.floor(combo / 5) + 1, 4); }
+            else combo = 0;
+            const payload = { song: 'ТЕСТ-ДЕМО · Когда теряем (синтетика)',
+                playing: true, pos, dur: 64 * beat,
+                score, combo, rating: cur ? (r > 0.3 ? 'PERFECT' : 'GOOD') : 'MISS',
+                pitch: cur ? { midi: cur.p, cents: Math.round(Math.sin(Date.now() / 200) * 12), clarity: 0.93 } : null,
+                word: cur ? cur.w : '',
+                next: demoNotes.filter(n => n.s > pos).slice(0, 6).map(n => n.w),
+                notes: demoNotes.filter(n => n.e > pos - 6 && n.s < pos + 6)
+            };
+            const msg = { t: 'STATE', seq: seq++, d: payload };
+            this.transport.send(msg);
+            this.state.apply(msg);   /* демо рисуется и в своём окне */
+            document.getElementById('btnDemoOff').disabled = false;
+        }, 120);
+    }
+    demoOff() {
+        if (this.demo) { clearInterval(this.demo); this.demo = null; }
+        document.getElementById('btnDemoOff').disabled = true;
+        this.state.reset();
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => { new HallApp(); });
+
+/* ── 6b. ТЕЛЕФОННЫЙ WORKLET: компактный McLeod MPM (1024, gate RMS) ─────── */
+const PHONE_WORKLET = `
+class PhonePitchProcessor extends AudioWorkletProcessor {
+    constructor() {
+        super();
+        this.N = 1024;
+        this.buf = new Float32Array(this.N);
+        this.w = 0; this.filled = 0;
+        this.minClarity = 0.70; this.minRms = 0.012;
+    }
+    process(inputs) {
+        const input = inputs[0];
+        if (!input || !input[0]) return true;
+        const ch = input[0];
+        for (let i = 0; i < ch.length; i++) {
+            this.buf[this.w] = ch[i];
+            this.w = (this.w + 1) % this.N;
+            if (this.filled < this.N) this.filled++;
+            if (this.filled === this.N && this.w === 0) this.analyze();
+        }
+        return true;
+    }
+    analyze() {
+        let sq = 0;
+        for (let i = 0; i < this.N; i++) sq += this.buf[i] * this.buf[i];
+        const rms = Math.sqrt(sq / this.N);
+        if (rms < this.minRms) { this.port.postMessage({ pitch: null, clarity: 0, rms }); return; }
+        const half = this.N >> 1;
+        const nsdf = new Float32Array(half);
+        for (let tau = 0; tau < half; tau++) {
+            let acf = 0, div = 0;
+            for (let i = 0; i < this.N - tau; i++) {
+                const x = this.buf[i], y = this.buf[i + tau];
+                acf += x * y; div += x * x + y * y;
+            }
+            nsdf[tau] = div > 0 ? (2 * acf) / div : 0;
+        }
+        let maxTau = -1, maxVal = 0;
+        for (let tau = 2; tau < half - 1; tau++) {
+            if (nsdf[tau] > nsdf[tau - 1] && nsdf[tau] > nsdf[tau + 1]) {
+                if (nsdf[tau] >= this.minClarity) { maxTau = tau; maxVal = nsdf[tau]; break; }
+                if (nsdf[tau] > maxVal) { maxVal = nsdf[tau]; maxTau = tau; }
+            }
+        }
+        let pitch = null;
+        if (maxTau > 0 && maxVal >= this.minClarity) {
+            const a = nsdf[maxTau - 1], b = nsdf[maxTau], c = nsdf[maxTau + 1];
+            const den = 2 * (2 * b - a - c);
+            const delta = den !== 0 ? (c - a) / den : 0;
+            pitch = sampleRate / (maxTau + delta);
+        }
+        this.port.postMessage({ pitch, clarity: maxVal, rms });
+    }
+}
+registerProcessor('phone-pitch-processor', PhonePitchProcessor);
+`;
+</script>
+<script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script>
+<script defer src="./singulyar-modules.js"></script>
+<script>
+/* дом ставится в офлайн целиком — с любой двери */
+try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
+</script>
+
+<nav aria-label="нить дома" style="position:relative;z-index:5;margin:24px 0 0;padding:12px 16px;text-align:center;background:rgba(10,10,12,.72);border-top:1px solid rgba(212,175,55,.22);font-size:14px;color:#8A9099">⌂ <a href="./index.html" style="color:#D4AF37;text-decoration:none">хаб</a> · ¶ <a href="./ДОКУМЕНТАЦИЯ.html" style="color:#D4AF37;text-decoration:none">доки</a> · <span style="color:#5A6470">нить дома · такт v<span data-реестр="версия">11.21</span> «<span data-реестр="такт">ОРГАНИЗМ</span>»</span></nav>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-латенс" aria-labelledby="сг47-латенс-заголовок">
+<h2 id="сг47-латенс-заголовок">Смещение зала — латенс-ядро/0.1 <em>(М4, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Глобальный временной синхрон: смещение участников — медиана разностей меток рукопожатий; компенсация — сдвиг расписания. Метки приносят участники по ЭФИРУ/ПИР — сеть только по явному действию (И-01). Живой дрейф-замер на железе — Г2 (владелец).</p>
+<label for="сг47-латенс-вход">Пары меток — по одной JSON-строке {"здесь":мс,"там":мс}</label>
+<textarea id="сг47-латенс-вход" placeholder='{"здесь":1000,"там":1250}
+{"здесь":2000,"там":2240}
+{"здесь":3000,"там":3260}'></textarea>
+<button type="button" id="сг47-латенс-кнопка">Измерить смещение</button>
+<div class="сг47-ответ" id="сг47-латенс-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М4 — латенс-ядро/0.1 в зале ·17 */
+(function(){try{
+ var вход=document.getElementById('сг47-латенс-вход'),кнопка=document.getElementById('сг47-латенс-кнопка'),ответ=document.getElementById('сг47-латенс-ответ');
+ if(!вход||!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__ЛАТЕНС;
+   if(!порт){ответ.textContent='Порт латенс-ядро/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var пары=[];
+   var строки=(вход.value||'').split(/\n+/);
+   for(var i=0;i<строки.length;i++){var с=строки[i].trim();if(!с)continue;var п=JSON.parse(с);пары.push(п)}
+   var р=порт.смещение(пары);
+   ответ.textContent='Смещение: '+р.смещениеМс+' мс (медиана '+р.проб+' проб)\nРазброс (p75−p25): '+р.разбросМс+' мс\nКомпенсация: участник '+ (р.смещениеМс>=0?'опережает на ':'отстаёт на ')+Math.abs(р.смещениеМс)+' мс — расписание сдвигается той же величиной.';
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-агрегат" aria-labelledby="сг47-агрегат-заголовок">
+<h2 id="сг47-агрегат-заголовок">Агрегат вечера — агрегат-ядро/0.1 <em>(М5, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Коллективный интеллект без слежки: считаем только на устройстве; наружу — агрегат без личности. Категории с числом событий меньше k честно скрываются («меньше k»), вырожденный агрегат — честная пометка.</p>
+<label for="сг47-агрегат-вход">События — по одной JSON-строке {"категория":"…"}</label>
+<textarea id="сг47-агрегат-вход" placeholder='{"категория":"пение"}
+{"категория":"пение"}
+{"категория":"слушание"}'></textarea>
+<label for="сг47-агрегат-k">k (минимум категории, по умолчанию 5)</label>
+<input type="text" id="сг47-агрегат-k" inputmode="numeric" placeholder="5" autocomplete="off">
+<button type="button" id="сг47-агрегат-кнопка">Собрать агрегат</button>
+<div class="сг47-ответ" id="сг47-агрегат-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М5 — агрегат-ядро/0.1 в зале ·17 */
+(function(){try{
+ var вход=document.getElementById('сг47-агрегат-вход'),k=document.getElementById('сг47-агрегат-k'),кнопка=document.getElementById('сг47-агрегат-кнопка'),ответ=document.getElementById('сг47-агрегат-ответ');
+ if(!вход||!кнопка||!ответ)return;
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__АГРЕГАТ;
+   if(!порт){ответ.textContent='Порт агрегат-ядро/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   var события=[];
+   var строки=(вход.value||'').split(/\n+/);
+   for(var i=0;i<строки.length;i++){var с=строки[i].trim();if(!с)continue;события.push(JSON.parse(с))}
+   var опции={};
+   if((k.value||'').trim())опции.k=parseInt(k.value,10);
+   var р=порт.собрать(события,опции);
+   var наружу=[];var имя;
+   for(имя in р.агрегат){if(Object.prototype.hasOwnProperty.call(р.агрегат,имя))наружу.push(имя+': '+р.агрегат[имя])}
+   var скрыто=[];
+   for(имя in р.скрыто){if(Object.prototype.hasOwnProperty.call(р.скрыто,имя))скрыто.push(имя)}
+   ответ.textContent=(наружу.length?('Наружу (агрегат без личности):\n  '+наружу.join('\n  ')):'Наружу нечего отдать:')+'\nСкрыто честно (<'+р.k+'): '+(скрыто.length?скрыто.join(', '):'—')+'\nВсего событий: '+р.всего+(р.вырожден?'\nАгрегат вырожден (все категории меньше k) — честная пометка.':'');
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
+<style id="сг47-стиль">
+.сг47-панель{border:1px solid rgba(222,169,104,.35);background:rgba(23,24,26,.6);border-radius:14px;padding:14px 16px;margin:18px 0;font:15px/1.5 'Manrope',system-ui,sans-serif;color:#e8e4da}
+.сг47-панель h2{margin:0 0 6px;font-size:17px;color:#dea968}
+.сг47-панель h2 em{font-style:normal;font-weight:400;font-size:12px;color:#b9b2a4}
+.сг47-панель .сг47-подсказка{margin:0 0 10px;font-size:13px;color:#b9b2a4}
+.сг47-панель label{display:block;font-size:13px;color:#dea968}
+.сг47-панель input[type=text],.сг47-панель textarea{width:100%;box-sizing:border-box;background:#101113;border:1px solid rgba(222,169,104,.3);border-radius:8px;color:#e8e4da;padding:8px 10px;font:inherit;margin:4px 0 10px}
+.сг47-панель textarea{min-height:64px;resize:vertical}
+.сг47-панель button{background:#dea968;color:#17181a;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font:inherit;min-height:44px;margin:0 8px 8px 0}
+.сг47-панель button:hover{filter:brightness(1.08)}
+.сг47-панель .сг47-ответ{margin-top:8px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.сг47-панель .сг47-отказ{color:#e88}
+.сг47-панель a{color:#dea968}
+@media (prefers-reduced-motion: reduce){.сг47-панель *,.сг47-панель *::before,.сг47-панель *::after{transition:none!important;animation:none!important}}
+</style>
+<!-- такт v11.47 «ЗАКРЫТИЕ» (С125): панель-слой канонов закрытия дорожной карты (идемпотентный блок сг47) -->
+<section class="сг47-панель" id="сг47-зеркало" aria-labelledby="сг47-зеркало-заголовок">
+<h2 id="сг47-зеркало-заголовок">Зеркало каталога — зеркало-каталога/0.1 <em>(М1, такт v11.47 «ЗАКРЫТИЕ»)</em></h2>
+<p class="сг47-подсказка">Content-addressed протокол М1: каждый файл — честные SHA-256-иды чанков (64 КБ), корень — хэш канонизированного списка. 0 сети: транспорт (IPFS-релеи) — снаружи, по явному действию человека (И-01). Файлы выбираешь ты — дом их не читает без тебя.</p>
+<label for="сг47-зеркало-файлы">Файлы каталога для зеркала</label>
+<input type="text" id="сг47-зеркало-файлы" placeholder="пути через запятую (имена выбранных файлов)" autocomplete="off" readonly>
+<input type="file" id="сг47-зеркало-выбор" multiple aria-label="Выбрать файлы для зеркала" style="color:#e8e4da">
+<button type="button" id="сг47-зеркало-кнопка">Построить зеркало</button>
+<div class="сг47-ответ" id="сг47-зеркало-ответ" role="status" aria-live="polite"></div>
+</section>
+<script>
+/* такт v11.47 «ЗАКРЫТИЕ» (С125): М1 — зеркало-каталога/0.1 в зале ·17 (файлы — только от человека) */
+(function(){try{
+ var выбор=document.getElementById('сг47-зеркало-выбор'),имена=document.getElementById('сг47-зеркало-файлы'),кнопка=document.getElementById('сг47-зеркало-кнопка'),ответ=document.getElementById('сг47-зеркало-ответ');
+ if(!выбор||!кнопка||!ответ)return;
+ var файлы=[];
+ выбор.addEventListener('change',function(){
+  файлы=[];
+  for(var i=0;i<выбор.files.length;i++)файлы.push(выбор.files[i]);
+  var список=[];for(var j=0;j<файлы.length;j++)список.push(файлы[j].name);
+  имена.value=список.join(', ');
+ });
+ кнопка.addEventListener('click',function(){
+  ответ.className='сг47-ответ';
+  try{
+   var порт=window.__ЗЕРКАЛО;
+   if(!порт){ответ.textContent='Порт зеркало-каталога/0.1 не загрузился — честный отказ.';ответ.className='сг47-ответ сг47-отказ';return;}
+   if(!файлы.length){ответ.textContent='Файлы не выбраны: зеркало пустых каталогов не строит.';return;}
+   var очередь=[];var готово=0;
+   for(var i=0;i<файлы.length;i++){
+    (function(ф){
+     var читатель=new FileReader();
+     читатель.onload=function(){очередь.push({путь:ф.name,данные:new Uint8Array(читатель.result)});готово++;еслиВсё()};
+     читатель.onerror=function(){ответ.textContent='Честный отказ: файл «'+ф.name+'» не прочитался.';ответ.className='сг47-ответ сг47-отказ'};
+     читатель.readAsArrayBuffer(ф);
+    })(файлы[i]);
+   }
+   function еслиВсё(){
+    if(готово!==файлы.length)return;
+    порт.построить(очередь).then(function(з){
+     var сч=0;for(var i=0;i<з.листы.length;i++)сч+=з.листы[i].блоки.length;
+     ответ.textContent='Корень зеркала:\n'+з.корень+'\nЛистов: '+з.листы.length+' · блоков: '+сч+'\n(зеркало — JSON в консоли; доставка наружу — только твоим действием, И-01)';
+     try{console.log('зеркало-каталога/0.1:',JSON.parse(JSON.stringify(з)))}catch(е){}
+    }).catch(function(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'});
+   }
+  }catch(е){ответ.textContent='Честный отказ: '+е.message;ответ.className='сг47-ответ сг47-отказ'}
+ });
+}catch(е){}})();
+</script>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a class="sg65here" aria-current="page" href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+</div>
+</details>
+</nav>
+<script defer src="js/latency-core.js"></script>
+<script defer src="js/aggregate-core.js"></script>
+<script defer src="js/mirror-core.js"></script>
+<script defer src="js/sg-registry.js"></script>
+</body>
+</html>

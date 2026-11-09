@@ -1,0 +1,28 @@
+---
+- name: Deploy OpenWrt VLAN & Isolation Configs for OMNISPEAKER
+  hosts: routers_openwrt
+  gather_facts: no
+  tasks:
+    - name: Copy OpenWrt network config
+      copy:
+        src: ../../config/net/openwrt_network.etc.config
+        dest: /etc/config/network
+        mode: '0644'
+
+    - name: Copy OpenWrt firewall rules
+      copy:
+        src: ../../config/net/openwrt_firewall.etc.config
+        dest: /etc/config/firewall
+        mode: '0644'
+
+    - name: Copy Avahi mDNS Reflector config
+      copy:
+        src: ../../config/net/openwrt_avahi.conf
+        dest: /etc/avahi/avahi-daemon.conf
+        mode: '0644'
+
+    - name: Restart network & firewall services
+      shell: |
+        /etc/init.d/network restart
+        /etc/init.d/firewall restart
+        /etc/init.d/avahi-daemon restart

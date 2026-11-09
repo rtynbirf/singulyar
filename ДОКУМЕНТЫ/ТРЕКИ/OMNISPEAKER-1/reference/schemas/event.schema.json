@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OmniEvent",
+  "type": "object",
+  "required": ["event_id", "ts_utc", "source", "type", "privacy_class", "payload"],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {"type": "string"},
+    "ts_utc": {"type": "string", "format": "date-time", "description": "Всегда UTC (Z). Локальная зона хранится отдельно в конфигурации дома (IANA, напр. Europe/Berlin)."},
+    "source": {"type": "string"},
+    "type": {"enum": ["user_command", "ambient_event", "device_event", "security_event", "health_event", "energy_event", "calendar_event", "system_event", "agent_action_result"]},
+    "subtype": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "privacy_class": {"enum": ["public", "household", "personal", "health_sensitive", "biometric"]},
+    "provenance": {"enum": ["owner_direct", "user_direct", "guest", "sensor_event", "automation", "untrusted_audio", "web", "document", "memory_inferred", "model"]},
+    "required_response": {"enum": ["none", "automation", "safety_protocol", "confirm_user"]},
+    "payload": {"type": "object"}
+  }
+}

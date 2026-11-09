@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ti_Tigrinya",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ti_Tigrinya.srt",
+ "юниты": [
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "ሓድሽ ምሸት ኣብ እንዳ ቡን፣",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "ረጒድ ዕንበባ ንገዛውቲ ይፈስስ። [ሙዚቃ]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "ተዘክሮታት ኣብ ዘለዎ ከባቢታት ኮለል እብል",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ኣዕብደኒ።",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ኣበይ ኣብቲ ውዑይ ጽድያ",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "ክረምቲ ንነፍሲ ​​ይሽፍና እዩ።",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "ህይወት ከም ፍላጻ ዝነፈረሉ ዕለታት ሓሊፉ፡ ዝሓለፈ",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "ንሕና።",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "ስለምንታይ ከም ዝገበርናዮ ረሲዕና ወረቓቕቲ ኣዋህሊልና",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "ንነብር ኣለና።",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "ኩሉ ግዜ ድማ፡ [ሙዚቃ] እዩ ዝመስል።",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "ገና ኣብ ቅድሜና C ድምጺ ኣሎ።",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "ግዜ ተለቂሑ ጥራይ",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "ዋላ ሓንቲ ኣይህብን እዩ።",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "ሃንደበት ድማ [ሙዚቃ] ኣብ ልበይ ይወድቕ",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ዝሑል በረድ።",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "ምስ እንኸስር [ሙዚቃ] ከነማስወሉ ንመሃር፣",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "ናይ ሓደ ሰብ መብራህቲ ብድሕሪ ማዕጾ ክጠፍእ ከሎ።",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "ደድሕሪ እተን ዝብገሳ ባቡራት እናወዛወዝና ንፍትን።",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "መልሲ ንምርካብ ንዝሓለፈ ለምኑ።",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "ቁሪ ምስ ዝኸውን ምፍቃር ንመሃር፣ [ሙዚቃ]።",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "ኣብ ጨጉሪ ርእስኻ ሓሙኽሽቲ እምበር ሓጺን ምስ ዝህሉ። ብዝዕባ፣",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "ኣቐዲመ እንተ ዝፈልጥ፡ [ሙዚቃ]።",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "እዚ ግሉጽ ዝኾነ ኣብ ነፍሲ ከመይ ክሓምም እዩ።",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "ጓሂ።",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "ኣይበለን፣ [ሙዚቃ] ኣይተሓቛቖፈን፣ ግዜ ኣይነበሮን።",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "እዚ ዘለኣለማዊ ድርኺት እዩ።",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "ኩሉ ንደሓር ኣቐሚጠዮ፣ ልበይ ንኻልኦት ኣይኮነን።",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ተኸፊቱ። [ሙዚቃ]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ምስ ጽላሎት ኢና ንቃለስ ዘለና፣",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "ኣብ ልዕሊ ባዶ ንእሽቶ ነገራት ንቃጸል።",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "እቲ በረድ ከመይ ይሰፍር ከም ዘሎ ድማ ኣይትርእዮን ኢኻ።",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "ኣብ መንኵብና ኰይኑ።",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "ሓጎስ ግን ኣብ ብልጭታ መስኮት ድኳን ኣይኮነን፣",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ] ኣብ ዕስለ ኖት ዘይኮነስ ኣብ ጸጥታ",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "ሓቂ ኣዝማድ፡ ኣብ ዋዒ ኣብ መንጎ ህቦብላታት። ግን",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "ድሮ [ሙዚቃ] እንታይ ምዃኑ ጥራይ ኢና ነድንቕ",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "ምምላስ ዘይከኣል እዩ።",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "ነዊሕ ናተይ ምቕጻል",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "መብዛሕትኡ ግዜ ድማ [ሙዚቃ] ትርጉም ዘይብሉ መንገዲ እዩ፣",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ] ምስ ሰኣንና ምምስጋን ንመሃር፣",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "ናይ ሓደ ሰብ መብራህቲ ብድሕሪ ማዕጾ ክጠፍእ ከሎ።",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "ድሕሪ [ሙዚቃ] ነተን ዝተበገሳ ባቡራት ንወዛወዝ፣",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "ንዝሓለፈ መልሲ ክትልምን ምፍታን እዩ።",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ] ምስ ዝዘሓለ፡",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "ኣብ ጨጉሪ ርእሲ ሓሙኽሽቲ ምስ ዝህሉ፡ [ሙዚቃ]ን ዘይኮነን።",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "ሓጺን። ብዝዕባ፣",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "ከመይ ከም ዝጭድር ኣቐዲመ እንተዝፈልጥ",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "እዚ ኣብ ነፍሲ ዘሎ ግሉጽ ጓሂ።",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "ነቶም ኣረግቶት ጸውዑ፡ ሓቚፍዎም፡",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "ናህሪ ናህሪ እናሃረመ ከሎ።",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "እቲ ቅሬታታት ይሓልፍ፣ ሎሚ ነዚ እየ ዘለኹ",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "እጽሊ ኣለኹ።",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "ምኽንያቱ ኩሎም ደርፍታት መወዳእታ ስለዘለዎም",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "ኣብ መወዳእታ ሓደ።",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ዝደርፍ]።",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "ንሕና [ሙዚቃ] ኣብ ዝኽሪ ምዕራፋት ኢና ንተርፍ፣",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "ረሲዕና ኮፍ ንብል።",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "ክንስእን ከለና ምምስጋን ንመሃር፣",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "ናይ ሓደ ሰብ ሙዚቃ ብድሕሪ ማዕጾ ክወጽእ ከሎ",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "ብርሃን።",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "ደድሕሪ እተን ዝብገሳ ባቡራት እናወዛወዝና ንፍትን።",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "መልሲ ንምርካብ ንዝሓለፈ ለምኑ።",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "ምፍቃር ንመሃር፣ [ሙዚቃ]።",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "ምስ ዝዘሓለ፡ ኣብ ስየ ሓሙኽሽቲ ምስ ዝነበረን",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "ዝተሰብረ [ሙዚቃ] ክሪስታል። ኣነ ክከናኸኖ ይግባእ",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "እንታይ ኣሎ፡ ኣብዚ እናሃለና፡ ክሳብ",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "ነፊሩ ከይዱ",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "ነፍሲ ናብ ርሑቕ።",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[ሙዚቃ]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

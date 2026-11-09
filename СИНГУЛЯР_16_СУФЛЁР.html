@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><script src="./cord.js"></script><!-- страховочный корд дома — общий файл --><!--/СНГ:КОРД-->
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СИНГУЛЯР ·16 — СУФЛЁР · UltraStar Edge · офлайн-оценка вокала</title>
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_16_%D0%A1%D0%A3%D0%A4%D0%9B%D0%81%D0%A0.html">
+<meta property="og:title" content="СИНГУЛЯР ·16 — СУФЛЁР · UltraStar Edge · офлайн-оценка вокала">
+<meta property="og:description" content="СИНГУЛЯР ·16 «СУФЛЁР»: офлайн-оценка вокала UltraStar-стиля — McLeod MPM в AudioWorklet, нотные колбаски с анимацией, HUD Score/Combo/Rating, автогенерация нотной карты из минусовки. Ноль зависимостей, ноль innerHTML, ноль сети.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/%D0%A1%D0%98%D0%9D%D0%93%D0%A3%D0%9B%D0%AF%D0%A0_16_%D0%A1%D0%A3%D0%A4%D0%9B%D0%81%D0%A0.html">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="СИНГУЛЯР ·16 «СУФЛЁР»: офлайн-оценка вокала UltraStar-стиля — McLeod MPM в AudioWorklet, нотные колбаски с анимацией, HUD Score/Combo/Rating, автогенерация нотной карты из минусовки. Ноль зависимостей, ноль innerHTML, ноль сети.">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#0A0A0C;--panel:#1A1D23;--line:#2A2B2D;--tx:#E8E8E8;--dim:#8A9099;--teal:#D4AF37;--teal2:#F0D78C;--amber:#F5A623;--red:#ef4444;--green:#2FA36B;--blue:#8A94B8;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding-bottom:60px}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#121418,#0A0A0C)}
+.hd{display:flex;align-items:center;gap:14px;padding:16px 0}
+.hd .logo{width:42px;height:42px;border-radius:11px;background:conic-gradient(from 210deg,#D4AF37,#F0D78C,#D4AF37);display:grid;place-items:center;color:#0A0A0C;font-weight:800;font-size:17px;font-family:var(--mono)}
+.hd b{font-size:17px;display:block}
+.hd span{color:var(--dim);font-size:12.5px;display:block}
+.badge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid #1f4d47;border-radius:999px;padding:5px 12px;background:#1A1508;white-space:nowrap}
+h1{font-size:clamp(24px,4.2vw,36px);line-height:1.18;margin:26px 0 10px}
+h1 em{font-style:normal;color:var(--teal)}
+h2{font-size:18px;margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line);color:var(--tx)}
+h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:12px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--dim);max-width:820px;font-size:15.5px}
+.stage{position:relative;background:#0A0A0C;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:16px 0}
+.stage canvas{display:block;width:100%;height:340px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.btn{display:inline-block;font-family:var(--mono);font-size:13px;background:var(--teal);color:#0A0A0C;border-radius:10px;padding:9px 14px;font-weight:700;border:0;cursor:pointer}
+.btn.ghost{background:none;color:var(--teal);border:1px solid #1f4d47}
+.btn.blue{background:var(--teal2);color:#0A0A0C}
+.btn.gray{background:#2E3033;color:#C8CCD2}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+input[type=file]{display:none}
+input[type=range]{flex:1;min-width:160px;accent-color:#D4AF37}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+.panel h3{font-size:14px;color:var(--teal2);font-family:var(--mono);margin-bottom:8px}
+.hint{color:var(--dim);font-size:13px}
+.status{font-family:var(--mono);font-size:12.5px;color:var(--dim);margin-top:8px;min-height:18px;white-space:pre-wrap}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0}
+.stat .n{background:#121418;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:19px;font-family:var(--mono);color:var(--teal);font-variant-numeric:tabular-nums}
+.stat i{font-style:normal;color:var(--dim);font-size:11.5px}
+label.chk{display:inline-flex;gap:7px;align-items:center;color:var(--dim);font-size:13.5px;cursor:pointer}
+table.rec{width:100%;border-collapse:collapse;font-size:13.5px}
+table.rec td{padding:6px 8px;border-bottom:1px dashed rgba(255,255,255,.07);font-variant-numeric:tabular-nums}
+table.rec td:last-child{text-align:right;color:var(--teal);font-family:var(--mono)}
+.warn{border:1px solid #4d3a12;background:#1a1408;border-radius:12px;padding:12px 16px;font-size:13px;color:#e8d5a8;margin:14px 0}
+footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--dim);font-size:12px;font-family:var(--mono)}
+kbd{font-family:var(--mono);font-size:11px;background:#16191E;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px}
+.singulyar-hud{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px;background:rgba(17,24,39,.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);padding:7px 18px;border-radius:30px;color:#fff;z-index:5;user-select:none;box-shadow:0 4px 20px rgba(0,0,0,.4);font-family:system-ui,sans-serif}
+.hudbox{display:flex;flex-direction:column;align-items:center}
+.hudlab{font-size:9.5px;color:#9ca3af;text-transform:uppercase;letter-spacing:1px}
+.hudval{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.hudcombo{color:#F5A623;transition:transform .1s ease}
+.hudscore{color:#8A94B8}
+.hudbadge{font-size:13px;font-weight:900;padding:3px 11px;border-radius:11px;background:rgba(255,255,255,.05);color:#6b7280;letter-spacing:1px;transition:all .15s cubic-bezier(.175,.885,.32,1.275)}
+@media(max-width:640px){.singulyar-hud{gap:12px;padding:6px 12px}.hudval{font-size:16px}.stage canvas{height:260px}}
+</style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0A0A0C">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+</head>
+<body>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<header><div class="wrap hd">
+  <div class="logo">S·16</div>
+  <div><b>СУФЛЁР ·16</b><span>пой — и увидь свой голос в нотах: ноты растут из твоего голоса</span></div>
+</div></header>
+
+<main class="wrap">
+  <h1>Пой — и <em>увидь свой голос</em> в нотах.</h1>
+  <p class="lead">Модуль ·16 закрывает гештальт UltraStar внутри СИНГУЛЯР: микрофон анализируется
+  локально в аудио-потоке — два детектора на выбор (McLeod MPM и ЙИН/YIN, ПВ2 v11.30), ноты летят справа «колбасками» с плавным
+  проявлением, а HUD считает Score, Combo и рейтинг PERFECT / GOOD / MISS. Нотная карта не нужна
+  заранее — она генерируется прямо из минусовки этим же DSP-движком и живёт в IndexedDB.
+  Ни сервера, ни сети, ни innerHTML.</p>
+
+  <div class="stat">
+    <div class="n"><b id="stFrame">—</b><i>кадров DSP/с</i></div>
+    <div class="n"><b id="stNote">—</b><i>нот в карте</i></div>
+    <div class="n"><b id="stChart">—</b><i>источник карты</i></div>
+    <div class="n"><b id="stMic">выкл</b><i>микрофон</i></div>
+    <div class="n"><b id="stMs">—</b><i>мс/кадр · движок ЙИН (ПВ2)</i></div>
+  </div>
+
+  <h2>Сцена <em>canvas · 60 fps · мастер-часы audio.currentTime</em></h2>
+  <div class="stage" id="stageHost"><canvas id="pitchCanvas" aria-hidden="true"></canvas></div>
+
+  <div class="row">
+    <button class="btn" id="btnPlay">▶ играть минусовку</button>
+    <button class="btn gray" id="btnStop">⏹ стоп</button>
+    <input type="range" id="seek" aria-label="Позиция воспроизведения" min="0" max="1000" value="0">
+    <span class="hint" id="clock" style="font-family:var(--mono)">0.0 / 0.0 с</span>
+  </div>
+  <div class="row">
+    <button class="btn blue" id="btnFlagman">флагман «Когда теряем»</button>
+    <button class="btn ghost" id="btnFile">своя минусовка…</button>
+    <input type="file" id="fileAudio" accept="audio/*" aria-label="Файл минусовки">
+    <label class="chk"><input type="checkbox" id="chkPhones">я в наушниках (честный захват без фильтров)</label>
+    <label class="chk"><input type="checkbox" id="chkHall">в зал (·17)</label>
+  </div>
+
+  <h2>Нотная карта <em>откуда берутся «колбаски»</em></h2>
+  <div class="panel">
+    <h3>ТРИ ИСТОЧНИКА — ВСЁ ОФЛАЙН</h3>
+    <div class="row" style="margin:6px 0">
+      <button class="btn" id="btnExtract">собрать ноты из минусовки</button>
+      <button class="btn ghost" id="btnTxt">импорт UltraStar .txt / LRC</button>
+      <input type="file" id="fileChart" aria-label="Загрузить текст или титры: txt, lrc, us, ul" accept=".txt,.lrc,.us,.ul">
+      <button class="btn ghost" id="btnFromMem">из памяти (IndexedDB)</button>
+      <button class="btn gray" id="btnSaveTxt" disabled>скачать .txt</button>
+      <button class="btn gray" id="btnSaveMem" disabled>запомнить карту</button>
+    </div>
+    <p class="hint">— DSP-экстрактор McLeod разберёт минусовку на мелодическую линию и квантует
+    её в ноты (первый раз — счёт по кадрам с прогрессом, результат кэшируется в браузере).
+    — формат UltraStar (<code>: старт длина нота слово</code>, <code>*</code> = золотая нота) или LRC.
+    — карта, сохранённая раньше, подхватится сама при выборе песни.</p>
+    <div class="status" id="chartStatus" role="status" aria-live="polite">Карта не загружена — включится режим вокального монитора (без очков).</div>
+  </div>
+
+  <h2>Fusion-автосборщик <em>слова ASR × ноты DSP = UltraStar .txt в один клик</em></h2>
+  <div class="panel">
+    <div class="row" style="margin:6px 0">
+      <button class="btn" id="btnFusion">собрать .txt</button>
+      <button class="btn gray" id="btnFusionDl" disabled>скачать .txt</button>
+      <button class="btn gray" id="btnFusionMem" disabled>запомнить в памяти</button>
+    </div>
+    <p class="hint">Сведение по ТЗ KARAOKE_TREND «Fusion Engine»: тайминги слов из LRC/ASR × мелодическая линия
+    DSP-экстрактора → квантование к 1/16 бита (#BPM/#GAP), мелизмы «теря-а-ем» помечаются маркером <code>~</code>,
+    паузы &gt; 1,5 с нарезают строки. Результат — готовый UltraStar .txt: скачай или сохрани в память песни.</p>
+    <pre id="fusionPreview" class="hint" style="white-space:pre-wrap;background:#0A0A0C;border:1px solid var(--line);border-radius:10px;padding:10px;max-height:180px;overflow:auto;font-family:var(--mono);font-size:12px;color:var(--teal);margin:8px 0 0">// собери карту (или импортируй ), при желании подгрузи слова LRC — и жми «собрать .txt»</pre>
+    <div class="status" id="fusionStatus" role="status" aria-live="polite" style="margin-top:8px">Автосборщик ждёт карту и слова.</div>
+  </div>
+
+  <h2>Микрофон и итог <em>оценка только по твоему голосу</em></h2>
+  <div class="panel">
+    <div class="row" style="margin:6px 0">
+      <button class="btn" id="btnMic">включить микрофон</button>
+      <button class="btn gray" id="btnMicOff" disabled>выключить</button>
+      <span class="hint">Частота → MIDI + центсы, медиана 5 кадров, октавная поправка, комбо ×1…×4.</span>
+      <span class="hint">движок высоты (оба — в аудио-потоке, вне Main Thread):</span>
+      <label class="chk"><input type="radio" name="pitchEngine" value="mpm" checked>McLeod MPM</label>
+      <label class="chk"><input type="radio" name="pitchEngine" value="yin">ЙИН (YIN)</label>
+    </div>
+    <div class="status" id="micStatus" role="status" aria-live="polite">Микрофон выключен. Нажми — браузер спросит разрешение (всё остаётся на устройстве).</div>
+  </div>
+
+  <div class="panel">
+    <h3>РЕКОРДЫ ПЕСНИ (IndexedDB, локально)</h3>
+    <table class="rec" id="recTable"><tr><td colspan="3" class="hint">Пока пусто — спой первую песню.</td></tr></table>
+  </div>
+
+  <div class="warn">Честность оценки: без нотной карты очки не начисляются — только живой монитор
+  голоса (шар с аурой). Для очков собери карту из минусовки или импортируй UltraStar .txt.
+  Петь лучше в наушниках: если колонки играют в микрофон, DSP может ловить мелодию минусовки.</div>
+
+  <p class="hint" style="margin-top:18px">Горячие клавиши: <kbd>Пробел</kbd> — пуск/пауза ·
+  <kbd>M</kbd> — микрофон · <kbd>←/→</kbd> — перемотка ±5 с. Платформа:
+  <a href="index.html">ОРКЕСТРАТОР ·15</a> · <a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">файл ·15</a> ·
+  <a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">флагман ·01</a></p>
+
+  <footer>СУФЛЁР ·16 · часть единого дома: <a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания">документация</a></footer>
+</main>
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════════════════════
+   СИНГУЛЯР ·16 «СУФЛЁР» — единый файл. Архитектура:
+   1. WORKLET   — два детектора в аудио-потоке (вне Main Thread): McLeod MPM (NSDF) и ЙИН (YIN, ПВ2 v11.30); gate RMS, параболическая интерполяция; выбор движка — панель микрофона
+   2. BUS       — событийная шина (PITCH_FRAME, ACCURACY_EVALUATED, NOTECHART_*, SONG_CHANGE)
+   3. PARSER    — UltraStar .txt (метки #BPM, #GAP, строки-ноты : * F) + LRC
+   4. ENGINE    — микрофон → worklet → медиана×5 → MIDI+центы
+   5. EXTRACTOR — минусовка → мелодическая линия → ноты (квантование, сегменты ≥80 мс)
+   6. LOADER    — IndexedDB singulyar_db: notecharts + scores, автозагрузка по SONG_CHANGE
+   7. HUD       — Score / Combo / Rating (textContent + CSS-трансформации, 0 innerHTML)
+   8. RENDERER  — «колбаски» с fade-in и golden-нотами, шар вокалиста с аурой
+   9. APP       — мастер-часы audio.currentTime + rAF, сведение ASR/LRC×DSP, рекорды
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. WORKLET: инлайн-код процессора (отдельный аудио-поток) ─────────── */
+const SINGULYAR_WORKLET_CODE = `
+class SingulyarPitchProcessor extends AudioWorkletProcessor {
+    constructor() {
+        super();
+        this.bufferSize = 2048;
+        this.buffer = new Float32Array(this.bufferSize);
+        this.writePos = 0;
+        this.sr = sampleRate;
+    }
+    process(inputs) {
+        const input = inputs[0];
+        if (!input || !input[0]) return true;
+        const channel = input[0];
+        for (let i = 0; i < channel.length; i++) {
+            this.buffer[this.writePos++] = channel[i];
+            if (this.writePos >= this.bufferSize) { this.analyze(); this.writePos = 0; }
+        }
+        return true;
+    }
+    analyze() {
+        let sumSq = 0;
+        for (let i = 0; i < this.bufferSize; i++) sumSq += this.buffer[i] * this.buffer[i];
+        const rms = Math.sqrt(sumSq / this.bufferSize);
+        if (rms < 0.008) { this.port.postMessage({ pitch: null, clarity: 0, rms }); return; }
+        const half = this.bufferSize >> 1;
+        const nsdf = new Float32Array(half);
+        for (let tau = 0; tau < half; tau++) {
+            let acf = 0, div = 0;
+            for (let i = 0; i < this.bufferSize - tau; i++) {
+                const x = this.buffer[i], y = this.buffer[i + tau];
+                acf += x * y; div += x * x + y * y;
+            }
+            nsdf[tau] = div > 0 ? (2 * acf) / div : 0;
+        }
+        let maxTau = -1, maxVal = 0;
+        const cutoff = 0.80;
+        for (let tau = 2; tau < half - 1; tau++) {
+            if (nsdf[tau] > nsdf[tau - 1] && nsdf[tau] > nsdf[tau + 1]) {
+                if (nsdf[tau] >= cutoff) { maxTau = tau; maxVal = nsdf[tau]; break; }
+                if (nsdf[tau] > maxVal) { maxVal = nsdf[tau]; maxTau = tau; }
+            }
+        }
+        if (maxTau > 0 && maxVal > 0.4) {
+            const a = nsdf[maxTau - 1], b = nsdf[maxTau], c = nsdf[maxTau + 1];
+            const delta = (c - a) / (2 * (2 * b - a - c));
+            const pitch = this.sr / (maxTau + delta);
+            this.port.postMessage({ pitch, clarity: maxVal, rms });
+        } else {
+            this.port.postMessage({ pitch: null, clarity: 0, rms });
+        }
+    }
+}
+/* ── 1b. WORKLET: ЙИН (YIN, de Cheveigné & Kawahara) — ПВ2, такт v11.30 «ЩИТ» ──
+   Второй детектор высоты в том же аудио-потоке — оценка вокала ВНЕ Main Thread.
+   Математика и умолчания 1:1 с каноном yin-core/0.1
+   (ДОКУМЕНТЫ/ТРЕКИ/КАРАОКЕ_СИНХРОН/src/yin-core.mjs): окно 2048, порог θ=0.15,
+   честный фолбэк по минимуму c(τ) (< 0.5), голос 60–1100 Гц, честный отказ у
+   нижней границы диапазона. Сообщения той же формы {pitch, clarity, rms} + ms —
+   шина, HUD и скоринг дома не меняются вовсе. */
+class SingulyarYinProcessor extends AudioWorkletProcessor {
+    constructor() {
+        super();
+        this.bufferSize = 2048;
+        this.buffer = new Float32Array(this.bufferSize);
+        this.writePos = 0;
+        this.sr = sampleRate;
+        this.diff = new Float64Array((this.bufferSize >> 1) + 1);
+        this.cmnd = new Float64Array((this.bufferSize >> 1) + 1);
+    }
+    process(inputs) {
+        const input = inputs[0];
+        if (!input || !input[0]) return true;
+        const channel = input[0];
+        for (let i = 0; i < channel.length; i++) {
+            this.buffer[this.writePos++] = channel[i];
+            if (this.writePos >= this.bufferSize) { this.analyze(); this.writePos = 0; }
+        }
+        return true;
+    }
+    analyze() {
+        const t0 = (typeof Date !== 'undefined' && Date.now) ? Date.now() : 0;
+        const msOf = () => (typeof Date !== 'undefined' && Date.now) ? (Date.now() - t0) : 0;
+        const W = this.bufferSize >> 1;
+        let sumSq = 0;
+        for (let i = 0; i < this.bufferSize; i++) sumSq += this.buffer[i] * this.buffer[i];
+        const rms = Math.sqrt(sumSq / this.bufferSize);
+        if (rms < 0.008) { this.port.postMessage({ pitch: null, clarity: 0, rms, ms: msOf() }); return; }
+        const x = this.buffer, d = this.diff;
+        d[0] = 0;
+        for (let tau = 1; tau <= W; tau++) {
+            let s = 0;
+            for (let j = 0; j < W; j++) { const delta = x[j] - x[j + tau]; s += delta * delta; }
+            d[tau] = s;
+        }
+        const c = this.cmnd;
+        c[0] = 1;
+        let running = 0;
+        for (let tau = 1; tau <= W; tau++) {
+            running += d[tau];
+            c[tau] = running > 0 ? (d[tau] * tau) / running : 1;
+        }
+        const TH = 0.15, FALLBACK = 0.5;
+        const tauMin = Math.max(2, Math.floor(this.sr / 1100));
+        const tauMax = Math.min(W - 1, Math.ceil(this.sr / 60));
+        let tau = -1;
+        for (let t = tauMin; t <= tauMax; t++) {
+            if (c[t] < TH) {
+                while (t + 1 <= tauMax && c[t + 1] < c[t]) t++;
+                tau = t; break;
+            }
+        }
+        if (tau < 0) {
+            let best = tauMin, val = c[tauMin];
+            for (let t = tauMin + 1; t <= tauMax; t++) if (c[t] < val) { val = c[t]; best = t; }
+            if (val < FALLBACK) tau = best;
+        }
+        if (tau < 0 || (tau >= tauMax && c[tauMax + 1] < c[tauMax])) {
+            /* честный отказ: периодичности нет или период уходит за нижнюю
+               границу голоса — выдумывать высоту канон запрещает */
+            this.port.postMessage({ pitch: null, clarity: 0, rms, ms: msOf() });
+            return;
+        }
+        const a = c[tau - 1], b = c[tau], cc = c[tau + 1];
+        const den = 2 * (2 * b - a - cc);
+        const delta = den !== 0 ? (cc - a) / den : 0;
+        const pitch = this.sr / (tau + (delta > -1 && delta < 1 ? delta : 0));
+        const clarity = Math.min(1, Math.max(0, 1 - c[tau]));
+        this.port.postMessage({ pitch, clarity, rms, ms: msOf() });
+    }
+}
+registerProcessor('singulyar-pitch-processor', SingulyarPitchProcessor);
+registerProcessor('singulyar-yin-processor', SingulyarYinProcessor);
+`;
+
+/* ── 2. ШИНА СОБЫТИЙ ────────────────────────────────────────────────────── */
+class SingulyarEventBus {
+    constructor() { this.listeners = new Map(); }
+    on(event, cb) {
+        if (!this.listeners.has(event)) this.listeners.set(event, []);
+        this.listeners.get(event).push(cb);
+    }
+    emit(event, data) {
+        if (this.listeners.has(event)) this.listeners.get(event).forEach(cb => cb(data));
+    }
+}
+
+/* ── 3. ПАРСЕР ULTRASTAR / LRC ──────────────────────────────────────────── */
+class SingulyarNoteChart {
+    constructor() { this.bpm = 120; this.gap = 0; this.notes = []; }
+
+    parseUltraStar(text) {
+        this.notes = [];
+        const lines = String(text).split(/\r?\n/);
+        for (let line of lines) {
+            line = line.trim();
+            if (line.startsWith('#BPM:')) this.bpm = parseFloat(line.split(':')[1].replace(',', '.')) || 120;
+            else if (line.startsWith('#GAP:')) this.gap = (parseFloat(line.split(':')[1].replace(',', '.')) || 0) / 1000;
+            else if (line.startsWith(':') || line.startsWith('*') || line.startsWith('F')) {
+                const parts = line.split(/\s+/);
+                if (parts.length >= 5) {
+                    const type = parts[0] === '*' ? 'GOLDEN' : 'NORMAL';
+                    const startBeat = parseInt(parts[1], 10);
+                    const durBeats = parseInt(parts[2], 10);
+                    const pitch = parseInt(parts[3], 10) + 60;
+                    const word = parts.slice(4).join(' ') || '~';
+                    const beat = 60 / (this.bpm * 4);
+                    const start = this.gap + startBeat * beat;
+                    this.notes.push({ type, start, end: start + durBeats * beat, pitch, word });
+                }
+            }
+        }
+        this.notes.sort((a, b) => a.start - b.start);
+        return this.notes;
+    }
+
+    parseLRC(text) {
+        /* LRC: строки [мм:сс.цц] текст — линия без высоты: ноты не строим,
+           но слова запомним для подвязки к DSP-нотам. Возвращаем линию таймингов. */
+        const lines = [];
+        const re = /\[(\d{1,2}):(\d{2})(?:[.:](\d{1,3}))?\]/g;
+        for (let raw of String(text).split(/\r?\n/)) {
+            re.lastIndex = 0;
+            let m, t = null;
+            while ((m = re.exec(raw)) !== null) {
+                const frac = m[3] ? ('0.'.concat(m[3].length === 1 ? '0' : '', m[3])) : '0';
+                t = parseInt(m[1], 10) * 60 + parseInt(m[2], 10) + parseFloat(frac);
+            }
+            const words = raw.replace(re, '').trim();
+            if (t !== null && words) lines.push({ t, words });
+        }
+        lines.sort((a, b) => a.t - b.t);
+        return lines;
+    }
+
+    toUltraStar(bpm) {
+        const B = bpm || this.bpm || 120;
+        const beat = 60 / (B * 4);
+        const out = ['#TITLE:СИНГУЛЯР ·16', '#ARTIST:RUVSON', '#BPM:' + B, '#GAP:0'];
+        let prevEnd = null;
+        for (const n of this.notes) {
+            if (prevEnd !== null && n.start - prevEnd > 1.5) out.push('- 0 0 0');
+            const sb = Math.max(0, Math.round((n.start - this.gap) / beat));
+            const db = Math.max(1, Math.round((n.end - n.start) / beat));
+            const p = n.pitch - 60;
+            out.push((n.type === 'GOLDEN' ? '*' : ':') + ' ' + sb + ' ' + db + ' ' + p + ' ' + (n.word || '~'));
+            prevEnd = n.end;
+        }
+        out.push('E');
+        return out.join('\n');
+    }
+}
+/* ── 4. МИКРОФОННЫЙ ДВИЖОК (медиана×5, без фильтров браузера) ──────────── */
+class SingulyarPitchEngine {
+    constructor(bus) {
+        this.bus = bus;
+        this.audioCtx = null;
+        this.stream = null;
+        this.workletNode = null;
+        this.useHeadphones = false;
+        this.pitchHistory = [];
+        this.historySize = 5;
+        this.active = false;
+        this.frames = 0;
+        this.processorName = 'singulyar-pitch-processor'; /* ПВ2 v11.30: второй движок 'singulyar-yin-processor' */
+        this.engineTitle = 'MPM';
+        this.lastMs = null;    /* честный замер кадра из аудио-потока (шлёт ЙИН) */
+        this.lastSignal = 0;   /* S15_PITCH_NO_SIGNAL: момент последнего сигнала */
+        this.silentSince = 0;  /* мс тишины с последнего сигнала */
+    }
+    /* S15_PITCH_NO_SIGNAL: микрофон включён, но сигнала нет больше 3 секунд */
+    noSignal() { return this.active && this.silentSince > 3000; }
+
+    async start(useHeadphones, processorName) {
+        if (this.active) return;
+        this.useHeadphones = !!useHeadphones;
+        this.processorName = (processorName === 'singulyar-yin-processor') ? 'singulyar-yin-processor' : 'singulyar-pitch-processor';
+        this.engineTitle = this.processorName === 'singulyar-yin-processor' ? 'ЙИН' : 'MPM';
+        const AC16 = window.AudioContext || window.webkitAudioContext;
+        if (!AC16) throw new Error('S16_NO_AUDIO_CTX: Web Audio недоступен — питч-движок не поднимется; суфлёр читает без тональности (ложим то, что доступно)'); /* v11.41 «ДОСТУПНО»: честный текст вместо TypeError */
+        this.audioCtx = new AC16();
+        if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
+        this.stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: !this.useHeadphones,   /* в наушниках эхо не страшно — снимаем фильтры целиком */
+                noiseSuppression: !this.useHeadphones,
+                autoGainControl: false,
+                channelCount: 1,
+                sampleRate: { ideal: 44100 }
+            }
+        });
+        const blob = new Blob([SINGULYAR_WORKLET_CODE], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+        await this.audioCtx.audioWorklet.addModule(url);
+        URL.revokeObjectURL(url);
+        const source = this.audioCtx.createMediaStreamSource(this.stream);
+        this.workletNode = new AudioWorkletNode(this.audioCtx, this.processorName);
+        this.workletNode.port.onmessage = (e) => this.handleData(e.data);
+        source.connect(this.workletNode);   /* НЕ подключаем к destination — нет фидбека */
+        this.active = true;
+    }
+    handleData({ pitch, clarity, rms, ms }) {
+        this.frames++;
+        this.lastMs = (typeof ms === 'number' && ms >= 0) ? ms : null;
+        const nowTs = Date.now();
+        if (pitch || (rms || 0) > 0.012) this.lastSignal = nowTs;
+        this.silentSince = nowTs - this.lastSignal;
+        if (!pitch) {
+            this.pitchHistory = [];
+            this.bus.emit('PITCH_FRAME', { hz: null, midi: null, cents: 0, clarity: 0, rms });
+            return;
+        }
+        this.pitchHistory.push(pitch);
+        if (this.pitchHistory.length > this.historySize) this.pitchHistory.shift();
+        const sorted = [...this.pitchHistory].sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)];
+        const rawMidi = 69 + 12 * Math.log2(median / 440);
+        const midi = Math.round(rawMidi);
+        const cents = Math.round((rawMidi - midi) * 100);
+        this.bus.emit('PITCH_FRAME', {
+            hz: Math.round(median * 10) / 10, midi, cents,
+            clarity: Math.round(clarity * 100), rms
+        });
+    }
+    stop() {
+        if (this.stream) this.stream.getTracks().forEach(t => t.stop());
+        if (this.audioCtx) this.audioCtx.close();
+        this.stream = null; this.audioCtx = null; this.workletNode = null;
+        this.pitchHistory = [];
+        this.active = false;
+    }
+}
+
+/* ── 5. DSP-ЭКСТРАКТОР: минусовка → нотная карта (офлайн) ──────────────── */
+class SingulyarAudioNoteExtractor {
+    constructor(options = {}) {
+        this.sampleRate = options.sampleRate || 44100;
+        this.frameSize = options.frameSize || 2048;
+        this.hopSize = options.hopSize || 2048;      /* шаг анализа ≈ 46 мс (баланс скорость/точность) */
+        this.minVolumeRms = options.minVolumeRms || 0.02;
+        this.minClarity = options.minClarity || 0.80;
+        this.bpm = options.bpm || 120;
+        this.cancel = false;
+    }
+    /* Бег по кадрам с уступкой UI (chunked, с прогрессом) */
+    async extractNotesFromAudioBuffer(audioBuffer, onProgress) {
+        this.cancel = false;
+        const sr = audioBuffer.sampleRate;
+        const ch0 = audioBuffer.getChannelData(0);
+        const ch1 = audioBuffer.numberOfChannels > 1 ? audioBuffer.getChannelData(1) : null;
+        const mono = new Float32Array(ch0.length);
+        for (let i = 0; i < ch0.length; i++) mono[i] = ch1 ? (ch0[i] + ch1[i]) / 2 : ch0[i];
+        const total = mono.length;
+        const pitchTimeline = [];
+        let offset = 0, frameIdx = 0;
+        const totalFrames = Math.max(1, Math.floor((total - this.frameSize) / this.hopSize));
+        while (offset + this.frameSize <= total) {
+            const frameTime = offset / sr;
+            const frame = mono.subarray(offset, offset + this.frameSize);
+            const r = this.analyzeFrame(frame, sr);
+            if (r.pitch && r.clarity >= this.minClarity && r.rms >= this.minVolumeRms) {
+                pitchTimeline.push({ time: frameTime, midi: Math.round(69 + 12 * Math.log2(r.pitch / 440)) });
+            } else {
+                pitchTimeline.push({ time: frameTime, midi: null });
+            }
+            offset += this.hopSize; frameIdx++;
+            if ((frameIdx & 127) === 0) {
+                if (onProgress) onProgress(frameIdx / totalFrames);
+                await new Promise(res => setTimeout(res, 0));   /* UI дышит */
+                if (this.cancel) return null;
+            }
+        }
+        const rawNotes = this.segmentPitchTimeline(pitchTimeline);
+        return this.formatToNoteChart(rawNotes);
+    }
+    analyzeFrame(buffer, sr) {
+        let sumSq = 0;
+        for (let i = 0; i < buffer.length; i++) sumSq += buffer[i] * buffer[i];
+        const rms = Math.sqrt(sumSq / buffer.length);
+        if (rms < this.minVolumeRms) return { pitch: null, clarity: 0, rms };
+        const half = buffer.length >> 1;
+        const nsdf = new Float32Array(half);
+        for (let tau = 0; tau < half; tau++) {
+            let acf = 0, div = 0;
+            for (let i = 0; i < buffer.length - tau; i++) {
+                const x = buffer[i], y = buffer[i + tau];
+                acf += x * y; div += x * x + y * y;
+            }
+            nsdf[tau] = div > 0 ? (2 * acf) / div : 0;
+        }
+        let maxTau = -1, maxVal = 0;
+        for (let tau = 2; tau < half - 1; tau++) {
+            if (nsdf[tau] > nsdf[tau - 1] && nsdf[tau] > nsdf[tau + 1]) {
+                if (nsdf[tau] >= this.minClarity) { maxTau = tau; maxVal = nsdf[tau]; break; }
+                if (nsdf[tau] > maxVal) { maxVal = nsdf[tau]; maxTau = tau; }
+            }
+        }
+        if (maxTau > 0) {
+            const a = nsdf[maxTau - 1], b = nsdf[maxTau], c = nsdf[maxTau + 1];
+            const delta = (c - a) / (2 * (2 * b - a - c));
+            return { pitch: sr / (maxTau + delta), clarity: maxVal, rms };
+        }
+        return { pitch: null, clarity: 0, rms };
+    }
+    segmentPitchTimeline(timeline) {
+        const notes = [];
+        let cur = null;
+        for (let i = 0; i < timeline.length; i++) {
+            const f = timeline[i];
+            if (f.midi !== null) {
+                if (!cur) cur = { start: f.time, end: f.time, midi: f.midi, count: 1 };
+                else if (Math.abs(f.midi - cur.midi) <= 1) { cur.end = f.time; cur.count++; }
+                else {
+                    if (cur.end - cur.start >= 0.08) notes.push(cur);
+                    cur = { start: f.time, end: f.time, midi: f.midi, count: 1 };
+                }
+            } else if (cur) {
+                if (cur.end - cur.start >= 0.08) notes.push(cur);
+                cur = null;
+            }
+        }
+        if (cur && cur.end - cur.start >= 0.08) notes.push(cur);
+        return notes;
+    }
+    formatToNoteChart(rawNotes) {
+        const notes = rawNotes.map(n => ({
+            type: 'NORMAL',
+            start: Math.round(n.start * 1000) / 1000,
+            end: Math.round(n.end * 1000) / 1000,
+            pitch: n.midi,
+            word: '~'
+        }));
+        return { version: '1.0', bpm: this.bpm, totalNotes: notes.length, notes };
+    }
+}
+
+/* ── 6. INDEXEDDB: notecharts + scores, автозагрузка по SONG_CHANGE ─────── */
+class SingulyarNoteChartLoader {
+    constructor(options = {}) {
+        this.bus = options.eventBus;
+        this.dbName = 'singulyar_db';
+        this.db = null;
+        if (this.bus) this.bus.on('SONG_CHANGE', (d) => this.autoLoadNoteChart(d.songId));
+    }
+    async initDB() {
+        if (this.db) return this.db;
+        return new Promise((resolve, reject) => {
+            const req = indexedDB.open(this.dbName, 1);
+            req.onupgradeneeded = (e) => {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains('notecharts')) db.createObjectStore('notecharts', { keyPath: 'songId' });
+                if (!db.objectStoreNames.contains('scores')) db.createObjectStore('scores', { keyPath: 'songId' });
+            };
+            req.onsuccess = () => { this.db = req.result; resolve(this.db); };
+            req.onerror = () => reject(req.error);
+        });
+    }
+    async autoLoadNoteChart(songId) {
+        try {
+            const db = await this.initDB();
+            const tx = db.transaction('notecharts', 'readonly');
+            const req = tx.objectStore('notecharts').get(songId);
+            req.onsuccess = () => {
+                const rec = req.result;
+                if (rec && rec.chart && rec.chart.notes) {
+                    this.bus.emit('NOTECHART_READY', { songId, chart: rec.chart, source: 'IndexedDB' });
+                } else {
+                    this.bus.emit('NOTECHART_NOT_FOUND', { songId });
+                }
+            };
+            req.onerror = () => this.bus.emit('NOTECHART_ERROR', { songId, error: req.error });
+        } catch (err) {
+            this.bus.emit('NOTECHART_ERROR', { songId, error: err.message });
+        }
+    }
+    async saveChart(songId, chart, txt) {
+        const db = await this.initDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction('notecharts', 'readwrite');
+            tx.objectStore('notecharts').put({ songId, chart, txt, timestamp: Date.now() });
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = () => reject(tx.error);
+        });
+    }
+    async saveScore(songId, score, maxCombo, notesTotal, hitPct) {
+        const db = await this.initDB();
+        const prev = await new Promise((res) => {
+            const tx = db.transaction('scores', 'readonly');
+            const q = tx.objectStore('scores').get(songId);
+            q.onsuccess = () => res(q.result || null);
+            q.onerror = () => res(null);
+        });
+        const rec = {
+            songId,
+            best: Math.max(score, prev ? prev.best || 0 : 0),
+            last: score,
+            maxCombo: Math.max(maxCombo, prev ? prev.maxCombo || 0 : 0),
+            hitPct: Math.max(hitPct || 0, prev ? prev.hitPct || 0 : 0),
+            notesTotal: notesTotal || (prev ? prev.notesTotal : 0),
+            plays: (prev ? prev.plays || 0 : 0) + 1,
+            date: new Date().toISOString().slice(0, 10)
+        };
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction('scores', 'readwrite');
+            tx.objectStore('scores').put(rec);
+            tx.oncomplete = () => resolve(rec);
+            tx.onerror = () => reject(tx.error);
+        });
+    }
+    async listScores() {
+        const db = await this.initDB();
+        return new Promise((res) => {
+            const tx = db.transaction('scores', 'readonly');
+            const q = tx.objectStore('scores').getAll();
+            q.onsuccess = () => res(q.result || []);
+            q.onerror = () => res([]);
+        });
+    }
+}
+/* ── 7. HUD-ПАНЕЛЬ (Score / Combo / Rating) — чистый DOM API ───────────── */
+class SingulyarHUDPanel {
+    constructor(options = {}) {
+        this.container = options.container || document.body;
+        this.bus = options.eventBus;
+        this.elements = {};
+        this.lastComboBounce = 0;
+        this.initDOM();
+        this.bindEvents();
+    }
+    initDOM() {
+        const hud = document.createElement('div');
+        hud.className = 'singulyar-hud';
+        const mk = (cls, lab) => {
+            const box = document.createElement('div'); box.className = 'hudbox';
+            const l = document.createElement('span'); l.className = 'hudlab'; l.textContent = lab;
+            const v = document.createElement('span'); v.className = 'hudval ' + cls;
+            box.appendChild(l); box.appendChild(v);
+            return { box, v };
+        };
+        const s = mk('hudscore', 'SCORE'); s.v.textContent = '000000';
+        const c = mk('hudcombo', 'COMBO'); c.v.textContent = 'x0';
+        this.elements.scoreVal = s.v;
+        this.elements.comboVal = c.v;
+        this.elements.ratingBadge = document.createElement('div');
+        this.elements.ratingBadge.className = 'hudbadge';
+        this.elements.ratingBadge.textContent = 'READY';
+        hud.appendChild(s.box);
+        hud.appendChild(this.elements.ratingBadge);
+        hud.appendChild(c.box);
+        this.container.appendChild(hud);
+        this.root = hud;
+    }
+    bindEvents() {
+        if (!this.bus) return;
+        this.bus.on('ACCURACY_EVALUATED', (d) => this.updateHUD(d.rating, d.score, d.combo));
+        this.bus.on('SONG_CHANGE', () => this.reset());
+    }
+    updateHUD(rating, score, combo) {
+        this.elements.scoreVal.textContent = String(score).padStart(6, '0');
+        this.elements.comboVal.textContent = 'x' + combo;
+        if (combo > 1 && performance.now() - this.lastComboBounce > 80) {
+            this.lastComboBounce = performance.now();
+            this.elements.comboVal.style.transform = 'scale(1.25)';
+            setTimeout(() => { this.elements.comboVal.style.transform = 'scale(1)'; }, 100);
+        }
+        const badge = this.elements.ratingBadge;
+        badge.style.transform = 'scale(1.15)';
+        if (rating === 'PERFECT') {
+            badge.textContent = 'PERFECT!';
+            badge.style.background = 'rgba(16,185,129,.2)'; badge.style.color = '#2FA36B'; badge.style.border = '1px solid #2FA36B';
+        } else if (rating === 'GOOD') {
+            badge.textContent = 'GOOD';
+            badge.style.background = 'rgba(245,158,11,.2)'; badge.style.color = '#F5A623'; badge.style.border = '1px solid #F5A623';
+        } else {
+            badge.textContent = 'MISS';
+            badge.style.background = 'rgba(239,68,68,.2)'; badge.style.color = '#ef4444'; badge.style.border = '1px solid #ef4444';
+        }
+        setTimeout(() => { badge.style.transform = 'scale(1)'; }, 150);
+    }
+    reset() {
+        this.elements.scoreVal.textContent = '000000';
+        this.elements.comboVal.textContent = 'x0';
+        this.elements.ratingBadge.textContent = 'READY';
+        this.elements.ratingBadge.style.background = 'rgba(255,255,255,.05)';
+        this.elements.ratingBadge.style.color = '#6b7280';
+        this.elements.ratingBadge.style.border = '1px solid transparent';
+    }
+}
+
+/* ── 8. АНИМИРОВАННЫЙ РЕНДЕРЕР (fade-in «колбасок», golden, аура) ──────── */
+class SingulyarAnimatedCanvasRenderer {
+    constructor(canvas, bus) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.bus = bus;
+        this.noteChart = [];
+        this.currentMidi = null;
+        this.currentCents = 0;
+        this.hitFlash = [];
+        if (this.bus) {
+            this.bus.on('PITCH_FRAME', (frame) => {
+                this.currentMidi = frame.midi;
+                this.currentCents = frame.cents;
+            });
+            this.bus.on('ACCURACY_EVALUATED', (d) => {
+                if (d && d.note) this.hitFlash.push({ start: d.note.start, end: d.note.end, pitch: d.note.pitch, rating: d.rating, born: performance.now() });
+            });
+        }
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+    }
+    resize() {
+        const r = this.canvas.getBoundingClientRect();
+        this.canvas.width = Math.max(320, Math.round(r.width * (window.devicePixelRatio || 1)));
+        this.canvas.height = Math.round(r.height * (window.devicePixelRatio || 1));
+    }
+    draw(currentTime) {
+        const w = this.canvas.width, h = this.canvas.height;
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, w, h);
+        const pxPerSec = 120 * (window.devicePixelRatio || 1);
+        const baseMidi = 55, midiRange = 24;
+        const spawnHorizonX = w - 60 * (window.devicePixelRatio || 1);
+        const laneH = h / midiRange;
+
+        /* линии-направляющие по полутонам */
+        ctx.strokeStyle = 'rgba(255,255,255,.045)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= midiRange; i++) {
+            const y = h - (i / midiRange) * h;
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        /* нотные «колбаски» */
+        for (let i = 0; i < this.noteChart.length; i++) {
+            const note = this.noteChart[i];
+            const x = (note.start - currentTime) * pxPerSec + 120 * (window.devicePixelRatio || 1);
+            const noteW = Math.max(6, (note.end - note.start) * pxPerSec);
+            const noteY = h - ((note.pitch - baseMidi) / midiRange) * h;
+            if (x + noteW < 0 || x > w + 100) continue;
+            let alpha = 1.0, scaleY = 1.0;
+            if (x > spawnHorizonX - 100 * (window.devicePixelRatio || 1)) {
+                const progress = Math.max(0, Math.min(1, (w - x) / (100 * (window.devicePixelRatio || 1))));
+                alpha = progress;
+                scaleY = 0.3 + progress * 0.7;
+            }
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            const baseColor = note.type === 'GOLDEN' ? '#F5A623' : '#8A94B8';
+            ctx.fillStyle = baseColor;
+            const animatedH = Math.max(4, 16 * scaleY * (window.devicePixelRatio || 1));
+            ctx.beginPath();
+            ctx.roundRect(x, noteY - animatedH / 2, noteW, animatedH, 8 * (window.devicePixelRatio || 1));
+            ctx.fill();
+            if (note.type === 'GOLDEN') {
+                ctx.strokeStyle = 'rgba(255,195,110,.8)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+            if (alpha > 0.4 && noteW > 26) {
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold ' + Math.round(12 * (window.devicePixelRatio || 1)) + 'px system-ui, sans-serif';
+                ctx.fillText(note.word || '', x + 8 * (window.devicePixelRatio || 1), noteY + 4 * (window.devicePixelRatio || 1));
+            }
+            ctx.restore();
+        }
+
+        /* подсветка спетых нот */
+        const now = performance.now();
+        this.hitFlash = this.hitFlash.filter(f => now - f.born < 450);
+        for (const f of this.hitFlash) {
+            const x = (f.start - currentTime) * pxPerSec + 120 * (window.devicePixelRatio || 1);
+            const noteW = Math.max(6, (f.end - f.start) * pxPerSec);
+            const y = h - ((f.pitch - baseMidi) / midiRange) * h;
+            const k = 1 - (now - f.born) / 450;
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, k) * 0.9;
+            ctx.strokeStyle = f.rating === 'PERFECT' ? '#2FA36B' : (f.rating === 'GOOD' ? '#F5A623' : '#ef4444');
+            ctx.lineWidth = 3 * (window.devicePixelRatio || 1);
+            ctx.beginPath();
+            ctx.roundRect(x, y - 10 * (window.devicePixelRatio || 1), noteW, 20 * (window.devicePixelRatio || 1), 9);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        /* курсор вокалиста */
+        if (this.currentMidi !== null) {
+            const singerY = h - ((this.currentMidi - baseMidi) / midiRange) * h;
+            const isPerfect = Math.abs(this.currentCents) <= 25;
+            const color = isPerfect ? '#2FA36B' : '#F5A623';
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.shadowColor = color;
+            ctx.shadowBlur = isPerfect ? 20 : 8;
+            ctx.beginPath();
+            ctx.arc(120 * (window.devicePixelRatio || 1), singerY, (isPerfect ? 10 : 8) * (window.devicePixelRatio || 1), 0, Math.PI * 2);
+            ctx.fill();
+            if (isPerfect) {
+                ctx.strokeStyle = 'rgba(255,255,255,.8)';
+                ctx.lineWidth = 2 * (window.devicePixelRatio || 1);
+                ctx.beginPath();
+                ctx.arc(120 * (window.devicePixelRatio || 1), singerY, 14 * (window.devicePixelRatio || 1), 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        /* позиционная линия «сейчас» */
+        ctx.fillStyle = 'rgba(212,175,55,.85)';
+        ctx.fillRect(118 * (window.devicePixelRatio || 1), 0, 2, h);
+    }
+}
+/* ── 9. ПРИЛОЖЕНИЕ: мастер-часы, сведение, скоринг, рекорды ─────────────── */
+class SingulyarPrompterApp {
+    constructor() {
+        this.bus = new SingulyarEventBus();
+        this.parser = new SingulyarNoteChart();
+        this.engine = new SingulyarPitchEngine(this.bus);
+        this.extractor = new SingulyarAudioNoteExtractor();
+        this.loader = new SingulyarNoteChartLoader({ eventBus: this.bus });
+        this.renderer = new SingulyarAnimatedCanvasRenderer(document.getElementById('pitchCanvas'), this.bus);
+        this.hud = new SingulyarHUDPanel({ container: document.getElementById('stageHost'), eventBus: this.bus });
+
+        this.audio = new Audio();
+        this.audio.preload = 'auto';
+        this.audio.crossOrigin = 'anonymous';
+
+        this.songId = null;
+        this.songTitle = '—';
+        this.chart = null;            /* {notes:[{type,start,end,pitch,word}]} */
+        this.chartSource = '—';
+        this.lrcLines = [];           /* слова для подвязки */
+        this.txtExport = '';
+
+        /* скоринг */
+        this.score = 0; this.combo = 0; this.maxCombo = 0;
+        this.noteStats = new Map();   /* idx → {hit, total} */
+        this.finished = new Set();
+        this.framesWindow = 0; this.fpsTimer = 0;
+
+        this.el = {};
+        ['stFrame','stNote','stChart','stMic','btnPlay','btnStop','seek','clock','btnFlagman','btnFile',
+         'fileAudio','chkPhones','btnExtract','btnTxt','fileChart','btnFromMem','btnSaveTxt','btnSaveMem',
+         'chartStatus','btnMic','btnMicOff','micStatus','stMs','recTable'].forEach(id => this.el[id] = document.getElementById(id));
+
+        this.bindUI();
+        this.bindBus();
+        this.refreshRecords();
+        this.loop = this.loop.bind(this);
+        requestAnimationFrame(this.loop);
+        setInterval(() => { this.el.stFrame.textContent = this.engine.active ? '≈' + (this.engine.frames - (this._f0 || 0)) : '—'; this._f0 = this.engine.frames; this.el.stMs.textContent = (this.engine.active && this.engine.engineTitle === 'ЙИН' && this.engine.lastMs != null) ? '≈' + this.engine.lastMs : '—'; }, 1000);
+    }
+
+    /* ── UI ── */
+    bindUI() {
+        this.el.btnFlagman.addEventListener('click', () => this.loadSong('rWpYxmFjm9g', 'Когда теряем · флагман', './minus/rWpYxmFjm9g.mp3'));
+        this.el.btnFile.addEventListener('click', () => this.el.fileAudio.click());
+        this.el.fileAudio.addEventListener('change', (e) => {
+            const f = e.target.files[0];
+            if (f) this.loadSong('own_' + f.name.replace(/\.[^.]+$/, '').slice(0, 40), 'свой файл: ' + f.name, URL.createObjectURL(f));
+        });
+        this.el.btnPlay.addEventListener('click', () => this.togglePlay());
+        this.el.btnStop.addEventListener('click', () => { this.audio.pause(); this.audio.currentTime = 0; this.resetRun(); });
+        this.el.seek.addEventListener('input', () => {
+            if (this.audio.duration) this.audio.currentTime = (this.el.seek.value / 1000) * this.audio.duration;
+        });
+        this.el.btnExtract.addEventListener('click', () => this.extractChart());
+        this.el.btnTxt.addEventListener('click', () => this.el.fileChart.click());
+        this.el.fileChart.addEventListener('change', (e) => this.importChart(e.target.files[0]));
+        this.el.btnFromMem.addEventListener('click', () => { if (this.songId) this.bus.emit('SONG_CHANGE', { songId: this.songId }); });
+        this.el.btnSaveTxt.addEventListener('click', () => this.downloadTxt());
+        this.el.btnSaveMem.addEventListener('click', () => this.saveChartToMem());
+        this.el.btnMic.addEventListener('click', () => this.micOn());
+        this.el.btnMicOff.addEventListener('click', () => this.micOff());
+        /* ПВ2 v11.30: выбор движка высоты — по явному действию; живой поток честно перезапускается */
+        this.pitchRadios = Array.prototype.slice.call(document.querySelectorAll('input[name="pitchEngine"]'));
+        this.pitchRadios.forEach((r) => r.addEventListener('change', () => {
+            if (!this.engine.active) return;
+            const имя = (document.querySelector('input[name="pitchEngine"]:checked') || {}).value === 'yin' ? 'ЙИН' : 'MPM';
+            this.micOff();
+            this.micOn().then(() => {
+                if (this.engine.active) this.el.micStatus.textContent = 'Движок высоты переключён на «' + this.engine.engineTitle + '» — микрофонный поток перезапущен (прошлый: ' + имя + ').';
+            });
+        }));
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            if (e.code === 'Space') { e.preventDefault(); this.togglePlay(); }
+            else if (e.key === 'm' || e.key === 'M' || e.key === 'ь' || e.key === 'Ь') { this.engine.active ? this.micOff() : this.micOn(); }
+            else if (e.key === 'ArrowRight' && this.audio.duration) this.audio.currentTime = Math.min(this.audio.duration, this.audio.currentTime + 5);
+            else if (e.key === 'ArrowLeft' && this.audio.duration) this.audio.currentTime = Math.max(0, this.audio.currentTime - 5);
+        });
+    }
+    bindBus() {
+        this.bus.on('NOTECHART_READY', ({ chart, source, songId }) => {
+            if (songId !== this.songId) return;
+            this.applyChart(chart, source);
+        });
+        this.bus.on('NOTECHART_NOT_FOUND', ({ songId }) => {
+            if (songId !== this.songId) return;
+            this.chart = null; this.chartSource = 'нет — монитор';
+            this.renderer.noteChart = [];
+            this.el.stNote.textContent = '0';
+            this.el.stChart.textContent = 'монитор';
+            this.setChartStatus('В памяти карты нет — режим вокального монитора (без очков). Собери или импортируй .');
+        });
+        this.bus.on('NOTECHART_ERROR', ({ error }) => this.setChartStatus('Ошибка карты: ' + error));
+        this.audio.addEventListener('loadedmetadata', () => {
+            this.el.clock.textContent = '0.0 / ' + this.audio.duration.toFixed(1) + ' с';
+        });
+        this.audio.addEventListener('ended', () => this.finishRun());
+    }
+
+    /* ── песня ── */
+    async loadSong(songId, title, src) {
+        this.songId = songId; this.songTitle = title;
+        this.audio.src = src;
+        this.chart = null; this.renderer.noteChart = []; this.chartSource = '—';
+        this.lrcLines = []; this.txtExport = '';
+        this.el.btnSaveTxt.disabled = true; this.el.btnSaveMem.disabled = true;
+        this.el.stChart.textContent = '…';
+        this.setChartStatus('Песня: ' + title + ' — ищу карту в памяти…');
+        this.hud.reset(); this.resetRun();
+        this.bus.emit('SONG_CHANGE', { songId });
+        try { await this.audio.load(); } catch (e) { /* file:// без сети — ок */ }
+        /* фоновая попытка автозагрузки LRC рядом (для подвязки слов) — только на https/file, без сети не мешает */
+        this.tryLoadLrc(songId);
+    }
+    async tryLoadLrc(songId) {
+        try {
+            const r = await fetch('./ДАННЫЕ/' + encodeURIComponent(songId) + '.lrc');
+            if (r.ok) this.lrcLines = this.parser.parseLRC(await r.text());
+        } catch (e) { /* офлайн — нормально */ }
+    }
+    togglePlay() {
+        if (!this.audio.src) { this.el.btnFlagman.click(); return; }
+        if (this.audio.paused) { this.audio.play().catch(() => {}); this.el.btnPlay.textContent = '⏸ пауза'; }
+        else { this.audio.pause(); this.el.btnPlay.textContent = '▶ играть минусовку'; }
+    }
+
+    /* ── нотная карта: источники ── */
+    setChartStatus(msg) { this.el.chartStatus.textContent = msg; }
+    applyChart(chart, source) {
+        if (!chart || !chart.notes || !chart.notes.length) { this.bus.emit('NOTECHART_NOT_FOUND', { songId: this.songId }); return; }
+        /* подвязка слов из LRC, золотые ноты: каждая 8-я длинная */
+        let li = 0;
+        chart.notes.forEach((n, idx) => {
+            while (li < this.lrcLines.length - 1 && this.lrcLines[li].t < n.start - 0.15) li++;
+            const L = this.lrcLines[li];
+            if (L && n.start >= L.t - 0.35 && n.start <= L.t + 8) {
+                const ws = L.words.split(/\s+/).filter(Boolean);
+                const span = Math.max(0.4, chart.notes.filter(m => m.start >= L.t && m.start < L.t + 6).length || ws.length);
+                const k = Math.min(ws.length - 1, Math.floor(((n.start - L.t) / span) * ws.length));
+                n.word = ws[Math.max(0, k)] || '~';
+            } else if (!n.word || n.word === '~') {
+                n.word = '';
+            }
+            if (n.end - n.start >= 0.9 && idx % 8 === 0) n.type = 'GOLDEN';
+        });
+        this.chart = chart;
+        this.chartSource = source;
+        this.renderer.noteChart = chart.notes;
+        this.txtExport = this.parserToTxt(chart);
+        this.el.stNote.textContent = String(chart.notes.length);
+        this.el.stChart.textContent = source;
+        this.el.btnSaveTxt.disabled = false;
+        this.el.btnSaveMem.disabled = false;
+        this.setChartStatus('Карта готова: ' + chart.notes.length + ' нот (' + source + '). Жми ▶ и — поёт, попадаешь, получаешь очки.');
+    }
+    parserToTxt(chart) {
+        this.parser.bpm = 120; this.parser.gap = 0; this.parser.notes = chart.notes;
+        return this.parser.toUltraStar(120);
+    }
+    async extractChart() {
+        if (!this.audio.src) { this.setChartStatus('Сначала выбери минусовку (флагман или свой файл).'); return; }
+        const btn = this.el.btnExtract;
+        btn.disabled = true;
+        this.setChartStatus('⏳ DSP-анализ минусовки: McLeod NSDF по кадрам… (первый раз — счёт идёт, результат кэшируется)');
+        try {
+            const resp = await fetch(this.audio.src);
+            if (!resp.ok) throw new Error('минусовка недоступна: HTTP ' + resp.status);
+            const buf = await resp.arrayBuffer();
+            const ac = new (window.AudioContext || window.webkitAudioContext)();
+            const audioBuf = await ac.decodeAudioData(buf);
+            await ac.close();
+            this.extractor.bpm = 120;
+            const chart = await this.extractor.extractNotesFromAudioBuffer(audioBuf, (p) => {
+                this.setChartStatus('⏳ Анализ: ' + Math.round(p * 100) + '% (кадры NSDF, окно 2048, шаг 2048)');
+            });
+            if (!chart) { this.setChartStatus('Анализ отменён.'); btn.disabled = false; return; }
+            this.applyChart({ ...chart, notes: chart.notes.map(n => ({ ...n })) }, 'из минусовки');
+            await this.loader.saveChart(this.songId, chart, this.txtExport).catch(() => {});
+            this.refreshRecords();
+        } catch (err) {
+            this.setChartStatus('Не вышло: ' + err.message + ' — при file:// просто открой сайт или импортируй .txt');
+        }
+        btn.disabled = false;
+    }
+    importChart(file) {
+        if (!file) return;
+        const rd = new FileReader();
+        rd.onload = () => {
+            const text = String(rd.result);
+            let notes;
+            if (/^\s*\[?\d{1,2}:\d{2}/.test(text) && !/^\s*[#:*F]?\s*\d/.test(text.split('\n')[0])) {
+                /* LRC: только слова — подвяжем к будущей DSP-карте */
+                this.lrcLines = this.parser.parseLRC(text);
+                this.setChartStatus('LRC: ' + this.lrcLines.length + ' строк слов. Теперь собери ноты из минусовки — слова лягут на ноты.');
+                return;
+            } else {
+                notes = this.parser.parseUltraStar(text);
+            }
+            if (!notes.length) { this.setChartStatus('Формат не распознан: нужен UltraStar .txt (: старт длина нота слово) или LRC.'); return; }
+            this.applyChart({ version: '1.0', bpm: this.parser.bpm, notes }, '' + file.name.slice(0, 24));
+        };
+        rd.readAsText(file, 'utf-8');
+    }
+    async saveChartToMem() {
+        if (!this.chart || !this.songId) return;
+        try {
+            await this.loader.saveChart(this.songId, this.chart, this.txtExport);
+            this.setChartStatus('Карта сохранена в IndexedDB — при следующем открытии подхватится сама.');
+        } catch (e) { this.setChartStatus('Не сохранилось: ' + e.message); }
+    }
+    downloadTxt() {
+        if (!this.txtExport) return;
+        const blob = new Blob([this.txtExport], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = (this.songId || 'song') + '_ultrastar.txt';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    /* ── микрофон ── */
+    async micOn() {
+        try {
+            const движок = (document.querySelector('input[name="pitchEngine"]:checked') || {}).value === 'yin' ? 'singulyar-yin-processor' : 'singulyar-pitch-processor';
+            await this.engine.start(this.el.chkPhones.checked, движок);
+            this.el.stMic.textContent = 'вкл';
+            this.el.btnMic.disabled = true; this.el.btnMicOff.disabled = false;
+            this.el.micStatus.textContent = 'Микрофон живой (движок: ' + this.engine.engineTitle
+                + (this.engine.engineTitle === 'ЙИН' ? ', бюджет кадра <10 мс — замер живой' : '')
+                + '): шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
+        } catch (e) {
+            const code = e && e.name === 'NotAllowedError' ? 'S15_PERMISSION_DENIED'
+                : e && e.name === 'NotFoundError' ? 'S15_DEVICE_MISSING'
+                : e && e.name === 'NotReadableError' ? 'S15_DEVICE_BUSY' : 'S15_MIC_ERROR';
+            this.el.micStatus.textContent = '[' + code + '] Микрофон недоступен: ' + e.message
+                + ' (нужно разрешение браузера; на file:// работает в Chrome/Edge)';
+            this.bus.emit('S15_MIC_ERROR', { code, message: e && e.message });
+        }
+    }
+    micOff() {
+        this.engine.stop();
+        this.el.stMic.textContent = 'выкл';
+        this.el.btnMic.disabled = false; this.el.btnMicOff.disabled = true;
+        this.el.micStatus.textContent = 'Микрофон выключен.';
+    }
+
+    /* ── скоринг: по нотам (удержание), честно без карты — без очков ── */
+    evaluateFrame(t) {
+        if (!this.chart || !this.engine.active || this.audio.paused) return;
+        const notes = this.chart.notes;
+        for (let i = 0; i < notes.length; i++) {
+            const n = notes[i];
+            if (t >= n.start && t <= n.end && !this.finished.has(i)) {
+                const st = this.noteStats.get(i) || { hit: 0, total: 0 };
+                /* попадание: октавная поправка + ±1 полутон GOOD, ±0 PERFECT */
+                if (this.engine && this._lastMidi != null) {
+                    let diff = Math.abs(this._lastMidi - n.pitch) % 12;
+                    if (diff > 6) diff = 12 - diff;
+                    st.total++;
+                    if (diff === 0) st.hit += this.engine._lastCents != null && Math.abs(this.engine._lastCents) <= 25 ? 1 : 0.6;
+                    else if (diff <= 1) st.hit += 0.3;
+                }
+                this.noteStats.set(i, st);
+                if (t >= n.end - 0.02) this.closeNote(i, n, st);
+            }
+        }
+    }
+    closeNote(i, n, st) {
+        this.finished.add(i);
+        const ratio = st.total > 0 ? st.hit / st.total : 0;
+        let rating = 'MISS';
+        if (ratio >= 0.75) rating = 'PERFECT';
+        else if (ratio >= 0.4) rating = 'GOOD';
+        if (rating === 'PERFECT') { this.combo++; this.score += 100 * Math.min(Math.floor(this.combo / 5) + 1, 4); }
+        else if (rating === 'GOOD') { this.combo++; this.score += 50; }
+        else this.combo = 0;
+        this.maxCombo = Math.max(this.maxCombo, this.combo);
+        this.bus.emit('ACCURACY_EVALUATED', { rating, score: this.score, combo: this.combo, note: n });
+    }
+    resetRun() {
+        this.score = 0; this.combo = 0; this.maxCombo = 0;
+        this.noteStats = new Map(); this.finished = new Set();
+        this.hud.reset();
+    }
+    async finishRun() {
+        this.el.btnPlay.textContent = '▶ играть минусовку';
+        if (!this.chart || !this.songId) return;
+        let hit = 0, total = 0;
+        for (const [, st] of this.noteStats) { hit += st.hit; total += st.total; }
+        const pct = total ? Math.round((hit / total) * 100) : 0;
+        try {
+            const rec = await this.loader.saveScore(this.songId, this.score, this.maxCombo, this.chart.notes.length, pct);
+            this.el.micStatus.textContent = 'Итог: ' + this.score + ' очков · комбо ×' + this.maxCombo +
+                ' · точность ' + pct + '% · рекорд песни: ' + rec.best;
+            this.refreshRecords();
+        } catch (e) { /* IDB недоступна — не критично */ }
+    }
+
+    /* ── рекорды ── */
+    async refreshRecords() {
+        try {
+            const rows = await this.loader.listScores();
+            const t = this.el.recTable;
+            t.textContent = '';
+            if (!rows.length) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td'); td.colSpan = 3; td.className = 'hint';
+                td.textContent = 'Пока пусто — спой первую песню.';
+                tr.appendChild(td); t.appendChild(tr);
+                return;
+            }
+            rows.sort((a, b) => b.best - a.best).slice(0, 8).forEach(r => {
+                const tr = document.createElement('tr');
+                const a = document.createElement('td'); a.textContent = (r.songId === 'rWpYxmFjm9g' ? '' : '') + r.songId;
+                const b = document.createElement('td'); b.textContent = 'комбо ×' + (r.maxCombo || 0) + ' · точность ' + (r.hitPct || 0) + '% · ' + (r.plays || 1) + '×';
+                const c = document.createElement('td'); c.textContent = String(r.best || 0);
+                tr.appendChild(a); tr.appendChild(b); tr.appendChild(c); t.appendChild(tr);
+            });
+        } catch (e) { /* нет IDB */ }
+    }
+
+    /* ── мастер-цикл: audio.currentTime + rAF ── */
+    loop() {
+        const t = this.audio.currentTime || 0;
+        if (this.engine.noSignal()) {
+            if (!this.noSignalShown) {
+                this.noSignalShown = true;
+                this.el.micStatus.textContent = '[S15_PITCH_NO_SIGNAL] Микрофон включён, но сигнала нет >3 с — проверь устройство ввода или спой громче.';
+                this.bus.emit('S15_PITCH_NO_SIGNAL', { silentMs: this.engine.silentSince });
+            }
+        } else if (this.noSignalShown) {
+            this.noSignalShown = false;
+            if (this.engine.active) this.el.micStatus.textContent = 'Микрофон живой: шар на сцене = твой голос. Зелёная аура — попадание ±25 центов.';
+        }
+        this.evaluateFrame(t);
+        this.renderer.draw(t);
+        if (this.audio.duration) {
+            this.el.seek.value = String(Math.round((t / this.audio.duration) * 1000));
+            this.el.clock.textContent = t.toFixed(1) + ' / ' + this.audio.duration.toFixed(1) + ' с';
+        }
+        requestAnimationFrame(this.loop);
+    }
+}
+
+/* связка: последний MIDI/центы для скоринга */
+Object.defineProperty(SingulyarPrompterApp.prototype, 'init', { value: function () {} });
+
+(function bootstrap() {
+    const app = new SingulyarPrompterApp();
+    app.bus.on('PITCH_FRAME', (f) => { app._lastMidi = f.midi; app.engine._lastCents = f.cents; });
+    window.S16 = app;   /* отладка: S16.chart, S16.score, S16.audio */
+})();
+
+/* ── 7b. FUSION-АВТОСБОРЩИК: ASR-слова × DSP-ноты → UltraStar .txt ─────── */
+class SingulyarUltraStarAssembler {
+    constructor(options = {}) {
+        this.bpm = options.bpm || 120;
+        this.gap = options.gap || 0;                 /* сек */
+        this.bindWindow = options.bindWindow || 0.6; /* окно привязки слова, сек */
+        this.lineBreak = options.lineBreak || 1.5;   /* пауза для новой строки, сек */
+    }
+    /* LRC-строки → плоский список слов с оценкой тайминга внутри строки */
+    wordsFromLines(lines) {
+        const out = [];
+        for (let i = 0; i < lines.length; i++) {
+            const L = lines[i];
+            const next = lines[i + 1];
+            const span = Math.max(1, (next ? next.t : L.t + 4) - L.t);
+            const ws = String(L.words || '').split(/\s+/).filter(Boolean);
+            ws.forEach((w, k) => out.push({ t: L.t + (span * k) / Math.max(ws.length, 1), w }));
+        }
+        return out;
+    }
+    assemble(asrWords, dspNotes, opts = {}) {
+        const bpm = opts.bpm || this.bpm;
+        const gap = opts.gap != null ? opts.gap : this.gap;
+        const beat = 60 / (bpm * 4);                 /* UltraStar: бит = 1/4 четверти */
+        const q = (t) => Math.round((t - gap) / (beat / 16)) * (beat / 16);   /* сетка 1/16 бита */
+        /* 1) привязка слов: ближайшее слово к началу ноты (окно) */
+        const notes = [];
+        let wi = 0, bound = 0, melisma = 0;
+        const sorted = [...(asrWords || [])].sort((a, b) => a.t - b.t);
+        for (const n of dspNotes || []) {
+            let best = null, bestD = Infinity;
+            while (wi < sorted.length && sorted[wi].t < n.start - this.bindWindow) wi++;
+            for (let k = wi; k < sorted.length && sorted[k].t <= n.start + this.bindWindow; k++) {
+                const d = Math.abs(sorted[k].t - n.start);
+                if (d < bestD) { bestD = d; best = sorted[k]; }
+            }
+            notes.push({ type: n.type || 'NORMAL', start: n.start, end: n.end, pitch: n.pitch, word: best ? best.w : null });
+            if (best) bound++;
+        }
+        /* 2) мелизмы: одно слово тянется по нескольким нотам → «~» на продолжении;
+           «» — ноты, к которым слово так и не привязалось (пока слова нет вообще) */
+        let lastBound = null;
+        for (const n of notes) {
+            if (n.word === null) { n.word = lastBound ? '~' : ''; if (n.word === '~') melisma++; }
+            else if (n.word === lastBound) { n.word = '~'; melisma++; }
+            if (n.word !== '~' && n.word !== '') lastBound = n.word;
+        }
+        /* 3) квантование + нарезка строк по паузам */
+        const lines = ['#TITLE:' + (opts.title || 'СИНГУЛЯР ·16 Fusion'), '#ARTIST:' + (opts.artist || 'RUVSON'),
+            '#BPM:' + bpm, '#GAP:' + Math.round(gap * 1000)];
+        let prevEnd = null, lineCount = 0;
+        for (const n of notes) {
+            const qs = Math.max(0, Math.round((q(n.start)) / beat));
+            const qe = Math.max(qs + 1, Math.round((q(n.end)) / beat));
+            if (prevEnd !== null && n.start - prevEnd > this.lineBreak) { lines.push('- 0 0 0'); lineCount++; }
+            lines.push((n.type === 'GOLDEN' ? '*' : ':') + ' ' + qs + ' ' + (qe - qs) + ' ' + (n.pitch - 60) + ' ' + n.word);
+            prevEnd = n.end;
+        }
+        lines.push('E');
+        return { txt: lines.join('\n'), notes, stats: { bound, melisma, lineBreaks: lineCount, total: notes.length } };
+    }
+}
+
+/* ── 7c. FUSION UI: собрать / скачать / в память (0 innerHTML) ───────────── */
+(function fusionUI() {
+    const btnA = document.getElementById('btnFusion');
+    const btnD = document.getElementById('btnFusionDl');
+    const btnM = document.getElementById('btnFusionMem');
+    const prev = document.getElementById('fusionPreview');
+    const stat = document.getElementById('fusionStatus');
+    if (!btnA) return;
+    const asm = new SingulyarUltraStarAssembler({ bpm: 120 });
+    let out = null, chartOut = null;
+    const say = (msg) => { stat.textContent = msg; };
+    btnA.addEventListener('click', () => {
+        const app = window.S16;
+        if (!app || !app.chart || !app.chart.notes || !app.chart.notes.length) {
+            say('Сначала собери ноты из минусовки или импортируй карту — Fusion сводит слова с нотами.'); return;
+        }
+        const words = app.lrcLines && app.lrcLines.length ? asm.wordsFromLines(app.lrcLines) : [];
+        const r = asm.assemble(words, app.chart.notes, { title: app.songTitle || 'СИНГУЛЯР ·16 Fusion', bpm: 120 });
+        out = r.txt; chartOut = { version: '1.0', bpm: 120, totalNotes: r.notes.length, notes: r.notes };
+        prev.textContent = r.txt.length > 1200 ? r.txt.slice(0, 1200) + '\n… (' + r.txt.length + ' симв. всего)' : r.txt;
+        btnD.disabled = false; btnM.disabled = false;
+        say('Fusion: ' + r.stats.total + ' нот · со словами ' + r.stats.bound + ' · мелизм ~ ' + r.stats.melisma +
+            ' · строк ' + (r.stats.lineBreaks + 1) + (words.length ? '' : ' · слова не подгружены — добавь LRC через ')); 
+    });
+    btnD.addEventListener('click', () => {
+        if (!out) return;
+        const app = window.S16;
+        const blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = ((app && app.songId) || 'song') + '_fusion_ultrastar.txt';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        say('Скачано: ' + a.download);
+    });
+    btnM.addEventListener('click', async () => {
+        if (!chartOut) return;
+        const app = window.S16;
+        if (!app || !app.songId) return;
+        try {
+            await app.loader.saveChart(app.songId, chartOut, out);
+            say('Fusion-карта сохранена в памяти (IndexedDB) — при открытии песни подхватится сама.');
+        } catch (e) { say('Не сохранилось: ' + e.message); }
+    });
+})();
+
+/* ── МОСТ «В ЗАЛ» ·17: BroadcastChannel + localStorage-фолбэк, пульт CMD ── */
+(function hallBridge() {
+    const chk = document.getElementById('chkHall');
+    const hint = document.getElementById('micStatus');
+    if (!chk) return;
+    let bc = null, timer = null, lastRating = '', lastPitch = null, seq = 0;
+    const seenCmd = new Map();
+    const LS = 'singulyar-hall';
+    const SRC = 'stage-' + Math.random().toString(36).slice(2, 8);
+
+    function send(m) {
+        m.ver = 1; m.src = SRC; m.seq = ++seq; m.ts = Date.now();
+        if (bc) { try { bc.postMessage(m); } catch (e) {} }
+        try { localStorage.setItem(LS, JSON.stringify(m)); } catch (e2) {}
+    }
+    function onMsg(m) {
+        try {
+            if (!m || m.ver !== 1 || m.t !== 'CMD' || m.src === SRC) return;
+            const id = m.src + ':' + m.seq;
+            if (seenCmd.has(id)) return;
+            seenCmd.set(id, 1); if (seenCmd.size > 200) seenCmd.clear();
+            const app = window.S16; if (!app) return;
+            if (m.cmd === 'play') app.audio.play().catch(() => {});
+            else if (m.cmd === 'pause') app.audio.pause();
+            else if (m.cmd === 'stop') { app.audio.pause(); app.audio.currentTime = 0; }
+            else if (m.cmd === 'seek' && app.audio.duration) {
+                app.audio.currentTime = Math.max(0, Math.min(app.audio.duration, app.audio.currentTime + (m.v || 0)));
+            }
+        } catch (e) {}
+    }
+    function onStorage(e) { if (e.key === LS && e.newValue) { try { onMsg(JSON.parse(e.newValue)); } catch (e2) {} } }
+    function tick() {
+        const app = window.S16; if (!app) return;
+        const t = app.audio.currentTime || 0, dur = app.audio.duration || 0;
+        const N = (app.chart && app.chart.notes) || [];
+        const notes = [];
+        for (let i = 0; i < N.length; i++) {
+            const n = N[i];
+            if (n.end > t - 2 && n.start < t + 12) notes.push({ s: n.start, e: n.end, p: n.pitch, g: n.type === 'GOLDEN', w: n.word });
+        }
+        let word = '';
+        const cur = N.find(n => t >= n.start && t <= n.end);
+        if (cur) word = cur.word;
+        else if (app.lrcLines && app.lrcLines.length) {
+            let L = null;
+            for (const ln of app.lrcLines) { if (ln.t <= t) L = ln; else break; }
+            if (L) word = L.words || '';
+        }
+        const next = [];
+        for (const n of N) { if (n.start > t) { next.push(n.word); if (next.length >= 6) break; } }
+        send({ t: 'STATE', d: {
+            song: app.songTitle, playing: !app.audio.paused, pos: t, dur,
+            score: app.score || 0, combo: app.combo || 0, rating: lastRating,
+            pitch: lastPitch, word, next, notes
+        }});
+    }
+    function open() {
+        try { bc = new BroadcastChannel('singulyar-hall'); } catch (e) { bc = null; }
+        if (bc) bc.onmessage = onMsg;
+        window.addEventListener('storage', onStorage);
+        timer = setInterval(tick, 125);   /* 8 Гц */
+        send({ t: 'HELLO', role: 'stage' });
+    }
+    function close() {
+        if (bc) { try { bc.postMessage({ ver: 1, t: 'BYE', src: SRC }); bc.close(); } catch (e) {} bc = null; }
+        window.removeEventListener('storage', onStorage);
+        if (timer) { clearInterval(timer); timer = null; }
+    }
+    window.S16.bus.on('PITCH_FRAME', (f) => { lastPitch = (f && f.midi) ? { midi: f.midi, cents: f.cents, clarity: f.clarity } : null; });
+    window.S16.bus.on('ACCURACY_EVALUATED', (d) => { if (d) lastRating = d.rating || ''; });
+    chk.addEventListener('change', () => {
+        if (chk.checked) {
+            open();
+            hint.textContent = 'Трансляция в зал включена: канал singulyar-hall (BroadcastChannel' + (bc ? ' активен' : ' недоступен — только localStorage') + '). Открой ·17 ЗАЛ во втором окне.';
+        } else {
+            close();
+            hint.textContent = 'Трансляция в зал выключена.';
+        }
+    });
+})();
+</script>
+<script>
+/* ═══ ЗГ-НАЧАЛО · ЗОЛОТОЙ ГОЛОС v1.1 (подарок хозяина — ХОЗЯЙСКАЯ ГРАМОТА №1 от 2026-10-04) ═══
+   Ядро чистое: без DOM и window — живёт и в Node-тесте ИНСТРУМЕНТЫ/test_s16_golden_voice.js.
+   Ноль сети, ноль innerHTML — законы дома. Соглашение дома: .txt хранит PITCH = midi − 60. */
+const GoldenVoice = (function () {
+  'use strict';
+  const VERSION = '0.1.0';
+  const RU_PC = ['до', 'до#', 'ре', 'ре#', 'ми', 'фа', 'фа#', 'соль', 'соль#', 'ля', 'ля#', 'си'];
+  const EN_PC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+  // ---- Частоты и центы -----------------------------------------------------
+
+  function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+  function freqToMidi(f) { return 69 + 12 * Math.log2(f / 440); }
+
+  // Разница в центах с заворотом по октаве: каратэ-караоке поют в своей октаве.
+  function centDiffOctave(aMidi, bMidi) {
+    let d = (aMidi - bMidi) * 100;
+    d = ((d % 1200) + 1200) % 1200;   // [0, 1200)
+    if (d > 600) d -= 1200;           // (-600, 600]
+    return d;
+  }
+
+  // ---- Парсер UltraStar .txt (фолбэк для standalone-использования) ----------
+
+  // Возвращает { bpm, gapMs, spb, notes, lines, meta }
+  // note: { t0, t1, start, dur, midi, golden, free, rap, text, line, player }
+  function parseUltraStar(text, opts) {
+    opts = opts || {};
+    // дом хранит в .txt PITCH = midi - 60 (живой код ·16: экспорт «n.pitch - 60»)
+    const pitchOffset = typeof opts.pitchOffset === 'number' ? opts.pitchOffset : -60;
+    const out = { bpm: 120, gapMs: 0, meta: {}, notes: [], lines: [] };
+    let curLine = null;
+    let player = null;
+    const rows = String(text).split(/\r?\n/);
+    for (let raw of rows) {
+      const line = raw.trim();
+      if (!line) continue;
+      if (line.charAt(0) === '#') {
+        const k = line.indexOf(':');
+        if (k > 0) {
+          const key = line.slice(1, k).toUpperCase();
+          const val = line.slice(k + 1).trim();
+          out.meta[key] = val;
+          if (key === 'BPM') out.bpm = parseFloat(String(val).replace(',', '.')) || 120;
+          if (key === 'GAP') out.gapMs = parseFloat(val) || 0;
+        }
+        continue;
+      }
+      const tag = line.charAt(0);
+      if (tag === 'P' && /^P\d/i.test(line)) { player = line.slice(0, 2).toUpperCase(); continue; }
+      if (tag === '-') {                       // разрыв строки
+        if (curLine) out.lines.push(curLine);
+        curLine = null;
+        continue;
+      }
+      if (tag === ':' || tag === '*' || tag === 'R' || tag === 'F') {
+        const parts = line.slice(1).trim().split(/\s+/);
+        if (parts.length < 3) continue;
+        const start = parseInt(parts[0], 10);
+        const dur = parseInt(parts[1], 10);
+        const stored = parseInt(parts[2], 10);
+        const text2 = parts.slice(3).join(' ');
+        if (!isFinite(start) || !isFinite(dur) || !isFinite(stored)) continue;
+        const spb = 15 / out.bpm;              // такт UltraStar = шестнадцатая
+        const t0 = out.gapMs / 1000 + start * spb;
+        const note = {
+          start: start, dur: dur,
+          t0: t0, t1: t0 + dur * spb,
+          midi: stored - pitchOffset,
+          golden: tag === '*',
+          rap: tag === 'R',
+          free: tag === 'F',
+          text: text2,
+          line: curLine ? out.lines.length : -1,
+          player: player
+        };
+        if (!curLine) curLine = { notes: [], t0: t0, t1: 0 };
+        note.line = out.lines.length;          // предварительный индекс, чинится ниже
+        curLine.notes.push(note);
+        if (note.t1 > curLine.t1) curLine.t1 = note.t1;
+        out.notes.push(note);
+      }
+    }
+    if (curLine) out.lines.push(curLine);
+    // нормализуем индексы строк: line -> индекс в out.lines
+    out.lines.forEach(function (L, i) { L.idx = i; L.notes.forEach(function (n) { n.line = i; }); });
+    return out;
+  }
+
+  // ---- Тональность файла: Крумхансл–Шмуклер ---------------------------------
+
+  const KK_MAJOR = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88];
+  const KK_MINOR = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+
+  function pearson(a, b) {
+    const n = a.length;
+    let sa = 0, sb = 0;
+    for (let i = 0; i < n; i++) { sa += a[i]; sb += b[i]; }
+    const ma = sa / n, mb = sb / n;
+    let num = 0, da = 0, db = 0;
+    for (let i = 0; i < n; i++) {
+      const x = a[i] - ma, y = b[i] - mb;
+      num += x * y; da += x * x; db += y * y;
+    }
+    const den = Math.sqrt(da * db);
+    return den === 0 ? 0 : num / den;
+  }
+
+  // notes: массив с { midi, dur } (длительность в тактах — вес ноты)
+  // возвращает { tonic, mode, name, ru, r, margin, table }
+  function detectKey(notes) {
+    const hist = new Array(12).fill(0);
+    let total = 0;
+    for (const n of notes) {
+      const w = (typeof n.dur === 'number' && n.dur > 0) ? n.dur : 1;
+      const pc = ((Math.round(n.midi) % 12) + 12) % 12;
+      hist[pc] += w; total += w;
+    }
+    if (total === 0) return { tonic: 0, mode: 'major', name: 'C major', ru: 'до мажор', r: 0, margin: 0, table: [] };
+    const table = [];
+    for (let t = 0; t < 12; t++) {
+      const rotMaj = new Array(12), rotMin = new Array(12);
+      for (let i = 0; i < 12; i++) {
+        rotMaj[i] = KK_MAJOR[((i - t) % 12 + 12) % 12];
+        rotMin[i] = KK_MINOR[((i - t) % 12 + 12) % 12];
+      }
+      table.push({ tonic: t, mode: 'major', r: pearson(hist, rotMaj) });
+      table.push({ tonic: t, mode: 'minor', r: pearson(hist, rotMin) });
+    }
+    table.sort(function (a, b) { return b.r - a.r; });
+    const best = table[0], second = table[1];
+    const name = EN_PC[best.tonic] + (best.mode === 'minor' ? ' minor' : ' major');
+    const ru = RU_PC[best.tonic] + (best.mode === 'minor' ? ' минор' : ' мажор');
+    return { tonic: best.tonic, mode: best.mode, name: name, ru: ru, r: best.r, margin: best.r - second.r, table: table };
+  }
+
+  // ---- Трекер нот: f0-кадры -> нотные события (гистерезис) -------------------
+  // opts: { rise: 3, fall: 4, jumpCents: 60, medianWin: 5, minRms: 0 }
+  // Решения по гистерезису принимаются по октаво-завёрнутой дистанции:
+  // певец волен перескочить октаву — событие не рвётся.
+  // jumpCents=60: порог смены ноты МЕНЬШЕ полутона (100 центов), иначе соседние
+  // полутоны слипаются в одно событие (поймано живым прогоном: ре-ми-до-си слиплись).
+  function trackNotes(frames, opts) {
+    opts = opts || {};
+    const rise = opts.rise || 3;
+    const fall = opts.fall || 4;
+    const jumpCents = opts.jumpCents || 60;
+    const medianWin = opts.medianWin || 5;
+    const minRms = opts.minRms || 0;
+    const events = [];
+    let cur = null;          // { t0, t1, vals[], pending{} }
+    let silence = 0;
+    let pend = null;         // { vals[], count } — кандидат на новую ноту/смену
+
+    function median(arr) {
+      const a = arr.slice().sort(function (x, y) { return x - y; });
+      const m = a.length >> 1;
+      return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+    }
+    function dist(a, b) { return Math.abs(centDiffOctave(a, b)); }
+    function close() {
+      if (cur && cur.vals.length >= rise) {
+        events.push({ t0: cur.t0, t1: cur.t1, midi: median(cur.vals), frames: cur.vals.length });
+      }
+      cur = null;
+    }
+
+    for (let i = 0; i < frames.length; i++) {
+      const fr = frames[i];
+      const hasVoice = fr && typeof fr.f0 === 'number' && isFinite(fr.f0) && fr.f0 > 0 && (fr.rms === undefined || fr.rms > minRms);
+      if (!hasVoice) {
+        silence++;
+        if (pend) pend = null;
+        if (cur && silence >= fall) close();
+        continue;
+      }
+      silence = 0;
+      const midi = freqToMidi(fr.f0);
+
+      if (!cur) {
+        if (!pend) pend = { vals: [midi], t0: fr.t };
+        else {
+          if (dist(midi, median(pend.vals)) <= jumpCents) { pend.vals.push(midi); }
+          else { pend = { vals: [midi], t0: fr.t }; }
+          if (pend.vals.length >= rise) {
+            cur = { t0: pend.t0, t1: fr.t, vals: pend.vals.slice(), last: median(pend.vals) };
+            pend = null;
+          }
+        }
+        continue;
+      }
+
+      // внутри события: принимаем/считаем кандидатом на смену
+      if (dist(midi, cur.last) <= jumpCents) {
+        cur.vals.push(midi); cur.t1 = fr.t;
+        const win = cur.vals.slice(-medianWin);
+        cur.last = median(win);
+        if (pend) pend = null;
+      } else {
+        if (!pend) pend = { vals: [midi], t0: fr.t };
+        else if (dist(midi, median(pend.vals)) <= jumpCents) { pend.vals.push(midi); }
+        else { pend = { vals: [midi], t0: fr.t }; }
+        if (pend.vals.length >= rise) {
+          close();
+          cur = { t0: pend.t0, t1: fr.t, vals: pend.vals.slice(), last: median(pend.vals) };
+          pend = null;
+        }
+      }
+    }
+    close();
+    return events;
+  }
+
+  // ---- Скоринг с эталоном -----------------------------------------------------
+  // song: результат parseUltraStar (или { bpm, gapMs, notes:[{t0,t1,midi,golden,line}] })
+  // events: результат trackNotes
+  // opts: { coverMin: 0.6, perfect: 50, good: 100, ok: 200, pointsPerBeat: 100, lineBonus: 1000 }
+  // ГЛАС ДОМА v0.1: нота пройдена, если покрытие ≥ coverMin и медианная ошибка ≤ ok.
+  //   perfect ≤50ц — 100% очков; good ≤100ц — 75%; ok ≤200ц — 50%; мимо — 0.
+  //   золотая нота ×2. Бонус строки +lineBonus, если все ноты строки пройдены.
+  //   Итог нормируется к 10000 по максимуму (очки нот + бонусы строк).
+  function score(song, events, opts) {
+    opts = opts || {};
+    const coverMin = opts.coverMin || 0.6;
+    const T = { perfect: opts.perfect || 50, good: opts.good || 100, ok: opts.ok || 200 };
+    const ppb = opts.pointsPerBeat || 100;
+    const lineBonus = opts.lineBonus || 1000;
+
+    const notes = song.notes || [];
+    const perNote = [];
+    let raw = 0, maxRaw = 0;
+
+    for (let i = 0; i < notes.length; i++) {
+      const n = notes[i];
+      const durSec = Math.max(1e-9, n.t1 - n.t0);
+      // собираем пересечения событий с окном ноты
+      let cover = 0;
+      const errs = [], ws = [];
+      for (const e of events) {
+        const o = Math.min(n.t1, e.t1) - Math.max(n.t0, e.t0);
+        if (o > 0) {
+          cover += o;
+          errs.push(centDiffOctave(e.midi, n.midi));
+          ws.push(o);
+        }
+      }
+      cover = Math.min(1, cover / durSec);
+      // взвешенная медиана ошибки
+      let err = null;
+      if (errs.length) {
+        const idx = errs.map(function (e, k) { return k; }).sort(function (a, b) { return errs[a] - errs[b]; });
+        const wsum = ws.reduce(function (a, b) { return a + b; }, 0);
+        let acc = 0, mid = wsum / 2;
+        for (const k of idx) { acc += ws[k]; if (acc >= mid) { err = errs[k]; break; } }
+        if (err === null) err = errs[idx[idx.length - 1]];
+      }
+      const passed = cover >= coverMin && err !== null && Math.abs(err) <= T.ok;
+      let grade = 'miss';
+      if (passed) {
+        const a = Math.abs(err);
+        grade = a <= T.perfect ? 'perfect' : (a <= T.good ? 'good' : 'ok');
+      }
+      const base = n.dur * ppb * (n.golden ? 2 : 1);
+      const pts = grade === 'perfect' ? base : (grade === 'good' ? base * 0.75 : (grade === 'ok' ? base / 2 : 0));
+      raw += pts; maxRaw += base;
+      perNote.push({ i: i, cover: cover, err: err, grade: grade, pts: pts, max: base, golden: !!n.golden });
+    }
+
+    // бонусы строк
+    const lines = (song.lines || []).map(function (L, li) {
+      const ns = notes.map(function (n, i) { return { n: n, i: i }; }).filter(function (p) { return p.n.line === li; });
+      const allPass = ns.length > 0 && ns.every(function (p) { return perNote[p.i].grade !== 'miss'; });
+      const bonus = allPass ? lineBonus : 0;
+      raw += bonus; maxRaw += lineBonus;
+      return { idx: li, t0: L.t0, t1: L.t1, bonus: bonus, notes: ns.map(function (p) { return p.i; }) };
+    });
+
+    const score10000 = maxRaw > 0 ? Math.round(10000 * raw / maxRaw) : 0;
+    const gradeWord =
+      score10000 >= 9500 ? 'ИДЕАЛЬНО' :
+      score10000 >= 8000 ? 'ОТЛИЧНО' :
+      score10000 >= 6000 ? 'ХОРОШО' :
+      score10000 >= 3000 ? 'ЕСТЬ ПОПЫТКА' : 'МИМО';
+
+    return { score: score10000, raw: raw, maxRaw: maxRaw, perNote: perNote, lines: lines, grade: gradeWord, version: VERSION };
+  }
+
+  // ---- DTW по контуру в центах (заготовка якоря темпа для v0.2) --------------
+  // a, b — массивы чисел (центы/полутона). band — ширина полосы Сакоэ–Тибу.
+  function dtw(a, b, band) {
+    const n = a.length, m = b.length;
+    if (!n || !m) return { cost: 0, pathLen: 0 };
+    const INF = 1e15;
+    const D = new Array(n + 1);
+    for (let i = 0; i <= n; i++) D[i] = new Array(m + 1).fill(INF);
+    D[0][0] = 0;
+    for (let i = 1; i <= n; i++) {
+      const lo = Math.max(1, i - (band || m)), hi = Math.min(m, i + (band || m));
+      for (let j = lo; j <= hi; j++) {
+        const c = Math.abs(a[i - 1] - b[j - 1]);
+        D[i][j] = c + Math.min(D[i - 1][j], D[i][j - 1], D[i - 1][j - 1]);
+      }
+    }
+    const pathLen = n + m; // верхняя оценка нормировки пути
+    return { cost: D[n][m] / pathLen, pathLen: pathLen };
+  }
+
+  return {
+    version: VERSION,
+    midiToFreq: midiToFreq,
+    freqToMidi: freqToMidi,
+    centDiffOctave: centDiffOctave,
+    parseUltraStar: parseUltraStar,
+    detectKey: detectKey,
+    trackNotes: trackNotes,
+    score: score,
+    dtw: dtw
+  };
+})();
+
+/* ═══ ЗГ-ПРОВОДКА в живую ·16 (закон 4 дома: счёт из фактов, не из заглушек) ═══
+   Кадры микрофона собираются с bus PITCH_FRAME ТОЛЬКО при играющей минусовке
+   и включённом живом микрофоне. По концу песни трекер (гистерезис 60 центов,
+   медиана 5 кадров) превращает кадры в нотные события, эталон берётся из карты
+   песни (midi = pitch карты; .txt хранит midi − 60 — соглашение дома), движок
+   считает эталонный счёт к 10000 (октавы не штрафуются, золотые ×2). */
+(function () {
+  'use strict';
+  var S = window.S16;
+  if (!S || !S.bus) return;
+  var кадры = [];
+  var живём = false;
+  S.bus.on('PITCH_FRAME', function (f) {
+    if (!живём) return;
+    if (S.audio && !S.audio.paused && S.engine && S.engine.active) {
+      кадры.push({ t: S.audio.currentTime, f0: (f && typeof f.hz === 'number') ? f.hz : null, rms: (f && f.rms) || 0 });
+    }
+  });
+  function счётИзФактов() {
+    if (!S.chart || !S.chart.notes || !S.chart.notes.length) return;
+    if (кадры.length < 8) {
+      S.bus.emit('ЗОЛОТОЙ_СЧЁТ', { ok: false, причина: 'мало кадров: ' + кадры.length });
+      return;
+    }
+    var bpm = (S.parser && S.parser.bpm) || 120;
+    var spb = 15 / bpm; /* такт UltraStar = шестнадцатая; соглашение дома (П.3) */
+    var notes = S.chart.notes.map(function (n) {
+      return { t0: n.start, t1: n.end,
+               dur: Math.max(1, Math.round((n.end - n.start) / spb)),
+               midi: n.pitch, /* в карте pitch — абсолютный midi (.txt хранит midi−60) */
+               golden: n.type === 'GOLDEN' };
+    });
+    var song = { bpm: bpm, notes: notes, lines: [] };
+    var events = GoldenVoice.trackNotes(кадры);
+    var res = GoldenVoice.score(song, events);
+    if (S.hud && S.hud.elements && S.hud.elements.scoreVal) {
+      S.hud.elements.scoreVal.textContent = String(res.score).padStart(6, '0');
+    }
+    S.bus.emit('ЗОЛОТОЙ_СЧЁТ', { ok: true, score: res.score, grade: res.grade, events: events.length, version: res.version });
+    if (S.el && S.el.micStatus) {
+      S.el.micStatus.textContent = 'ЗОЛОТОЙ ГОЛОС: ' + res.score + ' / 10000 · ' + res.grade +
+        ' · нот спето: ' + events.length + ' (эталон из карты; октава своя — не штрафуется)';
+    }
+  }
+  var А = S.audio;
+  if (А) {
+    А.addEventListener('play', function () { кадры.length = 0; живём = true; });
+    А.addEventListener('pause', function () { живём = false; });
+    А.addEventListener('ended', function () { живём = false; счётИзФактов(); });
+  }
+})();
+/* ═══ ЗГ-КОНЕЦ · ЗОЛОТОЙ ГОЛОС ═══ */
+</script>
+<script defer src="./singulyar-ux-engine-v9.js" data-hotkeys="off"></script><script defer src="./singulyar-modules.js"></script>
+<style id="sng-канон-v135">
+/* ── СИНГУЛЯР · канон дома v1.35.0 «СТАНДАРТ»: void + стекло + золото ──
+   Палитра аппа переложена на канон дома (ember/радуга выжжены);
+   семантические цвета состояния (ok/bad) сохранены — это юзобилити. */
+:root{
+  --ember:#d4af37; --ember2:#8a6d1d; --coal2:#8a6d1d; --hot:#f2e7c4;
+  --glow:rgba(212,175,55,.5); --glow2:rgba(212,175,55,.14);
+  --spoke-glow:rgba(212,175,55,.5);
+  --bg:#0A0A0C; --surf:#101014; --surf2:#16161c;
+  --edge:#23232b; --edge2:#2e2e38;
+  --skin:#ece9e2; --ash:#9a958c;
+}
+body{background:#0A0A0C !important}
+::selection{background:rgba(212,175,55,.32)}
+/* ── ПОД КАПОТ: тех-информация живёт под футер, в нативном спойлере ── */
+.sng-подкапот{position:fixed;left:0;right:0;bottom:0;z-index:90;margin:0;
+  background:rgba(10,10,12,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(212,175,55,.22);color:#b9b4aa;
+  font:12px/1.55 ui-monospace,'SF Mono',Consolas,monospace}
+.sng-подкапот>summary{cursor:pointer;list-style:none;padding:4px 14px 5px;
+  color:#d4af37;letter-spacing:.08em}
+.sng-подкапот>summary::-webkit-details-marker{display:none}
+.sng-подкапот>summary::before{content:'⌇ ';color:#8a6d1d}
+.sng-подкапот>summary:hover{background:rgba(212,175,55,.08)}
+.sng-подкапот[open]>summary{border-bottom:1px solid rgba(212,175,55,.14)}
+.sng-подкапот .тело{max-height:44svh;overflow:auto;padding:10px 16px 14px;color:#9a958c}
+.sng-подкапот .тело b{color:#d4af37;font-weight:600}
+.sng-подкапот a{color:#d4af37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.35)}
+</style><details class="sng-подкапот" data-нет-подсказки><summary>под капот · тех-гарантии и сборка</summary><div class="тело"><b>СУФЛЁР ·16 v1.1</b> · сборка 2026-10-14 (такт v11.30 «ЩИТ») · Fusion-автосборщик<br>офлайн-оценка вокала UltraStar-стиля · детекторы высоты в AudioWorklet: McLeod MPM + ЙИН/YIN (ПВ2, выбор в панели микрофона) · нотные колбаски с плавным проявлением · HUD Score/Combo/PERFECT-GOOD-MISS · автогенерация нотной карты из минусовки · IndexedDB: notecharts + scores · <b>офлайн · 0 зависимостей · 0 внешних запросов · 0 innerHTML</b> · канон дома v1.35.0 «СТАНДАРТ»</div></details><script>
+/* дом ставится в офлайн целиком — с любой двери */
+try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js').catch(function(){});}catch(e){}
+</script>
+<style>
+#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
+#sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#D4AF37;color:#FFD97A;outline:none}
+#sg65nav summary{list-style:none}
+#sg65nav summary::-webkit-details-marker{display:none}
+#sg65nav .sg65menu{position:fixed;right:10px;bottom:46px;max-height:72vh;overflow:auto;background:rgba(12,14,20,.97);border:1px solid rgba(212,175,55,.45);border-radius:14px;padding:10px 12px;width:min(320px,88vw);display:flex;flex-direction:column;gap:1px;box-shadow:0 8px 30px rgba(0,0,0,.5);text-align:left}
+#sg65nav .sg65menu b{color:#D4AF37;font-size:10.5px;letter-spacing:.09em;margin:8px 0 2px;text-transform:uppercase;font-weight:700}
+#sg65nav .sg65menu a{color:#C9D2DC;text-decoration:none;padding:6px 9px;border-radius:8px;font-weight:500}
+#sg65nav .sg65menu a:hover,#sg65nav .sg65menu a:focus{background:rgba(212,175,55,.14);color:#FFD97A;outline:none}
+#sg65nav .sg65here{opacity:.6}
+@media (max-width:480px){#sg65nav .sg65a{padding:9px 10px}}
+@media print{#sg65nav{display:none}}
+</style>
+<!-- SG65-НАВИГАТОР v10.65: ⌂ ДОМ · ↑ НАЗАД · ☰ ВСЕ ДВЕРИ — выход из любой комнаты дома -->
+<nav id="sg65nav" aria-label="Навигатор СИНГУЛЯРА: дом, шаг назад, все двери">
+<a class="sg65a" href="index.html" title="⌂ Первое меню дома — оттуда открыты все двери">⌂ ДОМ</a>
+<a class="sg65a" href="index.html" title="↑ Шаг назад — первое меню дома" onclick="try{if(history.length&gt;1){history.back();return false}}catch(e){}">↑ НАЗАД</a>
+<details>
+<summary class="sg65a" title="☰ Все двери дома — меню всегда с тобой">☰ ДВЕРИ</summary>
+<div class="sg65menu">
+<b>Хаб</b>
+<a href="index.html">·00 первое меню</a>
+<b>Жилые залы</b>
+<a href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html">·01 КОГДА ТЕРЯЕМ</a>
+<a href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html">·02 РЕЗОНАНС</a>
+<a href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html">·02б ФАБРИКА</a>
+<a href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html">·15 ОРКЕСТРАТОР</a>
+<a class="sg65here" aria-current="page" href="СИНГУЛЯР_16_СУФЛЁР.html">·16 СУФЛЁР</a>
+<a href="СИНГУЛЯР_17_ЗАЛ.html">·17 ЗАЛ</a>
+<a href="СИНГУЛЯР_18_СОБЫТИЕ.html">·18 СОБЫТИЕ</a>
+<a href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">·19 ЧЕЛОВЕК</a>
+<a href="СИНГУЛЯР_20_ФОНЕТИКА.html">·20 ФОНЕТИКА</a>
+<a href="СИНГУЛЯР_21_ОБЩЕНИЕ.html">·21 ОБЩЕНИЕ</a>
+<a href="СИНГУЛЯР_22_СВЯЗЬ.html">·22 СВЯЗЬ</a>
+<a href="СИНГУЛЯР_23_КРУГ.html">·23 КРУГ</a>
+<a href="СИНГУЛЯР_24_ПОЧТА.html">·24 ПОЧТА</a>
+<a href="СИНГУЛЯР_25_КОШЕЛЁК.html">·25 КОШЕЛЁК</a>
+<a href="СИНГУЛЯР_26_ЛИНИЯ.html">·26 ЛИНИЯ</a>
+<a href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">·27 ФУНДАМЕНТ</a>
+<a href="СИНГУЛЯР_28_УЗЕЛ.html">·28 УЗЕЛ</a>
+<a href="СИНГУЛЯР_29_СВОБОДА.html">·29 СВОБОДА</a>
+<a href="СИНГУЛЯР_30_ТКАНЬ.html">·30 ТКАНЬ</a>
+<a href="СИНГУЛЯР_31_ЛАДОМ.html">·31 ЛАДОМ</a>
+<a href="СИНГУЛЯР_32_СЦЕНА.html">·32 СЦЕНА</a>
+<a href="СИНГУЛЯР_33_ФОНД.html">·33 ФОНД</a>
+<a href="СИНГУЛЯР_34_ДОМ_ФОНДА.html">·34 ДОМ ФОНДА</a>
+<a href="СИНГУЛЯР_35_ВОПРОСЫ.html">·35 ВОПРОСЫ</a>
+<a href="СИНГУЛЯР_36_СЛОВАРЬ.html">·36 СЛОВАРЬ</a>
+<a href="СИНГУЛЯР_37_О_ДОМЕ.html">·37 О ДОМЕ</a>
+<a href="СИНГУЛЯР_38_ПУЛЬС.html">·38 ПУЛЬС</a>
+<a href="СИНГУЛЯР_39_КОЛОНКА.html">·42 КОЛОНКА</a>
+<b>Доки и помощь</b>
+<a href="ДОКУМЕНТАЦИЯ.html">·45 ДОКУМЕНТАЦИЯ</a>
+<a href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">·46 УСТАНОВКА</a>
+<a href="ИНСТРУКЦИЯ_ДОМА.html">·47 ИНСТРУКЦИЯ ДОМА</a>
+<a href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html">·48 ПРОТОКОЛ ЭКРАНА</a>
+<a href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html">·49 ПОДДЕРЖАТЬ</a>
+<a href="ШТАБ_РЕВИЗИИ_31.html">·43 ШТАБ РЕВИЗИИ</a>
+<b>Лаборатория и инструменты</b>
+<a href="organism-living-prototype.html">·39 ОРГАНИЗМ</a>
+<a href="harmonia-prototype.html">·40 ГАРМОНИЯ</a>
+<a href="hir-prototype.html">·41 НАМЕРЕНИЕ</a>
+<a href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html">·44 ПУЛЬТ ТЕЛЕФОНА</a>
+<a href="ИНСТРУМЕНТЫ/растеризатор.html">·50 РАСТЕРИЗАТОР</a>
+<a href="БИБЛИОТЕКИ/adapter-os/prototype/index.html">·51 ADAPTER-OS</a>
+<a href="КОЛОНКА/prototype/index.html">·52 ПРОТОТИП КОЛОНКИ</a>
+</div>
+</details>
+</nav>
+<script defer src="js/sg-registry.js"></script>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">42</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.30</span> «<span data-реестр="такт">ЩИТ</span>» · кэш <span data-реестр="кэш">v181</span></div>
+</body>
+</html>

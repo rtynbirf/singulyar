@@ -1,0 +1,41 @@
+---
+- name: Provision OMNISPEAKER Node on RK3588 (Armbian)
+  hosts: omnispeaker_nodes
+  become: yes
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - docker.io
+          - docker-compose-plugin
+          - pipewire
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Create OMNISPEAKER application directory
+      file:
+        path: /opt/omnispeaker
+        state: directory
+        owner: armbian
+        group: armbian
+        mode: '0755'
+
+    - name: Copy Docker Compose file
+      copy:
+        src: ../../config/docker-compose.yml
+        dest: /opt/omnispeaker/docker-compose.yml
+        owner: armbian
+        mode: '0644'
+
+    - name: Copy Policy Engine Rules
+      copy:
+        src: ../../config/policy_rules.json
+        dest: /opt/omnispeaker/policy_rules.json
+        owner: armbian
+        mode: '0644'
+
+    - name: Start OMNISPEAKER Docker Stack
+      shell: docker compose up -d
+      args:
+        chdir: /opt/omnispeaker

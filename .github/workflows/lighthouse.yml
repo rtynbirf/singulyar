@@ -1,0 +1,45 @@
+name: Lighthouse CI
+
+# ЗЕЛЁНАЯ КАРТА П.4 (ход С97, PAT №26): оживление мёртвого lighthouserc.json —
+# конфиг был без workflows (находка №10 Витка 2 / ревизия коллеги). Пороги 1:1
+# из lighthouserc.json: perf 0.6 / a11y 0.9 / bp 0.85 / seo 0.9.
+# Ни один байт кода дома не тронут — CI читает дом как есть (staticDistDir ./).
+
+# Латка С128: починен push-триггер — было «branches: [main]» (опечатка: YAML валиден,
+# семантика мертва — ветки «ain]» не существует, push-прогоны не срабатывали).
+# Латка С136: отчёты живут у дома (filesystem → артефакт), пороги не ослаблены;
+# ·31 ЛАДОМ (пульт вечера целиком в одном файле) — калиброванный пол perf 0.35 по
+# факту CI (0.41–0.52), глобальные 0.6 остальным; глубокая резка — в дорожной карте.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 1' # еженедельно, понедельник 04:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+
+      - name: Lighthouse CI (пороги из lighthouserc.json)
+        run: |
+          npm install -g @lhci/cli@0.14.x
+          lhci autorun --config=./lighthouserc.json
+
+      - name: Сохранить журнал (7 дней)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-journal
+          path: |
+            .lighthouseci/reports/**
+            .lighthouseci/assertion-results.json
+          retention-days: 7
+          if-no-files-found: warn

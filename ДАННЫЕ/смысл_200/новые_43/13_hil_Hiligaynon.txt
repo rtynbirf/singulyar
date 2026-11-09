@@ -1,0 +1,40 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: Hiligaynon (хилигайнон)
+ISO: hil | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. Bag-o nga gab-i sa kapehan; madulum-on nga gabon nagapamalhibog sang mga balay.
+    [кириллицей на слух]: Ба́го нга га́би са капэха́н; мадулу́мон нга га́бон нагапамалхи́бог санг ма́га ба́лай.
+02. Nagalakat ako sa mga kalye — didto ang mga handum nagapabuang sang hunahuna.
+    [кириллицей на слух]: Нагала́кат ако са ма́га калйе — ди́дто анг ма́га ханду́м нагапа́буанг санг хунаху́на.
+03. Sa mainit nga adlaw, may tugnaw nga nagahupong sa kalag.
+    [кириллицей на слух]: Са майи́т нга адла́у, май тугна́у нагаху́понг са ка́лаг.
+04. Ang kabuhi nagdalagan parihas pana — nag-agi sa mga petsa, nag-agi sa amon.
+    [кириллицей на слух]: Анг кабу́хи нагдага́ган париха́с па́на — наг-аги́ са ма́га пэ́тса, наг-аги́ са амо́н.
+05. Nagtipon kita sang kwarta, nakalimot kita — para sa ano ang aton kinabuhi.
+    [кириллицей на слух]: Нагтипо́н кита санг куа́рта, накали́мот кита — па́ра са а́но анг а́тон кинабу́хи.
+06. Ang oras wala nagahatag sing bisan ano nga utang — sa dughan nagapahigda bugnaw nga yelo.
+    [кириллицей на слух]: Анг о́рас уа́ла нагаха́таг синг би́сан а́но нга ута́нг — са ду́хан нагапахи́гда бугна́у нга е́ло.
+07. Nagakat-on kita magbantay kon nagawala: likod sang pultahan, may ilaw nagapalong — apan sa atubangan, ang nota nga «do» nagakalat pa gihapon.
+    [кириллицей на слух]: Нагакат-о́н кита магба́нтай кон нагауа́ла на: ли́код санг пу́лтахан, май и́лау нагапа́лонг — апа́н са атуба́нган, анг но́та нга «до» нагака́лат па гиха́пон.
+08. Nagapahapyo kita sa mga tren nga naghalin na, nangamuyo sa nagligad nga maghatag sing sabat.
+    [кириллицей на слух]: Нагапаха́пё кита са ма́га трэн нга нага́лин на, нангаму́ё са наглига́д нга мага́таг синг са́бат.
+09. Nagakat-on kita maghigugma kon nagtugnaw na: sa palad, abo — hindi bakal.
+    [кириллицей на слух]: Нагакат-о́н кита магхигу́гма кон нагтугна́у на: са па́лад, а́бо — хи́нди ба́каль.
+10. Kon nahibal-an ta lang daan — mangin ano ka mabug-at ang malinaw nga kasubo sa kalag.
+    [кириллицей на слух]: Кон нахиба́-ан та ланг даа́н — мангин а́но ка мабуг-а́т анг малина́у нга касу́бо са ка́лаг.
+11. Wala nagasiling, wala nagagakap, wala nagakaabot — ginapaulit-ulit nga kanta: tanan ginapaabot pa, ang dughan wala ginabrehan sa iban.
+    [кириллицей на слух]: Уа́ла нагаси́линг, уа́ла нагага́кап, уа́ла нагакаа́бот — гинапау́лит-у́лит нга ка́нта: та́нан гинапаа́бот па, анг ду́хан уа́ла гинабре́хан са и́бан.
+12. Ang kalipay wala sa kinang sang vitrina — kundi sa malin-aw nga kamatuoran sang pinalangga; ginabantayan lang naton ang indi na mabalikan.
+    [кириллицей на слух]: Анг кали́пай уа́ла са ки́нанг санг витри́на — кунди са мали́н-ау нга каматуо́ран санг пинала́нга; гинабанта́ян ланг на́тон анг и́нди на мабали́кан.
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, 6 примечаний):
+- «копили бумажки» → «nagtipon kita sang kwarta»: копили ДЕНЬГИ (kwarta — из испанского, живое хилигайнонское слово), не листки.
+- «впереди ещё звучит до» → «ang nota nga "do" nagakalat pa gihapon»: нота «до» всё ещё разносится впереди; на Филиппинах фиксированная сольмизация do re mi — «do» всегда нота, музыкальная метафора «всё ещё впереди» цела.
+- «прозрачная печаль» → «malinaw nga kasubo»: ясная, светлая грусть (kasubo), не физическая прозрачность.
+- «остыло» → «nagtugnaw na»: любовь стала холодной (tugnaw) — о чувстве.
+- «не обнял» → «wala nagagakap»: не обнял (gakap — живое слово объятия).
+- «мы ценим лишь то, что уже не вернуть» → «ginabantayan lang naton ang indi na mabalikan»: бережём лишь то, куда не вернуться.
+АККОРДЫ (местные имена; игровой свод дома для пения, не транскрипция записи): Am=Am (A-menor); Dm=Dm (D-menor); G=G (G-mayor); C=C (C-mayor); F=F (F-mayor); E7=E7 (E-septymo)
+ИГРА (местные слова): глушить=punggan (приглушать); баррэ=bar (bar-chord, заимств.); перебор=fingerstyle (заимств.); бой=pagpukpok (ударять по струнам)
+НОТЫ (местная система, 7 ступеней от A): A=la B=ti C=do D=re E=mi F=fa G=sol
+СИСТЕМА НОТ: сольмизация (фиксированное do, филиппинская школа do-re-mi; ступень си = ti).

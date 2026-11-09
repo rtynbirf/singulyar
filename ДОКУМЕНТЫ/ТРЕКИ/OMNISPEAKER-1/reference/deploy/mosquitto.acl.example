@@ -1,0 +1,7 @@
+# CN=agent: полный доступ к дереву home/
+user agent
+topic readwrite home/#
+# CN=sensor-bedroom: только своя ветка
+user sensor-bedroom
+topic write home/bedroom/sensor/#
+topic read  home/bedroom/config/#

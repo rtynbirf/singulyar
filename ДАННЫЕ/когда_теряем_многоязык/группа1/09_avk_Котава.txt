@@ -1,0 +1,58 @@
+RUVSON — «КОГДА ТЕРЯЕМ» (When we lose)
+ЯЗЫК: Котава · КОД: avk · КОРПУС · ПЕСНЯ 2 · ГРУППА 1 · язык 09 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: опора — файл песни 1 «Где настоящее» (avk, группа 7): грамматика и лексика аттестованы. Корни kotava.org из опоры: miel, awalt, tanoy, min, me, tir/tid, tiyir, koe, va, kan, ta, ke, bat/ban, lize, anton, ota, teza, mukot, vala, bera, eama, barda, azil, koyar, betar, gruper, renar, vestar, lavar, siki, kitapek, ava, edje, jin, rotir, boza, blira, kenta, xo, coba, remo; добавлены из словаря kotava.org: ugal (время), dim- (обратно). Грамматика по опоре: SVO, прямое дополнение через va, определяющее слово следует за определяемым (ke-генитив), времена — настоящее нулевое (tir/tid), прошедшее tiyir/tiyid; конечных глаголов, кроме tir/tid/tiyir/rotir, нет — смысл через именования: -ara (действие), -sa/-ena (причастие), -sik (деятель), -uca (состояние), me (не) перед сказуемым. Нет в опоре и словаре — описательно: кофейня — xo ke vala ke eama (место воды растения), туман — boza ke vala (пузырь воды), дома — xo (места), бумажки/купюры — ota (числа), воспоминание — coba ke edje (вещь того времени), поезд — koyasa azil (идущее железо), ответ — dimafa ava (обратное слово), сердце и душа — koef xo (внутреннее место), лёд — azilafa vala (железная вода), печаль — lavuca (состояние плача), иней — azilafa eama (железное растение), пульс — blira ke koef xo (жизнь сердца), старики — lo koyasik (много-прошедшие), родные — renasik (любящие), терять — coba me tid (вещей нет), пепел — taw (пыль), зима — me berafa barda (не-тёплое время года), финал — mukot (цель). Часть корней дана описательно — точный аттестованный эквивалент нами не гарантируется.
+
+01. Reaf miel koe xo ke vala ke eama. Boza ke vala tir betasa va kot xo. Jin tir koyasik koe lo kenta, lize coba ke edje tid me grupena, lize berafa barda me tid — koef xo tid azilaf.
+[реаф миэль куэ ксо кэ вала кэ эама. боза кэ вала тир бэтаса ва кот ксо. джин тир койасик куэ ло кэнта, лизэ цоба кэ эджэ тид мэ груупэна, лизэ бэрафа барда мэ тид — куэф ксо тид азилаф]
+
+02. Koyara ke blira tiyir — min tid grupesik va ota, me grupesik va mukot ke blira. A rotir: blira tid lize, me edje.
+[койара кэ блира тийир — мин тид груупэсик ва ота, мэ груупэсик ва мукот кэ блира. а ротир: блира тид лизэ, мэ эджэ]
+
+03. Anton ugal tir; coba me tid ta min. A re, koef xo tid azilafa vala.
+[антон угал тир; цоба мэ тид та мин. а рэ, куэф ксо тид азилафа вала]
+
+04. Min tid grupesik: kotcoba tid zolonaf, edje coba me tid — edje tanoy awalt me tir. Kan vestara va dimafa ava ke edje.
+[мин тид груупэсик: котцоба тид золонаф, эджэ цоба мэ тид — эджэ таной авальт мэ тир. кан вэстара ва димафа ава кэ эджэ]
+
+05. Min tid renasik, edje kotcoba tid azilaf — edje koe min taw tir, me azil. A lavuca tid lize, me grupena edje.
+[мин тид рэнасик, эджэ котцоба тид азилаф — эджэ куэ мин тау тир, мэ азил. а лавуца тид лизэ, мэ груупэна эджэ]
+
+06. Ava me tiyid, renara me tiyid, ugal me tiyid — batcoba tid teza ke blira. Kotcoba tid ta edje; koef xo tid me grupena.
+[ава мэ тийид, ренара мэ тийид, угал мэ тийид — батцоба тид тэза кэ блира. котцоба тид та эджэ; куэф ксо тид мэ груупэна]
+
+07. Min tid vestasik va coba me tir; lavara tid koe boza. A azilafa eama tid, me grupena.
+[мин тид вэстасик ва цоба мэ тир; лавара тид куэ боза. а азилафа эама тид, мэ груупэна]
+
+08. Renuca me tid koe awalt ke siki, me tid koe ota — renuca tid koe berafa teza ke renasik, edje lavara.
+[рэнуца мэ тид куэ авальт кэ сики, мэ тид куэ ота — рэнуца тид куэ бэрафа тэза кэ рэнасик, эджэ лавара]
+
+09. A min tid grupesik va coba me rotir betena — koyara tid lo, mukot tid me grupena.
+[а мин тид груупэсик ва цоба мэ ротир бэтэна — койара тид ло, мукот тид мэ груупэна]
+
+10. Bat ava ta lo koyasik; renara ta renasik; edje blira ke koef xo tid. Renara me tiyid, re tid me — batcoba tid zolonaf.
+[бат ава та ло койасик; ренара та рэнасик; эджэ блира кэ куэф ксо тид. ренара мэ тийид, рэ тид мэ — батцоба тид золонаф]
+
+11. Mukot ke kot ava tid tanoy: min tid koe coba ke edje — me grupena.
+[мукот кэ кот ава тид таной: мин тид куэ цоба кэ эджэ — мэ груупэна]
+
+12. Kotcoba re tid zolonaf — edje min tid lize, edje koef xo koe remo taw me tir.
+[котцоба рэ тид золонаф — эджэ мин тид лизэ, эджэ куэф ксо куэ рэмо тау мэ тир]
+
+───
+
+СЛОВАРЬ МАЛЫША (avk · 12 слов + фраза):
+время → ugal [угал]
+туман → boza ke vala (пузырь воды; описательно) [боза кэ вала]
+воспоминание → coba ke edje (вещь того времени; описательно) [цоба кэ эджэ]
+весна → berafa barda (тёплое время года; из опоры песни 1) [бэрафа барда]
+свет → awalt (свет дня; описательно) [авальт]
+поезд → koyasa azil (идущее железо; описательно) [койаса азил]
+ответ → dimafa ava (обратное слово; описательно) [димафа ава]
+сердце → koef xo (внутреннее место; описательно) [куэф ксо]
+лёд → azilafa vala (железная вода; описательно) [азилафа вала]
+печаль → lavuca (состояние плача; от lavar + -uca) [лавуца]
+иней → azilafa eama (железное растение; описательно) [азилафа эама]
+пульс → blira ke koef xo (жизнь сердца; описательно) [блира кэ куэф ксо]
+ФРАЗА: «когда теряем?» → Edje coba me tid? [эджэ цоба мэ тид?]

@@ -1,0 +1,18 @@
+{
+ "tier": {
+  "M": 176,
+  "C": 110,
+  "S": 223,
+  "X": 6
+ },
+ "verdict": {
+  "KEEP": 307,
+  "REVISE": 19,
+  "MERGE": 23,
+  "DEFER": 46,
+  "RESTRICT": 91,
+  "POLICY": 8,
+  "REMOVE": 9,
+  "DUP": 12
+ }
+}

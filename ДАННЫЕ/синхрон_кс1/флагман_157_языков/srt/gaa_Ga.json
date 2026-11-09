@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "gaa_Ga",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/gaa_Ga.srt",
+ "юниты": [
+  {
+   "text": "[lala]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Gbi gbɛkɛ hee yɛ kɔfe shwapo lɛ mli",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Afua ni mli wa fiteɔ tsũi. [lala]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Mifãa gbɛ kɛtsɔɔ akutsei ni kaimɔi yɔɔ mli lɛ amli",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "ha mifee shwilafo",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "He ni yɛ fɛ̃i be ni mli edɔ lɛ mli",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Fɛ̃i be lɛ haa susuma lɛ nɔ",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "He ni wala fo tamɔ akpɔlɔ ni eho gbii, eho",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "wɔ",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Wɔbua woji anaa, ni wɔhiɛ kpa nɔ hewɔ ni wɔfee nakai lɛ nɔ",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "wɔhiɔ shi",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Ni etamɔ nɔ ni be fɛɛ be lɛ, [lala]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "C gbɛɛmɔ ko yɛ hiɛ lolo",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Be ni afa kɛkɛ",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "ekɛ nɔ ko nɔ ko haaa",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Ni trukaa lɛ [lala] bagbee mitsui nɔ",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ais ni mli ejɔ",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkaseɔ bɔ ni wɔhiɛ sɔɔ [lala] kɛji wɔlaaje",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "beni mɔ ko kane gboɔ yɛ shinaa lɛ sɛɛ lɛ",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkɛ wɔdɛŋ tsɔɔ oketekei ni miiya lɛ asɛɛ, ni wɔbɔɔ mɔdɛŋ",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "kpa be ni eho lɛ fai koni eha bo hetoo",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkaseɔ bɔ ni asumɔɔ mɔ kɛji fɛ̃i eba, [lala]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "be mli ni sũ yɛ oniji amli, shi jeee dade. EHE",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "kɛji mile kɛtsɔ hiɛ kulɛ, [lala]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "bɔ ni nɛkɛ nɔ ni mli tse nɛɛ baaye susuma lɛ he awui",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "awerɛhoyeli",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Ekɛɛɛɛ, [lala] ekɛ ehe wooo mli, ebɛ be",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Enɛ ji naanɔ yiŋtoo",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Mikɛ nɔ fɛɛ nɔ to kɛha sɛɛ mli, mitsui jeee mɛi krokomɛi ahe",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "gbele. [lala]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkɛ hulutsoo lɛ miiwu",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "wɔshãa yɛ nibii bibii ni bɛ sɛɛnamɔ nɔ",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Ni onyɛɛɛ ona bɔ ni fɛ̃i lɛ miiho lɛ",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "yɛ wɔkuɛ nɔ",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Shi miishɛɛ bɛ shwapo samflɛ ni kpɛɔ lɛ mli",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[lala] jeee yɛ shika babaoo mli, shi moŋ yɛ dioofeemɔ mli",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "wekumɛi anɔkwale lɛ, yɛ amɛmlihilɛ mli yɛ ahum lɛ ateŋ. Shi",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "wɔhiɛ sɔɔ nɔ ni [lala] ji momo lɛ pɛ",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "enyɛŋ eba akɛ aku sɛɛ aba",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Mitsa mi long lɛ nɔ",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "ni bei pii lɛ [la] ji gbɛ ni shishinumɔ bɛ he",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "wɔkaseɔ bɔ ni wɔhiɛ sɔɔ nii kɛ́ wɔlaaje [lala]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "beni mɔ ko kane gboɔ yɛ shinaa lɛ sɛɛ lɛ",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkɛ wɔdɛŋ woɔ oketekei ni efã lɛ asɛɛ [lala] sɛɛ",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "ni ebɔɔ mɔdɛŋ ni ekpa be ni eho lɛ fai koni eha hetoo",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkaseɔ bɔ ni asumɔɔ [lala] kɛ́ edɔ",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "be mli ni sũ yɛ tsei lɛ amli lɛ, [lala] ni bɛ",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "dade. EHE",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Eji mile bɔ ni ebaabote mli kɛtsɔ hiɛ kulɛ",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "nɛkɛ awerɛho ni mli ka shi faŋŋ nɛɛ yɛ susuma lɛ mli",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Tswaa onukpai lɛ, fuaa amɛ",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "be mli ni pulse lɛ miitswa lɛ",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Ha ni mlifu lɛ atsɔ, miyɛ kɛha enɛ ŋmɛnɛ",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Misɔleɔ",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Ejaakɛ lalai fɛɛ yɛ naagbee",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "yɛ naagbee lɛ, ekome",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Wɔ [lala] hiɔ shi yɛ nibii ni he hiaa waa lɛ akaimɔ mli",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "wɔtara shi ni wɔhiɛ ekpa nɔ",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkaseɔ bɔ ni wɔhiɛ sɔɔ kɛ́ wɔlaaje",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "beni mɔ ko lala jeɔ kpo yɛ shinaa lɛ sɛɛ lɛ",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "kane",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkɛ wɔdɛŋ tsɔɔ oketekei ni miiya lɛ asɛɛ, ni wɔbɔɔ mɔdɛŋ",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "kpa be ni eho lɛ fai koni eha bo hetoo",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Wɔkaseɔ bɔ ni asumɔɔ, [lala]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "be mli ni edɔ, be mli ni sũ yɔɔ tsei lɛ amli kɛ",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "[la] kristalo ni ekumɔ. Esa akɛ makwɛ nɔ",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "nɔ ni ji, be mli ni wɔyɔɔ biɛ lɛ, kɛyashi",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "efo kɛtee",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "susuma kɛtee shɔŋŋ",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[lala]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

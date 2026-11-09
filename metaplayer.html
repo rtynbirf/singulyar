@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>МЕТА-МЕГА-ПЛЕЕР — СИНГУЛЯР · дверь 44</title>
+<meta name="description" content="Слой достоверности поверх любых источников: НАЙДЕНО/ПРОВЕРЕНО/ДОСТУПНО/ИГРАЕТ, confirmed-play гейт, антифасадный журнал решений, ноль серверов.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09090f; --bg2:#0d0d16; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.09); --txt:#f3f0fa; --mut:#9b93ad;
+  --acc:#e879f9; --acc2:#8b5cf6; --grad:linear-gradient(93deg,#e879f9,#8b5cf6 60%,#6366f1);
+  --ok:#34d399; --warn:#fbbf24; --fail:#fb7185; --unk:#94a3b8;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Manrope',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(600px 400px at 12% -5%,rgba(232,121,249,.14),transparent 60%),
+             radial-gradient(700px 500px at 95% 15%,rgba(99,102,241,.12),transparent 60%),
+             radial-gradient(500px 400px at 50% 110%,rgba(139,92,246,.10),transparent 60%)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
+  background-image:repeating-conic-gradient(#fff 0 .0001turn,#000 0 .0002turn)}
+a{color:var(--acc)}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,textarea,select{font-family:inherit;color:var(--txt);background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:14px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--acc2);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:11px;font-family:inherit}
+::selection{background:rgba(232,121,249,.35)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px;border:2px solid var(--bg)}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;
+  padding:14px 22px;background:rgba(9,9,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Unbounded';font-size:17px;letter-spacing:.02em}
+.logo .dot{width:28px;height:28px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:14px;box-shadow:0 4px 18px rgba(232,121,249,.45)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hdr-tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:5px 12px}
+.hdr-sp{flex:1}
+.hbtn{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--txt);transition:.18s}
+.hbtn:hover{background:var(--card2);border-color:var(--acc2)}
+
+/* ---------- layout ---------- */
+main{position:relative;z-index:1;max-width:1460px;margin:0 auto;padding:22px}
+.gate{display:grid;grid-template-columns:minmax(0,1fr) 410px;gap:18px;align-items:start}
+@media(max-width:1080px){.gate{grid-template-columns:1fr}}
+
+/* ---------- stage ---------- */
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stage-hd{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.stage-hd .t{font-weight:800;font-size:15px}
+.stage-hd .sub{color:var(--mut);font-size:12.5px}
+.frame{position:relative;aspect-ratio:16/9;background:#000}
+.frame video,.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.frame .veil{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
+  background:linear-gradient(180deg,rgba(9,9,15,.55),rgba(9,9,15,.85))}
+.frame .veil .big{font-family:'Unbounded';font-size:clamp(18px,3.4vw,30px);margin-bottom:10px}
+.frame .veil .sm{color:var(--mut);font-size:14px;max-width:560px;margin:0 auto 16px}
+.st-acts{display:flex;gap:10px;padding:13px 16px;border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+.st-acts .sp{flex:1}
+.pos{height:4px;background:rgba(255,255,255,.08);border-radius:99px;margin:0 16px 14px;overflow:hidden;cursor:pointer}
+.pos i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px}
+
+/* ---------- status chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:4px 11px;font-size:11px;font-weight:800;letter-spacing:.06em}
+.chip.found{background:rgba(99,102,241,.16);color:#a5b4fc}
+.chip.checked{background:rgba(139,92,246,.18);color:#c4b5fd}
+.chip.avail{background:rgba(251,191,36,.14);color:#fcd34d}
+.chip.playing{background:rgba(52,211,153,.16);color:#6ee7b7}
+.chip.dead{background:rgba(251,113,133,.14);color:#fda4af}
+.chip.unknown{background:rgba(148,163,184,.14);color:#cbd5e1}
+.rub{font-size:11px;font-weight:800;border-radius:8px;padding:3px 8px}
+.rub.yes{background:rgba(52,211,153,.14);color:#6ee7b7}
+.rub.no{background:rgba(148,163,184,.12);color:#cbd5e1}
+
+/* ---------- side panels ---------- */
+.side{display:flex;flex-direction:column;gap:18px;min-width:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.panel>h3{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);
+  padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.panel>h3 .cnt{margin-left:auto;background:var(--card2);border-radius:99px;padding:2px 9px;font-size:11px}
+.panel .bd{padding:12px 14px;max-height:420px;overflow:auto}
+
+/* sources */
+.src{border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:9px;background:var(--bg2);transition:.15s}
+.src.on{border-color:var(--acc2);box-shadow:0 0 0 3px rgba(139,92,246,.14)}
+.src .r1{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.src .sc{font-size:12px;font-weight:800;color:var(--mut);min-width:34px}
+.src .u{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;text-align:left}
+.src .r2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.src .mini{font-size:11px;border:1px solid var(--line);border-radius:8px;padding:3px 9px;background:var(--card);font-weight:700;transition:.15s}
+.src .mini:hover{border-color:var(--acc2);background:var(--card2)}
+.src .mini.warn{color:var(--warn)} .src .mini.danger{color:var(--fail)}
+
+/* journal */
+.jr{font-size:12.5px;line-height:1.45;border-bottom:1px dashed rgba(255,255,255,.06);padding:7px 2px}
+.jr .tm{color:var(--mut);font-size:11px;margin-right:8px;font-variant-numeric:tabular-nums}
+.jr.ok .what{color:var(--ok)} .jr.warn .what{color:var(--warn)} .jr.fail .what{color:var(--fail)} .jr .what{font-weight:700}
+.jr .why{color:var(--mut)}
+
+/* ---------- library ---------- */
+.lib{margin-top:18px}
+.addrow{display:flex;gap:9px;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.addrow input[type=text]{flex:1;min-width:200px}
+.items{padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.itm{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg2);transition:.15s;cursor:pointer}
+.itm:hover{border-color:var(--acc2);transform:translateY(-1px)}
+.itm .t{font-weight:800;font-size:13.5px;margin-bottom:5px;display:flex;gap:7px;align-items:center}
+.itm .m{font-size:11.5px;color:var(--mut);display:flex;gap:8px;flex-wrap:wrap}
+.itm .bar{height:3.5px;background:rgba(255,255,255,.08);border-radius:99px;margin-top:9px;overflow:hidden}
+.itm .bar i{display:block;height:100%;background:var(--grad)}
+.itm .del{position:absolute;display:none}
+.epchip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:9px;padding:3px 9px;font-size:11.5px;font-weight:700;margin:3px 4px 0 0;background:var(--card)}
+.epchip.seen{opacity:.45;text-decoration:line-through}
+.epchip:hover{border-color:var(--acc2)}
+.eps{margin-top:8px}
+
+/* ---------- overlay: honest fail ---------- */
+.fails{margin:8px 0 4px;text-align:left;max-height:190px;overflow:auto;font-size:12.5px}
+.fails .f{display:flex;gap:8px;padding:6px 4px;border-bottom:1px dashed rgba(255,255,255,.07)}
+.fails .f .u2{color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;direction:rtl}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--bg2);border:1px solid var(--acc2);border-radius:14px;padding:11px 20px;font-size:13.5px;
+  z-index:120;transition:.25s;pointer-events:none;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- upnext ---------- */
+.upnext{position:fixed;right:22px;bottom:96px;z-index:110;width:300px;border-radius:18px;padding:16px;
+  background:rgba(13,13,22,.96);border:1px solid var(--acc2);box-shadow:0 14px 50px rgba(0,0,0,.55)}
+.upnext .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f0abfc;font-weight:800;margin-bottom:6px}
+.upnext .t{font-weight:800;font-size:14.5px;margin-bottom:12px}
+.upnext .acts{display:flex;gap:8px}
+.upnext .acts .hbtn{flex:1;justify-content:center}
+.upnext .cd{height:3px;border-radius:99px;background:rgba(255,255,255,.12);margin-top:12px;overflow:hidden}
+.upnext .cd i{display:block;height:100%;width:100%;background:var(--grad);transition:width .95s linear}
+
+/* ---------- buttons prim ---------- */
+.btn-prim{background:var(--grad);color:#fff;font-weight:800;border-radius:12px;padding:10px 18px;font-size:13px;
+  box-shadow:0 6px 22px rgba(139,92,246,.35);transition:.18s}
+.btn-prim:hover{filter:brightness(1.08)}
+.btn-ghost{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:13px;font-weight:700}
+.btn-ghost:hover{border-color:var(--acc2)}
+
+footer{position:relative;z-index:1;text-align:center;color:var(--mut);font-size:12px;padding:26px 16px 34px}
+footer b{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="ambient"></div><div class="grain"></div>
+
+<header>
+  <div class="logo"><span class="dot">🎯</span><span>МЕТА-МЕГА<b>·44</b></span></div>
+  <span class="hdr-tag">слой достоверности</span>
+  <span class="hdr-sp"></span>
+  <button class="hbtn" id="btnImpLac" title="Забрать каталог ЛАКОРНИИ в библиотеку (same-origin)">📥 ЛАКОРНИЯ</button>
+  <button class="hbtn" id="btnExport" title="Скачать память: библиотека+прогресс+приоритеты (JSON)">⇩ память</button>
+  <button class="hbtn" id="btnImport" title="Загрузить память из файла">⇧</button>
+  <input type="file" id="fileImport" accept="application/json" class="hidden">
+  <button class="hbtn" id="btnReset" title="Стереть память дома (двойное подтверждение)">✕</button>
+</header>
+
+<main>
+  <div class="gate">
+    <!-- ================= STAGE ================= -->
+    <section class="stage">
+      <div class="stage-hd">
+        <div>
+          <div class="t" id="stTitle">Ничего не открыто</div>
+          <div class="sub" id="stSub">Открой серию из библиотеки или вставь ссылку справа</div>
+        </div>
+        <span class="hdr-sp"></span>
+        <span id="stChips"></span>
+      </div>
+      <div class="frame" id="frame">
+        <div class="veil" id="veil">
+          <div>
+            <div class="big">Дверь открыта. Что играем?</div>
+            <div class="sm">МЕТА-МЕГА-ПЛЕЕР не верит словам: статус <b>ИГРАЕТ</b> ставится только фактом
+              воспроизведения, <b>ДОСТУПНО</b> — живой пробой, а «не знаю» здесь не притворяется «мертво».</div>
+            <button class="btn-prim" id="veilBtn">▶ Открыть первую серию</button>
+          </div>
+        </div>
+      </div>
+      <div class="pos" id="posWrap" title="позиция"><i id="posBar"></i></div>
+      <div class="st-acts">
+        <button class="hbtn" id="aPlay" title="Space">⏯</button>
+        <button class="hbtn" id="aBack" title="← 10с">⏪10</button>
+        <button class="hbtn" id="aFwd" title="→ 10с">10⏩</button>
+        <button class="hbtn" id="aSrc" title="N — следующий источник">↻ источник</button>
+        <button class="hbtn" id="aEp" title="Shift+N — следующая серия">⏭ серия</button>
+        <span class="sp"></span>
+        <span class="sub" id="stPos" style="color:var(--mut);font-size:12px">— : —</span>
+      </div>
+    </section>
+
+    <!-- ================= SIDE ================= -->
+    <aside class="side">
+      <div class="panel">
+        <h3>Источники серии <span class="cnt" id="srcCnt">0</span></h3>
+        <div class="bd" id="srcList"></div>
+      </div>
+      <div class="panel">
+        <h3>Журнал решений <span class="cnt" id="jrCnt">0</span></h3>
+        <div class="bd" id="jrList" style="max-height:300px"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ================= LIBRARY ================= -->
+  <section class="panel lib">
+    <h3>Библиотека · память человека <span class="cnt" id="libCnt">0</span></h3>
+    <div class="addrow">
+      <input type="text" id="inTitle" placeholder="Название (что смотрим?)" style="flex:0 0 230px">
+      <input type="text" id="inUrl" placeholder="Ссылка: mp4 / m3u8 / magnet / youtube / любой embed — Enter">
+      <button class="btn-prim" id="btnAdd">＋ дверь</button>
+    </div>
+    <div class="items" id="items"></div>
+  </section>
+</main>
+
+<footer>ДОМ <b>СИНГУЛЯР</b> · дверь 44 · МЕТА-МЕГА-ПЛЕЕР · ноль серверов · память — твоя · UNKNOWN ≠ FALSE</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   МЕТА-МЕГА-ПЛЕЕР v1 · дверь дома СИНГУЛЯР
+   Инверсия ошибок шести попыток (см. «Анализ подходов»):
+   1) «ссылка отвечает» ≠ «видео играет» → 4 статуса раздельно
+   2) авто-переход до подтверждённого play запрещён → confirmed-play гейт
+   3) stall переключает ИСТОЧНИК, никогда не серию
+   4) iframe честно «не подтверждаемо изнутри», не фасадит
+   5) zero-server: прогресс/ссылки/приоритеты в localStorage
+   6) каждое решение движка видно в журнале (UNKNOWN ≠ FALSE)
+   ===================================================================== */
+
+/* ---------- память ---------- */
+var LS_LIB = 'mm44_lib_v1', LS_MEM = 'mm44_mem_v1', LS_JR = 'mm44_jr_v1';
+function loadLS(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d } catch (e) { return d } }
+function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { journal('память недоступна', 'localStorage: ' + e.message, 'warn') } }
+var LIB = loadLS(LS_LIB, { items: [], lacorniaBuilt: 0 });
+var MEM = loadLS(LS_MEM, { prog: {}, seen: {}, prio: {} });
+
+function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('on') }, 2600); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] }) }
+function hhmm(s) { s = Math.max(0, Math.floor(s || 0)); var m = Math.floor(s / 60); return Math.floor(m / 60) + ':' + ('0' + m % 60).slice(-2) + ':' + ('0' + s % 60).slice(-2) }
+
+/* ---------- журнал решений (антифасад) ---------- */
+var J = loadLS(LS_JR, []);
+function journal(what, why, lvl) {
+  J.unshift({ ts: new Date().toISOString().slice(11, 19), what: what, why: why || '', lvl: lvl || 'info' });
+  if (J.length > 400) J.length = 400;
+  saveLS(LS_JR, J); renderJournal();
+}
+function renderJournal() {
+  var el = document.getElementById('jrList');
+  document.getElementById('jrCnt').textContent = J.length;
+  el.innerHTML = J.slice(0, 60).map(function (e) {
+    return '<div class="jr ' + esc(e.lvl) + '"><span class="tm">' + esc(e.ts) + '</span><span class="what">' + esc(e.what) + '</span>' + (e.why ? ' <span class="why">— ' + esc(e.why) + '</span>' : '') + '</div>';
+  }).join('');
+}
+
+/* ---------- детект источника ---------- */
+function detect(u) {
+  var uu = null; try { uu = new URL(u) } catch (e) { return { k: 'bad', kind: 'битая ссылка', sov: 0 } }
+  var h = uu.hostname.replace(/^www\./, '').replace(/^m\./, '');
+  var q = u.toLowerCase();
+  if (/\.m3u8([?#]|$)/.test(q)) return { k: 'hls', kind: 'HLS-поток', host: h, sov: 20 };
+  if (/\.mpd([?#]|$)/.test(q)) return { k: 'dash', kind: 'DASH-поток', host: h, sov: 18 };
+  if (/\.torrent([?#]|$)/.test(q)) return { k: 'torrent', kind: 'P2P · .torrent', host: h, sov: 40 };
+  if (/^magnet:\?/i.test(u)) return { k: 'magnet', kind: 'P2P · magnet', host: 'magnet', sov: 40 };
+  if (/\.(mp4|webm|ogv|ogg|mov|m4v)([?#]|$)/.test(q)) return { k: 'video', kind: 'прямое видео', host: h, sov: 30 };
+  if (h === 'youtube.com' || h === 'm.youtube.com' || h === 'youtu.be' || h === 'youtube-nocookie.com') {
+    var vid = uu.searchParams.get('v') || '';
+    if (!vid) { var m2 = uu.pathname.match(/^\/(shorts|embed)\/([\w-]+)/); if (m2) vid = m2[2]; }
+    if (h === 'youtu.be') vid = uu.pathname.slice(1);
+    return { k: 'yt', kind: 'YouTube', host: 'youtube.com', vid: vid, sov: 10 };
+  }
+  var named = { 'dailymotion.com': 'Dailymotion', 'dai.ly': 'Dailymotion', 'vk.com': 'VK video', 'vkvideo.ru': 'VK video', 'rutube.ru': 'Rutube', 'sibnet.ru': 'Sibnet', 'ok.ru': 'OK', 'myvi.ru': 'Myvi', 'vimeo.com': 'Vimeo' };
+  for (var hh in named) { if (h === hh || h.indexOf('.' + hh) > -1 || h.indexOf(hh) > -1) return { k: 'embed', kind: named[hh], host: h, sov: 12 } }
+  return { k: 'embed', kind: h, host: h, sov: 8 };
+}
+/* суверенные фронты YouTube — В ДОБАВКУ к оригиналу, юзер решает */
+function ytFronts(vid) {
+  return [
+    'https://inv.nadeko.net/embed/' + vid,
+    'https://yewtu.be/embed/' + vid
+  ];
+}
+
+/* ---------- score-модель ---------- */
+function scoreSrc(s, d) {
+  var sc = d.sov;
+  if (s.ru) sc += 15;                                   // RU как first-class
+  if (MEM.prio[d.host]) sc += MEM.prio[d.host];         // приоритет пользователя хосту
+  if (s.verified) sc += 25;                             // подтверждён «Играет ✓»
+  if (s.banned) sc -= 1000;                             // исключён пользователем
+  return sc;
+}
+function ruBadge(s, d) {
+  if (s.ru === true) return '<span class="rub yes">🇷🇺 озвучка</span>';
+  if (s.ru === false) return '<span class="rub no">оригинал</span>';
+  var m = /озвучк|dub|dubbed|ru\b|рус/i.test((s.u || '') + ' ' + (s.lbl || ''));
+  return m ? '<span class="rub yes">🇷🇺 возможно RU</span>' : '<span class="rub no">язык неизвестен</span>';
+}
+</script>
+<script>
+'use strict';
+/* =====================================================================
+   ДВИЖОК: порядок источников, гейты, транспорты
+   ===================================================================== */
+var CUR = null;          // { itemId, epN, srcs:[{s,u,d,sc}], idx }
+var pl = null;           // <video> элемент
+var hlsApi = null;       // hls.js инстанс
+var wt = null;           // WebTorrent клиент
+var wtScriptTried = false;
+var confirmT = null;     // таймер confirmed-play
+var stallT = null;       // watchdog зависания
+var lastT = 0, lastAdv = Date.now();
+var switchLock = false;  // защита от каскадных переключений
+
+function curItem() { return LIB.items.find(function (x) { return x.id === CUR.itemId }) || null }
+function curEp() { var it = curItem(); return it ? it.eps.find(function (e) { return e.n === CUR.epN }) || null : null }
+
+/* ---------- сборка упорядоченного списка источников ---------- */
+function buildSrcList(ep) {
+  var arr = (ep.srcs || []).map(function (s) { return { s: s, u: s.u, d: detect(s.u) } });
+  arr.forEach(function (o) { o.sc = scoreSrc(o.s, o.d) });
+  arr.sort(function (a, b) { return b.sc - a.sc });
+  /* YouTube: суверенные фронты добавляются В ХВОСТ как альтернативы */
+  for (var i = arr.length - 1; i >= 0; i--) {
+    if (arr[i].d.k === 'yt' && arr[i].d.vid) {
+      ytFronts(arr[i].d.vid).forEach(function (fu) {
+        var d2 = detect(fu);
+        arr.push({ s: { u: fu, ru: arr[i].s.ru }, u: fu, d: d2, sc: scoreSrc({ ru: arr[i].s.ru }, d2) });
+      });
+    }
+  }
+  return arr;
+}
+
+/* ---------- смена статуса чипов ---------- */
+function chip(kind, text) { return '<span class="chip ' + kind + '">' + text + '</span>' }
+function statusChips(st) {
+  var map = { found: ['found', 'НАЙДЕНО'], checked: ['checked', 'ПРОВЕРЕНО'], avail: ['avail', 'ДОСТУПНО'], playing: ['playing', 'ИГРАЕТ'], dead: ['dead', 'НЕ ОТВЕЧАЕТ'], unknown: ['unknown', 'НЕИЗВЕСТНО'] };
+  var m = map[st] || map.unknown;
+  return chip(m[0], m[1]);
+}
+
+/* ---------- открыть серию ---------- */
+function openItem(itemId, epN, startAt) {
+  var it = LIB.items.find(function (x) { return x.id === itemId });
+  if (!it) return;
+  var ep = it.eps.find(function (e) { return e.n === epN }) || it.eps[0];
+  if (!ep) { toast('У тайтла нет серий'); return }
+  teardown();
+  var srcs = buildSrcList(ep);
+  CUR = { itemId: itemId, epN: ep.n, srcs: srcs, idx: -1 };
+  document.getElementById('stTitle').textContent = it.t + ' · серия ' + ep.n;
+  document.getElementById('stSub').textContent = srcs.length ? 'источников: ' + srcs.length + ' · порядок по score (суверенность + RU + твои приоритеты)' : 'источников нет — добавь ссылку справа';
+  journal('открыто: ' + it.t + ' · с' + ep.n, srcs.length + ' источников', 'info');
+  renderSources();
+  if (!srcs.length) { honestFail('источников не добавлено'); return }
+  nextSource('старт', startAt || 0);
+}
+
+/* ---------- переключение ИСТОЧНИКА (никогда серии!) ---------- */
+function nextSource(reason, startAt) {
+  if (switchLock) return;
+  if (!CUR) return;
+  var prevIdx = CUR.idx;
+  CUR.idx++;
+  if (CUR.idx >= CUR.srcs.length) { honestFail(null); return }
+  var o = CUR.srcs[CUR.idx];
+  if (prevIdx >= 0) journal('источник ' + (prevIdx + 1) + ' → ' + (CUR.idx + 1), reason, 'warn');
+  else journal('пробую источник ' + (CUR.idx + 1) + '/' + CUR.srcs.length, o.d.kind + (o.s.ru ? ' · RU' : '') + ' · score ' + o.sc, 'info');
+  renderSources();
+  playSource(o, startAt || 0);
+}
+
+/* ---------- транспорты ---------- */
+function teardown() {
+  if (confirmT) { clearTimeout(confirmT); confirmT = null }
+  if (stallT) { clearInterval(stallT); stallT = null }
+  if (hlsApi) { try { hlsApi.destroy() } catch (e) {} hlsApi = null }
+  switchLock = false; lastT = 0; lastAdv = Date.now();
+  var f = document.getElementById('frame');
+  f.innerHTML = '<div class="veil hidden" id="veil" style="display:none"></div>';
+}
+function mkVideo() {
+  var f = document.getElementById('frame');
+  f.innerHTML = '';
+  pl = document.createElement('video');
+  pl.controls = true; pl.autoplay = true; pl.playsInline = true;
+  pl.style.width = '100%'; pl.style.height = '100%';
+  f.appendChild(pl);
+  return pl;
+}
+function playSource(o, startAt) {
+  teardown();
+  setChips(['found', 'avail_unknown']);
+  var f = document.getElementById('frame'), v;
+  var k = o.d.k;
+  if (k === 'video' || k === 'hls' || k === 'dash') {
+    v = mkVideo();
+    wireGates(v, startAt);
+    if (k === 'hls') { loadHls(v, o.u, startAt) }
+    else { v.src = o.u; v.currentTime = startAt || 0; v.play().catch(function (e) { journal('autoplay заблокирован', 'нажми ⏯ — это браузер, не источник', 'warn') }) }
+  } else if (k === 'magnet' || k === 'torrent') {
+    loadTorrent(o, startAt);
+  } else if (k === 'yt') {
+    mountIframe('https://www.youtube-nocookie.com/embed/' + o.d.vid + '?autoplay=1&rel=0', o);
+  } else {
+    mountIframe(o.u, o);
+  }
+}
+function loadHls(v, url, startAt) {
+  if (v.canPlayType('application/vnd.apple.mpegurl')) { v.src = url; v.currentTime = startAt || 0; v.play().catch(function () {}); return }
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js';
+  s.onload = function () {
+    if (!window.Hls || !Hls.isSupported()) { journal('HLS недоступен', 'hls.js не поддержан этим браузером', 'fail'); return nextSource('нет HLS-движка') }
+    hlsApi = new Hls({ manifestLoadingTimeOut: 12000, fragLoadingTimeOut: 15000 });
+    hlsApi.loadSource(url); hlsApi.attachMedia(v);
+    hlsApi.on(Hls.Events.MANIFEST_PARSED, function () { v.currentTime = startAt || 0; v.play().catch(function () {}) });
+    hlsApi.on(Hls.Events.ERROR, function (_, data) {
+      if (data && data.fatal) journal('HLS фатальная ошибка', data.type + '/' + (data.details || ''), 'fail'), nextSource('HLS ' + (data.details || 'ошибка'));
+    });
+  };
+  s.onerror = function () { journal('hls.js не загрузился', 'CDN недоступен из этой сети', 'fail'); nextSource('CDN hls.js недоступен') };
+  document.head.appendChild(s);
+}
+function loadTorrent(o, startAt) {
+  journal('P2P транспорт', 'WebTorrent: ищем пиров…', 'info');
+  var f = document.getElementById('frame');
+  f.innerHTML = '<div class="veil"><div><div class="big">🧲 Ищем пиров…</div><div class="sm" id="wtStat">раздача ищется — честный таймаут 45с, фасадить не будем</div></div></div>';
+  var start = function () {
+    try { wt = wt || new WebTorrent() } catch (e) { journal('WebTorrent сломан', e.message, 'fail'); return nextSource('WebTorrent ошибка') }
+    var to = setTimeout(function () { journal('P2P таймаут', '45с без метаданных — источник недоступен сейчас', 'fail'); if (wt) try { wt.remove(o.u) } catch (e) {} ; nextSource('магнит: нет пиров 45с') }, 45000);
+    wt.add(o.u, function (t) {
+      var f2 = t.files.find(function (x) { return /\.(mp4|webm|mkv|m4v)$/i.test(x.name) });
+      clearTimeout(to);
+      if (!f2) { journal('в раздаче нет видео', t.name, 'fail'); return nextSource('раздача без видео-файла') }
+      journal('раздача подключена', t.name + ' · ' + t.numPeers + ' пиров', 'ok');
+      f.innerHTML = ''; pl = document.createElement('video'); pl.controls = true; pl.autoplay = true; pl.style.width = '100%'; pl.style.height = '100%';
+      document.getElementById('frame').appendChild(pl);
+      f2.streamTo(pl).then(function () { wireGates(pl, startAt); pl.play().catch(function () {}) }).catch(function (e) { journal('стрим не пошёл', e.message, 'fail'); nextSource('WebTorrent streamTo') });
+      var st = setInterval(function () { var el2 = document.getElementById('wtStat'); if (!el2 || !t.parent) { clearInterval(st); return } el2.textContent = 'пиры: ' + t.numPeers + ' · ' + Math.round(t.progress * 100) + '%' }, 1000);
+    });
+  };
+  if (window.WebTorrent) { start(); return }
+  var s = document.createElement('script');
+  s.src = 'webtorrent.min.js';
+  s.onload = start;
+  s.onerror = function () { journal('WebTorrent не загрузился', 'файл webtorrent.min.js недоступен', 'fail'); nextSource('нет P2P-движка') };
+  document.head.appendChild(s); wtScriptTried = true;
+}
+
+/* ---------- iframe: честный режим ---------- */
+function mountIframe(src, o) {
+  var f = document.getElementById('frame');
+  f.innerHTML = '<iframe src="' + esc(src) + '" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="origin"></iframe>';
+  setChips(['found', 'checked?' ]);
+  journal('iframe смонтирован', 'внутри чужого плеера ИГРАЕТ подтвердить нельзя — кнопка «Играет ✓» на тебя', 'warn');
+  renderSources();
+}
+
+/* ---------- ГЕЙТЫ: confirmed-play + stall watchdog ---------- */
+function wireGates(v, startAt) {
+  var confirmed = false;
+  v.addEventListener('playing', function () {
+    if (confirmed) return;
+    confirmT = setTimeout(function () {
+      confirmed = true;
+      setChips(['found', 'playing']);
+      journal('ИГРАЕТ подтверждено', 'playing + прогресс времени ' + hhmm(v.currentTime), 'ok');
+      var o = CUR.srcs[CUR.idx];
+      if (o) { o.s.verified = true; saveLib(); renderSources() }
+    }, 2000);
+  });
+  v.addEventListener('timeupdate', function () {
+    lastT = v.currentTime; 
+    document.getElementById('posBar').style.width = (v.duration ? (v.currentTime / v.duration * 100) : 0) + '%';
+    document.getElementById('stPos').textContent = hhmm(v.currentTime) + ' / ' + (v.duration ? hhmm(v.duration) : '—');
+    if (CUR) { var key = CUR.itemId + ':' + CUR.epN; MEM.prog[key] = { t: v.currentTime, src: CUR.idx, ts: Date.now(), dur: v.duration || 0 }; saveLS(LS_MEM, MEM) }
+  });
+  v.addEventListener('error', function () { journal('видео-ошибка', 'элемент video: код ' + (v.error ? v.error.code : '?'), 'fail'); nextSource('media error') });
+  v.addEventListener('ended', function () { onEnded(); });
+  stallT = setInterval(function () {
+    if (v.paused) return;
+    if (Math.abs(v.currentTime - lastT) > 0.2) { lastAdv = Date.now(); return }
+    if (Date.now() - lastAdv > 15000) {
+      switchLock = false;
+      journal('ЗАВИСАНИЕ 15с', 'прогресс не двигается — меняю ИСТОЧНИК, серию не трогаю', 'fail');
+      nextSource('stall 15с — завис поток');
+    }
+  }, 1000);
+  v.currentTime = startAt || 0;
+  v.play().catch(function () { journal('autoplay заблокирован', 'нажми ⏯ — жест пользователя решит', 'warn') });
+}
+function onEnded() {
+  var it = curItem(); if (!it) return;
+  MEM.seen[it.id + ':' + CUR.epN] = 1; saveLS(LS_MEM, MEM);
+  journal('ended подтверждён', 'серия ' + CUR.epN + ' досмотрена', 'ok');
+  renderLibrary();
+  var nx = it.eps.filter(function (e) { return e.n > CUR.epN && e.srcs && e.srcs.length }).sort(function (a, b) { return a.n - b.n })[0];
+  if (!nx) { toast('Это была последняя серия 🎉'); return }
+  showUpnext(it, nx.n);
+}
+function showUpnext(it, n) {
+  killUpnext();
+  var d = document.createElement('div'); d.className = 'upnext'; d.id = 'upnext';
+  d.innerHTML = '<div class="lbl">Дальше · только по ended</div><div class="t">' + esc(it.t) + ' · серия ' + n + '</div>' +
+    '<div class="acts"><button class="hbtn" id="unGo">▶ Смотреть</button><button class="hbtn" id="unNo">Отмена</button></div><div class="cd"><i id="unBar"></i></div>';
+  document.body.appendChild(d);
+  var left = 10;
+  var bar = document.getElementById('unBar'), iv = setInterval(function () {
+    left--; if (bar) bar.style.width = (left * 10) + '%';
+    if (left <= 0) { clearInterval(iv); killUpnext(); openItem(it.id, n) }
+  }, 1000);
+  upnextIv = iv;
+  document.getElementById('unGo').onclick = function () { clearInterval(iv); killUpnext(); openItem(it.id, n) };
+  document.getElementById('unNo').onclick = function () { clearInterval(iv); killUpnext(); journal('автопереход отменён', 'человек решает сам', 'info') };
+}
+var upnextIv = null;
+function killUpnext() { if (upnextIv) { clearInterval(upnextIv); upnextIv = null } var u = document.getElementById('upnext'); if (u) u.remove() }
+
+/* ---------- честная карточка провала ---------- */
+function honestFail(note) {
+  var reasons = (CUR ? CUR.srcs : []).map(function (o, i) {
+    var r = o._why || (o.s.banned ? 'исключён тобой' : 'не подтверждён');
+    return '<div class="f"><span class="sc">' + (i + 1) + '</span><span class="u2">' + esc(o.u) + '</span><span class="why">' + esc(r) + '</span></div>';
+  }).join('');
+  document.getElementById('frame').innerHTML =
+    '<div class="veil"><div><div class="big">Ни один источник не подтвердил «Играет»</div>' +
+    '<div class="sm">' + esc(note || 'движок перебрал всё и не врёт, что «смотрел» то, чего не было') + '</div>' +
+    '<div class="fails">' + reasons + '</div>' +
+    '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">' +
+    '<button class="btn-prim" onclick="document.getElementById(\'inUrl\').focus()">＋ Добавить источник</button>' +
+    '<button class="btn-ghost" onclick="replayAll()">↻ Пробовать заново</button></div></div></div>';
+  journal('честный провал серии', note || 'все источники перебраны', 'fail');
+}
+function replayAll() { if (CUR) { CUR.idx = -1; CUR.srcs.forEach(function (o) { delete o._why }); switchLock = false; nextSource('реплей по кнопке') } }
+
+/* ---------- панели ---------- */
+function setChips(list) {
+  var el = document.getElementById('stChips');
+  var o = CUR && CUR.srcs[CUR.idx];
+  var h = chip('found', 'НАЙДЕНО');
+  if (list.indexOf('playing') > -1) h += chip('playing', 'ИГРАЕТ');
+  else if (list.indexOf('avail_unknown') > -1) h += chip('unknown', 'ДОСТУПНО?');
+  if (o && o.d.k === 'embed' || o && o.d.k === 'yt') h += chip('unknown', 'iframe: не подтверждаемо изнутри');
+  el.innerHTML = h;
+}
+function renderSources() {
+  var el = document.getElementById('srcList');
+  document.getElementById('srcCnt').textContent = CUR ? CUR.srcs.length : 0;
+  if (!CUR) { el.innerHTML = '<div style="color:var(--mut);font-size:12.5px">Серия не открыта</div>'; return }
+  el.innerHTML = CUR.srcs.map(function (o, i) {
+    var st = '';
+    if (i === CUR.idx) st = o.s.banned ? statusChips('dead') : (o.d.k === 'embed' || o.d.k === 'yt' ? statusChips('unknown') : statusChips('avail'));
+    else st = o.s.verified ? statusChips('checked') : (o.s.banned ? statusChips('dead') : statusChips('found'));
+    return '<div class="src' + (i === CUR.idx ? ' on' : '') + '">' +
+      '<div class="r1"><span class="sc">#' + (i + 1) + '</span>' + st + ruBadge(o.s, o.d) + '<span style="margin-left:auto;font-size:11px;color:var(--mut)">score ' + o.sc + '</span></div>' +
+      '<div class="r1"><span class="u" title="' + esc(o.u) + '">' + esc(o.u) + '</span></div>' +
+      '<div class="r2">' +
+      '<button class="mini" onclick="tryIdx(' + i + ')">▶ к нему</button>' +
+      '<button class="mini" onclick="markRu(' + i + ')" title="русская озвучка?">🇷🇺</button>' +
+      '<button class="mini" onclick="verifySrc(' + i + ')">Играет ✓</button>' +
+      '<button class="mini" onclick="banSrc(' + i + ')" ' + (o.s.banned ? 'style="color:var(--warn)"' : '') + '>' + (o.s.banned ? 'вернуть' : 'исключить') + '</button>' +
+      (MEM.prio[o.d.host] ? '<button class="mini warn" onclick="prioSrc(\'' + esc(o.d.host) + '\',' + (-MEM.prio[o.d.host]) + ')">приоритет +' + MEM.prio[o.d.host] + ' ✕</button>' : '<button class="mini" onclick="prioSrc(\'' + esc(o.d.host) + '\',10)">+10 хосту</button>') +
+      '</div></div>';
+  }).join('');
+}
+function tryIdx(i) { if (!CUR) return; CUR.idx = i; var o = CUR.srcs[i]; journal('ручной выбор источника ' + (i + 1), o.d.kind, 'info'); renderSources(); playSource(o, 0) }
+function markRu(i) { if (!CUR) return; var s = CUR.srcs[i].s; s.ru = !s.ru; saveLib(); buildAgain(); journal('язык источника ' + (i + 1), s.ru ? 'русская озвучка (твой вердикт)' : 'не RU', 'info') }
+function verifySrc(i) {
+  if (!CUR) return; CUR.srcs[i].s.verified = true; saveLib(); buildAgain();
+  journal('ИГРАЕТ ✓ поставил человек', 'источник ' + (i + 1) + ' — проверено вручную (+25 к score)', 'ok'); toast('Источник подтверждён — +25 к score');
+}
+function banSrc(i) { if (!CUR) return; var s = CUR.srcs[i].s; s.banned = !s.banned; saveLib(); buildAgain(); journal(s.banned ? 'источник исключён' : 'источник возвращён', 'решение пользователя', 'warn') }
+function prioSrc(host, delta) { MEM.prio[host] = (MEM.prio[host] || 0) + delta; if (MEM.prio[host] <= 0) delete MEM.prio[host]; saveLS(LS_MEM, MEM); buildAgain(); journal('приоритет хоста ' + host, (delta > 0 ? '+' : '') + delta + ' к score всех его источников', 'info') }
+function buildAgain() { if (!CUR) { renderSources(); return } var ep = curEp(); if (!ep) return; var keep = CUR.idx; CUR.srcs = buildSrcList(ep); CUR.idx = Math.min(keep, CUR.srcs.length - 1); renderSources() }
+
+/* ---------- библиотека ---------- */
+function saveLib() { saveLS(LS_LIB, LIB) }
+function renderLibrary() {
+  var el = document.getElementById('items');
+  document.getElementById('libCnt').textContent = LIB.items.length;
+  if (!LIB.items.length) { el.innerHTML = '<div style="color:var(--mut);font-size:13px">Пусто. Вставь ссылку сверху — или нажми 📥 ЛАКОРНИЯ и забери весь каталог дома.</div>'; return }
+  el.innerHTML = LIB.items.map(function (it) {
+    var seenN = it.eps.filter(function (e) { return MEM.seen[it.id + ':' + e.n] }).length;
+    var pct = it.eps.length ? Math.round(seenN / it.eps.length * 100) : 0;
+    var ruN = it.eps.filter(function (e) { return (e.srcs || []).some(function (s) { return s.ru }) }).length;
+    return '<div class="itm" onclick="openItem(\'' + it.id + '\',' + it.eps[0].n + ')">' +
+      '<div class="t">' + esc(it.t) + (it.lacornia ? ' <span class="rub no">дом</span>' : '') + '</div>' +
+      '<div class="m"><span>' + it.eps.length + ' эп.</span>' + (ruN ? '<span>🇷🇺 ' + ruN + '</span>' : '') + (seenN ? '<span>✓ ' + seenN + '</span>' : '') + '</div>' +
+      '<div class="eps">' + it.eps.slice(0, 8).map(function (e) {
+        return '<span class="epchip' + (MEM.seen[it.id + ':' + e.n] ? ' seen' : '') + '" onclick="event.stopPropagation();openItem(\'' + it.id + '\',' + e.n + ')">' + e.n + '</span>';
+      }).join('') + (it.eps.length > 8 ? '<span class="epchip">…</span>' : '') + '</div>' +
+      '<div class="bar"><i style="width:' + pct + '%"></i></div></div>';
+  }).join('');
+}
+function addItem(t, urls) {
+  var srcs = urls.filter(Boolean).map(function (u) { return { u: u.trim() } }).filter(function (s) { return s.u });
+  if (!srcs.length) { toast('Ни одной ссылки'); return null }
+  var maxN = 0; LIB.items.forEach(function (x) { x.eps.forEach(function (e) { maxN = Math.max(maxN, e.n) }) });
+  var it = { id: 'i' + Date.now().toString(36) + Math.floor(Math.random() * 999), t: t || 'Без названия', eps: [{ n: 1, srcs: srcs }] };
+  LIB.items.unshift(it); saveLib(); renderLibrary();
+  journal('новая запись в библиотеке', it.t + ' · источников: ' + srcs.length, 'ok');
+  return it;
+}
+
+/* ---------- импорт ЛАКОРНИИ (same-origin fetch) ---------- */
+function importLacornia() {
+  journal('импорт ЛАКОРНИИ', 'fetch streaming.html — same-origin, без серверов', 'info');
+  fetch('streaming.html').then(function (r) { return r.text() }).then(function (h) {
+    var m = h.match(/<script id="data" type="application\/json">([\s\S]*?)<\/script>/);
+    if (!m) throw new Error('блок данных не найден');
+    var data = JSON.parse(m[1]);
+    var n = 0;
+    data.s.forEach(function (x) {
+      if (LIB.items.some(function (y) { return y.lacId === x.id })) return;
+      var eps = (x.eps || []).filter(function (e) { return e.u }).map(function (e) {
+        return { n: e.n, srcs: [{ u: e.u, ru: !!e.a }] };
+      });
+      if (!eps.length) return;
+      LIB.items.push({ id: 'lac' + x.id, lacId: x.id, lacornia: true, t: x.t, meta: (x.ty || '') + ' · ' + (x.y || ''), eps: eps });
+      n++;
+    });
+    saveLib(); renderLibrary();
+    journal('ЛАКОРНИЯ импортирована', 'тайтлов добавлено: ' + n, 'ok');
+    toast('ЛАКОРНИЯ: +' + n + ' тайтлов в библиотеку');
+  }).catch(function (e) {
+    journal('импорт не удался', e.message + ' (открой страницу с того же домена, где лежит streaming.html)', 'fail');
+    toast('Не вышло: ' + e.message);
+  });
+}
+
+/* ---------- экспорт / импорт / сброс памяти ---------- */
+function exportMem() {
+  var blob = new Blob([JSON.stringify({ lib: LIB, mem: MEM, jr: J, v: 1 }, null, 1)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'metaplayer-memory.json'; a.click();
+  journal('память выгружена', 'metaplayer-memory.json', 'ok');
+}
+function importMem(file) {
+  var fr = new FileReader();
+  fr.onload = function () {
+    try {
+      var d = JSON.parse(fr.result);
+      if (d.lib) { LIB = d.lib; saveLS(LS_LIB, LIB) }
+      if (d.mem) { MEM = d.mem; saveLS(LS_MEM, MEM) }
+      if (d.jr) { J = d.jr; saveLS(LS_JR, J); renderJournal() }
+      renderLibrary(); renderSources();
+      journal('память загружена', file.name, 'ok'); toast('Память восстановлена');
+    } catch (e) { toast('Файл не разобрался: ' + e.message) }
+  };
+  fr.readAsText(file);
+}
+function resetMem() {
+  if (resetMem._arm) {
+    localStorage.removeItem(LS_LIB); localStorage.removeItem(LS_MEM); localStorage.removeItem(LS_JR);
+    LIB = { items: [], lacorniaBuilt: 0 }; MEM = { prog: {}, seen: {}, prio: {} }; J = [];
+    renderLibrary(); renderJournal(); renderSources(); resetMem._arm = false;
+    toast('Дом вычищен. Начинаем заново.'); journal('память стёрта', 'по двойному подтверждению человека', 'warn');
+  } else {
+    resetMem._arm = true; toast('Нажми ✕ ещё раз — сотрётся ВСЯ память');
+    setTimeout(function () { resetMem._arm = false }, 4000);
+  }
+}
+
+/* ---------- кнопки/клавиши/boot ---------- */
+document.getElementById('veilBtn').onclick = function () {
+  if (LIB.items.length) { var it = LIB.items.find(function (x) { return x.eps.some(function (e) { return e.srcs.length && !MEM.seen[x.id + ':' + e.n] }) }) || LIB.items[0]; var ep = it.eps.find(function (e) { return e.srcs.length && !MEM.seen[it.id + ':' + e.n] }) || it.eps[0]; openItem(it.id, ep.n) }
+  else document.getElementById('inUrl').focus();
+};
+document.getElementById('aPlay').onclick = function () { if (pl) { pl.paused ? pl.play().catch(function () {}) : pl.pause() } };
+document.getElementById('aBack').onclick = function () { if (pl) pl.currentTime = Math.max(0, pl.currentTime - 10) };
+document.getElementById('aFwd').onclick = function () { if (pl) pl.currentTime = Math.min(pl.duration || 1e9, pl.currentTime + 10) };
+document.getElementById('aSrc').onclick = function () { switchLock = false; nextSource('кнопка «источник»') };
+document.getElementById('aEp').onclick = function () { var it = curItem(); if (!it) return; var nx = it.eps.find(function (e) { return e.n > CUR.epN }); if (nx) openItem(it.id, nx.n); else toast('Серий больше нет') };
+document.getElementById('btnAdd').onclick = function () { var it = addItem(document.getElementById('inTitle').value, [document.getElementById('inUrl').value]); if (it) { document.getElementById('inUrl').value = ''; document.getElementById('inTitle').value = ''; openItem(it.id, 1) } };
+document.getElementById('inUrl').addEventListener('keydown', function (e) { if (e.key === 'Enter') document.getElementById('btnAdd').click() });
+document.getElementById('btnImpLac').onclick = importLacornia;
+document.getElementById('btnExport').onclick = exportMem;
+document.getElementById('btnImport').onclick = function () { document.getElementById('fileImport').click() };
+document.getElementById('fileImport').addEventListener('change', function (e) { if (e.target.files[0]) importMem(e.target.files[0]) });
+document.getElementById('btnReset').onclick = resetMem;
+document.addEventListener('keydown', function (e) {
+  var typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement && document.activeElement.tagName);
+  if (typing) return;
+  if (e.code === 'Space') { e.preventDefault(); document.getElementById('aPlay').click() }
+  else if (e.key === 'ArrowLeft') document.getElementById('aBack').click();
+  else if (e.key === 'ArrowRight') document.getElementById('aFwd').click();
+  else if (e.key.toLowerCase() === 'n' && e.shiftKey) document.getElementById('aEp').click();
+  else if (e.key.toLowerCase() === 'n') { switchLock = false; nextSource('клавиша N') }
+  else if (e.key === 'Escape') killUpnext();
+});
+journal('дверь 44 открыта', 'МЕТА-МЕГА-ПЛЕЕР v1 · ноль серверов · UNKNOWN ≠ FALSE', 'ok');
+renderLibrary(); renderJournal(); renderSources();
+</script>
+</body>
+</html>

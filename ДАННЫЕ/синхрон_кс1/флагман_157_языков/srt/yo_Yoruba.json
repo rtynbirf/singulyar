@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "yo_Yoruba",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/yo_Yoruba.srt",
+ "юниты": [
+  {
+   "text": "[orin]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Alẹ́ tuntun ní ilé kọfí",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Kurukuru tó gbóná máa ń tú ilé ká. [orin]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Mo rìn kiri ni awọn agbegbe nibiti awọn iranti wa",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "mú mi ya wèrè",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Nibo ni orisun omi gbona",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Igba otutu bo ọkàn",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Ibi tí ayé ti fò bí ọfà kọjá ọjọ́, àtijọ́",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "àwa",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "A kó àwọn ìwé jọ, a sì gbàgbé ìdí tí a fi ń ṣe bẹ́ẹ̀",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "a n gbe",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Ó sì máa ń dà bíi pé, [orin]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "Ohùn C kan ṣì wà níwájú",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Àkókò tí a yá ni",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "kò fún ni ohunkóhun",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Lojiji [orin] si ṣubu si ọkan mi",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "yìnyín tútù",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "A kọ́ láti mọrírì [orin] nígbà tí a bá pàdánù",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí ìmọ́lẹ̀ ẹnìkan bá kú lẹ́yìn ìlẹ̀kùn",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "A juwọ́ sí àwọn ọkọ̀ ojú irin tí ń lọ, a ń gbìyànjú láti fi ọwọ́ sí wọn lẹ́yìn",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "ẹ bẹ ohun tó ti kọjá fún ìdáhùn",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "A kọ́ láti nífẹ̀ẹ́ nígbà tí òtútù bá mú, [orin]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí eérú bá wà ní ọwọ́ rẹ, kì í ṣe irin. NÍPA",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "ìbá ṣe pé mo mọ̀ tẹ́lẹ̀, [orin]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "báwo ni ẹni tí ó mọ̀ yìí yóò ṣe máa ro nínú ọkàn",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "ìbànújẹ́",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Kò sọ pé, [orin] òun kò gbá ara òun mọ́ra, òun kò ní àkókò",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Ète ayérayé ni èyí",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Mo ti fi ohun gbogbo pamọ́ fún ìgbà tó bá yá, ọkàn mi kì í ṣe fún àwọn ẹlòmíràn",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "ṣí. [orin]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "A n ba ojiji ja",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "A máa ń jóná lórí àwọn nǹkan kéékèèké tí kò ní ṣófo",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "O kò sì le rí bí òtútù náà ṣe ń rọ̀",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "lórí èjìká wa",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Ṣugbọn ayọ ko si ninu didan ferese ile itaja",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[orin] kìí ṣe nínú ọ̀pọ̀lọpọ̀ ìwé owó, ṣùgbọ́n nínú ìdákẹ́jẹ́ẹ́",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "òtítọ́ àwọn ẹbí, nínú ìgbóná wọn láàrín àwọn ìjì. Ṣùgbọ́n",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "Ohun tí [orin] ti jẹ́ tẹ́lẹ̀ nìkan ni a mọrírì",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "ko ṣeeṣe lati pada",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Tẹsiwaju gigun mi",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "àti nígbà púpọ̀ [orin] jẹ́ ọ̀nà tí kò ní ìtumọ̀",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "a kọ́ láti mọrírì nígbà tí a bá pàdánù [orin]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí ìmọ́lẹ̀ ẹnìkan bá kú lẹ́yìn ìlẹ̀kùn",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "A juwọ́ sí orin lẹ́yìn [orin] àwọn ọkọ̀ ojú irin tí wọ́n ti lọ",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "gbígbìyànjú láti béèrè ìdáhùn ohun tó ti kọjá",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "A kọ́ láti nífẹ̀ẹ́ [orin] nígbà tí ó bá ti tutù",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí eérú bá wà ní ọ̀pẹ, [orin] kì í ṣe",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "irin. NÍPA",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Tí mo bá mọ̀ tẹ́lẹ̀ bí yóò ṣe máa kùn nínú",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "ibanujẹ kedere yii ninu ọkan",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Pe àwọn arúgbó, gbá wọn mọ́ra",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí ìlù ọkàn náà ń lù",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Jẹ́ kí àwọn ẹ̀dùn náà kọjá, mo wà fún èyí lónìí",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Mo gbadura",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Nítorí gbogbo orin ló ní òpin",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "nígbẹ̀yìn-gbẹ́yín, ọ̀kan",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ń kọrin]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Àwa [orin] ṣì wà ní ìrántí àwọn ìṣẹ̀lẹ̀ pàtàkì",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "a jókòó tí a ti gbàgbé",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "A kọ lati mọriri nigbati a ba padanu",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí orin ẹnìkan bá jáde lẹ́yìn ìlẹ̀kùn",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "ìmọ́lẹ̀",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "A juwọ́ sí àwọn ọkọ̀ ojú irin tí ń lọ, a ń gbìyànjú láti fi ọwọ́ sí wọn lẹ́yìn",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "ẹ bẹ ohun tó ti kọjá fún ìdáhùn",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "A kọ́ láti nífẹ̀ẹ́, [orin]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "nígbà tí ó bá tutù, nígbà tí eérú bá wà ní ọwọ́ àti",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "Kírísítà [orin] tí ó fọ́. Mo yẹ kí n tọ́jú rẹ̀",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "kini o jẹ, nigba ti a wa nihin, titi di igba ti a ba wa nihin",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "fò lọ",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "ọkàn sinu ijinna",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[orin]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}
