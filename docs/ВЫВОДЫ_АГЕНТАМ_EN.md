@@ -49,6 +49,7 @@ The register's rule: a lesson gets in if it (a) has already happened and cost ti
 - **Error.** After every landing into `rumu` the `oracle-rumu` oracle turns red with "ПИН УСТАРЕЛ" (runs `42638053885`, `42638047456`). The temptation — "fix the CI" or mute the check.
 - **Root.** It is designed so: the oracle compares `cell-swarm/swarm.json → cells[singulyar].pin` against the live HEAD of `rumu`. Any honest push into `rumu` MUST paint this run red until the pin is chased up. The red is the signal "the House has not caught up with itself yet", not an accident.
 - **Fix.** A pin chase with a single-purpose commit (exactly one field changes, `cells[singulyar].pin`; the foreign bytes of `swarm.json` untouched; blob → tree → commit → ref), then an oracle re-run. The wave's tail: two chases `015a4814` (behind `abd3ee7`) and `0786b7c` (behind `0247fa1`) — both green on re-run.
+- **Tail 2026-11-10 (a live case):** a re-run RIGHT after the chase reads stale data — the oracle takes the pin from `raw.githubusercontent.com`, which keeps the object for up to 300 s (`cache-control: max-age=300`); two attempts in a row went red on an already fresh pin. The order: chase → a ≈5 min pause → re-run; or an honest KNOWN_ISSUES entry instead of feverish re-runs.
 - **Guard.** The clean-trail checklist (CANON §4): "after a push into rumu — chase the pin by a wave with the right, or leave a note to the owner". A red PIN not chased within the wave = an abandoned trail.
 
 ### L-5. An inherited red ≠ your red: the differential run
@@ -129,3 +130,4 @@ The register's rule: a lesson gets in if it (a) has already happened and cost ti
 | Date | Event |
 |---|---|
 | 2026-11-10 | Introduced by the owner's order; 10 lessons of the ЛКГ-1+ПРАВДА-2 campaign (environment, Git Data API, red runs, House laws, the clean trail) + the ready-made tricks table + the pre-push checklist |
+| 2026-11-10 | Tail: L-4 extended with a live case — the raw CDN window (300 s) painted two re-runs red after the pin chase; the rule "chase → ≈5 min pause → re-run" |
