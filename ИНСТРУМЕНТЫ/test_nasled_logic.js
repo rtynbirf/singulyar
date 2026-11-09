@@ -137,8 +137,11 @@ test('пульт: вкладка НАСЛЕДСТВО в HTML дома — aria-
 
 test('гварды дома: глобалы только __НАСЛЕД*, кэш поднят', () => {
   assert.ok(src.includes("__НАСЛЕД={вер:'v11.56'"), 'экспорт версией (рождение модуля — летопись, не трогается)');
-  assert.ok(src.includes("s15-orkestrator-v216"), 'APP кэш догнал дом (TH-AUDIO-44c, FLAGMAN-01: v212 PR#48, FLAGMAN-01b: v213, FLAGMAN-02 «ФОНД»: v214, FLAGMAN-04 «УНИСОН»: v214→v215, FLAGMAN-05 «ВСТРЕЧА»: v215→v216)');
+  /* v11.44 «ИЗМЕРЕНО»: поколение кэша не морожено — читаем правду из реестра дома
+     (класс «протухший оракул» умирает; пин v216 протух на 22 поколения: FLAGMAN-05 → ЛКГ/W1 v238) */
+  const КЭШ = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'versions.json'), 'utf-8')).дом.поколение_кэша;
+  assert.ok(src.includes('s15-orkestrator-' + КЭШ), 'APP кэш догнал дом: зала несёт поколение реестра (' + КЭШ + ')');
   const sw = fs.readFileSync(path.join(__dirname, '..', 'sw15.js'), 'utf-8');
-  assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-v216';"), 'S15_CACHE v215 (TH-AUDIO-44c → FLAGMAN-01 → FLAGMAN-01b → FLAGMAN-02 «ФОНД» → FLAGMAN-04 «УНИСОН» → FLAGMAN-05 «ВСТРЕЧА»)');
+  assert.ok(sw.includes("var S15_CACHE = 's15-orkestrator-" + КЭШ + "';"), 'S15_CACHE = поколению реестра (' + КЭШ + ')');
   assert.ok(!/ЗАКОН_ПОРЯДОК[\s\S]{0,400}НАСЛЕД/.test(src), 'порядок языков не тронут');
 });
