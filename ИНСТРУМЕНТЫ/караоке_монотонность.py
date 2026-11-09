@@ -4,7 +4,9 @@
 Спайка та же, что в axis_remeasure.py: меняется только массив cues, lyr не трогаем."""
 import os, re, json
 
-REPO = '/home/z/my-project/download/singulyar'
+# закон «инструкция без автора»: репо выводится из места самого инструмента,
+# никакого пути машины автора (страж test_instruction_alone.py, п.4)
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AXDIR = os.path.join(REPO, 'КАРАОКЕ')
 
 def cues_span(src):

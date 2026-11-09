@@ -23,7 +23,7 @@ console.log("=== ОРАКУЛ v10.53 «ОБЕРЕГ» ===");
 
 /* ЩИТ */
 чек("ЩИТ: элемент в шапке до ЗДОРОВЬЯ", /<span id="shield" class="shield"[^>]*>[\s\S]{0,120}shTxt[\s\S]{0,120}<button id="chipHealth"/.test(raw));
-чек("ЩИТ: точка индикатора (цвет палитры-закона #d4af37)", raw.includes(".shield.жив i{background:#d4af37"));
+чек("ЩИТ: точка индикатора (цвет палитры-закона — бронза дома #B08D57, такт v1.62 «жёлтое — в бронзу»)", raw.includes(".shield.жив i{background:#B08D57"));
 чек("ЩИТ: plain language «СВОЁ»/«МИКРОФОН»", raw.includes("жив ? 'МИКРОФОН' : 'СВОЁ'"));
 чек("ЩИТ: драйвер — обёртка над трактом-брокером", raw.includes("Т.занять = function(){ var р = занять.apply(this, arguments); setTimeout(обнови, 0); return р; };"));
 чек("ЩИТ: гарда от двойной обёртки", raw.includes("Т.__щитОбёрнут"));

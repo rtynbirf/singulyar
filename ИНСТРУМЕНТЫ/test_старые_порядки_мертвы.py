@@ -93,8 +93,11 @@ iEt, iEn = коды.index('et'), коды.index('en')
         'С145: sr kk de uk en zh hi es fr ar pt ja ko it' in сыр)
 
 sw = Ст['sw15.js']
-проверь('sw15: кэш поднят — законсервированное старьё у владельца умирает (v215, TH-AUDIO-44c, FLAGMAN-01: v212 PR#48, FLAGMAN-01b a11y: v213, FLAGMAN-02 «ФОНД»: v214 и FLAGMAN-04 «УНИСОН»: v214→v215)',
-        "S15_CACHE = 's15-orkestrator-v216'" in sw)
+# v11.44 «ИЗМЕРЕНО»: поколение кэша не морожено — читаем правду из реестра дома
+# (пин v215/v216 протух: FLAGMAN-05 → ЛКГ-1+ПРАВДА-2 → W1, v238)
+КЭШ = json.load(open(os.path.join(T, 'data', 'versions.json'), encoding='utf-8'))['дом']['поколение_кэша']
+проверь('sw15: кэш живого поколения реестра («%s») — законсервированное старьё у владельца умирает (TH-AUDIO-44c → FLAGMAN-01…05 → ЛКГ/W1)' % КЭШ,
+        "S15_CACHE = 's15-orkestrator-%s'" % КЭШ in sw)
 проверь('sw15: стейл-гонка навигаций мертва — стейл только на упавшей сети (С147)',
         "Promise.race" not in sw[sw.find("req.mode === 'navigate'"):sw.find("req.mode === 'navigate'")+1500])
 проверь('·31: лицо перезагружается само при смене св-воркера (С147)',
