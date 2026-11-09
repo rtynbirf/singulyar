@@ -15,6 +15,7 @@
 | 5 | [docs/ДОРОЖНАЯ_КАРТА_АГЕНТОВ_EN.md](ДОРОЖНАЯ_КАРТА_АГЕНТОВ_EN.md) | the order by risk, the crossing-out journal, the movement rules |
 | 6 | [docs/РИТУАЛ_ТАКТА.md](РИТУАЛ_ТАКТА.md) | the 8 release stages — the only way to change the House (RU) |
 | 7 | [docs/ПОЛИМАТ_МУЛЬТИАГЕНТ.md](ПОЛИМАТ_МУЛЬТИАГЕНТ.md) | the eight laws of the swarm: the key, directives, append-only, STOP-HORN (RU) |
+| 8 | [docs/ВЫВОДЫ_АГЕНТАМ_EN.md](ВЫВОДЫ_АГЕНТАМ_EN.md) | the lessons register of the ЛКГ-1+ПРАВДА-2 wave (error → root → fix → guard): some agents dare not repeat, others gain; read it before your first wave and after every mess |
 
 ## The map of truth sources (short)
 
