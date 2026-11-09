@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ss_Swati",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ss_Swati.srt",
+ "юниты": [
+  {
+   "text": "[umculo]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Kusihlwa lokusha esitolo sekhofi",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Inkungu lendze incibilikisa tindlu. [umculo]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ngizulazula emadolobheni lapho tinkhumbuzo tikhona khona",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "kungihlanyise",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Kuphi entfwasanhlobo lefutfumele",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Busika bumbonya umphefumulo",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Lapho imphilo indiza khona njengemcibisholo wendlula emalanga, wendlula",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "tsine",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Sagcwala emaphepha, sakhohlwa kutsi kungani",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "siyaphila",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Futsi bekubonakala ngaso sonkhe sikhatsi, [umculo]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "kusekhona umsindvo we-C phambili",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Ngiboleke sikhatsi nje",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "akuniki lutfo",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Futsi ngekushesha [umculo] uwela enhlitiyweni yami",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ice lebandzako",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Sifundza kubonga [umculo] uma silahlekelwe",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "uma kukhanya kwemuntfu kucima ngemuva kwemnyango",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Siphakamisa tandla ngemuva kwetitimelane letihambako, setama",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "ncenga sikhatsi lesengcile kutsi utfole imphendvulo",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Sifundza kutsandza uma kubandza, [umculo]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "uma kunemlotsa etindvundvuneni takho, hhayi insimbi. NGE",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "kube bengati kusengaphambili, [umculo]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "kutsi lona losobala utawubuhlungu njani emphefumulweni",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "kudvumateka",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Akazange asho, [umculo] akazange ahage, akazange abe nesikhatsi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Lesi sisusa saphakadze",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Konkhe ngigcinele kamuva, inhlitiyo yami ayisiyo yalabanye",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "kwavulwa. [umculo]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Silwa nemtfunti",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "sishisa ngetulu kwetintfo letincane letingenamsebenti",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Futsi awuboni kutsi sifonyo sihlala njani",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "emahlombe etfu",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Kodvwa injabulo ayikho ekucwebeteleni kwelifasitelo lesitolo",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[umculo] hhayi ngesicumbi setikweleti, kodvwa ngendlela lethulile",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "liciniso letihlobo, ekufutfumeleni kwato emkhatsini wetivunguvungu. Kodvwa",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "sibonga kuphela ngaloko [umculo] lovele ukhona",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "akunakwenteka kutsi abuye",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Ngichubeka nesikhatsi sami lesidze",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "futsi imvamisa [umculo] uyindlela lengenanchazelo",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "sifundza kubonga nasilahlekelwa [ngumculo]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "uma kukhanya kwemuntfu kucima ngemuva kwemnyango",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Siphephetsa ngemuva [kwemculo] titimelane letihambile",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "kwetama kuncenga sikhatsi lesengcile kutsi sitfole imphendvulo",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Sifundza kutsandza [umculo] nasewupholile",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "uma kunemlotsa etintendeni, [umculo] hhayi",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "insimbi. NGE",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Kube nje bengati kusengaphambili kutsi itawububula njani nga 2019",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "loku lusizi lokusobala emphefumulweni",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Bita bantfu labadzala, ubagone",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "ngesikhatsi i-pulse ishaya",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Akendlule tikhalato, ngikuloku namuhla",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Ngiyathandaza",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Ngoba tonkhe tingoma tinesiphetfo",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "ekugcineni, munye",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[kuhlabela]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Sihlala [umculo] sikhumbula tintfo letibalulekile",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "sihlala sikhohliwe",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Sifundza kubonga uma silahlekelwa",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "uma umculo wemuntfu uphuma ngemuva kwemnyango",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "kukhanya",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Siphakamisa tandla ngemuva kwetitimelane letihambako, setama",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "ncenga sikhatsi lesengcile kutsi utfole imphendvulo",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Sifundza kutsandza, [umculo]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "ngesikhatsi sekupholile, ngesikhatsi kunemlotsa etintendeni futsi",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "ikristalu [yemculo] lephukile. Kufanele ngiyinakekele",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "yini, ngesikhatsi sisekhona lapha, kuze kube ngu",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "wandiza wahamba",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "umphefumulo ungene endzaweni lekhashane",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

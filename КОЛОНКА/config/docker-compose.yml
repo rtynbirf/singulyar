@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  omnispeaker-core:
+    image: omnispeaker/core:v0.4.0
+    container_name: omnispeaker_core
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - OFFLINE_MODE=true
+      - NPU_DEVICE=/dev/rknn_app
+    volumes:
+      - ./policy_rules.json:/etc/omnispeaker/policy_rules.json:ro
+      - audit_logs:/var/log/omnispeaker
+    devices:
+      - /dev/rknn_app:/dev/rknn_app
+      - /dev/snd:/dev/snd
+
+  faster-whisper:
+    image: omnispeaker/whisper-npu:v1.2
+    container_name: omnispeaker_asr
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9000:9000"
+
+  piper-tts:
+    image: omnispeaker/piper-tts:v1.0
+    container_name: omnispeaker_tts
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9001:9001"
+
+volumes:
+  audit_logs:

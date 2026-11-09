@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OmniTask",
+  "type": "object",
+  "required": ["task_id", "goal", "initiator", "created_utc", "constraints", "status"],
+  "properties": {
+    "task_id": {"type": "string"},
+    "goal": {"type": "string"},
+    "initiator": {"type": "string"},
+    "provenance": {"type": "string"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "deadline_utc": {"type": "string", "format": "date-time"},
+    "home_timezone": {"type": "string", "description": "IANA, напр. Europe/Berlin"},
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "cloud_allowed": {"type": "boolean", "default": false},
+        "irreversible_actions": {"enum": ["deny", "confirm"], "default": "confirm"},
+        "quiet_hours_local": {"type": "string", "pattern": "^\\d{2}:\\d{2}-\\d{2}:\\d{2}$"},
+        "max_steps": {"type": "integer", "maximum": 25},
+        "max_tool_calls": {"type": "integer", "maximum": 40},
+        "max_duration_s": {"type": "integer", "maximum": 300}
+      }
+    },
+    "status": {"enum": ["created", "planning", "awaiting_confirmation", "executing", "failed", "cancelled", "completed"]},
+    "plan_ref": {"type": "string"},
+    "audit_head": {"type": "string"}
+  }
+}

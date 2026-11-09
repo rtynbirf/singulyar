@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "name": "Фиксированный eval-набор SINGULYAR-SEARCH (такт v10.76 «ПО КАРТЕ»)",
+    "size": 20,
+    "corpus": "документы самого трека: docs/*.md + README.md (id = имя файла без .md); загрузка — src/eval-set.mjs#loadCorpusDir",
+    "qrelsPolicy": "relevant = документ, где живёт тема вопроса (первоисточник по треку); для gate обеих строк — 02 и 06 честно релевантны. Термин в нескольких документах ≠ релевантность: qrels ставились по ТОПИКу, а не по вхождению слова, поэтому честные промахи baseline-а (например, длинный 02_TZ упомягивает всё) — это данные eval-а, а не ошибка разметки.",
+    "lexiconNote": "baseline лексический, без морфологии — запросы составлены в словоформах корпуса"
+  },
+  "queries": [
+    { "id": "q01", "lang": "ru", "query": "ndcg recall метрики оценка", "relevant": ["07_METRICS_AND_EVAL"] },
+    { "id": "q02", "lang": "en", "query": "BM25 full-text search channel", "relevant": ["05_SEARCH_AND_FUSION"] },
+    { "id": "q03", "lang": "en", "query": "RRF rank fusion k=60 normalization", "relevant": ["05_SEARCH_AND_FUSION"] },
+    { "id": "q04", "lang": "en", "query": "rerank cross-encoder top-M", "relevant": ["12_ROADMAP_AND_BACKLOG"] },
+    { "id": "q05", "lang": "en", "query": "chunking таблицы код не рвать", "relevant": ["05_SEARCH_AND_FUSION"] },
+    { "id": "q06", "lang": "ru", "query": "бэклог фазы риски приоритеты дорожной карты", "relevant": ["12_ROADMAP_AND_BACKLOG"] },
+    { "id": "q07", "lang": "ru", "query": "fts5 sqlite полнотекстовый индекс", "relevant": ["00_AUDIT_AND_CATALOG"] },
+    { "id": "q08", "lang": "en", "query": "wasDerivedFrom wasAttributedTo generatedAtTime PROV-O", "relevant": ["06_VERIFICATION_PROVENANCE"] },
+    { "id": "q09", "lang": "ru", "query": "UNKNOWN обязательный исход недостаток независимых доказательств", "relevant": ["06_VERIFICATION_PROVENANCE"] },
+    { "id": "q10", "lang": "ru", "query": "gate CLAIM SOURCE EVIDENCE TEST VERDICT журнал полностью", "relevant": ["02_TZ", "06_VERIFICATION_PROVENANCE"] },
+    { "id": "q11", "lang": "ru", "query": "роли рой llm программные алгоритмы utility отличие", "relevant": ["04_MULTIAGENT_AND_ROLES"] },
+    { "id": "q12", "lang": "en", "query": "EvidenceState sufficiency reliability uncertainty gaps cost_spent", "relevant": ["09_DATA_MODELS"] },
+    { "id": "q13", "lang": "ru", "query": "архитектура координатор память доказательств слои", "relevant": ["03_ARCHITECTURE"] },
+    { "id": "q14", "lang": "ru", "query": "пошаговая инструкция реализации шаги 0-16", "relevant": ["10_IMPLEMENTATION_GUIDE"] },
+    { "id": "q15", "lang": "ru", "query": "qrels eval harness контрольный набор запросов регрессия", "relevant": ["11_TEST_AND_EVAL_PLAN"] },
+    { "id": "q16", "lang": "ru", "query": "модель угроз prompt injection эхо-камера", "relevant": ["08_SECURITY_AND_THREATS"] },
+    { "id": "q17", "lang": "ru", "query": "источники тренды 2025 2026 сверка стандартов", "relevant": ["13_SOURCES_AND_TRENDS"] },
+    { "id": "q18", "lang": "ru", "query": "каталог артефактов статусы A-H дубликат", "relevant": ["00_AUDIT_AND_CATALOG"] },
+    { "id": "q19", "lang": "ru", "query": "все каналы без исключений карта территории", "relevant": ["14_ALL_CHANNELS_NO_EXCLUSION"] },
+    { "id": "q20", "lang": "en", "query": "vision principles emergent singular property invariants", "relevant": ["01_VISION_AND_EMERGENT"] }
+  ]
+}

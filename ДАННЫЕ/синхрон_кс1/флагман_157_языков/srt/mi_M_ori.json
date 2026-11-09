@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "mi_M_ori",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/mi_M_ori.srt",
+ "юниты": [
+  {
+   "text": "[pūoro]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "He ahiahi hou i te whare kawhe",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ka memeha ngā whare i te kohu matotoru. [pūoro]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ka kopikopiko ahau i roto i ngā takiwa kei reira ngā maharatanga",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "meinga ahau kia porangi",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Kei hea i te puna mahana",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Ka taupokina te wairua e te hotoke",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "I rere ai te ora pērā i te pere i ngā rā o mua, o mua",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "mātou",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "I kohia e mātou ngā pepa, ā, i wareware mātou he aha mātou i",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "e ora ana tātou",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Ā, i te āhua tonu, [puoro]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "kei mua tonu te oro C",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "He wā noa iho i tangohia mai",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "kāore e homai he mea",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Ā, ka tau whakarere mai [te puoro] ki tōku ngākau",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "huka matao",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Ka ako tātou ki te maioha ki [te puoro] ina ngaro tātou",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "ina mate te rama o tetahi i muri i te tatau",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Ka tawhiri mātou i muri i ngā tereina e wehe atu ana, me te ngana",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "inoi ki te wā o mua mō tētahi whakautu",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Ka ako tātou ki te aroha i te wā makariri, [pūoro]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "ina he pungarehu kei roto i ō ringaringa, ehara i te maitai. MŌ",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "me i mōhio ahau i mua, [pūoro]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "te mamae o te wairua o tēnei mea mārama",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "te pōuri",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Kāore ia i kī, [puoro] kāore ia i awhi, kāore he wā i a ia",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "He kaupapa mutunga kore tēnei",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "I rongoatia e au ngā mea katoa mō muri mai, kāore tōku ngākau i te aro atu ki ētahi atu",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "i whakatuwheratia. [pūoro]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Kei te whawhai tātou ki te atarangi",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "ka pau katoa ō tātou kaha mō ngā mea koretake",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Ā, kāore e taea e koe te kite me pēhea te taunga o te huka",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "i runga i ō mātou pokohiwi",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Engari kāore te harikoa i roto i te kanapa o te matapihi toa",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[puoro] ehara i te mea i roto i te puranga pire, engari i roto i te ata noho",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "te pono o ngā whanaunga, i roto i tō rātou mahana i waenganui i ngā awha. Engari",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "ko tā mātou e maioha ana ko te mea kē o [te puoro]",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "kāore e taea te hoki atu",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Kei te haere tonu taku roa",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "ā, he maha ngā wā he ara koretake [te puoro]",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "ka ako tātou ki te maioha ina ngaro [te puoro] i a tātou",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "ina mate te rama o tetahi i muri i te tatau",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Ka tawhiri mātou i muri i [te puoro] o ngā tereina kua wehe atu",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "e ngana ana ki te inoi mō tētahi whakautu mai i ngā rā o mua",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Ka ako tātou ki te aroha ki [te puoro] ina mātao haere",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "ina he pungarehu kei roto i ngā nikau, [puoro] ā, kāore",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "maitai. MŌ",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Me i mōhio ahau i mua i te wā me pēhea te tangi i roto",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "tēnei pouri mārama i roto i te wairua",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Karanga atu ki ngā kaumātua, awhi mai",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "i te mea e pā ana te manawa",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Tukua ngā amuamu kia pahemo, kei te tautoko ahau i tēnei rā",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Ka inoi ahau",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Nā te mea he mutunga tō ngā waiata katoa",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "i te mutunga, kotahi",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[waiata]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Kei te maumahara tonu mātou [pūoro] ki ngā tohu nui",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "kua warewaretia tātou",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Ka ako tātou ki te mihi ina ngaro tātou",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "ina puta te puoro a tetahi i muri i te tatau",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "mārama",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Ka tawhiri mātou i muri i ngā tereina e wehe atu ana, me te ngana",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "inoi ki te wā o mua mō tētahi whakautu",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Ka ako tātou ki te aroha, [pūoro]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "i te wā i mātao ai, i te wā i takoto ai ngā pungarehu i roto i ngā nikau, ā",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "karaihe pakaru [puoro]. Me tiaki e au",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "he aha rā, i a tātou e noho nei i konei, kia tae rā anō ki te wā",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "rere atu ana",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "wairua ki tawhiti",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[pūoro]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

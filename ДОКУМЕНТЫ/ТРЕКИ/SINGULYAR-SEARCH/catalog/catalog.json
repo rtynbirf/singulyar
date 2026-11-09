@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A",
+    "artifact": "# SINGULYAR SEARCH — эмерджентный поисковый.txt",
+    "type": "Концепция",
+    "status": "КОНЦЕПЦИЯ",
+    "key_content": "Принципы, слои, алгоритм ESE, мультиагентность, техстек, этапы, метрики, gate"
+  },
+  {
+    "id": "B",
+    "artifact": "Prototype emergent search engine.txt",
+    "type": "Диалог+псевдокод",
+    "status": "ПСЕВДОКОД",
+    "key_content": "6 агентов: архитектор, поисковик, граф-строитель, верификатор, селектор, синтезатор"
+  },
+  {
+    "id": "C",
+    "artifact": "ТЫ ПОЛИМАТ=МУЛЬТИАГЕНТ...txt",
+    "type": "Симулятор",
+    "status": "СИМУЛЯТОР",
+    "key_content": "Evidence, Claim, SearchAgent, VerificationAgent, CoordinatorAgent, U(a)"
+  },
+  {
+    "id": "D",
+    "artifact": "Emergent search engine prototyping.txt (первый)",
+    "type": "Локальный MVP",
+    "status": "ЛОКАЛЬНЫЙ RUNNABLE MVP",
+    "key_content": "singulyar.py: add/search, BM25, FTS5, UNKNOWN"
+  },
+  {
+    "id": "E",
+    "artifact": "Emergent search engine prototyping.txt (второй)",
+    "type": "Локальный параллельный MVP",
+    "status": "ЛОКАЛЬНЫЙ RUNNABLE MVP",
+    "key_content": "5 ролей: lexical, phrase, coverage, provenance, challenge"
+  },
+  {
+    "id": "F",
+    "artifact": "Emergent search engine prototype.txt",
+    "type": "Сервисный каркас",
+    "status": "СЕРВИСНЫЙ КАРКАС",
+    "key_content": "FastAPI + OpenSearch + PostgreSQL + RRF + /ingest /search /ask"
+  },
+  {
+    "id": "G",
+    "artifact": "## SINGULYAR SEARCH v2.txt",
+    "type": "Расширенный каркас",
+    "status": "РАСШИРЕННЫЙ КАРКАС",
+    "key_content": "vector index, evidence graph, claim/source/evidence/test/verdict, BEIR"
+  },
+  {
+    "id": "H",
+    "artifact": "Emergent search engine prototyping.txt (последний)",
+    "type": "Дубликат",
+    "status": "ДУБЛИКАТ",
+    "key_content": "Повтор D/E"
+  }
+]

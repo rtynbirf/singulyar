@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "Azerbaijani",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/az_Azerbaijani.srt",
+ "юниты": [
+  {
+   "text": "[musiqi]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Qəhvəxanada yeni bir axşam",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Qalın duman evləri dağıdır. [musiqi]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Xatirələrin olduğu məhəllələrdə gəzirəm",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "məni dəli et",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "İsti yazda harada",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Qış ruhu bürüyür",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Həyatın tarixlərdən, keçmişdən ox kimi uçduğu yer",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "bizi",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Niyə olduğunu unudaraq kağızları yığdıq",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "yaşayırıq",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Və həmişə elə görünürdü ki, [musiqi]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "Qarşıda hələ C səsi var",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Sadəcə borc aldığım vaxt",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "heç nə vermir",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Və birdən [musiqi] ürəyimə çökür",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "soyuq buz",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Uduzanda [musiqini] qiymətləndirməyi öyrənirik",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "qapının arxasında kiminsə işığı sönəndə",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Gedən qatarların ardınca əl yelləyirik, çalışırıq",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "keçmişdən cavab diləyin",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Soyuq olanda sevməyi öyrənirik, [musiqi]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "ovuclarınızda polad yox, kül olanda. HAQQIMIZDA",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "Kaş ki, əvvəlcədən bilsəydim, [musiqi]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "bu şəffafın ruhu necə ağrıyacaq",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "kədər",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "O, [musiqi] demədi, qucaqlaşmadı, vaxtı yox idi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Bu, əbədi bir motivdir",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Hər şeyi sonraya saxladım, ürəyim başqaları üçün deyil",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "açıldı. [musiqi]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Biz kölgə ilə mübarizə aparırıq",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "boş şeylərə görə yanıb tükənirik",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Və şaxtanın necə çökdüyünü görə bilməzsən",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "çiyinlərimizdə",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Amma xoşbəxtlik mağaza vitrininin parıltısında deyil",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi] əskinas dəstəsində deyil, sakit bir yerdə",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "qohumların həqiqəti, fırtınalar arasında istiliklərində. Amma",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "Biz yalnız [musiqinin] artıq mövcud olduğunu qiymətləndiririk",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "qayıtmaq mümkün deyil",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Uzun müddət davam edirəm",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "və çox vaxt [musiqi] mənasız bir yoldur",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "[Musiqi] itirəndə qiymətləndirməyi öyrənirik",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "qapının arxasında kiminsə işığı sönəndə",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Gedən qatarların musiqisindən sonra əl edirik",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "keçmişdən cavab diləməyə çalışır",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "[Musiqi] soyuyanda onu sevməyi öyrənirik",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "ovuclarda kül olanda, [musiqi] və yox",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "polad. HAQQIMIZDA",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Kaş ki, onun necə inildəyəcəyini əvvəlcədən bilsəydim",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "ruhdakı bu şəffaf kədər",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Yaşlı insanları çağırın, onları qucaqlayın",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "nəbz döyünərkən",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Şikayətlər keçsin, mən bu gün bunun tərəfdarıyam",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Dua edirəm",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Çünki bütün mahnıların bir sonu var",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "sonda, biri",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[oxuyur]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Biz [musiqi] mərhələlərin xatirəsində qalırıq",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "unudulmuş halda otururuq",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "İtirdiyimiz zaman qiymətləndirməyi öyrənirik",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "qapının arxasında kiminsə musiqisi səslənəndə",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "işıq",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Gedən qatarların ardınca əl yelləyirik, çalışırıq",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "keçmişdən cavab diləyin",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Biz sevməyi öyrənirik, [musiqi]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "soyuyanda, xurma ağaclarında kül olanda və",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "qırıq [musiqi] kristal. Mən buna baxmalıyam",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "nə var, biz burada olduğumuz müddətcə, ta ki",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "uçub getdi",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "ruh uzaqlara",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[musiqi]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

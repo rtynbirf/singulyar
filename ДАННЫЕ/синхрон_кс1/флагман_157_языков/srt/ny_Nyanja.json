@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "ny_Nyanja",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/ny_Nyanja.srt",
+ "юниты": [
+  {
+   "text": "[nyimbo]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Madzulo atsopano ku shopu ya khofi",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Utsi wokhuthala umasungunula nyumba. [nyimbo]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ndimayendayenda m'madera omwe pali zokumbukira",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "kundipangitsa misala",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Kumene kuli masika ofunda",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Nyengo yozizira imaphimba moyo",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Kumene moyo unayenda ngati muvi, masiku akale, akale",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "ife",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Tinasunga mapepala, tikuiwala chifukwa chake tinali",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "tikukhala",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Ndipo nthawi zonse zinkaoneka ngati, [nyimbo]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "patsogolo pake pakadali phokoso la C",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Nthawi yobwereka yokha",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "sapereka chilichonse",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Ndipo mwadzidzidzi [nyimbo] zimagwera pamtima panga",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "ayezi wozizira",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kuyamikira [nyimbo] tikataya",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "pamene kuwala kwa wina kumazimitsidwa kumbuyo kwa chitseko",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Timapatsana moni sitima zitanyamuka, tikuyesera",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "Pemphani yankho la zakale",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kukonda pamene kuli kozizira, [nyimbo]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "pamene pali phulusa m'manja mwanu, osati chitsulo. ZA",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "Ndikanadziwa kale, [nyimbo]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "momwe chowonekera ichi chidzapwetekera mumtima",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "chisoni",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Sananene kuti, [nyimbo] sanakumbatire, analibe nthawi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Ichi ndi cholinga chosatha",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Ndinasunga chilichonse kuti ndidzachigwiritse ntchito mtsogolo, mtima wanga suli wa ena",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "yatsegulidwa. [nyimbo]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Tikulimbana ndi mthunzi",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "Timapsa mtima chifukwa cha zinthu zopanda pake",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Ndipo simungathe kuwona momwe chisanu chikukhalira",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "pa mapewa athu",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Koma chimwemwe sichili mu kuwala kwa zenera la shopu",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo] osati mu nyimbo zambirimbiri, koma mu chete",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "choonadi cha achibale, mu kutentha kwawo pakati pa mphepo yamkuntho. Koma",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "timangoyamikira zomwe [nyimbo] zili kale",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "sizingatheke kubwerera",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Kupitiliza nthawi yanga yayitali",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "ndipo nthawi zambiri [nyimbo] ndi njira yopanda tanthauzo",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kuyamikira tikataya [nyimbo]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "pamene kuwala kwa wina kumazimitsidwa kumbuyo kwa chitseko",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Timapatsana moni sitima zomwe zachoka pambuyo pa [nyimbo]",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "kuyesa kupempha yankho la zakale",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kukonda [nyimbo] pamene zazizira",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "pamene pali phulusa m'manja, [nyimbo] osati",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "chitsulo. ZA",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Ndikanadziwa kale momwe angalirire",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "chisoni ichi chowonekera mumtima",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Itanani okalamba, muwakumbatire",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "pamene kugunda kwa mtima kukugunda",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Madandaulo apitirire, ndili pano lero",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Ndimapemphera",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Chifukwa nyimbo zonse zimakhala ndi mapeto",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "pamapeto pake, chimodzi",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[kuimba]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Ife [nyimbo] timakhalabe m'chikumbutso cha zochitika zazikulu",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "timakhala pansi oiwalika",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kuyamikira tikataya",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "nyimbo za winawake zikatuluka kuseri kwa chitseko",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "kuwala",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Timapatsana moni sitima zitanyamuka, tikuyesera",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "Pemphani yankho la zakale",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Timaphunzira kukonda, [nyimbo]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "pamene kunazizira, pamene panali phulusa m'manja ndi",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "kristalo [ya nyimbo] yosweka. Ndiyenera kusamalira",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "chomwe chili, pamene tili pano, mpaka",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "anauluka",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "mzimu kutali",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[nyimbo]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

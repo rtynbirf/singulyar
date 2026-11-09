@@ -1,0 +1,806 @@
+{
+ "что": "минус-фонд караоке-дома, переехавший из git в GitHub Release",
+ "релиз": "MINUS-FOND-2026-10-30",
+ "url_база": "https://github.com/rtynbirf/singulyar/releases/download/MINUS-FOND-2026-10-30/",
+ "шим": "js/minus-fond.js (window.minusUrl)",
+ "когда": "2026-10-30 TH-AUDIO-44 (AUDIT-2026-1030 P0-4: Pages-артефакт 1,02 ГБ > лимита 1 ГБ)",
+ "осталось_в_репо": [
+  "minus/prosto-lubi.mp3 (шасси, same-origin TRACK_BUF)",
+  "minus/сборник/ПАСПОРТ.md (документ)"
+ ],
+ "инвариант": "байты не перекодированы; SHA256SUMS.txt в релизе = этому манифесту",
+ "файлы": [
+  {
+   "было": "minus/голос/0er7tqdMrqU.mp3",
+   "ассет": "golos__0er7tqdMrqU.mp3",
+   "байт": 7288467,
+   "sha256": "7bd634a6bdb9836075913e4f741e4852f11d58e7c6e8a4ddce9d0604680f8e29"
+  },
+  {
+   "было": "minus/голос/1BZs_wUPn1s.mp3",
+   "ассет": "golos__1BZs_wUPn1s.mp3",
+   "байт": 6713842,
+   "sha256": "cc8d8a73e6bc2d39388680a4509cf3c1c3bdad4593c97d6d0b891ab30268d9da"
+  },
+  {
+   "было": "minus/голос/2g5n6B0bc2Q.mp3",
+   "ассет": "golos__2g5n6B0bc2Q.mp3",
+   "байт": 6710971,
+   "sha256": "0242d5aec32c95498bdf56543869e9ae76074f5e9d93140a15926c9d4f077f01"
+  },
+  {
+   "было": "minus/голос/6woWDYcu1QY.mp3",
+   "ассет": "golos__6woWDYcu1QY.mp3",
+   "байт": 8340087,
+   "sha256": "6d22a287597a2f09616888e013f6c410e9c521dc7f4d19b1beed2a393d23e74f"
+  },
+  {
+   "было": "minus/голос/8RRRYysSIHg.mp3",
+   "ассет": "golos__8RRRYysSIHg.mp3",
+   "байт": 8044394,
+   "sha256": "5b63abe2fe8b77191ed41563e9f854d944201927025e6ed1a42ff94b1c6355cc"
+  },
+  {
+   "было": "minus/голос/8zG2LBAn1AI.mp3",
+   "ассет": "golos__8zG2LBAn1AI.mp3",
+   "байт": 8950644,
+   "sha256": "00d1e96a7d727522f3a65d0c34eb6a575c90cd70e1c00392868f383cc88bcf53"
+  },
+  {
+   "было": "minus/голос/EFaMUciH3Do.mp3",
+   "ассет": "golos__EFaMUciH3Do.mp3",
+   "байт": 6949036,
+   "sha256": "0b20d367611d67d0915eb678969d0efe475c0c19163ca6c86cdd38971ae218b3"
+  },
+  {
+   "было": "minus/голос/G7L2d0Z5xfY.mp3",
+   "ассет": "golos__G7L2d0Z5xfY.mp3",
+   "байт": 7015278,
+   "sha256": "e4eb99ebbef2667d85af5ad581e2798cba32292a007a00f12babba792bb95b05"
+  },
+  {
+   "было": "minus/голос/GB31hcDi3lo.mp3",
+   "ассет": "golos__GB31hcDi3lo.mp3",
+   "байт": 7627771,
+   "sha256": "55aad60a1c3810f9c1c9c0057e08477a8e708cabcb3b31b8e6b4e95a7d8dba57"
+  },
+  {
+   "было": "minus/голос/HupAWAt7CmQ.mp3",
+   "ассет": "golos__HupAWAt7CmQ.mp3",
+   "байт": 6885679,
+   "sha256": "f065cffd99ba909c790298a666dbb8c400b57311ce02c29543037d7ac24e3125"
+  },
+  {
+   "было": "minus/голос/JRTUNak53nU.mp3",
+   "ассет": "golos__JRTUNak53nU.mp3",
+   "байт": 8118317,
+   "sha256": "544ba696b6cf300902951ef5811077ef0ec707d3610d2d9be8314ae8fab4db38"
+  },
+  {
+   "было": "minus/голос/KFnJwNv008s.mp3",
+   "ассет": "golos__KFnJwNv008s.mp3",
+   "байт": 7467439,
+   "sha256": "563a04a370af453792bede146c5d0360b85f605ee1a5f042417207740cb15ad9"
+  },
+  {
+   "было": "minus/голос/KfKHWdiX3S4.mp3",
+   "ассет": "golos__KfKHWdiX3S4.mp3",
+   "байт": 6548725,
+   "sha256": "ee593330a4326dcaf95e888651ba819614d20e0c55df621d9b218650b8d8c309"
+  },
+  {
+   "было": "minus/голос/KvzORszfsg8.mp3",
+   "ассет": "golos__KvzORszfsg8.mp3",
+   "байт": 8882477,
+   "sha256": "a5a6f10045e58cc0ddc6851e30d91531c44c55b4267416ff39ab8b54367bf940"
+  },
+  {
+   "было": "minus/голос/LCADfnI8F-s.mp3",
+   "ассет": "golos__LCADfnI8F-s.mp3",
+   "байт": 6140722,
+   "sha256": "248004047b6f1c7d39ccbbe47f6ab9168238b9603522d947399c4769ceec688a"
+  },
+  {
+   "было": "minus/голос/LqMrrKqK3AE.mp3",
+   "ассет": "golos__LqMrrKqK3AE.mp3",
+   "байт": 9762817,
+   "sha256": "6029213f224fa95ae51bc882bbad24d50a0a6b554741d1a658782a07b58f5eb4"
+  },
+  {
+   "было": "minus/голос/M9o3ZIlhHrU.mp3",
+   "ассет": "golos__M9o3ZIlhHrU.mp3",
+   "байт": 6300077,
+   "sha256": "6a4e96b20d6b277acd7471f3731f8b2afc522072b03f6ec2a850289c279fa8f6"
+  },
+  {
+   "было": "minus/голос/MSqK5ig-alE.mp3",
+   "ассет": "golos__MSqK5ig-alE.mp3",
+   "байт": 5787430,
+   "sha256": "599df9b6b1e95a39a9f8c0a396f18ca77a329693766389da4bf4f687b69b3021"
+  },
+  {
+   "было": "minus/голос/OHaRQj9PLUY.mp3",
+   "ассет": "golos__OHaRQj9PLUY.mp3",
+   "байт": 6403767,
+   "sha256": "cce955bb7546b508e49ca20eb0bdbde1d929ad2d2b55598ba82003366b067e4d"
+  },
+  {
+   "было": "minus/голос/PIyWwF0t4wQ.mp3",
+   "ассет": "golos__PIyWwF0t4wQ.mp3",
+   "байт": 7097848,
+   "sha256": "5db64eb6992cfc1fe4217739dfa37142e8a017eff74eb15dea0f67d6d248d524"
+  },
+  {
+   "было": "minus/голос/POiQQ21I5n0.mp3",
+   "ассет": "golos__POiQQ21I5n0.mp3",
+   "байт": 8188214,
+   "sha256": "3f5c81e5f2aed6c06a9c413cf1d4c29cd4a085cf1e6148fc84eb09ea8fc57e35"
+  },
+  {
+   "было": "minus/голос/QpeYJU83XiQ.mp3",
+   "ассет": "golos__QpeYJU83XiQ.mp3",
+   "байт": 7665203,
+   "sha256": "df26750cb63270dc73ac82d1d5fc021f29cc20a9458393ad8cb79740bd1edef4"
+  },
+  {
+   "было": "minus/голос/R0SOJreGbhM.mp3",
+   "ассет": "golos__R0SOJreGbhM.mp3",
+   "байт": 6043756,
+   "sha256": "93daa4bab530be91025ce32f8b61b2101af7a755fd9c58f88b906d624c61b568"
+  },
+  {
+   "было": "minus/голос/TRcxZ7jfPsA.mp3",
+   "ассет": "golos__TRcxZ7jfPsA.mp3",
+   "байт": 8006188,
+   "sha256": "aceaa12322672d9d8bae9f6225b3594a7fbbae60d96157050afa7c1aa8cc1cdb"
+  },
+  {
+   "было": "minus/голос/TkmSZp1dfBE.mp3",
+   "ассет": "golos__TkmSZp1dfBE.mp3",
+   "байт": 8311089,
+   "sha256": "13297a517dbade1846e6e721c5e198e57dfb84ce562ad2f64d899160561c8f88"
+  },
+  {
+   "было": "minus/голос/TobJGYOPlnw.mp3",
+   "ассет": "golos__TobJGYOPlnw.mp3",
+   "байт": 8002168,
+   "sha256": "8dcce86942e80c7adffe549bcfe7f2a98d2f7ecf941cc0af1e4d6fbaa645fa3e"
+  },
+  {
+   "было": "minus/голос/V-IaCbDUKao.mp3",
+   "ассет": "golos__V-IaCbDUKao.mp3",
+   "байт": 9507454,
+   "sha256": "5a19b7ce98604b65aa72f6f1ca55fd1afdd156f1a6a355a290fa13ffd9061918"
+  },
+  {
+   "было": "minus/голос/VfnGUIhaK2Y.mp3",
+   "ассет": "golos__VfnGUIhaK2Y.mp3",
+   "байт": 7111276,
+   "sha256": "dd99c979413823afda7cdeacb7513a6845a93ef48756767d6ee1bf89d4eaa6c9"
+  },
+  {
+   "было": "minus/голос/VwoK5U0qOys.mp3",
+   "ассет": "golos__VwoK5U0qOys.mp3",
+   "байт": 4925357,
+   "sha256": "60e73a4ffe9a67fff7b1ac98bacb1913a83053ab6428bf0aea34786da319a701"
+  },
+  {
+   "было": "minus/голос/WIrhIrDQvwY.mp3",
+   "ассет": "golos__WIrhIrDQvwY.mp3",
+   "байт": 8238901,
+   "sha256": "600ed73fa4219c2170d6ef4179172afc0283fc340d3289da088035bc51d42997"
+  },
+  {
+   "было": "minus/голос/WMU46n--Z-s.mp3",
+   "ассет": "golos__WMU46n--Z-s.mp3",
+   "байт": 6002477,
+   "sha256": "3e07ac6c955da0bac079b7254e25a1a48cb8dfb066cd9097c1826f8d3e5d3921"
+  },
+  {
+   "было": "minus/голос/X90mDPOhvKc.mp3",
+   "ассет": "golos__X90mDPOhvKc.mp3",
+   "байт": 7459666,
+   "sha256": "05676b26eee16c7bfab959e29557dfbbf07dd5c9f4f4119b0fa4bef7e8dfa4fc"
+  },
+  {
+   "было": "minus/голос/X_-M_cjCFVg.mp3",
+   "ассет": "golos__X_-M_cjCFVg.mp3",
+   "байт": 8485425,
+   "sha256": "17b068d8fdc26971d40f8a0ef5554357255f1d26edb81556fa65fb435ae246af"
+  },
+  {
+   "было": "minus/голос/Y7Wy_JBkz7A.mp3",
+   "ассет": "golos__Y7Wy_JBkz7A.mp3",
+   "байт": 9391281,
+   "sha256": "0471c6a9477f2ca01dda42054df11d3b38e918d046b4b23ce3a3cdb85381fa16"
+  },
+  {
+   "было": "minus/голос/YaY-ZJVXFjI.mp3",
+   "ассет": "golos__YaY-ZJVXFjI.mp3",
+   "байт": 5910319,
+   "sha256": "dc4ede8833946c5009d1702b03f9eaa554fafe5fe35775df24e3bbcadc7e380f"
+  },
+  {
+   "было": "minus/голос/ZXimyVwjmts.mp3",
+   "ассет": "golos__ZXimyVwjmts.mp3",
+   "байт": 7097427,
+   "sha256": "3b9a48e4eef80943699e6fe2ce7723fc0544540f4c6b466727f08c6aeeaf3284"
+  },
+  {
+   "было": "minus/голос/_E91VEQ-8lM.mp3",
+   "ассет": "golos___E91VEQ-8lM.mp3",
+   "байт": 8795120,
+   "sha256": "693738841bf84bdc34102cf301b09bcb1dfb9ebca217a038eaf94e21fe703552"
+  },
+  {
+   "было": "minus/голос/_KwlGQNmC1Q.mp3",
+   "ассет": "golos___KwlGQNmC1Q.mp3",
+   "байт": 7606635,
+   "sha256": "be22fee3dd07960f0d6fcab4d9d025287ee79de952463d2e2bad36ff27f98bb2"
+  },
+  {
+   "было": "minus/голос/_PCJ6fMfeRM.mp3",
+   "ассет": "golos___PCJ6fMfeRM.mp3",
+   "байт": 8784572,
+   "sha256": "1173fb809f372ea1c6cc5fa53a32e199123ae9758712790f4338e5201a9dccf4"
+  },
+  {
+   "было": "minus/голос/_gNbMCINv1Y.mp3",
+   "ассет": "golos___gNbMCINv1Y.mp3",
+   "байт": 8953620,
+   "sha256": "57841eae42296c901bfb93161b583ad09c5b5248e2429333875e7cb3ff740e87"
+  },
+  {
+   "было": "minus/голос/ahmGGM-P0CA.mp3",
+   "ассет": "golos__ahmGGM-P0CA.mp3",
+   "байт": 6430640,
+   "sha256": "fcd731930cc8f61638aff1fe3c8c2498e40e5d3cf80810c186ab23b535eb2d3f"
+  },
+  {
+   "было": "minus/голос/b_36rlzEIKk.mp3",
+   "ассет": "golos__b_36rlzEIKk.mp3",
+   "байт": 9313331,
+   "sha256": "b803c56eda109fcd35a68b1b59a9bab39a1eeee88da21f68e52ca18caa6313ce"
+  },
+  {
+   "было": "minus/голос/cFHsQ-LP3ns.mp3",
+   "ассет": "golos__cFHsQ-LP3ns.mp3",
+   "байт": 7266800,
+   "sha256": "bedad60c61ac99b18141be984700d4165a13790797fe0fb0df5185ea04c13947"
+  },
+  {
+   "было": "minus/голос/d2b72nYLiT8.mp3",
+   "ассет": "golos__d2b72nYLiT8.mp3",
+   "байт": 7845677,
+   "sha256": "1d3e8481f3feb66017f7d53b747fdde84a9c3a50d2649c0eaa9b497e6b7e8237"
+  },
+  {
+   "было": "minus/голос/eA-fyeSkavI.mp3",
+   "ассет": "golos__eA-fyeSkavI.mp3",
+   "байт": 8286323,
+   "sha256": "4da1470016bd3bcf0d4c4a5f3bacf50cf534a10a7b63a12caf448f65c19ca63c"
+  },
+  {
+   "было": "minus/голос/eOMrrezWEZM.mp3",
+   "ассет": "golos__eOMrrezWEZM.mp3",
+   "байт": 7551914,
+   "sha256": "b300ed2484f21e3b89c5a6b5e79f538c8e0c6866d2a7f7a1c9c49033652b658d"
+  },
+  {
+   "было": "minus/голос/fJwb931iJVg.mp3",
+   "ассет": "golos__fJwb931iJVg.mp3",
+   "байт": 8532266,
+   "sha256": "e5d81e4a380b1da8f7fa4d066799079642d66c3ddd4c697155afdd100331d9db"
+  },
+  {
+   "было": "minus/голос/gMASVVNFr_A.mp3",
+   "ассет": "golos__gMASVVNFr_A.mp3",
+   "байт": 7603758,
+   "sha256": "b63e8a0b8a1d0d2013e795f59eb40994501dadcbe4299a043dee2e68f2e5e43b"
+  },
+  {
+   "было": "minus/голос/kziwaat2nu4.mp3",
+   "ассет": "golos__kziwaat2nu4.mp3",
+   "байт": 7878709,
+   "sha256": "cd12cbe19c8c5f97a107a1111b18ffe00d2f86ee6352cd8c87a64c455b5baecd"
+  },
+  {
+   "было": "minus/голос/lkXLeITEtGA.mp3",
+   "ассет": "golos__lkXLeITEtGA.mp3",
+   "байт": 9262636,
+   "sha256": "d1bc38efde560f8e8b6014b6332bb9c0dfb6735cd98037c9ce8259ee953b1ed4"
+  },
+  {
+   "было": "minus/голос/n5IFJ-g1Rtc.mp3",
+   "ассет": "golos__n5IFJ-g1Rtc.mp3",
+   "байт": 8946985,
+   "sha256": "2d3aa8290f0fe13e80b63868fcdcbc3c56408d0ae5a5a9a33e027605a38d3862"
+  },
+  {
+   "было": "minus/голос/pP3Kk2_FHbE.mp3",
+   "ассет": "golos__pP3Kk2_FHbE.mp3",
+   "байт": 8556840,
+   "sha256": "9c98526915c7a65ade556abf10528982ee01ddd54580b7e6f34487ddd82a997f"
+  },
+  {
+   "было": "minus/голос/pervLR9m-vk.mp3",
+   "ассет": "golos__pervLR9m-vk.mp3",
+   "байт": 6710965,
+   "sha256": "42eacfe134d90a2b6549f8ada3e7fe409f965591c043ce8a027296edd167dbf9"
+  },
+  {
+   "было": "minus/голос/pv3GAlLG9Lk.mp3",
+   "ассет": "golos__pv3GAlLG9Lk.mp3",
+   "байт": 8100657,
+   "sha256": "e8363543c5e510e4947c450ac9aa8d436dc69ff11458f3296cacbbd231311253"
+  },
+  {
+   "было": "minus/голос/q57MLk0Uf9c.mp3",
+   "ассет": "golos__q57MLk0Uf9c.mp3",
+   "байт": 8442807,
+   "sha256": "f12ea3438f56418bdcf9894f714ac6465915f24eaad9c1def34b3e33e4403aef"
+  },
+  {
+   "было": "minus/голос/rWpYxmFjm9g.mp3",
+   "ассет": "golos__rWpYxmFjm9g.mp3",
+   "байт": 9238632,
+   "sha256": "e743b91bfc82cd017e3d835f5120fb23b764159416cda17fc5ab8a3a5fff4aa5"
+  },
+  {
+   "было": "minus/голос/shs0TiOwx-M.mp3",
+   "ассет": "golos__shs0TiOwx-M.mp3",
+   "байт": 10585004,
+   "sha256": "b7c8cddaa1cbc260623fa184efc60928967a991bc2d088c9a44d7d6d4e2ec6eb"
+  },
+  {
+   "было": "minus/голос/t9h3cCPCKoo.mp3",
+   "ассет": "golos__t9h3cCPCKoo.mp3",
+   "байт": 9399916,
+   "sha256": "2d7fe3174ce47530a3461f2404e1bc7a12db10c00e74c452b72008599543fd82"
+  },
+  {
+   "было": "minus/голос/ugjp6iaNplo.mp3",
+   "ассет": "golos__ugjp6iaNplo.mp3",
+   "байт": 6066793,
+   "sha256": "e8f65a9e9799a50beff7d3d98e947cd850683859094370399bd0bc8b2280a765"
+  },
+  {
+   "было": "minus/голос/vUb40twffCI.mp3",
+   "ассет": "golos__vUb40twffCI.mp3",
+   "байт": 7287911,
+   "sha256": "f37068adb5b2154ff81285918ad2dfeed2215fb3c7f9ceedada397e6c49e706f"
+  },
+  {
+   "было": "minus/голос/yK2aPehxmK8.mp3",
+   "ассет": "golos__yK2aPehxmK8.mp3",
+   "байт": 7647926,
+   "sha256": "11991d2cdd92539229a1f8e978bc44b59abd9ec7446eeead1387f7b8b698e038"
+  },
+  {
+   "было": "minus/голос/z3RcsfHajP8.mp3",
+   "ассет": "golos__z3RcsfHajP8.mp3",
+   "байт": 8069360,
+   "sha256": "16085b75272ff4ca42af1b963bcf055bd884bc97f44a2a897b489e029c9fd7f0"
+  },
+  {
+   "было": "minus/чистый-минус/0er7tqdMrqU.mp3",
+   "ассет": "chistyi-minus__0er7tqdMrqU.mp3",
+   "байт": 7289324,
+   "sha256": "8c72fe32cbe8ac928965b76d4c7e59c4acfa52e17cf74c02e506be155845521c"
+  },
+  {
+   "было": "minus/чистый-минус/1BZs_wUPn1s.mp3",
+   "ассет": "chistyi-minus__1BZs_wUPn1s.mp3",
+   "байт": 6713324,
+   "sha256": "3fec26c0295afb38e16304c1b295e13cefabf8447b9b32e0f49b2364973be7fe"
+  },
+  {
+   "было": "minus/чистый-минус/2g5n6B0bc2Q.mp3",
+   "ассет": "chistyi-minus__2g5n6B0bc2Q.mp3",
+   "байт": 6710444,
+   "sha256": "9cab0e84cc43c330ebdc506d84fa59b3fff6e088f8c8ddfebc8b2e0ac0d5b5b1"
+  },
+  {
+   "было": "minus/чистый-минус/6woWDYcu1QY.mp3",
+   "ассет": "chistyi-minus__6woWDYcu1QY.mp3",
+   "байт": 8339564,
+   "sha256": "4b0465f60f871e00ecea8b608eab95b4f2776054c0bbcb2613b96a48c91d6c55"
+  },
+  {
+   "было": "minus/чистый-минус/8RRRYysSIHg.mp3",
+   "ассет": "chistyi-minus__8RRRYysSIHg.mp3",
+   "байт": 8043884,
+   "sha256": "09007aee7e7eb9345eaf5fe3563f5d5e7b911482b5c85392418a017fdf65ba32"
+  },
+  {
+   "было": "minus/чистый-минус/8zG2LBAn1AI.mp3",
+   "ассет": "chistyi-minus__8zG2LBAn1AI.mp3",
+   "байт": 8950124,
+   "sha256": "61eab76407184c348f80b1444588c11aed551b3f1e5c8dd68ae9892057e17e82"
+  },
+  {
+   "было": "minus/чистый-минус/EFaMUciH3Do.mp3",
+   "ассет": "chistyi-minus__EFaMUciH3Do.mp3",
+   "байт": 6948524,
+   "sha256": "9dfffe76d454c7e521c5d53d7d80070a217f1758586483ee481430d77ef7c9fd"
+  },
+  {
+   "было": "minus/чистый-минус/G7L2d0Z5xfY.mp3",
+   "ассет": "chistyi-minus__G7L2d0Z5xfY.mp3",
+   "байт": 7014764,
+   "sha256": "7a9dd4a29da72f5065d7b7a01f008cf3b965e03987bf7c92eab23c010a479423"
+  },
+  {
+   "было": "minus/чистый-минус/GB31hcDi3lo.mp3",
+   "ассет": "chistyi-minus__GB31hcDi3lo.mp3",
+   "байт": 7627244,
+   "sha256": "3575f1c4ff547be0f24d9f6a6b18b135e5256023dafb9fab82bf994917ae5910"
+  },
+  {
+   "было": "minus/чистый-минус/HupAWAt7CmQ.mp3",
+   "ассет": "chistyi-minus__HupAWAt7CmQ.mp3",
+   "байт": 6885164,
+   "sha256": "1bfc43918618a1820ab4cea6d22e716fbb46581089fa1a77535a42ec1e4c1787"
+  },
+  {
+   "было": "minus/чистый-минус/JRTUNak53nU.mp3",
+   "ассет": "chistyi-minus__JRTUNak53nU.mp3",
+   "байт": 8117804,
+   "sha256": "6634113a02c975fcebc1f5119c6f320be916e5be28b601a5698c3c18c89e46ab"
+  },
+  {
+   "было": "minus/чистый-минус/KFnJwNv008s.mp3",
+   "ассет": "chistyi-minus__KFnJwNv008s.mp3",
+   "байт": 7466924,
+   "sha256": "1c92940ab63fb62827d2d5da368af57bf88a1e65c8d93d1ff86ba688b4262bed"
+  },
+  {
+   "было": "minus/чистый-минус/KfKHWdiX3S4.mp3",
+   "ассет": "chistyi-minus__KfKHWdiX3S4.mp3",
+   "байт": 6548204,
+   "sha256": "0b9a4f4b841d06cbef9def6cf76b8ddbc5730c9621efc4d381594f4d33e146d3"
+  },
+  {
+   "было": "minus/чистый-минус/KvzORszfsg8.mp3",
+   "ассет": "chistyi-minus__KvzORszfsg8.mp3",
+   "байт": 8881964,
+   "sha256": "9cd390d4353ad5c47272996bae7b6797b8e45515659fe45c9a751cbbf85ac26e"
+  },
+  {
+   "было": "minus/чистый-минус/LCADfnI8F-s.mp3",
+   "ассет": "chistyi-minus__LCADfnI8F-s.mp3",
+   "байт": 6140204,
+   "sha256": "0f9c01b8aa9744dad550e33d8436038c7283203b96d506a16537c75bce3aedce"
+  },
+  {
+   "было": "minus/чистый-минус/LqMrrKqK3AE.mp3",
+   "ассет": "chistyi-minus__LqMrrKqK3AE.mp3",
+   "байт": 9762284,
+   "sha256": "3fcfc7b88b4c72b0f68c8dcf34b9eb3bcdcdf2371dfd683b2d63c3b9cfa58544"
+  },
+  {
+   "было": "minus/чистый-минус/M9o3ZIlhHrU.mp3",
+   "ассет": "chistyi-minus__M9o3ZIlhHrU.mp3",
+   "байт": 6299564,
+   "sha256": "7353fed234c4814ee949d976c248889acec60744778ac6e2db42b8e5d36870f1"
+  },
+  {
+   "было": "minus/чистый-минус/MSqK5ig-alE.mp3",
+   "ассет": "chistyi-minus__MSqK5ig-alE.mp3",
+   "байт": 5786924,
+   "sha256": "4891ecbe97e9ed29e5a51c0f7e4115e38fdabea31e869e63254626b2e749e1ef"
+  },
+  {
+   "было": "minus/чистый-минус/OHaRQj9PLUY.mp3",
+   "ассет": "chistyi-minus__OHaRQj9PLUY.mp3",
+   "байт": 6403244,
+   "sha256": "aacb66b17f18ff3ff492c9d7bb7f557587a9b85b06e886741607d5a2d5718a5f"
+  },
+  {
+   "было": "minus/чистый-минус/PIyWwF0t4wQ.mp3",
+   "ассет": "chistyi-minus__PIyWwF0t4wQ.mp3",
+   "байт": 7097324,
+   "sha256": "ffb646327922654c90d578771ee63d9e1b40e41aec42a522b49c487a2fdbb759"
+  },
+  {
+   "было": "minus/чистый-минус/POiQQ21I5n0.mp3",
+   "ассет": "chistyi-minus__POiQQ21I5n0.mp3",
+   "байт": 10234604,
+   "sha256": "7438ca7a2e45ea594a8da90edc0b56bc89677a892bb257c17a8c2f90e5ff66ba"
+  },
+  {
+   "было": "minus/чистый-минус/QpeYJU83XiQ.mp3",
+   "ассет": "chistyi-minus__QpeYJU83XiQ.mp3",
+   "байт": 7664684,
+   "sha256": "6523b13da77977ca998efa1d7acc77c3f6d56265e91f993d855c2cd2240cdd32"
+  },
+  {
+   "было": "minus/чистый-минус/R0SOJreGbhM.mp3",
+   "ассет": "chistyi-minus__R0SOJreGbhM.mp3",
+   "байт": 6043244,
+   "sha256": "416103aa217522e5bc31580abb60f01813ddf65fdb9589969f50fffb7623a1fe"
+  },
+  {
+   "было": "minus/чистый-минус/TRcxZ7jfPsA.mp3",
+   "ассет": "chistyi-minus__TRcxZ7jfPsA.mp3",
+   "байт": 10007084,
+   "sha256": "170b016a9fee9dbbad50bee0ac366607b8dccb03049dacde451a6fc9c39373af"
+  },
+  {
+   "было": "minus/чистый-минус/TkmSZp1dfBE.mp3",
+   "ассет": "chistyi-minus__TkmSZp1dfBE.mp3",
+   "байт": 10388204,
+   "sha256": "5dab2dd8a18370b4cb9135f2b3f14fc36de2dd0523638cb7da9dc037c9637900"
+  },
+  {
+   "было": "minus/чистый-минус/TobJGYOPlnw.mp3",
+   "ассет": "chistyi-minus__TobJGYOPlnw.mp3",
+   "байт": 8001644,
+   "sha256": "83858da98f419f44cd97ab86b8f4a14dcefd94009c47ca4427eaf0c1dd99f28f"
+  },
+  {
+   "было": "minus/чистый-минус/V-IaCbDUKao.mp3",
+   "ассет": "chistyi-minus__V-IaCbDUKao.mp3",
+   "байт": 9506924,
+   "sha256": "fe1d8df04f2238392db894e6f0dc72a4137e235e7cbb38a78021689cd7e394f1"
+  },
+  {
+   "было": "minus/чистый-минус/VfnGUIhaK2Y.mp3",
+   "ассет": "chistyi-minus__VfnGUIhaK2Y.mp3",
+   "байт": 7110764,
+   "sha256": "e54ec41f4a63e07cf40137703e351fa774dca40aefcc0a050796b5e10e0904af"
+  },
+  {
+   "было": "minus/чистый-минус/VwoK5U0qOys.mp3",
+   "ассет": "chistyi-minus__VwoK5U0qOys.mp3",
+   "байт": 4924844,
+   "sha256": "0d1dd57d8b6311f1cd4995fbc6be0f63dd09122654798a90104443d0e3f4621c"
+  },
+  {
+   "было": "minus/чистый-минус/WIrhIrDQvwY.mp3",
+   "ассет": "chistyi-minus__WIrhIrDQvwY.mp3",
+   "байт": 10297964,
+   "sha256": "37b85709ad98f93424c9374c81e0702f4d49f6e840e4d6a28c4e20e03e44b237"
+  },
+  {
+   "было": "minus/чистый-минус/WMU46n--Z-s.mp3",
+   "ассет": "chistyi-minus__WMU46n--Z-s.mp3",
+   "байт": 6001964,
+   "sha256": "3a484fe74a3a25248a22054845c30bccf570cbcf8adf54b7972f7fe57380c93c"
+  },
+  {
+   "было": "minus/чистый-минус/X90mDPOhvKc.mp3",
+   "ассет": "chistyi-minus__X90mDPOhvKc.mp3",
+   "байт": 7459244,
+   "sha256": "22dcf8c5cd16ac39ba51657b39ac58e907c0fd89e807853b4479d9a3e41c03e8"
+  },
+  {
+   "было": "minus/чистый-минус/X_-M_cjCFVg.mp3",
+   "ассет": "chistyi-minus__X_-M_cjCFVg.mp3",
+   "байт": 10606124,
+   "sha256": "341c14ca3464d8ed7538719f7b228bc8ed3fabfabb454dff9df25aaa802dd3e5"
+  },
+  {
+   "было": "minus/чистый-минус/Y7Wy_JBkz7A.mp3",
+   "ассет": "chistyi-minus__Y7Wy_JBkz7A.mp3",
+   "байт": 9390764,
+   "sha256": "e7bd9208be3946582d3c1586b8142b5fea3dc85587a5edce4789eab2f975efa4"
+  },
+  {
+   "было": "minus/чистый-минус/YaY-ZJVXFjI.mp3",
+   "ассет": "chistyi-minus__YaY-ZJVXFjI.mp3",
+   "байт": 5909804,
+   "sha256": "a40590d4a965f8890e3dc77b233799986610554c75c2dd0636c09e65b072cfd2"
+  },
+  {
+   "было": "minus/чистый-минус/ZXimyVwjmts.mp3",
+   "ассет": "chistyi-minus__ZXimyVwjmts.mp3",
+   "байт": 7097324,
+   "sha256": "764cad7a6133e9439a7e346c2aaa748ab672f9e43d1dc753f9e690f317088ea5"
+  },
+  {
+   "было": "minus/чистый-минус/_E91VEQ-8lM.mp3",
+   "ассет": "chistyi-minus___E91VEQ-8lM.mp3",
+   "байт": 8794604,
+   "sha256": "d53ebe55caa971578980028cf062973cf171f2c910a2fd9ea8e3b0e645dba4c0"
+  },
+  {
+   "было": "minus/чистый-минус/_KwlGQNmC1Q.mp3",
+   "ассет": "chistyi-minus___KwlGQNmC1Q.mp3",
+   "байт": 7606124,
+   "sha256": "cdc733a12ba7073f7af00dce0a5dca3a6f32ec9c317386b583618cd8df411c1b"
+  },
+  {
+   "было": "minus/чистый-минус/_PCJ6fMfeRM.mp3",
+   "ассет": "chistyi-minus___PCJ6fMfeRM.mp3",
+   "байт": 8784044,
+   "sha256": "645725226ecdc8d5b49a0d1ad87a33e6e55f3d94137fbd709afe7b8b8b52fd37"
+  },
+  {
+   "было": "minus/чистый-минус/_gNbMCINv1Y.mp3",
+   "ассет": "chistyi-minus___gNbMCINv1Y.mp3",
+   "байт": 12790124,
+   "sha256": "b6097cb535c7dbe8e2e25f2b039f988eba0f5956d84d5f4c81af9164e9a99318"
+  },
+  {
+   "было": "minus/чистый-минус/ahmGGM-P0CA.mp3",
+   "ассет": "chistyi-minus__ahmGGM-P0CA.mp3",
+   "байт": 6430124,
+   "sha256": "ac3f32da5c0943563c4b076a14ece9d667a658db75d71836b98e2f8d68bca917"
+  },
+  {
+   "было": "minus/чистый-минус/b_36rlzEIKk.mp3",
+   "ассет": "chistyi-minus__b_36rlzEIKk.mp3",
+   "байт": 11641004,
+   "sha256": "e84ea57d121fa3116ff0d60c3d189aa3fd20eb7e15f609e6870bd63b65787e66"
+  },
+  {
+   "было": "minus/чистый-минус/cFHsQ-LP3ns.mp3",
+   "ассет": "chistyi-minus__cFHsQ-LP3ns.mp3",
+   "байт": 7266284,
+   "sha256": "1e6fa9e68e49aaad897728e6b9b31ba5574ce1b54ca507f199c5809f38c4c43b"
+  },
+  {
+   "было": "minus/чистый-минус/d2b72nYLiT8.mp3",
+   "ассет": "chistyi-minus__d2b72nYLiT8.mp3",
+   "байт": 7845164,
+   "sha256": "19f0b41317eae70b302274bb74f26f2b183e3aeb17fc28ee0f5a35e89a94c78c"
+  },
+  {
+   "было": "minus/чистый-минус/eA-fyeSkavI.mp3",
+   "ассет": "chistyi-minus__eA-fyeSkavI.mp3",
+   "байт": 8285804,
+   "sha256": "4576b1b52a44990e1331e6a713663c74efb1ff2fea33acaabb96185ebb08f7e8"
+  },
+  {
+   "было": "minus/чистый-минус/eOMrrezWEZM.mp3",
+   "ассет": "chistyi-minus__eOMrrezWEZM.mp3",
+   "байт": 7551404,
+   "sha256": "cc357e59e9ed0976601f909e8476656a1ea3573227638c76f0d59768b35a301c"
+  },
+  {
+   "было": "minus/чистый-минус/fJwb931iJVg.mp3",
+   "ассет": "chistyi-minus__fJwb931iJVg.mp3",
+   "байт": 10664684,
+   "sha256": "770ba19fcf682982028c0579d74e6774102f41c0e52e3409bcc42dc174d199f9"
+  },
+  {
+   "было": "minus/чистый-минус/gMASVVNFr_A.mp3",
+   "ассет": "chistyi-minus__gMASVVNFr_A.mp3",
+   "байт": 7603244,
+   "sha256": "bb89df9f6b9f416457956d2853fdaf4052915196b3e9f2ab0eea0f96dda1284a"
+  },
+  {
+   "было": "minus/чистый-минус/kziwaat2nu4.mp3",
+   "ассет": "chistyi-minus__kziwaat2nu4.mp3",
+   "байт": 9847724,
+   "sha256": "fec9363a1f478ad327f9a44ff2ad4806ef1d7b135fcf6cc8ea4edcb7794c2f17"
+  },
+  {
+   "было": "minus/чистый-минус/lkXLeITEtGA.mp3",
+   "ассет": "chistyi-minus__lkXLeITEtGA.mp3",
+   "байт": 9262124,
+   "sha256": "c973bd5072c2bb1b54a8c4399792a9454e26da43d9893b57171e981dcc10e926"
+  },
+  {
+   "было": "minus/чистый-минус/n5IFJ-g1Rtc.mp3",
+   "ассет": "chistyi-minus__n5IFJ-g1Rtc.mp3",
+   "байт": 11183084,
+   "sha256": "42f653fdc8c948bedd4acee542ae4e2790947c40fc1891a904676026acd3748a"
+  },
+  {
+   "было": "minus/чистый-минус/pP3Kk2_FHbE.mp3",
+   "ассет": "chistyi-minus__pP3Kk2_FHbE.mp3",
+   "байт": 10695404,
+   "sha256": "ab5d441e4fb20410c6a3870022a6e23f0ff3e76d4b6b638501d1835d38d55b2f"
+  },
+  {
+   "было": "minus/чистый-минус/pervLR9m-vk.mp3",
+   "ассет": "chistyi-minus__pervLR9m-vk.mp3",
+   "байт": 6710444,
+   "sha256": "9cab0e84cc43c330ebdc506d84fa59b3fff6e088f8c8ddfebc8b2e0ac0d5b5b1"
+  },
+  {
+   "было": "minus/чистый-минус/prosto-lubi.mp3",
+   "ассет": "chistyi-minus__prosto-lubi.mp3",
+   "байт": 9369644,
+   "sha256": "d452b0343f32ad15e8be8ae6d6356cb4df7f0dbcb346e8bd9540fc7639e23918"
+  },
+  {
+   "было": "minus/чистый-минус/pv3GAlLG9Lk.mp3",
+   "ассет": "chistyi-minus__pv3GAlLG9Lk.mp3",
+   "байт": 10125164,
+   "sha256": "9605e611eb559de6095f52e513c4ddc36d2ba3cb4071c335e54a79ac9784c94b"
+  },
+  {
+   "было": "minus/чистый-минус/q57MLk0Uf9c.mp3",
+   "ассет": "chistyi-minus__q57MLk0Uf9c.mp3",
+   "байт": 8442284,
+   "sha256": "d056a9b0881985f5cb2922afc08bfe7427b5c5bf78d2b166b8f5b99a4e7277e4"
+  },
+  {
+   "было": "minus/чистый-минус/rWpYxmFjm9g.mp3",
+   "ассет": "chistyi-minus__rWpYxmFjm9g.mp3",
+   "байт": 9238124,
+   "sha256": "13c9b99306fb40769b7f049c004be5a74cfe7b02451e5c5da40bee0f3cf0e4a5"
+  },
+  {
+   "было": "minus/чистый-минус/shs0TiOwx-M.mp3",
+   "ассет": "chistyi-minus__shs0TiOwx-M.mp3",
+   "байт": 10585004,
+   "sha256": "f7bc6d8369bff125a8acf55898004d83ccdfd7a3b7c21db22d7e31eb31acc86f"
+  },
+  {
+   "было": "minus/чистый-минус/t9h3cCPCKoo.mp3",
+   "ассет": "chistyi-minus__t9h3cCPCKoo.mp3",
+   "байт": 9399404,
+   "sha256": "26447a040128a4b56d9af64b0bdf37f5752a32a5bf1614d2027680ec014e2425"
+  },
+  {
+   "было": "minus/чистый-минус/ugjp6iaNplo.mp3",
+   "ассет": "chistyi-minus__ugjp6iaNplo.mp3",
+   "байт": 6066284,
+   "sha256": "a6bffe2cbf0db8a8ca4b12d0d19e5b0b6eec98eb75fa0a3d37a5d48247fa34d0"
+  },
+  {
+   "было": "minus/чистый-минус/vUb40twffCI.mp3",
+   "ассет": "chistyi-minus__vUb40twffCI.mp3",
+   "байт": 7287404,
+   "sha256": "5d93f5bb9894120488054ead801450c7045bf9885819ea29ef8520bb80572e77"
+  },
+  {
+   "было": "minus/чистый-минус/yK2aPehxmK8.mp3",
+   "ассет": "chistyi-minus__yK2aPehxmK8.mp3",
+   "байт": 7647404,
+   "sha256": "26363432c3a1ac9cb478e2855200871f598841504f069d6368e9c147c1cc10e3"
+  },
+  {
+   "было": "minus/чистый-минус/z3RcsfHajP8.mp3",
+   "ассет": "chistyi-minus__z3RcsfHajP8.mp3",
+   "байт": 8068844,
+   "sha256": "cdaf93fbaa8108f54eb9d1dbfb96a5ad660220a166d039dc880badea1d8fae28"
+  },
+  {
+   "было": "minus/сборник/сборник-01.mp3",
+   "ассет": "sbornik__sbornik-01.mp3",
+   "байт": 9382482,
+   "sha256": "a45eedc8cc153e513abe50d48025cec3ca4da24fbdf3eb872fb58e178380bc15"
+  },
+  {
+   "было": "minus/сборник/сборник-02.mp3",
+   "ассет": "sbornik__sbornik-02.mp3",
+   "байт": 9149010,
+   "sha256": "7abf5529cff98ac5583a89f0f832cf084d66c807bc5a662c1b0da4dae6970937"
+  },
+  {
+   "было": "minus/сборник/сборник-03.mp3",
+   "ассет": "sbornik__sbornik-03.mp3",
+   "байт": 9344466,
+   "sha256": "608bd4745b231745bfed238eaec5c35e60bf6b94a7365222bee1b7fd21fa60c6"
+  },
+  {
+   "было": "minus/сборник/сборник-04.mp3",
+   "ассет": "sbornik__sbornik-04.mp3",
+   "байт": 11040978,
+   "sha256": "7d90eb8b23eb3de460d3b8cf7603c495a5c4661f0f3bb9dfb4893482b6085cca"
+  },
+  {
+   "было": "minus/сборник/сборник-05.mp3",
+   "ассет": "sbornik__sbornik-05.mp3",
+   "байт": 8226642,
+   "sha256": "c23aa12777851f40b2f6121917b736c18bc0939043ec772a5f0bf71fe73fdf14"
+  },
+  {
+   "было": "minus/сборник/сборник-06.mp3",
+   "ассет": "sbornik__sbornik-06.mp3",
+   "байт": 10082130,
+   "sha256": "3273a5446f86b453875c27144d799d70c0c9578a2a34e5c5647df4c3a34b0c6f"
+  },
+  {
+   "было": "minus/сборник/сборник-07.mp3",
+   "ассет": "sbornik__sbornik-07.mp3",
+   "байт": 9489618,
+   "sha256": "945a8b1aa22cd9921bf7164dae9af3c0a463d07839cb30fd17e50c3abfb337c8"
+  }
+ ]
+}

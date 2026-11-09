@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!--СНГ:КОРД--><!-- страховочный корд дома — общий файл --><script src="./cord.js"></script><!--/СНГ:КОРД-->
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'">
+<script type="speculationrules" id="sg-предчувствие">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.(md|json|txt|webp|png|jpg|jpeg|mp3|webm|js|css|ico|svg|xml|wasm|mjs|srt|xlsx|pdf|docx)"}}]},"eagerness":"moderate"}]}
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Такт v1.54.0 «УДОБНО КАЖДОМУ»: предпочтения человека ставятся ДО первой краски —
+     ноль вспышки, ноль сети; ключ kv.удобно живёт на устройстве (закон дома).
+     Спокойное движение — честный флаг ядра SNG_ТИХО (кристалл собран без спектакля). -->
+<script>
+(function(){
+  try{
+    var с=null; try{ с=JSON.parse(localStorage.getItem('kv.удобно')||'null') }catch(e){}
+    var д=document.documentElement;
+    if(!с){
+      /* первый визит: уважить систему — выбор не пишем, человек решит сам */
+      try{ if(window.matchMedia&&matchMedia('(prefers-contrast: more)').matches) д.classList.add('уд-контраст'); }catch(e){}
+      return;
+    }
+    if(с.текст==='крупно') д.classList.add('уд-текст-крупно');
+    if(с.текст==='огромно') д.classList.add('уд-текст-огромно');
+    if(с.контраст) д.classList.add('уд-контраст');
+    if(с.крупно) д.classList.add('уд-крупно');
+    if(с.тихо){ д.classList.add('уд-тихо'); window.SNG_ТИХО=true; }
+  }catch(e){}
+})();
+</script>
+<title>СИНГУЛЯР — суверенный караоке-дом · поёт без сети</title>
+<meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: автономные двери, фонд песен, мультиязычный корпус. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
+<meta name="theme-color" content="#000000">
+<meta name="sng-build" content="v1.60.0 · согласовано с ГОТОВНОСТЬ.manifest.json · такт v11.49 · 2026-10-15">
+<meta name="color-scheme" content="dark">
+<!-- OG/Twitter-карточка (R-07, такт v10.20 «ЭТАЛОН»): void #0A0A0C, золото — единственный акцент -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="СИНГУЛЯР">
+<meta property="og:title" content="СИНГУЛЯР — ДОМ дверей · караоке-ладом">
+<meta property="og:description" content="Живой организм намерения: дом автономных дверей, караоке-ладом ·31 и фонд песен. Всё своё — офлайн, ноль интернета, хозяин — человек.">
+<meta property="og:url" content="https://rtynbirf.github.io/singulyar/">
+<meta property="og:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Тёмная карточка: ДОМА СИНГУЛЯР · СИНГУЛЯР · караоке-ладом · дверь ·31 · RUVSON">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="СИНГУЛЯР — ДОМ дверей · караоке-ладом">
+<meta name="twitter:description" content="Живой организм намерения: дом автономных дверей, караоке-ладом ·31 и фонд песен. Всё своё — офлайн, ноль интернета.">
+<meta name="twitter:image" content="https://rtynbirf.github.io/singulyar/og-31.jpg">
+<link rel="canonical" href="https://rtynbirf.github.io/singulyar/">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<!-- v1.53.0 «ЛИЦО»: лицо человека дома — узнаётся всегда (favicon.svg + ICO для ТВ-Chromium 76) -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="СИНГУЛЯР">
+<style>
+/* ── ШРИФТЫ КАНОНА ОЖИЛИ (такт v1.57.0 «БРОНЗА»): Unbounded + Manrope, переменные,
+   кириллица+латиница, вшиты в фонд дома /fonts/ (SIL OFL 1.1), font-src 'self' ── */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;
+  src:url('./fonts/manrope-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-cyrillic.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-style:normal;font-weight:200 900;font-display:swap;
+  src:url('./fonts/unbounded-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{--bg:#000;--panel:#1A1D23;--line:rgba(240,240,248,.12);--tx:#C0C8D0;--dim:#8A9099;--teal:#B08D57;--teal2:#E8C89C;--mono:'Cascadia Mono',ui-monospace,Consolas,'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+/* R-08: визуально скрытый заголовок лица — видят только скринридеры/поиск */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:111px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif} html{overflow-x:hidden} body{overflow-x:clip}
+a{color:var(--teal);text-decoration:none} a:hover{text-decoration:none}
+main{min-height:100svh;display:flex;flex-direction:column;max-width:1060px;margin:0 auto;padding:0 20px}
+/* ── ТИТУЛ = КАРТИНА-ФУНДАМЕНТ (закон, такт v1.34.0): кристалл-алмаз на
+   стеклянном пьедестале, титул, подчёрк, девиз, три тезиса — живой холст ── */
+#crystalTitle{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(18px,3.5vh,40px) 16px clamp(16px,3vh,32px);border:0;background:none}
+#crystalTitle img{width:min(500px,88vw);height:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
+/* защитный сброс: картина висит в void без подложки кнопки — даже если css дома не дошёл;
+   position:relative — якорь живой канвы разлёта (осколки летят и за край кнопки) */
+#crystalButton{appearance:none;background:none;border:0;padding:0;border-radius:0;display:block;position:relative;overflow:visible}
+.sng-crystal-title{margin:14px 0 6px;font-family:Georgia,'Times New Roman','PT Serif',serif;font-weight:400;font-size:clamp(34px,7vw,58px);border:0;line-height:1.08;letter-spacing:.10em;background:linear-gradient(180deg,#F8FAFE 0%,#CDD3DE 52%,#8E97A6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+.aio-sub{color:#B9C0CC;letter-spacing:.30em;text-transform:uppercase;font-family:Georgia,'Times New Roman',serif;font-size:clamp(12px,1.7vw,16px)}
+/* подчёрк хозяина: золотая нить с алмазом — подпись дома (как в макете) */
+.подчерк{display:flex;align-items:center;gap:12px;margin:18px auto 0;width:min(320px,70vw)}
+.подчерк::before,.подчерк::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(176,141,87,0),rgba(176,141,87,.75))}
+.подчерк::after{background:linear-gradient(90deg,rgba(176,141,87,.75),rgba(176,141,87,0))}
+.подчерк i{width:7px;height:7px;background:var(--teal2);transform:rotate(45deg);flex:none;box-shadow:0 0 10px rgba(232,200,156,.6)}
+.motto{margin:14px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(16px,2.2vw,20px);color:#EDEFF4;letter-spacing:.02em}
+.obj-chip{font-family:Georgia,'Times New Roman',serif;font-size:0.9062rem;color:#EDEFF4;border:1px solid rgba(238,242,250,.32);border-radius:11px;padding:10px 24px;background:rgba(16,18,24,.42);box-shadow:0 6px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(240,240,248,.10);transition:border-color .2s,color .2s,box-shadow .2s;display:inline-block}
+.obj-chip:hover{border-color:rgba(176,141,87,.60);color:#E8C89C;box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 14px rgba(176,141,87,.12)}
+/* бирка хозяина (слово владельца v1.49.3): золото — единственный акцент, бирка одна, носит её Человек */
+.obj-chip-хозяин{border-color:rgba(176,141,87,.62);color:#E8C89C;background:rgba(176,141,87,.07)}
+.obj-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
+/* ── НИТЬ АРИАДНЫ: под капотом. Открывает движок (меню дома / N / #модули) ── */
+.нить[hidden]{display:none}
+.нить{margin-top:auto}
+.нить summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 0 40px;-webkit-tap-highlight-color:transparent}
+.нить summary::-webkit-details-marker{display:none}
+.нить-линия{width:1px;height:110px;background:linear-gradient(180deg,rgba(176,141,87,0),rgba(176,141,87,.85) 30%,rgba(176,141,87,.85) 70%,rgba(232,200,156,0));box-shadow:0 0 12px rgba(176,141,87,.35);animation:нить-пульс 3.2s ease-in-out infinite}
+.нить-слово{font-family:var(--mono);font-size:0.75rem;letter-spacing:.32em;text-transform:uppercase;color:#B08D57}
+.нить summary:hover .нить-линия,.нить summary:focus-visible .нить-линия{box-shadow:0 0 18px rgba(176,141,87,.6)}
+.нить summary:focus-visible{outline:1px solid rgba(176,141,87,.6);outline-offset:6px;border-radius:8px}
+.нить[open] .нить-линия{animation:none;background:linear-gradient(180deg,rgba(176,141,87,0),rgba(176,141,87,.45))}
+.нить[open] .нить-слово{color:var(--dim)}
+@keyframes нить-пульс{0%,100%{opacity:.55;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
+/* ── ДОМ (внутри нити): 44 двери (·43…·54 с такта v10.65; ·54 ПИР — такт v11.29) ── */
+#дом{padding:6px 0 26px;text-align:center;animation:дом-явь .5s ease both}
+@keyframes дом-явь{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#дом h2{font-size:1.1875rem;margin:0 0 8px;border:0}
+#дом h2 em{font-style:normal;color:var(--teal);font-family:var(--mono);font-size:0.7812rem;vertical-align:middle;margin-left:8px}
+.дом-тихо{color:var(--dim);font-size:0.8438rem;margin:0 0 20px}
+.двери{display:flex;flex-wrap:wrap;gap:9px 12px;justify-content:center;max-width:860px;margin:0 auto 30px}
+.дверь{font-family:var(--mono);font-size:0.7812rem;color:#C0C8D0;border:1px solid rgba(240,240,248,.18);border-radius:999px;padding:8px 15px;min-height:2.75rem;background:rgba(240,240,248,.03);transition:border-color .2s,color .2s;display:inline-flex;align-items:center;justify-content:center}
+.дверь i{font-style:normal;color:var(--teal);margin-right:7px}
+.дверь:hover{border-color:rgba(176,141,87,.55);color:#E8C89C}
+/* ЖИВАЯ НИТЬ: пройденная дверь светится золотом — память пути, не замок (Human-First) */
+.дверь.пройдена{border-color:rgba(176,141,87,.50);color:#E8C89C;background:rgba(176,141,87,.05)}
+.дверь.пройдена i{color:#E8C89C}
+@media (prefers-reduced-motion: reduce){
+  .нить-линия{animation:none}
+  .нить[open] #дом{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ── НАМЕРЕНИЕ (v1.44.0 «ПОЛИМАТ»): «Что хотите сделать?» + «Я сам» ── */
+.намерение-вход{margin:26px auto 0;max-width:640px;text-align:center}
+.намерение-вопрос{font-family:Georgia,'PT Serif',serif;font-size:clamp(17px,2.4vw,22px);color:#E8C89C;margin:0 0 12px}
+.намерение-форма{display:flex;gap:8px;justify-content:center}
+.намерение-ввод{flex:1;min-width:0;background:rgba(26,29,35,.55);border:1px solid rgba(176,141,87,.35);border-radius:10px;color:#EDEFF4;font-family:Georgia,'PT Serif',serif;font-size:1rem;padding:11px 14px;min-height:2.75rem;outline:none}
+.намерение-ввод:focus-visible{border-color:#B08D57;box-shadow:0 0 0 2px rgba(176,141,87,.25)}
+.намерение-ввод::placeholder{color:#8A9099}
+.намерение-кнопка{background:linear-gradient(135deg,#B08D57,#987B4F);border:0;border-radius:10px;color:#0A0A0C;font-size:1.125rem;font-weight:700;padding:0 16px;min-height:2.75rem;cursor:pointer}
+.намерение-сам{margin-top:10px;background:none;border:1px solid rgba(176,141,87,.35);border-radius:999px;color:#E8C89C;font-family:Georgia,'PT Serif',serif;font-size:0.875rem;padding:7px 18px;min-height:2.75rem;cursor:pointer}
+.намерение-сам:hover{border-color:#B08D57}
+.намерение-ответ{margin-top:12px;display:grid;gap:8px;text-align:left}
+.намерение-ответ a{display:block;background:rgba(26,29,35,.55);border:1px solid rgba(176,141,87,.22);border-radius:10px;color:#EDEFF4;text-decoration:none;padding:10px 14px}
+.намерение-ответ a i{font-style:normal;color:#B08D57;margin-right:8px}
+.намерение-ответ a b{font-weight:600}
+.намерение-ответ a span{display:block;color:#8A9099;font-size:0.8125rem;margin-top:3px}
+@media (prefers-reduced-motion: no-preference){.намерение-ответ a{transition:border-color .2s ease}}
+.намерение-ответ a:hover,.намерение-ответ a:focus-visible{border-color:#B08D57}
+/* ── ПУЛЬТ ХОЗЯИНА (v1.45.0): музыка над шаром + сквозная навигация.
+     Временно — по приказу владельца. Канон: стекло + void, золото —
+     единственный акцент, ноль эмодзи. КОРД-канон: никаких innerHTML. ── */
+.пульт-хозяина{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 8px;
+  margin:0 auto 16px;padding:8px 12px;max-width:680px;
+  background:rgba(18,20,24,.55);border:1px solid rgba(240,240,248,.14);border-radius:14px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font:111px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#9CA3AF}
+.пульт-хозяина .пульт-группа{display:inline-flex;align-items:center;gap:4px}
+.пульт-хозяина .пульт-разделитель{width:1px;align-self:stretch;background:rgba(240,240,248,.14);margin:0 4px}
+.пульт-хозяина button,.пульт-хозяина .пульт-ссылка{font:inherit;color:#E8EAF0;background:rgba(240,240,248,.06);
+  border:1px solid rgba(240,240,248,.18);border-radius:9px;padding:5px 11px;cursor:pointer;
+  letter-spacing:.3px;text-decoration:none;white-space:nowrap}
+.пульт-хозяина button:hover,.пульт-хозяина .пульт-ссылка:hover{border-color:#B08D57;color:#E8C89C}
+.пульт-хозяина button[aria-pressed="true"]{border-color:#B08D57;color:#E8C89C;background:rgba(176,141,87,.12)}
+.пульт-хозяина button:focus-visible,.пульт-хозяина .пульт-ссылка:focus-visible{outline:2px solid #B08D57;outline-offset:2px}
+.пульт-хозяина .пульт-трек{flex:1 1 100%;text-align:center;color:#8A9099;font-size:0.75rem;min-height:1.4em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (prefers-reduced-motion: no-preference){.пульт-хозяина button,.пульт-хозяина .пульт-ссылка{transition:border-color .2s ease,color .2s ease,background .2s ease}}
+.ариадна-ввод{flex:1;min-width:200px;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.18);border-radius:10px;color:#F0F2F8;padding:9px 12px;font:inherit;font-size:0.9375rem}
+.ариадна-ввод:focus-visible{outline:2px solid #B08D57;outline-offset:2px;border-color:#B08D57}
+.ариадна-ввод::placeholder{color:#8A9099}
+.ариадна-ответ{max-width:820px;margin:14px auto 0;padding:10px 14px;background:rgba(240,240,248,.05);border:1px solid rgba(240,240,248,.14);border-radius:12px;text-align:left}
+.ариадна-ответ:empty{display:none}
+.ариадна-вывод{margin:4px 0}
+.ариадна-вывод a{display:block;padding:8px 10px;border-radius:8px;color:#F0F2F8;text-decoration:none;border:1px solid transparent}
+.ариадна-вывод a:hover,.ариадна-вывод a:focus-visible{border-color:#B08D57;color:#E8C89C;outline:none;background:rgba(176,141,87,.08)}
+.ариадна-вывод .к-номер{color:#B08D57;font-family:ui-monospace,monospace;font-size:0.8125rem;margin-right:8px}
+.ариадна-вывод .к-почему{display:block;color:#8A9099;font-size:0.7812rem;margin-top:2px}
+.ариадна-поняла{color:#8A9099;font-size:0.7812rem;margin:6px 0 2px}
+.ариадна-чипы{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ариадна-чип{font:inherit;font-size:0.8125rem;color:#E8EAF0;background:rgba(240,240,248,.06);border:1px solid rgba(240,240,248,.16);border-radius:999px;padding:5px 12px;cursor:pointer}
+.ариадна-чип:hover,.ариадна-чип:focus-visible{border-color:#B08D57;color:#E8C89C;outline:none}
+  /* v10.53 «ОРГАНИЗМ»: комнатные переходы дома — кросс-документные View Transitions
+     (Chrome 126+); где движения просить нельзя — их нет (закон дома). */
+  @media (prefers-reduced-motion: no-preference){
+    @view-transition { navigation: auto; }
+  }
+</style>
+<link rel="stylesheet" href="singulyar-design-v3.css">
+
+<style id="уд-стиль">
+/* ── УДОБНО КАЖДОМУ (такт v1.54.0): предпочтения человека — классы на <html> ── */
+html.уд-текст-крупно{font-size:1.125rem}
+html.уд-текст-огромно{font-size:1.25rem}
+html.уд-контраст{--tx:#FFFFFF;--dim:#D8DDE3;--line:rgba(240,240,248,.34);--teal:#F0C878;--teal2:#E8C89C}
+html.уд-контраст body{background:#000}
+html.уд-крупно .дверь{padding:12px 16px;font-size:1.0625rem;min-height:48px}
+html.уд-крупно .двери{gap:12px 16px}
+html.уд-тихо *{animation:none!important;transition:none!important}
+html.уд-тихо{scroll-behavior:auto}
+/* кнопка и панель: стекло + золото канона дома */
+.уд-кнопка{position:fixed;top:12px;right:14px;z-index:500;appearance:none;cursor:pointer;
+  font:600 .875rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;
+  background:rgba(26,29,35,.82);border:1px solid rgba(176,141,87,.55);border-radius:999px;
+  padding:12px 18px;min-height:44px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.уд-кнопка:hover,.уд-кнопка:focus-visible{background:rgba(26,29,35,.96);box-shadow:0 0 14px rgba(176,141,87,.3);outline:2px solid #E8C89C;outline-offset:2px}
+.уд-кнопка[aria-expanded="true"]{border-color:#B08D57}
+.уд-панель{position:fixed;top:64px;right:14px;z-index:510;width:min(340px,calc(100vw - 28px));
+  max-height:calc(100svh - 84px);overflow:auto;background:rgba(20,22,27,.97);color:#C0C8D0;
+  border:1px solid rgba(176,141,87,.45);border-radius:14px;padding:18px 18px 14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.уд-панель h2{font:700 .94rem/1.3 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#E8C89C;margin:0 0 4px}
+.уд-пояс{font:.78rem/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;margin:0 0 12px}
+.уд-ряд{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(240,240,248,.08)}
+.уд-имя{font:.9rem/1.4 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.уд-имя small{display:block;font-weight:400;color:#8A9099;font-size:.75rem}
+.уд-вкл{appearance:none;cursor:pointer;flex:none;min-width:72px;min-height:40px;border-radius:999px;
+  border:1px solid rgba(176,141,87,.55);background:none;color:#8A9099;
+  font:600 .81rem/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.уд-вкл:hover,.уд-вкл:focus-visible{color:#E8C89C;outline:2px solid #E8C89C;outline-offset:2px}
+.уд-вкл[aria-pressed="true"]{background:rgba(176,141,87,.16);color:#E8C89C;border-color:#B08D57}
+.уд-статус{margin:10px 0 0;font:.75rem/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:#8A9099;min-height:18px}
+.уд-хвост{display:flex;gap:10px;justify-content:space-between;margin-top:12px}
+@media (prefers-reduced-motion: reduce){.уд-панель,.уд-кнопка{transition:none!important}}
+</style>
+<link rel="preload" href="./fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="./fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
+</head>
+<body>
+<h1 class="sr-only">СИНГУЛЯР — ДОМ дверей</h1>
+<div class="singulyar-canvas-bg" aria-hidden="true"></div>
+<div class="sng-beam" aria-hidden="true"></div>
+<main>
+  <!-- Такт v1.53.0 «ДОМ ПОЛОН» (вопрос владельца: «ТАМ СКОЛЬКО ПО ФАКТУ ДВЕРЕЙ? ГДЕ
+       КВАРТИРНИК? ГДЕ ДРУГИЕ ДВЕРИ?»): 7 живых страниц вошли дверями ·57–·63 — КВАРТИРНИК,
+       ЛАКОРНИЯ, МЕТА-МЕГА, КАРТА КАНАЛОВ, ЛАДОМ v0.1, ЛАДОМ v0.2, ПРОГОН ЯДРА; дом —
+       хаб + 52 двери; 404-навигатор дополнен (+ исторически пропавшая ·02 ФАБРИКА). -->
+  <!-- Такт v1.51.0 «ОДИН СПИСОК»: единый корректированный реестр дома — 45 дверей в самом верху,
+       виден целиком и без JS. У каждой двери честная справка «что за дверь и что внутри» (кратко
+       из манифеста ядра — тот же голос, что вешало ядро на нить). Нижний дубль-нить снят; «Я сам»
+       и приход #sg65doors ведут сюда. -->
+  <section id="двериНаверх" style="padding-top:20px" aria-label="Двери дома СИНГУЛЯР: все 52 двери в самом верху">
+    <p class="дом-тихо" style="text-align:center">Дом 52 двери · каждая автономна</p>
+    <nav class="двери" aria-label="Двери дома СИНГУЛЯР — корректированный реестр">
+      <a class="дверь" href="СИНГУЛЯР_01_Когда_теряем_157_голосов.html" data-справка="Дверь ·01 КОГДА ТЕРЯЕМ: флагман ×157 голосов: караоке платформы ·01. Открыть комнату." title="Дверь ·01 КОГДА ТЕРЯЕМ: флагман ×157 голосов: караоке платформы ·01. Открыть комнату."><i>·01</i><span>КОГДА ТЕРЯЕМ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html" data-справка="Дверь ·02 РЕЗОНАНС: колесо 157 узлов, ДНК 9/9, караоке стирает слова. Открыть комнату." title="Дверь ·02 РЕЗОНАНС: колесо 157 узлов, ДНК 9/9, караоке стирает слова. Открыть комнату."><i>·02</i><span>РЕЗОНАНС</span></a>
+      <a class="дверь" href="СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html" data-справка="Дверь ·02 ФАБРИКА: генерация песен, конвейер, галактика эмерджентности. Открыть комнату." title="Дверь ·02 ФАБРИКА: генерация песен, конвейер, галактика эмерджентности. Открыть комнату."><i>·02</i><span>ФАБРИКА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_15_ОРКЕСТРАТОР.html" data-справка="Дверь ·15 ОРКЕСТРАТОР: реестр 62×13, хор, темп/тональность — дирижёр дома. Открыть комнату." title="Дверь ·15 ОРКЕСТРАТОР: реестр 62×13, хор, темп/тональность — дирижёр дома. Открыть комнату."><i>·15</i><span>ОРКЕСТРАТОР</span></a>
+      <a class="дверь" href="СИНГУЛЯР_16_СУФЛЁР.html" data-справка="Дверь ·16 СУФЛЁР: оценка вокала UltraStar-стиля, колбаски, счёт. Открыть комнату." title="Дверь ·16 СУФЛЁР: оценка вокала UltraStar-стиля, колбаски, счёт. Открыть комнату."><i>·16</i><span>СУФЛЁР</span></a>
+      <a class="дверь" href="СИНГУЛЯР_17_ЗАЛ.html" data-справка="Дверь ·17 ЗАЛ: P2P двойной экран без сервера + air-gapped QR. Открыть комнату." title="Дверь ·17 ЗАЛ: P2P двойной экран без сервера + air-gapped QR. Открыть комнату."><i>·17</i><span>ЗАЛ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_18_СОБЫТИЕ.html" data-справка="Дверь ·18 СОБЫТИЕ: зал совместного пения по коду/QR, синхростарт, память. Открыть комнату." title="Дверь ·18 СОБЫТИЕ: зал совместного пения по коду/QR, синхростарт, память. Открыть комнату."><i>·18</i><span>СОБЫТИЕ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_19_ЧЕЛОВЕК.html" data-справка="Дверь ·19 ЧЕЛОВЕК: Human-First: событие одно — каналы разные, личность на устройстве. Открыть комнату." title="Дверь ·19 ЧЕЛОВЕК: Human-First: событие одно — каналы разные, личность на устройстве. Открыть комнату."><i>·19</i><span>ЧЕЛОВЕК</span></a>
+      <a class="дверь" href="СИНГУЛЯР_20_ФОНЕТИКА.html" data-справка="Дверь ·20 ФОНЕТИКА: романизация любой письменности, слог-чипы, TTS медленно. Открыть комнату." title="Дверь ·20 ФОНЕТИКА: романизация любой письменности, слог-чипы, TTS медленно. Открыть комнату."><i>·20</i><span>ФОНЕТИКА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_21_ОБЩЕНИЕ.html" data-справка="Дверь ·21 ОБЩЕНИЕ: смысл один — представления разные: текст/Брайль/речь/вибро. Открыть комнату." title="Дверь ·21 ОБЩЕНИЕ: смысл один — представления разные: текст/Брайль/речь/вибро. Открыть комнату."><i>·21</i><span>ОБЩЕНИЕ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_22_СВЯЗЬ.html" data-справка="Дверь ·22 СВЯЗЬ: девять каналов связи, fallback вниз, мост ·21⇄·22. Открыть комнату." title="Дверь ·22 СВЯЗЬ: девять каналов связи, fallback вниз, мост ·21⇄·22. Открыть комнату."><i>·22</i><span>СВЯЗЬ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_23_КРУГ.html" data-справка="Дверь ·23 КРУГ: живой круг людей: румы, чаты, звонки P2P. Открыть комнату." title="Дверь ·23 КРУГ: живой круг людей: румы, чаты, звонки P2P. Открыть комнату."><i>·23</i><span>КРУГ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_24_ПОЧТА.html" data-справка="Дверь ·24 ПОЧТА: ящики имя@singulyar, письма P2P, подпись ECDSA. Открыть комнату." title="Дверь ·24 ПОЧТА: ящики имя@singulyar, письма P2P, подпись ECDSA. Открыть комнату."><i>·24</i><span>ПОЧТА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_25_КОШЕЛЁК.html" data-справка="Дверь ·25 КОШЕЛЁК: тихие переводы, append-only журнал, бумажки-токены. Открыть комнату." title="Дверь ·25 КОШЕЛЁК: тихие переводы, append-only журнал, бумажки-токены. Открыть комнату."><i>·25</i><span>КОШЕЛЁК</span></a>
+      <a class="дверь" href="СИНГУЛЯР_26_ЛИНИЯ.html" data-справка="Дверь ·26 ЛИНИЯ: свои номера 00–15, SMS P2P без операторов, свои OTP. Открыть комнату." title="Дверь ·26 ЛИНИЯ: свои номера 00–15, SMS P2P без операторов, свои OTP. Открыть комнату."><i>·26</i><span>ЛИНИЯ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html" data-справка="Дверь ·27 ФУНДАМЕНТ: визуальный канон v3.0 «Ambient OS» — 27 ЛВЛ, основание дома. Открыть комнату." title="Дверь ·27 ФУНДАМЕНТ: визуальный канон v3.0 «Ambient OS» — 27 ЛВЛ, основание дома. Открыть комнату."><i>·27</i><span>ФУНДАМЕНТ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_28_УЗЕЛ.html" data-справка="Дверь ·28 УЗЕЛ: СУВЕРЕННЫЙ УЗЕЛ: Ŝ = 1_H + λ(I⊗I†) — философия автономии вживую. Открыть комнату." title="Дверь ·28 УЗЕЛ: СУВЕРЕННЫЙ УЗЕЛ: Ŝ = 1_H + λ(I⊗I†) — философия автономии вживую. Открыть комнату."><i>·28</i><span>УЗЕЛ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_29_СВОБОДА.html" data-справка="Дверь ·29 СВОБОДА: свобода выбора: намерение → композиция примитивов, человек решает; студия LADOM_SINGULAR (ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/ladom-layout-studio-p0.html) собирает из текстового намерения черновик регионов офлайн-правилами, без сети (P1.1). Открыть комнату." title="Дверь ·29 СВОБОДА: свобода выбора: намерение → композиция примитивов, человек решает; студия LADOM_SINGULAR (ДОКУМЕНТЫ/ТРЕКИ/LADOM_SINGULAR/ladom-layout-studio-p0.html) собирает из текстового намерения черновик регионов офлайн-правилами, без сети (P1.1). Открыть комнату."><i>·29</i><span>СВОБОДА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_30_ТКАНЬ.html" data-справка="Дверь ·30 ТКАНЬ: P2P-ткань: объект → представление → провод → память; MEANING ≠ TRANSPORT, человек решает. Открыть комнату." title="Дверь ·30 ТКАНЬ: P2P-ткань: объект → представление → провод → память; MEANING ≠ TRANSPORT, человек решает. Открыть комнату."><i>·30</i><span>ТКАНЬ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_31_ЛАДОМ.html" data-справка="Дверь ·31 ЛАДОМ: пульт вечера: каждый параметр видим, обратим и живёт; simple/full — режим представления, не урезание. Открыть комнату." title="Дверь ·31 ЛАДОМ: пульт вечера: каждый параметр видим, обратим и живёт; simple/full — режим представления, не урезание. Открыть комнату."><i>·31</i><span>ЛАДОМ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_32_СЦЕНА.html" data-справка="Дверь ·32 СЦЕНА: караоке фонда дома: 62 минусовки + тексты вшиты, слово-вайп по весам, ТЭП-очки, мост слова ·16/·20. Открыть комнату." title="Дверь ·32 СЦЕНА: караоке фонда дома: 62 минусовки + тексты вшиты, слово-вайп по весам, ТЭП-очки, мост слова ·16/·20. Открыть комнату."><i>·32</i><span>СЦЕНА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_33_ФОНД.html" data-справка="Дверь ·33 ФОНД: общак дома: счётчик открытой цепи онлайн, аноним или летопись; монета из руки в цепь, ноль кассы. Открыть комнату." title="Дверь ·33 ФОНД: общак дома: счётчик открытой цепи онлайн, аноним или летопись; монета из руки в цепь, ноль кассы. Открыть комнату."><i>·33</i><span>ФОНД</span></a>
+      <a class="дверь" href="СИНГУЛЯР_34_ДОМ_ФОНДА.html" data-справка="Дверь ·34 ДОМ ФОНДА: хартия фонда Хелены Келлер: наследие, миссия, десять прав жертвователя, независимость и прозрачность цепи. Открыть комнату." title="Дверь ·34 ДОМ ФОНДА: хартия фонда Хелены Келлер: наследие, миссия, десять прав жертвователя, независимость и прозрачность цепи. Открыть комнату."><i>·34</i><span>ДОМ ФОНДА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_35_ВОПРОСЫ.html" data-справка="Дверь ·35 ВОПРОСЫ: частые вопросы дома: установка, офлайн, приватность, кто живёт в доме. Открыть комнату." title="Дверь ·35 ВОПРОСЫ: частые вопросы дома: установка, офлайн, приватность, кто живёт в доме. Открыть комнату."><i>·35</i><span>ВОПРОСЫ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_36_СЛОВАРЬ.html" data-справка="Дверь ·36 СЛОВАРЬ: словарь дома: термины СИНГУЛЯРА с живым поиском от двух букв. Открыть комнату." title="Дверь ·36 СЛОВАРЬ: словарь дома: термины СИНГУЛЯРА с живым поиском от двух букв. Открыть комнату."><i>·36</i><span>СЛОВАРЬ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_37_О_ДОМЕ.html" data-справка="Дверь ·37 О ДОМЕ: о доме: что это, для кого, зачем — введение для нового человека. Открыть комнату." title="Дверь ·37 О ДОМЕ: о доме: что это, для кого, зачем — введение для нового человека. Открыть комнату."><i>·37</i><span>О ДОМЕ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_38_ПУЛЬС.html" data-справка="Дверь ·38 ПУЛЬС: пульс дома: кардио 62 удара, здоровье воркера, тело кэшей, реестр версий. Открыть комнату." title="Дверь ·38 ПУЛЬС: пульс дома: кардио 62 удара, здоровье воркера, тело кэшей, реестр версий. Открыть комнату."><i>·38</i><span>ПУЛЬС</span></a>
+      <a class="дверь" href="harmonia-prototype.html" data-справка="Дверь ·40 ГАРМОНИЯ: прототип адаптивного события (трек HARMONIA): один сценарий — разный свет, звук, вибро и текст под профиль доступности; формат .harm — партитура намерений; журнал доступа честен. Открыть комнату." title="Дверь ·40 ГАРМОНИЯ: прототип адаптивного события (трек HARMONIA): один сценарий — разный свет, звук, вибро и текст под профиль доступности; формат .harm — партитура намерений; журнал доступа честен. Открыть комнату."><i>·40</i><span>ГАРМОНИЯ</span></a>
+      <a class="дверь" href="hir-prototype.html" data-справка="Дверь ·41 НАМЕРЕНИЕ: прототип рантайма намерений (трек HIR): намерение → событие → представление → честный статус транспорта; исходный текст не затирается, «сохранено локально» ≠ «доставлено». Открыть комнату." title="Дверь ·41 НАМЕРЕНИЕ: прототип рантайма намерений (трек HIR): намерение → событие → представление → честный статус транспорта; исходный текст не затирается, «сохранено локально» ≠ «доставлено». Открыть комнату."><i>·41</i><span>НАМЕРЕНИЕ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_39_КОЛОНКА.html" data-справка="Дверь ·42 КОЛОНКА: трек УМНАЯ КОЛОНКА (OMNISPEAKER-1): автономная амбиентная колонка дома — живой DAG-оркестратор, Policy Gate (PIN для critical), настоящий hash-chain аудит SHA-256, аппаратная приватность (микрик микрофона + механическая шторка камеры), VLAN-матрица, IaC-конфиги, карта 13 недель; абсолютный offline-first — в облако не ходит. Открыть комнату." title="Дверь ·42 КОЛОНКА: трек УМНАЯ КОЛОНКА (OMNISPEAKER-1): автономная амбиентная колонка дома — живой DAG-оркестратор, Policy Gate (PIN для critical), настоящий hash-chain аудит SHA-256, аппаратная приватность (микрик микрофона + механическая шторка камеры), VLAN-матрица, IaC-конфиги, карта 13 недель; абсолютный offline-first — в облако не ходит. Открыть комнату."><i>·42</i><span>КОЛОНКА</span></a>
+      <a class="дверь" href="ШТАБ_РЕВИЗИИ_31.html" data-справка="Дверь ·43 ШТАБ РЕВИЗИИ: штаб ревизий: карта тактов, уроки, хвосты — память инженерных ходов. Открыть комнату." title="Дверь ·43 ШТАБ РЕВИЗИИ: штаб ревизий: карта тактов, уроки, хвосты — память инженерных ходов. Открыть комнату."><i>·43</i><span>ШТАБ РЕВИЗИИ</span></a>
+      <a class="дверь" href="ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html" data-справка="Дверь ·44 ПУЛЬТ ТЕЛЕФОНА: пульт ЛАДОМ для телефона: кнопки дома в кармане, та же нить. Открыть комнату." title="Дверь ·44 ПУЛЬТ ТЕЛЕФОНА: пульт ЛАДОМ для телефона: кнопки дома в кармане, та же нить. Открыть комнату."><i>·44</i><span>ПУЛЬТ ТЕЛЕФОНА</span></a>
+      <a class="дверь" href="ДОКУМЕНТАЦИЯ.html" data-справка="Дверь ·45 ДОКУМЕНТАЦИЯ: инварианты с тестами, открытый код, данные и 200 языков. Открыть комнату." title="Дверь ·45 ДОКУМЕНТАЦИЯ: инварианты с тестами, открытый код, данные и 200 языков. Открыть комнату."><i>·45</i><span>ДОКУМЕНТАЦИЯ</span></a>
+      <a class="дверь" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html" data-справка="Дверь ·46 УСТАНОВКА: как поставить дом СИНГУЛЯР себе. Открыть комнату." title="Дверь ·46 УСТАНОВКА: как поставить дом СИНГУЛЯР себе. Открыть комнату."><i>·46</i><span>УСТАНОВКА</span></a>
+      <a class="дверь" href="ИНСТРУКЦИЯ_ДОМА.html" data-справка="Дверь ·47 ИНСТРУКЦИЯ ДОМА: как жить в доме: комнаты, нити, привычки — по-человечески. Открыть комнату." title="Дверь ·47 ИНСТРУКЦИЯ ДОМА: как жить в доме: комнаты, нити, привычки — по-человечески. Открыть комнату."><i>·47</i><span>ИНСТРУКЦИЯ ДОМА</span></a>
+      <a class="дверь" href="ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html" data-справка="Дверь ·48 ПРОТОКОЛ ЭКРАНА: протокол вывода дома на экран: честный старт и живые проверки. Открыть комнату." title="Дверь ·48 ПРОТОКОЛ ЭКРАНА: протокол вывода дома на экран: честный старт и живые проверки. Открыть комнату."><i>·48</i><span>ПРОТОКОЛ ЭКРАНА</span></a>
+      <a class="дверь" href="ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html" data-справка="Дверь ·49 ПОДДЕРЖАТЬ: как поддержать дом: фонд, реквизиты, честный отчёт. Открыть комнату." title="Дверь ·49 ПОДДЕРЖАТЬ: как поддержать дом: фонд, реквизиты, честный отчёт. Открыть комнату."><i>·49</i><span>ПОДДЕРЖАТЬ</span></a>
+      <a class="дверь" href="БИБЛИОТЕКИ/adapter-os/prototype/index.html" data-справка="Дверь ·51 ADAPTER-OS: мост-прототип adapter-os: дом как приложение поверх чужой ОС. Открыть комнату." title="Дверь ·51 ADAPTER-OS: мост-прототип adapter-os: дом как приложение поверх чужой ОС. Открыть комнату."><i>·51</i><span>ADAPTER-OS</span></a>
+      <a class="дверь" href="КОЛОНКА/prototype/index.html" data-справка="Дверь ·52 ПРОТОТИП КОЛОНКИ: прототип умной колонки OMNISPEAKER-1: автономный разум в комнате. Открыть комнату." title="Дверь ·52 ПРОТОТИП КОЛОНКИ: прототип умной колонки OMNISPEAKER-1: автономный разум в комнате. Открыть комнату."><i>·52</i><span>ПРОТОТИП КОЛОНКИ</span></a>
+      <a class="дверь" href="СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html" data-справка="Дверь ·53 СВЯЗЬ ЧЕЛОВЕКА: контур человеческой связи: P2P без серверов, E2EE, честные квитанции доставки. Открыть комнату." title="Дверь ·53 СВЯЗЬ ЧЕЛОВЕКА: контур человеческой связи: P2P без серверов, E2EE, честные квитанции доставки. Открыть комнату."><i>·53</i><span>СВЯЗЬ ЧЕЛОВЕКА</span></a>
+      <a class="дверь" href="СИНГУЛЯР_54_ПИР.html" data-справка="Дверь ·54 ПИР: живая связь без посредников: видео, звук, текст и экран напрямую между устройствами (WebRTC P2P); релеи — только рукопожатие; глухой режим — коды без сети. Открыть комнату." title="Дверь ·54 ПИР: живая связь без посредников: видео, звук, текст и экран напрямую между устройствами (WebRTC P2P); релеи — только рукопожатие; глухой режим — коды без сети. Открыть комнату."><i>·54</i><span>ПИР</span></a>
+      <a class="дверь" href="СИНГУЛЯР_43_ЕДИНОЕ_ОКНО_КОММУНИКАЦИИ.html" data-справка="Дверь ·55 ЕДИНОЕ ОКНО: единое окно коммуникации: карта средств и маршрутизатор намерений поверх дверей ·18–·26; смысл один — представления разные; внешние каналы честно помечены; доставку не заменяет. Открыть комнату." title="Дверь ·55 ЕДИНОЕ ОКНО: единое окно коммуникации: карта средств и маршрутизатор намерений поверх дверей ·18–·26; смысл один — представления разные; внешние каналы честно помечены; доставку не заменяет. Открыть комнату."><i>·55</i><span>ЕДИНОЕ ОКНО</span></a>
+      <a class="дверь" href="https://rtynbirf.github.io/" data-справка="Дверь ·56 МЕГА-ПЛЕЕР: отдельная дверь наружу: соседняя комната — автопилот просмотра МЕГА-ПЛЕЕР; каталог, плеер, живой RU-слой; открывается в новый лист, дом не рвёт просмотр. Открыть комнату." title="Дверь ·56 МЕГА-ПЛЕЕР: отдельная дверь наружу: соседняя комната — автопилот просмотра МЕГА-ПЛЕЕР; каталог, плеер, живой RU-слой; открывается в новый лист, дом не рвёт просмотр. Открыть комнату."><i>·56</i><span>МЕГА-ПЛЕЕР</span></a>
+      <a class="дверь" href="organism-living-prototype.html" data-справка="Дверь ·39 ОРГАНИЗМ: живой прототип интерфейса: колония частиц с геномом, мутация каждые 12 секунд, лаборатория поколения 1. Открыть комнату." title="Дверь ·39 ОРГАНИЗМ: живой прототип интерфейса: колония частиц с геномом, мутация каждые 12 секунд, лаборатория поколения 1. Открыть комнату."><i>·39</i><span>ОРГАНИЗМ</span></a>
+      <a class="дверь" href="ИНСТРУМЕНТЫ/растеризатор.html" data-справка="Дверь ·50 РАСТЕРИЗАТОР: инструмент: растеризация векторов дома в PNG на устройстве. Открыть комнату." title="Дверь ·50 РАСТЕРИЗАТОР: инструмент: растеризация векторов дома в PNG на устройстве. Открыть комнату."><i>·50</i><span>РАСТЕРИЗАТОР</span></a>
+    
+      <a class="дверь" href="КВАРТИРНИК/КВАРТИРНИК.html" data-справка="Дверь ·57 КВАРТИРНИК: вечер «Просто люби» RUVSON: караоке, 53 облика, 16 языков строк, суфлёр, ШИЛКА. Открыть комнату." title="Дверь ·57 КВАРТИРНИК: вечер «Просто люби» RUVSON: караоке, 53 облика, 16 языков строк, суфлёр, ШИЛКА. Открыть комнату."><i>·57</i><span>КВАРТИРНИК</span></a>
+      <a class="дверь" href="streaming.html" data-справка="Дверь ·58 ЛАКОРНИЯ: личный кинотеатр BL/GL: сам находит серии, мега-плеер с фолбэком источников. Открыть комнату." title="Дверь ·58 ЛАКОРНИЯ: личный кинотеатр BL/GL: сам находит серии, мега-плеер с фолбэком источников. Открыть комнату."><i>·58</i><span>ЛАКОРНИЯ</span></a>
+      <a class="дверь" href="metaplayer.html" data-справка="Дверь ·59 МЕТА-МЕГА: мета-мега-плеер: слой достоверности поверх каталога — распознавание источника, цепочка фолбэков. Открыть комнату." title="Дверь ·59 МЕТА-МЕГА: мета-мега-плеер: слой достоверности поверх каталога — распознавание источника, цепочка фолбэков. Открыть комнату."><i>·59</i><span>МЕТА-МЕГА</span></a>
+      <a class="дверь" href="singulyar-search-prototype.html" data-справка="Дверь ·60 КАРТА КАНАЛОВ: SINGULYAR SEARCH: карта всех каналов v2.0 — без исключений. Открыть комнату." title="Дверь ·60 КАРТА КАНАЛОВ: SINGULYAR SEARCH: карта всех каналов v2.0 — без исключений. Открыть комнату."><i>·60</i><span>КАРТА КАНАЛОВ</span></a>
+      <a class="дверь" href="ladom-prototype/index.html" data-справка="Дверь ·61 ЛАДОМ v0.1: первый прототип вечера «Просто люби» — предок ·31 ЛАДОМ. Открыть комнату." title="Дверь ·61 ЛАДОМ v0.1: первый прототип вечера «Просто люби» — предок ·31 ЛАДОМ. Открыть комнату."><i>·61</i><span>ЛАДОМ v0.1</span></a>
+      <a class="дверь" href="ladom-v2/index.html" data-справка="Дверь ·62 ЛАДОМ v0.2: прототип вечера v0.2.0 «Просто люби» — предок ·31 ЛАДОМ. Открыть комнату." title="Дверь ·62 ЛАДОМ v0.2: прототип вечера v0.2.0 «Просто люби» — предок ·31 ЛАДОМ. Открыть комнату."><i>·62</i><span>ЛАДОМ v0.2</span></a>
+      <a class="дверь" href="БИБЛИОТЕКИ/рантайм-намерений/prototype/index.html" data-справка="Дверь ·63 ПРОГОН ЯДРА: рантайм намерений: воспроизведение реальных прогонов ядра. Открыть комнату." title="Дверь ·63 ПРОГОН ЯДРА: рантайм намерений: воспроизведение реальных прогонов ядра. Открыть комнату."><i>·63</i><span>ПРОГОН ЯДРА</span></a>
+    </nav>
+  </section>
+  
+  
+  <!-- Такт v1.52.0 «ИОН» (слово владельца: «ИОН САМ РАЗЛЕТАЛСЯ НА ОСКОЛКИ»):
+       кристалл сам рассыпается на 52 двери-осколка и нити связей при приходе —
+       на лице дома двери и связи; касание ядра — СОБРАТЬ ион, повторное — РАССЫПАТЬ.
+       Двери-осколки открываются и перетаскиваются («куда поставил — там и стоит»). -->
+<section id="crystalTitle" aria-label="Титул: SINGULYAR — Ambient Intent Organism">
+    
+    <button id="crystalButton" class="кристалл-кнопка" type="button" aria-expanded="true"
+            aria-controls="осколкиСлой"
+            aria-label="Кристалл SINGULYAR — собрать осколки обратно">
+      <img id="crystalHero" src="./КРИСТАЛЛ.webp" width="500" height="420" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
+    </button>
+    <p class="тихо-подсказка" id="статусОсколков" aria-live="polite">ион сам рассыпается на 52 двери · касание — собрать · ещё касание — рассыпать</p>
+    <div id="осколкиСлой" class="осколки-слой" hidden></div>
+    <h1 class="sng-crystal-title" style="margin-top:6px">SINGULYAR</h1>
+    <p class="aio-sub">Ambient Intent Organism</p>
+    <div class="подчерк" aria-hidden="true"><i></i></div>
+    <p class="motto">Смысл один. Представление — твоё.</p>
+    <p class="тихо-подсказка" style="margin-top:2px"><b data-реестр="дверей">52</b> двери · <b data-реестр="песен">62</b> песни · <b data-реестр="языков">200</b> языков</p>
+    <div class="obj-row">
+      <a class="obj-chip" href="https://github.com/rtynbirf/singulyar/releases/download/v1.12/SINGULYAR_OS_v18_20_MODULES.html">Один файл.</a>
+      <a class="obj-chip" href="ИНСТРУКЦИЯ_УСТАНОВКИ.html">◇ Установить дом — 2 минуты</a>
+      <a class="obj-chip" href="СИНГУЛЯР_27_ФУНДАМЕНТ.html">Поёт без сети.</a>
+      <a class="obj-chip obj-chip-хозяин" href="СИНГУЛЯР_19_ЧЕЛОВЕК.html">Хозяин проекта — человек.</a>
+      <a class="obj-chip" href="СИНГУЛЯР_28_УЗЕЛ.html">Зал суверенного узла.</a>
+      <!-- pills по макету: границы тоньше, стекло, как на канонной картине -->
+    </div>
+
+    <section class="намерение-вход" aria-label="Единый вход намерения: Что хотите сделать? — Я сам">
+      <p class="намерение-вопрос">Что хотите сделать?</p>
+      <form id="намерениеФорма" class="намерение-форма" autocomplete="off">
+        <input id="намерениеВвод" class="намерение-ввод" type="text" enterkeyhint="go"
+               placeholder="одно намерение — своими словами" aria-label="Опишите намерение своими словами">
+        <button type="submit" class="намерение-кнопка" title="Спросить дом: где это делается">→</button>
+      </form>
+      <button type="button" id="яСам" class="намерение-сам" title="Открыть весь дом: все двери под рукой, ничего не спрятано">Я сам</button>
+      <div id="намерениеОтвет" class="намерение-ответ" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <script>
+  /* ДВЕРИ строит ядро SNG из манифеста (манифест — истина; ноль innerHTML).
+     Нить под капотом: на лице её нет — движок дома открывает по нити.
+     ЖИВАЯ НИТЬ (v1.39.0): пройденные двери светятся золотом, счёт пути —
+     в шапке дома. Визиты пишет само ядро при загрузке каждой комнаты. */
+  (function(){
+    function двери(){
+      try{
+        var SNG=window.SNG; if(!SNG||!SNG.карта) return;
+        var бокс=document.getElementById('двери'); if(!бокс) return;
+        var увидено={};
+        var визиты=SNG.визиты?SNG.визиты():{};
+        SNG.карта().forEach(function(строка){
+          строка.модули.forEach(function(m){
+            if(m.файл==='index.html'||увидено[m.файл]) return;
+            увидено[m.файл]=1;
+            var a=document.createElement('a'); a.className='дверь'; a.href=m.файл;
+            if(визиты[m.id]) a.classList.add('пройдена');
+            /* справка — не эхо ярлыка (v1.45.0): что за дверь и что внутри */
+            a.title='Дверь '+m.номер+' '+m.имя+': '+(m.кратко||'автономная комната дома')+'. Открыть комнату.';
+            var n=document.createElement('i'); n.textContent=m.номер;
+            var s=document.createElement('span'); s.textContent=m.имя;
+            a.appendChild(n); a.appendChild(s);
+            бокс.appendChild(a);
+          });
+        });
+        /* живой счёт: сколько дверей человек уже касался (хаб — лицо, не дверь) */
+        var пройдено=0;
+        SNG.модуль.forEach(function(m){ if(m.id!=='хаб'&&визиты[m.id]) пройдено++; });
+        /* v10.55 «ПОТОК»: счётчик дверей честный всегда, без условия «если гость уже
+           касался»: число из правды реестра (SG_РЕЕСТР/data-versions.json), фолбэк —
+           манифест ядра SNG.модуль; реестр доезжает позже — догоняем по событию */
+        var счётПравда=function(){
+          try{
+            var em=бокс.parentNode&&бокс.parentNode.querySelector('h2 em'); if(!em) return;
+            var всего=0;
+            SNG.модуль.forEach(function(m){ if(m.id!=='хаб') всего++; });
+            var честно=всего;
+            try{ if(window.SG_РЕЕСТР&&window.SG_РЕЕСТР.счётчики&&window.SG_РЕЕСТР.счётчики.дверей) честно=window.SG_РЕЕСТР.счётчики.дверей; }catch(е){}
+            em.textContent=честно+' дверей · каждая автономна'+(пройдено>0?' · пройдено '+пройдено:'');
+          }catch(е){}
+        };
+        счётПравда();
+        try{ window.addEventListener('sg-реестр-готов', счётПравда); }catch(е){}
+      }catch(e){}
+    }
+    function осколки(){
+      try{
+        var SNG=window.SNG; if(!SNG||!SNG.осколки||SNG.осколкиДвижок) return;
+        var кнопка=document.getElementById('crystalButton');
+        var слой=document.getElementById('осколкиСлой');
+        if(!кнопка||!слой||слой.dataset.осколки) return;
+        SNG.осколкиДвижок=SNG.осколки({
+          кнопка: кнопка,
+          слой: слой,
+          канвас: document.getElementById('crystalHero'),
+          статус: document.getElementById('статусОсколков')
+        });
+      }catch(e){}
+    }
+    function обе(){ двери(); осколки(); }
+    if(window.SNG) обе();
+    else{ var s=document.querySelector('script[src*="singulyar-modules"]'); if(s) s.addEventListener('load',обе); else document.addEventListener('DOMContentLoaded',обе); }
+  })();
+  </script>
+</main>
+  <script>
+  /* НАМЕРЕНИЕ (v1.44.0): спросить дом → двери-ответы; «Я сам» → нить Ариадны.
+     Инвариант I-11: full-режим не меньше simple — «Я сам» открывает весь дом.
+     Текст человека не хранится: ядро получает только факт (сколько нашлось).
+     Ноль сети. Подсказки накрывает ux-engine v9.4 (ПОДСКАЗКИ ВЕЗДЕ). */
+  (function(){
+    function готово(){
+      try{
+        var SNG=window.SNG; if(!SNG||!SNG.намерение) return;
+        var форма=document.getElementById('намерениеФорма');
+        var ввод=document.getElementById('намерениеВвод');
+        var ответ=document.getElementById('намерениеОтвет');
+        var сам=document.getElementById('яСам');
+        if(!форма||!ввод||!ответ||!сам) return;
+        форма.addEventListener('submit',function(ev){
+          ev.preventDefault();
+          var нашёл=SNG.намерение(ввод.value||'');
+          if(SNG.событие) SNG.событие('намерение','нашлось:'+нашёл.length);
+          while(ответ.firstChild) ответ.removeChild(ответ.firstChild);
+          if(!нашёл.length){
+            var p=document.createElement('p'); p.style.margin='0'; p.style.color='#8A9099';
+            p.textContent='Дом не знает таких слов — открой сам: двери все на месте.';
+            ответ.appendChild(p);
+          } else {
+            нашёл.forEach(function(д){
+              var a=document.createElement('a'); a.href=д.файл;
+              a.title='Дверь '+д.номер+' '+д.имя+': '+(д.кратко||'автономная комната дома')+'. Открыть комнату.';
+              var i=document.createElement('i'); i.textContent=д.номер;
+              var b=document.createElement('b'); b.textContent=д.имя;
+              var sp=document.createElement('span'); sp.textContent=д.кратко||'';
+              a.appendChild(i); a.appendChild(b); a.appendChild(sp);
+              ответ.appendChild(a);
+            });
+          }
+        });
+        сам.addEventListener('click',function(){
+          if(SNG.событие) SNG.событие('намерение','я сам');
+          var цель=document.getElementById('двериНаверх');
+          if(цель&&цель.scrollIntoView) цель.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+      }catch(e){}
+    }
+    if(window.SNG) готово();
+    else{ var sc=document.querySelector('script[src*="singulyar-modules"]');
+          if(sc) sc.addEventListener('load',готово);
+          else document.addEventListener('DOMContentLoaded',готово); }
+  })();
+  </script>
+<script>
+/* PWA: регистрация только при хостинге; на file:// офлайн и так полный */
+try{
+  var h = location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  if (h && 'serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw15.js').catch(function(){});
+  }
+}catch(e){}
+/* латка С147 «СТАЙЛ НЕ СТАРШЕ ЗАКОНА»: новый св-воркер встал контролёром — лицо
+   перезагружается само один раз (обновление, не первая установка), владелец
+   видит законную дверь сразу, а не законсервированный стейл; флаг гасит петлю */
+try{
+  if('serviceWorker' in navigator){
+    var __с147Была = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function(){
+      if(!__с147Была || window.__с147Готово) return;
+      window.__с147Готово = true;
+      location.reload();
+    });
+  }
+}catch(e){}
+</script>
+<script>
+/* СНГ:АРИАДНА v1.49.0 — поисковая машина дома. Слово владельца: «НА ЗАГЛАВНОЙ
+   СДЕЛАЙ ВМЕСТО ПРОИГРЫВАТЕЛЯ ПОИСКОВУЮ СТРОКУ И НАУЧИ НАШЕГО ПОДОПЕЧНОГО
+   ЕЁ ЮЗАТЬ». Эмерджентный синтез мировых практик поиска (намерение →
+   источники → честная неопределённость) с канонами дома: ищет ПО ДОМУ —
+   44 двери, 64 песни фонда, документы. Ноль сети, ноль innerHTML,
+   ноль эмодзи; всё в try — АРИАДНА не имеет права уронить лицо.
+   Музыка никуда не ушла: она живёт в дверях ·15 ·16 ·18 ·32. */
+(function(){
+  try{
+    var ввод=идЛи('ариаднаВвод'), искать=идЛи('ариаднаИскать'),
+        ответ=идЛи('ариаднаОтвет'), строка=идЛи('ариаднаСтрока');
+    if(!ввод||!искать||!ответ||!строка) return;
+
+    /* индекс дверей вшит из манифеста (сборка v1.49.0) — работает до грузки ядра */
+    var ДВЕРИ=[
+    { ид:'хаб', номер:'·00', имя:'ХАБ', файл:'index.html' },
+    { ид:'s01', номер:'·01', имя:'КОГДА ТЕРЯЕМ', файл:'СИНГУЛЯР_01_Когда_теряем_157_голосов.html' },
+    { ид:'s02r', номер:'·02', имя:'РЕЗОНАНС', файл:'СИНГУЛЯР_02_РЕЗОНАНС_Когда_теряем_157_голосов.html' },
+    { ид:'s02f', номер:'·02', имя:'ФАБРИКА', файл:'СИНГУЛЯР_02_ФАБРИКА_эмерджентная_архитектура.html' },
+    { ид:'s15', номер:'·15', имя:'ОРКЕСТРАТОР', файл:'СИНГУЛЯР_15_ОРКЕСТРАТОР.html' },
+    { ид:'s16', номер:'·16', имя:'СУФЛЁР', файл:'СИНГУЛЯР_16_СУФЛЁР.html' },
+    { ид:'s17', номер:'·17', имя:'ЗАЛ', файл:'СИНГУЛЯР_17_ЗАЛ.html' },
+    { ид:'s18', номер:'·18', имя:'СОБЫТИЕ', файл:'СИНГУЛЯР_18_СОБЫТИЕ.html' },
+    { ид:'s19', номер:'·19', имя:'ЧЕЛОВЕК', файл:'СИНГУЛЯР_19_ЧЕЛОВЕК.html' },
+    { ид:'s20', номер:'·20', имя:'ФОНЕТИКА', файл:'СИНГУЛЯР_20_ФОНЕТИКА.html' },
+    { ид:'s21', номер:'·21', имя:'ОБЩЕНИЕ', файл:'СИНГУЛЯР_21_ОБЩЕНИЕ.html' },
+    { ид:'s22', номер:'·22', имя:'СВЯЗЬ', файл:'СИНГУЛЯР_22_СВЯЗЬ.html' },
+    { ид:'s23', номер:'·23', имя:'КРУГ', файл:'СИНГУЛЯР_23_КРУГ.html' },
+    { ид:'s24', номер:'·24', имя:'ПОЧТА', файл:'СИНГУЛЯР_24_ПОЧТА.html' },
+    { ид:'s25', номер:'·25', имя:'КОШЕЛЁК', файл:'СИНГУЛЯР_25_КОШЕЛЁК.html' },
+    { ид:'s26', номер:'·26', имя:'ЛИНИЯ', файл:'СИНГУЛЯР_26_ЛИНИЯ.html' },
+    { ид:'s27', номер:'·27', имя:'ФУНДАМЕНТ', файл:'СИНГУЛЯР_27_ФУНДАМЕНТ.html' },
+    { ид:'s28', номер:'·28', имя:'УЗЕЛ', файл:'СИНГУЛЯР_28_УЗЕЛ.html' },
+    { ид:'s29', номер:'·29', имя:'СВОБОДА', файл:'СИНГУЛЯР_29_СВОБОДА.html' },
+    { ид:'s30', номер:'·30', имя:'ТКАНЬ', файл:'СИНГУЛЯР_30_ТКАНЬ.html' },
+    { ид:'s31', номер:'·31', имя:'ЛАДОМ', файл:'СИНГУЛЯР_31_ЛАДОМ.html' },
+    { ид:'s32', номер:'·32', имя:'СЦЕНА', файл:'СИНГУЛЯР_32_СЦЕНА.html' },
+    { ид:'s33', номер:'·33', имя:'ФОНД', файл:'СИНГУЛЯР_33_ФОНД.html' },
+    { ид:'s34', номер:'·34', имя:'ДОМ ФОНДА', файл:'СИНГУЛЯР_34_ДОМ_ФОНДА.html' },
+    { ид:'s35', номер:'·35', имя:'ВОПРОСЫ', файл:'СИНГУЛЯР_35_ВОПРОСЫ.html' },
+    { ид:'s36', номер:'·36', имя:'СЛОВАРЬ', файл:'СИНГУЛЯР_36_СЛОВАРЬ.html' },
+    { ид:'s37', номер:'·37', имя:'О ДОМЕ', файл:'СИНГУЛЯР_37_О_ДОМЕ.html' },
+    { ид:'s38', номер:'·38', имя:'ПУЛЬС', файл:'СИНГУЛЯР_38_ПУЛЬС.html' },
+    { ид:'s39', номер:'·39', имя:'ОРГАНИЗМ', файл:'organism-living-prototype.html' },
+    { ид:'s40', номер:'·40', имя:'ГАРМОНИЯ', файл:'harmonia-prototype.html' },
+    { ид:'s41', номер:'·41', имя:'НАМЕРЕНИЕ', файл:'hir-prototype.html' },
+    { ид:'s42', номер:'·42', имя:'КОЛОНКА', файл:'СИНГУЛЯР_39_КОЛОНКА.html' },
+    { ид:'s43', номер:'·43', имя:'ШТАБ РЕВИЗИИ', файл:'ШТАБ_РЕВИЗИИ_31.html' },
+    { ид:'s44', номер:'·44', имя:'ПУЛЬТ ТЕЛЕФОНА', файл:'ЛАДОМ_ПУЛЬТ_ТЕЛЕФОН.html' },
+    { ид:'s45', номер:'·45', имя:'ДОКУМЕНТАЦИЯ', файл:'ДОКУМЕНТАЦИЯ.html' },
+    { ид:'s46', номер:'·46', имя:'УСТАНОВКА', файл:'ИНСТРУКЦИЯ_УСТАНОВКИ.html' },
+    { ид:'s47', номер:'·47', имя:'ИНСТРУКЦИЯ ДОМА', файл:'ИНСТРУКЦИЯ_ДОМА.html' },
+    { ид:'s48', номер:'·48', имя:'ПРОТОКОЛ ЭКРАНА', файл:'ПРОТОКОЛ_ВЫВОДА_НА_ЭКРАН.html' },
+    { ид:'s49', номер:'·49', имя:'ПОДДЕРЖАТЬ', файл:'ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html' },
+    { ид:'s50', номер:'·50', имя:'РАСТЕРИЗАТОР', файл:'ИНСТРУМЕНТЫ/растеризатор.html' },
+    { ид:'s51', номер:'·51', имя:'ADAPTER-OS', файл:'БИБЛИОТЕКИ/adapter-os/prototype/index.html' },
+    { ид:'s52', номер:'·52', имя:'ПРОТОТИП КОЛОНКИ', файл:'КОЛОНКА/prototype/index.html' },
+    { ид:'s53', номер:'·53', имя:'СВЯЗЬ ЧЕЛОВЕКА', файл:'СИНГУЛЯР_53_СВЯЗЬ_ЧЕЛОВЕКА.html' },
+    { ид:'s54', номер:'·54', имя:'ПИР', файл:'СИНГУЛЯР_54_ПИР.html' },
+    { ид:'s55', номер:'·55', имя:'ЕДИНОЕ ОКНО', файл:'СИНГУЛЯР_43_ЕДИНОЕ_ОКНО_КОММУНИКАЦИИ.html' },
+    { ид:'s56', номер:'·56', имя:'МЕГА-ПЛЕЕР', файл:'https://rtynbirf.github.io/' },
+    { ид:'s57', номер:'·57', имя:'КВАРТИРНИК', файл:'КВАРТИРНИК/КВАРТИРНИК.html' },
+    { ид:'s58', номер:'·58', имя:'ЛАКОРНИЯ', файл:'streaming.html' },
+    { ид:'s59', номер:'·59', имя:'МЕТА-МЕГА', файл:'metaplayer.html' },
+    { ид:'s60', номер:'·60', имя:'КАРТА КАНАЛОВ', файл:'singulyar-search-prototype.html' },
+    { ид:'s61', номер:'·61', имя:'ЛАДОМ v0.1', файл:'ladom-prototype/index.html' },
+    { ид:'s62', номер:'·62', имя:'ЛАДОМ v0.2', файл:'ladom-v2/index.html' },
+    { ид:'s63', номер:'·63', имя:'ПРОГОН ЯДРА', файл:'БИБЛИОТЕКИ/рантайм-намерений/prototype/index.html' }
+    ];
+    var ПЕСНИ=[
+    ["1BZs_wUPn1s","Я сам себе судья"],
+    ["2g5n6B0bc2Q","Не вам жить мою жизнь"],
+    ["6woWDYcu1QY","Разгадка в небесах"],
+    ["8RRRYysSIHg","Суть проста"],
+    ["8zG2LBAn1AI","Не играй в любовь"],
+    ["9ys_TVEtda8","Просто люби"],
+    ["EFaMUciH3Do","Цени моменты"],
+    ["G7L2d0Z5xfY","Вера остаётся"],
+    ["GB31hcDi3lo","Гордость нас убивает"],
+    ["HupAWAt7CmQ","А время капает"],
+    ["JRTUNak53nU","Компас на Дом"],
+    ["KFnJwNv008s","Свет в темноте"],
+    ["KfKHWdiX3S4","Смысл жизни прост"],
+    ["KvzORszfsg8","Крик в тишине"],
+    ["LCADfnI8F-s","Действуй сейчас"],
+    ["LqMrrKqK3AE","Одиночество среди людей"],
+    ["M9o3ZIlhHrU","Люди в Масках"],
+    ["MSqK5ig-alE","Не Угасай"],
+    ["OHaRQj9PLUY","Дорога мой Учитель"],
+    ["PIyWwF0t4wQ","Остаться человеком"],
+    ["POiQQ21I5n0","Оставайся молодым"],
+    ["Qb8xb0vUYDg","Сборник Музыки со Смыслом"],
+    ["QpeYJU83XiQ","Жизнь не прощает"],
+    ["R0SOJreGbhM","Цени моменты"],
+    ["TRcxZ7jfPsA","Когда Теряем"],
+    ["TkmSZp1dfBE","Меня не сломать"],
+    ["TobJGYOPlnw","Остаться человеком"],
+    ["V-IaCbDUKao","Твоё плавание не вечно"],
+    ["VfnGUIhaK2Y","А что если да"],
+    ["VwoK5U0qOys","Сердце в Огне"],
+    ["WIrhIrDQvwY","Страх не слабость"],
+    ["WMU46n--Z-s","Не теряй шанс"],
+    ["X90mDPOhvKc","Когда погаснут огни"],
+    ["X_-M_cjCFVg","Когда ты удобен"],
+    ["Y7Wy_JBkz7A","Живи как умеешь"],
+    ["YaY-ZJVXFjI","Время как вода"],
+    ["_E91VEQ-8lM","Тишина спасает"],
+    ["_KwlGQNmC1Q","Ты одна дала"],
+    ["_PCJ6fMfeRM","Всё начинается с тебя"],
+    ["_gNbMCINv1Y","О чём мечтаешь ты"],
+    ["ahmGGM-P0CA","Начать сначала"],
+    ["b_36rlzEIKk","Ты Главный игрок"],
+    ["cFHsQ-LP3ns","Не тех мы ценим"],
+    ["d2b72nYLiT8","Не жди завтра"],
+    ["eA-fyeSkavI","Вне зоны доступа"],
+    ["eOMrrezWEZM","Код перемен"],
+    ["fJwb931iJVg","Живи сейчас"],
+    ["gMASVVNFr_A","Время покажет"],
+    ["kziwaat2nu4","Ангел без крыльев"],
+    ["lkXLeITEtGA","Тень ушедших"],
+    ["n5IFJ-g1Rtc","В чём смысл"],
+    ["pP3Kk2_FHbE","Цени время"],
+    ["pervLR9m-vk","Не спеши осуждать"],
+    ["pv3GAlLG9Lk","Нас учат потери"],
+    ["q57MLk0Uf9c","Неудача — не конец"],
+    ["rWpYxmFjm9g","Когда теряем (флагман ★)"],
+    ["shs0TiOwx-M","Где настоящее"],
+    ["t9h3cCPCKoo","А что если ДА"],
+    ["ugjp6iaNplo","Бой с собой"],
+    ["vUb40twffCI","Там где ты"],
+    ["yK2aPehxmK8","Пленники прошлого"],
+    ["z3RcsfHajP8","Я сам себе враг"],
+    
+    ["ZXimyVwjmts","Два голоса"],
+    ["0er7tqdMrqU","Куда летят года"]];
+    var СЛОВА_ДВЕРЕЙ={
+      s01:['теряем','157','голосов','гимн','флагман','когда теряем'],
+      s02r:['резонанс','эхо','отклик'],
+      s02f:['фабрика','эмерджентная','архитектура','сборка'],
+      s15:['оркестратор','музыка','плеер','минусовки','плейлист','играть'],
+      s16:['суфлёр','суфлер','текст','подсказка','слова песни'],
+      s17:['зал','сбор','встреча','холл'],
+      s18:['событие','календарь','дата'],
+      s19:['человек','личность','профиль','кто я'],
+      s20:['фонетика','звук','произношение','голос','буквы'],
+      s21:['общение','диалог','беседа','разговор'],
+      s22:['связь','канал','контакт','линия связи'],
+      s23:['круг','сообщество','люди','свои'],
+      s24:['почта','письмо','отправить','сообщение','конверт'],
+      s25:['кошелёк','кошелек','личный','банк','ладонь','мои деньги','хранить'],
+      s26:['линия','путь','траектория','маршрут'],
+      s27:['фундамент','основа','база','установка','фундамент дома'],
+      s28:['узел','нода','сервер','суверенитет','свой хост'],
+      s29:['свобода','воля','независимость','свободный'],
+      s30:['ткань','сеть','структура','переплетение'],
+      s31:['ладом','здоровье','томограф','страховка','диагностика','проверка','живой запуск'],
+      s32:['сцена','караоке','петь','поёт','поет','пение','песня','песни','музыка','очки','темп','минусовка','спеть'],
+      s33:['фонд','общак','деньги','биткоин','btc','монета','пожертвовать','донат','поддержать','сатоши','баланс','цепь','кошелёк дома','кошелек дома'],
+      s34:['дом фонда','хелена','келлер','кесслер','keller','устав','хартия','права жертвователя','независимость','наследие','миссия','наш фонд'],
+      s35:['вопрос','вопросы','ответы','faq','спросить','частые вопросы','как установить','почему'],
+      s36:['словарь','глоссарий','термин','термины','что такое','значение','определение'],
+      s37:['о доме','о проекте','что это','для кого','объясни','введение','с чего начать','попробовать'],
+      s38:['пульс','версии','реестр','кэш','обновление','статус','здоровье дома','диагностика дома'],
+      s39:['организм','живой интерфейс','колония','частицы','геном','мутация','эволюция','лаборатория','прототип','поколение'],
+      s56:['мега','плее','мегаплеер','смотреть','фильм','фильмы','сериал','лакорн','bl','gl','автопилот','каталог','просмотр','кино','видео']
+    };
+    var ДОКИ=[
+      {файл:'ДОКУМЕНТАЦИЯ.html',номер:'¶',имя:'Документация дома',ключи:['документация','инварианты','доки','тесты','код','i-01','i-11']},
+      {файл:'ФОНД/УСТАВ_ФОНДА.md',номер:'¶',имя:'Устав фонда',ключи:['устав','юрлицо','правила фонда','редакция','хартия']},
+      {файл:'ДОКУМЕНТЫ/ПОДДЕРЖАТЬ.html',номер:'¶',имя:'Поддержать дом',ключи:['поддержать','помочь','взнос','донат']},
+      {файл:'ИНСТРУКЦИЯ_УСТАНОВКИ.html',номер:'¶',имя:'Инструкция установки',ключи:['установить','pwa','на телефон','домашний экран','офлайн']}
+    ];
+
+    /* чистое ядро поиска — наружу для сторожей (паттерн дома: S32_ЯДРО) */
+    window.АРИАДНА_ЯДРО = { цели:цели, ищи:ищи, норм:норм, лев:лев };
+    function идЛи(х){ return document.getElementById(х); }
+    function норм(т){ return String(т||'').toLowerCase().replace(/ё/g,'е'); }
+    function лев(а,б){                                  // Левенштейн честным DP (слова короткие)
+      if(а===б) return 0;
+      var н=а.length, к=б.length;
+      if(!н) return к; if(!к) return н;
+      var прошлый=[], текущий=[];
+      for(var j=0;j<=к;j++) прошлый[j]=j;
+      for(var i=1;i<=н;i++){
+        текущий[0]=i;
+        for(j=1;j<=к;j++){
+          текущий[j]=Math.min(прошлый[j]+1, текущий[j-1]+1, прошлый[j-1]+(а[i-1]===б[j-1]?0:1));
+        }
+        var т=прошлый; прошлый=текущий; текущий=т;
+      }
+      return прошлый[к];
+    }
+    /* цели поиска: двери + песни + доки */
+    function цели(){
+      var ц=[];
+      ДВЕРИ.forEach(function(д){
+        if(д.файл==='index.html') return;
+        var ключи=(СЛОВА_ДВЕРЕЙ[д.ид]||[]).slice();
+        ключи.push(норм(д.имя));
+        ц.push({файл:д.файл, ярлык:д.номер+' '+д.имя, ключи:ключи.map(норм), номер:д.номер, имя:д.имя});
+      });
+      ПЕСНИ.forEach(function(п){
+        ц.push({файл:'СИНГУЛЯР_32_СЦЕНА.html', ярлык:'·32 СЦЕНА — песня «'+п[1]+'»', ключи:[норм(п[1])], номер:'·32', имя:п[1], песня:true});
+      });
+      ДОКИ.forEach(function(д){
+        ц.push({файл:д.файл, ярлык:д.номер+' '+д.имя, ключи:д.ключи.map(норм), номер:д.номер, имя:д.имя});
+      });
+      return ц;
+    }
+    function ищи(запрос){
+      var з=норм(запрос).trim();
+      if(!з) return {понял:'', результат:[], пусто:true};
+      var токены=з.split(/\s+/).filter(function(т){return т.length>=2;});
+      if(!токены.length) return {понял:'', результат:[], пусто:true};
+      var список=цели(), найдено=[];
+      список.forEach(function(цель){
+        var счёт=0, покрыто=0, почему=[];
+        токены.forEach(function(т){
+          var удар=0;
+          for(var i=0;i<цель.ключи.length;i++){
+            var кл=цель.ключи[i];
+            if(кл===т){удар=5;почему.push(т);break;}
+            if(кл.indexOf(т)!==-1){удар=Math.max(удар,4);почему.push(т);continue;}
+            if(т.length>=5){
+              var слова=кл.split(' ');
+              for(var w=0;w<слова.length;w++){
+                if(лев(т,слова[w])<=1){удар=Math.max(удар,4);почему.push(т);}
+              }
+            }
+          }
+          if(удар>0) покрыто++;
+          счёт+=удар;
+        });
+        if(з.length>=4 && (цель.ключи.some(function(кл){return кл.indexOf(з)!==-1;})||норм(цель.имя).indexOf(з)!==-1)) счёт+=6;
+        if(счёт>=4 && покрыто>0){
+          найдено.push({цель:цель, счёт:счёт, почему:Array.from(new Set(почему)).slice(0,3)});
+        }
+      });
+      найдено.sort(function(а,б){return б.счёт-а.счёт;});
+      return {понял:токены.join(' '), результат:найдено.slice(0,3), пусто:найдено.length===0};
+    }
+    var ПРИМЕРЫ=['где деньги дома','как поёт дом','что за фонд','здоровье','почта'];
+    function чип(родитель, текст){
+      var ч=document.createElement('button');
+      ч.type='button'; ч.className='ариадна-чип'; ч.textContent=текст;
+      ч.addEventListener('click',function(){
+        try{ ввод.value=текст; вести(); ввод.focus(); }catch(е2){}
+      });
+      родитель.appendChild(ч);
+    }
+    function веди(запрос){
+      try{
+        ответ.hidden=false;
+        ответ.textContent='';
+        var р=ищи(запрос);
+        if(!р.понял){
+          строка.textContent='АРИАДНА: спроси дом — веду к двери · ноль сети';
+          var п0=document.createElement('p'); п0.className='ариадна-поняла';
+          п0.textContent='скажи слово — я приведу к двери. Например:';
+          ответ.appendChild(п0);
+          var чипы=document.createElement('div'); чипы.className='ариадна-чипы';
+          ПРИМЕРЫ.forEach(function(п){ чип(чипы,п); });
+          ответ.appendChild(чипы);
+          return;
+        }
+        var пон=document.createElement('p'); пон.className='ариадна-поняла';
+        пон.textContent='АРИАДНА поняла: «'+р.понял+'»'+(р.пусто?' — таких дверей в доме нет, и я не притворяюсь:':' — веду:');
+        ответ.appendChild(пон);
+        if(!р.пусто){
+          var вывод=document.createElement('div'); вывод.className='ариадна-вывод';
+          р.результат.forEach(function(н){
+            var сс=document.createElement('a'); сс.href=н.цель.файл;
+            var ном=document.createElement('span'); ном.className='к-номер'; ном.textContent=н.цель.номер;
+            сс.appendChild(ном);
+            сс.appendChild(document.createTextNode(н.цель.имя));
+            var поч=document.createElement('span'); поч.className='к-почему';
+            поч.textContent='нить привела по: '+н.почему.join(', ')+' · '+н.цель.файл;
+            сс.appendChild(поч);
+            вывод.appendChild(сс);
+          });
+          ответ.appendChild(вывод);
+          строка.textContent='АРИАДНА: веду к '+р.результат.length+' двер'+(р.результат.length===1?'и':'ям')+' · ноль сети';
+        }else{
+          строка.textContent='АРИАДНА: в доме такого нет — спроси иначе · ноль сети';
+          var под=document.createElement('p'); под.className='ариадна-поняла';
+          под.textContent='попробуй ещё или открой «⌇ нить» — там все двери дома. Например:';
+          ответ.appendChild(под);
+        }
+        var чипы=document.createElement('div'); чипы.className='ариадна-чипы';
+        ПРИМЕРЫ.forEach(function(п){ чип(чипы,п); });
+        ответ.appendChild(чипы);
+      }catch(е1){}
+    }
+    искать.addEventListener('click',function(){ try{ веди(ввод.value); }catch(е3){} });
+    ввод.addEventListener('keydown',function(событие){
+      try{ if(событие.key==='Enter'){ событие.preventDefault(); веди(ввод.value); } }catch(е4){}
+    });
+    /* живая справка от пульта: перенос data-справки кнопки в title, как у ключей пульта */
+    try{
+      var т=искать.getAttribute('data-справка')||'';
+      if(т) искать.setAttribute('title',т);
+    }catch(е5){}
+  }catch(е0){}
+})();
+</script>
+<script defer src="./singulyar-modules.js"></script>
+<script defer src="./singulyar-ux-engine-v9.js"></script>
+<script defer src="./js/sg-registry.js"></script>
+<script id="нитевой-жгут">
+/* v10.53 «ОРГАНИЗМ»: мёртвая кнопка «⌇ нить» воскресла — нить Ариадны
+   открывается одной кнопкой: раскрыть, доскроллить, отдать фокус. */
+(function(){
+  var кн = document.getElementById('пультНить');
+  if(!кн || кн.getAttribute('data-жгут')) return;
+  кн.setAttribute('data-жгут', '1');
+  кн.addEventListener('click', function(){
+    var нить = document.getElementById('модули');
+    if(!нить) return;
+    var плавно = true;
+    try { плавно = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(_){}
+    if(нить.tagName === 'DETAILS' && !нить.open) нить.open = true;
+    try { нить.scrollIntoView({behavior: плавно ? 'smooth' : 'auto', block: 'start'}); }
+    catch(_) { try { нить.scrollIntoView(); } catch(_2){} }
+    кн.setAttribute('aria-expanded', 'true');
+    var заг = нить.querySelector('summary');
+    if(заг){ try { заг.focus({preventScroll:true}); } catch(_){ заг.focus(); } }
+  });
+})();
+</script>
+
+<script>
+/* SG65: хэш #sg65doors — раскрыть нить дверей дома (приход «· ВСЕ ДВЕРИ» из ЛАДОМ) */
+try{
+function sg65раскрыть(){
+  var t=document.getElementById('двериНаверх'); if(!t) return;
+  setTimeout(function(){ try{ t.scrollIntoView({behavior:'smooth',block:'start'}); }catch(_){} },250);
+}
+if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.addEventListener('hashchange', function(){ if(location.hash==='#sg65doors') sg65раскрыть(); }); }
+}catch(e){}
+</script>
+
+<!-- Такт v1.54.0 «УДОБНО КАЖДОМУ»: панель предпочтений человека.
+     Выбор помнится на устройстве (kv.удобно), 0 сети; Esc и «Готово» закрывают. -->
+<button type="button" id="удобноКнопка" class="уд-кнопка" aria-haspopup="dialog" aria-expanded="false" aria-controls="удобно"
+        title="Сделать дом удобным: текст, контраст, движение, крупные двери">Удобно</button>
+<div id="удобно" class="уд-панель" role="dialog" aria-modal="true"
+     aria-label="Сделать дом удобным: текст, контраст, движение, крупные двери" hidden>
+  <h2>Сделать удобным</h2>
+  <p class="уд-пояс">Глаза и руки у всех разные. Выбор помнится на этом устройстве — ноль сети, ноль облаков.</p>
+  <div class="уд-ряд">
+    <span class="уд-имя">Крупный текст<small>шрифт +2 пикселя</small></span>
+    <button type="button" class="уд-вкл" id="удТекстКрупно" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Огромный текст<small>шрифт +4 пикселя</small></span>
+    <button type="button" class="уд-вкл" id="удТекстОгромно" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Высокий контраст<small>белый текст, яркое золото</small></span>
+    <button type="button" class="уд-вкл" id="удКонтраст" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Крупные двери<small>пилюли и цели нажатия больше</small></span>
+    <button type="button" class="уд-вкл" id="удКрупно" aria-pressed="false">выкл</button>
+  </div>
+  <div class="уд-ряд">
+    <span class="уд-имя">Спокойное движение<small>кристалл собран без спектакля</small></span>
+    <button type="button" class="уд-вкл" id="удТихо" aria-pressed="false">выкл</button>
+  </div>
+  <p class="уд-статус" id="удСтатус" aria-live="polite"></p>
+  <div class="уд-хвост">
+    <button type="button" id="удСброс" class="уд-вкл" title="Забыть мой выбор на этом устройстве">Забыть</button>
+    <button type="button" id="удГотово" class="уд-вкл">Готово</button>
+  </div>
+</div>
+<script>
+(function(){
+  var КЛЮЧ='kv.удобно';
+  var кн=document.getElementById('удобноКнопка'); if(!кн) return;
+  var п=document.getElementById('удобно'); if(!п) return;
+  var статус=document.getElementById('удСтатус');
+  var Б={
+    'удТекстКрупно':  {к:'текст', з:'крупно',  имя:'Крупный текст'},
+    'удТекстОгромно': {к:'текст', з:'огромно', имя:'Огромный текст'},
+    'удКонтраст':     {к:'контраст', з:true,   имя:'Высокий контраст'},
+    'удКрупно':       {к:'крупно',   з:true,   имя:'Крупные двери'},
+    'удТихо':         {к:'тихо',     з:true,   имя:'Спокойное движение'}
+  };
+  function чит(){ try{ return JSON.parse(localStorage.getItem(КЛЮЧ)||'{}') }catch(e){ return {} } }
+  function пиш(с){ try{ localStorage.setItem(КЛЮЧ, JSON.stringify(с)) }catch(e){} }
+  function класс(имя,вкл){ document.documentElement.classList.toggle(имя, !!вкл) }
+  function применить(с){
+    класс('уд-текст-крупно', с.текст==='крупно');
+    класс('уд-текст-огромно', с.текст==='огромно');
+    класс('уд-контраст', !!с.контраст);
+    класс('уд-крупно', !!с.крупно);
+    класс('уд-тихо', !!с.тихо);
+  }
+  function отразить(с){
+    Object.keys(Б).forEach(function(к){
+      var б=Б[к], эл=document.getElementById(к); if(!эл) return;
+      var вкл = (б.к==='текст') ? (с.текст===б.з) : !!с[б.к];
+      эл.setAttribute('aria-pressed', вкл?'true':'false');
+      эл.textContent = вкл?'вкл':'выкл';
+    });
+  }
+  function нажать(к){
+    var с=чит(), б=Б[к], было;
+    if(б.к==='текст'){ было=(с.текст===б.з); с.текст = было?null:б.з; }
+    else { было=!!с[б.к]; с[б.к]=!было; }
+    if(!с.текст) delete с.текст;
+    пиш(с);
+    if(б.к==='тихо'){ window.SNG_ТИХО=!было; }
+    применить(с); отразить(с);
+    if(статус) статус.textContent = б.имя + (было?' выключено':' включено') +
+      (б.к==='тихо' ? ' · страница обновится сама' : ' · запомнено на устройстве');
+    if(б.к==='тихо'){ setTimeout(function(){ location.reload() }, 500); }
+  }
+  function открыть(){ п.hidden=false; кн.setAttribute('aria-expanded','true');
+    var п1=п.querySelector('button'); if(п1) п1.focus(); }
+  function закрыть(){ п.hidden=true; кн.setAttribute('aria-expanded','false'); кн.focus(); }
+  кн.addEventListener('click', function(){ п.hidden?открыть():закрыть(); });
+  Object.keys(Б).forEach(function(к){
+    var эл=document.getElementById(к);
+    if(эл) эл.addEventListener('click', function(){ нажать(к); });
+  });
+  var г=document.getElementById('удГотово'); if(г) г.addEventListener('click', закрыть);
+  var сб=document.getElementById('удСброс');
+  if(сб) сб.addEventListener('click', function(){
+    var был=чит().тихо;
+    try{ localStorage.removeItem(КЛЮЧ) }catch(e){}
+    window.SNG_ТИХО=false;
+    применить({}); отразить({});
+    if(статус) статус.textContent='выбор забыт — дом в каноне';
+    if(был) setTimeout(function(){ location.reload() }, 600);
+  });
+  document.addEventListener('keydown', function(e){ if((e.key==='Escape'||e.key==='Esc')&&!п.hidden) закрыть(); });
+  /* фокус-ловушка диалога (ARIA APG): Tab не убегает за панель */
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Tab'||п.hidden) return;
+    var bs=[].filter.call(п.querySelectorAll('button'),function(b){return !b.disabled});
+    if(!bs.length) return;
+    var п1=bs[0], посл=bs[bs.length-1];
+    if(e.shiftKey&&document.activeElement===п1){ e.preventDefault(); посл.focus(); }
+    else if(!e.shiftKey&&document.activeElement===посл){ e.preventDefault(); п1.focus(); }
+  });
+  /* у рубильника имя настройки — не «вкл/выкл» (SR: «Крупный текст, кнопка выключено») */
+  Object.keys(Б).forEach(function(к){ var эл=document.getElementById(к);
+    if(эл) эл.setAttribute('aria-label', Б[к].имя); });
+  отразить(чит());
+})();
+</script>
+
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.65</span> «<span data-реестр="такт">НАСТОЯЩАЯ БРОНЗА</span>» · кэш <span data-реестр="кэш">v226</span></div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Древнескандинавский · КОД: non · ГРУППА 6 · язык 02 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: нормализованная орфография XIII в. (стиль Старшей Эдды); skjár «экран» — прозрачное окно.
+
+01. Já, þetta er framrás: vér byggjum net vitra greina, búð á Marsi, byggjum gerviheim, kveikjum á eilífri blómun við einum stroki ok fáum allt í senn. Megum vér þetta.
+[яу, тэтта эр фрамраус: вэр бёгйум нет витра грейна, буд ау марси, бёгйум гервихейм, квейкйум ау эйливри бломун вид эйнум строки ок фаум аллт и сенн. мегум вэр тэтта]
+
+02. Vér höfum komit til endamarka langvillra vilja — í heimi án hléa ok án fjarlægða.
+[вэр хёвум комит тиль эндамарка лангвилра вилйа — и хейми ан хлеуа ок ан фьярлэгда]
+
+03. Allt hefir orðit nærri ok skjótara, en inni í brjósti er orðit þagnara.
+[аллт хэвир ортит найрри ок скёутара, эн инни и брйости эр ортит тагнара]
+
+04. Vér fljúgum skjótara en skjótast, skiptum lykilorðum; vér höfum sjálfir gleymt okkar hlutverkum.
+[вэр флйюум скёутара эн скёутаст, скиптум люкилортум; вэр хёвум сйаулвир глеймт оккар хлутверкум]
+
+05. En svaraðu mér, horfandi í þennan skjá: hvar er nú hitt eina sanna?
+[эн свара́ду меир, хотранди и тэннан скйау: хвар эр ну хитт эйна санна?]
+
+06. Hér eða þar — hvar lyktr várrigns, hvar gras vex í vári? Hitt sanna býr eigi einungis í höfði.
+[хер эда тар — хвар люктр ваурригнс, хвар грас векс и ваури? хитт санна бюр эйги эйнунгис и хёвди]
+
+07. Vér vitum nær allt þess, er vita má. En hvar er hitt sanna? Hvar skal leita þess?
+[вэр витум найр аллт тесс, эр вита мау. эн хвар эр хитт санна? хвар скал лейта тесс?]
+
+08. Í stein hafa þeir snerit öllu, sem luktist vársins, ok mæla lífið í fjölda skilaboða.
+[и стейн хава тейр снейрит осёллу, сем луктист ваурсинс, ок мэла лифид и фйолда склабода]
+
+09. Vér sofnum með skjánum ok vaknum með honum; vér erum fastir í hveli sjálfstýringar.
+[вэр софнум мед скйаунум ок вакнум мед хонум; вэр эрум фастир и хвеле сйаулвстюрингар]
+
+10. Vér lærðum að eyða fjarlægð, en ekki einsemd — og vér heyrum sjaldnar hvor annan.
+[вэр лэиртум ад эйда фьярлэгд, эн екки эйнсемд — ог вэр хейрум сйалднар хвор аннан]
+
+11. Minnist þú, þá er nótt var nótt, og vér þögnuðum einfaldlega, og heppnin var ekki sótt sem skrá?
+[миннист ту, та эр ноутт вар ноутт, ог вэр тёгнудум эйнфалдлега, ог хеппнин вар екки соутт сем скау?]
+
+12. Og ef eitt sinn slokknar ljósið í skjánum — segðu mér: hvar er hitt sanna? Hér eða þar?
+[ог эф эйтт синн слоккнар лйоусид и скйаунум — сегду меир: хвар эр хитт санна? хер эда тар?]
+
+───
+СЛОВАРЬ МАЛЫША (non):
+настоящее → hitt sanna [хитт санна]
+экран → skjár [скйаур]
+дождь → regn / várrign [регн / ваурригн]
+весна → vár [ваур]
+трава → gras [грас]
+бетон → steinn (камень) [стейнн]
+уведомление → skilaboð (послание) [склабо́д]
+пароль → lykilorð (слово-ключ) [люкилорт]
+ночь → nótt [ноутт]
+одиночество → einsemd [эйнсемд]
+счастье → heppni [хеппни]
+где? → hvar [хвар]
+где настоящее? → hvar er hitt sanna? [хвар эр хитт санна?]

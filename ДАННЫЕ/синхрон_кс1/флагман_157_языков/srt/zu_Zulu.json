@@ -1,0 +1,494 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "zu_Zulu",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/zu_Zulu.srt",
+ "юниты": [
+  {
+   "text": "[umculo]",
+   "startMs": 1309,
+   "endMs": 3329,
+   "level": "line"
+  },
+  {
+   "text": "Ubusuku obusha esitolo sekhofi",
+   "startMs": 13200,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Inkungu ejiyile iyawachitha amakhaya. [umculo]",
+   "startMs": 15480,
+   "endMs": 19705,
+   "level": "line"
+  },
+  {
+   "text": "Ngizulazula ezindaweni lapho kukhona khona izinkumbulo",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "kungenza ngihlanye",
+   "startMs": 23080,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "Kuphi entwasahlobo efudumele",
+   "startMs": 26400,
+   "endMs": 32095,
+   "level": "line"
+  },
+  {
+   "text": "Ubusika bumboza umphefumulo",
+   "startMs": 29040,
+   "endMs": 33320,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 32095,
+   "endMs": 36760,
+   "level": "line"
+  },
+  {
+   "text": "Lapho impilo indiza khona njengomcibisholo, izinsuku ezedlule, ezedlule",
+   "startMs": 33320,
+   "endMs": 38645,
+   "level": "line"
+  },
+  {
+   "text": "thina",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 38645,
+   "endMs": 43080,
+   "level": "line"
+  },
+  {
+   "text": "Saqongelela amaphepha, sikhohlwa ukuthi kungani",
+   "startMs": 39160,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "siphila",
+   "startMs": 43080,
+   "endMs": 45520,
+   "level": "line"
+  },
+  {
+   "text": "Futhi kwakubonakala njalo, [umculo]",
+   "startMs": 45720,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "kusekhona umsindo ka-C ngaphambili",
+   "startMs": 47240,
+   "endMs": 52200,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 52400,
+   "endMs": 54560,
+   "level": "line"
+  },
+  {
+   "text": "Isikhathi esibolekiwe nje",
+   "startMs": 52600,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "akaniki lutho",
+   "startMs": 54560,
+   "endMs": 58520,
+   "level": "line"
+  },
+  {
+   "text": "Futhi ngokuzumayo [umculo] uwela enhliziyweni yami",
+   "startMs": 59240,
+   "endMs": 64440,
+   "level": "line"
+  },
+  {
+   "text": "iqhwa elibandayo",
+   "startMs": 61800,
+   "endMs": 68960,
+   "level": "line"
+  },
+  {
+   "text": "Sifunda ukwazisa [umculo] uma silahlekelwa",
+   "startMs": 64440,
+   "endMs": 72200,
+   "level": "line"
+  },
+  {
+   "text": "lapho ukukhanya kothile kucima ngemuva komnyango",
+   "startMs": 68960,
+   "endMs": 74670,
+   "level": "line"
+  },
+  {
+   "text": "Siphakamisa izandla ngemva kwezitimela ezihambayo, sizama",
+   "startMs": 72200,
+   "endMs": 75240,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 74670,
+   "endMs": 78320,
+   "level": "line"
+  },
+  {
+   "text": "Cela impendulo esikhathini esidlule",
+   "startMs": 75240,
+   "endMs": 81920,
+   "level": "line"
+  },
+  {
+   "text": "Sifunda ukuthanda uma kubanda, [umculo]",
+   "startMs": 78320,
+   "endMs": 85000,
+   "level": "line"
+  },
+  {
+   "text": "uma kukhona umlotha ezandleni zakho, hhayi insimbi. MAYELANA",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "ukube nje bengazi kusengaphambili, [umculo]",
+   "startMs": 85000,
+   "endMs": 90000,
+   "level": "line"
+  },
+  {
+   "text": "ukuthi lokhu okusobala kuzobuhlungu kanjani emphefumulweni",
+   "startMs": 86360,
+   "endMs": 91840,
+   "level": "line"
+  },
+  {
+   "text": "ukudabuka",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Akazange athi, [umculo] akazange agonane, wayengenaso isikhathi",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Lesi yisisusa saphakade",
+   "startMs": 94320,
+   "endMs": 101120,
+   "level": "line"
+  },
+  {
+   "text": "Ngigcinele konke ukuze ngikwenzele kamuva, inhliziyo yami ayithandi abanye",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "kuvuliwe. [umculo]",
+   "startMs": 101120,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Silwa nesithunzi",
+   "startMs": 104000,
+   "endMs": 106520,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 106111,
+   "endMs": 110480,
+   "level": "line"
+  },
+  {
+   "text": "sishiswa yizinto ezincane ezingenalutho",
+   "startMs": 106520,
+   "endMs": 113316,
+   "level": "line"
+  },
+  {
+   "text": "Futhi awukwazi ukubona ukuthi iqhwa lihlala kanjani",
+   "startMs": 110480,
+   "endMs": 113880,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 113316,
+   "endMs": 116960,
+   "level": "line"
+  },
+  {
+   "text": "emahlombe ethu",
+   "startMs": 113880,
+   "endMs": 119211,
+   "level": "line"
+  },
+  {
+   "text": "Kodwa injabulo ayikho ekukhanyeni kwefasitela lesitolo",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "[umculo] hhayi ngenqwaba yezincwadi, kodwa ngokuthula",
+   "startMs": 119211,
+   "endMs": 125040,
+   "level": "line"
+  },
+  {
+   "text": "iqiniso lezihlobo, ekufudumaleni kwazo phakathi kweziphepho. Kodwa",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "sikwazisa kuphela lokho [umculo] osuvele uyikho",
+   "startMs": 125040,
+   "endMs": 129920,
+   "level": "line"
+  },
+  {
+   "text": "akunakwenzeka ukubuya",
+   "startMs": 126880,
+   "endMs": 132600,
+   "level": "line"
+  },
+  {
+   "text": "Ukuqhubeka kwami ​​​​isikhathi eside",
+   "startMs": 129920,
+   "endMs": 135760,
+   "level": "line"
+  },
+  {
+   "text": "futhi ngokuvamile [umculo] uyindlela engenamsebenzi",
+   "startMs": 132600,
+   "endMs": 140280,
+   "level": "line"
+  },
+  {
+   "text": "sifunda ukwazisa lapho silahlekelwa [umculo]",
+   "startMs": 135760,
+   "endMs": 143480,
+   "level": "line"
+  },
+  {
+   "text": "lapho ukukhanya kothile kucima ngemuva komnyango",
+   "startMs": 140280,
+   "endMs": 145880,
+   "level": "line"
+  },
+  {
+   "text": "Sivayizela izitimela ezihambile ngemva komculo",
+   "startMs": 143480,
+   "endMs": 149520,
+   "level": "line"
+  },
+  {
+   "text": "uzama ukucela impendulo esikhathini esidlule",
+   "startMs": 145880,
+   "endMs": 153160,
+   "level": "line"
+  },
+  {
+   "text": "Sifunda ukuthanda [umculo] uma usupholile",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "lapho kukhona umlotha ezintendeni zezandla, [umculo] hhayi",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "insimbi. MAYELANA",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "Ukube nje bengazi kusengaphambili ukuthi kuzokhala kanjani",
+   "startMs": 156160,
+   "endMs": 163040,
+   "level": "line"
+  },
+  {
+   "text": "lokhu kudabuka okusobala emphefumulweni",
+   "startMs": 159200,
+   "endMs": 165061,
+   "level": "line"
+  },
+  {
+   "text": "Biza abantu abadala, ubagone",
+   "startMs": 163040,
+   "endMs": 165480,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 165061,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "ngenkathi ukushaya kwenhliziyo kushaya",
+   "startMs": 165480,
+   "endMs": 169000,
+   "level": "line"
+  },
+  {
+   "text": "Makudlule izikhalazo, ngisekela lokhu namuhla",
+   "startMs": 169440,
+   "endMs": 174231,
+   "level": "line"
+  },
+  {
+   "text": "Ngiyathandaza",
+   "startMs": 172400,
+   "endMs": 175080,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 174231,
+   "endMs": 178280,
+   "level": "line"
+  },
+  {
+   "text": "Ngoba zonke izingoma zinesiphelo",
+   "startMs": 175080,
+   "endMs": 180127,
+   "level": "line"
+  },
+  {
+   "text": "ekugcineni, eyodwa",
+   "startMs": 178280,
+   "endMs": 181320,
+   "level": "line"
+  },
+  {
+   "text": "[ukucula]",
+   "startMs": 180127,
+   "endMs": 184680,
+   "level": "line"
+  },
+  {
+   "text": "Thina [umculo] sihlala sikhumbula izenzakalo ezibalulekile",
+   "startMs": 181320,
+   "endMs": 186022,
+   "level": "line"
+  },
+  {
+   "text": "sihlala sikhohliwe",
+   "startMs": 184680,
+   "endMs": 187280,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 186022,
+   "endMs": 191760,
+   "level": "line"
+  },
+  {
+   "text": "Sifunda ukwazisa lapho silahlekelwa",
+   "startMs": 187280,
+   "endMs": 193720,
+   "level": "line"
+  },
+  {
+   "text": "lapho umculo womuntu uphuma ngemuva komnyango",
+   "startMs": 191760,
+   "endMs": 194959,
+   "level": "line"
+  },
+  {
+   "text": "ukukhanya",
+   "startMs": 193720,
+   "endMs": 197959,
+   "level": "line"
+  },
+  {
+   "text": "Siphakamisa izandla ngemva kwezitimela ezihambayo, sizama",
+   "startMs": 194959,
+   "endMs": 200959,
+   "level": "line"
+  },
+  {
+   "text": "Cela impendulo esikhathini esidlule",
+   "startMs": 197959,
+   "endMs": 202360,
+   "level": "line"
+  },
+  {
+   "text": "Sifunda ukuthanda, [umculo]",
+   "startMs": 200959,
+   "endMs": 205800,
+   "level": "line"
+  },
+  {
+   "text": "lapho kuphola, lapho kukhona umlotha ezintendeni zezandla futhi",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  },
+  {
+   "text": "ikristalu [yomculo] ephukile. Kufanele ngiyinakekele",
+   "startMs": 205800,
+   "endMs": 211160,
+   "level": "line"
+  },
+  {
+   "text": "kuyini, ngenkathi silapha, kuze kube",
+   "startMs": 208080,
+   "endMs": 213532,
+   "level": "line"
+  },
+  {
+   "text": "wandiza",
+   "startMs": 211160,
+   "endMs": 213560,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 213532,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "umphefumulo ukude",
+   "startMs": 213560,
+   "endMs": 216720,
+   "level": "line"
+  },
+  {
+   "text": "[umculo]",
+   "startMs": 220082,
+   "endMs": 222102,
+   "level": "line"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Африхили · КОД: afh · ГРУППА 7 · язык 19 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: базис — Atobrah, Afrihili (1970): jua, usiku, moja, sisi, wapi, nini, si; служебное и глагольное — по суахилийской модели (ni, na, kwa, bila, -na-, -me-, ha-, li-). Сомнительные и современные термины — описательно из широко аттестованных суахилийских корней (помета «суах.»): настоящее — halisi (подлинный), одиночество — upweke, счастье — furaha (радость), экран — dirisha (окно), бетон — jiwe (камень), уведомление — habari (весть), пароль — neno la siri (тайное слово), весна — masika (сезон дождей), трава — nyasi, дождь — mvua; нейросети — akili za mashine (умы машин), метавселенная — ulimwengu ndani ya mashine (мир внутри машины). Отдельные слова могут не входить в аттестованный лексикон Afrihili — честная помета: суах.
+
+01. Sasa ni wakati mpya: akili za mashine, msingi Mars, ulimwengu ndani ya mashine, joto la milele kwa kidole moja — wote na mara moja. Sisi tunaweza.
+[саса ни вакати мпья: акили за машине, мсинги Марс, улимвенгу ндани я машине, джото ла миллеле ква кидоле моджа — воте на мара моджа. сиси тунавеза]
+
+02. Tumefika mpaka wa tamaa — ulimwengu bila mapumziko na umbali.
+[тумефика мпака ва тамаа — улимвенгу била мапумзико на умбали]
+
+03. Wote ni karibu zaidi na haraka zaidi, lakini ndani ni kimya zaidi.
+[воте ни карибу заиди на харака заиди, лаки ни ндани ни кимья заиди]
+
+04. Tunaruka haraka, tukibadilisha maneno ya siri, tumesahau majukumu yetu.
+[тунарука харака, тукибадилиша манено я сири, тумесахау маджукуму йету]
+
+05. Jibu mi, ukitazama dirisha hili: wapi sasa kuna halisi?
+[джибу ми, укитазама дириша хили: вапи саса куна халиси?]
+
+06. Hapa au pale — harufu ya mvua, nyasi ya masika? Halisi si ndani ya kichwa pekee.
+[хапа ау палэ — харуфу я мвуа, няси я масика? халиси си ндани я кичва пекее]
+
+07. Tunajua karibu yote, lakini wapi kuna halisi? Wapi kwa kutafuta?
+[тунаджуа карибу йоте, лаки ни вапи куна халиси? вапи ква кутафута]
+
+08. Yote yenye harufu ya masika yamo ndani ya jiwe; maisha ni idadi ya habari.
+[йоте йенье харуфу я масика ямо ндани я дживе; маиша ни идади я хабари]
+
+09. Tunalala na dirisha, tunaamka na dirisha — mzunguko wa mashine peke yake.
+[туналала на дириша, тунаамка на дириша — мзунгуко ва машине пеке яке]
+
+10. Tumejifunza kufuta umbali, lakini si upweke; tunasikilizana kidogo kidogo.
+[тумеджифунза куфута умбали, лаки ни си упвеке; тунасикилизана кидого кидого]
+
+11. Usiku ulikuwa usiku, tulikuwa kimya, furaha haikuwa jambo la mashine.
+[усику уликува усику, туликува кимья, фураха хаикува джамбо ла машине]
+
+12. Kama dirisha litazima — sema na mi: wapi kuna halisi? Hapa au pale?
+[кама дириша литазима — сэма на ми: вапи куна халиси? хапа ау палэ?]
+
+───
+СЛОВАРЬ МАЛЫША (afh):
+настоящее → halisi (подлинный; суах.) [халиси]
+экран → dirisha (окно; описательно) [дириша]
+дождь → mvua (суах.) [мвуа]
+весна → masika (сезон дождей; суах.) [масика]
+трава → nyasi (суах.) [няси]
+бетон → jiwe (камень; описательно) [дживе]
+уведомление → habari (весть; описательно) [хабари]
+пароль → neno la siri (тайное слово) [нено ла сири]
+ночь → usiku [усику]
+одиночество → upweke (суах.) [упвеке]
+счастье → furaha (радость; суах.) [фураха]
+где? → wapi? [вапи?]
+где настоящее? → wapi kuna halisi? [вапи куна халиси?]

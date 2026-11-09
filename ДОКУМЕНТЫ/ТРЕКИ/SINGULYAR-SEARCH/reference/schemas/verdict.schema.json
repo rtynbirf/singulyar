@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verdict",
+  "type": "object",
+  "required": ["result", "rationale"],
+  "properties": {
+    "result": { "type": "string", "enum": ["supported", "contradicted", "unknown"] },
+    "rationale": { "type": "string" },
+    "claim_id": { "type": "string" }
+  }
+}

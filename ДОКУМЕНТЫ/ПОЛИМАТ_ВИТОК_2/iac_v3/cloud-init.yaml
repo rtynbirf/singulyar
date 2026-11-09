@@ -1,0 +1,73 @@
+#cloud-config
+# ==============================================================================
+# СИНГУЛЯР · Zero-Touch Cloud-Init Configuration with Crypto Passport Auto-Mint
+# ==============================================================================
+
+hostname: singulyar-node
+manage_etc_hosts: true
+
+users:
+  - name: singulyar
+    gecos: Singulyar Kiosk Operator
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, audio, video, input
+    shell: /bin/bash
+
+packages:
+  - nginx
+  - chromium-browser
+  - xorg
+  - lightdm
+  - alsa-utils
+  - unclutter
+  - python3
+  - python3-cryptography
+  - openssl
+
+write_files:
+  - path: /usr/local/bin/singulyar-kiosk.sh
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env bash
+      export DISPLAY=${DISPLAY:-:0}
+      xset s off -dpms 2>/dev/null || true
+      while true; do
+          chromium \
+              --kiosk \
+              --no-first-run \
+              --disable-infobars \
+              --autoplay-policy=no-user-gesture-required \
+              --use-fake-ui-for-media-stream \
+              --enable-features=SharedArrayBuffer \
+              "http://localhost:80"
+          sleep 2
+      done
+
+  - path: /etc/systemd/system/singulyar-kiosk.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=SINGULYAR OS Autonomous Kiosk Runtime
+      After=graphical.target
+      Wants=graphical.target
+
+      [Service]
+      Type=simple
+      User=singulyar
+      Environment=DISPLAY=:0
+      ExecStart=/usr/local/bin/singulyar-kiosk.sh
+      Restart=always
+
+      [Install]
+      WantedBy=graphical.target
+
+runcmd:
+  - [ mkdir, -p, /etc/singulyar/passport ]
+  - [ python3, /usr/local/bin/generate_node_passport.py, --output-dir, /etc/singulyar/passport ]
+  - [ mkdir, -p, /var/www/singulyar/assets ]
+  - [ cp, /etc/singulyar/passport/node_passport.json, /var/www/singulyar/assets/node_passport.json ]
+  - [ chmod, "644", /var/www/singulyar/assets/node_passport.json ]
+  - [ systemctl, daemon-reload ]
+  - [ systemctl, enable, singulyar-kiosk.service ]
+  - [ systemctl, restart, nginx ]
+  - [ systemctl, restart, singulyar-kiosk.service ]

@@ -1,0 +1,44 @@
+name: main-drift-watch
+
+# Защитная пломба ADR-0004 (issue #62 п.1, T11/П-11).
+# Ежедневно сравнивает main с rumu и открывает issue, если головы разошлись.
+# Финальный флип дефолта — только явным решением Хозяина (см. docs/adr/0004).
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Сравнить головы (живой compare API)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          AHEAD=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/compare/rumu...main" \
+            | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('ahead_by','-'), d.get('behind_by','-'), d.get('status','-'))")
+          echo "rumu...main -> ahead_by behind_by status: $AHEAD"
+          echo "DRIFT=$AHEAD" >> "$GITHUB_ENV"
+      - name: Открыть issue при дрейфе
+        if: env.DRIFT != '0 0 identical'
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            const [ahead, behind, status] = process.env.DRIFT.trim().split(/\s+/);
+            const body = 'ADR-0004 · ежедневная сверка голов\n\n' +
+              'rumu...main: ahead_by=' + ahead + ' behind_by=' + behind + ' status=' + status + '\n\n' +
+              'Если расхождение мешает — флип дефолта только по протоколу ADR-0004: ' +
+              '(а) parity контента Pages, (б) зелёный такт-гейт на main, (в) слово Хозяина.';
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'ПЛОМБА: main/rumu дрейф ' + ahead + '/' + behind + ' (' + status + ') — ' + context.runId,
+              body
+            });

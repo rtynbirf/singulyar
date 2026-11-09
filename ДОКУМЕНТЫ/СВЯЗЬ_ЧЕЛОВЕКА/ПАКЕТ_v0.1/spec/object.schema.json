@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://singulyar.example/schemas/object-v0.1.json",
+  "title": "Singulyar Communication Object v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "kind",
+    "createdAt",
+    "sender",
+    "recipient",
+    "payload",
+    "delivery"
+  ],
+  "properties": {
+    "schema": {
+      "const": "singulyar.object.v0.1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128
+    },
+    "kind": {
+      "enum": [
+        "text",
+        "file",
+        "voice",
+        "call_invite",
+        "value_intent",
+        "contact_invite"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sender": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "recipient": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "payload": {
+      "type": "object"
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "mime": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$"
+        },
+        "retention": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "additionalProperties": false
+    },
+    "consent": {
+      "type": "object",
+      "properties": {
+        "granted": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "grantedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "draft",
+            "locally_saved",
+            "queued",
+            "attempting",
+            "accepted_by_transport",
+            "acknowledged_by_recipient",
+            "read_receipt_optional",
+            "cancelled",
+            "failed",
+            "expired"
+          ]
+        },
+        "transport": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "adapterVersion": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

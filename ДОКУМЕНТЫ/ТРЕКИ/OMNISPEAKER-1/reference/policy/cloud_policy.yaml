@@ -1,0 +1,20 @@
+cloud_policy:
+  default: deny
+  consent: {required: true, per_scope: true, revocable: true, log: true}
+  egress:
+    proxy_required: true
+    allowed_domains: []          # заполняется пользователем/OEM; пустой список = ничего не разрешено
+    blocked_categories: [advertising, telemetry_unknown, social, unknown]
+  data_rules:
+    raw_audio: never
+    camera_video: never
+    health_data: never
+    biometric: never
+    pii_redaction: required       # имена, адреса, номера — до отправки
+    anonymized_telemetry: opt_in
+    crash_logs: opt_in
+  escalation:
+    local_first: true
+    max_context_tokens: 4000
+    retention: zero
+    result_provenance: web        # результаты облака = недоверенный источник (P-002)

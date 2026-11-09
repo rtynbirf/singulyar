@@ -1,0 +1,51 @@
+RUVSON · СИНГУЛЯР · «КОГДА ТЕРЯЕМ» · СМЫСЛОВОЙ ПЕРЕВОД · 200 ЯЗЫКОВ
+Язык: toki pona (токи пона)
+ISO: tok | Каркас: 12 строк, смысл не буквы | Такт v10.64 «СМЫСЛ»
+=====================================================================
+01. suno pini lon tomo telo kili; kon lete li weka e tomo tawa.
+    [кириллицей на слух]: суно пини лон томо телo кили; кон лете ли вэка э томо тава
+02. mi tawa e nasin tomo. mi toki e tenpo pini. ni li ken ike e lawa mi.
+    [кириллицей на слух]: ми тава э насин томо. ми токи э тенпо пини. ни ли кен икe э права ми
+03. tenpo seli la mi pilin e lete. kon lete li awen lon pilin mi.
+    [кириллицей на слух]: тенпо сели ла ми пилин э лете. кон лете ли авен лон пилин ми
+04. tenpo li tawa wawa. jan li weka. mi en tenpo mi li weka e tenpo.
+    [кириллицей на слух]: тенпо ли тава вава. jan ли вэка. ми эн тенпо ми ли вэка э тенпо
+05. mi jo e mani mute. mi sona ala e nasin pilin. mi ken ala toki e wile mi.
+    [кириллицей на слух]: ми jo э мани муте. ми сона ала э насин пилин. ми кен ала токи э виле ми
+06. tenpo li pana ala e suli. mi pilin e lete. kon lete li lon pilin mi.
+    [кириллицей на слух]: тенпо ли пана ала э сули. ми пилин э лете. кон лете ли лон пилин ми
+07. mi kama sona: suli li lon weka. jan li weka. tomo pimeja li kama.
+    [кириллицей на слух]: ми кама сона: сули ли лон вэка. jan ли вэка. томо пимеджа ли кама
+08. mi lukin e la tomo tawa li weka. mi toki tawa tenpo pini: o toki e ken.
+    [кириллицей на слух]: ми лукин э ла томо тава ли вэка. ми токи тава тенпо пини: о токи э кен
+09. mi kama sona: olin li pini. mi jo e telo seli. mi jo ala e kiwen.
+    [кириллицей на слух]: ми кама сона: олин ли пини. ми jo э телo сели. ми jo ала э kivен
+10. ni li ike: tenpo pini la mi sona ala e ike kama. ni li pilin lili e mi.
+    [кириллицей на слух]: ни ли ике: тенпо пини ла ми сона ала э ике кама. ни ли пилин лили э ми
+11. mi toki ala. mi pana ala e pilin pona. mi weka e tenpo pona. olin pi tenpo ali.
+    [кириллицей на слух]: ми токи ала. ми пана ала э пилин пона. ми вэка э тенпо пона. олин пи тенпо али
+12. pilin pona li lon jan pona, li lon ni ala: toko suli. mi lukin e pona taso lon weka.
+    [кириллицей на слух]: пилин пона ли лон jan пона, ли лон ни ала: токо сули. ми лукин э пона тасо лон вэка
+=====================================================================
+СЛОВАРЬ МАЛЫША (как донесён смысл, не буквы):
+- «копили бумажки» → «mi jo e mani mute» (мани = деньги, карта = бумага): копили
+  ДЕНЬГИ — в toki pona «mani» родное слово (из английского money), ловушки
+  «бумажек» отрезаны сознательно.
+- «впереди ещё звучит до» → в toki pona (~120 слов) ноты не имеют лексики:
+  «kalama musi» (звук-музыка). Метафора «впереди ещё звучит до» передана
+  описательно: «kalama musi li kama» (музыка придёт) — честная пометка:
+  описательный перевод, не буквальный.
+- «туман растворяет дома» → «kon lete li weka e tomo tawa» (туман делает дома
+  невидимыми) — растворяет силуэты.
+- «прозрачная печаль» → «pilin lili» (малое-чистое чувство) + образ прозрачности
+  через «lete» — о чувстве.
+- «остыло» → «olin li pini» (любовь кончилась/остыла) — о чувстве.
+- «вымолить у прошлого ответ» → «mi toki tawa tenpo pini: o toki e ken» (говорим
+  прошлому: дай возможность) — молитвенная модальность через императив «о».
+- «сердце для других не отворил» → «mi pana ala e pilin pona» (не давал доброго
+  чувства людям) — про людей.
+АККОРДЫ (местные имена): Am=kalama pimeja pi toki la; Dm=kalama pi toki re; G=kalama pona pi toki sol; C=kalama pi toki do; F=kalama pi toki fa; E7=kalama pi toki mi
+ИГРА (местные слова): глушить=pini e kalama; баррэ=barre; перебор=tawa e luka; бой=luka pona
+НОТЫ (местная система, 7 ступеней от A): A=la B=si C=do D=re E=mi F=fa G=sol
+СИСТЕМА НОТ: toki pona заимствует сольмизацию (do-re-mi-fa-sol-la-si) — родной
+нотной системы нет (~120 слов словаря); честная пометка обязательна.

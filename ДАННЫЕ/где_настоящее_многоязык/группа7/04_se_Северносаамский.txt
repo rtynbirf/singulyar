@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Северносаамский · КОД: se · ГРУППА 7 · язык 04 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: латиница, северносаамская норма (норвежская ориентация); «настоящее» — duohta (истинный), «экран» — šearbma, «одиночество» — oktonasvuohta (от okto «один»), «счастье» — lihku; rolla, fiilla, autopilotta — норвежские заимствования; «нейросети» (neurovercco), «одним свайпом» (okta liigadiin «одним движением»), «засыпаем» (manat návccái «идём в постель»), «просыпаемся» (váhkáhuvvat, возвратное от váhkkit «будить») — описательно.
+
+01. Nu, dát lea ovdáneapmi: hukset neuroverccuid, vuáđu Mársas, eallit virtuálamáilmmis, álggahit abbas miessemánu okta liigadiin ja ožžot buot oktanaga. Mii dat máhtit.
+[ну, дат леа овдянеапми: хуксет неуро-верццуйд, вуяду марсас, эаллит виртуяламайлммис, ялггахит аббас миессэману окта лиигадийн йа ожжот буот октанага. мии дат мяхтит]
+
+02. Mii leat johttán háliidusaid raidui — máilbmis mas eai leat boahccut iige gaskkat.
+[мии леат йохттан хялиидусайд райдуй — майлбмис мас эай леат боахкут ииге гасккат]
+
+03. Buot šaddai leaibu ja johtilogat, muhto sisabealde šattai hilbeapput.
+[буот шаддай ляйибу йа йохтилогат, мухто сисабеалде шаттай хильбеаппут]
+
+04. Mii girdet johtilogat, molsašuddit beassansániid; mii iežat unohtaimet rollaid.
+[мии гирдет йохтилогат, мольсашуддит беассансатнийд; мии иежат унохтаймет роллайд]
+
+05. Muhto vástta muse, geahčamin dán šearbmii: gos dál lea duohta?
+[мухто вястта музе, геахчамин дан шэарбмий: гос даль леа дуохта?]
+
+06. Dás dahje doppe — gos arvvi háhttu, gos suoidni giđčas? Duohta ii leat dušše oainus.
+[дас дахье доппе — гос арви хахтту, гос суойни гиччас? дуохта ии леат душше оайнус]
+
+07. Mii diehtit nu ollu go vejolaš dieđit. Muhto gos lea duohta? Gos dan ohcat?
+[мии диехтит ну оллу го вейолаш диехтит. мухто гос леа дуохта? гос дан охкат?]
+
+08. Studdojuvvui betohndii buot man suohkkanai giđčas, ja mearridit eallima dieđáhusaid luguiin.
+[студдоюввуй бетоэнди буот ман суохкканай гиччас, йа меарридит эаллима диедахусайд лугуйин]
+
+09. Návccái manat šearbmain, šearbmain maiddái váhkáhuvvat; mii leat fastan autopilotta gierddus.
+[навччай манат шэарбмаин, шэарбмаин майдяй вяхкахувват; мии леат фастан автопилотта гиерддус]
+
+10. Mii oahppaimet sihkkut gaskkaid, muhto ii oahppan sihkkut oktonasvuođa — ja gullet nubbi nuppi harveapput.
+[мии оахппаймет сихкут гасккайд, мухто ии оахппан сихкут октонасвуода — йа гуллет нубби нуппи харвеаппут]
+
+11. Muitta go idja lei idja, mii dušše hilbaimet, ja lihku ii lean dárbu viežžat fiillan?
+[муитта го идья лей идья, мии душше хильбаймет, йа лихку ии леан дарбу виежжат фийлян?]
+
+12. Ja jos okta beaivi šearbma jápmá — muital muse: gos lea duohta? Dás dahje doppe?
+[йа йос окта бяйви шэарбма йямпа — муитал музе: гос леа дуохта? дас дахье доппе?]
+
+───
+СЛОВАРЬ МАЛЫША (se):
+настоящее → duohta (истинный) [дуохта]
+экран → šearbma [шэарбма]
+дождь → arvi [арви]
+весна → giđđa [гидда]
+трава → suoidni [суойни]
+бетон → betohnda (заимств. из норв. betong) [бетонда]
+уведомление → dieđáhus (сообщение) [диедахус]
+пароль → beassansátni (слово входа) [беассансатни]
+ночь → idja [идья]
+одиночество → oktonasvuohta [октонасвуохта]
+счастье → lihku [лихку]
+где? → gos [гос]
+где настоящее? → gos lea duohta? [гос леа дуохта?]

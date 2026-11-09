@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidenceState",
+  "type": "object",
+  "properties": {
+    "sufficiency": { "type": "number", "minimum": 0, "maximum": 1 },
+    "reliability": { "type": "number", "minimum": 0, "maximum": 1 },
+    "conflict": { "type": "number", "minimum": 0, "maximum": 1 },
+    "uncertainty": { "type": "number", "minimum": 0, "maximum": 1 },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "cost_spent": { "type": "number" },
+    "unique_sources": { "type": "integer", "minimum": 0 }
+  }
+}

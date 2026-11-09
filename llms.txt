@@ -1,0 +1,42 @@
+# singulyar
+> СИНГУЛЯР — офлайн-вселенная караоке RUVSON: 64 песни × 200 языков · ОРКЕСТРАТОР ·15 · хаб + 45 дверей · PWA (офлайн, без слежки)
+
+Автоген 2026-11-08 · источник: живой GitHub API (номера и файлы не руками) · владелец rtynbirf · ветка `rumu`
+
+## Мембрана
+- README.md — для человека (СИНГУЛЯР — офлайн-вселенная караоке RUVSON)
+- AGENTS.md — есть
+- LICENSE — MIT
+- topics: accessibility, fsrs, html, javascript, karaoke, lyrics, music, offline-first, opfs, phonetics, privacy, pwa, russian, ruvson, service-worker, spaced-repetition, speech-recognition, transcription, web-audio, webgpu
+
+## Карта корня
+- .github/
+- .gitignore
+- .nojekyll
+- 404.html
+- AGENTS.md
+- CHANGELOG.md
+- CODEOWNERS
+- CODE_OF_CONDUCT.md
+- CONTRIBUTING.md
+- LICENSE
+- PULSE.md
+- README.md
+- SECURITY.md
+- autopilot_client.js
+- catalog.js
+- … ещё 98
+
+## CI
+- workflow: lighthouse
+- workflow: oracle-rumu
+- workflow: pages
+- workflow: pr_check
+- workflow: scorecard
+- workflow: self-audit
+- workflow: такт_гейт
+
+## Ссылки
+- [GitHub](https://github.com/rtynbirf/singulyar)
+- [README](https://github.com/rtynbirf/singulyar/blob/rumu/README.md)
+- [raw llms.txt](https://raw.githubusercontent.com/rtynbirf/singulyar/rumu/llms.txt)

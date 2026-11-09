@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МАТРИЦА × ПУАНСОН — граница видна</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@300;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#030305;color:#ddd;font-family:'JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem}
+  .stage{width:100%;max-width:780px}
+  svg{width:100%;height:auto}
+  .labels{display:flex;justify-content:space-between;max-width:780px;width:100%;margin-top:0.8rem;font-size:0.7rem;letter-spacing:0.12em}
+  .label-m{color:#7eb8da}
+  .label-p{color:#c9a227;text-align:right}
+  .title{font-family:'Cinzel',serif;font-size:1.6rem;letter-spacing:0.22em;color:#c8c4bc;margin-top:1.4rem;text-align:center}
+  .sub{font-size:0.72rem;color:#666;margin-top:0.35rem;text-align:center;letter-spacing:0.06em}
+  .boundary{margin-top:1.2rem;border:1px solid #2a2a32;border-radius:4px;padding:0.7rem 1rem;font-size:0.68rem;color:#888;max-width:520px;text-align:center;line-height:1.5}
+  .boundary b{color:#c9a227}
+</style>
+</head>
+<body>
+<div class="stage">
+<svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff6d0"/>
+      <stop offset="40%" stop-color="#e8b84a"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="matrixGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8d4f0" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#4a7aaa" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="punchBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8c878"/>
+      <stop offset="60%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#8a7018"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ========== МАТРИЦА (outer die / cavity) ========== -->
+  <!-- outer shell - transparent, cool tone -->
+  <g id="MATRIX" opacity="0.95">
+    <!-- main outer facets -->
+    <polygon points="400,80 520,160 560,300 520,440 400,520 280,440 240,300 280,160"
+             fill="url(#matrixGlass)" stroke="#7eb8da" stroke-width="1.8" stroke-opacity="0.7"/>
+    <!-- upper inner cut -->
+    <polygon points="400,120 480,180 500,280 480,360 400,400 320,360 300,280 320,180"
+             fill="none" stroke="#7eb8da" stroke-width="1.2" stroke-opacity="0.5"/>
+    <!-- mid horizontal ring of matrix -->
+    <ellipse cx="400" cy="300" rx="155" ry="28" fill="none" stroke="#7eb8da" stroke-width="1.1" opacity="0.45"/>
+    <!-- lower facets -->
+    <polygon points="280,440 320,480 400,510 480,480 520,440" fill="none" stroke="#7eb8da" stroke-width="1.3" opacity="0.55"/>
+    <!-- side depth lines -->
+    <line x1="280" y1="160" x2="300" y2="280" stroke="#7eb8da" stroke-width="0.8" opacity="0.4"/>
+    <line x1="520" y1="160" x2="500" y2="280" stroke="#7eb8da" stroke-width="0.8" opacity="0.4"/>
+    <line x1="240" y1="300" x2="300" y2="280" stroke="#7eb8da" stroke-width="0.7" opacity="0.35"/>
+    <line x1="560" y1="300" x2="500" y2="280" stroke="#7eb8da" stroke-width="0.7" opacity="0.35"/>
+  </g>
+
+  <!-- ========== ГРАНИЦА (the visible boundary) ========== -->
+  <g id="BOUNDARY">
+    <!-- the contact surface - sharp thin ring where punch meets matrix -->
+    <ellipse cx="400" cy="300" rx="118" ry="22" fill="none" stroke="#ffffff" stroke-width="2.2" opacity="0.85"/>
+    <ellipse cx="400" cy="300" rx="118" ry="22" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.9"/>
+    <!-- small tick marks on the boundary to emphasize the interface -->
+    <g stroke="#fff" stroke-width="1.4" opacity="0.7">
+      <line x1="282" y1="300" x2="292" y2="300"/>
+      <line x1="508" y1="300" x2="518" y2="300"/>
+      <line x1="400" y1="278" x2="400" y2="288"/>
+      <line x1="400" y1="312" x2="400" y2="322"/>
+    </g>
+    <!-- label line -->
+    <line x1="520" y1="300" x2="620" y2="270" stroke="#aaa" stroke-width="0.7" stroke-dasharray="3 3" opacity="0.6"/>
+    <text x="625" y="268" fill="#ccc" font-size="11" font-family="monospace">ГРАНИЦА</text>
+  </g>
+
+  <!-- ========== ПУАНСОН (the active punch) ========== -->
+  <g id="PUNCH" filter="url(#softGlow)">
+    <!-- punch body - descending / pressing -->
+    <polygon points="400,210 455,260 455,340 400,390 345,340 345,260"
+             fill="url(#punchBody)" stroke="#e8c878" stroke-width="1.5" opacity="0.92"/>
+    <!-- punch tip / working face -->
+    <polygon points="345,340 400,390 455,340 400,355"
+             fill="#a08020" stroke="#e8c878" stroke-width="1.2"/>
+    <!-- inner core of punch -->
+    <circle cx="400" cy="300" r="28" fill="url(#coreGlow)"/>
+    <circle cx="400" cy="300" r="11" fill="#fff8e0" opacity="0.95"/>
+    <!-- vertical force axis -->
+    <line x1="400" y1="160" x2="400" y2="210" stroke="#c9a227" stroke-width="2" opacity="0.8"/>
+    <polygon points="400,155 393,172 407,172" fill="#c9a227"/>
+    <!-- force indication arrows on sides -->
+    <g fill="#c9a227" opacity="0.7">
+      <polygon points="330,240 318,255 330,250"/>
+      <polygon points="470,240 482,255 470,250"/>
+    </g>
+  </g>
+
+  <!-- quiet labels inside drawing -->
+  <text x="175" y="140" fill="#7eb8da" font-size="13" font-family="monospace" opacity="0.8">МАТРИЦА</text>
+  <text x="175" y="155" fill="#5a7a9a" font-size="9" font-family="monospace" opacity="0.6">полость / приём</text>
+
+  <text x="555" y="200" fill="#c9a227" font-size="13" font-family="monospace" opacity="0.9">ПУАНСОН</text>
+  <text x="555" y="215" fill="#8a7020" font-size="9" font-family="monospace" opacity="0.7">удар / рождение</text>
+</svg>
+</div>
+
+<div class="labels">
+  <div class="label-m">МАТРИЦА — то, что принимает форму</div>
+  <div class="label-p">ПУАНСОН — то, что её продавливает</div>
+</div>
+
+<div class="title">МАТРИЦА × ПУАНСОН</div>
+<div class="sub">граница между ними видна</div>
+
+<div class="boundary">
+  Белое кольцо — <b>граница</b>.<br>
+  Холодное стекло снаружи — матрица.<br>
+  Тёплое золото внутри — пуансон.<br>
+  Пока граница существует — процесс ещё идёт.
+</div>
+</body>
+</html>

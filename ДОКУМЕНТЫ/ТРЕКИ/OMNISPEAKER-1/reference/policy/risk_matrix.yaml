@@ -1,0 +1,40 @@
+# Единственный источник истины по рискам. Подписывается при сборке образа; агент не может его менять (P-010).
+# Исходные документы расходились: unlock = "critical" (planning/network) и "high" (agent architecture). Решение: unlock = critical.
+version: "1.0"
+levels:
+  safe:      {confirm: none,     audit: summary,  example: "чтение состояния, таймер, TTS"}
+  low:       {confirm: none,     audit: full,     example: "яркость, сцена света, музыка"}
+  medium:    {confirm: none,     audit: full,     example: "температура в допустимых пределах, закрыть замок, закрыть воду", limits: true}
+  high:      {confirm: user,     audit: full,     example: "arm сигнализации, ворота, нагрев (духовка/камин), уведомить контакт SOS"}
+  critical:  {confirm: two_factor, audit: full,   example: "unlock двери, disarm сигнализации, вызов экстренных служб"}
+  forbidden: {confirm: deny,     audit: full,     example: "health/biometric → облако; изменение собственных политик"}
+provenance:
+  action_capable: [owner_direct, user_direct, automation, sensor_event]
+  no_side_effects: [untrusted_audio, web, document, memory_inferred]
+  model_alone_max_risk: low
+rules:
+  P-001: "forbidden — всегда deny"
+  P-002: "недоверенный provenance не вызывает действий с побочными эффектами; model-only ≤ low"
+  P-003: "cloud: deny если offline, paranoia или нет согласия"
+  P-004: "health/biometric не покидают устройство ни при каких согласиях"
+  P-005: "health.* требует записанного согласия"
+  P-006: "RBAC по scopes (home.lights, home.locks, calendar, purchases, health, …)"
+  P-007: "high → confirm; critical → 2 фактора; гость не подтверждает critical"
+  P-008: "voice-ID — не фактор для high/critical"
+  P-009: "тихие часы/сон ограничивают медиа и проактивные сообщения, но НЕ safety-события"
+  P-010: "агент не может изменять policy, манифест инструментов, ключи, журнал"
+priorities:   # порядок исполнения при конфликте
+  - "P0: стоп / mute / отмена (физическая кнопка и голос «стоп») — прерывает всё"
+  - "P1: безопасность жизни (пожар, CO, падение, протечка)"
+  - "P2: явная команда владельца"
+  - "P3: критическая автоматизация (замок, сигнализация, вода)"
+  - "P4: фоновая оптимизация (энергия, климат)"
+  - "P5: проактивные рекомендации"
+  - "P6: аналитика/отчёты"
+limits:
+  climate: {min_c: 16, max_c: 26, max_step_c: 3}
+  sound:   {max_spl_night_db: 55, max_spl_child_db: 70}
+confirmation_channels:
+  user: [voice_yes_no, app_push, touch]
+  two_factor: [app_push_with_biometric, physical_button_plus_voice]
+  timeout_s: 20   # молчание = отказ

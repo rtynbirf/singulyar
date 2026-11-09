@@ -1,0 +1,57 @@
+RUVSON — «ГДЕ НАСТОЯЩЕЕ» (Where is what's real)
+ЯЗЫК: Вепсский · КОД: vep · ГРУППА 6 · язык 20 из 20
+ПРИНЦИП: луна · ай · мун — языки разные, смысл один. Сущность не множится.
+ФОРМАТ: строка перевода → [кириллическая транскрипция] · СКЕЛЕТ: 12 строк
+ПРИМЕЧАНИЕ: петрозаводская норма (латиница, ʼ — палатализация); «настоящее» — tovel'ine (истинный), «одиночество» — üks'kaikenduz, «счастье» — hed' (покой/счастье).
+
+01. Hö, se on askel eterpäin: saudam mielenverkod, bazu Marsal, eläm toižen mirus, avaidam kaikenaigaižen keväz'n ühtel kosketusel, sadam kaik samal aigal. Voldam sidä.
+[хё, сэ он аскель этэрпайн: саудам миленвэркод, базу Марсаль, элям тойжэн мирус, авайдам кайкенайгайжэн кэвязн юхтэль кокскетусэль, садам кайк самаль айгаль. вольдам сиядя]
+
+02. Tolim tahondoiden lopindhasai — miros, kus ei ole pausid, ei edahusid.
+[толим тахондойдин лопиндхасай — мирос, кус эй олэ паусид, эй эдахусид]
+
+03. Kaik tuli läzemba da pigemb, a südäimes tuli vaiktimb.
+[кайк тули лязэмба да пигэмб, а сюдяймэс тули вайктимб]
+
+04. Lendam pigemba da pigemba, parolad vajehtades; mö iče unhtim omad rolid.
+[лэндам пигэмба да пигэмба, паролад вайжэхтадэс; мё ичэ унхтим омад ролид]
+
+05. Anda vastust minele, ekatades necen ekranad: kus nügüd' om tovel'ine?
+[анда вастуст минэлэ, экатадэс нэцэн экранад: кус нюгюдь ом товельинэ?]
+
+06. Necil vai sigäl — kus vihman haju, kus hein keväz'l? Tovel'ine ei vai päas.
+[нэциль вай сияль — кус вихман хаю, кус хэйн кэвязль? товельинэ эй вай пяас]
+
+07. Tedam läz kaiked, midä voib teta. A kus om tovel'ine? Kus sidä kacta?
+[тэдам ляз кайкед, мидя войб тэта. а кус ом товельинэ? кус сиядя качта?]
+
+08. Kaik, mi keväz'l hajui, kattas betonal; elod märhitam tištustusiden lugul.
+[кайк, ми кэвязль хаюй, каттас бэтональ; элод мархитам тиштустусидин лугуль]
+
+09. Ekrananke magam, senke herätam; jäim avtopilotan kehäs.
+[экрананкэ магам, сэнкэ хэрятам; яйм автопилотан кэхяс]
+
+10. Opendim sirdatamha edahusid, a üks'kaikendust ei; ja toine tošt koldam harvemba da harvemba.
+[опэндим сирдатамха эдахусид, а юкскаикендуст эй; я тойнэ тошт колдам харвэмба да харвэмба]
+
+11. Mušton pidat-ik? Ö oli ö, vaikim vai, hed' ei tarbnuh tuda failal.
+[муштон пидат-ик? ё оли ё, вайким вай, хэдь эй тарбнух туда файаль]
+
+12. Ja ku ühten päiväl ekran palehtab — sano minele: kus om tovel'ine? Necil vai sigäl?
+[я ку юхтэн пяйвяль экран палэхтаб — сано минэлэ: кус ом товельинэ? нэциль вай сияль?]
+
+───
+СЛОВАРЬ МАЛЫША (vep):
+настоящее → tovel'ine (истинный) [товельинэ]
+экран → ekran [экран]
+дождь → vihm [вихм]
+весна → keväz' [кэвязь]
+трава → hein [хэйн]
+бетон → beton [бэтон]
+уведомление → tištuz (извещение) [тиштуз]
+пароль → parol [пароль]
+ночь → ö [ё]
+одиночество → üks'kaikenduz [юкскаикендуз]
+счастье → hed' (счастье/покой) [хэдь]
+где? → kus [кус]
+где настоящее? → kus om tovel'ine? [кус ом товельинэ?]

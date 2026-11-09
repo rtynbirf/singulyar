@@ -1,0 +1,80 @@
+{
+ "канон": "пульс-синхрон/1",
+ "songId": "gd_Scottish_Gaelic",
+ "версия": 1,
+ "метка": "пересинхрон SRT→КС1 (такт v11.22 «СИНХРОН», С100); уровень line; чистка по канону аудита; источник: ДАННЫЕ/флагман_157_языков/srt/gd_Scottish_Gaelic.srt",
+ "юниты": [
+  {
+   "text": "Bidh mi a’ coiseachd tro na nàbachdan far a bheil cuimhneachain",
+   "startMs": 20320,
+   "endMs": 26200,
+   "level": "line"
+  },
+  {
+   "text": "sinn",
+   "startMs": 36760,
+   "endMs": 39160,
+   "level": "line"
+  },
+  {
+   "text": "when there is ash in your palms, not steel. MU DHEIDHINN",
+   "startMs": 81920,
+   "endMs": 86360,
+   "level": "line"
+  },
+  {
+   "text": "bròn",
+   "startMs": 90000,
+   "endMs": 94320,
+   "level": "line"
+  },
+  {
+   "text": "Cha tuirt e, [ceòl] nach do ghabh e pòg, cha robh ùine aige",
+   "startMs": 91840,
+   "endMs": 97840,
+   "level": "line"
+  },
+  {
+   "text": "Shàbhail mi a h-uile càil airson nas fhaide air adhart, chan eil mo chridhe airson feadhainn eile",
+   "startMs": 97840,
+   "endMs": 103545,
+   "level": "line"
+  },
+  {
+   "text": "Ach chan eil sonas ann an deàrrsadh uinneag bùtha",
+   "startMs": 116960,
+   "endMs": 121800,
+   "level": "line"
+  },
+  {
+   "text": "fìrinn nan càirdean, 'nan blàths am measg nan stoirm. Ach",
+   "startMs": 121800,
+   "endMs": 126880,
+   "level": "line"
+  },
+  {
+   "text": "Bidh sinn ag ionnsachadh gaol a thoirt do [cheòl] nuair a bhios e air fuarachadh",
+   "startMs": 149520,
+   "endMs": 155000,
+   "level": "line"
+  },
+  {
+   "text": "nuair a bhios luaithre anns na pailmean, [ceòl] agus chan eil",
+   "startMs": 153160,
+   "endMs": 156160,
+   "level": "line"
+  },
+  {
+   "text": "steel. MU DHEIDHINN",
+   "startMs": 155000,
+   "endMs": 159200,
+   "level": "line"
+  },
+  {
+   "text": "nuair a fhuaraich e, nuair a bha luaithre anns na pailmean agus",
+   "startMs": 202360,
+   "endMs": 208080,
+   "level": "line"
+  }
+ ]
+}
