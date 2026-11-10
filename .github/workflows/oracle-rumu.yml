@@ -16,7 +16,7 @@ jobs:
           set -e
           TARGET="${{ github.event.pull_request.base.sha }}"
           if [ -z "$TARGET" ]; then TARGET="${{ github.sha }}"; fi
-          PIN=$(curl -fsSL https://raw.githubusercontent.com/rtynbirf/cell-swarm/main/swarm.json | python3 -c 'import json,sys;s=json.load(sys.stdin);print([c["pin"] for c in s["cells"] if c.get("name")=="singulyar"][0])')
+          PIN=$(curl -fsSL "https://raw.githubusercontent.com/rtynbirf/cell-swarm/main/swarm.json?nocache=${GITHUB_RUN_ID}" | python3 -c 'import json,sys;s=json.load(sys.stdin);print([c["pin"] for c in s["cells"] if c.get("name")=="singulyar"][0])')
           echo "пин rumu: ${PIN} | текущий: ${TARGET}"
           if [ "$PIN" != "$TARGET" ]; then
             echo "ПИН УСТАРЕЛ: тело rumu ушло вперёд. Обнови пин клетки singulyar в геноме ядра: make pins --write в cell-swarm (MANIFEST.json в архиве rumu — датированная копия)."
