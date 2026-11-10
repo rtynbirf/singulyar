@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Если используете этот проект, процитируйте его так."
+title: "singulyar"
+abstract: "СИНГУЛЯР — офлайн-вселенная караоке RUVSON: 64 песни × 200 языков · ОРКЕСТРАТОР ·15 · хаб + 45 дверей · PWA (офлайн, без слежки)"
+authors:
+  - name: "Полимат-Универсум (rtynbirf)"
+repository-code: "https://github.com/rtynbirf/singulyar"
+license: "MIT"
