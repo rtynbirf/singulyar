@@ -1,5 +1,8 @@
 <div align="center">
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/forge-banner-singulyar.svg" />
   <img src="banner.png" alt="singulyar — Офлайн-вселенная караоке RUVSON: 64 песни" width="100%">
+</picture>
 </div>
 
 # СИНГУЛЯР — офлайн-вселенная караоке RUVSON
