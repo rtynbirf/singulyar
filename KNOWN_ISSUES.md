@@ -3,6 +3,7 @@
 
 | Что | Статус | Детали | Run/ссылка |
 |---|---|---|---|
+| Такт-гейт 15:49 (68429e6, волна ×12) | 🟢 залечено волной ×12 | раны в тени: Python-оракулы 2 FAIL («Запуск» за 15-строчным окном оракула у стражей ×11; SHA256SUMS/v1.0-final MANIFEST отстали от forge-hand 6bac697 — 5 сумм + формат pr_check.yml; ОТЧЁТ_ПОЛНЫЙ.md — мёртвые ссылки на зипы-паки песочницы) — погашены; вскрылся и залечен оракул описания (PATCH description = реестру versions.json; дрейф после b7bdef3 11-10); реран 🟢 | [43052138683](https://github.com/rtynbirf/singulyar/actions/runs/43052138683) |
 | Оракулы дома зелёные 19:59 (226a499) | 🟢 вылечено догоном пина | «ПИН УСТАРЕЛ»: пин в genome cell-swarm/main/swarm.json отставал от тела rumu — по дизайну гейта; пин догнан (5ff5f7fa) | [42517742808](https://github.com/rtynbirf/singulyar/actions/runs/42517742808) |
 | Оракулы дома зелёные 20:01 (226a499) | 🟢 вылечено догоном пина | та же орбита | [42517960432](https://github.com/rtynbirf/singulyar/actions/runs/42517960432) |
 | push-оракулы 21:37/21:49 (d95ad5a, 5ff5f7f) | 🟢 вылечено догоном пина | структурный паттерн: push-ран стартует до `make pins --write` → красится; диспатч после обновления пина зелёный | [42526141010](https://github.com/rtynbirf/singulyar/actions/runs/42526141010) · [42527073306](https://github.com/rtynbirf/singulyar/actions/runs/42527073306) |
