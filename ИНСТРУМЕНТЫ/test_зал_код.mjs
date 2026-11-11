@@ -91,15 +91,17 @@ test('sg-registry: дислокация читается, правда пере�
   assert.ok(т.includes("'?t=' + Date.now()"), 'нет cache-buster');
 });
 
-test('автомат: воркфлоу Дислокация + замерщик + догон пина', () => {
-  const вф = readFileSync(join(КОРЕНЬ, '.github', 'workflows', 'дислокация.yml'), 'utf-8');
+test('автомат: воркфлоу Дислокация + замерщик + ветка данных (rumu не трогаем)', () => {
+  const вф = readFileSync(join(КОРЕНЬ, '.github/workflows/дислокация.yml'), 'utf-8');
   assert.ok(вф.includes('cron:'), 'нет расписания');
   assert.ok(вф.includes('node ИНСТРУМЕНТЫ/дислокация.mjs'), 'нет запуска замерщика');
-  assert.ok(вф.includes('пин_догон.py'), 'нет догона пина');
-  const зм = readFileSync(join(КОРЕНЬ, 'ИНСТРУМЕНТЫ', 'дислокация.mjs'), 'utf-8');
+  assert.ok(вф.includes('данные-дислокация'), 'замер не идёт в ветку данных');
+  assert.ok(вф.includes('pages.yml/dispatches'), 'нет пере-диспатча выкладки');
+  assert.ok(!вф.includes('пин_догон'), 'воркфлоу не должен догонять пин (геном заархивирован)');
+  const зм = readFileSync(join(КОРЕНЬ, 'ИНСТРУМЕНТЫ/дислокация.mjs'), 'utf-8');
   assert.ok(зм.includes('дислокация.json'), 'замерщик не пишет файл');
-  const дог = readFileSync(join(КОРЕНЬ, 'scripts', 'пин_догон.py'), 'utf-8');
-  assert.ok(дог.includes('cell-swarm'), 'догон не смотрит в геном');
+  const пж = readFileSync(join(КОРЕНЬ, '.github/workflows/pages.yml'), 'utf-8');
+  assert.ok(пж.includes('данные-дислокация'), 'pages.yml не материализует замер');
 });
 
 test('sw15: кэш поднят (v239), зал-код.js в пре-кэше', () => {

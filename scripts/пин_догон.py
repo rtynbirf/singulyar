@@ -9,14 +9,21 @@
   2) меняет pin у клетки singulyar на SHA из argv;
   3) коммитит через Git Data API (blobs → tree → commit → ref, закон AGENTS §5).
 
-Запуск: python3 scripts/пин_догон.py <sha>   (токен в env ПИН_ТОКЕН)
-Честность: любая ошибка — печатаем факт и выходим с кодом 1; воркфлоу не роняет.
+СТАТУС 2026-11-11: геном cell-swarm ЗААРХИВИРОВАН (read-only) — догон невозможен
+ни этим скриптом, ни руками; оракул «ПИН УСТАРЕЛ» на любом новом коммите rumu —
+родная рана дома (см. KNOWN_ISSUES.md). Воркфлоу «Дислокация» потому и не
+коммитит в rumu (ветка данных «данные-дислокация»), чтобы не красить гейт.
+Скрипт оставлен волно́й как инструмент на случай разморозки генома.
+
+Запуск: python3 scripts/пин_догон.py <sha>   (токен в env ПИН_ТОКЕН/PIN_TOKEN)
+Честность: любая ошибка — печатаем факт и выходим с кодом 1.
 """
 import base64
 import json
 import os
 import sys
 import urllib.request
+import urllib.error
 
 РЕПО_ГЕНОМ = "rtynbirf/cell-swarm"
 ВЕТКА = "main"
@@ -24,18 +31,24 @@ import urllib.request
 
 
 def запрос(url, метод="GET", тело=None, токен=None):
-    заг = {"Accept": "application/vnd.github+json", "User-Agent": "дислокация-автомат"}
+    заг = {"Accept": "application/vnd.github+json", "User-Agent": "dislokaciya-avtomat",
+           "Content-Type": "application/json"}
     if токен:
         заг["Authorization"] = f"token {токен}"
     данные = json.dumps(тело).encode() if тело is not None else None
     з = urllib.request.Request(url, data=данные, headers=заг, method=метод)
-    with urllib.request.urlopen(з, timeout=30) as о:
-        return json.loads(о.read().decode() or "{}")
+    try:
+        with urllib.request.urlopen(з, timeout=30) as о:
+            return json.loads(о.read().decode() or "{}")
+    except urllib.error.HTTPError as е:
+        print(f"пин_догон: HTTP {е.code} на {метод} {url}")
+        print("тело ответа:", е.read().decode()[:400])
+        raise
 
 
 def главное():
     sha = sys.argv[1] if len(sys.argv) > 1 else ""
-    токен = os.environ.get("ПИН_ТОКЕН", "").strip()
+    токен = (os.environ.get("ПИН_ТОКЕН") or os.environ.get("PIN_TOKEN") or "").strip()
     if not sha or len(sha) < 40:
         print("пин_догон: нет SHA — выхожу")
         return 1

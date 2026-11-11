@@ -2,10 +2,11 @@ name: Дислокация — живой замер релеев и счётч�
 
 # ЛАТКА 2026-11-11: числа и релеи дома меряются, а не декларируются.
 # Каждые 15 минут CI пробует релеи живым WebSocket и пишет data/дислокация.json.
-# Ритм без шума: коммит — только если замер реально изменился.
-# Догон пина: после коммита воркфлоу обновляет пин клетки singulyar в геноме
-# cell-swarm (секрет SINGULYAR_PIN_TOKEN; нет секрета — честное предупреждение)
-# и пере-диспатчит оракула, чтобы живой CI остался зелёным (обычай «догон»).
+# Закон ветки: замер уходит в ветку данных «данные-дислокация» — rumu НЕ коммитится
+# (пин-гейт оракула цел, геном cell-swarm заархивирован и пин-догон невозможен).
+# После замера pages.yml пере-диспатчится и материализует свежий замер в выкладку
+# (по образцу «Двери-0»: minus-fond материализуется так же).
+# Ритм без шума: коммит — если замер изменился или старше часа (свежесть строки).
 
 on:
   schedule:
@@ -30,33 +31,64 @@ jobs:
           node-version: 24
       - name: Живой замер релеев
         run: node ИНСТРУМЕНТЫ/дислокация.mjs
-      - name: Коммит без шума (только при изменившемся замере)
+      - name: Ветка данных (rumu не трогаем — пин-гейт цел)
         env:
-          ПИН_ТОКЕН: ${{ secrets.SINGULYAR_PIN_TOKEN }}
           ГХ_ТОКЕН: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          if git diff --quiet -- data/дислокация.json; then
-            echo "замер тот же — коммита нет (ритм без шума)"
-            exit 0
-          fi
+          cp data/дислокация.json /tmp/замер.json
           git config user.name  "дислокация-автомат"
           git config user.email "дислокация-автомат@users.noreply.github.com"
-          git add data/дислокация.json
-          git commit -m "дислокация: живой замер релеев/счётчиков $(date -u +%FT%TZ)"
-          git pull --rebase origin rumu
-          git push
-          SHA=$(git rev-parse HEAD)
-          echo "замер ушёл в дом: $SHA"
-          # догон пина (клетка singulyar в геноме cell-swarm) — обычай дома
-          if [ -n "$ПИН_ТОКЕН" ]; then
-            python3 scripts/пин_догон.py "$SHA" || echo "пин не догнан (честно пишем, замер не роняем)"
+          if git fetch origin данные-дислокация 2>/dev/null; then
+            git checkout -B данные-дислокация FETCH_HEAD
           else
-            echo "СЕКРЕТА SINGULYAR_PIN_TOKEN НЕТ — пин догонит следующая волна"
+            git checkout --orphan данные-дислокация
+            git rm -rf . >/dev/null 2>&1 || true
+            mkdir -p data
           fi
-          # пере-диспатч оракула: живой CI остаётся зелёным после догона пина
-          curl -s -o /dev/null -w "пере-диспатч оракула: HTTP %{http_code}\n" -X POST \
+          python3 - <<'PY'
+          import json, pathlib, subprocess, datetime
+          нов = json.load(open('/tmp/замер.json'))
+          п = pathlib.Path('data/дислокация.json')
+          стар = None
+          if п.exists():
+              try: стар = json.load(open(п, encoding='utf-8'))
+              except Exception: стар = None
+          сигн = lambda д: json.dumps({'релеи': д.get('релеи'), 'счётчики': д.get('счётчики')}, sort_keys=True, ensure_ascii=False)
+          свеж = 1e9
+          if стар:
+              г = datetime.datetime.fromisoformat(стар['генерация'].replace('Z', '+00:00'))
+              свеж = (datetime.datetime.now(datetime.timezone.utc) - г).total_seconds()
+          изменилось = стар is None or сигн(нов) != сигн(стар)
+          протухло = свеж > 3600
+          if изменилось or протухло:
+              п.write_text(json.dumps(нов, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+              print('пишем замер:', 'изменился' if изменилось else 'протух (>1ч) — свежесть строки честная')
+          else:
+              print('замер тот же и свежий (<1ч) — коммита нет (ритм без шума)')
+              open('/tmp/без_шума', 'w').write('1')
+          PY
+          if [ -f /tmp/без_шума ]; then
+            echo "замер без изменений — и пуша нет, и деплой не будим"
+            exit 0
+          fi
+          git add data/дислокация.json
+          if git diff --cached --quiet; then
+            echo "в ветке уже этот замер — пуша нет"
+          else
+            git commit -m "дислокация: живой замер $(date -u +%FT%TZ)"
+            git pull --rebase origin данные-дислокация 2>/dev/null || true
+            git push origin данные-дислокация
+            echo "замер ушёл в ветку данных"
+          fi
+      - name: Пере-диспатч Pages (замер в выкладку)
+        if: success()
+        env:
+          ГХ_ТОКЕН: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/без_шума ]; then echo "деплой не будим — данных нет"; exit 0; fi
+          curl -s -o /dev/null -w "пере-диспатч Pages: HTTP %{http_code}\n" -X POST \
             -H "Authorization: token $ГХ_ТОКЕН" \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/oracle-rumu.yml/dispatches" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pages.yml/dispatches" \
             -d '{"ref":"rumu"}'
