@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  замер:
+  zamer:   # ID job'а — только латиница/цифры/_/- (правило GitHub Actions); имя замера живёт в названии шагов
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
