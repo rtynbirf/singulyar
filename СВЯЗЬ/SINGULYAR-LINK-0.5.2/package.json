@@ -1,0 +1,20 @@
+{
+  "name": "singulyar-link",
+  "version": "0.5.2",
+  "private": true,
+  "type": "module",
+  "description": "СИНГУЛЯР · ЕДИНОЕ ОКНО — одна ссылка, любой мессенджер, любой человек",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "test": "node --test tests/hub.test.mjs",
+    "check": "node --check server/index.mjs && node --check public/app.js",
+    "test:e2e": "node tests/e2e.mjs && node tests/wa-call.e2e.mjs"
+  },
+  "dependencies": {
+    "werift": "^0.27.0",
+    "ws": "^8.18.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
