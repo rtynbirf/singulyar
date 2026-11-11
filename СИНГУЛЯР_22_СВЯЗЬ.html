@@ -166,11 +166,16 @@ footer{padding-bottom:30px}
   <p class="state" id="stEpo" aria-live="polite">ЭПОХИ: ротация доступна, когда крипта включена.</p>
   <p class="hint">Фраза зала (v1.19) запечатывает тексты ДО провода и ДО журнала: AES-GCM, ключ выводится из фразы и не ходит по проводу вообще — ни кодом, ни сообщением. Говорите её голосом в комнате, как и код зала. Ключ живёт только в памяти вкладки: перезагрузили — введите снова. У кого фразы нет — видит честное «запечатано», а не пустоту.</p>
   <p class="hint">Ротация (v1.22): «новая эпоха» выводит новый ключ эпохи — с новой фразой это честный rekey (старая фраза новое не открывает вообще), с той же фразой — разнос ключей по эпохам. «стереть прошлое» выбрасывает ключи старых эпох из памяти вкладки: прошлое этой вкладки навсегда «запечатано». Честная граница: у носителя фразы старые ключи всё ещё выводимы — это стирание на устройстве, а не форвард-секретность. Объявление эпохи (без ключа) уходит в журнал кристалла как открытое событие hall.epoch.</p>
-  <p class="state" id="stZal">Канал — это зал по коду, как в ·18: без аккаунтов, почт и паролей. Один код связывает окна этого браузера, а звонок — и другие устройства (v1.24, публичные релеи Nostr). Ссылка ниже открывает зал ·18 с этим же кодом.</p>
+  <p class="state" id="stZal">Канал — это зал по коду, как в ·18: без аккаунтов, почт и паролей. Один код связывает окна этого браузера, а звонок — и другие устройства (v1.24, публичные релеи Nostr). Ссылки ниже открывают зал ·18 (события) и зал ·22 (связь) с этим же кодом.</p>
   <p class="state" id="stRelay" aria-live="polite">межустройство: зал закрыт.</p>
+  <p class="state" id="stДислокация" hidden></p>
   <div class="row" style="margin-top:8px">
     <button id="btnLinkZal" disabled>ссылка на зал ·18 с этим кодом</button>
     <input id="inLink" class="mono grow" readonly aria-label="Ссылка на зал" placeholder="ссылка появится здесь">
+  </div>
+  <div class="row" style="margin-top:6px">
+    <button id="btnLink22" disabled>ссылка на зал ·22 с этим кодом</button>
+    <input id="inLink22" class="mono grow" readonly aria-label="Ссылка на зал ·22" placeholder="ссылка появится здесь">
   </div>
 </section>
 
@@ -394,6 +399,7 @@ footer{padding-bottom:30px}
 
 <footer>СВЯЗЬ ·22 · часть единого дома: <a href="index.html" title="Хаб дома · кристалл ·00">хаб ·00</a> · <a href="ДОКУМЕНТАЦИЯ.html" title="Документация дома: открытый код, открытые знания">документация</a> · <a href="ДОКУМЕНТЫ/АРХИТЕКТУРА_22_СВЯЗЬ.md" title="Архитектура связи — для тех, кто знакомится с доками">архитектура связи</a></footer>
 </main>
+<!--СНГ:ЗАЛКОД--><script src="./js/зал-код.js"></script><!--/СНГ:ЗАЛКОД-->
 <script>
 /* ════════════════════════════════════════════════════════════════════════
    СИНГУЛЯР ·22 «СВЯЗЬ» — ядро.
@@ -935,7 +941,15 @@ const S22 = (function () {
                  по релею он едет в виде шума */
               password: пароль,
               /* те же публичные реле, что у зала ·18 (проверены 2026-10-02, TLS-проба 2026-10-04) */
-              relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+              relayConfig: { urls: (function () {   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: релеи — от живого замера CI (data/дислокация.json), не от декларации 2026-10-02; нет замера — канон */
+              try {
+                const канон = ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'];
+                const живы = ((window.SG_ДИСЛОКАЦИЯ && window.SG_ДИСЛОКАЦИЯ.релеи) || []).filter(function (р) { return р && р.жив && р.url; }).map(function (р) { return р.url; });
+                const все = живы.concat(канон); const видели = {}; const итог = [];
+                for (let i = 0; i < все.length && итог.length < 6; i++) { if (!видели[все[i]]) { видели[все[i]] = 1; итог.push(все[i]); } }
+                return итог;
+              } catch (е) { return ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net']; }
+            })(), redundancy: 2 },
               /* публичный STUN: адрес через NAT для прямого медиа; секретов нет;
                  TURN (симметричный NAT) — надстройка ·18, честная граница */
               rtcConfig: { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }] }
@@ -1007,7 +1021,7 @@ const S22 = (function () {
   }
   function открытьКанал(фиксКод) {
     закрытьКанал(true);
-    код = String(фиксКод || $('inCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+    код = window.ЗАЛКОД ? window.ЗАЛКОД.код(фиксКод || $('inCode').value || '', случайныйКод) : String(фиксКод || $('inCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: один вход = один зал (js/зал-код.js) — кириллица/ссылка не рассыпают людей */
     /* КРИПТА: фраза зала → ключ (только память вкладки). Падение вывода
        ключа не роняет зал: связь честно открывается без крипты. */
     (function () {
@@ -1101,9 +1115,21 @@ const S22 = (function () {
     у.search = '?зал=' + encodeURIComponent(код);
     return у.href;
   }
+  /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: приглашение в ТЕКУЩИЙ зал ·22 — раньше
+     ссылка вела только в зал ·18 (другая комната: singular-event-v1-*),
+     и приглашённый не попадал в связь, где сидит пригласивший. */
+  function ссылкаЗала22() {
+    const у = new URL(location.href);
+    у.hash = ''; у.search = '';
+    у.pathname = у.pathname.replace(/[^/]*$/, 'СИНГУЛЯР_22_СВЯЗЬ.html');
+    у.search = '?зал=' + encodeURIComponent(код);
+    return у.href;
+  }
   function обновитьСсылку() {
     $('inLink').value = код ? ссылкаЗала18() : '';
     $('btnLinkZal').disabled = !код;
+    const л22 = $('inLink22'); if (л22) л22.value = код ? ссылкаЗала22() : '';
+    const б22 = $('btnLink22'); if (б22) б22.disabled = !код;
   }
   function открытьЗал18() {
     if (!код) открытьКанал();
@@ -2049,6 +2075,10 @@ const S22 = (function () {
     $('inLink').value = ссылкаЗала18();
     try { $('inLink').select(); document.execCommand('copy'); событие('Ссылка на зал ·18 скопирована', false); } catch (e) {}
   });
+  if ($('btnLink22')) $('btnLink22').addEventListener('click', function () {
+    $('inLink22').value = ссылкаЗала22();
+    try { $('inLink22').select(); document.execCommand('copy'); событие('Ссылка на зал ·22 скопирована', false); } catch (e) {}
+  });
   $('btnSend').addEventListener('click', function () {
     const т = $('inMsg').value.trim();
     if (!т) return;
@@ -2243,7 +2273,32 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v238</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v239</span></div>
+<!--СНГ:ДИСЛОКАЦИЯ-->
+<script>
+/* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: живая строка дислокации — числа только из
+   факта замера CI (data/дислокация.json); нет замера — строка честно скрыта. */
+(function () {
+  'use strict';
+  function рисуй(д) {
+    try {
+      const э = document.getElementById('stДислокация');
+      if (!э || !д || !д.релеи || !д.релеи.length) return;
+      let живо = 0, всего = 0;
+      for (let i = 0; i < д.релеи.length; i++) { всего++; if (д.релеи[i].жив) живо++; }
+      let мин = -1;
+      try { if (д.генерация) мин = Math.max(0, Math.round((Date.now() - new Date(д.генерация).getTime()) / 60000)); } catch (е) {}
+      э.textContent = 'дислокация · замер CI' + (д.источник ? ' (' + д.источник + ')' : '') + ': релеи живы ' + живо + '/' + всего +
+        (мин >= 0 ? ' · замер ' + (мин < 1 ? 'только что' : мин + ' мин назад') : '');
+      э.hidden = false;
+    } catch (е) { /* строка не обязана жить */ }
+  }
+  if (window.SG_ДИСЛОКАЦИЯ) рисуй(window.SG_ДИСЛОКАЦИЯ);
+  window.addEventListener('sg-дислокация-готов', function (е) { рисуй(е && е.detail); });
+  setInterval(function () { if (window.SG_ДИСЛОКАЦИЯ) рисуй(window.SG_ДИСЛОКАЦИЯ); }, 60000);
+}());
+</script>
+<!--/СНГ:ДИСЛОКАЦИЯ-->
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
 </body>
 </html>

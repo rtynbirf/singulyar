@@ -1,0 +1,62 @@
+name: Дислокация — живой замер релеев и счётчиков
+
+# ЛАТКА 2026-11-11: числа и релеи дома меряются, а не декларируются.
+# Каждые 15 минут CI пробует релеи живым WebSocket и пишет data/дислокация.json.
+# Ритм без шума: коммит — только если замер реально изменился.
+# Догон пина: после коммита воркфлоу обновляет пин клетки singulyar в геноме
+# cell-swarm (секрет SINGULYAR_PIN_TOKEN; нет секрета — честное предупреждение)
+# и пере-диспатчит оракула, чтобы живой CI остался зелёным (обычай «догон»).
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: дислокация
+  cancel-in-progress: false
+
+jobs:
+  замер:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Живой замер релеев
+        run: node ИНСТРУМЕНТЫ/дислокация.mjs
+      - name: Коммит без шума (только при изменившемся замере)
+        env:
+          ПИН_ТОКЕН: ${{ secrets.SINGULYAR_PIN_TOKEN }}
+          ГХ_ТОКЕН: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          if git diff --quiet -- data/дислокация.json; then
+            echo "замер тот же — коммита нет (ритм без шума)"
+            exit 0
+          fi
+          git config user.name  "дислокация-автомат"
+          git config user.email "дислокация-автомат@users.noreply.github.com"
+          git add data/дислокация.json
+          git commit -m "дислокация: живой замер релеев/счётчиков $(date -u +%FT%TZ)"
+          git pull --rebase origin rumu
+          git push
+          SHA=$(git rev-parse HEAD)
+          echo "замер ушёл в дом: $SHA"
+          # догон пина (клетка singulyar в геноме cell-swarm) — обычай дома
+          if [ -n "$ПИН_ТОКЕН" ]; then
+            python3 scripts/пин_догон.py "$SHA" || echo "пин не догнан (честно пишем, замер не роняем)"
+          else
+            echo "СЕКРЕТА SINGULYAR_PIN_TOKEN НЕТ — пин догонит следующая волна"
+          fi
+          # пере-диспатч оракула: живой CI остаётся зелёным после догона пина
+          curl -s -o /dev/null -w "пере-диспатч оракула: HTTP %{http_code}\n" -X POST \
+            -H "Authorization: token $ГХ_ТОКЕН" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/oracle-rumu.yml/dispatches" \
+            -d '{"ref":"rumu"}'
