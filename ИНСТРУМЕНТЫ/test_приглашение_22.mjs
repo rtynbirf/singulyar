@@ -109,7 +109,16 @@ test('e2e ·22: приглашение ?зал=ТЕСТ1 собирает дву
   const релейПорт = стенд.порт; /* релей — upgrade того же порта ('self') */
   const ссылка = 'http://127.0.0.1:' + стенд.порт + '/СИНГУЛЯР_22_СВЯЗЬ.html?зал=ТЕСТ1';
 
-  const браузер = await pw.chromium.launch({ headless: true });
+  /* запуск — с фолбэком (ран 43041932304: apt-зеркало раннера хронически не
+     резолвится, --with-deps висит до таймаута): предустановленный Chrome раннера
+     (channel:chrome) и Edge — те же движок и WebRTC, что у chromium; обычный
+     chromium playwright — если его браузер установлен в среде. */
+  let браузер = null, последняя = null;
+  for (const канал of [null, 'chrome', 'msedge']) {
+    try { браузер = await pw.chromium.launch({ headless: true, ...(канал ? { channel: канал } : {}) }); break; }
+    catch (е) { последняя = е; }
+  }
+  if (!браузер) { t.skip('нет ни chromium, ни предустановленного chrome/msedge: ' + String(последняя).slice(0, 140)); return; }
   const журналы = [];
   try {
     const окна = [];

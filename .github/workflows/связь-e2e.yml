@@ -36,18 +36,15 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
-      - name: Playwright + Chromium (для e2e двух окон; в репо не хранится — зависимость среды)
+      - name: Playwright (пакет) и запасной браузер — CDN playwright, apt-зеркало не трогаем
+        # Ран 43041932304: apt-зеркало azure.archive хронически не резолвится,
+        # --with-deps висит до таймаута job. Runner ubuntu-24.04 несёт
+        # предустановленный Google Chrome — страж стартует по channel:chrome,
+        # а этот шаг лишь кладёт пакет playwright и (если CDN доступен)
+        # браузер chromium как первый выбор стража.
         run: |
           set -e
           npm i --no-save playwright@1.57.0
-          # apt-зеркало раннера иногда даёт DNS-транзиент (инфра-морг, ран 43036645554) —
-          # ретраим как Доктор гейтов: до 3 попыток, пауза, конечная терминация.
-          # Переменные shell — только латиница (урок рана 43038924350: bash не ест кириллицу).
-          ok=0
-          for p in 1 2 3; do
-            if npx playwright install --with-deps chromium; then ok=1; break; fi
-            echo "popytka $p не сошла (транзиент?) — ждём 20с и снова"; sleep 20
-          done
-          [ "$ok" = 1 ] || { echo "депы не встали за 3 попытки"; exit 1; }
+          npx playwright install chromium || echo "браузер playwright недоступен — страж возьмёт предустановленный Chrome (channel:chrome)"
       - name: Страж «приглашение собирает людей»
         run: node --test ИНСТРУМЕНТЫ/test_приглашение_22.mjs
