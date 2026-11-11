@@ -1,14 +1,15 @@
 name: link-e2e
 
-# Волна ×14 (2026-11-12): материал Сессии-1 — мост звонков WhatsApp — гоняется в CI.
-# Синтаксис + юнит хаба + оба сквозных прогона (настоящий Chromium против сервера;
-# поддельный Graph API Meta + настоящий WebRTC против моста). Движок по умолчанию chromium;
-# в песочнице дополнительно проверено SG_ENGINE=firefox — 7 зелёных прогонов моста.
+# Волна ×15 (2026-11-12): страж переходит за комплектом — теперь LINK 0.5.3
+# «КОММУНИКАТОР ЧЕЛОВЕКА» (RTT, морзе-ключ, брайль, пиктограммы, письмо, duet).
+# Синтаксис (server/app/duet) + юнит хаба (5 тестов, вкл. пиктограммные сигналы)
+# + оба сквозных прогона (настоящий Chromium против сервера; поддельный Graph API
+# Meta + настоящий WebRTC против моста). История: волна ×14 гнала 0.5.2 тем же составом.
 on:
   push:
     branches: [rumu]
     paths:
-      - "СВЯЗЬ/SINGULYAR-LINK-0.5.2/**"
+      - "СВЯЗЬ/SINGULYAR-LINK-0.5.3/**"
       - ".github/workflows/link-e2e.yml"
   workflow_dispatch:
 
@@ -17,7 +18,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: СВЯЗЬ/SINGULYAR-LINK-0.5.2
+        working-directory: СВЯЗЬ/SINGULYAR-LINK-0.5.3
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
