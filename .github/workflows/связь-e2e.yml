@@ -40,6 +40,13 @@ jobs:
         run: |
           set -e
           npm i --no-save playwright@1.57.0
-          npx playwright install --with-deps chromium
+          # apt-зеркало раннера иногда даёт DNS-транзиент (инфра-морг, ран 43036645554) —
+          # ретраим как Доктор гейтов: до 3 попыток, пауза, конечная терминация
+          ок=0
+          for п in 1 2 3; do
+            if npx playwright install --with-deps chromium; then ок=1; break; fi
+            echo "попытка $п не сошла (транзиент?) — ждём 20с и снова"; sleep 20
+          done
+          [ "$ок" = 1 ] || { echo "депы не встали за 3 попытки"; exit 1; }
       - name: Страж «приглашение собирает людей»
         run: node --test ИНСТРУМЕНТЫ/test_приглашение_22.mjs
