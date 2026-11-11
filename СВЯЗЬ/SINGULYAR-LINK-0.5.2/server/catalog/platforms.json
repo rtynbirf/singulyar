@@ -1,0 +1,686 @@
+{
+  "version": "0.5",
+  "updated": "2026-11-11",
+  "note": "Реестр платформ для СИНГУЛЯР. capabilities — честная оценка доступности моста, не маркетинг. MAU ориентировочные.",
+  "tiers": {
+    "A": "Есть рабочий или почти рабочий серверный мост (официальный API / Calling)",
+    "B": "Текст или уведомления через официальный Bot/Business API",
+    "C": "Только deep-link / share / invite в общий хаб",
+    "D": "Локальный агент / desktop capture / неофициальный путь",
+    "E": "Закрыто или нет осмысленного входа без сотрудничества платформы",
+    "F": "Открытый/децентрализованный протокол — мост предпочтителен через federation"
+  },
+  "platforms": [
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "tier": "A",
+      "mau": "~3B",
+      "region": "global",
+      "bridge": "whatsapp-call",
+      "capabilities": [
+        "voice-call-in",
+        "invite-link",
+        "business-api"
+      ],
+      "limits": [
+        "voice-only-in-bridge",
+        "needs-udp",
+        "business-number"
+      ],
+      "invite": {
+        "type": "wa.me",
+        "template": "https://wa.me/?text={text}"
+      }
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "tier": "A",
+      "mau": "~1B",
+      "region": "global",
+      "bridge": "telegram",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "invite-link",
+        "bot-api"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "share",
+        "template": "https://t.me/share/url?url={url}&text={text}"
+      }
+    },
+    {
+      "id": "viber",
+      "name": "Viber",
+      "tier": "D",
+      "mau": "varies",
+      "region": "global/CIS/MENA",
+      "bridge": "viber-audio",
+      "capabilities": [
+        "invite-link",
+        "local-audio-agent"
+      ],
+      "limits": [
+        "no-public-calling-api"
+      ],
+      "invite": {
+        "type": "deep-link",
+        "template": "viber://forward?text={text}"
+      }
+    },
+    {
+      "id": "teams",
+      "name": "Microsoft Teams",
+      "tier": "B",
+      "mau": "enterprise",
+      "region": "global",
+      "bridge": "teams",
+      "capabilities": [
+        "call-events",
+        "text-out",
+        "graph"
+      ],
+      "limits": [
+        "needs-calling-bot",
+        "needs-licenses",
+        "media-path-todo"
+      ],
+      "invite": {
+        "type": "deep-link",
+        "template": "https://teams.microsoft.com/l/chat/0/0?message={text}"
+      }
+    },
+    {
+      "id": "signal",
+      "name": "Signal",
+      "tier": "C",
+      "mau": "~100M+",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "no-bot-api-for-personal",
+        "e2ee-first"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "wechat",
+      "name": "WeChat",
+      "tier": "E",
+      "mau": "~1.41B",
+      "region": "CN/global-chinese",
+      "bridge": null,
+      "capabilities": [
+        "invite-link-limited"
+      ],
+      "limits": [
+        "closed-ecosystem",
+        "china-regulations"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "facebook-messenger",
+      "name": "Facebook Messenger",
+      "tier": "B",
+      "mau": "~1B",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "page-bot-possible"
+      ],
+      "limits": [
+        "personal-chats-closed",
+        "meta-policies"
+      ],
+      "invite": {
+        "type": "share",
+        "template": "https://www.facebook.com/dialog/send?link={url}&app_id={appId}"
+      }
+    },
+    {
+      "id": "snapchat",
+      "name": "Snapchat",
+      "tier": "C",
+      "mau": "~932M",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "no-server-bridge"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "qq",
+      "name": "QQ",
+      "tier": "E",
+      "mau": "~532M",
+      "region": "CN",
+      "bridge": null,
+      "capabilities": [
+        "invite-link-limited"
+      ],
+      "limits": [
+        "closed",
+        "china"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "imo",
+      "name": "imo",
+      "tier": "C",
+      "mau": "large",
+      "region": "global/emerging",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "tier": "A",
+      "mau": "~200M+",
+      "region": "global",
+      "bridge": "discord",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "bot-api",
+        "invite-link"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      },
+      "note": "Полноценный Discord-бот — следующий приоритетный мост после Teams media"
+    },
+    {
+      "id": "line",
+      "name": "LINE",
+      "tier": "A",
+      "mau": "~197M",
+      "region": "JP/TW/TH/ID",
+      "bridge": "line",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "messaging-api"
+      ],
+      "limits": [
+        "regional-accounts"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "kakaotalk",
+      "name": "KakaoTalk",
+      "tier": "C",
+      "mau": "large-KR",
+      "region": "KR",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "channel-api-limited"
+      ],
+      "limits": [
+        "korea-centric"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "zalo",
+      "name": "Zalo",
+      "tier": "C",
+      "mau": "large-VN",
+      "region": "VN",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "oa-api"
+      ],
+      "limits": [
+        "vietnam-centric"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "imessage",
+      "name": "Apple Messages (iMessage)",
+      "tier": "D",
+      "mau": "apple-ecosystem",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "local-agent-possible"
+      ],
+      "limits": [
+        "no-server-api",
+        "apple-only"
+      ],
+      "invite": {
+        "type": "sms",
+        "template": "sms:&body={text}"
+      }
+    },
+    {
+      "id": "instagram-dm",
+      "name": "Instagram Direct",
+      "tier": "C",
+      "mau": "large",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "meta-closed"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "google-messages",
+      "name": "Google Messages",
+      "tier": "C",
+      "mau": "android-rcs",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "rcs-limited"
+      ],
+      "limits": [
+        "carrier-dependent"
+      ],
+      "invite": {
+        "type": "sms",
+        "template": "sms:&body={text}"
+      }
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "tier": "A",
+      "mau": "enterprise",
+      "region": "global",
+      "bridge": "slack",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "bot-api",
+        "webhooks"
+      ],
+      "limits": [
+        "workspace-install"
+      ],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "skype",
+      "name": "Skype",
+      "tier": "E",
+      "mau": "legacy",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "sunset-to-teams"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      },
+      "note": "Skype consumer sunset; redirect to Teams"
+    },
+    {
+      "id": "google-chat",
+      "name": "Google Chat",
+      "tier": "A",
+      "mau": "workspace",
+      "region": "global",
+      "bridge": "googlechat",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "webhooks"
+      ],
+      "limits": [
+        "workspace"
+      ],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "element",
+      "name": "Element / Matrix",
+      "tier": "F",
+      "mau": "federated",
+      "region": "global",
+      "bridge": "webhook",
+      "capabilities": [
+        "federation",
+        "text",
+        "voip",
+        "bridges-exist"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "matrix",
+        "template": "{url}"
+      },
+      "note": "Предпочтительный открытый хребет; mautrix-* мосты к другим сетям"
+    },
+    {
+      "id": "matrix",
+      "name": "Matrix protocol",
+      "tier": "F",
+      "mau": "protocol",
+      "region": "global",
+      "bridge": "webhook",
+      "capabilities": [
+        "federation",
+        "e2ee",
+        "voip"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "matrix",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "session",
+      "name": "Session",
+      "tier": "C",
+      "mau": "privacy",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "onion-routing",
+        "no-phone"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "simplex",
+      "name": "SimpleX Chat",
+      "tier": "C",
+      "mau": "privacy",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link",
+        "no-ids"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "signal-alternative-wire",
+      "name": "Wire",
+      "tier": "C",
+      "mau": "enterprise-privacy",
+      "region": "EU",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "threema",
+      "name": "Threema",
+      "tier": "C",
+      "mau": "privacy-CH",
+      "region": "CH/EU",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "paid"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "briar",
+      "name": "Briar",
+      "tier": "C",
+      "mau": "offline-first",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-link"
+      ],
+      "limits": [
+        "tor-bluetooth"
+      ],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "jami",
+      "name": "Jami",
+      "tier": "F",
+      "mau": "p2p",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "p2p",
+        "invite-link"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "tox",
+      "name": "Tox",
+      "tier": "F",
+      "mau": "p2p",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "p2p"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "clipboard",
+        "template": "{text}\n{url}"
+      }
+    },
+    {
+      "id": "discord-alt-revolt",
+      "name": "Revolt",
+      "tier": "B",
+      "mau": "small",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "bot-api-possible"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "rocket-chat",
+      "name": "Rocket.Chat",
+      "tier": "A",
+      "mau": "self-hosted",
+      "region": "global",
+      "bridge": "rocketchat",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "webhooks"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "mattermost",
+      "name": "Mattermost",
+      "tier": "A",
+      "mau": "self-hosted",
+      "region": "global",
+      "bridge": "mattermost",
+      "capabilities": [
+        "text-in",
+        "text-out",
+        "webhooks"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "zulip",
+      "name": "Zulip",
+      "tier": "B",
+      "mau": "self-hosted",
+      "region": "global",
+      "bridge": "webhook",
+      "capabilities": [
+        "webhooks",
+        "bots"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "url",
+        "template": "{url}"
+      }
+    },
+    {
+      "id": "sms",
+      "name": "SMS / RCS",
+      "tier": "C",
+      "mau": "universal",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-sms"
+      ],
+      "limits": [
+        "cost",
+        "no-group-call"
+      ],
+      "invite": {
+        "type": "sms",
+        "template": "sms:&body={text}"
+      }
+    },
+    {
+      "id": "email",
+      "name": "Email",
+      "tier": "C",
+      "mau": "universal",
+      "region": "global",
+      "bridge": null,
+      "capabilities": [
+        "invite-mailto"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "mailto",
+        "template": "mailto:?subject={subject}&body={text}"
+      }
+    },
+    {
+      "id": "browser",
+      "name": "Browser / PWA / any device",
+      "tier": "A",
+      "mau": "universal",
+      "region": "global",
+      "bridge": "native-hub",
+      "capabilities": [
+        "full-hub",
+        "voice",
+        "video",
+        "text",
+        "signals"
+      ],
+      "limits": [],
+      "invite": {
+        "type": "direct",
+        "template": "{url}"
+      }
+    }
+  ]
+}
