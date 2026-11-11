@@ -1,0 +1,45 @@
+name: связь-e2e — приглашение собирает людей (два окна, локальный релей)
+
+# Волна ×11 «Связь» (issue #68 п.5): живой прогон «приглашение собирает
+# людей» был доказан волной руками (два окна Chromium) — теперь он стоит
+# стражем в CI. Стенд детерминированный: все wss-релеи переезжают на
+# локальный фейк-NIP-01-релей (ИНСТРУМЕНТЫ/фейк-релей-nip01.mjs, RFC 6455
+# руками, ноль внешних зависимостей и ноль внешней сети), BroadcastChannel
+# изолирован синглтоном на окно — меж окнами живёт только релей.
+# Запуск: при правке проводки связи (·22, зал-код, sg-registry) и по руке.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [rumu]
+    paths:
+      - 'СИНГУЛЯР_22_СВЯЗЬ.html'
+      - 'js/зал-код.js'
+      - 'js/sg-registry.js'
+      - 'ИНСТРУМЕНТЫ/test_приглашение_22.mjs'
+      - 'ИНСТРУМЕНТЫ/фейк-релей-nip01.mjs'
+      - '.github/workflows/связь-e2e.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: связь-e2e
+  cancel-in-progress: true
+
+jobs:
+  svyaz-e2e:   # ID job'а — только латиница/цифры/_/- (правило GitHub Actions; урок c4153a5)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Playwright + Chromium (для e2e двух окон; в репо не хранится — зависимость среды)
+        run: |
+          set -e
+          npm i --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Страж «приглашение собирает людей»
+        run: node --test ИНСТРУМЕНТЫ/test_приглашение_22.mjs
