@@ -13,16 +13,16 @@
 ## Запуск (3 шага)
 
 ```bash
-unzip SINGULYAR-LINK.zip && cd SINGULYAR-LINK
-./start-public.sh          # сервер + публичная HTTPS-ссылка (нужен cloudflared)
-# или локально для проверки:  node server/index.mjs   → http://localhost:8787
+unzip SINGULYAR-LINK-0.5.2.zip && cd SINGULYAR-LINK-0.5.2   # из дома: cd СВЯЗЬ/SINGULYAR-LINK-0.5.2
+./start-public.sh          # сам поставит зависимости → сервер на 8787 + публичная HTTPS-ссылка (нужен cloudflared)
+# или локально для проверки:  npm install && node server/index.mjs   → http://localhost:8787
 ```
 
 1. Открой адрес **https://…trycloudflare.com**, который напечатает скрипт (именно его, не localhost).
 2. «Создать пространство» → «Войти» → кнопка **«Пригласить»**.
 3. Выбери для каждого человека его мессенджер (WhatsApp, Viber, Telegram, Teams, СМС, почта, меню телефона, QR). Человек нажимает ссылку — он в разговоре.
 
-Node.js 20+. Зависимость `ws` уже лежит в `node_modules`, `npm install` не нужен.
+Node.js 20+. Зависимости (`ws`, `werift`) ставятся командой `npm install`; при первом запуске `start-public.sh` делает это сам. В комплекте `node_modules` нет — пакет лёгкий.
 
 ## Что умеет
 
