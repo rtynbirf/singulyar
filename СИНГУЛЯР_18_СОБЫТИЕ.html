@@ -301,6 +301,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
 <p id="событие-эфир-статус" role="status" style="margin:.6rem 0 .3rem;color:#8b93a3;font:12.5px/1.5 ui-monospace,Consolas,monospace">вещание: ждёт · данные: не собраны · релей: не собран</p>
 <ul id="событие-эфир-журнал" aria-live="polite" style="margin:.2rem 0 0;padding-left:1.1rem;color:#b9c2cf;font-size:.9rem"></ul>
 </section>
+<!--СНГ:ЗАЛКОД--><script src="./js/зал-код.js"></script><!--/СНГ:ЗАЛКОД-->
 <script>
 (function () {
 'use strict';
@@ -867,8 +868,16 @@ function ТРАНСПОРТ_РЕТРАНСЛЯТОР(код) {
         .then(function (tr) {
           комната = tr.joinRoom({
             appId: 'singular-zal-event-v1',
-            /* явные реле вместо дефолтных: стабильнее, проверены 2026-10-02 */
-            relayConfig: { urls: ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'], redundancy: 2 },
+            /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: релеи — от живого замера CI (data/дислокация.json); нет замера — канон */
+            relayConfig: { urls: (function () {
+              try {
+                const канон = ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net'];
+                const живы = ((window.SG_ДИСЛОКАЦИЯ && window.SG_ДИСЛОКАЦИЯ.релеи) || []).filter(function (р) { return р && р.жив && р.url; }).map(function (р) { return р.url; });
+                const все = живы.concat(канон); const видели = {}; const итог = [];
+                for (let i = 0; i < все.length && итог.length < 6; i++) { if (!видели[все[i]]) { видели[все[i]] = 1; итог.push(все[i]); } }
+                return итог;
+              } catch (е) { return ['wss://nostr.oxtr.dev', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://nostr.sathoarder.com', 'wss://nostr.islandarea.net']; }
+            })(), redundancy: 2 },
             /* STUN: голос ходит P2P напрямую; STUN нужен только для адреса
                через NAT (LAN работает и без него). TURN-релея у нас нет —
                симметричный NAT останется непробитым, это честно в доках. */
@@ -1601,7 +1610,7 @@ function подключитьСлежениеЗаПирами(комната, т
   });
 }
 function создатьЗал(фиксКод) {
-  const код = фиксКод ? String(фиксКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5) : кодЗала();
+  const код = фиксКод ? (window.ЗАЛКОД ? window.ЗАЛКОД.код(фиксКод, кодЗала) : String(фиксКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5)) : кодЗала();   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: один вход = один зал */
   const вид = $('transportHost').value;
   const имя = нормИмя($('hostName').value || 'Ведущий');
   const политика = (document.querySelector('input[name=savePolicy]:checked') || {}).value || 'any';
@@ -1631,8 +1640,8 @@ function создатьЗал(фиксКод) {
   }).catch(function (e) { лог('△ зал не поднялся: ' + (e && e.message || e), 'err'); });
 }
 function войтиВЗал() {
-  const код = String($('joinCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-  if (код.length !== 5) { лог('△ код зала — 5 символов', 'err'); return; }
+  const код = window.ЗАЛКОД ? window.ЗАЛКОД.код($('joinCode').value || '', '') : String($('joinCode').value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11 */
+  if (код.length < 4 || код.length > 5) { лог('△ код зала — 4–5 символов (кириллица переводится в латиницу сама)', 'err'); return; }
   const вид = $('transportGuest').value;
   const имя = нормИмя($('guestName').value || 'Участник');
   let т;
@@ -1775,13 +1784,13 @@ window.ЗАЛ18 = { ПРИЛОЖЕНИЕ: ПРИЛОЖЕНИЕ, ХРАНИЛИЩ
   const п = new URLSearchParams(location.search);
   const залКод = п.get('зал') || п.get('zal') || '';
   if (залКод) {
-    $('joinCode').value = String(залКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+    $('joinCode').value = window.ЗАЛКОД ? window.ЗАЛКОД.код(залКод, '') : String(залКод).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11 */
     $('joinAuto').textContent = 'код из QR: ' + $('joinCode').value + ' — введи имя и жми «войти»';
     $('guestName').focus();
   }
   if ((location.hash || '').indexOf('память') >= 0) показ('scMemory');
-  const хостКод = (п.get('хост') || п.get('host') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
-  if (хостКод && хостКод.length === 5) {
+  const хостКод = window.ЗАЛКОД ? window.ЗАЛКОД.код(п.get('хост') || п.get('host') || '', '') : (п.get('хост') || п.get('host') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);   /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11 */
+  if (хостКод && хостКод.length >= 4) {
     лог('мост ·19 ЧЕЛОВЕК: создаём зал с кодом из приглашения ' + хостКод);
     setTimeout(function () { создатьЗал(хостКод); }, 150);
   }
