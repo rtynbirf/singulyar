@@ -27,6 +27,14 @@ jobs:
           git fetch --depth=1 origin minus-fond
           git checkout FETCH_HEAD -- minus/голос
           echo "голос-фонд в выкладке: $(find minus/голос -name '*.mp3' | wc -l) файлов, $(du -sh minus/голос | cut -f1)"
+      - name: "Дверь-дислокация (ЛАТКА 2026-11-11): живой замер релеев — материализация ветки данные-дислокация в выкладку"
+        run: |
+          if git fetch --depth=1 origin данные-дислокация 2>/dev/null; then
+            git checkout FETCH_HEAD -- data/дислокация.json
+            echo "дислокация в выкладке: замер $(python3 -c "import json;print(json.load(open('data/дислокация.json', encoding='utf-8'))['генерация'])")"
+          else
+            echo "ветки данные-дислокация нет — лица честно живут без строки дислокации"
+          fi
       - name: "Pin Pages source to workflow (гонка legacy-main устранена)"
         run: |
           code=$(curl -s -o /tmp/pg.json -w "%{http_code}" -X PATCH \
