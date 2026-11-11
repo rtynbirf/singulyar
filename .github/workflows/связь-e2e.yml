@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   svyaz-e2e:   # ID job'а — только латиница/цифры/_/- (правило GitHub Actions; урок c4153a5)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # Playwright 1.57 (chromium-1200) знает 24.04; ubuntu-latest = 26.04 — ещё не поддержан
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
