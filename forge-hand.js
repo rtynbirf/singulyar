@@ -1,9 +1,44 @@
-/* ФОРЖ:РУКА v1 · кузня rtynbirf · ЧЕЛОВЕК=АККАУНТ=PID1 · одно другое не исключает
-   Хозяйская рука дома СИНГУЛЯР: золотая нить внизу каждой страницы.
-   CSP-безопасно: никаких inline-стилей в HTML, всё через CSSOM. */
+/* ФОРЖ:РУКА v2 · кузня rtynbirf · ЧЕЛОВЕК=АККАУНТ=PID1 · одно другое не исключает
+   Рука дома СИНГУЛЯР: корона сверху + золотая нить внизу каждой страницы.
+   CSP-безопасно: никаких inline-стилей в HTML, всё через свойства CSSOM. */
 (function () {
   if (window.__FORGE_HAND__) return;
   window.__FORGE_HAND__ = 1;
+  function crown() {
+    try {
+      if (!document.body) return;
+      if (document.querySelector('[data-forge="crown"]')) return;
+      var o = document.createElement('div');
+      o.setAttribute('data-forge', 'crown');
+      o.setAttribute('aria-hidden', 'true');
+      var s = o.style;
+      s.position = 'fixed';
+      s.top = '0';
+      s.left = '0';
+      s.right = '0';
+      s.height = '3px';
+      s.zIndex = '2147483000';
+      s.pointerEvents = 'none';
+      s.background = 'repeating-linear-gradient(90deg, rgba(217,164,65,.92) 0 16px, rgba(232,114,42,.85) 16px 30px, rgba(138,100,32,.55) 30px 34px)';
+      s.boxShadow = '0 1px 0 rgba(242,196,100,.35), 0 4px 14px rgba(0,0,0,.35)';
+      var d = document.createElement('span');
+      d.setAttribute('aria-hidden', 'true');
+      var ds = d.style;
+      ds.position = 'fixed';
+      ds.top = '2px';
+      ds.left = '50%';
+      ds.width = '8px';
+      ds.height = '8px';
+      ds.zIndex = '2147483001';
+      ds.pointerEvents = 'none';
+      ds.transform = 'translateX(-50%) rotate(45deg)';
+      ds.background = '#F2C464';
+      ds.boxShadow = '0 0 10px rgba(242,196,100,.85)';
+      var head = document.head || document.documentElement;
+      head.appendChild(o);
+      head.appendChild(d);
+    } catch (e) { /* корона не должна ломать дом */ }
+  }
   function stamp() {
     try {
       if (!document.body) return;
@@ -41,9 +76,10 @@
       document.body.appendChild(f);
     } catch (e) { /* рука не должна ломать дом */ }
   }
+  function dress() { crown(); stamp(); }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', stamp);
+    document.addEventListener('DOMContentLoaded', dress);
   } else {
-    stamp();
+    dress();
   }
 })();
