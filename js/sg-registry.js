@@ -16,31 +16,65 @@
   'use strict';
 
   /* ── 1. Реестр: fetch → window.SG_РЕЕСТР → событие ─────────────── */
+  /* ЛАТКА ДИСЛОКАЦИЯ 2026-11-11: правду перечитываем каждые 5 минут
+     (режим реального времени) и ломаем CDN-кэш (?t= — грабля ЛЕТОПИСЦА
+     6bdb0cd: raw/CDN отдаёт устаревшее). Падение одного чтения не роняет
+     остальные; свежая правда перерисовывает бирки сама. */
   (function загрузитьРеестр() {
     try {
       if (typeof fetch !== 'function') return;
       /* такт v11.25 «САЖЕНЦЫ» (С103): дом живёт на любой глубине —
          дверь в подпапке ищет правду вверх по лестнице (их канон не тронут) */
       var КАНДИДАТЫ = ['data/versions.json', '../data/versions.json', '../../data/versions.json', '../../../data/versions.json'];
-      function попытка(i) {
-        if (i >= КАНДИДАТЫ.length) return; /* офлайн/file:// — комнаты живут без реестра */
-        fetch(КАНДИДАТЫ[i])
-          .then(function (ответ) {
-            if (!ответ.ok) throw new Error('реестр: HTTP ' + ответ.status);
-            return ответ.json();
-          })
-          .then(function (json) {
-            try {
-              window.SG_РЕЕСТР = json;
-              if (typeof CustomEvent === 'function') {
-                window.dispatchEvent(new CustomEvent('sg-реестр-готов', { detail: json }));
-              }
-              заполнитьДатаРеестр(json); /* 2. после прихода правды — заполнить */
-            } catch (е) { /* реестр не имеет права ломать комнату */ }
-          })
-          .catch(function () { попытка(i + 1); /* не здесь — ищем выше */ });
+      var ДИСЛОКАЦИЯ = ['data/дислокация.json', '../data/дислокация.json', '../../data/дислокация.json', '../../../data/дислокация.json'];
+      function чтоЕсть(список, i) { return i >= список.length ? null : список[i]; }
+      function попыткаРеестра() {
+        function попытка(i) {
+          var путь = чтоЕсть(КАНДИДАТЫ, i);
+          if (!путь) return; /* офлайн/file:// — комнаты живут без реестра */
+          fetch(путь + '?t=' + Date.now())
+            .then(function (ответ) {
+              if (!ответ.ok) throw new Error('реестр: HTTP ' + ответ.status);
+              return ответ.json();
+            })
+            .then(function (json) {
+              try {
+                window.SG_РЕЕСТР = json;
+                if (typeof CustomEvent === 'function') {
+                  window.dispatchEvent(new CustomEvent('sg-реестр-готов', { detail: json }));
+                }
+                заполнитьДатаРеестр(json); /* 2. после прихода правды — заполнить */
+              } catch (е) { /* реестр не имеет права ломать комнату */ }
+            })
+            .catch(function () { попытка(i + 1); /* не здесь — ищем выше */ });
+        }
+        попытка(0);
       }
-      попытка(0);
+      function попыткаДислокации() {
+        function попытка(i) {
+          var путь = чтоЕсть(ДИСЛОКАЦИЯ, i);
+          if (!путь) return; /* замера ещё нет — страницы живут без строки */
+          fetch(путь + '?t=' + Date.now())
+            .then(function (ответ) {
+              if (!ответ.ok) throw new Error('дислокация: HTTP ' + ответ.status);
+              return ответ.json();
+            })
+            .then(function (json) {
+              try {
+                window.SG_ДИСЛОКАЦИЯ = json;
+                if (typeof CustomEvent === 'function') {
+                  window.dispatchEvent(new CustomEvent('sg-дислокация-готов', { detail: json }));
+                }
+              } catch (е) { /* строка не обязана жить */ }
+            })
+            .catch(function () { попытка(i + 1); });
+        }
+        попытка(0);
+      }
+      попыткаРеестра();
+      попыткаДислокации();
+      /* реальное время: 5 минут — и правда дома перечитана сама */
+      try { setInterval(function () { попыткаРеестра(); попыткаДислокации(); }, 300000); } catch (е) { /* нет таймеров — живём разовым чтением */ }
     } catch (е) { /* сеть недоступна — честно молчим */ }
   }());
 
