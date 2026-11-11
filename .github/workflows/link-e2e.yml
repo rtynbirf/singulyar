@@ -14,7 +14,7 @@ on:
 
 jobs:
   link:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: СВЯЗЬ/SINGULYAR-LINK-0.5.2
