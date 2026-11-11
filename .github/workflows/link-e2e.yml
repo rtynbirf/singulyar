@@ -1,0 +1,39 @@
+name: link-e2e
+
+# Волна ×14 (2026-11-12): материал Сессии-1 — мост звонков WhatsApp — гоняется в CI.
+# Синтаксис + юнит хаба + оба сквозных прогона (настоящий Chromium против сервера;
+# поддельный Graph API Meta + настоящий WebRTC против моста). Движок по умолчанию chromium;
+# в песочнице дополнительно проверено SG_ENGINE=firefox — 7 зелёных прогонов моста.
+on:
+  push:
+    branches: [rumu]
+    paths:
+      - "СВЯЗЬ/SINGULYAR-LINK-0.5.2/**"
+      - ".github/workflows/link-e2e.yml"
+  workflow_dispatch:
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: СВЯЗЬ/SINGULYAR-LINK-0.5.2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Зависимости
+        run: npm install
+      - name: Синтаксис
+        run: npm run check
+      - name: Юнит хаба
+        run: npm test
+      - name: Playwright (Chromium)
+        run: |
+          npm i --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: E2E хаба
+        run: node tests/e2e.mjs
+      - name: E2E моста WhatsApp (материал Сессии-1)
+        run: node tests/wa-call.e2e.mjs
