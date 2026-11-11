@@ -17,6 +17,7 @@ on:
       - 'js/зал-код.js'
       - 'js/sg-registry.js'
       - 'ИНСТРУМЕНТЫ/test_приглашение_22.mjs'
+      - 'ИНСТРУМЕНТЫ/test_ice_диагностика.mjs'
       - 'ИНСТРУМЕНТЫ/фейк-релей-nip01.mjs'
       - '.github/workflows/связь-e2e.yml'
 
@@ -48,3 +49,5 @@ jobs:
           npx playwright install chromium || echo "браузер playwright недоступен — страж возьмёт предустановленный Chrome (channel:chrome)"
       - name: Страж «приглашение собирает людей»
         run: node --test ИНСТРУМЕНТЫ/test_приглашение_22.mjs
+      - name: Страж ICE-диагностики (юнит + e2e звонка)
+        run: node --test ИНСТРУМЕНТЫ/test_ice_диагностика.mjs
