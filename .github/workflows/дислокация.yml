@@ -39,11 +39,15 @@ jobs:
           cp data/дислокация.json /tmp/замер.json
           git config user.name  "дислокация-автомат"
           git config user.email "дислокация-автомат@users.noreply.github.com"
+          # замерщик положил свежий файл в worktree (не-трекнутый) — унести его
+          # с дороги ДО ветвления, иначе сравним замер с ним же самим (урок 12:14Z)
+          rm -f data/дислокация.json
           if git fetch origin данные-дислокация 2>/dev/null; then
             git checkout -B данные-дислокация FETCH_HEAD
           else
             git checkout --orphan данные-дислокация
             git rm -rf . >/dev/null 2>&1 || true
+            rm -f data/дислокация.json
             mkdir -p data
           fi
           python3 - <<'PY'
