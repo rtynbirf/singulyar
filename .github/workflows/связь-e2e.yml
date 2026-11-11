@@ -18,6 +18,7 @@ on:
       - 'js/sg-registry.js'
       - 'ИНСТРУМЕНТЫ/test_приглашение_22.mjs'
       - 'ИНСТРУМЕНТЫ/test_ice_диагностика.mjs'
+      - 'ИНСТРУМЕНТЫ/test_reconnect_22.mjs'
       - 'ИНСТРУМЕНТЫ/фейк-релей-nip01.mjs'
       - '.github/workflows/связь-e2e.yml'
 
@@ -51,3 +52,5 @@ jobs:
         run: node --test ИНСТРУМЕНТЫ/test_приглашение_22.mjs
       - name: Страж ICE-диагностики (юнит + e2e звонка)
         run: node --test ИНСТРУМЕНТЫ/test_ice_диагностика.mjs
+      - name: Страж reconnect/resume зала (юнит + e2e переезда)
+        run: node --test ИНСТРУМЕНТЫ/test_reconnect_22.mjs

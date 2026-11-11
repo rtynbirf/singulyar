@@ -104,14 +104,14 @@ test('автомат: воркфлоу Дислокация + замерщик +
   assert.ok(пж.includes('данные-дислокация'), 'pages.yml не материализует замер');
 });
 
-test('sw15: кэш поднят (v239), зал-код.js в пре-кэше', () => {
+test('sw15: кэш поднят (v240), зал-код.js в пре-кэше', () => {
   const т = readFileSync(join(КОРЕНЬ, 'sw15.js'), 'utf-8');
-  assert.ok(т.includes("var S15_CACHE = 's15-orkestrator-v239';"), 'кэш не поднят');
+  assert.ok(т.includes("var S15_CACHE = 's15-orkestrator-v240';"), 'кэш не поднят');
   assert.ok(т.includes("'./js/зал-код.js'"), 'зал-код.js не в пре-кэше');
 });
 
-test('versions.json: кэш v239 в реестре (лица ≡ реестру)', () => {
+test('versions.json: кэш v240 в реестре (лица ≡ реестру)', () => {
   const р = JSON.parse(readFileSync(join(КОРЕНЬ, 'data', 'versions.json'), 'utf-8'));
-  assert.equal(р.дом.поколение_кэша, 'v239');
+  assert.equal(р.дом.поколение_кэша, 'v240');
   assert.equal(р.дом.дата, '2026-11-11');
 });
