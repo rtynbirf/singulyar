@@ -67,3 +67,57 @@ select{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-
 .trans{margin-top:4px;color:var(--acc);font-style:italic}
 .trans .tag{font-style:normal}
 .transbtn{min-height:38px;font-size:.85rem;width:100%;text-align:left}
+/* ---------- 0.8.0 СЛОИ · progressive disclosure, mobile-first ----------
+   Ничего из 0.5.x–0.7.0 не удалено: слой только добавляет воздух, иерархию
+   и крупные зоны касания. Цвет несёт смысл (состояние, сигналы), не украшение. */
+:root{color-scheme:dark light}
+h1{font-size:clamp(1.7rem,4.5vw,2.2rem);line-height:1.2;letter-spacing:-.01em}
+.card{padding:20px}
+main{padding:20px 16px 36px}
+button{min-height:48px}
+button.big{min-height:56px;font-size:1.08rem}
+details{margin-top:16px}
+details>summary{padding:6px 0;font-weight:600}
+details.adv,details.settings{border:1px solid var(--line);border-radius:12px;padding:4px 14px 10px}
+details.adv[open],details.settings[open]{padding-bottom:12px}
+/* статус-пилюля: «где я» видно одним взглядом, без чтения */
+#status{border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--bg);max-width:58vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-room="in"] #status{color:var(--acc);border-color:color-mix(in srgb,var(--acc) 45%,var(--line));font-weight:600}
+body[data-room="in"] .dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 22%,transparent)}
+/* клавиша установки дома — на виду, но тише главного потока */
+#btnInstall{margin-top:10px;width:100%;border:1px dashed var(--acc);color:var(--acc);font-weight:600}
+#btnInstall:hover{border-color:var(--acc)}
+/* шаги установки — короткие фразы, одна мысль на строку */
+.steps{margin:12px 0 6px;padding-left:20px;color:var(--fg)}
+.steps li{margin:10px 0;line-height:1.5}
+/* комната: разговор в центре (чат первый в DOM — на телефоне он сверху) */
+.room{grid-template-columns:minmax(0,1fr) 360px}
+.side{min-width:0}
+.side .row{margin-bottom:2px}
+.side h3{margin-top:20px}
+.side h3:first-of-type{margin-top:14px}
+/* сигналы — как реакции: чипы, не стена кнопок */
+.signals{gap:8px}
+.signals button{min-height:48px;border-radius:999px;padding:8px 14px;font-weight:600}
+.picto button{border-radius:14px}
+/* группы профиля доступности: Зрение / Слух / Сигналы / Язык */
+.grp{border-top:1px dashed var(--line);margin-top:8px;padding-top:2px}
+.grp:first-of-type{border-top:none}
+.grp>b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--mute);margin:12px 0 4px}
+.grp .check{margin:8px 0}
+/* бейдж перевода — маленькое честное «переведено на устройстве», не чекбокс-стена */
+#transState{display:inline-block;margin-top:8px;padding:3px 12px;border:1px solid var(--acc);border-radius:999px;color:var(--acc);font-size:.82rem}
+/* чат: воздух и читаемые пузыри */
+.messages{gap:10px}
+.msg{padding:10px 13px;border-radius:14px}
+.send input{min-height:48px}
+.send button{flex:none}
+@media(max-width:900px){
+  .room{grid-template-columns:1fr}
+  #btnLetter,#btnLeave{width:100%}
+}
+@media(max-width:480px){
+  .brand small{display:none}
+  header{padding-left:12px;padding-right:12px}
+  #status{max-width:52vw}
+}

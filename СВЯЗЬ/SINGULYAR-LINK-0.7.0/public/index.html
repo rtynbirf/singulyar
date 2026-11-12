@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0e1116">
+<meta name="color-scheme" content="dark light">
 <title>СИНГУЛЯР · Единое окно</title>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -16,7 +17,7 @@
 </header>
 
 <main>
-  <!-- 1. Создать пространство -->
+  <!-- 1. НАЧАЛО · один главный поток: создать пространство. Всё остальное — ниже и тише. -->
   <section id="view-start" class="card hidden">
     <h1>Один разговор для всех</h1>
     <p>Создай пространство — получишь одну ссылку. Каждый открывает её <b>из своего мессенджера</b>: Viber, WhatsApp, Telegram, Teams, Signal, СМС. Ничего устанавливать не нужно.</p>
@@ -24,6 +25,7 @@
       <input id="title" maxlength="40" placeholder="Семья" autocomplete="off">
     </label>
     <button id="btnCreate" class="primary big">Создать пространство</button>
+    <button id="btnInstall" class="ghost install">Установить дом — 2 минуты</button>
 
     <details id="duet">
       <summary>Прямая связь БЕЗ дома — когда выключили всё</summary>
@@ -47,82 +49,33 @@
     </details>
   </section>
 
-  <!-- 2. Войти -->
+  <!-- 2. ВОЙТИ · имя + четыре главных переключателя; глубокие способы — за «ещё», не пропали -->
   <section id="view-join" class="card hidden">
     <h1 id="joinTitle">Пространство</h1>
     <label>Твоё имя
       <input id="name" maxlength="48" placeholder="Как тебя называть" autocomplete="given-name">
     </label>
     <fieldset>
-      <legend>Как тебе удобно общаться</legend>
-      <label class="check"><input type="checkbox" id="nSpeak"> <span>🔊 Читать мне сообщения вслух</span></label>
-      <label class="check"><input type="checkbox" id="nCaps"> <span>📝 Мне нужны субтитры (другие увидят, что их речь надо писать)</span></label>
+      <legend>Как тебе удобно</legend>
+      <label class="check"><input type="checkbox" id="nSpeak"> <span>🔊 Читать мне вслух</span></label>
+      <label class="check"><input type="checkbox" id="nCaps"> <span>📝 Субтитры для меня</span></label>
       <label class="check"><input type="checkbox" id="nLarge"> <span>🔎 Крупный текст и кнопки</span></label>
-      <label class="check"><input type="checkbox" id="nHaptic" checked> <span>📳 Вибрация и звук на сигналы</span></label>
-      <label class="check"><input type="checkbox" id="nMorse"> <span>·− Морзе входящих вибрацией и строкой (тактиль)</span></label>
+      <label class="check"><input type="checkbox" id="nHaptic" checked> <span>📳 Вибрация на сигналы</span></label>
+    </fieldset>
+    <details class="adv">
+      <summary>Ещё способы: морзе, брайль, перевод</summary>
+      <label class="check"><input type="checkbox" id="nMorse"> <span>·− Морзе входящих — вибрацией и строкой</span></label>
       <label class="check"><input type="checkbox" id="nBraille"> <span>⠿ Брайль под сообщениями</span></label>
-      <label class="check"><input type="checkbox" id="nTrans"> <span>🌐 Переводить мне на моём языке — на устройстве, без облака</span></label>
+      <label class="check"><input type="checkbox" id="nTrans"> <span>🌐 Переводить мне — на устройстве, без облака</span></label>
       <label>Мой язык
         <select id="nTransLang" aria-label="Мой язык"></select>
       </label>
-    </fieldset>
+    </details>
     <button id="btnJoin" class="primary big">Войти</button>
   </section>
 
-  <!-- 3. Комната -->
+  <!-- 3. КОМНАТА · разговор в центре, управление по краям; на телефоне чат сверху -->
   <section id="view-room" class="room hidden">
-    <aside class="card side">
-      <div class="row">
-        <h2 id="roomTitle">Пространство</h2>
-        <button id="btnInvite" class="primary">Пригласить</button>
-      </div>
-      <div id="peers" class="peers" aria-live="polite"></div>
-      <div id="bridgeNote" class="note hidden"></div>
-
-      <h3>Звонок</h3>
-      <div class="row wrap">
-        <button id="btnMic" aria-pressed="false">🎤 Микрофон</button>
-        <button id="btnCam" aria-pressed="false">📷 Камера</button>
-        <button id="btnCaps" aria-pressed="false" title="Моя речь → текст для всех">📝 Речь в текст</button>
-        <button id="btnPhone" class="hidden" title="Позвонить на обычный телефон — он станет участником разговора">☎ Телефон</button>
-      </div>
-      <div id="tiles" class="tiles"></div>
-
-      <h3>Сигналы</h3>
-      <div class="row wrap signals">
-        <button data-nudge="wait">✋ Подожди</button>
-        <button data-nudge="ok">👍 Понял</button>
-        <button data-nudge="love">❤️ Люблю</button>
-        <button data-nudge="call">🔔 Позвони</button>
-        <button data-nudge="urgent" class="danger">🆘 Срочно</button>
-      </div>
-
-      <h3>Пиктограммы — для тех, кто не читает</h3>
-      <div class="row wrap signals picto">
-        <button data-nudge="water">💧 ВОДА</button>
-        <button data-nudge="hurt">🤕 БОЛИТ</button>
-        <button data-nudge="here">📍 Я ЗДЕСЬ</button>
-        <button data-nudge="danger" class="danger">⚠️ ОПАСНО</button>
-      </div>
-
-      <details>
-        <summary>Мои настройки</summary>
-        <label class="check"><input type="checkbox" id="sSpeak"> <span>🔊 Читать вслух</span></label>
-        <label class="check"><input type="checkbox" id="sCaps"> <span>📝 Мне нужны субтитры</span></label>
-        <label class="check"><input type="checkbox" id="sLarge"> <span>🔎 Крупно</span></label>
-        <label class="check"><input type="checkbox" id="sHaptic"> <span>📳 Вибрация и звук</span></label>
-        <label class="check"><input type="checkbox" id="sMorse"> <span>·− Морзе входящих</span></label>
-        <label class="check"><input type="checkbox" id="sBraille"> <span>⠿ Брайль под сообщениями</span></label>
-        <label class="check"><input type="checkbox" id="sTrans"> <span>🌐 Переводить мне на моём языке</span></label>
-        <label>Мой язык
-          <select id="sTransLang" aria-label="Мой язык"></select>
-        </label>
-        <div id="transState" class="note hidden" role="note"></div>
-      </details>
-      <button id="btnLetter" class="ghost">Письмо на бумагу</button>
-      <button id="btnLeave" class="ghost">Выйти</button>
-    </aside>
-
     <section class="card chat">
       <div id="messages" class="messages" aria-live="polite"></div>
       <div id="live" class="live" aria-live="polite"></div>
@@ -144,6 +97,70 @@
         </div>
       </div>
     </section>
+
+    <aside class="card side">
+      <div class="row">
+        <h2 id="roomTitle">Пространство</h2>
+        <button id="btnInvite" class="primary">Позвать</button>
+      </div>
+      <div id="peers" class="peers" aria-live="polite"></div>
+      <div id="bridgeNote" class="note hidden"></div>
+
+      <h3>Сигналы — быстрые реакции</h3>
+      <div class="row wrap signals">
+        <button data-nudge="wait">✋ Подожди</button>
+        <button data-nudge="ok">👍 Понял</button>
+        <button data-nudge="love">❤️ Люблю</button>
+        <button data-nudge="call">🔔 Позвони</button>
+        <button data-nudge="urgent" class="danger">🆘 Срочно</button>
+      </div>
+
+      <h3>Пиктограммы — для тех, кто не читает</h3>
+      <div class="row wrap signals picto">
+        <button data-nudge="water">💧 ВОДА</button>
+        <button data-nudge="hurt">🤕 БОЛИТ</button>
+        <button data-nudge="here">📍 Я ЗДЕСЬ</button>
+        <button data-nudge="danger" class="danger">⚠️ ОПАСНО</button>
+      </div>
+
+      <h3>Звонок</h3>
+      <div class="row wrap">
+        <button id="btnMic" aria-pressed="false">🎤 Микрофон</button>
+        <button id="btnCam" aria-pressed="false">📷 Камера</button>
+        <button id="btnCaps" aria-pressed="false" title="Моя речь → текст для всех">📝 Речь в текст</button>
+        <button id="btnPhone" class="hidden" title="Позвонить на обычный телефон — он станет участником разговора">☎ Телефон</button>
+      </div>
+      <div id="tiles" class="tiles"></div>
+
+      <details class="settings">
+        <summary>Мой способ общения</summary>
+        <div class="grp">
+          <b>Зрение</b>
+          <label class="check"><input type="checkbox" id="sLarge"> <span>🔎 Крупно</span></label>
+          <label class="check"><input type="checkbox" id="sCaps"> <span>📝 Субтитры</span></label>
+          <label class="check"><input type="checkbox" id="sBraille"> <span>⠿ Брайль</span></label>
+        </div>
+        <div class="grp">
+          <b>Слух</b>
+          <label class="check"><input type="checkbox" id="sSpeak"> <span>🔊 Читать вслух</span></label>
+        </div>
+        <div class="grp">
+          <b>Сигналы</b>
+          <label class="check"><input type="checkbox" id="sHaptic"> <span>📳 Вибрация и звук</span></label>
+          <label class="check"><input type="checkbox" id="sMorse"> <span>·− Морзе входящих</span></label>
+        </div>
+        <div class="grp">
+          <b>Язык</b>
+          <label class="check"><input type="checkbox" id="sTrans"> <span>🌐 Переводить мне</span></label>
+          <label>Мой язык
+            <select id="sTransLang" aria-label="Мой язык"></select>
+          </label>
+          <div id="transState" class="note hidden" role="note"></div>
+        </div>
+      </details>
+      <button id="btnLetter" class="ghost">Письмо на бумагу</button>
+      <button id="btnLeave" class="ghost">Выйти</button>
+    </aside>
   </section>
 </main>
 
@@ -157,9 +174,23 @@
   </div>
 </div>
 
+<div id="installDlg" class="modal hidden" role="dialog" aria-modal="true" aria-label="Установить дом — 2 минуты">
+  <div class="sheet">
+    <div class="row"><h2>Установить дом — 2 минуты</h2><button id="installClose" class="ghost">Закрыть</button></div>
+    <p class="note">После установки дом открывается как своё приложение: иконка рядом с близкими, без адресной строки, держит плохую связь.</p>
+    <ol class="steps">
+      <li><b>Android</b> — меню ⋮ → «Установить приложение» (или «Добавить на главный экран»).</li>
+      <li><b>iPhone / iPad</b> — в Safari кнопка «Поделиться» → «На экран “Домой”».</li>
+      <li><b>Компьютер</b> — значок установки в правой части адресной строки.</li>
+    </ol>
+    <button id="btnInstallGo" class="primary big">Установить сейчас</button>
+  </div>
+</div>
+
 <div id="toast" class="toast hidden" role="alert"></div>
 <script src="/vendor/qrcode.js"></script>
 <script src="/app.js" type="module"></script>
 <script src="/duet.js" type="module"></script>
+<script src="/sloi.js"></script>
 </body>
 </html>
