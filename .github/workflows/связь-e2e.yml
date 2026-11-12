@@ -20,6 +20,7 @@ on:
       - 'ИНСТРУМЕНТЫ/test_ice_диагностика.mjs'
       - 'ИНСТРУМЕНТЫ/test_reconnect_22.mjs'
       - 'ИНСТРУМЕНТЫ/test_лимиты_mesh_22.mjs'
+      - 'ИНСТРУМЕНТЫ/test_webtorrent_22.mjs'
       - 'ИНСТРУМЕНТЫ/фейк-релей-nip01.mjs'
       - '.github/workflows/связь-e2e.yml'
 
@@ -57,3 +58,5 @@ jobs:
         run: node --test ИНСТРУМЕНТЫ/test_reconnect_22.mjs
       - name: Страж лимитов mesh (issue #68 п.4 — замер фактом)
         run: node --test ИНСТРУМЕНТЫ/test_лимиты_mesh_22.mjs
+      - name: Страж F-005 — webtorrent-маршрут файлов (issue #68 п.6 — дисциплина до подключения)
+        run: node --test ИНСТРУМЕНТЫ/test_webtorrent_22.mjs
