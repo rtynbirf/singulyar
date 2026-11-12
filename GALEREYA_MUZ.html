@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ГАЛЕРЕЯ МУЗ · 64 полотна кузни ПОЛИМАТ · СИНГУЛЯР</title>
+<meta name="description" content="Дверь ·64: все 64 написанные картины дома rtynbirf — живые комнаты и свод архива. Обсидиан, расплавленное золото, ручная ковка.">
+<style>
+:root{--bg:#0B0906;--bg2:#14100A;--line:#2A2216;--gold:#B08D3E;--gold2:#F2C464;--gold3:#6E5A2E;--tx:#D8CDB4;--dim:#8A7D62;--mono:ui-monospace,'Cascadia Mono',Consolas,monospace;--serif:Georgia,'Times New Roman',serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--serif);overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:34px 22px 60px}
+header{text-align:center;padding:26px 0 20px}
+.nad{font-family:var(--mono);font-size:12px;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,58px);font-weight:400;letter-spacing:10px;color:var(--gold2);margin:14px 0 10px;text-shadow:0 0 34px rgba(178,141,62,.35)}
+.pod{font-family:var(--mono);font-size:13px;color:var(--dim);letter-spacing:1px}
+.rule{max-width:560px;height:1px;margin:20px auto;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold2) 50%,var(--gold) 70%,transparent)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:20px 0 26px}
+.flt{font-family:var(--mono);font-size:12.5px;letter-spacing:2px;color:var(--tx);background:transparent;border:1px solid var(--line);padding:9px 18px;cursor:pointer;transition:.25s}
+.flt:hover{border-color:var(--gold);color:var(--gold2)}
+.flt.on{border-color:var(--gold);color:var(--gold2);background:rgba(178,141,62,.09);box-shadow:0 0 18px rgba(178,141,62,.18) inset}
+.cnt{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.card{position:relative;border:1px solid var(--line);background:var(--bg2);cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 14px 40px rgba(0,0,0,.55),0 0 26px rgba(178,141,62,.16)}
+.card img{display:block;width:100%;aspect-ratio:1200/630;object-fit:cover;background:#0d0a07}
+.cap{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 13px;border-top:1px solid var(--line)}
+.cap b{font-family:var(--mono);font-weight:400;font-size:13px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap i{font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:1px;white-space:nowrap}
+.tag{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:4px 9px;border:1px solid}
+.tag.live{color:var(--gold2);border-color:var(--gold3);background:rgba(20,15,8,.82)}
+.tag.svod{color:#9C8B6A;border-color:#3A2F1C;background:rgba(20,15,8,.82)}
+.num{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:10px;color:var(--dim);padding:4px 7px;background:rgba(20,15,8,.82);border:1px solid var(--line)}
+footer{text-align:center;margin-top:46px;font-family:var(--mono);font-size:11.5px;color:var(--gold3);letter-spacing:2px}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{color:var(--gold2)}
+#lb{position:fixed;inset:0;z-index:9;display:none;background:rgba(7,5,3,.95);backdrop-filter:blur(4px)}
+#lb.open{display:flex;flex-direction:column;align-items:center;justify-content:center}
+#lb img{max-width:min(1240px,94vw);max-height:78vh;border:1px solid var(--gold3);box-shadow:0 0 70px rgba(178,141,62,.14)}
+#lb .lbcap{max-width:1100px;text-align:center;margin-top:14px;font-family:var(--mono)}
+#lb .lbn{font-size:14px;color:var(--gold2);letter-spacing:2px}
+#lb .lbd{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.6;padding:0 14px}
+#lb button{position:fixed;top:50%;transform:translateY(-50%);background:transparent;border:1px solid var(--line);color:var(--gold);font-size:26px;width:52px;height:52px;cursor:pointer;transition:.2s;font-family:var(--mono)}
+#lb button:hover{border-color:var(--gold);color:var(--gold2)}
+#prev{left:14px}#next{right:14px}
+#x{position:fixed;top:14px;right:16px;transform:none;font-size:18px;width:44px;height:44px}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="wrap">
+<header>
+  <div class="nad">ДВЕРЬ ·64 · КУЗНЯ ПОЛИМАТ</div>
+  <h1>ГАЛЕРЕЯ МУЗ</h1>
+  <div class="pod">64 полотна · 21 живая светится · 43 спят под сводом · обсидиан и расплавленное золото · раунды 8–9 · 2026-11-12</div>
+  <div class="rule"></div>
+  <div class="tools">
+    <button class="flt on" data-f="all">ВСЕ · 64</button>
+    <button class="flt" data-f="живая">ЖИВЫЕ · 21</button>
+    <button class="flt" data-f="свод">СВОД · 43</button>
+    <span class="cnt" id="cnt">показано 64</span>
+  </div>
+</header>
+<main class="grid" id="grid" aria-label="Сетка полотен"></main>
+<footer>◆ картина каждой комнаты — ручная ковка <a href="https://github.com/rtynbirf">КУЗНИ ПОЛИМАТ</a> · ЧЕЛОВЕК=АККАУНТ=PID1 · дверь ·64 дома СИНГУЛЯР ◆</footer>
+</div>
+<div id="lb" role="dialog" aria-modal="true">
+  <button id="x" aria-label="Закрыть">✕</button>
+  <button id="prev" aria-label="Предыдущее">←</button>
+  <img id="lbi" alt="">
+  <div class="lbcap"><div class="lbn" id="lbn"></div><div class="lbd" id="lbd"></div></div>
+  <button id="next" aria-label="Следующее">→</button>
+</div>
+<script id="manifest" type="application/json">[{"f": "МУЗЫ/index.svg", "n": "index", "s": "живая", "k": "созвездие", "d": "SSOT-хаб: реестр проектов, проверенные SHA, конституция веса", "num": 1}, {"f": "МУЗЫ/singulyar.svg", "n": "singulyar", "s": "живая", "k": "созвездие", "d": "СИНГУЛЯР — офлайн-вселенная караоке RUVSON: созвездие страниц", "num": 2}, {"f": "МУЗЫ/edinyy-svod.svg", "n": "edinyy-svod", "s": "живая", "k": "мандала", "d": "ЕДИНЫЙ СВОД: один документ вместо россыпи, купол правил дома", "num": 3}, {"f": "МУЗЫ/lean-canon.svg", "n": "lean-canon", "s": "живая", "k": "мандала", "d": "постный канон: минимум, из которого всё следует", "num": 4}, {"f": "МУЗЫ/ekonomika.svg", "n": "ekonomika", "s": "живая", "k": "поток", "d": "КНИГА ЭКОНОМИКИ: счёт и достаток дома", "num": 5}, {"f": "МУЗЫ/revo.svg", "n": "revo", "s": "живая", "k": "поток", "d": "REVO — автономный прототип метода Reve: layout → render → critic", "num": 6}, {"f": "МУЗЫ/polymath-core.svg", "n": "polymath-core", "s": "живая", "k": "орбиты", "d": "КНИГА ПОЛИМАТ-ЯДРА: общие органы всех агентов", "num": 7}, {"f": "МУЗЫ/cell65-host.svg", "n": "cell65-host", "s": "живая", "k": "орбиты", "d": "cell65-host: хост ячеек — шестьдесят пять комнат живых процессов", "num": 8}, {"f": "МУЗЫ/ekspozicii.svg", "n": "ekspozicii", "s": "живая", "k": "кружево", "d": "КНИГА ЭКСПОЗИЦИЙ: витрины дома для гостей", "num": 9}, {"f": "МУЗЫ/github-doctrine.svg", "n": "github-doctrine", "s": "живая", "k": "кружево", "d": "КНИГА ДОКТРИНЫ: правила игры дома на GitHub", "num": 10}, {"f": "МУЗЫ/rtynbirf.svg", "n": "rtynbirf", "s": "живая", "k": "горизонт", "d": "ЧЕЛОВЕК=АККАУНТ=PID1 · ПОЛИМАТ=МУЛЬТИАГЕНТ · живая кузня", "num": 11}, {"f": "МУЗЫ/rtynbirf.github.io.svg", "n": "rtynbirf.github.io", "s": "живая", "k": "горизонт", "d": "ЛАКОРНИЯ · MEGA-PLAYER SINGULYAR: сцена, где поёт дом", "num": 12}, {"f": "МУЗЫ/domovoy.svg", "n": "domovoy", "s": "живая", "k": "дерево", "d": "КНИГА ДОМОВОГО: ритуал такта, живое не ломается", "num": 13}, {"f": "МУЗЫ/combain-v2.svg", "n": "combain-v2", "s": "живая", "k": "дерево", "d": "COMBAIN v2 — self-hosted messenger: ветви диалогов в своих стенах", "num": 14}, {"f": "МУЗЫ/ruvson.svg", "n": "ruvson", "s": "живая", "k": "волны", "d": "КНИГА RUVSON: фонд песен, звук идёт волнами", "num": 15}, {"f": "МУЗЫ/uace.svg", "n": "uace", "s": "живая", "k": "волны", "d": "КНИГА UACE: универсальный автомат счёта и исполнения", "num": 16}, {"f": "МУЗЫ/.github.svg", "n": ".github", "s": "живая", "k": "улей", "d": "здоровье дома: профили, шаблоны, правила приёма", "num": 17}, {"f": "МУЗЫ/agryp.svg", "n": "agryp", "s": "живая", "k": "улей", "d": "agryp — неспящий супервизор агентов уровня PID 1", "num": 18}, {"f": "МУЗЫ/neutral-browser.svg", "n": "neutral-browser", "s": "живая", "k": "колонны", "d": "Neutral Browser — НЕЙТРАЛЬНЫЙ БРАУЗЕР ПОЛЬЗОВАТЕЛЯ: порталы без слежки", "num": 19}, {"f": "МУЗЫ/release-vault.svg", "n": "release-vault", "s": "живая", "k": "колонны", "d": "release-vault — шифрованное хранилище релизных ассетов", "num": 20}, {"f": "МУЗЫ/free-man.svg", "n": "free-man", "s": "живая", "k": "горизонт", "d": "FREE MAN: свободный браузер — local-first, ноль слежки", "num": 64}, {"f": "МУЗЫ/H-PE11-PHOENIX.svg", "n": "H-PE11-PHOENIX", "s": "свод", "k": "горизонт", "d": "ФЕНИКС: сгорает и встаёт, живое не ломается", "num": 21}, {"f": "МУЗЫ/POLYMATH-ATLAS-GESTALT-CANON.svg", "n": "POLYMATH-ATLAS-GESTALT-CANON", "s": "свод", "k": "мандала", "d": "гештальт-канон атласа", "num": 22}, {"f": "МУЗЫ/cell-rs.svg", "n": "cell-rs", "s": "свод", "k": "орбиты", "d": "ячейки на Rust: крепкие стены", "num": 23}, {"f": "МУЗЫ/cell-swarm.svg", "n": "cell-swarm", "s": "свод", "k": "улей", "d": "рой ячеек: мелкие руки делают большое", "num": 24}, {"f": "МУЗЫ/commons.svg", "n": "commons", "s": "свод", "k": "улей", "d": "общее: то, что не делится", "num": 25}, {"f": "МУЗЫ/domovenok.svg", "n": "domovenok", "s": "свод", "k": "дерево", "d": "домовёнок: мал, да удал", "num": 26}, {"f": "МУЗЫ/domovoy-ritual.svg", "n": "domovoy-ritual", "s": "свод", "k": "дерево", "d": "ритуал такта: живое не ломается", "num": 27}, {"f": "МУЗЫ/domovoy-tweaker.svg", "n": "domovoy-tweaker", "s": "свод", "k": "дерево", "d": "домовой-твикер: подкручивает тихо", "num": 28}, {"f": "МУЗЫ/github-runbook.svg", "n": "github-runbook", "s": "свод", "k": "колонны", "d": "рунбук: что делать, когда всё пошло не так", "num": 29}, {"f": "МУЗЫ/global-video-platforms-registry.svg", "n": "global-video-platforms-registry", "s": "свод", "k": "колонны", "d": "реестр видеоплатформ мира", "num": 30}, {"f": "МУЗЫ/karaoke-dream.svg", "n": "karaoke-dream", "s": "свод", "k": "созвездие", "d": "караоке-сон: сцена, где поёт каждый", "num": 31}, {"f": "МУЗЫ/khozyain.svg", "n": "khozyain", "s": "свод", "k": "горизонт", "d": "дом-как-аккаунт: один автомат, зелёные main, ноль тревог", "num": 32}, {"f": "МУЗЫ/language-through-the-ages.svg", "n": "language-through-the-ages", "s": "свод", "k": "волны", "d": "язык сквозь века", "num": 33}, {"f": "МУЗЫ/linguistic-code.svg", "n": "linguistic-code", "s": "свод", "k": "кружево", "d": "лингвистический код: язык как программа", "num": 34}, {"f": "МУЗЫ/markitdown.svg", "n": "markitdown", "s": "свод", "k": "поток", "d": "markitdown: любое слово — в разметку", "num": 35}, {"f": "МУЗЫ/nous.svg", "n": "nous", "s": "свод", "k": "мандала", "d": "НОУС: чистый ум без лишних слов", "num": 36}, {"f": "МУЗЫ/os-forge.svg", "n": "os-forge", "s": "свод", "k": "колонны", "d": "кузня ОС: железо из огня", "num": 37}, {"f": "МУЗЫ/polimat-hub.svg", "n": "polimat-hub", "s": "свод", "k": "созвездие", "d": "хаб ПОЛИМАТ: все нити в одну руку", "num": 38}, {"f": "МУЗЫ/polimat-task174.svg", "n": "polimat-task174", "s": "свод", "k": "орбиты", "d": "задача 174: доведённая до конца", "num": 39}, {"f": "МУЗЫ/polymat-hive.svg", "n": "polymat-hive", "s": "свод", "k": "улей", "d": "улей ПОЛИМАТ: ячейки, которые живут", "num": 40}, {"f": "МУЗЫ/polymath-atlas.svg", "n": "polymath-atlas", "s": "свод", "k": "созвездие", "d": "атлас полимата: карта всех карт", "num": 41}, {"f": "МУЗЫ/polymath-atlas-v107.svg", "n": "polymath-atlas-v107", "s": "свод", "k": "созвездие", "d": "атлас v107: сто седьмая печать", "num": 42}, {"f": "МУЗЫ/polymath-gen.svg", "n": "polymath-gen", "s": "свод", "k": "дерево", "d": "генератор полимата: из ничего — всё", "num": 43}, {"f": "МУЗЫ/polymath-multiagent.svg", "n": "polymath-multiagent", "s": "свод", "k": "орбиты", "d": "ПОЛИМАТ=МУЛЬТИАГЕНТ: много рук одного хозяина", "num": 44}, {"f": "МУЗЫ/polymath-os.svg", "n": "polymath-os", "s": "свод", "k": "улей", "d": "ОС полимата: система как дом", "num": 45}, {"f": "МУЗЫ/polymath-stckg-core.svg", "n": "polymath-stckg-core", "s": "свод", "k": "орбиты", "d": "стек-ядро полимата", "num": 46}, {"f": "МУЗЫ/polymath-tools-atlas.svg", "n": "polymath-tools-atlas", "s": "свод", "k": "созвездие", "d": "атлас инструментов полимата", "num": 47}, {"f": "МУЗЫ/red-thread-debt-audit.svg", "n": "red-thread-debt-audit", "s": "свод", "k": "поток", "d": "красная нить долга: аудит до конца", "num": 48}, {"f": "МУЗЫ/rent-mechanism-q43.svg", "n": "rent-mechanism-q43", "s": "свод", "k": "улей", "d": "механизм аренды: счёт по правилам дома", "num": 49}, {"f": "МУЗЫ/repo-doctrine.svg", "n": "repo-doctrine", "s": "свод", "k": "колонны", "d": "доктрина репозитория: как живут комнаты", "num": 50}, {"f": "МУЗЫ/runtime-protocol.svg", "n": "runtime-protocol", "s": "свод", "k": "поток", "d": "протокол времени исполнения", "num": 51}, {"f": "МУЗЫ/ruvson-lyrics.svg", "n": "ruvson-lyrics", "s": "свод", "k": "кружево", "d": "слова RUVSON: строки, что поют", "num": 52}, {"f": "МУЗЫ/ruvson-rse2.svg", "n": "ruvson-rse2", "s": "свод", "k": "волны", "d": "RUVSON RSE2: вторая печать песен", "num": 53}, {"f": "МУЗЫ/singulyar-llm.svg", "n": "singulyar-llm", "s": "свод", "k": "созвездие", "d": "СИНГУЛЯР LLM: офлайн-вселенная с умом", "num": 54}, {"f": "МУЗЫ/task-graph-propagator.svg", "n": "task-graph-propagator", "s": "свод", "k": "дерево", "d": "граф задач: волна по узлам", "num": 55}, {"f": "МУЗЫ/uace-pml.svg", "n": "uace-pml", "s": "свод", "k": "поток", "d": "UACE PML: язык автомата", "num": 56}, {"f": "МУЗЫ/uace-polymat.svg", "n": "uace-polymat", "s": "свод", "k": "поток", "d": "UACE ПОЛИМАТ: автомат счёта и исполнения", "num": 57}, {"f": "МУЗЫ/universal-agent.svg", "n": "universal-agent", "s": "свод", "k": "орбиты", "d": "универсальный агент: одна рука на все дела", "num": 58}, {"f": "МУЗЫ/voice-atlas-llm.svg", "n": "voice-atlas-llm", "s": "свод", "k": "волны", "d": "атлас голосов LLM", "num": 59}, {"f": "МУЗЫ/web-evolution-1991-2026.svg", "n": "web-evolution-1991-2026", "s": "свод", "k": "поток", "d": "эволюция веба: от первого сайта до дома", "num": 60}, {"f": "МУЗЫ/windows-chronicle.svg", "n": "windows-chronicle", "s": "свод", "k": "колонны", "d": "хроника окон: от 1985 до сегодня", "num": 61}, {"f": "МУЗЫ/yazyk-skvoz-epohi.svg", "n": "yazyk-skvoz-epohi", "s": "свод", "k": "волны", "d": "язык сквозь эпохи: слова живут дольше нас", "num": 62}, {"f": "МУЗЫ/rumu.svg", "n": "rumu", "s": "свод", "k": "орбиты", "d": "СИНГУЛЯР РУМУ: спит саркофагом, просыпается по слову Хозяина", "num": 63}]</script>
+<script>
+var M=JSON.parse(document.getElementById('manifest').textContent);
+var grid=document.getElementById('grid'),cur=0,shown=[];
+function el(t,c){var e=document.createElement(t);if(c)e.className=c;return e}
+function draw(){
+  grid.innerHTML='';shown=[];
+  var f=document.querySelector('.flt.on').dataset.f;
+  M.forEach(function(it,i){
+    if(f!=='all'&&it.s!==f)return;
+    shown.push(i);
+    var c=el('div','card');c.dataset.i=i;
+    var im=el('img');im.loading='lazy';im.src=it.f;im.alt='Муза '+it.n+' — '+it.k;
+    var cap=el('div','cap');var b=el('b');b.textContent=it.n;
+    var st=el('i');st.textContent=(it.s==='живая'?'◆ живая':'◇ свод')+' · '+it.k;
+    cap.appendChild(b);cap.appendChild(st);
+    var tg=el('span','tag '+(it.s==='живая'?'live':'svod'));tg.textContent=it.s.toUpperCase();
+    var nm=el('span','num');nm.textContent='№'+it.num;
+    c.appendChild(im);c.appendChild(cap);c.appendChild(tg);c.appendChild(nm);
+    c.addEventListener('click',function(){openLb(shown.indexOf(i))});
+    grid.appendChild(c);
+  });
+  document.getElementById('cnt').textContent='показано '+shown.length;
+}
+document.querySelectorAll('.flt').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.flt').forEach(function(x){x.classList.remove('on')});
+    btn.classList.add('on');draw();
+  });
+});
+var lb=document.getElementById('lb'),lbi=document.getElementById('lbi'),lbn=document.getElementById('lbn'),lbd=document.getElementById('lbd');
+function openLb(k){cur=k;render();lb.classList.add('open');document.body.style.overflow='hidden'}
+function render(){var it=M[shown[cur]];lbi.src=it.f;lbi.alt=it.n;lbn.textContent='№'+it.num+' · '+it.n+' · '+(it.s==='живая'?'ЖИВАЯ КОМНАТА':'СВОД АРХИВА')+' · '+it.k.toUpperCase();lbd.textContent=it.d}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow=''}
+function step(d){cur=(cur+d+shown.length)%shown.length;render()}
+document.getElementById('x').onclick=closeLb;
+document.getElementById('prev').onclick=function(){step(-1)};
+document.getElementById('next').onclick=function(){step(1)};
+lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+document.addEventListener('keydown',function(e){
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')closeLb();
+  if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);
+});
+draw();
+/* звёздная пыль кузни */
+(function(){
+  var cv=document.getElementById('stars'),ctx=cv.getContext('2d'),W,H,stars=[];
+  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;stars=[];
+    for(var i=0;i<150;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*Math.PI*2,s:.004+Math.random()*.012});
+  }
+  rs();addEventListener('resize',rs);
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(function(st){
+      st.p+=st.s;var a=.25+.45*(1+Math.sin(st.p))/2;
+      ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,7);ctx.fillStyle='rgba(200,160,90,'+a.toFixed(3)+')';ctx.fill();
+    });
+    if(!still)requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
