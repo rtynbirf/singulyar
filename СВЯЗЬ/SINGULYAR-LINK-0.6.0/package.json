@@ -1,0 +1,20 @@
+{
+  "name": "singulyar-link",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "description": "СИНГУЛЯР · ЕДИНОЕ ОКНО / КОММУНИКАТОР ЧЕЛОВЕКА — одна ссылка, любой мессенджер, любой человек, любой канал чувств, любой телефон, любой язык",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "test": "node --test tests/hub.test.mjs tests/azbuki.test.mjs tests/translate.test.mjs tests/sip-call.test.mjs",
+    "check": "node --check server/index.mjs && node --check public/app.js && node --check public/azbuki.js && node --check public/translate.js && node --check public/duet.js",
+    "test:e2e": "node tests/e2e.mjs && node tests/wa-call.e2e.mjs"
+  },
+  "dependencies": {
+    "werift": "^0.27.0",
+    "ws": "^8.18.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
