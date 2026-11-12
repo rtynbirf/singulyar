@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<!--
+  СИНГУЛЯР · Прототип 0.8.1 (вход → комната → профиль)
+  0.8.0 (12.11.2026): три слоя, адаптивная панель, крупный текст, контраст, тёмная тема.
+  0.8.1 (13.11.2026), волна ×21:
+    · ЖИВОЕ ПРЕВЬЮ в профиле: смена режима/модификаторов мгновенно меняет
+      пример сообщения и мини-панель «так ты пишешь»;
+    · ЧЕСТНЫЕ ГРАНИЦЫ: автоопределение устройства (вибрация, озвучка, микрофон,
+      субтитры, WebRTC, сеть, буфер) + точные тексты ошибок для каждого режима
+      (полная таблица: 07-honest-boundaries/ЧЕСТНЫЕ_ГРАНИЦЫ-0.8.1.md);
+    · ЧИСТЫЙ «БАБУШКИН» ВИД: демо-бар спрятан. Вид разработчика — только
+      с параметром  ?demo=1  (возврат к старому поведению);
+    · ОБЫЧНЫЕ ЛЮДИ — ГЛАВНОЕ: каналы у сообщений («Бабушка · СМС»),
+      статусы по каналу, «Мама печатает…», живой демо-диалог,
+      приглашение со копированием ссылки, честный микрофон и морзе-клавиатура;
+    · Профиль: «один основной способ» (4 карточки-режима) + плоские
+      «Дополнительно» — вместо категорий-групп (жёсткая структура из критики).
+  Философия не тронута: человек важнее канала. Одна ссылка → один разговор.
+-->
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>СИНГУЛЯР · Прототип 0.8.1 (вход → комната → профиль)</title>
+  <style>
+    :root {
+      --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --text-base: 1.125rem;
+      --text-sm: 0.9375rem;
+      --leading: 1.45;
+      --touch-min: 48px;
+      --btn-height: 52px;
+      --input-height: 56px;
+      --gap: 12px;
+      --radius: 12px;
+
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f5;
+      --text: #111111;
+      --text-secondary: #555555;
+      --border: #e5e5e5;
+      --accent: #1a1a1a;
+      --accent-text: #ffffff;
+      --danger: #c62828;
+      --success: #2e7d32;
+      --warn: #9a5b00;
+      --focus-ring: #1565c0;
+      --msg-mine: #1a1a1a;
+      --msg-mine-text: #ffffff;
+      --chip-bg: #efefec;
+      --chip-text: #333333;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --bg-subtle: #1c1c1e;
+        --text: #f2f2f2;
+        --text-secondary: #a0a0a0;
+        --border: #333333;
+        --accent: #ffffff;
+        --accent-text: #111111;
+        --danger: #ff8a80;
+        --success: #81c784;
+        --warn: #ffca7a;
+        --focus-ring: #90caf9;
+        --msg-mine: #2c2c2e;
+        --msg-mine-text: #f2f2f2;
+        --chip-bg: #2a2a2c;
+        --chip-text: #d5d5d5;
+      }
+    }
+
+    [data-large-text="true"] {
+      --text-base: 1.5rem;
+      --btn-height: 60px;
+      --input-height: 64px;
+      --touch-min: 56px;
+    }
+
+    [data-contrast="high"] {
+      --bg: #000;
+      --bg-subtle: #111;
+      --text: #fff;
+      --text-secondary: #eee;
+      --border: #fff;
+      --accent: #ff0;
+      --accent-text: #000;
+      --danger: #f33;
+      --success: #3f3;
+      --warn: #ffd24d;
+      --msg-mine: #ff0;
+      --msg-mine-text: #000;
+      --chip-bg: #000;
+      --chip-text: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: var(--leading);
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .screen.is-active {
+      display: flex;
+    }
+
+    /* ===== Shared ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--btn-height);
+      min-width: var(--touch-min);
+      padding: 0 1.25rem;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 600;
+      border: 2px solid transparent;
+      border-radius: var(--radius);
+      background: var(--bg-subtle);
+      color: var(--text);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-text);
+      width: 100%;
+    }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-icon {
+      min-width: var(--btn-height);
+      padding: 0;
+      font-size: 1.25em;
+    }
+    .btn-signal {
+      min-height: 52px;
+      font-size: 0.95em;
+      justify-content: flex-start;
+      padding-left: 0.85rem;
+      gap: 0.35rem;
+    }
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--focus-ring);
+      font-weight: 500;
+      min-height: auto;
+      padding: 0.5rem 0;
+    }
+
+    .input {
+      width: 100%;
+      min-height: var(--input-height);
+      padding: 0 1rem;
+      font-family: inherit;
+      font-size: 1em;
+      color: var(--text);
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      appearance: none;
+    }
+    .input:focus {
+      outline: none;
+      border-color: var(--focus-ring);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 25%, transparent);
+    }
+    .input::placeholder { color: var(--text-secondary); opacity: 1; }
+
+    .label {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+    }
+
+    /* ===== Chips (канал, статусы, превью-бейджи) ===== */
+    .chip {
+      display: inline-block;
+      padding: 0.05rem 0.55rem;
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--chip-text);
+      font-size: 0.72em;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip--ok { background: transparent; color: var(--success); border: 1.5px solid var(--success); }
+    .chip--warn { background: transparent; color: var(--warn); border: 1.5px solid var(--warn); }
+
+    /* ===== Demo bar (скрыт в чистом виде; ?demo=1 возвращает) ===== */
+    .demo-bar {
+      flex: 0 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 0.75rem;
+      background: var(--bg-subtle);
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.8em;
+    }
+    .demo-bar .demo-note {
+      width: 100%;
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+    .demo-bar button {
+      min-height: 32px;
+      padding: 0 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+    .demo-bar button.is-active {
+      background: var(--accent);
+      color: var(--accent-text);
+      border-color: transparent;
+    }
+
+    /* ===== Screen: Entry ===== */
+    .entry {
+      padding: 1.5rem 1.25rem;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .entry-brand {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    .entry h1 {
+      font-size: 1.6em;
+      line-height: 1.2;
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+    }
+    .entry-lead {
+      color: var(--text-secondary);
+      margin: 0 0 1.75rem;
+      font-size: 0.95em;
+    }
+    .entry-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .entry-secondary {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .entry-fold {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .entry-fold summary {
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 0.95em;
+      padding: 0.5rem 0;
+    }
+    .entry-fold-body {
+      padding: 0.75rem 0 0;
+      font-size: 0.9em;
+      color: var(--text-secondary);
+    }
+
+    /* ===== Screen: Room ===== */
+    .header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-info { flex: 1; min-width: 0; }
+    .header-title { font-weight: 650; margin: 0; font-size: 1.05em; }
+    .header-meta { font-size: var(--text-sm); color: var(--text-secondary); margin: 0; }
+
+    .messages {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .msg {
+      max-width: 85%;
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius);
+      background: var(--bg-subtle);
+      align-self: flex-start;
+    }
+    .msg--mine {
+      align-self: flex-end;
+      background: var(--msg-mine);
+      color: var(--msg-mine-text);
+    }
+    .msg-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: var(--text-sm);
+      opacity: 0.85;
+      margin-bottom: 0.15rem;
+    }
+    .msg-meta .msg-time { margin-left: auto; }
+    .msg-text { margin: 0; }
+    .msg-status { font-size: 0.8em; opacity: 0.75; margin-top: 0.25rem; }
+    .msg--mine .chip { background: rgba(255,255,255,0.16); color: inherit; }
+
+    .typing {
+      align-self: flex-start;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      padding: 0.35rem 0.9rem;
+    }
+
+    .composer {
+      flex: 0 0 auto;
+      padding: 0.75rem 1rem;
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+    .signals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+    [data-large-text="true"] .signals {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    }
+    .composer-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .composer-row .input { flex: 1; }
+
+    /* ===== Морзе-клавиатура ===== */
+    .morse-pad {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .morse-buf {
+      min-height: 2.4em;
+      padding: 0.45rem 0.8rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      font-size: 1.15em;
+      letter-spacing: 0.12em;
+      word-break: break-all;
+      color: var(--text);
+    }
+    .morse-buf .morse-tail { color: var(--text-secondary); }
+    .morse-keys {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .morse-keys .btn {
+      min-height: 64px;
+      font-size: 1.3em;
+      padding: 0;
+    }
+    .morse-keys .btn-word { font-size: 0.8em; }
+
+    /* ===== Screen: Profile ===== */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    .profile-header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.25rem;
+      padding-bottom: 1.5rem;
+    }
+    .profile-preview {
+      background: var(--bg-subtle);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .profile-preview-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .pv-msg { max-width: 100%; margin-bottom: 0; }
+    .pv-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 0.5rem;
+    }
+    .pv-braille {
+      margin: 0.45rem 0 0;
+      font-size: 1.25em;
+      letter-spacing: 0.1em;
+      line-height: 1.6;
+      word-break: break-all;
+    }
+    .pv-braille-caption {
+      font-size: 0.7em;
+      color: var(--text-secondary);
+      display: block;
+    }
+    .pv-sub-msg {
+      margin-top: 0.75rem;
+    }
+    .pv-composer {
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border);
+      pointer-events: none;
+      user-select: none;
+    }
+    .pv-input {
+      flex: 1;
+      min-height: var(--input-height);
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+      background: var(--bg);
+      font-size: 0.9em;
+    }
+    .pv-voice {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: var(--accent-text);
+      border-radius: var(--radius);
+      font-weight: 650;
+      font-size: 1.05em;
+    }
+    .pv-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .pv-chips .chip { font-size: 0.8em; padding: 0.3rem 0.7rem; }
+    .pv-keys { display: flex; gap: 8px; margin-bottom: 8px; }
+    .pv-keys span {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem 0;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1em;
+    }
+
+    .group { margin-bottom: 1.5rem; }
+    .group-title {
+      font-weight: 650;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-secondary);
+      margin: 0 0 0.75rem;
+    }
+
+    /* Карточки основного способа */
+    .mode-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 0.9rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      background: var(--bg);
+    }
+    .mode-card.is-sel {
+      border-color: var(--accent);
+      background: var(--bg-subtle);
+    }
+    .mode-card input {
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+    }
+    .mode-card strong { display: block; font-weight: 650; }
+    .mode-card span {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .toggle {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .toggle:last-child { border-bottom: none; }
+    .toggle input {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+    }
+    .toggle-text strong {
+      display: block;
+      font-weight: 600;
+    }
+    .toggle-text span {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .st-line {
+      font-size: var(--text-sm);
+      margin: 0.15rem 0 0 2.4rem;
+      color: var(--warn);
+    }
+    .st-line--ok { color: var(--success); }
+
+    .profile-footer {
+      flex: 0 0 auto;
+      padding: 0.75rem 1.25rem;
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+    }
+
+    /* Честные границы */
+    .caps-fold summary {
+      cursor: pointer;
+      font-weight: 600;
+      padding: 0.5rem 0;
+    }
+    .caps-list {
+      margin: 0.5rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .caps-list li {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: var(--text-sm);
+    }
+    .caps-list li:last-child { border-bottom: none; }
+    .caps-mark {
+      flex-shrink: 0;
+      font-weight: 700;
+      margin-top: 0.1em;
+    }
+    .caps-mark--ok { color: var(--success); }
+    .caps-mark--no { color: var(--warn); }
+    .caps-list b { display: block; }
+
+    /* ===== Sheet ===== */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .sheet-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .sheet {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      max-height: 75dvh;
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 16px 16px 0 0;
+      padding: 1.25rem 1rem max(1.25rem, env(safe-area-inset-bottom));
+      z-index: 50;
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+    }
+    .sheet.is-open { transform: translateY(0); }
+    .sheet h2 { margin: 0 0 1rem; font-size: 1.15em; }
+    .participant {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .participant:last-of-type { border-bottom: none; }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+    }
+    .dot--me { background: var(--text-secondary); }
+    .participant-info strong { display: block; }
+    .participant-info span {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .sheet-actions {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Приглашение */
+    .invite {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .invite-link {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-subtle);
+      border-radius: 8px;
+      word-break: break-all;
+      user-select: all;
+    }
+    .invite-note {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Тост для честных ошибок */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(1.5rem + env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(20px);
+      max-width: min(92vw, 480px);
+      background: var(--accent);
+      color: var(--accent-text);
+      padding: 0.8rem 1.1rem;
+      border-radius: var(--radius);
+      font-size: var(--text-sm);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 90;
+    }
+    .toast.is-show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hidden { display: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Демо-панель: ТОЛЬКО для разработки. В чистом виде скрыта.
+       Вернуть: добавить к адресу страницы  ?demo=1 -->
+  <div class="demo-bar hidden" id="demo-bar" aria-label="Демо-панель разработчика">
+    <span class="demo-note">Демо-панель разработчика (в чистом виде её нет)</span>
+    <button type="button" data-nav="entry" class="is-active">Вход</button>
+    <button type="button" data-nav="room">Комната</button>
+    <button type="button" data-nav="profile">Профиль</button>
+    <button type="button" data-mode="text" class="is-active">Обычный</button>
+    <button type="button" data-mode="signals">Сигналы</button>
+    <button type="button" data-mode="voice">Голос</button>
+    <button type="button" data-mode="morse">Морзе</button>
+    <button type="button" data-large>Крупный</button>
+    <button type="button" data-contrast>Контраст</button>
+  </div>
+
+  <!-- ========== SCREEN: ENTRY ========== -->
+  <section class="screen is-active" id="screen-entry">
+    <div class="entry">
+      <div class="entry-brand">СИНГУЛЯР</div>
+      <h1>Один разговор<br>для всех</h1>
+      <p class="entry-lead">
+        Одна ссылка. Каждый заходит из своего мессенджера, СМС или обычного телефона.
+      </p>
+
+      <div class="entry-form">
+        <div>
+          <label class="label" for="space-name">Название пространства</label>
+          <input class="input" id="space-name" type="text" value="Семья" placeholder="Например: Семья">
+        </div>
+        <button class="btn btn-primary" type="button" id="btn-create">Создать пространство</button>
+      </div>
+
+      <div class="entry-secondary">
+        <button class="btn-text" type="button">У меня уже есть ссылка</button>
+      </div>
+
+      <details class="entry-fold">
+        <summary>Прямая связь без сервера</summary>
+        <div class="entry-fold-body">
+          Два телефона соединяются напрямую, когда нет интернета.
+          Код-приглашение можно передать голосом, бумажкой или QR.
+          Честная граница: работает, пока открыты оба экрана.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN: ROOM ========== -->
+  <section class="screen" id="screen-room">
+    <header class="header">
+      <button class="btn btn-icon" type="button" data-nav="entry" aria-label="Назад">←</button>
+      <div class="header-info">
+        <p class="header-title">Семья</p>
+        <p class="header-meta">3 человека</p>
+      </div>
+      <button class="btn btn-icon" type="button" id="btn-participants" aria-label="Участники">👥</button>
+      <button class="btn btn-icon" type="button" data-nav="profile" aria-label="Мой способ общения" title="Мой способ общения">⚙️</button>
+    </header>
+
+    <main class="messages" id="messages" role="log" aria-live="polite">
+      <article class="msg">
+        <div class="msg-meta"><span>Бабушка</span><span class="chip">СМС</span><span class="msg-time">14:02</span></div>
+        <p class="msg-text">Я дома, всё хорошо</p>
+        <div class="msg-status">Доставлено на телефон</div>
+      </article>
+      <article class="msg msg--mine">
+        <div class="msg-meta"><span>Вы</span><span class="chip">браузер</span><span class="msg-time">14:03</span></div>
+        <p class="msg-text">Отлично, сейчас позвоню</p>
+        <div class="msg-status">Доставлено в комнату</div>
+      </article>
+      <article class="msg">
+        <div class="msg-meta"><span>Мама</span><span class="chip">WhatsApp</span><span class="msg-time">14:04</span></div>
+        <p class="msg-text">Я тоже буду к вечеру</p>
+        <div class="msg-status">Доставлено в WhatsApp</div>
+      </article>
+      <div class="typing hidden" id="typing">••• Мама печатает</div>
+    </main>
+
+    <footer class="composer" id="composer">
+      <div class="signals hidden" id="signals">
+        <button class="btn btn-signal" type="button">🟡 Подожди</button>
+        <button class="btn btn-signal" type="button">👍 Понял</button>
+        <button class="btn btn-signal" type="button">❤️ Люблю</button>
+        <button class="btn btn-signal" type="button">📞 Позвони</button>
+        <button class="btn btn-signal btn-danger" type="button">🆘 Срочно</button>
+      </div>
+
+      <button class="btn btn-primary hidden" id="btn-voice-only" type="button" style="min-height:72px;font-size:1.15em">
+        🎤 Говорить
+      </button>
+
+      <div class="morse-pad hidden" id="morse-pad">
+        <div class="morse-buf" id="morse-buf" aria-live="polite">Точки и тире появятся здесь</div>
+        <div class="morse-keys">
+          <button class="btn" type="button" id="mk-dot" aria-label="Точка">·</button>
+          <button class="btn" type="button" id="mk-dash" aria-label="Тире">−</button>
+          <button class="btn" type="button" id="mk-del" aria-label="Стереть символ">⌫</button>
+          <button class="btn" type="button" id="mk-letter">Буква</button>
+          <button class="btn btn-word" type="button" id="mk-word">Слово</button>
+        </div>
+      </div>
+
+      <div class="composer-row" id="composer-row">
+        <input class="input" type="text" placeholder="Написать сообщение" enterkeyhint="send" id="input-msg" autocomplete="off">
+        <button class="btn btn-icon" type="button" aria-label="Говорить" id="btn-mic" title="Голосовое сообщение">🎤</button>
+        <button class="btn btn-icon" type="button" aria-label="Ещё: пригласить и участники" id="btn-more" title="Пригласить, участники">+</button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ========== SCREEN: PROFILE ========== -->
+  <section class="screen" id="screen-profile">
+    <div class="profile">
+      <header class="profile-header">
+        <button class="btn btn-icon" type="button" data-nav="room" aria-label="Назад">←</button>
+        <strong>Как тебе удобно</strong>
+      </header>
+
+      <div class="profile-body">
+
+        <!-- ЖИВОЕ ПРЕВЬЮ: меняется при любом переключении -->
+        <div class="profile-preview" aria-live="polite">
+          <div class="profile-preview-label">Так будут выглядеть сообщения для тебя</div>
+          <article class="msg pv-msg">
+            <div class="msg-meta"><span>Бабушка</span><span class="chip">СМС</span><span class="msg-time">сейчас</span></div>
+            <p class="msg-text" id="pv-text">Я дома, всё хорошо</p>
+            <p class="pv-braille hidden" id="pv-braille"><span class="pv-braille-caption">брайль · экранный (демо)</span></p>
+            <div class="pv-badges" id="pv-badges"></div>
+          </article>
+          <article class="msg pv-sub-msg hidden" id="pv-subs">
+            <div class="msg-meta"><span>Папа</span><span class="chip">голосовое</span></div>
+            <p class="msg-text">«Позвони мне на работу»</p>
+            <div class="msg-status">речь превратилась в текст</div>
+          </article>
+
+          <div class="pv-composer">
+            <div class="profile-preview-label">Так ты пишешь</div>
+            <div id="pv-composer-body"></div>
+          </div>
+        </div>
+
+        <!-- ОСНОВНОЙ СПОСОБ: один из четырёх. Взаимоисключающие. -->
+        <div class="group">
+          <h3 class="group-title">Основной способ</h3>
+          <label class="mode-card" data-modecard="text">
+            <input type="radio" name="input-mode" value="text" checked>
+            <div>
+              <strong>Обычный</strong>
+              <span>Текст и голос. Работает везде, без ограничений.</span>
+            </div>
+          </label>
+          <label class="mode-card" data-modecard="signals">
+            <input type="radio" name="input-mode" value="signals">
+            <div>
+              <strong>Сигналы и картинки</strong>
+              <span>Важное — одним касанием. Обычное поле останется снизу.</span>
+            </div>
+          </label>
+          <label class="mode-card" data-modecard="voice">
+            <input type="radio" name="input-mode" value="voice">
+            <div>
+              <strong>Только голос</strong>
+              <span>Одна большая кнопка. Нужны микрофон и интернет.</span>
+            </div>
+          </label>
+          <label class="mode-card" data-modecard="morse">
+            <input type="radio" name="input-mode" value="morse">
+            <div>
+              <strong>Морзе</strong>
+              <span>Точка — короткое касание, тире — удержание. Медленно поначалу — это честно.</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- ДОПОЛНИТЕЛЬНО: можно любое количество -->
+        <div class="group">
+          <h3 class="group-title">Дополнительно</h3>
+          <label class="toggle">
+            <input type="checkbox" id="opt-large" checked>
+            <div class="toggle-text">
+              <strong>Крупный текст и кнопки</strong>
+              <span>Легче читать и попадать пальцем. Работает всегда.</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-contrast">
+            <div class="toggle-text">
+              <strong>Высокий контраст</strong>
+              <span>Чёрный, белый и жёлтый. Работает всегда.</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-tts">
+            <div class="toggle-text">
+              <strong>Читать сообщения вслух</strong>
+              <span>Голосом этого устройства, без облака</span>
+            </div>
+          </label>
+          <p class="st-line hidden" id="st-tts"></p>
+          <label class="toggle">
+            <input type="checkbox" id="opt-braille">
+            <div class="toggle-text">
+              <strong>Брайль под сообщениями</strong>
+              <span>6-точечная клетка на экране</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-subs">
+            <div class="toggle-text">
+              <strong>Мне нужны субтитры</strong>
+              <span>Речь других превращается в текст</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-vibro" checked>
+            <div class="toggle-text">
+              <strong>Вибрация и звук на сигналы</strong>
+              <span>Чтобы не пропустить важное</span>
+            </div>
+          </label>
+          <p class="st-line hidden" id="st-vibro"></p>
+          <label class="toggle">
+            <input type="checkbox">
+            <div class="toggle-text">
+              <strong>Морзе входящих вибрацией</strong>
+              <span>Тактильный канал. На кнопочном телефоне — честно никак</span>
+            </div>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="opt-translate">
+            <div class="toggle-text">
+              <strong>Переводить мне на русский</strong>
+              <span>на устройстве, без облака</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- ЧЕСТНЫЕ ГРАНИЦЫ: что реально работает на этом устройстве -->
+        <details class="caps-fold" id="caps-fold">
+          <summary>Честные границы на этом устройстве</summary>
+          <ul class="caps-list" id="caps-list"></ul>
+        </details>
+      </div>
+
+      <div class="profile-footer">
+        <button class="btn btn-primary" type="button" data-nav="room">Готово</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Participants sheet -->
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-label="Участники">
+    <h2>Участники · 3</h2>
+    <div class="participant">
+      <span class="dot"></span>
+      <div class="participant-info">
+        <strong>Бабушка</strong>
+        <span>СМС · кнопочный телефон</span>
+      </div>
+    </div>
+    <div class="participant">
+      <span class="dot"></span>
+      <div class="participant-info">
+        <strong>Мама</strong>
+        <span>WhatsApp</span>
+      </div>
+    </div>
+    <div class="participant">
+      <span class="dot dot--me"></span>
+      <div class="participant-info">
+        <strong>Вы</strong>
+        <span>Браузер</span>
+      </div>
+    </div>
+
+    <div class="invite hidden" id="invite">
+      <div class="invite-link" id="invite-link">singulyar.example/семья</div>
+      <button class="btn btn-primary" type="button" id="btn-copy">Скопировать ссылку</button>
+      <p class="invite-note">
+        Отправьте любым способом — человек зайдёт из своего:
+        WhatsApp · Telegram · СМС · обычный браузер.
+        А без всего этого — просто позвоните ему голосом, кнопка ниже.
+      </p>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn btn-primary" type="button" id="btn-invite">Пригласить человека</button>
+      <button class="btn" type="button" id="btn-call">Позвонить на обычный номер</button>
+    </div>
+  </div>
+
+  <!-- Тост честных ошибок -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    'use strict';
+
+    /* =========================================================
+       0.8.1 · ЧЕСТНЫЕ ГРАНИЦЫ: что реально умеет это устройство
+       Проверяется один раз при открытии. Никаких обещаний вслепую.
+    ========================================================= */
+    const CAPS = {
+      vibro:     ('vibrate' in navigator),
+      tts:       ('speechSynthesis' in window),
+      mic:       !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+      speech:    ('SpeechRecognition' in window) || ('webkitSpeechRecognition' in window),
+      rtc:       ('RTCPeerConnection' in window),
+      online:    navigator.onLine,
+      clipboard: !!(navigator.clipboard && navigator.clipboard.writeText)
+    };
+
+    const HONEST = {
+      vibroOk:  'Вибрация работает — сигналы почувствуешь.',
+      vibroNo:  'Вибрации нет. Вместо неё — звук и яркая вспышка экрана. Это честно.',
+      ttsOk:    'Озвучка готова: сообщения прочтут голосом этого устройства.',
+      ttsNo:    'Озвучки в этом браузере нет. Попробуй Chrome или Safari.',
+      micOk:    'Микрофон есть. Доступ попросим один раз, при первом касании «Говорить».',
+      micNo:    'Микрофон недоступен — голосовые не запишутся. Текст и сигналы работают.',
+      speechOk: 'Субтитры возможны: речь превратится в текст.',
+      speechNo: 'Субтитров в этом браузере нет. Читать и писать текст можно всегда.',
+      rtcOk:    'Прямая связь без сервера поднимется и в этом браузере.',
+      rtcNo:    'Прямая связь в этом браузере не поднимется — нужен Chrome или Firefox.',
+      netOk:    'Интернет есть.',
+      netNo:    'Интернета нет. СМС и звонки не пойдут — увидим честный статус «не доставлено».',
+      copyOk:   'Кнопка «Скопировать ссылку» сработает.',
+      copyNo:   'Ссылку скопируешь вручную: выдели и нажми «Копировать».',
+      sms:      'СМС живёт на домашнем компьютере. Пока он выключен, на СМС не дойдёт — комната покажет «не доставлено» и предложит позвонить.',
+      braille:  'Брайль выводится на экран. Тактильный брайль — отдельный прибор, его у нас нет. Честно.',
+      translate:'Перевод идёт на устройстве, без облака. Сложные фразы переводим честно-коряво.',
+      morse:    'Морзе медленнее текста в 5–8 раз — поначалу это нормально. Обычная клавиатура всегда рядом.'
+    };
+
+    /* ================== Состояние профиля ================== */
+    const state = {
+      mode: 'text',      // text | signals | voice | morse  (взаимоисключающие)
+      large: true, contrast: false, tts: false, braille: false,
+      subs: false, vibro: true, translate: false
+    };
+
+    const body = document.body;
+    const screens = {
+      entry: document.getElementById('screen-entry'),
+      room: document.getElementById('screen-room'),
+      profile: document.getElementById('screen-profile')
+    };
+
+    function showScreen(name) {
+      Object.values(screens).forEach(s => s.classList.remove('is-active'));
+      screens[name].classList.add('is-active');
+      document.querySelectorAll('[data-nav]').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.nav === name);
+      });
+    }
+
+    document.querySelectorAll('[data-nav]').forEach(btn => {
+      btn.addEventListener('click', () => showScreen(btn.dataset.nav));
+    });
+
+    document.getElementById('btn-create').addEventListener('click', () => {
+      showScreen('room');
+    });
+
+    /* ================== Тост честных ошибок ================== */
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+    function say(text) {
+      toast.textContent = text;
+      toast.classList.add('is-show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-show'), 3200);
+    }
+
+    /* ================== Панель ввода: жёсткая таблица режимов ==================
+       Вводные режимы взаимоисключающие. Побеждает выбранный в профиле.
+       text    → поле + 🎤 + «+»
+       signals → крупные сигналы + поле «или напиши»
+       voice   → только большая кнопка «Говорить»
+       morse   → морзе-клавиатура + поле для расшифрованного текста
+       Модификаторы (крупно, контраст, озвучка…) не конфликтуют — применяются поверх.
+    ========================================================= */
+    const signalsBox = document.getElementById('signals');
+    const voiceOnly  = document.getElementById('btn-voice-only');
+    const morsePad   = document.getElementById('morse-pad');
+    const composerRow = document.getElementById('composer-row');
+    const inputMsg   = document.getElementById('input-msg');
+
+    function applyPanel() {
+      signalsBox.classList.add('hidden');
+      voiceOnly.classList.add('hidden');
+      morsePad.classList.add('hidden');
+      composerRow.classList.add('hidden');
+
+      if (state.mode === 'signals') {
+        signalsBox.classList.remove('hidden');
+        composerRow.classList.remove('hidden');
+        inputMsg.placeholder = 'или напиши…';
+      } else if (state.mode === 'voice') {
+        voiceOnly.classList.remove('hidden');
+      } else if (state.mode === 'morse') {
+        morsePad.classList.remove('hidden');
+        composerRow.classList.remove('hidden');
+        inputMsg.placeholder = 'Текст с морзе появится здесь';
+      } else {
+        composerRow.classList.remove('hidden');
+        inputMsg.placeholder = 'Написать сообщение';
+      }
+    }
+
+    /* ================== Профиль: читать контролы и применить ================== */
+    const el = id => document.getElementById(id);
+
+    function readControls() {
+      state.mode = document.querySelector('input[name="input-mode"]:checked').value;
+      state.large    = el('opt-large').checked;
+      state.contrast = el('opt-contrast').checked;
+      state.tts      = el('opt-tts').checked;
+      state.braille  = el('opt-braille').checked;
+      state.subs     = el('opt-subs').checked;
+      state.vibro    = el('opt-vibro').checked;
+      state.translate= el('opt-translate').checked;
+    }
+
+    function applyProfile() {
+      readControls();
+
+      body.setAttribute('data-large-text', state.large ? 'true' : 'false');
+      body.setAttribute('data-contrast', state.contrast ? 'high' : '');
+
+      document.querySelectorAll('.mode-card').forEach(c => {
+        const sel = c.querySelector('input').checked;
+        c.classList.toggle('is-sel', sel);
+      });
+
+      applyPanel();
+      renderPreview();
+      renderStatusLines();
+    }
+
+    /* ================== ЖИВОЕ ПРЕВЬЮ ================== */
+    const PV_TEXT_RU = 'Я дома, всё хорошо';
+    const PV_TEXT_EN = 'I’m home, all good. Call when you can';
+
+    // Русский шрифт Брайля (6-точечная клетка) — экранный демо-перевод
+    const BRAILLE = {
+      'а':'⠁','б':'⠃','в':'⠺','г':'⠛','д':'⠙','е':'⠑','ё':'⠡','ж':'⠚','з':'⠵','и':'⠊',
+      'й':'⠯','к':'⠅','л':'⠇','м':'⠍','н':'⠝','о':'⠕','п':'⠏','р':'⠗','с':'⠎','т':'⠞',
+      'у':'⠥','ф':'⠋','х':'⠓','ц':'⠉','ч':'⠟','ш':'⠱','щ':'⠭','ъ':'⠰','ы':'⠷','ь':'⠮',
+      'э':'⠪','ю':'⠳','я':'⠫'
+    };
+    function toBraille(str) {
+      // Кириллица → экранный брайль (демо). Чего не знаем — оставляем как есть,
+      // ничего не прячем (латиница переведённого текста останется латиницей).
+      return str.toLowerCase().split('').map(ch => BRAILLE[ch] || ch).join('');
+    }
+
+    function chip(text, kind) {
+      const s = document.createElement('span');
+      s.className = 'chip' + (kind ? ' chip--' + kind : '');
+      s.textContent = text;
+      return s;
+    }
+
+    function renderPreview() {
+      // 1. Текст сообщения: перевод меняет его честно и заметно
+      el('pv-text').textContent = state.translate ? PV_TEXT_EN : PV_TEXT_RU;
+
+      // 2. Брайль под сообщением
+      const br = el('pv-braille');
+      if (state.braille) {
+        br.innerHTML = '';
+        const dots = document.createElement('span');
+        dots.textContent = toBraille(el('pv-text').textContent);
+        br.appendChild(dots);
+        const cap = document.createElement('span');
+        cap.className = 'pv-braille-caption';
+        cap.textContent = 'брайль · экранный (демо)';
+        br.appendChild(cap);
+        br.classList.remove('hidden');
+      } else {
+        br.classList.add('hidden');
+      }
+
+      // 3. Бейджи честности: что включено и чем это кончится на этом устройстве
+      const badges = el('pv-badges');
+      badges.innerHTML = '';
+      if (state.translate) badges.appendChild(chip('переведено · на устройстве'));
+      if (state.tts) {
+        badges.appendChild(CAPS.tts ? chip('озвучка голосом устройства', 'ok')
+                                    : chip('озвучки нет в этом браузере', 'warn'));
+      }
+      if (state.vibro) {
+        badges.appendChild(CAPS.vibro ? chip('вибро на сигналы', 'ok')
+                                      : chip('вибро — нет, будет звук и вспышка', 'warn'));
+      }
+      if (state.subs && !CAPS.speech) {
+        badges.appendChild(chip('субтитры — нет в этом браузере', 'warn'));
+      }
+
+      // 4. Субтитры: пример голосового, ставшего текстом
+      el('pv-subs').classList.toggle('hidden', !state.subs);
+
+      // 5. Мини-панель «так ты пишешь» — зеркало выбранного режима
+      const c = el('pv-composer-body');
+      c.innerHTML = '';
+      if (state.mode === 'text') {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:8px;align-items:center';
+        const inp = document.createElement('div');
+        inp.className = 'pv-input';
+        inp.textContent = 'Написать сообщение';
+        const mic = document.createElement('span'); mic.textContent = '🎤';
+        const more = document.createElement('span'); more.textContent = '+';
+        row.appendChild(inp); row.appendChild(mic); row.appendChild(more);
+        c.appendChild(row);
+      } else if (state.mode === 'signals') {
+        const chips = document.createElement('div');
+        chips.className = 'pv-chips';
+        ['👍 Понял', '❤️ Люблю', '📞 Позвони'].forEach(t => chips.appendChild(chip(t)));
+        c.appendChild(chips);
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:8px;align-items:center';
+        const inp = document.createElement('div');
+        inp.className = 'pv-input';
+        inp.style.minHeight = '44px';
+        inp.textContent = 'или напиши…';
+        row.appendChild(inp);
+        c.appendChild(row);
+      } else if (state.mode === 'voice') {
+        const v = document.createElement('div');
+        v.className = 'pv-voice';
+        v.textContent = '🎤 Говорить';
+        c.appendChild(v);
+      } else if (state.mode === 'morse') {
+        const keys = document.createElement('div');
+        keys.className = 'pv-keys';
+        ['·', '−', '⌫', 'Буква', 'Слово'].forEach(t => {
+          const s = document.createElement('span');
+          s.textContent = t;
+          keys.appendChild(s);
+        });
+        c.appendChild(keys);
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:8px;align-items:center';
+        const inp = document.createElement('div');
+        inp.className = 'pv-input';
+        inp.style.minHeight = '44px';
+        inp.textContent = 'Текст с морзе появится здесь';
+        row.appendChild(inp);
+        c.appendChild(row);
+      }
+    }
+
+    /* ================== Статусные строки под переключателями ================== */
+    function renderStatusLines() {
+      setSt('st-tts', el('opt-tts').checked, CAPS.tts, HONEST.ttsOk, HONEST.ttsNo);
+      setSt('st-vibro', el('opt-vibro').checked, CAPS.vibro, HONEST.vibroOk, HONEST.vibroNo);
+    }
+    function setSt(id, on, ok, okText, noText) {
+      const p = el(id);
+      if (!on) { p.classList.add('hidden'); return; }
+      p.textContent = ok ? okText : noText;
+      p.classList.toggle('st-line--ok', ok);
+      p.classList.remove('hidden');
+    }
+
+    /* ================== Слушатели профиля ================== */
+    document.querySelectorAll('input[name="input-mode"]').forEach(r => {
+      r.addEventListener('change', () => {
+        syncDemoModeButtons(r.value);
+        applyProfile();
+      });
+    });
+    ['opt-large','opt-contrast','opt-tts','opt-braille','opt-subs','opt-vibro','opt-translate']
+      .forEach(id => el(id).addEventListener('change', applyProfile));
+
+    /* ================== Демо-бар (только при ?demo=1) ================== */
+    const demoBar = document.getElementById('demo-bar');
+    if (new URLSearchParams(location.search).get('demo') === '1') {
+      demoBar.classList.remove('hidden');
+    }
+
+    document.querySelectorAll('[data-mode]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const radio = document.querySelector('input[name="input-mode"][value="' + btn.dataset.mode + '"]');
+        if (radio) radio.checked = true;
+        syncDemoModeButtons(btn.dataset.mode);
+        applyProfile();
+      });
+    });
+    function syncDemoModeButtons(mode) {
+      document.querySelectorAll('[data-mode]').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.mode === mode);
+      });
+    }
+
+    document.querySelector('[data-large]').addEventListener('click', function () {
+      el('opt-large').checked = !el('opt-large').checked;
+      applyProfile();
+    });
+    document.querySelector('[data-contrast]').addEventListener('click', function () {
+      el('opt-contrast').checked = !el('opt-contrast').checked;
+      applyProfile();
+    });
+
+    /* ================== Морзе-клавиатура ================== */
+    const MORSE = {
+      'а':'.-','б':'-...','в':'.--','г':'--.','д':'-..','е':'.','ж':'...-','з':'--..','и':'..',
+      'й':'.---','к':'-.-','л':'.-..','м':'--','н':'-.','о':'---','п':'.--.','р':'.-.','с':'...',
+      'т':'-','у':'..-','ф':'..-.','х':'....','ц':'-.-.','ч':'---.','ш':'----','щ':'--.-',
+      'ъ':'--.--','ы':'-.--','ь':'-..-','э':'..-..','ю':'..--','я':'.-.-',
+      '1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...',
+      '8':'---..','9':'----.','0':'-----'
+    };
+    const MORSE_REV = Object.fromEntries(Object.entries(MORSE).map(([k, v]) => [v, k]));
+    let morseBuf = '';
+
+    function renderMorseBuf() {
+      const buf = el('morse-buf');
+      if (!morseBuf) {
+        buf.innerHTML = 'Точки и тире появятся здесь';
+        return;
+      }
+      const lastDot = morseBuf.lastIndexOf(' ');
+      const tail = lastDot === -1 ? morseBuf : morseBuf.slice(lastDot + 1);
+      const done = lastDot === -1 ? '' : morseBuf.slice(0, lastDot + 1);
+      buf.innerHTML = '';
+      const d = document.createElement('span');
+      d.textContent = done;
+      const t = document.createElement('span');
+      t.className = 'morse-tail';
+      t.textContent = tail;
+      buf.appendChild(d); buf.appendChild(t);
+    }
+
+    // Клавиши пишут красивые символы (· −), карта морзе — ASCII (.-): нормализуем при расшифровке
+    function morseCode(buf) {
+      return buf.replace(/·/g, '.').replace(/−/g, '-').replace(/\s+$/, '');
+    }
+
+    el('mk-dot').addEventListener('click', () => { morseBuf += '·'; renderMorseBuf(); });
+    el('mk-dash').addEventListener('click', () => { morseBuf += '−'; renderMorseBuf(); });
+    el('mk-del').addEventListener('click', () => { morseBuf = morseBuf.slice(0, -1); renderMorseBuf(); });
+    el('mk-letter').addEventListener('click', () => {
+      if (!morseBuf) return;
+      const letter = MORSE_REV[morseCode(morseBuf)];
+      inputMsg.value += (letter || '·?');
+      morseBuf = '';
+      renderMorseBuf();
+    });
+    el('mk-word').addEventListener('click', () => {
+      if (!morseBuf) { inputMsg.value += ' '; return; }
+      const letter = MORSE_REV[morseCode(morseBuf)];
+      inputMsg.value += (letter || '·?') + ' ';
+      morseBuf = '';
+      renderMorseBuf();
+    });
+
+    /* ================== Микрофон: честно ================== */
+    const btnMic = el('btn-mic');
+    let recording = false;
+    function micStop() {
+      recording = false;
+      btnMic.textContent = '🎤';
+      btnMic.setAttribute('aria-label', 'Говорить');
+      sendMessage('🎤 Голосовое (0:05)');
+    }
+    btnMic.addEventListener('click', () => {
+      if (!CAPS.mic) { say(HONEST.micNo); return; }
+      if (!recording) {
+        recording = true;
+        btnMic.textContent = '■';
+        btnMic.setAttribute('aria-label', 'Остановить запись');
+        say('Идёт запись… Нажми ещё раз, чтобы отправить.');
+      } else {
+        micStop();
+      }
+    });
+    el('btn-voice-only').addEventListener('click', () => {
+      if (!CAPS.mic) { say(HONEST.micNo); return; }
+      say('Удерживайте, чтобы говорить (в прототипе — честная имитация).');
+    });
+
+    /* ================== Лента: каналы, статусы, живой диалог ================== */
+    const messages = document.getElementById('messages');
+    const typing = document.getElementById('typing');
+    let momReplied = false;
+
+    function sendMessage(text) {
+      if (!text) return;
+      const art = document.createElement('article');
+      art.className = 'msg msg--mine';
+      art.innerHTML = `
+        <div class="msg-meta"><span>Вы</span><span class="chip">браузер</span><span class="msg-time">сейчас</span></div>
+        <p class="msg-text"></p>
+        <div class="msg-status"></div>`;
+      art.querySelector('.msg-text').textContent = text;
+      const st = art.querySelector('.msg-status');
+      if (!navigator.onLine) {
+        st.textContent = 'Не отправилось: нет сети. Нажми, чтобы повторить';
+      } else {
+        st.textContent = 'Ушло';
+        setTimeout(() => { st.textContent = 'Доставлено в комнату'; }, 700);
+        maybeMomReplies();
+      }
+      messages.appendChild(art);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Обычные люди: комната живая. Ответ Мамы — один раз, тёплый.
+    function maybeMomReplies() {
+      if (momReplied) return;
+      momReplied = true;
+      setTimeout(() => {
+        typing.classList.remove('hidden');
+        messages.scrollTop = messages.scrollHeight;
+        setTimeout(() => {
+          typing.classList.add('hidden');
+          const art = document.createElement('article');
+          art.className = 'msg';
+          art.innerHTML = `
+            <div class="msg-meta"><span>Мама</span><span class="chip">WhatsApp</span><span class="msg-time">сейчас</span></div>
+            <p class="msg-text">Хорошо! Ждём всех к вечеру</p>
+            <div class="msg-status">Доставлено в WhatsApp</div>`;
+          messages.appendChild(art);
+          messages.scrollTop = messages.scrollHeight;
+        }, 2200);
+      }, 900);
+    }
+
+    inputMsg.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage(inputMsg.value.trim());
+        inputMsg.value = '';
+      }
+    });
+
+    document.querySelectorAll('.btn-signal').forEach(btn => {
+      btn.addEventListener('click', () => sendMessage(btn.textContent.trim()));
+    });
+
+    /* ================== Участники и приглашение ================== */
+    const sheet = document.getElementById('sheet');
+    const backdrop = document.getElementById('sheet-backdrop');
+    el('btn-participants').addEventListener('click', openSheet);
+    el('btn-more').addEventListener('click', openSheet);   // «+» = ещё: пригласить, участники
+    function openSheet() {
+      sheet.classList.add('is-open');
+      backdrop.classList.add('is-open');
+    }
+    backdrop.addEventListener('click', closeSheet);
+    function closeSheet() {
+      sheet.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+    }
+
+    el('btn-invite').addEventListener('click', () => {
+      el('invite').classList.toggle('hidden');
+    });
+
+    el('btn-copy').addEventListener('click', () => {
+      const link = el('invite-link').textContent.trim();
+      if (CAPS.clipboard) {
+        navigator.clipboard.writeText(link)
+          .then(() => say('Скопировано. Отправь тем способом, каким человек пользуется.'))
+          .catch(() => say(HONEST.copyNo));
+      } else {
+        say(HONEST.copyNo);
+      }
+    });
+
+    el('btn-call').addEventListener('click', () => {
+      say('Звонок пойдёт через домашний мост (SIP). Пока он выключен — просто набери номер вручную.');
+    });
+
+    /* ================== Честные границы: список на этом устройстве ================== */
+    function capsList() {
+      const rows = [
+        [CAPS.vibro, HONEST.vibroOk, HONEST.vibroNo],
+        [CAPS.tts, HONEST.ttsOk, HONEST.ttsNo],
+        [CAPS.mic, HONEST.micOk, HONEST.micNo],
+        [CAPS.speech, HONEST.speechOk, HONEST.speechNo],
+        [CAPS.rtc, HONEST.rtcOk, HONEST.rtcNo],
+        [CAPS.online, HONEST.netOk, HONEST.netNo],
+        [CAPS.clipboard, HONEST.copyOk, HONEST.copyNo],
+        [null, HONEST.sms, null],        // не проверяется из браузера — честно сказано как есть
+        [null, HONEST.braille, null],
+        [null, HONEST.translate, null],
+        [null, HONEST.morse, null]
+      ];
+      const ul = el('caps-list');
+      ul.innerHTML = '';
+      rows.forEach(([ok, okText, noText]) => {
+        const li = document.createElement('li');
+        const mark = document.createElement('span');
+        if (ok === true)      { mark.className = 'caps-mark caps-mark--ok'; mark.textContent = '✓'; li.appendChild(mark); }
+        else if (ok === false){ mark.className = 'caps-mark caps-mark--no'; mark.textContent = '—'; li.appendChild(mark); }
+        const txt = document.createElement('span');
+        txt.textContent = (ok === false) ? noText : okText;
+        li.appendChild(txt);
+        ul.appendChild(li);
+      });
+    }
+
+    /* ================== Старт ================== */
+    applyProfile();   // читает галочки по умолчанию (крупно — вкл) и рисует превью
+    capsList();
+  </script>
+</body>
+</html>
