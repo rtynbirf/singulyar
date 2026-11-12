@@ -1,0 +1,49 @@
+[
+  { "type": "telegram", "token": "123456:ABC-от-BotFather", "chatId": "-1001234567890", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "whatsapp-call", "room": "КОД_ПРОСТРАНСТВА",
+    "phoneNumberId": "ID_БИЗНЕС-НОМЕРА", "accessToken": "ТОКЕН",
+    "verifyToken": "verify", "appSecret": "SECRET",
+    "publicIp": "ПУБЛИЧНЫЙ_IP", "icePortRange": [40000, 40100] },
+
+  { "type": "sip-phone", "room": "КОД_ПРОСТРАНСТВА",
+    "listenPort": 5060, "publicIp": "ПУБЛИЧНЫЙ_IP", "rtpStart": 40000,
+    "allowFrom": "^[+0-9]+$",
+    "dial": { "host": "АДРЕС_АТС_ИЛИ_ТРАНКА", "port": 5060 } },
+
+  { "type": "discord", "token": "BOT_TOKEN", "channelId": "CHANNEL_ID", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "slack", "token": "xoxb-...", "channelId": "C...", "signingSecret": "опционально", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "line", "token": "CHANNEL_ACCESS_TOKEN", "toId": "GROUP_OR_USER_ID",
+    "channelSecret": "опционально", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "googlechat", "webhookUrl": "https://chat.googleapis.com/v1/spaces/.../messages?key=...&token=...",
+    "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "mattermost", "webhookUrl": "https://mm.example/hooks/xxx", "token": "in-token",
+    "via": "Mattermost", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "rocketchat", "webhookUrl": "https://rocketchat.example/hooks/xxx", "token": "in-token",
+    "via": "Rocket.Chat", "room": "КОД_ПРОСТРАНСТВА" },
+
+  { "type": "teams", "room": "КОД_ПРОСТРАНСТВА", "accessToken": "GRAPH_TOKEN",
+    "clientState": "secret", "autoAnswer": false, "mediaReady": false },
+
+  { "type": "viber-audio", "room": "КОД_ПРОСТРАНСТВА", "token": "agent-secret",
+    "displayName": "Viber (ПК-мост)" },
+
+  { "type": "webhook", "token": "длинный-секрет", "room": "КОД_ПРОСТРАНСТВА",
+    "url": "http://localhost:9000/in", "via": "Matrix" },
+
+  { "type": "sms", "room": "КОД_ПРОСТРАНСТВА", "transport": "twilio",
+    "accountSid": "ACxxxx", "authToken": "AUTH_TOKEN", "from": "+7XXXXXXXXXX",
+    "to": "+79001234567", "contacts": { "+79001234567": "Бабушка" },
+    "allowFrom": "^\\+7", "publicUrl": "https://ТВОЙ-АДРЕС/bridge/sms" },
+
+  { "type": "sms", "room": "КОД_ПРОСТРАНСТВА", "transport": "android",
+    "token": "длинный-секрет-в-webhook-шлюза", "gatewayUrl": "http://192.168.1.50:8080",
+    "gatewayLogin": "admin", "gatewayPassword": "пароль-приложения",
+    "passwordHashMode": false,
+    "to": "+79001234567", "contacts": { "+79001234567": "Бабушка" } }
+]
