@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e1116">
+<title>СИНГУЛЯР · Единое окно</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <div class="brand"><span class="dot" id="dot"></span> СИНГУЛЯР <small>единое окно</small></div>
+  <div id="status" role="status">не в комнате</div>
+</header>
+
+<main>
+  <!-- 1. Создать пространство -->
+  <section id="view-start" class="card hidden">
+    <h1>Один разговор для всех</h1>
+    <p>Создай пространство — получишь одну ссылку. Каждый открывает её <b>из своего мессенджера</b>: Viber, WhatsApp, Telegram, Teams, Signal, СМС. Ничего устанавливать не нужно.</p>
+    <label>Как назвать пространство
+      <input id="title" maxlength="40" placeholder="Семья" autocomplete="off">
+    </label>
+    <button id="btnCreate" class="primary big">Создать пространство</button>
+
+    <details id="duet">
+      <summary>Прямая связь БЕЗ дома — когда выключили всё</summary>
+      <p class="note">Два телефона соединяются напрямую, без сервера. Код-приглашение передаётся любым путём: QR в глаз друг другу, письмо, СМС, голосом по телефону, с бумаги. Интернет нужен только на время обмена кодами — а разговор идёт сам по себе.</p>
+      <div class="row wrap">
+        <button id="dOfferMake" class="primary">Я зову</button>
+        <button id="dOfferUse">Меня зовут</button>
+      </div>
+      <textarea id="dIn" rows="3" placeholder="Вставь сюда код второй стороны" aria-label="Код второй стороны"></textarea>
+      <div class="row wrap">
+        <button id="dStep" class="primary">Передать код дальше</button>
+        <button id="dClear" class="ghost">Заново</button>
+      </div>
+      <div id="dQr" class="qr" aria-label="QR-код связи"></div>
+      <textarea id="dOut" rows="4" readonly placeholder="Здесь появится твой код — отдай его второй стороне" aria-label="Твой код"></textarea>
+      <form id="dForm" class="send hidden">
+        <input id="dMsg" maxlength="1000" placeholder="Прямое сообщение (без дома)" autocomplete="off" aria-label="Прямое сообщение">
+        <button class="primary" type="submit">В путь</button>
+      </form>
+      <div id="dStatus" class="note" role="status">прямая связь не поднята</div>
+    </details>
+  </section>
+
+  <!-- 2. Войти -->
+  <section id="view-join" class="card hidden">
+    <h1 id="joinTitle">Пространство</h1>
+    <label>Твоё имя
+      <input id="name" maxlength="48" placeholder="Как тебя называть" autocomplete="given-name">
+    </label>
+    <fieldset>
+      <legend>Как тебе удобно общаться</legend>
+      <label class="check"><input type="checkbox" id="nSpeak"> <span>🔊 Читать мне сообщения вслух</span></label>
+      <label class="check"><input type="checkbox" id="nCaps"> <span>📝 Мне нужны субтитры (другие увидят, что их речь надо писать)</span></label>
+      <label class="check"><input type="checkbox" id="nLarge"> <span>🔎 Крупный текст и кнопки</span></label>
+      <label class="check"><input type="checkbox" id="nHaptic" checked> <span>📳 Вибрация и звук на сигналы</span></label>
+      <label class="check"><input type="checkbox" id="nMorse"> <span>·− Морзе входящих вибрацией и строкой (тактиль)</span></label>
+      <label class="check"><input type="checkbox" id="nBraille"> <span>⠿ Брайль под сообщениями</span></label>
+    </fieldset>
+    <button id="btnJoin" class="primary big">Войти</button>
+  </section>
+
+  <!-- 3. Комната -->
+  <section id="view-room" class="room hidden">
+    <aside class="card side">
+      <div class="row">
+        <h2 id="roomTitle">Пространство</h2>
+        <button id="btnInvite" class="primary">Пригласить</button>
+      </div>
+      <div id="peers" class="peers" aria-live="polite"></div>
+      <div id="bridgeNote" class="note hidden"></div>
+
+      <h3>Звонок</h3>
+      <div class="row wrap">
+        <button id="btnMic" aria-pressed="false">🎤 Микрофон</button>
+        <button id="btnCam" aria-pressed="false">📷 Камера</button>
+        <button id="btnCaps" aria-pressed="false" title="Моя речь → текст для всех">📝 Речь в текст</button>
+        <button id="btnPhone" class="hidden" title="Позвонить на обычный телефон — он станет участником разговора">☎ Телефон</button>
+      </div>
+      <div id="tiles" class="tiles"></div>
+
+      <h3>Сигналы</h3>
+      <div class="row wrap signals">
+        <button data-nudge="wait">✋ Подожди</button>
+        <button data-nudge="ok">👍 Понял</button>
+        <button data-nudge="love">❤️ Люблю</button>
+        <button data-nudge="call">🔔 Позвони</button>
+        <button data-nudge="urgent" class="danger">🆘 Срочно</button>
+      </div>
+
+      <h3>Пиктограммы — для тех, кто не читает</h3>
+      <div class="row wrap signals picto">
+        <button data-nudge="water">💧 ВОДА</button>
+        <button data-nudge="hurt">🤕 БОЛИТ</button>
+        <button data-nudge="here">📍 Я ЗДЕСЬ</button>
+        <button data-nudge="danger" class="danger">⚠️ ОПАСНО</button>
+      </div>
+
+      <details>
+        <summary>Мои настройки</summary>
+        <label class="check"><input type="checkbox" id="sSpeak"> <span>🔊 Читать вслух</span></label>
+        <label class="check"><input type="checkbox" id="sCaps"> <span>📝 Мне нужны субтитры</span></label>
+        <label class="check"><input type="checkbox" id="sLarge"> <span>🔎 Крупно</span></label>
+        <label class="check"><input type="checkbox" id="sHaptic"> <span>📳 Вибрация и звук</span></label>
+        <label class="check"><input type="checkbox" id="sMorse"> <span>·− Морзе входящих</span></label>
+        <label class="check"><input type="checkbox" id="sBraille"> <span>⠿ Брайль под сообщениями</span></label>
+      </details>
+      <button id="btnLetter" class="ghost">Письмо на бумагу</button>
+      <button id="btnLeave" class="ghost">Выйти</button>
+    </aside>
+
+    <section class="card chat">
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <div id="live" class="live" aria-live="polite"></div>
+      <form id="chatForm" class="send">
+        <input id="msg" maxlength="2000" placeholder="Сообщение — оно едет по буквам, пока пишешь" autocomplete="off" aria-label="Сообщение">
+        <button id="btnMorse" type="button" class="ghost" title="Ключ Морзе: точка/тире — азбука на выбор">·−</button>
+        <button class="primary" type="submit">Отправить</button>
+      </form>
+      <div id="morsePad" class="hidden">
+        <div id="morseBuf" aria-live="polite">—</div>
+        <div class="row wrap">
+          <label class="note" for="morseAlphabet" style="align-self:center">азбука</label>
+          <select id="morseAlphabet" aria-label="Азбука морзе"></select>
+          <button id="mDot" class="keybtn">·</button>
+          <button id="mDash" class="keybtn">−</button>
+          <button id="mLet">Буква</button>
+          <button id="mWord">Слово</button>
+          <button id="mBack" class="ghost">Стереть</button>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+
+<div id="inviteDlg" class="modal hidden" role="dialog" aria-modal="true" aria-label="Приглашение">
+  <div class="sheet">
+    <div class="row"><h2>Позвать человека</h2><button id="inviteClose" class="ghost">Закрыть</button></div>
+    <p class="note">Ссылка открывается в любом браузере. Человек отправляет её из своего привычного мессенджера — ты выбираешь, через какой.</p>
+    <div id="qr" class="qr" aria-label="QR-код приглашения"></div>
+    <input id="inviteUrl" readonly aria-label="Ссылка-приглашение">
+    <div id="inviteBtns" class="invites"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden" role="alert"></div>
+<script src="/vendor/qrcode.js"></script>
+<script src="/app.js" type="module"></script>
+<script src="/duet.js" type="module"></script>
+</body>
+</html>
