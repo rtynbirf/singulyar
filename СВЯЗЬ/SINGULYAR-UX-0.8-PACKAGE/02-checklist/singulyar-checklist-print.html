@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>СИНГУЛЯР · Чеклист 0.8 (печать)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #cccccc;
+      --accent: #1a1a1a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --text: #f0f0f0;
+        --muted: #aaaaaa;
+        --border: #444444;
+        --accent: #ffffff;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 16px 20px 32px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text);
+      background: var(--bg);
+      max-width: 800px;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin: 0 0 4px;
+      text-align: center;
+    }
+
+    .sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 0.95rem;
+      margin: 14px 0 6px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 3px 0 3px 1.4em;
+      position: relative;
+    }
+
+    li::before {
+      content: "☐";
+      position: absolute;
+      left: 0;
+      font-size: 1.05em;
+    }
+
+    .footer {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar button {
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    @media print {
+      .toolbar { display: none; }
+      body { padding: 0; font-size: 11px; }
+      h1 { font-size: 14pt; }
+      h2 { font-size: 11pt; margin-top: 10px; }
+      li { padding: 2px 0 2px 1.3em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" onclick="window.print()">🖨 Печать</button>
+    <button type="button" onclick="document.body.style.background='#fff';document.body.style.color='#111'">Светлая для печати</button>
+    <button type="button" onclick="document.body.style.background='#121212';document.body.style.color='#f0f0f0'">Тёмная</button>
+  </div>
+
+  <h1>СИНГУЛЯР · Чеклист 0.8</h1>
+  <p class="sub">Одностраничный проверочный лист · 12 ноября 2026</p>
+
+  <h2>Вход и навигация</h2>
+  <ul>
+    <li>Экран создания: только поле названия + большая кнопка «Создать пространство»</li>
+    <li>Вторичная ссылка «У меня уже есть ссылка»</li>
+    <li>Блок «Прямая связь без сервера» свёрнут по умолчанию</li>
+    <li>На экране входа нет ни одного чекбокса доступности</li>
+    <li>После создания сразу переход в комнату + предложение пригласить</li>
+  </ul>
+
+  <h2>Комната</h2>
+  <ul>
+    <li>Лента сообщений — главный фокус экрана</li>
+    <li>Панель ввода адаптивная (читает профиль человека)</li>
+    <li>Шапка: название + число участников + меню ⋯</li>
+    <li>В меню ⋯: Позвать · Позвонить · Пригласить · Мой способ общения · Выйти</li>
+    <li>Статусы: Ушло / Доставлено / Человек увидел</li>
+    <li>Индикатор «печатает» и «говорит»</li>
+  </ul>
+
+  <h2>Панель ввода</h2>
+  <ul>
+    <li>Обычный → поле + микрофон + «+»</li>
+    <li>Сигналы → крупные сигналы сверху</li>
+    <li>Пиктограммы → только крупные пиктограммы</li>
+    <li>Морзе → морзе-клавиатура</li>
+    <li>Только голос → одна большая кнопка «Говорить»</li>
+    <li>Крупный текст увеличивает все элементы</li>
+  </ul>
+
+  <h2>Профиль доступности</h2>
+  <ul>
+    <li>Отдельный экран/шторка «Как тебе удобно»</li>
+    <li>Группы: Зрение · Слух · Как писать · Язык</li>
+    <li>Есть превью сообщений</li>
+    <li>Большая кнопка «Готово»</li>
+    <li>Профиль сохраняется и применяется</li>
+  </ul>
+
+  <h2>Участники и приглашение</h2>
+  <ul>
+    <li>В карточке участника видно канал (СМС / WhatsApp / Браузер)</li>
+    <li>Приглашение: ссылка + QR-код</li>
+    <li>Текст «Человек зайдёт тем способом, который у него есть»</li>
+  </ul>
+
+  <h2>Эргономика</h2>
+  <ul>
+    <li>Основной текст ≥ 18 px · Крупный режим ≥ 24 px</li>
+    <li>Высота кнопок ≥ 52 px · Зоны нажатия ≥ 48×48 px</li>
+    <li>Контраст ≥ 7:1 · prefers-color-scheme · высокий контраст</li>
+    <li>Важные действия имеют текстовую подпись</li>
+  </ul>
+
+  <h2>Честность и ошибки</h2>
+  <ul>
+    <li>Все ошибки имеют понятный текст</li>
+    <li>Пустые состояния объясняют, что делать</li>
+    <li>Неподдерживаемые функции → честный отказ</li>
+    <li>Нет фейковых переводов</li>
+  </ul>
+
+  <h2>СМС-мост</h2>
+  <ul>
+    <li>СМС всегда подписываются («Семья:»)</li>
+    <li>Сегментация 70/67 и 160/153</li>
+    <li>Эхо не возвращается</li>
+    <li>В карточке видно «СМС · кнопочный телефон»</li>
+  </ul>
+
+  <h2>Критические сценарии</h2>
+  <ul>
+    <li>Бабушка на кнопочном телефоне — полный цикл</li>
+    <li>Слепоглухой: вибрация + различимые паттерны</li>
+    <li>Только голос: большая кнопка + озвучка</li>
+    <li>Прямая связь без сервера: код + p2p + индикатор</li>
+  </ul>
+
+  <p class="footer">
+    Критерий готовности 0.8: все пункты отмечены и проверены на реальном устройстве + одном пожилом пользователе.
+  </p>
+</body>
+</html>

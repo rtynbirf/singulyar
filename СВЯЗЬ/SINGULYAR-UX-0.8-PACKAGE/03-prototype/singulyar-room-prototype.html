@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>СИНГУЛЯР · Прототип комнаты 0.8</title>
+  <style>
+    :root {
+      --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --text-base: 1.125rem;
+      --text-lg: 1.5rem;
+      --text-sm: 0.9375rem;
+      --leading: 1.45;
+      --touch-min: 48px;
+      --btn-height: 52px;
+      --input-height: 56px;
+      --gap: 12px;
+      --radius: 12px;
+      --radius-sm: 8px;
+
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f5;
+      --text: #111111;
+      --text-secondary: #555555;
+      --border: #e5e5e5;
+      --accent: #1a1a1a;
+      --accent-text: #ffffff;
+      --danger: #c62828;
+      --success: #2e7d32;
+      --focus-ring: #1565c0;
+      --msg-mine: #1a1a1a;
+      --msg-mine-text: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121212;
+        --bg-subtle: #1c1c1e;
+        --text: #f2f2f2;
+        --text-secondary: #a0a0a0;
+        --border: #333333;
+        --accent: #ffffff;
+        --accent-text: #111111;
+        --danger: #ff8a80;
+        --success: #81c784;
+        --focus-ring: #90caf9;
+        --msg-mine: #2c2c2e;
+        --msg-mine-text: #f2f2f2;
+      }
+    }
+
+    [data-large-text="true"] {
+      --text-base: 1.5rem;
+      --text-lg: 1.75rem;
+      --btn-height: 60px;
+      --input-height: 64px;
+      --touch-min: 56px;
+    }
+
+    [data-contrast="high"] {
+      --bg: #000000;
+      --bg-subtle: #111111;
+      --text: #ffffff;
+      --text-secondary: #eeeeee;
+      --border: #ffffff;
+      --accent: #ffff00;
+      --accent-text: #000000;
+      --danger: #ff3333;
+      --success: #33ff33;
+      --msg-mine: #ffff00;
+      --msg-mine-text: #000000;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: var(--leading);
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* ===== Header ===== */
+    .header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .header-info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .header-title {
+      font-weight: 650;
+      font-size: 1.05em;
+      margin: 0;
+    }
+
+    .header-meta {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* ===== Messages ===== */
+    .messages {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 1rem;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius);
+      background: var(--bg-subtle);
+      align-self: flex-start;
+    }
+
+    .msg--mine {
+      align-self: flex-end;
+      background: var(--msg-mine);
+      color: var(--msg-mine-text);
+    }
+
+    .msg-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: var(--text-sm);
+      opacity: 0.75;
+      margin-bottom: 0.15rem;
+    }
+
+    .msg-text { margin: 0; }
+
+    .msg-status {
+      font-size: 0.8em;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+
+    .typing {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      font-style: italic;
+      padding: 0 0.25rem;
+    }
+
+    /* ===== Composer ===== */
+    .composer {
+      flex: 0 0 auto;
+      padding: 0.75rem 1rem;
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    .signals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .composer-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== Controls ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--btn-height);
+      min-width: var(--touch-min);
+      padding: 0 1rem;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: 600;
+      line-height: 1.2;
+      border: 2px solid transparent;
+      border-radius: var(--radius);
+      background: var(--bg-subtle);
+      color: var(--text);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-icon {
+      min-width: var(--btn-height);
+      padding: 0;
+      font-size: 1.25em;
+    }
+
+    .btn-signal {
+      min-height: 52px;
+      font-size: 0.95em;
+      gap: 0.35rem;
+      justify-content: flex-start;
+      padding-left: 0.85rem;
+    }
+
+    .input {
+      flex: 1 1 auto;
+      min-height: var(--input-height);
+      padding: 0 1rem;
+      font-family: inherit;
+      font-size: 1em;
+      color: var(--text);
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      appearance: none;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--focus-ring);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 25%, transparent);
+    }
+
+    .input::placeholder {
+      color: var(--text-secondary);
+      opacity: 1;
+    }
+
+    /* ===== Mode switcher (demo) ===== */
+    .demo-bar {
+      flex: 0 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0.5rem 1rem;
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85em;
+    }
+
+    .demo-bar button {
+      min-height: 36px;
+      padding: 0 0.7rem;
+      font-size: 0.85em;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .demo-bar button.is-active {
+      background: var(--accent);
+      color: var(--accent-text);
+      border-color: transparent;
+    }
+
+    .demo-label {
+      width: 100%;
+      font-size: 0.75em;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+
+    /* Sheet (participants) */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .sheet-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: 75dvh;
+      overflow-y: auto;
+      background: var(--bg);
+      border-radius: 16px 16px 0 0;
+      padding: 1.25rem 1rem max(1.25rem, env(safe-area-inset-bottom));
+      z-index: 50;
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .sheet.is-open {
+      transform: translateY(0);
+    }
+
+    .sheet h2 {
+      margin: 0 0 1rem;
+      font-size: 1.15em;
+    }
+
+    .participant {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .participant:last-of-type {
+      border-bottom: none;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+    }
+
+    .dot--me {
+      background: var(--text-secondary);
+    }
+
+    .participant-info strong {
+      display: block;
+    }
+
+    .participant-info span {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .sheet-actions {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo controls (not part of real UI) -->
+  <div class="demo-bar">
+    <div class="demo-label">Демо-режимы (в реальном продукте этого бара нет):</div>
+    <button type="button" data-mode="text" class="is-active">Обычный</button>
+    <button type="button" data-mode="signals">Сигналы</button>
+    <button type="button" data-mode="voice">Только голос</button>
+    <button type="button" data-large>Крупный текст</button>
+    <button type="button" data-contrast>Высокий контраст</button>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <button class="btn btn-icon" type="button" aria-label="Назад" title="Назад">←</button>
+    <div class="header-info">
+      <p class="header-title">Семья</p>
+      <p class="header-meta">3 человека</p>
+    </div>
+    <button class="btn btn-icon" type="button" aria-label="Участники" id="btn-participants" title="Участники">👥</button>
+    <button class="btn btn-icon" type="button" aria-label="Меню" title="Меню">⋯</button>
+  </header>
+
+  <!-- Messages -->
+  <main class="messages" id="messages" role="log" aria-live="polite" aria-relevant="additions">
+    <article class="msg">
+      <div class="msg-meta">
+        <span>Бабушка</span>
+        <span>14:02</span>
+      </div>
+      <p class="msg-text">Я дома, всё хорошо</p>
+      <div class="msg-status">через СМС</div>
+    </article>
+
+    <article class="msg msg--mine">
+      <div class="msg-meta">
+        <span>Вы</span>
+        <span>14:03</span>
+      </div>
+      <p class="msg-text">Отлично, сейчас позвоню</p>
+      <div class="msg-status">Доставлено</div>
+    </article>
+
+    <article class="msg">
+      <div class="msg-meta">
+        <span>Мама</span>
+        <span>14:04</span>
+      </div>
+      <p class="msg-text">Я тоже буду к вечеру</p>
+    </article>
+
+    <div class="typing" id="typing" hidden>••• Мама печатает</div>
+  </main>
+
+  <!-- Composer -->
+  <footer class="composer" id="composer">
+    <!-- Signals (hidden by default) -->
+    <div class="signals hidden" id="signals">
+      <button class="btn btn-signal" type="button">🟡 Подожди</button>
+      <button class="btn btn-signal" type="button">👍 Понял</button>
+      <button class="btn btn-signal" type="button">❤️ Люблю</button>
+      <button class="btn btn-signal" type="button">📞 Позвони</button>
+      <button class="btn btn-signal btn-danger" type="button">🆘 Срочно</button>
+    </div>
+
+    <!-- Voice only (hidden by default) -->
+    <button class="btn btn-primary hidden" id="btn-voice-only" type="button" style="min-height: 72px; font-size: 1.15em;">
+      🎤 Говорить
+    </button>
+
+    <!-- Normal row -->
+    <div class="composer-row" id="composer-row">
+      <input class="input" type="text" placeholder="Написать сообщение" enterkeyhint="send" id="input-msg" autocomplete="off">
+      <button class="btn btn-icon" type="button" aria-label="Говорить" title="Говорить">🎤</button>
+      <button class="btn btn-icon" type="button" aria-label="Ещё" title="Ещё" id="btn-more">+</button>
+    </div>
+  </footer>
+
+  <!-- Participants sheet -->
+  <div class="sheet-backdrop" id="sheet-backdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-label="Участники">
+    <h2>Участники · 3</h2>
+
+    <div class="participant">
+      <span class="dot"></span>
+      <div class="participant-info">
+        <strong>Бабушка</strong>
+        <span>СМС · кнопочный телефон</span>
+      </div>
+    </div>
+
+    <div class="participant">
+      <span class="dot"></span>
+      <div class="participant-info">
+        <strong>Мама</strong>
+        <span>WhatsApp</span>
+      </div>
+    </div>
+
+    <div class="participant">
+      <span class="dot dot--me"></span>
+      <div class="participant-info">
+        <strong>Вы</strong>
+        <span>Браузер</span>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn btn-primary" type="button">Пригласить человека</button>
+      <button class="btn" type="button">Позвонить на обычный номер</button>
+    </div>
+  </div>
+
+  <script>
+    // Demo mode switching
+    const body = document.body;
+    const signals = document.getElementById('signals');
+    const voiceOnly = document.getElementById('btn-voice-only');
+    const composerRow = document.getElementById('composer-row');
+    const modeButtons = document.querySelectorAll('[data-mode]');
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeButtons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const mode = btn.dataset.mode;
+
+        signals.classList.add('hidden');
+        voiceOnly.classList.add('hidden');
+        composerRow.classList.remove('hidden');
+
+        if (mode === 'signals') {
+          signals.classList.remove('hidden');
+        } else if (mode === 'voice') {
+          voiceOnly.classList.remove('hidden');
+          composerRow.classList.add('hidden');
+        }
+      });
+    });
+
+    document.querySelector('[data-large]').addEventListener('click', function () {
+      const on = body.getAttribute('data-large-text') === 'true';
+      body.setAttribute('data-large-text', on ? 'false' : 'true');
+      this.classList.toggle('is-active', !on);
+    });
+
+    document.querySelector('[data-contrast]').addEventListener('click', function () {
+      const on = body.getAttribute('data-contrast') === 'high';
+      body.setAttribute('data-contrast', on ? '' : 'high');
+      this.classList.toggle('is-active', !on);
+    });
+
+    // Participants sheet
+    const sheet = document.getElementById('sheet');
+    const backdrop = document.getElementById('sheet-backdrop');
+    const btnParticipants = document.getElementById('btn-participants');
+
+    function openSheet() {
+      sheet.classList.add('is-open');
+      backdrop.classList.add('is-open');
+    }
+
+    function closeSheet() {
+      sheet.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+    }
+
+    btnParticipants.addEventListener('click', openSheet);
+    backdrop.addEventListener('click', closeSheet);
+
+    // Simple send demo
+    const input = document.getElementById('input-msg');
+    const messages = document.getElementById('messages');
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      const art = document.createElement('article');
+      art.className = 'msg msg--mine';
+      art.innerHTML = `
+        <div class="msg-meta"><span>Вы</span><span>сейчас</span></div>
+        <p class="msg-text"></p>
+        <div class="msg-status">Ушло</div>
+      `;
+      art.querySelector('.msg-text').textContent = text;
+      messages.appendChild(art);
+      messages.scrollTop = messages.scrollHeight;
+      input.value = '';
+
+      // Fake status update
+      setTimeout(() => {
+        art.querySelector('.msg-status').textContent = 'Доставлено';
+      }, 800);
+    }
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Signal buttons send a message
+    document.querySelectorAll('.btn-signal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.textContent.trim();
+        const art = document.createElement('article');
+        art.className = 'msg msg--mine';
+        art.innerHTML = `
+          <div class="msg-meta"><span>Вы</span><span>сейчас</span></div>
+          <p class="msg-text"></p>
+          <div class="msg-status">Ушло</div>
+        `;
+        art.querySelector('.msg-text').textContent = text;
+        messages.appendChild(art);
+        messages.scrollTop = messages.scrollHeight;
+      });
+    });
+  </script>
+</body>
+</html>
