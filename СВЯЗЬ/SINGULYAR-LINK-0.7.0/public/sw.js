@@ -1,5 +1,5 @@
-const V = "singulyar-link-7"; /* 0.6.0: перевод живого разговора (translate.js, Translator API) */
-const SHELL = ["/", "/app.js", "/azbuki.js", "/translate.js", "/duet.js", "/style.css", "/manifest.webmanifest", "/icon.svg", "/vendor/qrcode.js"];
+const V = "singulyar-link-8"; /* 0.8.0: слои — progressive disclosure + клавиша установки дома (sloi.js) */
+const SHELL = ["/", "/app.js", "/azbuki.js", "/translate.js", "/duet.js", "/sloi.js", "/style.css", "/manifest.webmanifest", "/icon.svg", "/vendor/qrcode.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim()));
