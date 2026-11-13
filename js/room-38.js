@@ -973,6 +973,25 @@
       } catch (е) { решение({}); }
     });
   }
+  /* реестр языков — правда дома: живое чтение с бастом кэша (образец sg-registry:
+     правда перечитывается живьём, пре-кэш воркера держит её для офлайна).
+     Латка живой поверки v243: бамп не гарантирует свежее тело — HTTP-кэш
+     (CDN max-age=600 + браузер) мог отдать старый реестр в момент установки
+     нового поколения; баст отличается от пре-кэш-ключа — сеть отдаёт живое. */
+  function вечерЯзыкиРеестр() {
+    return new Promise(function (решение) {
+      try {
+        fetch(ЯЗЫКИ_ВЕЧЕРА + '?вечер=' + Date.now()).then(function (о) {
+          if (!о.ok) throw new Error('HTTP ' + о.status);
+          return о.json();
+        }).then(function (д) { решение(д || null); }).catch(function () {
+          fetch(ЯЗЫКИ_ВЕЧЕРА).then(function (о) { return о.ok ? о.json() : null; }).then(function (д) {
+            решение(д || null);
+          }).catch(function () { решение(null); });
+        });
+      } catch (е) { решение(null); }
+    });
+  }
   function вечерСобрать() {
     try {
       var кноп = по('вечерСобрать');
@@ -982,7 +1001,7 @@
       Promise.all([
         fetch(МАНИФЕСТ_ФОНДА).then(function (о) { if (!о.ok) throw new Error('HTTP ' + о.status); return о.json(); }),
         вечерТайтлы(),
-        fetch(ЯЗЫКИ_ВЕЧЕРА).then(function (о) { if (!о.ok) throw new Error('HTTP ' + о.status); return о.json(); }).catch(function () { return null; })
+        вечерЯзыкиРеестр()
       ]).then(function (о) {
         try {
           маниф = о[0]; тайтлы = о[1] || {}; языки = о[2];
