@@ -11,7 +11,7 @@
 | 0 | ~~Phase 0 remainder: live numbers on all faces~~ | cheap, and the whole navigation of the revision stands on the triple of numbers | ✅ 2026-11-09 — ПРАВДА-2 (F-019/F-020/F-021 closed; guards T-071…T-073 standing) |
 | 0a | ~~REQUIRED/OPTIONAL + surviving last-known-good~~ | the only defect with an irreversible outcome | ✅ 2026-11-09 — ЛКГ-1 (F-001/F-022; T-010/T-070 in the guard) |
 | 1 | **W1 The human update ritual** (UX §5) | after ЛКГ-1 a consent key is left without UI; the strongest external tensor at minimal code cost; + EN mirrors of the agents' package | ✅ 2026-11-09 — the ritual card in the hub, the `S15_ВЕДОМОСТЬ` key in the worker, guard `test_ритуал_такта.mjs`, T-070 alive; EN mirrors planted |
-| 2 | **W2 Fond readiness** (Phase 1 items 3–5) | the offline promise of a song = the honest status "the fond is in the House" | ⬜ |
+| 2 | ~~**W2 Fond readiness** (Phase 1 items 3–5)~~ | the offline promise of a song = the honest status "the fond is in the House" | ✅ 2026-11-13 — wave W2: CORE/SONG/MODEL/P2P_READY in ·38/·32 (definitions in the counters dictionary, +6), the "аудио_в_хранилище" counter from the OPFS list, the "evening" (songs × flagman languages ×157) with a forecast from the fond manifest and a cancel button, the ·32 ladder with the OPFS zero step and the honest SONG_UNAVAILABLE card; guard `test_готовность_фонда.mjs` 6/6 |
 | 3 | **W3 External actions** (Phase 2) | permissions and external boundaries | ⬜ |
 | 4 | **W4 Contracts + the worlds map** (Phase 3) | reduces the mismatch of doors and flows; the main↔rumu convergence — only with the owner's permission | ⬜ |
 | 5 | **W5 AT matrix** (Phase 4) | confirms accessibility with facts | ⬜ |
@@ -22,6 +22,7 @@
 
 | Date | Wave | What was crossed out | Commit/verification |
 |---|---|---|---|
+| 2026-11-13 | **W2 "Fond readiness"** (ТЗ §2) | the honest "the fond is in the House" status: CORE/SONG/MODEL/P2P_READY on ·38/·32; the "аудио_в_хранилище" counter = len(__ОПФС.список()); the evening — songs × flagman languages ×157 with a size forecast from the fond manifest and a cancel (AbortController); the ·32 ladder: OPFS → door-0 → чистый-минус → SONG_UNAVAILABLE; the counters dictionary +6 definitions; the "no media in precache" law intact | guard `test_готовность_фонда.mjs` 6/6; the whole House: 53 JS + 13 Python oracles, 0 red, truth shop "NO DRIFT", node --check clean |
 | 2026-11-09 | ЛКГ-1 + ПРАВДА-2 | F-001, F-019, F-020, F-021, F-022; the core ceiling; T-070…T-073; the agents' package planted in the repo | latkas; the live ЭП-06 verification — for the releasing wave after the push |
 | 2026-11-09 | W1 | the ritual card (S15_ВЕДОМОСТЬ + consent dialog) + EN mirrors of the package; the W1 row crossed out | latka v237→v238; guard `test_ритуал_такта.mjs`; T-070 alive |
 

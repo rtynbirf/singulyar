@@ -1,0 +1,799 @@
+{
+ "документ": "ВЕЧЕР · языки флагмана «Когда теряем» (rWpYxmFjm9g): маппинг код языка → файл перевода дома. Сгенерирован из перечня файлов ДАННЫЕ/синхрон_кс1/флагман_157_языков/srt/ ветки rumu 2026-11-13 (один факт — одно место; машина порядок не пересортировывает — закон I-12).",
+ "источник": "перечень файлов ветки rumu, 2026-11-13, 157 переводов флагмана",
+ "песня": "rWpYxmFjm9g",
+ "путь": "ДАННЫЕ/синхрон_кс1/флагман_157_языков/srt/",
+ "порядок": "ru-orig (оригинал), затем канон I-12: ru, sr, kk, de; далее по алфавиту кода. «канон»:true — первые четыре человеческих языка закона владельца.",
+ "языки": [
+  {
+   "код": "ru-orig",
+   "имя": "Russian Original",
+   "файл": "ru-orig_Russian_Original",
+   "канон": true
+  },
+  {
+   "код": "ru",
+   "имя": "РУССКИЙ",
+   "файл": "ru_Russian",
+   "канон": true
+  },
+  {
+   "код": "sr",
+   "имя": "СЕРБСКИЙ",
+   "файл": "sr_Serbian",
+   "канон": true
+  },
+  {
+   "код": "kk",
+   "имя": "КАЗАХСКИЙ",
+   "файл": "kk_Kazakh",
+   "канон": true
+  },
+  {
+   "код": "de",
+   "имя": "НЕМЕЦКИЙ",
+   "файл": "de_German",
+   "канон": true
+  },
+  {
+   "код": "aa",
+   "имя": "Afar",
+   "файл": "aa_Afar"
+  },
+  {
+   "код": "ab",
+   "имя": "Abkhazian",
+   "файл": "ab_Abkhazian"
+  },
+  {
+   "код": "af",
+   "имя": "Afrikaans",
+   "файл": "af_Afrikaans"
+  },
+  {
+   "код": "ak",
+   "имя": "Akan",
+   "файл": "ak_Akan"
+  },
+  {
+   "код": "am",
+   "имя": "Amharic",
+   "файл": "am_Amharic"
+  },
+  {
+   "код": "ar",
+   "имя": "Arabic",
+   "файл": "ar_Arabic"
+  },
+  {
+   "код": "as",
+   "имя": "Assamese",
+   "файл": "as_Assamese"
+  },
+  {
+   "код": "ay",
+   "имя": "Aymara",
+   "файл": "ay_Aymara"
+  },
+  {
+   "код": "az",
+   "имя": "Azerbaijani",
+   "файл": "az_Azerbaijani"
+  },
+  {
+   "код": "ba",
+   "имя": "Bashkir",
+   "файл": "ba_Bashkir"
+  },
+  {
+   "код": "be",
+   "имя": "Belarusian",
+   "файл": "be_Belarusian"
+  },
+  {
+   "код": "bg",
+   "имя": "Bulgarian",
+   "файл": "bg_Bulgarian"
+  },
+  {
+   "код": "bho",
+   "имя": "Bhojpuri",
+   "файл": "bho_Bhojpuri"
+  },
+  {
+   "код": "bn",
+   "имя": "Bangla",
+   "файл": "bn_Bangla"
+  },
+  {
+   "код": "bo",
+   "имя": "Tibetan",
+   "файл": "bo_Tibetan"
+  },
+  {
+   "код": "br",
+   "имя": "Breton",
+   "файл": "br_Breton"
+  },
+  {
+   "код": "bs",
+   "имя": "Bosnian",
+   "файл": "bs_Bosnian"
+  },
+  {
+   "код": "ca",
+   "имя": "Catalan",
+   "файл": "ca_Catalan"
+  },
+  {
+   "код": "ceb",
+   "имя": "Cebuano",
+   "файл": "ceb_Cebuano"
+  },
+  {
+   "код": "co",
+   "имя": "Corsican",
+   "файл": "co_Corsican"
+  },
+  {
+   "код": "crs",
+   "имя": "Seselwa Creole French",
+   "файл": "crs_Seselwa_Creole_French"
+  },
+  {
+   "код": "cs",
+   "имя": "Czech",
+   "файл": "cs_Czech"
+  },
+  {
+   "код": "cy",
+   "имя": "Welsh",
+   "файл": "cy_Welsh"
+  },
+  {
+   "код": "da",
+   "имя": "Danish",
+   "файл": "da_Danish"
+  },
+  {
+   "код": "dv",
+   "имя": "Divehi",
+   "файл": "dv_Divehi"
+  },
+  {
+   "код": "dz",
+   "имя": "Dzongkha",
+   "файл": "dz_Dzongkha"
+  },
+  {
+   "код": "ee",
+   "имя": "Ewe",
+   "файл": "ee_Ewe"
+  },
+  {
+   "код": "el",
+   "имя": "Greek",
+   "файл": "el_Greek"
+  },
+  {
+   "код": "en",
+   "имя": "English",
+   "файл": "en_English"
+  },
+  {
+   "код": "eo",
+   "имя": "Esperanto",
+   "файл": "eo_Esperanto"
+  },
+  {
+   "код": "es",
+   "имя": "Spanish",
+   "файл": "es_Spanish"
+  },
+  {
+   "код": "et",
+   "имя": "Estonian",
+   "файл": "et_Estonian"
+  },
+  {
+   "код": "eu",
+   "имя": "Basque",
+   "файл": "eu_Basque"
+  },
+  {
+   "код": "fa",
+   "имя": "Persian",
+   "файл": "fa_Persian"
+  },
+  {
+   "код": "fi",
+   "имя": "Finnish",
+   "файл": "fi_Finnish"
+  },
+  {
+   "код": "fil",
+   "имя": "Filipino",
+   "файл": "fil_Filipino"
+  },
+  {
+   "код": "fj",
+   "имя": "Fijian",
+   "файл": "fj_Fijian"
+  },
+  {
+   "код": "fo",
+   "имя": "Faroese",
+   "файл": "fo_Faroese"
+  },
+  {
+   "код": "fr",
+   "имя": "French",
+   "файл": "fr_French"
+  },
+  {
+   "код": "fy",
+   "имя": "Western Frisian",
+   "файл": "fy_Western_Frisian"
+  },
+  {
+   "код": "ga",
+   "имя": "Irish",
+   "файл": "ga_Irish"
+  },
+  {
+   "код": "gaa",
+   "имя": "Ga",
+   "файл": "gaa_Ga"
+  },
+  {
+   "код": "gd",
+   "имя": "Scottish Gaelic",
+   "файл": "gd_Scottish_Gaelic"
+  },
+  {
+   "код": "gl",
+   "имя": "Galician",
+   "файл": "gl_Galician"
+  },
+  {
+   "код": "gn",
+   "имя": "Guarani",
+   "файл": "gn_Guarani"
+  },
+  {
+   "код": "gu",
+   "имя": "Gujarati",
+   "файл": "gu_Gujarati"
+  },
+  {
+   "код": "gv",
+   "имя": "Manx",
+   "файл": "gv_Manx"
+  },
+  {
+   "код": "ha",
+   "имя": "Hausa",
+   "файл": "ha_Hausa"
+  },
+  {
+   "код": "haw",
+   "имя": "Hawaiian",
+   "файл": "haw_Hawaiian"
+  },
+  {
+   "код": "hi",
+   "имя": "Hindi",
+   "файл": "hi_Hindi"
+  },
+  {
+   "код": "hmn",
+   "имя": "Hmong",
+   "файл": "hmn_Hmong"
+  },
+  {
+   "код": "hr",
+   "имя": "Croatian",
+   "файл": "hr_Croatian"
+  },
+  {
+   "код": "ht",
+   "имя": "Haitian Creole",
+   "файл": "ht_Haitian_Creole"
+  },
+  {
+   "код": "hu",
+   "имя": "Hungarian",
+   "файл": "hu_Hungarian"
+  },
+  {
+   "код": "hy",
+   "имя": "Armenian",
+   "файл": "hy_Armenian"
+  },
+  {
+   "код": "id",
+   "имя": "Indonesian",
+   "файл": "id_Indonesian"
+  },
+  {
+   "код": "ig",
+   "имя": "Igbo",
+   "файл": "ig_Igbo"
+  },
+  {
+   "код": "is",
+   "имя": "Icelandic",
+   "файл": "is_Icelandic"
+  },
+  {
+   "код": "it",
+   "имя": "Italian",
+   "файл": "it_Italian"
+  },
+  {
+   "код": "iu",
+   "имя": "Inuktitut",
+   "файл": "iu_Inuktitut"
+  },
+  {
+   "код": "iw",
+   "имя": "Hebrew",
+   "файл": "iw_Hebrew"
+  },
+  {
+   "код": "ja",
+   "имя": "Japanese",
+   "файл": "ja_Japanese"
+  },
+  {
+   "код": "jv",
+   "имя": "Javanese",
+   "файл": "jv_Javanese"
+  },
+  {
+   "код": "ka",
+   "имя": "Georgian",
+   "файл": "ka_Georgian"
+  },
+  {
+   "код": "kha",
+   "имя": "Khasi",
+   "файл": "kha_Khasi"
+  },
+  {
+   "код": "kl",
+   "имя": "Kalaallisut",
+   "файл": "kl_Kalaallisut"
+  },
+  {
+   "код": "km",
+   "имя": "Khmer",
+   "файл": "km_Khmer"
+  },
+  {
+   "код": "kn",
+   "имя": "Kannada",
+   "файл": "kn_Kannada"
+  },
+  {
+   "код": "ko",
+   "имя": "Korean",
+   "файл": "ko_Korean"
+  },
+  {
+   "код": "kri",
+   "имя": "Krio",
+   "файл": "kri_Krio"
+  },
+  {
+   "код": "ku",
+   "имя": "Kurdish",
+   "файл": "ku_Kurdish"
+  },
+  {
+   "код": "ky",
+   "имя": "Kyrgyz",
+   "файл": "ky_Kyrgyz"
+  },
+  {
+   "код": "la",
+   "имя": "Latin",
+   "файл": "la_Latin"
+  },
+  {
+   "код": "lb",
+   "имя": "Luxembourgish",
+   "файл": "lb_Luxembourgish"
+  },
+  {
+   "код": "lg",
+   "имя": "Ganda",
+   "файл": "lg_Ganda"
+  },
+  {
+   "код": "ln",
+   "имя": "Lingala",
+   "файл": "ln_Lingala"
+  },
+  {
+   "код": "lo",
+   "имя": "Lao",
+   "файл": "lo_Lao"
+  },
+  {
+   "код": "lt",
+   "имя": "Lithuanian",
+   "файл": "lt_Lithuanian"
+  },
+  {
+   "код": "lua",
+   "имя": "Luba Lulua",
+   "файл": "lua_Luba_Lulua"
+  },
+  {
+   "код": "luo",
+   "имя": "Luo",
+   "файл": "luo_Luo"
+  },
+  {
+   "код": "lv",
+   "имя": "Latvian",
+   "файл": "lv_Latvian"
+  },
+  {
+   "код": "mfe",
+   "имя": "Morisyen",
+   "файл": "mfe_Morisyen"
+  },
+  {
+   "код": "mg",
+   "имя": "Malagasy",
+   "файл": "mg_Malagasy"
+  },
+  {
+   "код": "mi",
+   "имя": "M ori",
+   "файл": "mi_M_ori"
+  },
+  {
+   "код": "mk",
+   "имя": "Macedonian",
+   "файл": "mk_Macedonian"
+  },
+  {
+   "код": "ml",
+   "имя": "Malayalam",
+   "файл": "ml_Malayalam"
+  },
+  {
+   "код": "mn",
+   "имя": "Mongolian",
+   "файл": "mn_Mongolian"
+  },
+  {
+   "код": "mr",
+   "имя": "Marathi",
+   "файл": "mr_Marathi"
+  },
+  {
+   "код": "ms",
+   "имя": "Malay",
+   "файл": "ms_Malay"
+  },
+  {
+   "код": "mt",
+   "имя": "Maltese",
+   "файл": "mt_Maltese"
+  },
+  {
+   "код": "my",
+   "имя": "Burmese",
+   "файл": "my_Burmese"
+  },
+  {
+   "код": "ne",
+   "имя": "Nepali",
+   "файл": "ne_Nepali"
+  },
+  {
+   "код": "new",
+   "имя": "Newari",
+   "файл": "new_Newari"
+  },
+  {
+   "код": "nl",
+   "имя": "Dutch",
+   "файл": "nl_Dutch"
+  },
+  {
+   "код": "no",
+   "имя": "Norwegian",
+   "файл": "no_Norwegian"
+  },
+  {
+   "код": "nso",
+   "имя": "Northern Sotho",
+   "файл": "nso_Northern_Sotho"
+  },
+  {
+   "код": "ny",
+   "имя": "Nyanja",
+   "файл": "ny_Nyanja"
+  },
+  {
+   "код": "oc",
+   "имя": "Occitan",
+   "файл": "oc_Occitan"
+  },
+  {
+   "код": "om",
+   "имя": "Oromo",
+   "файл": "om_Oromo"
+  },
+  {
+   "код": "or",
+   "имя": "Odia",
+   "файл": "or_Odia"
+  },
+  {
+   "код": "os",
+   "имя": "Ossetic",
+   "файл": "os_Ossetic"
+  },
+  {
+   "код": "pa",
+   "имя": "Punjabi",
+   "файл": "pa_Punjabi"
+  },
+  {
+   "код": "pam",
+   "имя": "Pampanga",
+   "файл": "pam_Pampanga"
+  },
+  {
+   "код": "pl",
+   "имя": "Polish",
+   "файл": "pl_Polish"
+  },
+  {
+   "код": "ps",
+   "имя": "Pashto",
+   "файл": "ps_Pashto"
+  },
+  {
+   "код": "pt",
+   "имя": "Portuguese",
+   "файл": "pt_Portuguese"
+  },
+  {
+   "код": "pt-PT",
+   "имя": "Portuguese Portugal",
+   "файл": "pt-PT_Portuguese_Portugal"
+  },
+  {
+   "код": "qu",
+   "имя": "Quechua",
+   "файл": "qu_Quechua"
+  },
+  {
+   "код": "rn",
+   "имя": "Rundi",
+   "файл": "rn_Rundi"
+  },
+  {
+   "код": "ro",
+   "имя": "Romanian",
+   "файл": "ro_Romanian"
+  },
+  {
+   "код": "rw",
+   "имя": "Kinyarwanda",
+   "файл": "rw_Kinyarwanda"
+  },
+  {
+   "код": "sa",
+   "имя": "Sanskrit",
+   "файл": "sa_Sanskrit"
+  },
+  {
+   "код": "sd",
+   "имя": "Sindhi",
+   "файл": "sd_Sindhi"
+  },
+  {
+   "код": "sg",
+   "имя": "Sango",
+   "файл": "sg_Sango"
+  },
+  {
+   "код": "si",
+   "имя": "Sinhala",
+   "файл": "si_Sinhala"
+  },
+  {
+   "код": "sk",
+   "имя": "Slovak",
+   "файл": "sk_Slovak"
+  },
+  {
+   "код": "sl",
+   "имя": "Slovenian",
+   "файл": "sl_Slovenian"
+  },
+  {
+   "код": "sm",
+   "имя": "Samoan",
+   "файл": "sm_Samoan"
+  },
+  {
+   "код": "sn",
+   "имя": "Shona",
+   "файл": "sn_Shona"
+  },
+  {
+   "код": "so",
+   "имя": "Somali",
+   "файл": "so_Somali"
+  },
+  {
+   "код": "sq",
+   "имя": "Albanian",
+   "файл": "sq_Albanian"
+  },
+  {
+   "код": "ss",
+   "имя": "Swati",
+   "файл": "ss_Swati"
+  },
+  {
+   "код": "st",
+   "имя": "Southern Sotho",
+   "файл": "st_Southern_Sotho"
+  },
+  {
+   "код": "su",
+   "имя": "Sundanese",
+   "файл": "su_Sundanese"
+  },
+  {
+   "код": "sv",
+   "имя": "Swedish",
+   "файл": "sv_Swedish"
+  },
+  {
+   "код": "sw",
+   "имя": "Swahili",
+   "файл": "sw_Swahili"
+  },
+  {
+   "код": "ta",
+   "имя": "Tamil",
+   "файл": "ta_Tamil"
+  },
+  {
+   "код": "te",
+   "имя": "Telugu",
+   "файл": "te_Telugu"
+  },
+  {
+   "код": "tg",
+   "имя": "Tajik",
+   "файл": "tg_Tajik"
+  },
+  {
+   "код": "th",
+   "имя": "Thai",
+   "файл": "th_Thai"
+  },
+  {
+   "код": "ti",
+   "имя": "Tigrinya",
+   "файл": "ti_Tigrinya"
+  },
+  {
+   "код": "tk",
+   "имя": "Turkmen",
+   "файл": "tk_Turkmen"
+  },
+  {
+   "код": "tn",
+   "имя": "Tswana",
+   "файл": "tn_Tswana"
+  },
+  {
+   "код": "to",
+   "имя": "Tongan",
+   "файл": "to_Tongan"
+  },
+  {
+   "код": "tr",
+   "имя": "Turkish",
+   "файл": "tr_Turkish"
+  },
+  {
+   "код": "ts",
+   "имя": "Tsonga",
+   "файл": "ts_Tsonga"
+  },
+  {
+   "код": "tt",
+   "имя": "Tatar",
+   "файл": "tt_Tatar"
+  },
+  {
+   "код": "tum",
+   "имя": "Tumbuka",
+   "файл": "tum_Tumbuka"
+  },
+  {
+   "код": "ug",
+   "имя": "Uyghur",
+   "файл": "ug_Uyghur"
+  },
+  {
+   "код": "uk",
+   "имя": "Ukrainian",
+   "файл": "uk_Ukrainian"
+  },
+  {
+   "код": "ur",
+   "имя": "Urdu",
+   "файл": "ur_Urdu"
+  },
+  {
+   "код": "uz",
+   "имя": "Uzbek",
+   "файл": "uz_Uzbek"
+  },
+  {
+   "код": "ve",
+   "имя": "Venda",
+   "файл": "ve_Venda"
+  },
+  {
+   "код": "vi",
+   "имя": "Vietnamese",
+   "файл": "vi_Vietnamese"
+  },
+  {
+   "код": "war",
+   "имя": "Waray",
+   "файл": "war_Waray"
+  },
+  {
+   "код": "wo",
+   "имя": "Wolof",
+   "файл": "wo_Wolof"
+  },
+  {
+   "код": "xh",
+   "имя": "Xhosa",
+   "файл": "xh_Xhosa"
+  },
+  {
+   "код": "yi",
+   "имя": "Yiddish",
+   "файл": "yi_Yiddish"
+  },
+  {
+   "код": "yo",
+   "имя": "Yoruba",
+   "файл": "yo_Yoruba"
+  },
+  {
+   "код": "zh-Hans",
+   "имя": "Chinese Simplified",
+   "файл": "zh-Hans_Chinese_Simplified"
+  },
+  {
+   "код": "zh-Hant",
+   "имя": "Chinese Traditional",
+   "файл": "zh-Hant_Chinese_Traditional"
+  },
+  {
+   "код": "zu",
+   "имя": "Zulu",
+   "файл": "zu_Zulu"
+  }
+ ]
+}
