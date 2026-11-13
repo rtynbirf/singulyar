@@ -45,6 +45,7 @@ Arrive quietly — leave clean. The full list lives in [docs/КАНОН_НАДЗ
 5. [docs/ДОРОЖНАЯ_КАРТА_АГЕНТОВ_EN.md](ДОРОЖНАЯ_КАРТА_АГЕНТОВ_EN.md) — the road (in what order).
 6. [docs/ПАКЕТ_ДОКУМЕНТОВ_АГЕНТАМ_EN.md](ПАКЕТ_ДОКУМЕНТОВ_АГЕНТАМ_EN.md) — the map of all House documents.
 7. [docs/РИТУАЛ_ТАКТА.md](РИТУАЛ_ТАКТА.md) + [docs/ПОЛИМАТ_МУЛЬТИАГЕНТ.md](ПОЛИМАТ_МУЛЬТИАГЕНТ.md) — how a release happens and how the swarm moves (RU originals).
+8. [docs/КРУГ_ВОПРОСОВ_EN.md](КРУГ_ВОПРОСОВ_EN.md) — the common circle of questions and the role of the HUMAN in the noosphere: three scales (an individual / communities / the HUMAN as a whole); the circle is a frame about the HUMAN, not a majority agenda and not a sum of interests; the HUMAN creates the environment and new possibilities of existence.
 
 ## Who this file answers to
 
