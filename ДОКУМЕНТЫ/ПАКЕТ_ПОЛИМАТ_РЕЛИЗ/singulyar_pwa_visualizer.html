@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>СИНГУЛЯР · PWA WebGL Аудио-Аттрактор Компонент</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#09090b">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background: #09090b; font-family: system-ui, -apple-system, sans-serif; color: #f4f4f5; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        canvas { width: 100%; height: 100%; display: block; }
+        .overlay-ui { position: absolute; z-index: 10; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+        .card { background: rgba(18, 18, 22, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 12px; padding: 16px 20px; pointer-events: auto; }
+        .title { font-size: 1.1rem; font-weight: 700; color: #ffd700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+        .subtitle { font-size: 0.8rem; color: #a1a1aa; }
+        .controls { display: flex; gap: 10px; margin-top: 12px; }
+        button { background: #ffd700; color: #09090b; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+        button:hover { background: #f59e0b; }
+        .metrics { font-family: monospace; font-size: 0.8rem; color: #e4e4e7; line-height: 1.6; margin-top: 8px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="gl-canvas"></canvas>
+    </div>
+
+    <div class="overlay-ui">
+        <div class="card">
+            <div class="title">СИНГУЛЯР · ДВЕРЬ ·18 (АУДИО-АТТРАКТОР)</div>
+            <div class="subtitle">PWA WebGL Модуль Связывания с Аудиопотоком Караоке</div>
+            <div class="controls">
+                <button id="btn-audio">ВКЛЮЧИТЬ АУДИО-СИНХРОНИЗАЦИЮ</button>
+                <button id="btn-mesh" style="background: #27272a; color: #f4f4f5;">AIR-GAP MESH</button>
+            </div>
+            <div class="metrics" id="metrics-panel">
+                Статус: <span class="badge">OFFLINE READY</span><br>
+                Частотный спектр: <span id="val-fft">0 Hz</span><br>
+                Фазовый вектор (Takens 3D): <span id="val-vector">[0.00, 0.00, 0.00]</span><br>
+                Энтропия сигнала: <span id="val-entropy">0.0000</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="singulyar_omnibus_core_v2026.js"></script>
+    <script>
+        // PWA Service Worker Installer
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW reg fail:', err));
+            });
+        }
+
+        // WebGL & WebAudio Integration
+        const canvas = document.getElementById('gl-canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const omnibus = new SingulyarOmnibusCore(18);
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth * window.devicePixelRatio;
+            canvas.height = window.innerHeight * window.devicePixelRatio;
+            if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Shaders
+        const vsSource = `
+            attribute vec3 aPosition;
+            uniform mat4 uMatrix;
+            uniform float uTime;
+            varying vec3 vColor;
+            void main() {
+                gl_Position = uMatrix * vec4(aPosition, 1.0);
+                gl_PointSize = 3.5;
+                vColor = vec3(0.98, 0.84, 0.0) + 0.3 * sin(aPosition + uTime);
+            }
+        `;
+        const fsSource = `
+            precision mediump float;
+            varying vec3 vColor;
+            void main() {
+                gl_FragColor = vec4(vColor, 0.9);
+            }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+        const program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+
+        const aPosition = gl.getAttribLocation(program, 'aPosition');
+        const uMatrix = gl.getUniformLocation(program, 'uMatrix');
+        const uTime = gl.getUniformLocation(program, 'uTime');
+
+        // Points Buffer
+        const pointCount = 1500;
+        const positions = new Float32Array(pointCount * 3);
+        const buffer = gl.createBuffer();
+
+        // WebAudio Analyzer Setup
+        let audioCtx, analyzer, dataArray;
+        let isAudioActive = false;
+
+        document.getElementById('btn-audio').addEventListener('click', async () => {
+            if (isAudioActive) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const source = audioCtx.createMediaStreamSource(stream);
+                analyzer = audioCtx.createAnalyser();
+                analyzer.fftSize = 256;
+                source.connect(analyzer);
+                dataArray = new Uint8Array(analyzer.frequencyBinCount);
+                isAudioActive = true;
+                document.getElementById('btn-audio').innerText = "АУДИО-СИНХРОНИЗАЦИЯ АКТИВНА";
+                document.getElementById('btn-audio').style.background = "#10b981";
+            } catch (err) {
+                alert("Ошибка доступа к микрофону/аудиопотоку: " + err.message);
+            }
+        });
+
+        let angleY = 0;
+        function render(time) {
+            time *= 0.001;
+            angleY += 0.008;
+
+            let audioImpulse = 0;
+            if (isAudioActive && analyzer) {
+                analyzer.getByteFrequencyData(dataArray);
+                let sum = 0;
+                for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+                audioImpulse = sum / (dataArray.length * 255);
+            }
+
+            const state = omnibus.step(audioImpulse * 5.0);
+
+            document.getElementById('val-fft').innerText = (audioImpulse * 44100 / 2).toFixed(0) + " Hz";
+            document.getElementById('val-vector').innerText = `[${state.attractor3D.join(', ')}]`;
+            document.getElementById('val-entropy').innerText = state.entropyVal;
+
+            // Generate Lorenz-Takens trajectory points
+            let x = 0.1, y = 0.0, z = 0.0;
+            const dt = 0.01;
+            const sigma = 10.0 + audioImpulse * 15.0;
+            const rho = 28.0;
+            const beta = 8.0 / 3.0;
+
+            for (let i = 0; i < pointCount; i++) {
+                const dx = sigma * (y - x);
+                const dy = x * (rho - z) - y;
+                const dz = x * y - beta * z;
+                x += dx * dt;
+                y += dy * dt;
+                z += dz * dt;
+
+                positions[i * 3] = x * 0.035;
+                positions[i * 3 + 1] = y * 0.035;
+                positions[i * 3 + 2] = (z - 25) * 0.035;
+            }
+
+            gl.clearColor(0.035, 0.035, 0.043, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            gl.enable(gl.DEPTH_TEST);
+
+            gl.useProgram(program);
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
+            gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(aPosition);
+
+            // Simple MVP matrix
+            const cos = Math.cos(angleY), sin = Math.sin(angleY);
+            const matrix = new Float32Array([
+                cos, 0, -sin, 0,
+                0, 1, 0, 0,
+                sin, 0, cos, 0,
+                0, 0, 0, 1
+            ]);
+            gl.uniformMatrix4fv(uMatrix, false, matrix);
+            gl.uniform1f(uTime, time);
+
+            gl.drawArrays(gl.POINTS, 0, pointCount);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>
