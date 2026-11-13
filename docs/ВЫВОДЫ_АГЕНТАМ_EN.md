@@ -6,6 +6,7 @@
 > **Source:** the «ЛКГ-1 + ПРАВДА-2» campaign and its tails (2026-11-09…10): rumu commits `b2d5f47` → `abd3ee7` → `0247fa1`, cell-swarm pins `015a4814` → `0786b7c`, foreign (parallel) moves `3b178e1` (W1) and `200c0f6` (wave ×9).
 > **The lesson formula:** error → root → fix → guard. The guard is what makes a repetition either impossible or loud.
 > RU original (source of truth): [ВЫВОДЫ_АГЕНТАМ.md](ВЫВОДЫ_АГЕНТАМ.md).
+> ◈ **The frame of service:** the common circle of questions and the role of the HUMAN in the noosphere — [КРУГ_ВОПРОСОВ_EN.md](КРУГ_ВОПРОСОВ_EN.md). The HUMAN creates the environment and new possibilities of existence; an agent is a tool of that role, not its source (THE HUMAN DECIDES).
 
 ## Why this register exists (the double purpose)
 
