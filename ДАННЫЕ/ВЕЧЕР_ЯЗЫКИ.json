@@ -1,5 +1,5 @@
 {
- "документ": "ВЕЧЕР · языки флагмана «Когда теряем» (rWpYxmFjm9g): маппинг код языка → файл перевода дома. Сгенерирован из перечня файлов ДАННЫЕ/синхрон_кс1/флагман_157_языков/srt/ ветки rumu 2026-11-13 (один факт — одно место; машина порядок не пересортировывает — закон I-12).",
+ "документ": "ВЕЧЕР · языки флагмана «Когда теряем» (rWpYxmFjm9g): маппинг код языка → файл перевода дома. Сгенерирован из перечня файлов ДАННЫЕ/синхрон_кс1/флагман_157_языков/srt/ ветки rumu 2026-11-13 (один факт — одно место; машина порядок не пересортировывает — закон I-12). «файл» — полное имя файла с расширением .json (латка живой поверки: генератор срезал расширение при разборе — вечер честно получил 404 и перечислил отказ, не смолчал).",
  "источник": "перечень файлов ветки rumu, 2026-11-13, 157 переводов флагмана",
  "песня": "rWpYxmFjm9g",
  "путь": "ДАННЫЕ/синхрон_кс1/флагман_157_языков/srt/",
@@ -8,792 +8,792 @@
   {
    "код": "ru-orig",
    "имя": "Russian Original",
-   "файл": "ru-orig_Russian_Original",
+   "файл": "ru-orig_Russian_Original.json",
    "канон": true
   },
   {
    "код": "ru",
    "имя": "РУССКИЙ",
-   "файл": "ru_Russian",
+   "файл": "ru_Russian.json",
    "канон": true
   },
   {
    "код": "sr",
    "имя": "СЕРБСКИЙ",
-   "файл": "sr_Serbian",
+   "файл": "sr_Serbian.json",
    "канон": true
   },
   {
    "код": "kk",
    "имя": "КАЗАХСКИЙ",
-   "файл": "kk_Kazakh",
+   "файл": "kk_Kazakh.json",
    "канон": true
   },
   {
    "код": "de",
    "имя": "НЕМЕЦКИЙ",
-   "файл": "de_German",
+   "файл": "de_German.json",
    "канон": true
   },
   {
    "код": "aa",
    "имя": "Afar",
-   "файл": "aa_Afar"
+   "файл": "aa_Afar.json"
   },
   {
    "код": "ab",
    "имя": "Abkhazian",
-   "файл": "ab_Abkhazian"
+   "файл": "ab_Abkhazian.json"
   },
   {
    "код": "af",
    "имя": "Afrikaans",
-   "файл": "af_Afrikaans"
+   "файл": "af_Afrikaans.json"
   },
   {
    "код": "ak",
    "имя": "Akan",
-   "файл": "ak_Akan"
+   "файл": "ak_Akan.json"
   },
   {
    "код": "am",
    "имя": "Amharic",
-   "файл": "am_Amharic"
+   "файл": "am_Amharic.json"
   },
   {
    "код": "ar",
    "имя": "Arabic",
-   "файл": "ar_Arabic"
+   "файл": "ar_Arabic.json"
   },
   {
    "код": "as",
    "имя": "Assamese",
-   "файл": "as_Assamese"
+   "файл": "as_Assamese.json"
   },
   {
    "код": "ay",
    "имя": "Aymara",
-   "файл": "ay_Aymara"
+   "файл": "ay_Aymara.json"
   },
   {
    "код": "az",
    "имя": "Azerbaijani",
-   "файл": "az_Azerbaijani"
+   "файл": "az_Azerbaijani.json"
   },
   {
    "код": "ba",
    "имя": "Bashkir",
-   "файл": "ba_Bashkir"
+   "файл": "ba_Bashkir.json"
   },
   {
    "код": "be",
    "имя": "Belarusian",
-   "файл": "be_Belarusian"
+   "файл": "be_Belarusian.json"
   },
   {
    "код": "bg",
    "имя": "Bulgarian",
-   "файл": "bg_Bulgarian"
+   "файл": "bg_Bulgarian.json"
   },
   {
    "код": "bho",
    "имя": "Bhojpuri",
-   "файл": "bho_Bhojpuri"
+   "файл": "bho_Bhojpuri.json"
   },
   {
    "код": "bn",
    "имя": "Bangla",
-   "файл": "bn_Bangla"
+   "файл": "bn_Bangla.json"
   },
   {
    "код": "bo",
    "имя": "Tibetan",
-   "файл": "bo_Tibetan"
+   "файл": "bo_Tibetan.json"
   },
   {
    "код": "br",
    "имя": "Breton",
-   "файл": "br_Breton"
+   "файл": "br_Breton.json"
   },
   {
    "код": "bs",
    "имя": "Bosnian",
-   "файл": "bs_Bosnian"
+   "файл": "bs_Bosnian.json"
   },
   {
    "код": "ca",
    "имя": "Catalan",
-   "файл": "ca_Catalan"
+   "файл": "ca_Catalan.json"
   },
   {
    "код": "ceb",
    "имя": "Cebuano",
-   "файл": "ceb_Cebuano"
+   "файл": "ceb_Cebuano.json"
   },
   {
    "код": "co",
    "имя": "Corsican",
-   "файл": "co_Corsican"
+   "файл": "co_Corsican.json"
   },
   {
    "код": "crs",
    "имя": "Seselwa Creole French",
-   "файл": "crs_Seselwa_Creole_French"
+   "файл": "crs_Seselwa_Creole_French.json"
   },
   {
    "код": "cs",
    "имя": "Czech",
-   "файл": "cs_Czech"
+   "файл": "cs_Czech.json"
   },
   {
    "код": "cy",
    "имя": "Welsh",
-   "файл": "cy_Welsh"
+   "файл": "cy_Welsh.json"
   },
   {
    "код": "da",
    "имя": "Danish",
-   "файл": "da_Danish"
+   "файл": "da_Danish.json"
   },
   {
    "код": "dv",
    "имя": "Divehi",
-   "файл": "dv_Divehi"
+   "файл": "dv_Divehi.json"
   },
   {
    "код": "dz",
    "имя": "Dzongkha",
-   "файл": "dz_Dzongkha"
+   "файл": "dz_Dzongkha.json"
   },
   {
    "код": "ee",
    "имя": "Ewe",
-   "файл": "ee_Ewe"
+   "файл": "ee_Ewe.json"
   },
   {
    "код": "el",
    "имя": "Greek",
-   "файл": "el_Greek"
+   "файл": "el_Greek.json"
   },
   {
    "код": "en",
    "имя": "English",
-   "файл": "en_English"
+   "файл": "en_English.json"
   },
   {
    "код": "eo",
    "имя": "Esperanto",
-   "файл": "eo_Esperanto"
+   "файл": "eo_Esperanto.json"
   },
   {
    "код": "es",
    "имя": "Spanish",
-   "файл": "es_Spanish"
+   "файл": "es_Spanish.json"
   },
   {
    "код": "et",
    "имя": "Estonian",
-   "файл": "et_Estonian"
+   "файл": "et_Estonian.json"
   },
   {
    "код": "eu",
    "имя": "Basque",
-   "файл": "eu_Basque"
+   "файл": "eu_Basque.json"
   },
   {
    "код": "fa",
    "имя": "Persian",
-   "файл": "fa_Persian"
+   "файл": "fa_Persian.json"
   },
   {
    "код": "fi",
    "имя": "Finnish",
-   "файл": "fi_Finnish"
+   "файл": "fi_Finnish.json"
   },
   {
    "код": "fil",
    "имя": "Filipino",
-   "файл": "fil_Filipino"
+   "файл": "fil_Filipino.json"
   },
   {
    "код": "fj",
    "имя": "Fijian",
-   "файл": "fj_Fijian"
+   "файл": "fj_Fijian.json"
   },
   {
    "код": "fo",
    "имя": "Faroese",
-   "файл": "fo_Faroese"
+   "файл": "fo_Faroese.json"
   },
   {
    "код": "fr",
    "имя": "French",
-   "файл": "fr_French"
+   "файл": "fr_French.json"
   },
   {
    "код": "fy",
    "имя": "Western Frisian",
-   "файл": "fy_Western_Frisian"
+   "файл": "fy_Western_Frisian.json"
   },
   {
    "код": "ga",
    "имя": "Irish",
-   "файл": "ga_Irish"
+   "файл": "ga_Irish.json"
   },
   {
    "код": "gaa",
    "имя": "Ga",
-   "файл": "gaa_Ga"
+   "файл": "gaa_Ga.json"
   },
   {
    "код": "gd",
    "имя": "Scottish Gaelic",
-   "файл": "gd_Scottish_Gaelic"
+   "файл": "gd_Scottish_Gaelic.json"
   },
   {
    "код": "gl",
    "имя": "Galician",
-   "файл": "gl_Galician"
+   "файл": "gl_Galician.json"
   },
   {
    "код": "gn",
    "имя": "Guarani",
-   "файл": "gn_Guarani"
+   "файл": "gn_Guarani.json"
   },
   {
    "код": "gu",
    "имя": "Gujarati",
-   "файл": "gu_Gujarati"
+   "файл": "gu_Gujarati.json"
   },
   {
    "код": "gv",
    "имя": "Manx",
-   "файл": "gv_Manx"
+   "файл": "gv_Manx.json"
   },
   {
    "код": "ha",
    "имя": "Hausa",
-   "файл": "ha_Hausa"
+   "файл": "ha_Hausa.json"
   },
   {
    "код": "haw",
    "имя": "Hawaiian",
-   "файл": "haw_Hawaiian"
+   "файл": "haw_Hawaiian.json"
   },
   {
    "код": "hi",
    "имя": "Hindi",
-   "файл": "hi_Hindi"
+   "файл": "hi_Hindi.json"
   },
   {
    "код": "hmn",
    "имя": "Hmong",
-   "файл": "hmn_Hmong"
+   "файл": "hmn_Hmong.json"
   },
   {
    "код": "hr",
    "имя": "Croatian",
-   "файл": "hr_Croatian"
+   "файл": "hr_Croatian.json"
   },
   {
    "код": "ht",
    "имя": "Haitian Creole",
-   "файл": "ht_Haitian_Creole"
+   "файл": "ht_Haitian_Creole.json"
   },
   {
    "код": "hu",
    "имя": "Hungarian",
-   "файл": "hu_Hungarian"
+   "файл": "hu_Hungarian.json"
   },
   {
    "код": "hy",
    "имя": "Armenian",
-   "файл": "hy_Armenian"
+   "файл": "hy_Armenian.json"
   },
   {
    "код": "id",
    "имя": "Indonesian",
-   "файл": "id_Indonesian"
+   "файл": "id_Indonesian.json"
   },
   {
    "код": "ig",
    "имя": "Igbo",
-   "файл": "ig_Igbo"
+   "файл": "ig_Igbo.json"
   },
   {
    "код": "is",
    "имя": "Icelandic",
-   "файл": "is_Icelandic"
+   "файл": "is_Icelandic.json"
   },
   {
    "код": "it",
    "имя": "Italian",
-   "файл": "it_Italian"
+   "файл": "it_Italian.json"
   },
   {
    "код": "iu",
    "имя": "Inuktitut",
-   "файл": "iu_Inuktitut"
+   "файл": "iu_Inuktitut.json"
   },
   {
    "код": "iw",
    "имя": "Hebrew",
-   "файл": "iw_Hebrew"
+   "файл": "iw_Hebrew.json"
   },
   {
    "код": "ja",
    "имя": "Japanese",
-   "файл": "ja_Japanese"
+   "файл": "ja_Japanese.json"
   },
   {
    "код": "jv",
    "имя": "Javanese",
-   "файл": "jv_Javanese"
+   "файл": "jv_Javanese.json"
   },
   {
    "код": "ka",
    "имя": "Georgian",
-   "файл": "ka_Georgian"
+   "файл": "ka_Georgian.json"
   },
   {
    "код": "kha",
    "имя": "Khasi",
-   "файл": "kha_Khasi"
+   "файл": "kha_Khasi.json"
   },
   {
    "код": "kl",
    "имя": "Kalaallisut",
-   "файл": "kl_Kalaallisut"
+   "файл": "kl_Kalaallisut.json"
   },
   {
    "код": "km",
    "имя": "Khmer",
-   "файл": "km_Khmer"
+   "файл": "km_Khmer.json"
   },
   {
    "код": "kn",
    "имя": "Kannada",
-   "файл": "kn_Kannada"
+   "файл": "kn_Kannada.json"
   },
   {
    "код": "ko",
    "имя": "Korean",
-   "файл": "ko_Korean"
+   "файл": "ko_Korean.json"
   },
   {
    "код": "kri",
    "имя": "Krio",
-   "файл": "kri_Krio"
+   "файл": "kri_Krio.json"
   },
   {
    "код": "ku",
    "имя": "Kurdish",
-   "файл": "ku_Kurdish"
+   "файл": "ku_Kurdish.json"
   },
   {
    "код": "ky",
    "имя": "Kyrgyz",
-   "файл": "ky_Kyrgyz"
+   "файл": "ky_Kyrgyz.json"
   },
   {
    "код": "la",
    "имя": "Latin",
-   "файл": "la_Latin"
+   "файл": "la_Latin.json"
   },
   {
    "код": "lb",
    "имя": "Luxembourgish",
-   "файл": "lb_Luxembourgish"
+   "файл": "lb_Luxembourgish.json"
   },
   {
    "код": "lg",
    "имя": "Ganda",
-   "файл": "lg_Ganda"
+   "файл": "lg_Ganda.json"
   },
   {
    "код": "ln",
    "имя": "Lingala",
-   "файл": "ln_Lingala"
+   "файл": "ln_Lingala.json"
   },
   {
    "код": "lo",
    "имя": "Lao",
-   "файл": "lo_Lao"
+   "файл": "lo_Lao.json"
   },
   {
    "код": "lt",
    "имя": "Lithuanian",
-   "файл": "lt_Lithuanian"
+   "файл": "lt_Lithuanian.json"
   },
   {
    "код": "lua",
    "имя": "Luba Lulua",
-   "файл": "lua_Luba_Lulua"
+   "файл": "lua_Luba_Lulua.json"
   },
   {
    "код": "luo",
    "имя": "Luo",
-   "файл": "luo_Luo"
+   "файл": "luo_Luo.json"
   },
   {
    "код": "lv",
    "имя": "Latvian",
-   "файл": "lv_Latvian"
+   "файл": "lv_Latvian.json"
   },
   {
    "код": "mfe",
    "имя": "Morisyen",
-   "файл": "mfe_Morisyen"
+   "файл": "mfe_Morisyen.json"
   },
   {
    "код": "mg",
    "имя": "Malagasy",
-   "файл": "mg_Malagasy"
+   "файл": "mg_Malagasy.json"
   },
   {
    "код": "mi",
    "имя": "M ori",
-   "файл": "mi_M_ori"
+   "файл": "mi_M_ori.json"
   },
   {
    "код": "mk",
    "имя": "Macedonian",
-   "файл": "mk_Macedonian"
+   "файл": "mk_Macedonian.json"
   },
   {
    "код": "ml",
    "имя": "Malayalam",
-   "файл": "ml_Malayalam"
+   "файл": "ml_Malayalam.json"
   },
   {
    "код": "mn",
    "имя": "Mongolian",
-   "файл": "mn_Mongolian"
+   "файл": "mn_Mongolian.json"
   },
   {
    "код": "mr",
    "имя": "Marathi",
-   "файл": "mr_Marathi"
+   "файл": "mr_Marathi.json"
   },
   {
    "код": "ms",
    "имя": "Malay",
-   "файл": "ms_Malay"
+   "файл": "ms_Malay.json"
   },
   {
    "код": "mt",
    "имя": "Maltese",
-   "файл": "mt_Maltese"
+   "файл": "mt_Maltese.json"
   },
   {
    "код": "my",
    "имя": "Burmese",
-   "файл": "my_Burmese"
+   "файл": "my_Burmese.json"
   },
   {
    "код": "ne",
    "имя": "Nepali",
-   "файл": "ne_Nepali"
+   "файл": "ne_Nepali.json"
   },
   {
    "код": "new",
    "имя": "Newari",
-   "файл": "new_Newari"
+   "файл": "new_Newari.json"
   },
   {
    "код": "nl",
    "имя": "Dutch",
-   "файл": "nl_Dutch"
+   "файл": "nl_Dutch.json"
   },
   {
    "код": "no",
    "имя": "Norwegian",
-   "файл": "no_Norwegian"
+   "файл": "no_Norwegian.json"
   },
   {
    "код": "nso",
    "имя": "Northern Sotho",
-   "файл": "nso_Northern_Sotho"
+   "файл": "nso_Northern_Sotho.json"
   },
   {
    "код": "ny",
    "имя": "Nyanja",
-   "файл": "ny_Nyanja"
+   "файл": "ny_Nyanja.json"
   },
   {
    "код": "oc",
    "имя": "Occitan",
-   "файл": "oc_Occitan"
+   "файл": "oc_Occitan.json"
   },
   {
    "код": "om",
    "имя": "Oromo",
-   "файл": "om_Oromo"
+   "файл": "om_Oromo.json"
   },
   {
    "код": "or",
    "имя": "Odia",
-   "файл": "or_Odia"
+   "файл": "or_Odia.json"
   },
   {
    "код": "os",
    "имя": "Ossetic",
-   "файл": "os_Ossetic"
+   "файл": "os_Ossetic.json"
   },
   {
    "код": "pa",
    "имя": "Punjabi",
-   "файл": "pa_Punjabi"
+   "файл": "pa_Punjabi.json"
   },
   {
    "код": "pam",
    "имя": "Pampanga",
-   "файл": "pam_Pampanga"
+   "файл": "pam_Pampanga.json"
   },
   {
    "код": "pl",
    "имя": "Polish",
-   "файл": "pl_Polish"
+   "файл": "pl_Polish.json"
   },
   {
    "код": "ps",
    "имя": "Pashto",
-   "файл": "ps_Pashto"
+   "файл": "ps_Pashto.json"
   },
   {
    "код": "pt",
    "имя": "Portuguese",
-   "файл": "pt_Portuguese"
+   "файл": "pt_Portuguese.json"
   },
   {
    "код": "pt-PT",
    "имя": "Portuguese Portugal",
-   "файл": "pt-PT_Portuguese_Portugal"
+   "файл": "pt-PT_Portuguese_Portugal.json"
   },
   {
    "код": "qu",
    "имя": "Quechua",
-   "файл": "qu_Quechua"
+   "файл": "qu_Quechua.json"
   },
   {
    "код": "rn",
    "имя": "Rundi",
-   "файл": "rn_Rundi"
+   "файл": "rn_Rundi.json"
   },
   {
    "код": "ro",
    "имя": "Romanian",
-   "файл": "ro_Romanian"
+   "файл": "ro_Romanian.json"
   },
   {
    "код": "rw",
    "имя": "Kinyarwanda",
-   "файл": "rw_Kinyarwanda"
+   "файл": "rw_Kinyarwanda.json"
   },
   {
    "код": "sa",
    "имя": "Sanskrit",
-   "файл": "sa_Sanskrit"
+   "файл": "sa_Sanskrit.json"
   },
   {
    "код": "sd",
    "имя": "Sindhi",
-   "файл": "sd_Sindhi"
+   "файл": "sd_Sindhi.json"
   },
   {
    "код": "sg",
    "имя": "Sango",
-   "файл": "sg_Sango"
+   "файл": "sg_Sango.json"
   },
   {
    "код": "si",
    "имя": "Sinhala",
-   "файл": "si_Sinhala"
+   "файл": "si_Sinhala.json"
   },
   {
    "код": "sk",
    "имя": "Slovak",
-   "файл": "sk_Slovak"
+   "файл": "sk_Slovak.json"
   },
   {
    "код": "sl",
    "имя": "Slovenian",
-   "файл": "sl_Slovenian"
+   "файл": "sl_Slovenian.json"
   },
   {
    "код": "sm",
    "имя": "Samoan",
-   "файл": "sm_Samoan"
+   "файл": "sm_Samoan.json"
   },
   {
    "код": "sn",
    "имя": "Shona",
-   "файл": "sn_Shona"
+   "файл": "sn_Shona.json"
   },
   {
    "код": "so",
    "имя": "Somali",
-   "файл": "so_Somali"
+   "файл": "so_Somali.json"
   },
   {
    "код": "sq",
    "имя": "Albanian",
-   "файл": "sq_Albanian"
+   "файл": "sq_Albanian.json"
   },
   {
    "код": "ss",
    "имя": "Swati",
-   "файл": "ss_Swati"
+   "файл": "ss_Swati.json"
   },
   {
    "код": "st",
    "имя": "Southern Sotho",
-   "файл": "st_Southern_Sotho"
+   "файл": "st_Southern_Sotho.json"
   },
   {
    "код": "su",
    "имя": "Sundanese",
-   "файл": "su_Sundanese"
+   "файл": "su_Sundanese.json"
   },
   {
    "код": "sv",
    "имя": "Swedish",
-   "файл": "sv_Swedish"
+   "файл": "sv_Swedish.json"
   },
   {
    "код": "sw",
    "имя": "Swahili",
-   "файл": "sw_Swahili"
+   "файл": "sw_Swahili.json"
   },
   {
    "код": "ta",
    "имя": "Tamil",
-   "файл": "ta_Tamil"
+   "файл": "ta_Tamil.json"
   },
   {
    "код": "te",
    "имя": "Telugu",
-   "файл": "te_Telugu"
+   "файл": "te_Telugu.json"
   },
   {
    "код": "tg",
    "имя": "Tajik",
-   "файл": "tg_Tajik"
+   "файл": "tg_Tajik.json"
   },
   {
    "код": "th",
    "имя": "Thai",
-   "файл": "th_Thai"
+   "файл": "th_Thai.json"
   },
   {
    "код": "ti",
    "имя": "Tigrinya",
-   "файл": "ti_Tigrinya"
+   "файл": "ti_Tigrinya.json"
   },
   {
    "код": "tk",
    "имя": "Turkmen",
-   "файл": "tk_Turkmen"
+   "файл": "tk_Turkmen.json"
   },
   {
    "код": "tn",
    "имя": "Tswana",
-   "файл": "tn_Tswana"
+   "файл": "tn_Tswana.json"
   },
   {
    "код": "to",
    "имя": "Tongan",
-   "файл": "to_Tongan"
+   "файл": "to_Tongan.json"
   },
   {
    "код": "tr",
    "имя": "Turkish",
-   "файл": "tr_Turkish"
+   "файл": "tr_Turkish.json"
   },
   {
    "код": "ts",
    "имя": "Tsonga",
-   "файл": "ts_Tsonga"
+   "файл": "ts_Tsonga.json"
   },
   {
    "код": "tt",
    "имя": "Tatar",
-   "файл": "tt_Tatar"
+   "файл": "tt_Tatar.json"
   },
   {
    "код": "tum",
    "имя": "Tumbuka",
-   "файл": "tum_Tumbuka"
+   "файл": "tum_Tumbuka.json"
   },
   {
    "код": "ug",
    "имя": "Uyghur",
-   "файл": "ug_Uyghur"
+   "файл": "ug_Uyghur.json"
   },
   {
    "код": "uk",
    "имя": "Ukrainian",
-   "файл": "uk_Ukrainian"
+   "файл": "uk_Ukrainian.json"
   },
   {
    "код": "ur",
    "имя": "Urdu",
-   "файл": "ur_Urdu"
+   "файл": "ur_Urdu.json"
   },
   {
    "код": "uz",
    "имя": "Uzbek",
-   "файл": "uz_Uzbek"
+   "файл": "uz_Uzbek.json"
   },
   {
    "код": "ve",
    "имя": "Venda",
-   "файл": "ve_Venda"
+   "файл": "ve_Venda.json"
   },
   {
    "код": "vi",
    "имя": "Vietnamese",
-   "файл": "vi_Vietnamese"
+   "файл": "vi_Vietnamese.json"
   },
   {
    "код": "war",
    "имя": "Waray",
-   "файл": "war_Waray"
+   "файл": "war_Waray.json"
   },
   {
    "код": "wo",
    "имя": "Wolof",
-   "файл": "wo_Wolof"
+   "файл": "wo_Wolof.json"
   },
   {
    "код": "xh",
    "имя": "Xhosa",
-   "файл": "xh_Xhosa"
+   "файл": "xh_Xhosa.json"
   },
   {
    "код": "yi",
    "имя": "Yiddish",
-   "файл": "yi_Yiddish"
+   "файл": "yi_Yiddish.json"
   },
   {
    "код": "yo",
    "имя": "Yoruba",
-   "файл": "yo_Yoruba"
+   "файл": "yo_Yoruba.json"
   },
   {
    "код": "zh-Hans",
    "имя": "Chinese Simplified",
-   "файл": "zh-Hans_Chinese_Simplified"
+   "файл": "zh-Hans_Chinese_Simplified.json"
   },
   {
    "код": "zh-Hant",
    "имя": "Chinese Traditional",
-   "файл": "zh-Hant_Chinese_Traditional"
+   "файл": "zh-Hant_Chinese_Traditional.json"
   },
   {
    "код": "zu",
    "имя": "Zulu",
-   "файл": "zu_Zulu"
+   "файл": "zu_Zulu.json"
   }
  ]
 }
