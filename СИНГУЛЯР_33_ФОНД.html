@@ -1336,6 +1336,14 @@ class HallP2P {
             время: Date.now()
           }));
         } catch (е) { /* приватный режим — цифра просто не задержится */ }
+        /* W3: факт разведки — в журнал внешних действий (у человека, не телеметрия):
+           живой узел + по дороге промолчавшие — честные состояния (ТЗ §3) */
+        try {
+          if (window.ВД && window.ВД.опр) {
+            window.ВД.опр(итог.узел, true, сатоГрупп(итог.сатоши) + ' сатоши');
+            for (var ри = 0; ри < отчёты.length; ри++) window.ВД.опр(отчёты[ри].split(':')[0], false, 'по дороге промолчал');
+          }
+        } catch (е) { /* журнал не встал — разведка живёт дальше */ }
         цепьПомнит();
       })
       .catch(function (ошибка) {
@@ -1343,6 +1351,10 @@ class HallP2P {
         под.textContent = 'цепь не ответила никому: ' + (ошибка && ошибка.message || 'неизвестно') +
           (отчёты.length ? ' · ' + отчёты.join('; ') : '') +
           '. Бесплатные узлы порой лимитируют (429) — попробуй ещё раз или впиши свой узел.';
+        /* W3: все узлы промолчали — честные состояния в журнал */
+        try {
+          if (window.ВД && window.ВД.опр) for (var уи = 0; уи < узлы.length; уи++) window.ВД.опр(узлы[уи].имя, false, 'цепь не ответила');
+        } catch (е) { /* журнал не встал — честная подпись выше уже у человека */ }
       })
       .then(function () {}, function () {})
       .then(function () {
@@ -1694,7 +1706,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v245</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.75</span> «<span data-реестр="такт">ВСТРЕЧАЕТ ФЛАГМАН</span>» · кэш <span data-реестр="кэш">v246</span></div>
 <script defer src="js/crdt-core.js"></script>
 <script>
 /* ПВ5 (такт v11.36): Merkle-сверка общака на js/crdt-core.js (канон crdt-ядро/0.1) + QR-кадр канона qr-token.
@@ -1774,6 +1786,23 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 }());
 </script>
+<!-- W3 «ВНЕШНИЕ ДЕЙСТВИЯ»: панель «внешние провайдеры» — живые состояния узлов цепи
+     (живое/отказано — факт разведки в журнале устройства) + журнал (ТЗ §3, F-012) -->
+<div id="вд-панель" aria-label="Состояния внешних узлов цепи и журнал устройства"></div>
+<script defer src="js/внешние-действия.js"></script>
+<script>
+(function () {
+  function старт() {
+    try {
+      if (window.ВД && typeof window.ВД.панель === 'function') {
+        var эл = document.getElementById('вд-панель');
+        if (эл && !эл.dataset.вд) window.ВД.панель(эл, { дверь: '·33' });
+      }
+    } catch (е) { /* панель не обязана жить */ }
+  }
+  if (window.ВД) старт();
+  else { try { window.addEventListener('вд-готов', старт, { once: true }); } catch (е) {} setTimeout(старт, 400); }
+}());</script>
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
 </body>
 </html>

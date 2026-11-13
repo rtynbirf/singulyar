@@ -376,6 +376,23 @@ try{
 </div>
 </details>
 </nav>
+<!-- W3 «ВНЕШНИЕ ДЕЙСТВИЯ»: живые бейджи каналов К1–К4 из реестра статусов (F-011)
+     + журнал устройства; статусы VERIFIED схемы выше — летопись живой поверки -->
+<div id="вд-панель" aria-label="Состояния каналов вывода и журнал устройства"></div>
+<script defer src="js/внешние-действия.js"></script>
+<script>
+(function () {
+  function старт() {
+    try {
+      if (window.ВД && typeof window.ВД.панель === 'function') {
+        var эл = document.getElementById('вд-панель');
+        if (эл && !эл.dataset.вд) window.ВД.панель(эл, { дверь: '·48' });
+      }
+    } catch (е) { /* панель не обязана жить */ }
+  }
+  if (window.ВД) старт();
+  else { try { window.addEventListener('вд-готов', старт, { once: true }); } catch (е) {} setTimeout(старт, 400); }
+}());</script>
 <script defer src="js/sg-registry.js"></script>
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
 </body>
