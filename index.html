@@ -34,7 +34,7 @@
 <meta name="description" content="СИНГУЛЯР — офлайн-дом караоке RUVSON: автономные двери, фонд песен, мультиязычный корпус. Ядро поёт без сети, AI живёт на устройстве, хозяин проекта — человек. Скачал — открыл — поёшь.">
 <meta name="theme-color" content="#000000">
 <!--СНГ:ПРАВДА-НАЧАЛО-->
-<meta name="sng-build" content="v1.60.0 · согласовано с ГОТОВНОСТЬ.manifest.json · такт v11.76 «ПОВЕРКА» · кэш v249 · 2026-11-14 · SHA деплоя: meta sng-deploy-sha (ставит pages.yml)">
+<meta name="sng-build" content="v1.60.0 · согласовано с ГОТОВНОСТЬ.manifest.json · такт v11.76 «ПОВЕРКА» · кэш v250 · 2026-11-14 · SHA деплоя: meta sng-deploy-sha (ставит pages.yml)">
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 <!--СНГ:SHA-ДЕПЛОЯ-МЕСТО--> <!-- pages.yml заменяет комментарий на <meta name="sng-deploy-sha" content="SHA"> при выкладке (F-019) -->
 <meta name="color-scheme" content="dark">
@@ -252,7 +252,7 @@ html.уд-тихо{scroll-behavior:auto}
 <link rel="preload" href="./fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin/>
 </head>
 <body>
-<h1 class="sr-only">СИНГУЛЯР — ДОМ дверей</h1>
+<!-- ЛАТКА С176 (H-4, FIXED_VERIFIED): дубль sr-only h1 у тела снят — полное русское имя лица вшито sr-only внутрь титула кристалла ниже, один h1 на лицо (слово владельца «дизайн-решение за тобой», исполнено ПИД1 2026-11-14; поверка: проба хаба h1=1, имя «СИНГУЛЯР — ДОМ дверей · SINGULYAR») -->
 <div class="singulyar-canvas-bg" aria-hidden="true"></div>
 <div class="sng-beam" aria-hidden="true"></div>
 <main>
@@ -337,7 +337,7 @@ html.уд-тихо{scroll-behavior:auto}
     </button>
     <p class="тихо-подсказка" id="статусОсколков" aria-live="polite">ион сам рассыпается на 52 двери · касание — собрать · ещё касание — рассыпать</p>
     <div id="осколкиСлой" class="осколки-слой" hidden></div>
-    <h1 class="sng-crystal-title" style="margin-top:6px">SINGULYAR</h1>
+    <h1 class="sng-crystal-title" style="margin-top:6px"><span class="sr-only">СИНГУЛЯР — ДОМ дверей · </span>SINGULYAR</h1>
     <p class="aio-sub">Ambient Intent Organism</p>
     <div class="подчерк" aria-hidden="true"><i></i></div>
     <p class="motto">Смысл один. Представление — твоё.</p>
@@ -1070,7 +1070,7 @@ if(location.hash==='#sg65doors'){ setTimeout(sg65раскрыть, 700); window.
 </script>
 
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A9099; /* С136: серебро дома — контраст ≥4.5 (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em"><!--СНГ:ПРАВДА-НАЧАЛО-->
-ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v249</span> · сборка <span data-реестр="деплой">SHA при выкладке</span>
+ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v250</span> · сборка <span data-реестр="деплой">SHA при выкладке</span>
 <!--СНГ:ПРАВДА-КОНЕЦ-->
 <!--СНГ:КРУГ-ВОПРОСОВ:НАЧАЛО--><nav aria-label="круг вопросов" style="margin-top:10px;text-align:center;font-size:0.72rem;letter-spacing:.18em;text-transform:uppercase">◈ <a href="./СИНГУЛЯР_35_ВОПРОСЫ.html" style="color:#B08D57;text-decoration:none">круг вопросов</a> · <a href="./docs/КРУГ_ВОПРОСОВ.md" style="color:#B08D57;text-decoration:none">роль ЧЕЛОВЕКА в ноосфере</a></nav><!--СНГ:КРУГ-ВОПРОСОВ:КОНЕЦ-->
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->

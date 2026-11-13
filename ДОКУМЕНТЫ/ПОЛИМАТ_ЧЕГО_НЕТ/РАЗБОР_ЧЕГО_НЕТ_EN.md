@@ -3,6 +3,7 @@
 > **Status:** ✅ Synthesis adopted · **Date:** 2026-11-14 · **Carrier wave:** W3 «External actions»
 > **THIS IS NOT A GUIDELINE — A SYNTHESIS OF A COLLEAGUE'S REVIEW (another LLM, outside the swarm) BY THE OWNER'S WORD** «we must integrate and synthesize everything that suits us». Adoption follows the «COLLEAGUE PACKAGE: DOOR ZERO» precedent — in full, with a review against the house laws; executing individual rows requires the owner's word only.
 > RU source: [РАЗБОР_ЧЕГО_НЕТ.md](РАЗБОР_ЧЕГО_НЕТ.md) (Swarm Directive 1: EN mirrors).
+> **PID1 verdict on the §3 candidates (2026-11-14, the owner's word «they await your word, PID1»):** [ВЕРДИКТ_ПИД1_ЧЕГО_НЕТ_EN.md](ВЕРДИКТ_ПИД1_ЧЕГО_НЕТ_EN.md) — №1 closed in the House by W4 (the cell-swarm cell tail — the owner's right); №2–№7 accepted into the W7 wave map «The live layer of revision»; revocation — a separate line (append-only).
 
 ## 0. Frame (adopted from the review — the grain is there, not the vein)
 

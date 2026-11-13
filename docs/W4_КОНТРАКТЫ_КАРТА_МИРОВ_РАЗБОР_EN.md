@@ -72,7 +72,7 @@ None of the six is executed without a word — THE HUMAN DECIDES; W4 executed on
 
 ## 7. Open questions of the wave (taken honestly, not silently)
 
-1. **Live verification ЭП-06 (screenshots)** — for the release wave (the W2/W3 precedent; the owner's word of 2026-11-14); the guard holds the byte canon.
+1. **Live verification ЭП-06 (screenshots)** — for the release wave (the W2/W3 precedent; the owner's word of 2026-11-14); the guard holds the byte canon. → **closed by такт v11.76 «ПОВЕРКА» (2026-11-14): 6 frames + the checklist in СКРИНШОТЫ/ЭП-06_ПОВЕРКА/.**
 2. **The Pages pointer to the tombstone** — `source.branch: main` in the Pages API with the live pages.yml workflow from rumu: the site lives honestly, but the pointer is ADR-0006's legacy; re-targeting is the owner's/truth shop's word.
 3. **The cell-swarm cell** — агент-сообщение/0.1 (gap №1 in the swarm's part) lives in a foreign repo: the right and the term are the owner's word.
 4. **Releases as supply worlds** — outside the worlds registry (one fact — one place: the Release API + CHANGELOG); if the owner wants them in the map — a separate row.
@@ -86,7 +86,7 @@ None of the six is executed without a word — THE HUMAN DECIDES; W4 executed on
 - [x] The house passport gained the «worlds» block — README + ·37 + data/миры.json (probes 4, 6).
 - [x] Without permission — only the drift map: no branches merged; the drift block is honest (probe 4).
 - [x] The owner's word written in everywhere: the circle-of-questions doctrine — canon + 4 faces + maps (probe 6).
-- [ ] Live verification ЭП-06 with a checklist and screenshots — for the release wave (open question 1).
+- [x] Live verification ЭП-06 with a checklist and screenshots — **closed by такт v11.76 «ПОВЕРКА»** (6 frames + the OK/FAIL checklist in СКРИНШОТЫ/ЭП-06_ПОВЕРКА/; marked by latka С176 on the owner's order «ТАМ ВСЁ БЬЁТСЯ?»).
 - [x] Chronicle/CHANGELOG/WORK_REPORT/ДОРОЖНАЯ_КАРТА_АГЕНТОВ appended; the W4 line crossed out by the wave.
 - [x] EN mirrors of the key documents — by this wave (report ×2, doctrine ×2).
 - [x] The `sw15.js` edit = `S15_CACHE` bump v247; media outside the pre-cache; LKG not erased.
