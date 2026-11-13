@@ -11,6 +11,7 @@ The SINGULAR · LADOM house — the offline karaoke universe of RUVSON: a PWA wi
 |---|---|---|---|
 | [СИНТЕЗ.md](СИНТЕЗ.md) | synthesis | the house at a glance: laws, structure, rhythm, knowledge map, state, road | everyone, quick entry |
 | [СМЫСЛ_ПРОТОКОЛ](../ДАННЫЕ/смысл_200/СМЫСЛ_ПРОТОКОЛ.md) | protocol | semantic translation: 3 levels, reverse translation, 10 traps — teach МАЛЫШ (v10.63) | translators and МАЛЫШ |
+| [КРУГ_ВОПРОСОВ.md](КРУГ_ВОПРОСОВ.md) | doctrine | the general circle of questions and the Human's role in the noosphere: three scales (individual/communities/the Human as a whole), the open circle — mechanisms for discovering new questions, three directions (understand/discover/create), the Human creates an environment and new possibilities of existence (v11.75/W4, the owner's word); Russian canon | everyone |
 | [СИНТЕЗ_EN.md](СИНТЕЗ_EN.md) | translation | «SYNTHESIS — the house at a glance»: master synthesis in English — the first accepted translation of the documentation (v10.62 «ЖЕСТ») | everyone, entry without Russian |
 | [ТЗ.md](ТЗ.md) | living spec | user stories with acceptance criteria — what the house promises to a human | resident, developer |
 | [ДОРОЖНАЯ_КАРТА.md](ДОРОЖНАЯ_КАРТА.md) | plan | **THE UNIFIED ROADMAP**: all maps of the house merged (registry of 17 maps + the whole open front by lines: 🚧 📋 👤 🌐) | everyone |
