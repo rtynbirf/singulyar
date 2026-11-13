@@ -1,3 +1,12 @@
+# ЛАТКА ТЫЛОВ CI 2026-11-14: развилка build→deploy (официальная схема GitHub Pages).
+# Было: одна job'а «deploy» (upload+deploy вместе) — любой перезапуск упавшей job'ы
+# (rerun-failed-jobs) заново исполнял шаг Upload и создавал ВТОРОЙ артефакт github-pages,
+# deploy-pages валился «Multiple artifacts named "github-pages"… Artifact count is 2»
+# (улики: attempts 2 и 3 прогона 43468427047; heal удалением артефактов проиграл гонку
+# на 1 секунду — список артефактов тугой). Стало: шаг Deploy живёт в отдельной job'е
+# needs: build — перезапуск деплоя больше не пересоздаёт артефакт.
+# upload-pages-artifact v5 (пин fc324d3, обёртка upload-artifact v7) входа overwrite
+# не даёт — развилка job'ов = структурный фикс, а не ручное лечение.
 name: Deploy СИНГУЛЯР РУМУ to Pages
 
 on:
@@ -15,10 +24,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    name: Сборка выкладки (артефакт github-pages)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -63,6 +70,15 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: '.'
+
+  deploy:
+    name: Деплой выкладки на прод
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
