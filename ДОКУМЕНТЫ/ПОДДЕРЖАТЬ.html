@@ -484,6 +484,22 @@ document.querySelector("#goals").innerHTML = FUNDING_MIRROR.goals.map(g =>
 </details>
 </nav>
 <script defer src="../js/sg-registry.js"></script>
+<!-- W3 «ВНЕШНИЕ ДЕЙСТВИЯ»: статус кассы — из живого реестра статусов (F-012: «рельсы не подключены» — законное состояние), журнал устройства -->
+<div id="вд-панель" aria-label="Состояние кассы поддержки и журнал устройства"></div>
+<script defer src="../js/внешние-действия.js"></script>
+<script>
+(function () {
+  function старт() {
+    try {
+      if (window.ВД && typeof window.ВД.панель === 'function') {
+        var эл = document.getElementById('вд-панель');
+        if (эл && !эл.dataset.вд) window.ВД.панель(эл, { дверь: '·49' });
+      }
+    } catch (е) { /* панель не обязана жить */ }
+  }
+  if (window.ВД) старт();
+  else { try { window.addEventListener('вд-готов', старт, { once: true }); } catch (е) {} setTimeout(старт, 400); }
+}());</script>
 <div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#5A6470;font:11.5px/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">41</span> дверь · <span data-реестр="песен">62</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.26</span> «<span data-реестр="такт">САЖЕНЦЫ</span>» · кэш <span data-реестр="кэш">v177</span></div>
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
 </body>
