@@ -1,0 +1,16 @@
+{
+  "name": "СИНГУЛЯР · Аудио-Аттрактор PWA",
+  "short_name": "СИНГУЛЯР PWA",
+  "description": "Суверенный PWA WebGL Аудио-Визуализатор Караоке-Экосистемы",
+  "start_url": "singulyar_pwa_visualizer.html",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "hidden_order_attractor.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СИНГУЛЯР · 3D Attractor WebGL Engine v2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #08080a;
+            color: #d4af37;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #canvas-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid #d4af37;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            pointer-events: auto;
+            max-width: 380px;
+        }
+        h1 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #fff; text-shadow: 0 0 8px #d4af37; }
+        p { font-size: 0.8rem; line-height: 1.4; color: #aaa; margin-bottom: 12px; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; font-size: 0.75rem; }
+        .stat-card { background: rgba(255,255,255,0.03); padding: 8px; border-left: 2px solid #d4af37; }
+        .stat-val { color: #fff; font-weight: bold; margin-top: 2px; }
+        .controls { margin-top: 15px; display: flex; gap: 10px; }
+        button {
+            background: #d4af37; color: #000; border: none; padding: 8px 12px; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        button:hover { background: #fff; box-shadow: 0 0 10px #d4af37; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="glcanvas"></canvas>
+        <div class="ui-overlay">
+            <h1>СИНГУЛЯР · 3D Аттрактор</h1>
+            <p>Визуализация непрерывного фазового пространства (Теорема Такенса) поверх интерьера 52 дверей.</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div>Фазовый Угол</div>
+                    <div class="stat-val" id="val-phase">0.00 rad</div>
+                </div>
+                <div class="stat-card">
+                    <div>Энтропия</div>
+                    <div class="stat-val" id="val-entropy">1.4215</div>
+                </div>
+                <div class="stat-card">
+                    <div>Топология</div>
+                    <div class="stat-val">3D Lorenz-Takens</div>
+                </div>
+                <div class="stat-card">
+                    <div>Статус Памяти</div>
+                    <div class="stat-val" style="color: #00ff88;">0x00 ZERO-COPY</div>
+                </div>
+            </div>
+            <div class="controls">
+                <button onclick="toggleRotation()">Вращение</button>
+                <button onclick="injectImpulse()">Впрыск Импульса</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('glcanvas');
+        const gl = canvas.getContext('webgl');
+
+        if (!gl) {
+            alert('WebGL не поддерживается браузером.');
+        }
+
+        // Setup Shaders
+        const vsSource = `
+            attribute vec3 aPosition;
+            attribute float aPhase;
+            uniform mat4 uModelViewMatrix;
+            uniform mat4 uProjectionMatrix;
+            varying float vPhase;
+            void main() {
+                vPhase = aPhase;
+                gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
+                gl_PointSize = 3.5;
+            }
+        `;
+
+        const fsSource = `
+            precision mediump float;
+            varying float vPhase;
+            void main() {
+                vec3 gold = vec3(0.83, 0.68, 0.21);
+                vec3 cyan = vec3(0.0, 0.9, 0.83);
+                vec3 color = mix(gold, cyan, sin(vPhase) * 0.5 + 0.5);
+                gl_FragColor = vec4(color, 0.85);
+            }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const vertShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fragShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+        const program = gl.createProgram();
+        gl.attachShader(program, vertShader);
+        gl.attachShader(program, fragShader);
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        // Generate Lorenz Attractor Points
+        const numPoints = 6000;
+        const positions = new Float32Array(numPoints * 3);
+        const phases = new Float32Array(numPoints);
+
+        let x = 0.1, y = 0.0, z = 0.0;
+        const dt = 0.008;
+        const sigma = 10.0, rho = 28.0, beta = 8.0 / 3.0;
+
+        for (let i = 0; i < numPoints; i++) {
+            let dx = sigma * (y - x);
+            let dy = x * (rho - z) - y;
+            let dz = x * y - beta * z;
+            x += dx * dt;
+            y += dy * dt;
+            z += dz * dt;
+
+            positions[i * 3] = x * 0.05;
+            positions[i * 3 + 1] = y * 0.05;
+            positions[i * 3 + 2] = (z - 25) * 0.05;
+            phases[i] = i * 0.01;
+        }
+
+        const posBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+        const aPosition = gl.getAttribLocation(program, 'aPosition');
+        gl.enableVertexAttribArray(aPosition);
+        gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, 0, 0);
+
+        const phaseBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, phaseBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, phases, gl.STATIC_DRAW);
+
+        const aPhase = gl.getAttribLocation(program, 'aPhase');
+        gl.enableVertexAttribArray(aPhase);
+        gl.vertexAttribPointer(aPhase, 1, gl.FLOAT, false, 0, 0);
+
+        const uModelViewMatrix = gl.getUniformLocation(program, 'uModelViewMatrix');
+        const uProjectionMatrix = gl.getUniformLocation(program, 'uProjectionMatrix');
+
+        function perspective(fov, aspect, near, far) {
+            const f = 1.0 / Math.tan(fov / 2);
+            const nf = 1.0 / (near - far);
+            return new Float32Array([
+                f / aspect, 0, 0, 0,
+                0, f, 0, 0,
+                0, 0, (far + near) * nf, -1,
+                0, 0, (2 * far * near) * nf, 0
+            ]);
+        }
+
+        let angle = 0;
+        let isRotating = true;
+
+        function toggleRotation() { isRotating = !isRotating; }
+        function injectImpulse() {
+            angle += 0.8;
+            document.getElementById('val-entropy').innerText = (Math.random() * 2 + 1).toFixed(4);
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        gl.enable(gl.DEPTH_TEST);
+        gl.clearColor(0.03, 0.03, 0.04, 1.0);
+
+        function render() {
+            if (isRotating) angle += 0.008;
+
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+            const aspect = canvas.width / canvas.height;
+            const pMatrix = perspective(Math.PI / 4, aspect, 0.1, 100.0);
+
+            const cosA = Math.cos(angle);
+            const sinA = Math.sin(angle);
+
+            const mvMatrix = new Float32Array([
+                cosA, 0, -sinA, 0,
+                0, 1, 0, 0,
+                sinA, 0, cosA, 0,
+                0, 0, -2.5, 1
+            ]);
+
+            gl.uniformMatrix4fv(uProjectionMatrix, false, pMatrix);
+            gl.uniformMatrix4fv(uModelViewMatrix, false, mvMatrix);
+
+            gl.drawArrays(gl.POINTS, 0, numPoints);
+
+            document.getElementById('val-phase').innerText = (angle % (2 * Math.PI)).toFixed(2) + ' rad';
+            requestAnimationFrame(render);
+        }
+
+        render();
+    </script>
+</body>
+</html>
