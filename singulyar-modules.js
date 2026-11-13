@@ -2069,13 +2069,24 @@ window.SNG.обновлениеДома = (function () {
 (function () {
   try {
     var осн = document.querySelector('main');
-    if (осн && !document.querySelector('.skip-link')) {
+    if (осн) {
       if (!осн.id) осн.id = 'main';
+      /* W5 «AT-матрица» (ТЗ §5): цель скипа фокусируема — без tabindex="-1" фокус
+         после клика остаётся на теле, и скип не срабатывает (WCAG 2.4.1, проба §2) */
+      if (осн.getAttribute('tabindex') === null) осн.setAttribute('tabindex', '-1');
+    }
+    if (осн && !document.querySelector('.skip-link')) {
       var скип = document.createElement('a');
       скип.className = 'skip-link';
       скип.href = '#' + осн.id;
       скип.textContent = 'Сразу к главному — пропустить навигацию';
       document.body.insertBefore(скип, document.body.firstChild);
+    }
+    /* W5: дверь со своим статическим скипом — его цель тоже фокусируема */
+    var свой = document.querySelector('.skip-link');
+    if (свой && свой.getAttribute('href') && свой.getAttribute('href').charAt(0) === '#') {
+      var цель = document.getElementById(свой.getAttribute('href').slice(1));
+      if (цель && цель.getAttribute('tabindex') === null) цель.setAttribute('tabindex', '-1');
     }
   } catch (e) { /* скип — шаг конвейера, не сцена: тихо и честно */ }
 })();
