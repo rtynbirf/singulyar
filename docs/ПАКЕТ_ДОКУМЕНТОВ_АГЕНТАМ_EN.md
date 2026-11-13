@@ -16,6 +16,7 @@
 | 6 | [docs/РИТУАЛ_ТАКТА.md](РИТУАЛ_ТАКТА.md) | the 8 release stages — the only way to change the House (RU) |
 | 7 | [docs/ПОЛИМАТ_МУЛЬТИАГЕНТ.md](ПОЛИМАТ_МУЛЬТИАГЕНТ.md) | the eight laws of the swarm: the key, directives, append-only, STOP-HORN (RU) |
 | 8 | [docs/ВЫВОДЫ_АГЕНТАМ_EN.md](ВЫВОДЫ_АГЕНТАМ_EN.md) | the lessons register of the ЛКГ-1+ПРАВДА-2 wave (error → root → fix → guard): some agents dare not repeat, others gain; read it before your first wave and after every mess |
+| 9 | [docs/КРУГ_ВОПРОСОВ_EN.md](КРУГ_ВОПРОСОВ_EN.md) | the frame of service: the common circle of questions — three scales (an individual / communities / the HUMAN as a whole), the circle is open, three directions (understand the existing / discover the possible / create what does not yet exist); the role of the HUMAN in the noosphere |
 
 ## The map of truth sources (short)
 
