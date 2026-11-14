@@ -407,6 +407,16 @@ body{background:#0A0A0C !important}
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
+<style id="sng-lafka-rezonans">
+/* ── ЛАТКА v1.69.1 (2026-11-14, С178) · одна правда: ни один блок не перекрывает другой ──
+   Слово владельца: «ЭТО НОРМ? ОДИН БЛОК ПЕРЕКРЫВАЕТ ДРУГОЙ!!!». Полка песен поднимается
+   над плеером (плеер z-30 сидит на bottom 3.4rem и накрывал полку на ~34px);
+   скип-ссылка невидима до фокуса (ядро дома ставит её, канон стилей несёт страница). */
+#songs{bottom:calc(11.2rem + var(--sab))}
+@media(max-width:640px){#songs{bottom:calc(15rem + var(--sab))}}
+.skip-link{position:absolute;left:-100vw;top:0;z-index:2147483100;padding:10px 16px;border-radius:12px;background:#0c0a08;color:#F2C464;border:1px solid rgba(176,141,87,.5);text-decoration:none}
+.skip-link:focus,.skip-link:focus-visible{left:10px;top:10px}
+</style>
 </head>
 <body>
 <h1 style="position:absolute;left:-9999px;top:0">РЕЗОНАНС · Когда теряем — 157 голосов</h1>
@@ -1708,7 +1718,7 @@ function дескрипторАудио(){
   var cue=(audio.dataset&&audio.dataset.cue)||'';
   var чуж=(audio.dataset&&audio.dataset.foreign==='1');
   if(!чуж||!cue)return{тип:'флаг',t:'Когда теряем',артист:'OutShadow feat RUVSON'};
-  if(cue.slice(0,3)==='yt:')return{тип:'канал',id:cue};
+  if(cue.slice(0,3)==='yt:'){var вып=cue.slice(3),назв='';try{var кк=(window.КАНТР||[]);for(var ki=0;ki<кк.length;ki++){if(кк[ki].yt===вып){назв=кк[ki].t;break;}}}catch(e){}return{тип:'канал',id:cue,yt:вып,t:назв||вып,артист:'RUVSON'};}
   var сп=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS);
   for(var i=0;i<сп.length;i++){if(сп[i].id===cue)return{тип:'фонд',id:cue,t:сп[i].t,артист:'RUVSON'};}
   return{тип:'фонд',id:cue,t:cue,артист:'RUVSON'};
@@ -1741,10 +1751,10 @@ function панельРежим(){
   if(!нп)return;
   if(нп.hidden)нп.hidden=false;
   document.getElementById('нпТитул').textContent=d.t||'…';
-  document.getElementById('нпПод').textContent=d.тип==='канал'?'RUVSON · канал · '+датаКрасиво(d.дата):'RUVSON · звук фонда';
+  document.getElementById('нпПод').textContent=d.тип==='канал'?'RUVSON · канал'+(d.дата?' · '+датаКрасиво(d.дата):''):'RUVSON · звук фонда';
   document.getElementById('нпЧестно').textContent=d.тип==='канал'?'видео с канала — кадр и звук честные':'текст готовится · нить 157 голосов подождёт флагман';
   var с=document.getElementById('нпСвязь');
-  if(d.тип==='канал'){с.hidden=false;с.href=КАНАЛ_ССЫЛ+(d.yt||'');}
+  if(d.тип==='канал'&&d.yt){с.hidden=false;с.href=КАНАЛ_ССЫЛ+d.yt;}
   else{с.hidden=true;}
   тТитул.textContent=d.t||'Когда теряем';
   тАртист.textContent=d.тип==='канал'?'RUVSON · канал':'RUVSON · звук фонда';
@@ -1930,11 +1940,28 @@ window.__каналСик=function(доля){ if(!плеер)return; try{ var d=
 window.__каналГром=function(д){ if(!плеер)return false; try{плеер.setVolume(Math.round(Math.max(0,Math.min(1,д))*100));}catch(e){} return true; };
 window.__каналСтоп=function(){
   if(плеер){try{плеер.stopVideo();}catch(e){}}
+  if(рамка&&фолбэкКадр){рамка.innerHTML='';}
   текКан=null;
   if(тикер){clearInterval(тикер);тикер=null;}
   if(рамка)рамка.hidden=true;
   иконкаИгр(false);
 };
+var фолбэкКадр=false;
+function прямойКадр(tr){
+  /* ЛАТКА v1.69.1 (С178): человека не выбрасываем на YouTube — там реклама канала,
+     а не сам релиз. Не встал API-плеер → включаем прямой кадр релиза в той же рамке.
+     Ссылка «смотреть на YouTube» остаётся в панели — по желанию человека. */
+  if(!рамка||!tr||!tr.yt)return;
+  try{
+    фолбэкКадр=true; готово=true; текКан=tr;
+    рамка.hidden=false;
+    if(ждём)ждём.hidden=true;
+    var тит=String(tr.t||'релиз канала').replace(/"/g,'&quot;');
+    рамка.innerHTML='<iframe src="https://www.youtube.com/embed/'+tr.yt+'?autoplay=1&playsinline=1&rel=0" style="width:100%;height:100%;border:0;display:block" title="'+тит+' — RUVSON" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    иконкаИгр(true);
+    try{toast('плеер канала не встал · включил прямой кадр релиза');}catch(e){}
+  }catch(e){}
+}
 window.__каналФолбэк=function(tr){
   if(!готово||!плеер)return false;
   if(!tr||!tr.id||tr.flag||tr.yt||tr.id===ФЛАГМАН)return false;
@@ -1946,6 +1973,7 @@ window.__каналПлей=function(tr){
   /* правда прежде техники: панель/бар/шкаф узнают трек сразу, даже если API ещё грузится */
   огласить({тип:'канал',id:'yt:'+tr.yt,t:tr.t,артист:'RUVSON',yt:tr.yt,дата:tr.дата||''});
   обеспечитьПлеер();
+  if(фолбэкКадр){прямойКадр(tr);return;}
   if(готово&&плеер){
     текКан=tr;
     if(рамка)рамка.hidden=false;
@@ -1961,11 +1989,7 @@ window.__каналПлей=function(tr){
   if(элОбл&&tr.yt){try{элОбл.style.background='url(https://i.ytimg.com/vi/'+tr.yt+'/hqdefault.jpg) center/cover no-repeat';}catch(e){}}
   clearTimeout(страж);
   страж=setTimeout(function(){
-    if(!готово){
-      if(рамка)рамка.hidden=true;
-      try{window.open(КАНАЛ_ССЫЛ+tr.yt,'_blank','noopener');}catch(e){}
-      try{toast('плеер канала не встал · открыл релиз на YouTube');}catch(e){}
-    }
+    if(!готово){ прямойКадр(tr); }
   },15000);
 };
 function обеспечитьПлеер(){
