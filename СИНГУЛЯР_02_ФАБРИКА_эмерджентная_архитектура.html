@@ -359,6 +359,11 @@ body > nav[aria-label="нить дома"]{position:fixed !important;left:222px 
 body > footer[data-forge="hand"]{position:fixed !important;left:222px !important;right:auto !important;top:auto !important;bottom:46px !important;margin:0 !important;padding:6px 12px !important;text-align:left !important;border:1px solid rgba(217,164,65,.4) !important;border-radius:999px !important;background:rgba(10,10,12,.86) !important;z-index:40 !important;font-size:11px !important;box-shadow:none !important;white-space:nowrap !important;overflow:hidden !important;max-width:44vw;clear:none !important}
 .skip-link{position:absolute !important;left:-100vw !important;top:0 !important;z-index:2147483100 !important;padding:10px 16px;border-radius:12px;background:#0c0a08;color:#F2C464;border:1px solid rgba(176,141,87,.5);text-decoration:none}
 .skip-link:focus,.skip-link:focus-visible{left:10px !important;top:10px !important}
+/* мобильный (≤640px): стрип несёт всю навигацию (хаб/двери/нить/карта) — дубли-хвосты прячутся */
+@media(max-width:640px){
+  body > nav[aria-label="нить дома"], body > footer[data-forge="hand"]{display:none !important}
+  #main{padding-bottom:24px}
+}
 </style>
 </head>
 <body>
