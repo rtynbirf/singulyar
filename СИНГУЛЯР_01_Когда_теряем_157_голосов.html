@@ -1844,7 +1844,7 @@ function encodeWAV(chL,chR,sr){
   for(let i=0;i<n;i++){v.setInt16(44+i*4,clamp(chL[i],-1,1)*32767,true);v.setInt16(46+i*4,clamp(chR[i],-1,1)*32767,true)}
   return new Blob([b],{type:'audio/wav'});
 }
-/* FLAGMAN-02: лестница фонда дома для TRAX — как в ·32: голос → чистый-минус → синтез */
+/* FLAGMAN-02: лестница фонда дома для TRAX — как в ·32: сам трек (голос автора) → фолбэк-минус → синтез; латка С180 «МИНУС — САМ ТРЕК»: минус = сами треки, чистый-минус остался только ступенью фолбэка */
 function traxFond(id){
   if(ownURL)return;
   const t=TRAX_BY[id]; if(!t)return;
@@ -3053,7 +3053,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
   });
 })();
 </script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v252</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="text-align:center;color:#8A93A0; /* такт v1.56.0: серо-стальное серебро — AA (было #5A6470) */font:.72rem/1.6 ui-monospace,Consolas,monospace;margin:18px 0 10px;letter-spacing:.02em">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> двери · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v253</span></div>
 <script src="./forge-hand.js" defer></script>
 <script src="assets/autoplay-fix.js" defer></script>
 </body>
