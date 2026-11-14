@@ -1434,10 +1434,19 @@ function updatePulse(){
     ]);
   }
   var vPct = c.pairs ? Math.round(100 * (c.valid) / c.pairs) : 0;
+  /* ЛАТКА С177 «ЧИСЛА ГОВОРЯТ ПРАВДУ» (слово владельца «НЕ СООТВЕТСТВУЕТ ЗАЯВЛЕННОЕ РЕАЛЬНОСТИ»):
+     рядом с вычисленным реестром ·15 — канон дома из data/versions.json (window.SG_РЕЕСТР,
+     «правда перечитывается» sg-registry). Два реестра, оба честны, каждое число подписано
+     источником; канон не зашит — если правды нет (офлайн), подпись остаётся прежней. */
+  function канонСчёт(ключ){
+    try { var р = window.SG_РЕЕСТР && window.SG_РЕЕСТР.счётчики; return (р && р[ключ] != null) ? String(р[ключ]) : null; }
+    catch(e){ return null; }
+  }
+  var канПесен = канонСчёт('песен'), канЯзыков = канонСчёт('языков');
   g.textContent = '';
-  g.appendChild(stat('песен в каталоге', c.songs, 'каталог канала', 100));
+  g.appendChild(stat('песен в каталоге', c.songs, канПесен != null && канПесен !== String(c.songs) ? 'реестр ·15 · каталог канала (versions.json): ' + канПесен : 'каталог канала', 100));
   g.appendChild(stat('языковых дорожек', c.pairs, 'строк: '+c.lines.toLocaleString('ru'), vPct, c.bad ? 'bad' : ''));
-  g.appendChild(stat('языков реально есть', c.langs, 'объединение по всем песням', 100));
+  g.appendChild(stat('языков реально есть', c.langs, канЯзыков != null && канЯзыков !== String(c.langs) ? 'реестр ·15 (объединение по всем песням) · флагманы по канону дома: ' + канЯзыков : 'объединение по всем песням', 100));
   g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
   g.appendChild(stat('происхождение', c.verified+' / '+c.machine+' / '+c.user, 'verified / machine / user', Math.round(100*c.verified/Math.max(1,c.pairs))));
   g.appendChild(stat('натуральных минусовок рядом', minusFoundCount() + ' / ' + c.songs, 'проб ./minus/чистый-минус/<id>.mp3 — лениво, по 12', Math.round(100*minusFoundCount()/c.songs), 'warn'));
@@ -1448,6 +1457,9 @@ function updatePulse(){
   });
   if (S15.boot.banner) return;
 }
+/* ЛАТКА С177: канон приезжает позже пакета (sg-registry — async) — карточки ПУЛЬСА перерисовываются
+   с подписанными числами канона; повторные события перерисовки безвредны (render идемпотентен). */
+try { window.addEventListener('sg-реестр-готов', function(){ try { updatePulse(); } catch(e){} }); } catch(e){}
 
 /* ── РЕЕСТР: матрица песня × язык (DOM-only) ── */
 function rebuildMatrix(){
@@ -3049,7 +3061,7 @@ function tryBoot(){
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">200</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v250</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v251</span></div>
 
 <script defer src="js/opfs-core.js"></script>
 <script defer src="js/wsola-core.js"></script>
