@@ -63,6 +63,36 @@
 
   var ctxs = [];
   window.SNG_APF_CTX = function (c) { if (c && ctxs.indexOf(c) < 0) ctxs.push(c); };
+  /* ЛАТКА С181 «АВТОПЛЕЙ ВЕЗДЕ» (2026-11-15, слово владельца «АВТОПЛЕЙ ПОЧЕМУ НЕ ВОСТАНОВЛЕН?»):
+     любой AudioContext дома дожимается по первому жесту — конструкторы перехвачены,
+     страницам и гостевым пакетам больше не нужно регистрировать контексты руками.
+     Сам контекст не создаём (ноль поведения по умолчанию — закон дома), только помним созданные. */
+  try {
+    var OrigAC = window.AudioContext;
+    if (typeof OrigAC === 'function' && !OrigAC.__sngPatched) {
+      var ПойманныйAC = function (опции) {
+        var c = new OrigAC(опции);
+        if (ctxs.indexOf(c) < 0) ctxs.push(c);
+        return c;
+      };
+      ПойманныйAC.prototype = OrigAC.prototype;
+      ПойманныйAC.__sngPatched = true;
+      window.AudioContext = ПойманныйAC;
+    }
+  } catch (e) {}
+  try {
+    var OrigWK = window.webkitAudioContext;
+    if (typeof OrigWK === 'function' && !OrigWK.__sngPatched) {
+      var ПойманныйWK = function (опции) {
+        var c = new OrigWK(опции);
+        if (ctxs.indexOf(c) < 0) ctxs.push(c);
+        return c;
+      };
+      ПойманныйWK.prototype = OrigWK.prototype;
+      ПойманныйWK.__sngPatched = true;
+      window.webkitAudioContext = ПойманныйWK;
+    }
+  } catch (e) {}
   function resumeCtxs() {
     ctxs.forEach(function (c) { try { if (c.state === 'suspended') c.resume(); } catch (e) {} });
     if (window.__СБОРНИК_КОНТЕКСТЫ) { try { window.__СБОРНИК_КОНТЕКСТЫ.forEach(function (c) { if (c && c.state === 'suspended') c.resume(); }); } catch (e) {} }
