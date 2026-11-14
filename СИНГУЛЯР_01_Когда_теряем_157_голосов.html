@@ -118,8 +118,8 @@ input,select{font:inherit}
 
 /* main */
 .main{grid-area:main;overflow-y:auto;overflow-x:hidden;position:relative;z-index:10;
-  padding-bottom:calc(96px + var(--sab))}
-@media(min-width:821px){.main{padding-left:var(--nav-w);padding-bottom:calc(78px + var(--sab))}}
+  padding-bottom:calc(150px + var(--sab))}   /* С178-латка: мобилка — таббар (≈60px) + плавающая панель (верх на ≈129px) — контент прокручивается целиком над ними */
+@media(min-width:821px){.main{padding-left:var(--nav-w);padding-bottom:calc(26px + var(--sab))}}
 .view{display:none;animation:vin .35s ease}
 .view.on{display:block}
 .view.langsview.on,.view.filesview.on{display:flex}
@@ -139,7 +139,7 @@ input,select{font:inherit}
   display:flex;align-items:center;gap:.7rem;padding:.5rem .7rem;border:1px solid var(--edge2);
   border-radius:14px;background:rgba(10,10,12,.96);backdrop-filter:blur(14px);
   box-shadow:0 10px 34px rgba(0,0,0,.55);cursor:pointer;transition:.2s}
-@media(min-width:821px){.mini{left:calc(var(--nav-w) + .75rem);bottom:.9rem;max-width:640px}}
+@media(min-width:821px){.mini{position:relative;left:0;right:0;bottom:auto;grid-area:bar;justify-self:start;margin:.45rem 0 .5rem calc(var(--nav-w) + .75rem);max-width:640px}   /* С178-латка «ПАНЕЛЬ В КАРКАСЕ» (слово владельца «УПРАВЛЕНИЕ ГДЕ НЕ РАБОТАЕТ?»: невидимый плавающий слой накрывал кнопки «спеть (рус)»/«english» и чипы карточки): мини-плеер — теперь строка каркаса, .main заканчивается НАД ним, контент никогда не заходит под панель */}
 .mini:hover{border-color:var(--glow)}
 .mini .cv{width:42px;height:42px;border-radius:8px;object-fit:cover;flex:0 0 auto}
 .mini .mt{min-width:0;display:flex;flex-direction:column;gap:.1rem;flex:1}
@@ -891,6 +891,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
           <span class="stat"><b>3 520</b> строк текста · 61 песня</span>
           <span class="stat"><b>3:51</b> хронометраж</span>
           <span class="stat"><b>0</b> внешних запросов</span>
+          <span class="stat"><b><a href="СИНГУЛЯР_35_ВОПРОСЫ.html#q-30" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(176,141,87,.6)">ноосфера</a></b> человек: понимать · обнаруживать · создавать</span>
         </div>
       </div>
     </div>
@@ -2423,6 +2424,21 @@ showView=function(name,opts){
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',move);
   else move();
+})();
+
+/* ── С178-латка «ПАНЕЛЬ В КАРКАСЕ» (слово владельца «УПРАВЛЕНИЕ ГДЕ НЕ РАБОТАЕТ?»):
+   мини-плеер переезжает внутрь #app — на десктопе он строка каркаса (grid-area:bar
+   в CSS), контент никогда не заходит под панель и её невидимая геометрия не съедает
+   клики кнопок карточки; на мобильном панель остаётся плавающей (position:fixed
+   выводит элемент из потока сетки) ── */
+(function(){
+  const dockMini=()=>{
+    const m=document.getElementById('mini');
+    const app=document.getElementById('app');
+    if(m&&app&&m.parentElement!==app)app.appendChild(m);
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',dockMini);
+  else dockMini();
 })();
 
 /* ── ФЛАГ: состояние фич ── */
