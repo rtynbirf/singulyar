@@ -375,7 +375,10 @@ window.S32_ЯДРО = (function () {
     try {
       var AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return null;
-      if (!контекст) контекст = new AC();
+      if (!контекст) {
+        контекст = new AC();
+        if (window.SNG_APF_CTX) window.SNG_APF_CTX(контекст); /* ЛАТКА С181 «АВТОПЛЕЙ ВЕЗДЕ»: граф сцены зарегистрирован у разблокировщика — первый жест дома его дожмёт, если браузер держал suspended */
+      }
       if (!полосы) {
         var ист = контекст.createMediaElementSource(аудиоГотово());
         анализатор = контекст.createAnalyser();
@@ -1042,7 +1045,8 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v253</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v254</span></div>
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
+<script src="assets/autoplay-fix.js" defer></script> <!-- ЛАТКА С181 «АВТОПЛЕЙ ВЕЗДЕ»: разблокировщик звука (политика автоплея браузера — не поломка дома) -->
 </body>
 </html>
