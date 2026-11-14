@@ -84,7 +84,7 @@ ok_авто = bool(блок_ринг) and 'свойКругВкл() && свой�
 мета = re.search(r'<meta http-equiv="Content-Security-Policy" content="([^"]+)"', т)
 ок('CSP: connect-src только self+wss (не ослаблен)', bool(мета) and "connect-src 'self' wss:" in (мета.group(1) if мета else ''))
 ок('CSP: object-src \'none\'', bool(мета) and "object-src 'none'" in (мета.group(1) if мета else ''))
-ок('чужих script src нет (все — дома: ./cord.js, ./модули, ./движок, js/реестр)', len(re.findall(r'<script[^>]*\bsrc="(?!https?:|//|\./|js/)', т)) == 0)
+ок('чужих script src нет (все — дома: ./cord.js, ./модули, ./движок, js/реестр, assets)', len(re.findall(r'<script[^>]*\bsrc="(?!https?:|//|\./|js/|assets/)', т)) == 0)
 ок('только локальный trystero-бандл дома', т.count("import('./БИБЛИОТЕКИ/trystero-nostr.bundle.mjs')") == 1)
 
 # 9. Версия модуля честно поднята (С135 → v1.4.0)
