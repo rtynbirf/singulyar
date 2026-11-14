@@ -998,7 +998,7 @@ function probeOne(vid){
   a.addEventListener('canplaythrough', function(){ if(!done){ done=true; clearTimeout(to); S15.minus[vid]='found'; S15.минусПуть[vid] = a.dataset.путь; updateSrcRow(); updatePulse(); } });
   a.addEventListener('error', function(){ if(!done){ if(a.dataset.фолбэк !== '1'){ a.dataset.фолбэк = '1'; a.dataset.путь = window.minusUrl(vid + '.mp3'); a.src = a.dataset.путь; return; } /* RUM23-7: безголосым мастерам v10.69 — их трек в корне minus/ (сам и есть натуральный минус) */ done=true; clearTimeout(to); S15.minus[vid]='no'; updateSrcRow(); } });
   a.preload = 'metadata';
-  a.dataset.путь = window.minusUrl('чистый-минус/' + vid + '.mp3'); /* RUM23-7 «ДИЕТА ДОМА»: минус-фонд = натуральные минусовки (вокал убран из оригинала) */
+  a.dataset.путь = window.minusUrl('голос/' + vid + '.mp3'); /* латка С180 «МИНУС — САМ ТРЕК» (слово владельца «ВСЕСТО МИНУСА ПОСТАВЬ МИНУСОМ САМИ ТРЕКИ=)»): фон «минус» = сам трек minus/голос/{id}.mp3 (дверь-0 same-origin, TH-AUDIO-45); натуральная минусовка (raw/jsDelivr) из выбора ушла */
   a.src = a.dataset.путь;
 }
 function minusFoundCount(){
@@ -1113,9 +1113,9 @@ function loadSourceFor(vid, mode, cb){
   if (mode === 'minus'){
     var st = S15.minus[vid];
     if (st !== 'found'){
-      return cb({code:'S15_AUDIO_NOT_FOUND', human:'натуральной минусовки нет (фонд: релиз, чистый-минус/'+vid+'.mp3). Возьми синтез-фон или положи файл.'});
+      return cb({code:'S15_AUDIO_NOT_FOUND', human:'самого трека нет (фонд: релиз, голос/'+vid+'.mp3). Возьми синтез-фон или положи файл.'}); /* латка С180 */
     }
-    finish(S15.минусПуть[vid] || window.minusUrl('чистый-минус/' + vid + '.mp3'), 'натуральная минусовка ' + (S15.минусПуть[vid] || window.minusUrl('чистый-минус/' + vid + '.mp3'))); /* RUM23-7: минус = вокал убран из оригинала */
+    finish(S15.минусПуть[vid] || window.minusUrl('голос/' + vid + '.mp3'), 'сам трек ' + (S15.минусПуть[vid] || window.minusUrl('голос/' + vid + '.mp3'))); /* латка С180: минус = сам трек (голос автора) */
   } else if (mode === 'file'){
     var f = $('#userAudio').files[0];
     if (!f) return cb({code:'S15_NO_FILE', human:'файл не выбран'});
@@ -1368,7 +1368,7 @@ function updateSrcRow(){
   row.textContent = '';
   var vid = $('#chSong').value;
   var defs = [
-    ['minus', 'натуральная минусовка ./minus/чистый-минус/'],
+    ['minus', 'сам трек ./minus/голос/'], /* латка С180 */
     ['file', 'свой файл'],
     ['idb', 'память (IndexedDB)'],
     ['synth', 'синтез-фон по генам'],
@@ -1393,7 +1393,7 @@ function updateHint(){
   var h = $('#chHint');
   var st = S15.minus[vid];
   var bits = [];
-  if (st === 'no' || st === 'unknown') bits.push('натуральной минусовки (фонд: релиз, чистый-минус/'+vid+'.mp3) рядом нет — включён честный фолбэк');
+  if (st === 'no' || st === 'unknown') bits.push('самого трека (фонд: релиз, голос/'+vid+'.mp3) рядом нет — включён честный фолбэк'); /* латка С180 */
   bits.push('синтез-фон строится из генов песни (сид = ID): тональность/лад/темп/прогрессия — это не оригинал');
   bits.push('минус можно положить в память: кнопка «свой файл» + «в память»');
   h.textContent = bits.join(' · ');
@@ -1449,7 +1449,7 @@ function updatePulse(){
   g.appendChild(stat('языков реально есть', c.langs, канЯзыков != null && канЯзыков !== String(c.langs) ? 'реестр ·15 (объединение по всем песням) · флагманы по канону дома: ' + канЯзыков : 'объединение по всем песням', 100));
   g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
   g.appendChild(stat('происхождение', c.verified+' / '+c.machine+' / '+c.user, 'verified / machine / user', Math.round(100*c.verified/Math.max(1,c.pairs))));
-  g.appendChild(stat('натуральных минусовок рядом', minusFoundCount() + ' / ' + c.songs, 'проб ./minus/чистый-минус/<id>.mp3 — лениво, по 12', Math.round(100*minusFoundCount()/c.songs), 'warn'));
+  g.appendChild(stat('треков фонда рядом', minusFoundCount() + ' / ' + c.songs, 'проб ./minus/голос/<id>.mp3 — лениво, по 12', Math.round(100*minusFoundCount()/c.songs), 'warn')); /* латка С180 */
   var hs = $('#hudStats');
   hs.textContent = '';
   [['песен', c.songs], ['дорожек', c.pairs], ['языков', c.langs], ['строк', c.lines.toLocaleString('ru')]].forEach(function(p){
@@ -1831,11 +1831,11 @@ function wire(){
   var idbBtn = el('button', {class:'srcChip', text:'текущий файл → в память', onclick: function(){
     var f = $('#userAudio').files[0];
     var vid = $('#chSong').value;
-    if (f){ idbPut(vid, f, function(err){ toast(err? 'память недоступна: '+err.message : 'минус '+songTitle(vid)+' сохранён в память'); updateSrcRow(); }); }
+    if (f){ idbPut(vid, f, function(err){ toast(err? 'память недоступна: '+err.message : 'трек '+songTitle(vid)+' сохранён в память'); updateSrcRow(); }); } /* латка С180 */
     else if (P15.vid && S15.minus[P15.vid] === 'found'){
-      fetch(S15.минусПуть[P15.vid] || (window.minusUrl('чистый-минус/' + P15.vid + '.mp3'))).then(function(r){ return r.blob(); })
-        .then(function(b){ return idbPut(P15.vid, b, function(e2){ toast(e2? 'память недоступна':'минус скопирован в память'); }); })
-        .catch(function(){ toast('минус теперь в релизе (кросс-домен не читается) — выбери файл вручную'); });
+      fetch(S15.минусПуть[P15.vid] || (window.minusUrl('голос/' + P15.vid + '.mp3'))).then(function(r){ return r.blob(); }) /* латка С180: минус = сам трек */
+        .then(function(b){ return idbPut(P15.vid, b, function(e2){ toast(e2? 'память недоступна':'трек скопирован в память'); }); }) /* латка С180 */
+        .catch(function(){ toast('трек теперь в релизе (кросс-домен не читается) — выбери файл вручную'); }); /* латка С180 */
     } else toast('сначала выбери файл или найденный минус');
   }});
   $('#srcRow').appendChild(fileBtn);
@@ -3061,7 +3061,7 @@ function tryBoot(){
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v252</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v253</span></div>
 
 <script defer src="js/opfs-core.js"></script>
 <script defer src="js/wsola-core.js"></script>
