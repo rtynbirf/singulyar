@@ -9,8 +9,7 @@ name: Pull Request Conformance Checks
 on:
   pull_request:
     branches:
-      - main
-      - master
+      - rumu  # Латка волны 8: main/master сняты перезапуском истории — цель pull-чеков теперь rumu
 
 permissions:
   contents: read
