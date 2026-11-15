@@ -29,11 +29,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - name: "Дверь-0 (TH-AUDIO-45): голосовой фонд same-origin — материализация ветки minus-fond в выкладку"
+      - name: "Дверь-0 (TH-AUDIO-45, усиление Н-4 ×30): голосовой фонд same-origin — материализация из релиза GOLOS-FOND-2026-11-15"
         run: |
-          git fetch --depth=1 origin minus-fond
-          git checkout FETCH_HEAD -- minus/голос
-          echo "голос-фонд в выкладке: $(find minus/голос -name '*.mp3' | wc -l) файлов, $(du -sh minus/голос | cut -f1)"
+          mkdir -p minus/голос
+          TAGF="GOLOS-FOND-2026-11-15"
+          if curl -fsSL -o /tmp/golos-sha.txt "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/__SHA256SUMS.txt"; then
+            # первичка: релизные ассеты (серверная загрузка, CORS не участвует); 2 попытки на файл
+            grep -v '__SHA256SUMS' /tmp/golos-sha.txt | while read -r sum name; do
+              f=$(basename "$name")
+              curl -fsSL -o "minus/голос/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f" \
+                || curl -fsSL -o "minus/голос/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f"
+            done
+            (cd minus/голос && sha256sum -c /tmp/golos-sha.txt > /tmp/sha-verify.log 2>&1) || { cat /tmp/sha-verify.log; exit 1; }
+            echo "голос-фонд из релиза $TAGF: $(find minus/голос -name '*.mp3' | wc -l) файлов, $(du -sh minus/голос | cut -f1), sha256 сверены"
+          elif git fetch --depth=1 origin minus-fond 2>/dev/null && git checkout FETCH_HEAD -- minus/голос 2>/dev/null; then
+            # фолбэк: ветка после Н-4 (голос выпарен) — честный graceful
+            echo "голос-фонд из ветки minus-fond (фолбэк): $(find minus/голос -name '*.mp3' | wc -l) файлов"
+          else
+            echo "голос-фонд недоступен: релиз и ветка не ответили — выкладка идёт без голос-фонда (лестница зала уведёт 404 в МИН)"
+          fi
       - name: "Дверь-дислокация (ЛАТКА 2026-11-11): живой замер релеев — материализация ветки данные-дислокация в выкладку"
         run: |
           if git fetch --depth=1 origin данные-дислокация 2>/dev/null; then
