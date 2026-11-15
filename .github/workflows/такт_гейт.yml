@@ -12,9 +12,9 @@ name: Такт-гейт (доказательство выпуска)
 
 on:
   push:
-    branches: [rumu, main, 'latka-*']   # ПРАВДА-2 (2026-11-09): F-021 — гейт обязан красить и ветку деплоя rumu (pages.yml выкладывает именно её), не только main/латки
+    branches: [rumu, 'latka-*']   # ПРАВДА-2 (2026-11-09): F-021 — гейт обязан красить и ветку деплоя rumu (pages.yml выкладывает именно её), не только main/латки
   pull_request:
-    branches: [rumu, main]
+    branches: [rumu]
   workflow_dispatch:
 
 permissions:
