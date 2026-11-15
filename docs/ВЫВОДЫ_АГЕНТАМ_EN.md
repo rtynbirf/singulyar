@@ -67,6 +67,28 @@ The register's rule: a lesson gets in if it (a) has already happened and cost ti
 - **Fix.** A red is either fixed or given a KNOWN_ISSUES entry (run, cause, tail owner) — both ways are honest. CANON §5: reds are interpreted through KNOWN_ISSUES, not through a fake green.
 - **Guard.** A red with an entry and an owner is a healthy House. A green bought by muting is an accident postponed and hidden.
 
+
+### L-11. An automat dies on the first transient and hides the HTTP code
+
+- **Error-temptation.** The `index/metrics.py` cron went red nine times since Nov 13 ("не удалось получить список репо", exit 1): the script broke on a single API failure and never printed the response code — no diagnosis from the log was possible. Dispatches in quiet windows stayed green.
+- **Root.** No retries on transients (429/secondary-403/5xx/network) and no `URLError` handling; the error is printed without its HTTP code — ПРАВДА-2 broken by the very tool meant to defend it. The swarm's own waves create transient windows; a cron firing into a wave window must be resilient.
+- **Fix.** Patch `99cd64b`: retries with 5/10/15 s backoff, honest "HTTP <code> (attempt N/M)" in the log; 401/404/422 return immediately (not transients). Dispatch proof: metrics #15 success.
+- **Guard.** Every house automat: retries on transients + visible HTTP code in the log; a silent death = a false red = a red tail (I-2). On a red cron — read the code first, treat second.
+
+### L-12. A guard's allowlist is checked against the fact, not against itself
+
+- **Error-temptation.** The Tak-gate red-flagged the page `СИНГУЛЯР_23_КРУГ.html`: the guard `test_круг_свой.py` demanded `script src` ⊆ {https?:, //, ./, js/} while the page had grown a home-grown `assets/autoplay-fix.js`. The temptation was "revert the page".
+- **Root.** The guard's allowlist did not know the new legitimate source: the list lagged behind the fact. The page is right — the file exists in the repo and the source is home-grown.
+- **Fix.** Guard patch `5029a9b` (`assets/` prefix in the list and in the label), verified by running the new regex against the live page: 0 violators; Tak-gate #302 success.
+- **Guard.** On a red allowlist guard — fact-check the failure first (does the file exist? is the source home-grown?), then patch: if the page is right, patch the guard (ПРАВДА-2 works both ways); if the page is guilty, patch the page.
+
+### L-13. Conservation in the same beat as the push paints fresh runs red — an artifact, not a defect
+
+- **Error-temptation.** The night of 2026-11-14: push waves 22:23/22:41/23:08 across ~26 repos plus repo freezing in the same beat → 50 "workflow run failed" notifications and red tails across the district. The temptation was to "fix the gates" — there is nothing to fix: the YAML is valid, the content is fine.
+- **Root.** A run created by a push is instantly marked `failure` when the repo is archived: its jobs stay `queued/None` forever (never executed, no logs, the run closes in ~3 s). Re-run and dispatch in an archived repo never execute (jobs are not created: total_count=0), DELETE of a run in an archive = 403.
+- **Fix.** Read the signature, do not silence it: queued jobs on a completed run = a conservation artifact. In live repos, red tails are cleared by re-runs (ruvson-lyrics Nov 12: re-run → success) or by an honest verdict; in archives — by verdicts and a notification sweep right after the freeze. Inbox swept: 50 → 0.
+- **Guard.** The conservation ritual ends with a sweeping beat: after the freeze — sweep notifications and issue verdicts on artifact runs until ЧИСТ (an amendment to Charter I-2/I-6: for archived repos a red tail of queued jobs is the ritual's trace, not the repo's sin).
+
 ## D. House laws that burned people
 
 ### L-7. A manual number on a House face = a red CI, not "a trifle in the markup"
@@ -113,6 +135,8 @@ The register's rule: a lesson gets in if it (a) has already happened and cost ti
 | Truth shop dry-run | `python3 ИНСТРУМЕНТЫ/цех_правды.py` before edits — it must say «ДРЕЙФ НЕТ» ("NO DRIFT") (idempotent) | L-7 |
 | Python archive rebuild | `zipfile` + a dirty-name filter + a list check | L-9 |
 | A seal in one comment | one comment in the live tracker with real SHAs; the draft updated BEFORE publishing | L-10 |
+| Retries with backoff + honest HTTP code | retries=3, 5/10/15 s; "HTTP <code> (attempt N/M)" in the log; 401/404/422 immediately | L-11 |
+| Sweep after conservation | freeze → notification sweep → verdicts on queued runs; re-runs only in live repos | L-13 |
 
 ## The pre-push checklist (learn it; it follows from the lessons)
 
@@ -125,10 +149,13 @@ The register's rule: a lesson gets in if it (a) has already happened and cost ti
 7. Edits of `sw15.js` — by the LKG law and with a generation bump; aggressive skipWaiting is forbidden (L-8).
 8. Artifacts are rebuilt with a proven tool, the name list is clean (L-9).
 9. The seal in one comment, real SHAs, no placeholders (L-10).
+10. Automats carry retries on transients and visible HTTP codes; after conservation — sweep artifact runs (L-11, L-13).
 
 ## The register's history
 
 | Date | Event |
 |---|---|
 | 2026-11-10 | Introduced by the owner's order; 10 lessons of the ЛКГ-1+ПРАВДА-2 campaign (environment, Git Data API, red runs, House laws, the clean trail) + the ready-made tricks table + the pre-push checklist |
-| 2026-11-10 | Tail: L-4 extended with a live case — the raw CDN window (300 s) painted two re-runs red after the pin chase; the rule "chase → ≈5 min pause → re-run" |
+| 2026-11-10 | Tail: L-4 extended with a live case
+| 2026-11-14 | L-4 live case: the pin chased the body patch `5029a9b` — cell-swarm commits `5c2b736` (11 cell pins to live HEADs) and `bd889e5` (the chase); the CDN pause honored, oracle #320 success |
+| 2026-11-14 | The night of the district's conservation: 40 repos archived, 26 live; 50 "failed" parsed as artifacts (L-13); the real reds fixed at the root (L-11 index, L-12 singulyar); lessons L-11…L-13 planted | — the raw CDN window (300 s) painted two re-runs red after the pin chase; the rule "chase → ≈5 min pause → re-run" |
