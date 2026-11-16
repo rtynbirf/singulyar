@@ -191,7 +191,7 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 .linNode.ext .pt{border-color:var(--warn)}
 
 /* ── тосты ── */
-#toasts{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;align-items:center}
+#toasts{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:91;display:flex;flex-direction:column;gap:8px;align-items:center} /* латка С187: тосты выше подкапота (оба были 90 — подкапот позже в DOM и закрывал низ тоста на 21px) */
 .toast{font-family:var(--mono);font-size:12px;background:#16191E;border:1px solid hsl(var(--hue) 32% 60% / .5);
   color:var(--tx);border-radius:10px;padding:9px 16px;animation:tin .25s ease}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}}
@@ -239,7 +239,7 @@ table#matrix{border-collapse:collapse;font-size:12.5px;min-width:100%}
 .ts-menu{position:relative}
 .ts-menu summary{list-style:none}
 .ts-menu summary::-webkit-details-marker{display:none}
-.ts-menu-body{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:300px;max-width:min(92vw,430px);max-height:min(70vh,520px);overflow:auto;background:#1A1D23;border:1px solid #35373B;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.ts-menu-body{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:300px;max-width:min(92vw,430px);max-height:min(50vh,360px);overflow:auto;background:#1A1D23;border:1px solid #35373B;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.5 /* латка С187: меню «настроить» больше не ныряет под подкапот на дефолтной прокрутке */)}
 .ts-mh{font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#B08D57;margin:10px 0 4px}
 .ts-mh:first-child{margin-top:0}
 .ts-mrow{display:flex;align-items:center;gap:9px;padding:4px 0;font-size:13.5px;color:#C8CCD2;cursor:pointer}
@@ -1447,13 +1447,13 @@ function updatePulse(){
   g.appendChild(stat('песен в каталоге', c.songs, канПесен != null && канПесен !== String(c.songs) ? 'реестр ·15 · каталог канала (versions.json): ' + канПесен : 'каталог канала', 100));
   g.appendChild(stat('языковых дорожек', c.pairs, 'строк: '+c.lines.toLocaleString('ru'), vPct, c.bad ? 'bad' : ''));
   g.appendChild(stat('языков реально есть', c.langs, канЯзыков != null && канЯзыков !== String(c.langs) ? 'реестр ·15 (объединение по всем песням) · флагманы по канону дома: ' + канЯзыков : 'объединение по всем песням', 100));
-  g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ':''), c.warn+' предупреждений · '+c.bad+' ошибок', vPct, c.warn?'warn':''));
+  g.appendChild(stat('таймлайны валидны', c.valid + (c.warn? ' ':''), 'предупреждений: '+c.warn+' · ошибок: '+c.bad /* латка С187: «2890 предупреждений» читалось слитно — слова вперёд */, vPct, c.warn?'warn':''));
   g.appendChild(stat('происхождение', c.verified+' / '+c.machine+' / '+c.user, 'verified / machine / user', Math.round(100*c.verified/Math.max(1,c.pairs))));
   g.appendChild(stat('треков фонда рядом', minusFoundCount() + ' / ' + c.songs, 'проб ./minus/голос/<id>.mp3 — лениво, по 12', Math.round(100*minusFoundCount()/c.songs), 'warn')); /* латка С180 */
   var hs = $('#hudStats');
   hs.textContent = '';
-  [['песен', c.songs], ['дорожек', c.pairs], ['языков', c.langs], ['строк', c.lines.toLocaleString('ru')]].forEach(function(p){
-    hs.appendChild(el('span', {}, [document.createTextNode(p[0]+' '), el('b', {text: String(p[1])})]));
+  [['песен', c.songs, канПесен], ['дорожек', c.pairs, null], ['языков', c.langs, канЯзыков], ['строк', c.lines.toLocaleString('ru'), null]].forEach(function(p){ /* латка С187: канон дома рядом с числом реестра — «61 и 64» больше не выглядят спором (С177 доведена до HUD) */
+    hs.appendChild(el('span', {}, [document.createTextNode(p[0]+' '), el('b', {text: String(p[1])})].concat((p[2] && p[2] !== String(p[1])) ? [el('small', {text: ' · кан. ' + p[2]})] : [])));
   });
   if (S15.boot.banner) return;
 }
@@ -2986,7 +2986,7 @@ function tryBoot(){
 </script>
 <script defer src="./singulyar-modules.js"></script>
 <style>
-#sg65nav{position:fixed;right:10px;bottom:10px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif}
+#sg65nav{position:fixed;right:10px;bottom:40px;z-index:2147483000;display:flex;gap:6px;align-items:center;font:600 12.5px/1.1 system-ui,-apple-system,'Segoe UI',sans-serif} /* латка С187: над подкапотом (29px), тело открытого подкапота больше не уходит под навигацию */
 #sg65nav .sg65a{display:inline-block;padding:9px 12px;border-radius:999px;border:1px solid rgba(176,141,87,.5);background:rgba(12,14,20,.86);color:#E8ECF2;text-decoration:none;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-user-select:none;user-select:none}
 #sg65nav .sg65a:hover,#sg65nav .sg65a:focus{border-color:#B08D57;color:#E8C89C;outline:none}
 #sg65nav summary{list-style:none}
@@ -3061,7 +3061,7 @@ function tryBoot(){
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v256</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">68</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v257</span></div>
 
 <script defer src="js/opfs-core.js"></script>
 <script defer src="js/wsola-core.js"></script>
