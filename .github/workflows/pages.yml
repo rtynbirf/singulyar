@@ -48,34 +48,28 @@ jobs:
           else
             echo "голос-фонд недоступен: релиз и ветка не ответили — выкладка идёт без голос-фонда (лестница зала уведёт 404 в МИН)"
           fi
-      - name: "Дверь-сборник (С186): Сборник same-origin — материализация 7 частей из релиза MINUS-FOND (паспорт дома: ДАННЫЕ/МИНУС_ФОНД_РЕЛИЗ.json)"
+      - name: "Дверь-сборник (С186, догонка: релиз MINUS-FOND вычищен — материализация 7 частей из ветки minus-fond, sha256 по паспорту дома ДАННЫЕ/МИНУС_ФОНД_РЕЛИЗ.json)"
         run: |
           mkdir -p minus/сборник
-          python3 - <<'PYEOF'
-          import json, hashlib, pathlib, urllib.request
+          if git fetch --depth=1 origin minus-fond 2>/dev/null && git checkout FETCH_HEAD -- minus/сборник 2>/dev/null; then
+            python3 - <<'PYEOF'
+          import json, hashlib, pathlib
           ман = json.load(open('ДАННЫЕ/МИНУС_ФОНД_РЕЛИЗ.json', encoding='utf-8'))
-          база = ман['url_база']
           сб = [x for x in ман['файлы'] if 'сборник' in x['было'] and x['было'].endswith('.mp3')]
           ок = 0
           for x in сб:
               п = pathlib.Path(x['было'])
               if not п.exists():
-                  для_загрузки = база + x['ассет']
-                  для_ошибки = None
-                  for попыт in range(2):
-                      try:
-                          urllib.request.urlretrieve(для_загрузки, п)
-                          break
-                      except Exception as е:
-                          для_ошибки = е
-                  else:
-                      print('релиз не ответил для %s: %s — Сборник играет с raw/jsDelivr (лестница С186 ловит зеркалом)' % (x['было'], для_ошибки))
-                      continue
+                  print('в ветке нет %s — часть играет с raw/jsDelivr (лестница С186 ловит зеркалом)' % x['было'])
+                  continue
               х = hashlib.sha256(п.read_bytes()).hexdigest()
               assert х == x['sha256'], 'sha256 не сошёлся: ' + x['было']
               ок += 1
           print('сборник same-origin: %d частей, sha256 сверены по паспорту дома' % ок)
           PYEOF
+          else
+            echo "ветка minus-fond не ответила — Сборник играет с raw/jsDelivr (лестница С186 ловит зеркалом)"
+          fi
       - name: "Дверь-дислокация (ЛАТКА 2026-11-11): живой замер релеев — материализация ветки данные-дислокация в выкладку"
         run: |
           if git fetch --depth=1 origin данные-дислокация 2>/dev/null; then
