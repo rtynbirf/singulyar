@@ -101,6 +101,20 @@ input[type=search]{width:100%;background:#121418;color:var(--tx);border:1px soli
 footer{border-top:1px solid var(--line);margin-top:40px;padding:18px 0;color:var(--dim);font-size:13px}
 @media (max-width:640px){ .сцена{padding:16px} .row{gap:8px} .badge{display:none} }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+/* ── латка С183 «ЭМЕРДЖЕНТНЫЙ ЗАЛ»: мировые практики → дом ── */
+.с183-мини{font-family:var(--mono);font-size:12px;background:rgba(240,240,248,.06);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:5px 9px;cursor:pointer;min-height:32px;line-height:1}
+.с183-мини[aria-pressed="true"]{border-color:var(--gold);color:var(--gold)}
+.фонд-список li{display:flex;align-items:stretch}
+.с183-строка-кн{flex:0 0 auto;display:flex;gap:6px;align-items:center;padding:0 10px}
+#плашкаРаунда{position:absolute;left:16px;bottom:14px;right:16px;z-index:4;display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12.5px;color:var(--gold);background:rgba(10,10,12,.85);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+#плашкаРаунда[hidden]{display:none}
+#отсчёт{position:absolute;right:14px;top:12px;z-index:4;font-family:var(--mono);font-size:13px;color:var(--gold);background:rgba(10,10,12,.85);border:1px solid var(--line);border-radius:10px;padding:6px 12px}
+#отсчёт[hidden]{display:none}
+dialog#юзать{background:var(--panel);color:var(--tx);border:1px solid var(--line);border-radius:16px;max-width:600px;padding:22px 26px;font-family:var(--mono)}
+dialog#юзать::backdrop{background:rgba(0,0,0,.6)}
+dialog#юзать ol{margin:12px 0 18px;padding-left:20px;display:grid;gap:9px;font-size:13px;line-height:1.55}
+dialog#юзать h2{font-size:16px;letter-spacing:.08em}
+@media (max-width:640px){ #плашкаРаунда{font-size:11px;left:10px;bottom:8px;right:10px} #отсчёт{font-size:11px;right:10px;top:8px} }
 </style>
   <link rel="manifest" href="./manifest.webmanifest">
   <meta name="theme-color" content="#0A0A0C">
@@ -138,6 +152,8 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
       <span class="пометка" id="песняПометка" hidden></span>
       <span class="пометка" id="песняГотовность" hidden aria-live="polite"></span><!-- W2: SONG_READY / не выучена / SONG_UNAVAILABLE — честная метка у титула -->
     </div>
+    <div id="плашкаРаунда" hidden aria-live="polite"><span id="раундТекст"></span><button type="button" class="с183-мини" id="раундОчистить">снять</button></div><!-- латка С183: очередь зала -->
+    <div id="отсчёт" hidden aria-live="polite"></div><!-- латка С183: честный отсчёт до первой строки -->
     <div class="слова">
       <div class="строка прошлая" id="строкаПрошлая" aria-hidden="true"></div>
       <div class="строка текущая" id="строкаТекущая">Найди песню в фонде и жми ПЛЕЙ</div>
@@ -163,6 +179,10 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
       <span class="sep" aria-hidden="true"></span>
       <button type="button" class="mini" id="кнРепит" aria-pressed="false" data-справка="РЕПИТ: песня играет по кругу.">РЕПИТ</button>
       <button type="button" class="mini" id="кнСлучайно" aria-pressed="false" data-справка="СЛУЧАЙНО: после конца — случайная песня фонда, не повторяя текущую. Выкл — по порядку списка.">СЛУЧАЙНО</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" class="mini" id="кнЭхо" aria-pressed="false" data-справка="ЭХО-ГРИМ: микрофон с эхом — слышишь себя в зале, как в настоящем караоке. Ничего не пишется и не уходит из дома. Наушники держат свист подальше.">ЭХО</button>
+      <button type="button" class="mini" id="кнЛуп" aria-pressed="false" data-справка="ЛУП СТРОКИ: репетиция — текущая строка крутится по кругу, пока не отпустишь. Клавиша L (д).">ЛУП</button>
+      <button type="button" class="mini" id="кнЮзать" data-справка="КАК ЮЗАТЬ: честная инструкция дома. Клавиша ? .">?</button>
     </div>
     <input type="range" class="прогресс" id="прогресс" min="0" max="1000" value="0" step="1" aria-label="Позиция песни">
     <div class="row">
@@ -197,11 +217,25 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
   <section class="panel" aria-label="Фонд песен дома">
     <label class="lbl" for="поиск" style="display:block;margin-bottom:8px" id="лейблФонда">ФОНД ДОМА · 64 песни · найди свою</label>
     <input type="search" id="поиск" placeholder="название или номер…" aria-label="Поиск песни по фонду">
+    <button type="button" class="mini" id="кнМои" aria-pressed="false" style="margin-top:8px" data-справка="МОИ: только любимые — ставь ☆ у песен фонда.">МОИ ☆</button>
     <ul class="фонд-список" id="списокПесен"></ul>
   </section>
 
   <p class="hint">Честность дома: тексты — черновики распознавания (ASR), маркеры ♪ и &gt;&gt; — язык корпуса; смысловая редактура — Фаза 3.
   Минусовки — локальный фонд дома (ремастер 128 кбит/с). Слова сцены видят двери ·16 СУФЛЁР и ·20 ФОНЕТИКА (мост «зал»).</p>
+  <dialog id="юзать" aria-labelledby="юзатьТитул"><!-- латка С183: слово владельца «КАК ЮЗАТЬ ТВОЁ?» — закрыто -->
+    <h2 id="юзатьТитул">КАК ЮЗАТЬ ДОМ</h2>
+    <ol>
+      <li><strong>Жест — закон дома.</strong> Браузер не даёт звук без твоего касания: кликни песню или жми ПЛЕЙ — дом поёт.</li>
+      <li><strong>Слова</strong> подсвечиваются строка за строкой и слово за словом. Сдвиг — клавиши х/ъ, построчный тюнинг в памяти дома.</li>
+      <li><strong>РАУНД</strong> — очередь вечера: «+» у песни встаёт в раунд, после текущей поётся она (плашка внизу сцены).</li>
+      <li><strong>ЭХО-ГРИМ</strong> — микрофон с эхом: слышишь себя как в зале. Ничего не пишется и не уходит из дома.</li>
+      <li><strong>ЛУП СТРОКИ</strong> — репетиция: строка крутится, пока не снимешь (клавиша L / д).</li>
+      <li><strong>ТЭП</strong> — тапай Space в такт словам: очки за точность, рекорды дом помнит.</li>
+      <li><strong>Клавиши</strong>: Space — плей/пауза · ← → — ±10 с · ↑ ↓ — громкость · T (е) — ТЭП · L (д) — луп · ? — эта справка · Esc — пауза.</li>
+    </ol>
+    <button type="button" class="btn" id="юзатьЗакрыть">ПОНЯЛ — ПОЮ</button>
+  </dialog>
 </main>
 <footer>
   <div class="wrap">СИНГУЛЯР ·32 «СЦЕНА» · такт v1.46.0 · файл-комната: автономна, работает офлайн · КОРД на страже</div>
@@ -619,6 +653,7 @@ window.S32_ЯДРО = (function () {
   }
   function onКонец() {
     if (сборникДалее()) return; /* латка С140: часть закончилась — подставляем следующую */
+    if (раунд.length) { var д = раунд.shift(); раундПиши(); раундПокажи(); выбрать(д, true); статус('из раунда зала: «' + (песня(д) || { title: '?' }).title + '»', 'ok'); return; } /* латка С183: очередь зала живее порядка */
     if (случайно) {
       var сл = случайное(ПЕСНИ.length - 1);
       if (сл >= индекс) сл++;
@@ -678,6 +713,10 @@ window.S32_ЯДРО = (function () {
         рисуйСтроку();
         строкаВал_обновить();
       }
+      if (луп && !сборникАктивен() && с >= 0 && t >= строки[с].t1) { try { аудио.currentTime = строки[с].t0 + сдвигМс / 1000; } catch (е) {} } /* латка С183: репетиция строки — крутит, пока не отпустишь */
+      var отсХвост = строки.length ? строки[0].t0 - t : 0;
+      var отЭл = document.getElementById('отсчёт');
+      if (отЭл) { if (отсХвост > 0.6 && отсХвост < 9) { отЭл.textContent = 'инструментал · слова через ' + Math.ceil(отсХвост) + ' с'; отЭл.hidden = false; } else if (!отЭл.hidden) отЭл.hidden = true; } /* латка С183: честный отсчёт до первой строки */
       if (с >= 0) {
         var слова = строки[с].слова, живое = -1;
         for (var w = 0; w < слова.length; w++) {
@@ -906,6 +945,8 @@ window.S32_ЯДРО = (function () {
         case 'ArrowUp': е.preventDefault(); громСтавь(громкость + 0.1); break;
         case 'ArrowDown': е.preventDefault(); громСтавь(громкость - 0.1); break;
         case 't': case 'T': case 'е': case 'Е': тэпПереключить(); break;
+        case 'l': case 'L': case 'д': case 'Д': лупПереключить(); break; /* латка С183: репетиция строки */
+        case '?': case '/': юзатьОткрой(); break; /* латка С183: справка дома */
         case 'х': case 'Х': case '[': строкаСдвиг(-0.5); break;
         case 'ъ': case 'Ъ': case ']': строкаСдвиг(0.5); break;
         case 'Escape': хотимПлей = false; if (аудио) аудио.pause(); break;
@@ -915,6 +956,113 @@ window.S32_ЯДРО = (function () {
     $('строкаТекущая').addEventListener('click', function () { if (тэп) тэпТап(); });
   }
 
+  /* ── латка С183 «ЭМЕРДЖЕНТНЫЙ ЗАЛ» (2026-11-17; слово владельца «ИДИ ПОКУМЕКАЙ ПОШАРЬСЯ ПО
+     ЛУЧШИМ МИРОВЫМ ТРЕНДАМ ПРАКТИК И ВЬЕБАШЬ У НАС НАШЕ!! ЭМЕРДЖЕНТНОЕ=)») ──
+     Мировые практики → дом, всё аддитивно, закон дома цел (звук по жесту; НИЧЕГО не пишется
+     и не уходит из дома): РАУНД — очередь вечера (KaraFun/плейлисты), ЭХО-ГРИМ — микрофон
+     зала с эхом (стандарт караоке-миков), ЛУП СТРОКИ — репетиция (Yousician-практика),
+     ОТСЧЁТ до первой строки (универсальная честность), МОИ ☆ — любимое, КАК ЮЗАТЬ —
+     онбординг (слово владельца «КАК ЮЗАТЬ ТВОЁ?» закрыто). */
+  var раунд = [];
+  function раундПиши() { try { localStorage.setItem('s32-раунд', JSON.stringify(раунд)); } catch (е) {} }
+  function раундЧитай() { try { var в = JSON.parse(localStorage.getItem('s32-раунд') || '[]'); if (в instanceof Array) раунд = в.filter(function (х) { return typeof х === 'number' && х >= 0 && х < ПЕСНИ.length; }); } catch (е) {} }
+  function раундПокажи() {
+    var пл = document.getElementById('плашкаРаунда');
+    if (!пл) return;
+    if (!раунд.length) { пл.hidden = true; return; }
+    var имена = раунд.slice(0, 4).map(function (х) { var п = песня(х); return п ? '«' + п.title + '»' : '?'; }).join(' → ');
+    document.getElementById('раундТекст').textContent = 'РАУНД: ' + имена + (раунд.length > 4 ? ' … ещё ' + (раунд.length - 4) : '');
+    пл.hidden = false;
+  }
+  function раундДоб(i) {
+    if (!(i >= 0 && i < ПЕСНИ.length)) return;
+    раунд.push(i); раундПиши(); раундПокажи();
+    статус('в раунд: «' + (песня(i) || { title: '?' }).title + '» — поёт после текущей', 'ok');
+  }
+  var любимые = {};
+  function любимыеЧитай() { try { var в = JSON.parse(localStorage.getItem('s32-любимое') || '{}'); if (в && typeof в === 'object') любимые = в; } catch (е) {} }
+  function любимыеПиши() { try { localStorage.setItem('s32-любимое', JSON.stringify(любимые)); } catch (е) {} }
+  function с183КнопкиПесни(i) {
+    var ид = ПЕСНИ[i].id, об = document.createElement('span');
+    об.className = 'с183-строка-кн';
+    var з = эл('button', 'с183-мини', любимые[ид] ? '★' : '☆');
+    з.type = 'button';
+    з.setAttribute('aria-pressed', любимые[ид] ? 'true' : 'false');
+    з.setAttribute('aria-label', 'любимое: ' + ПЕСНИ[i].title);
+    з.addEventListener('click', function (е) {
+      е.stopPropagation();
+      if (любимые[ид]) { delete любимые[ид]; з.textContent = '☆'; з.setAttribute('aria-pressed', 'false'); }
+      else { любимые[ид] = 1; з.textContent = '★'; з.setAttribute('aria-pressed', 'true'); }
+      любимыеПиши(); поискПроводи();
+    });
+    var р = эл('button', 'с183-мини', '+');
+    р.type = 'button';
+    р.setAttribute('aria-label', 'в раунд: ' + ПЕСНИ[i].title);
+    р.addEventListener('click', function (е) { е.stopPropagation(); раундДоб(i); });
+    об.appendChild(з); об.appendChild(р);
+    return об;
+  }
+  var толькоМои = false;
+  function моиПереключить() {
+    толькоМои = !толькоМои;
+    var кн = $('кнМои'); if (кн) кн.setAttribute('aria-pressed', толькоМои ? 'true' : 'false');
+    if (толькоМои && Object.keys(любимые).length === 0) статус('любимых пока нет — ставь ☆ у песен фонда', 'warn');
+    поискПроводи();
+  }
+  var луп = false;
+  function лупПереключить() {
+    if (!луп && сборникАктивен()) { статус('луп — для обычных песен: Сборник едет частями', 'warn'); return; }
+    луп = !луп;
+    if (луп && индекс >= 0 && !строки.length) { луп = false; статус('луп нечем крутить — у песни строк нет', 'warn'); return; }
+    var кн = $('кнЛуп'); if (кн) { кн.setAttribute('aria-pressed', луп ? 'true' : 'false'); кн.textContent = луп ? 'ЛУП●' : 'ЛУП'; }
+    статус(луп ? 'луп строки: текущая строка крутится — репетиция; снять — ЛУП или L' : 'луп снят', 'ok');
+  }
+  var эхоЖивое = false, эхоПоток = null, эхоКонтекст = null, эхоВход = null;
+  function эхоГлуши() {
+    try { if (эхоПоток) эхоПоток.getTracks().forEach(function (т) { т.stop(); }); } catch (е) {}
+    try { if (эхоВход) эхоВход.disconnect(); } catch (е) {}
+    try { if (эхоКонтекст && эхоКонтекст.close) эхоКонтекст.close(); } catch (е) {}
+    эхоПоток = null; эхоВход = null; эхоКонтекст = null; эхоЖивое = false;
+    var кн = $('кнЭхо'); if (кн) { кн.setAttribute('aria-pressed', 'false'); кн.textContent = 'ЭХО'; }
+    статус('эхо-грим заглушен — микрофон отпущен', 'ok');
+  }
+  function эхоПереключить() {
+    if (эхоЖивое) { эхоГлуши(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { статус('у этого браузера микрофонного пути нет — эхо молчит честно', 'warn'); return; }
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: true } }).then(function (поток) {
+      эхоПоток = поток;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) throw new Error('AudioContext нет');
+      эхоКонтекст = new AC();
+      эхоВход = эхоКонтекст.createMediaStreamSource(поток);
+      var сухой = эхоКонтекст.createGain(); сухой.gain.value = 0.9;
+      var дилей = эхоКонтекст.createDelay(1.0); дилей.delayTime.value = 0.22;
+      var круг = эхоКонтекст.createGain(); круг.gain.value = 0.34;
+      var фильтр = эхоКонтекст.createBiquadFilter(); фильтр.type = 'lowpass'; фильтр.frequency.value = 3200;
+      var мокрый = эхоКонтекст.createGain(); мокрый.gain.value = 0.5;
+      эхоВход.connect(сухой); сухой.connect(эхоКонтекст.destination);
+      эхоВход.connect(дилей); дилей.connect(круг); круг.connect(дилей);
+      дилей.connect(фильтр); фильтр.connect(мокрый); мокрый.connect(эхоКонтекст.destination);
+      if (эхоКонтекст.state === 'suspended' && эхоКонтекст.resume) эхоКонтекст.resume();
+      эхоЖивое = true;
+      var кн = $('кнЭхо'); if (кн) { кн.setAttribute('aria-pressed', 'true'); кн.textContent = 'ЭХО●'; }
+      статус('эхо-грим жив: слышишь себя в зале; ничего не пишется и не уходит из дома', 'ok');
+    }).catch(function (е) {
+      статус('микрофон не открыт (' + ((е && е.name) || 'отказ') + ') — разрешение твоё, дом не умоляет', 'warn');
+    });
+  }
+  function юзатьОткрой() { try { var д = document.getElementById('юзать'); if (д && !д.open && д.showModal) д.showModal(); } catch (е) {} }
+  function юзатьЗакрой() { try { var д = document.getElementById('юзать'); if (д && д.open) д.close(); localStorage.setItem('s32-юзал', '1'); } catch (е) {} }
+  function с183Подключи() {
+    var кЭ = $('кнЭхо'); if (кЭ) кЭ.addEventListener('click', эхоПереключить);
+    var кЛ = $('кнЛуп'); if (кЛ) кЛ.addEventListener('click', лупПереключить);
+    var кЮ = $('кнЮзать'); if (кЮ) кЮ.addEventListener('click', юзатьОткрой);
+    var кМ = $('кнМои'); if (кМ) кМ.addEventListener('click', моиПереключить);
+    var з = document.getElementById('юзатьЗакрыть'); if (з) з.addEventListener('click', юзатьЗакрой);
+    var д = document.getElementById('юзать'); if (д) д.addEventListener('close', function () { try { localStorage.setItem('s32-юзал', '1'); } catch (е) {} });
+    var оч = document.getElementById('раундОчистить'); if (оч) оч.addEventListener('click', function () { раунд = []; раундПиши(); раундПокажи(); статус('раунд зала снят', 'ok'); });
+    раундЧитай(); раундПокажи(); любимыеЧитай();
+  }
   /* ── фонд песен ── */
   function списокСобери() {
     var ул = $('списокПесен');
@@ -934,6 +1082,7 @@ window.S32_ЯДРО = (function () {
       if (п.views) кн.appendChild(эл('span', 'v', '▸ ' + п.views.toLocaleString('ru-RU')));
       кн.addEventListener('click', (function (ии) { return function () { выбрать(ии, true); }; })(i));
       ли.appendChild(кн);
+      ли.appendChild(с183КнопкиПесни(i)); /* латка С183: ☆ любимое + «+» в раунд — практики зала */
       ул.appendChild(ли);
     }
     $('счётФонда').textContent = String(ПЕСНИ.length);
@@ -958,7 +1107,7 @@ window.S32_ЯДРО = (function () {
     var ли = $('списокПесен').children;
     for (var i = 0; i < ПЕСНИ.length; i++) {
       var п = ПЕСНИ[i];
-      var показ = !запрос || п.title.toLowerCase().indexOf(запрос) !== -1 || п.id.toLowerCase().indexOf(запрос) !== -1;
+      var показ = (толькоМои ? !!любимые[п.id] : true) && (!запрос || п.title.toLowerCase().indexOf(запрос) !== -1 || п.id.toLowerCase().indexOf(запрос) !== -1); /* латка С183: МОИ ☆ */
       ли[i].style.display = показ ? '' : 'none';
     }
   }
@@ -977,6 +1126,8 @@ window.S32_ЯДРО = (function () {
     списокСобери();
     подключиКнопки();
     клавиши();
+    с183Подключи(); /* латка С183: раунд/эхо/луп/мои/юзать — мировые практики зала */
+    try { if (!localStorage.getItem('s32-юзал')) юзатьОткрой(); } catch (е) {} /* латка С183: первый визит — честный онбординг */
     $('поиск').addEventListener('input', поискПроводи);
     холстРазмер();
     requestAnimationFrame(кадр);
@@ -1070,7 +1221,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 </details>
 </nav>
 <script defer src="js/sg-registry.js"></script>
-<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v255</span></div>
+<div id="sg-организм" role="note" aria-label="Живой реестр дома" style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">ДОМ СИНГУЛЯР · <span data-реестр="дверей">52</span> дверь · <span data-реестр="песен">64</span> песни · <span data-реестр="языков">197</span> языков · такт v<span data-реестр="версия">11.76</span> «<span data-реестр="такт">ПОВЕРКА</span>» · кэш <span data-реестр="кэш">v256</span></div>
 <script src="./forge-hand.js" defer></script><!--ФОРЖ:РУКА-->
 <script src="assets/autoplay-fix.js" defer></script> <!-- ЛАТКА С181 «АВТОПЛЕЙ ВЕЗДЕ»: разблокировщик звука (политика автоплея браузера — не поломка дома) -->
 </body>
