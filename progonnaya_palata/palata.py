@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""ПРОГОННАЯ ПАЛАТА (Ф-О · волна-19) — сценарные прогоны поведения агента.
+"""ПРОГОННАЯ ПАЛАТА (Ф-О · волна-19; волна-20: + районные сценарии Х-065…Х-067).
 Судья детерминированный: assert / grep / sha256. Статусы по ст. 68:
 ВЫПОЛНЕНО / ЗАЯВЛЕНО / НЕ ПРОВЕРЕНО. Не входит в pytest-коллекцию стенда.
 
 Запуск:
   python3 palata.py --journal <файл или папка журнала> --tree <корень дерева>
+  python3 palata.py --district <клон index> <клон .github>   # волна-20, районные сценарии
 Без аргументов — самопрогон палаты в текущей папке репо (журнал и tmp ищутся по умолчанию).
 """
 import argparse
 import hashlib
+import json
 import os
 import re
 import subprocess
@@ -99,6 +101,98 @@ def kh064_cleanup(tmpdir):
     return STATUS_CLAIMED, "в tmp остались: " + ", ".join(leftover[:5])
 
 
+def kh065_memory_fresh(index_dir):
+    """Х-065: память дома (index/agents/memory/MEMORY.md) существует и датирована."""
+    if not index_dir or not os.path.isdir(index_dir):
+        return STATUS_UNCHECKED, "клон index не найден"
+    mem = os.path.join(index_dir, "agents", "memory", "MEMORY.md")
+    if not os.path.exists(mem):
+        return STATUS_CLAIMED, "MEMORY.md в index/agents/memory нет"
+    try:
+        with open(mem, encoding="utf-8") as fh:
+            head = fh.read(2000)
+    except OSError as e:
+        return STATUS_UNCHECKED, f"чтение не удалось: {e}"
+    m = re.search(r"Обновлено:\s*(\d{4}-\d{2}-\d{2})", head)
+    if not m:
+        return STATUS_CLAIMED, "страница есть, но без даты «Обновлено»"
+    upd = datetime.strptime(m.group(1), "%Y-%m-%d").date()
+    stale = (datetime.now(timezone.utc).date() - upd).days
+    if stale > 14:
+        return STATUS_CLAIMED, f"память молчит {stale} дней (обновлено {upd})"
+    return STATUS_DONE, f"память датирована {upd} (свежесть {stale} дн.)"
+
+
+def _skill_files(hub_dir):
+    sk = os.path.join(hub_dir, "skills")
+    if not os.path.isdir(sk):
+        return None
+    out = []
+    for name in sorted(os.listdir(sk)):
+        p = os.path.join(sk, name, "SKILL.md")
+        if os.path.isfile(p):
+            out.append(p)
+    return out
+
+
+def kh066_skills_and_passport(hub_dir):
+    """Х-066: навыки дома валидны (frontmatter name+description); паспорт района, если есть, читается."""
+    if not hub_dir or not os.path.isdir(hub_dir):
+        return STATUS_UNCHECKED, "клон .github не найден"
+    files = _skill_files(hub_dir)
+    if files is None:
+        return STATUS_CLAIMED, "skills/ в хабе нет"
+    bad, good = [], 0
+    for p in files:
+        try:
+            head = open(p, encoding="utf-8").read(1000)
+        except OSError:
+            bad.append(os.path.basename(os.path.dirname(p)))
+            continue
+        fm = re.match(r"^---\s*\n(.*?)\n---", head, re.S)
+        if fm and re.search(r"^name:\s*\S", fm.group(1), re.M) and re.search(r"^description:\s*\S", fm.group(1), re.M):
+            good += 1
+        else:
+            bad.append(os.path.basename(os.path.dirname(p)))
+    passport = os.path.join(hub_dir, "docs", "AGENT-TRUST-PASSPORT-Z-AI.json")
+    pp = "паспорт района не найден (не заявлен)"
+    if os.path.exists(passport):
+        try:
+            d = json.load(open(passport, encoding="utf-8"))
+            pp = f"паспорт района читается как JSON (ключей: {len(d)})"
+        except Exception as e:
+            pp = f"паспорт не читается как JSON: {e}"
+    if bad:
+        return STATUS_CLAIMED, f"навыки без валидного frontmatter: {', '.join(bad)}; {pp}"
+    return STATUS_DONE, f"навыки валидны: {good} SKILL.md; {pp}"
+
+
+def kh067_agent_cards(index_dir):
+    """Х-067: карточки деятелей (index/agents/*.json) — JSON с обязательными полями."""
+    if not index_dir or not os.path.isdir(index_dir):
+        return STATUS_UNCHECKED, "клон index не найден"
+    ag = os.path.join(index_dir, "agents")
+    if not os.path.isdir(ag):
+        return STATUS_CLAIMED, "agents/ в index нет"
+    cards = [f for f in os.listdir(ag) if f.endswith(".json")]
+    if not cards:
+        return STATUS_CLAIMED, "карточек (.json) в agents/ нет"
+    need = {"name", "kind", "capabilities", "boundaries", "verification", "mandate"}
+    bad = []
+    for c in cards:
+        try:
+            d = json.load(open(os.path.join(ag, c), encoding="utf-8"))
+        except Exception as e:
+            bad.append(f"{c}: {e}")
+            continue
+        miss = need - set(d)
+        if miss:
+            bad.append(f"{c}: нет {', '.join(sorted(miss))}")
+    if bad:
+        return STATUS_CLAIMED, "карточки не валидны: " + "; ".join(bad[:3])
+    return STATUS_DONE, f"карточки валидны: {len(cards)} шт. (JSON + 6 полей)"
+
+
 def self_probe(tmpdir):
     """Самопрогон: кладёт в tmp файл-след, проверяет Х-062 и Х-064 на собственном материале, убирает за собой."""
     report = []
@@ -120,6 +214,8 @@ def main():
     ap.add_argument("--tmp", default=None, help="папка tmp такта")
     ap.add_argument("--takt-date", default=None, help="дата такта (YYYY-MM-DD)")
     ap.add_argument("--self", action="store_true", help="самопрогон на собственном tmp")
+    ap.add_argument("--district", nargs=2, metavar=("INDEX_DIR", "HUB_DIR"),
+                    help="районные сценарии волны-20: Х-065…Х-067 по клонам index и .github")
     args = ap.parse_args()
 
     if args.takt_date:
@@ -134,6 +230,12 @@ def main():
         ("Х-063 пломба П2", *kh063_seal_p2(tree)),
         ("Х-064 уборка", *kh064_cleanup(tmpdir)),
     ]
+    if args.district:
+        results += [
+            ("Х-065 память дома", *kh065_memory_fresh(args.district[0])),
+            ("Х-066 навыки+паспорт", *kh066_skills_and_passport(args.district[1])),
+            ("Х-067 карточки деятелей", *kh067_agent_cards(args.district[0])),
+        ]
     if args.self:
         os.makedirs(tmpdir, exist_ok=True)
         results += self_probe(tmpdir)
