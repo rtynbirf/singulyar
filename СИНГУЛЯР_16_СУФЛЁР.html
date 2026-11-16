@@ -906,7 +906,7 @@ class SingulyarPrompterApp {
 
     /* ── UI ── */
     bindUI() {
-        this.el.btnFlagman.addEventListener('click', () => this.loadSong('rWpYxmFjm9g', 'Когда теряем · флагман', './minus/rWpYxmFjm9g.mp3'));
+        this.el.btnFlagman.addEventListener('click', () => this.loadSong('rWpYxmFjm9g', 'Когда теряем · флагман', 'minus/голос/rWpYxmFjm9g.mp3') /* С186: дверь-0 голоса same-origin (латентный 404 вылечен) */);
         this.el.btnFile.addEventListener('click', () => this.el.fileAudio.click());
         this.el.fileAudio.addEventListener('change', (e) => {
             const f = e.target.files[0];
