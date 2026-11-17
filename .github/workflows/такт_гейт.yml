@@ -19,6 +19,9 @@ on:
   pull_request:
     branches: [rumu]
   workflow_dispatch:
+concurrency:
+  group: takt-gate
+  cancel-in-progress: false
 
 permissions:
   contents: read
