@@ -23,7 +23,9 @@
 import base64, difflib, gzip, hashlib, json, os, re, shutil, subprocess, sys
 
 ДОМ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-КЛОН = '/home/z/my-project/repo-ruvson-lyrics'
+# путь клона ruvson-lyrics — вычисляется от себя (работает в любом клоне),
+# переопределяется переменной окружения; литералов машины автора нет (С184, гейт Э-5.4)
+КЛОН = os.environ.get('КЛОН_RUVSON_LYRICS') or os.path.join(os.path.dirname(ДОМ), 'repo-ruvson-lyrics')
 СНИМОК = os.path.join(ДОМ, 'ДАННЫЕ', 'ЧИСТОВИКИ')
 СЦЕНА = os.path.join(ДОМ, 'СИНГУЛЯР_32_СЦЕНА.html')
 С15 = os.path.join(ДОМ, 'СИНГУЛЯР_15_ОРКЕСТРАТОР.html')
