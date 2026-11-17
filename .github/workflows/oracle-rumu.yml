@@ -10,6 +10,9 @@ on:
   pull_request:
     branches: [rumu]
   workflow_dispatch:
+concurrency:
+  group: oracle-rumu
+  cancel-in-progress: false
 permissions:
   statuses: write
   issues: write
