@@ -17,7 +17,7 @@ jobs:
   oracle:
     runs-on: ubuntu-latest
     steps:
-      - name: Сверка пина тела (грейс: дрейф такта — не тревога; живой пин из генома ядра cell-swarm/swarm.json, клетка singulyar)
+      - name: Сверка пина тела (грейс — дрейф такта не тревога; живой пин из генома ядра cell-swarm/swarm.json, клетка singulyar)
         run: |
           set -e
           TARGET="${{ github.event.pull_request.base.sha }}"
