@@ -1,15 +1,15 @@
 <div align="center">
   <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/forge-banner-singulyar.svg" />
-  <img src="banner.png" alt="singulyar — Офлайн-вселенная караоке RUVSON: 64 песни" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/banner.png" alt="singulyar — Офлайн-вселенная караоке RUVSON: 64 песни" width="100%">
 </picture>
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
 <div align="center">
-  <img src="repo-muse.svg" width="100%" alt="Муза singulyar: мастерская КАНДИНСКИЙ · КОМПОЗИЦИЯ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/repo-muse.svg" width="100%" alt="Муза singulyar: мастерская КАНДИНСКИЙ · КОМПОЗИЦИЯ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
   <br/>
-  <img src="forge-divider.svg" width="62%" alt="делитель мастерской КАНДИНСКИЙ · КОМПОЗИЦИЯ" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/forge-divider.svg" width="62%" alt="делитель мастерской КАНДИНСКИЙ · КОМПОЗИЦИЯ" />
 </div>
 <!--ФОРЖ:МУЗА:КОНЕЦ-->
 
@@ -27,7 +27,7 @@
 
 # СИНГУЛЯР — офлайн-вселенная караоке RUVSON
 
-<p align="center"><img src=".github/social-preview.png" alt="singulyar" width="100%"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/.github/social-preview.png" alt="singulyar" width="100%"></p>
 
 
 Офлайн-ядро караоке-вселенной RUVSON: **64 песни · флагман «Когда теряем» на 157 языках (конвейер: 197) · ОРКЕСТРАТОР ·15 · ОС из 17 модулей · PWA**.
