@@ -748,7 +748,32 @@ $("#ctaLang").addEventListener("click", () => go("langs"));
 try{ go("fab"); }catch(e){}
 
 // ── CATALOG RENDER ─────────────────────────────────────────────
-function renderCatalog() {
+  /* ЛАТКА (С179): слово владельца «НА ССЫЛКАХ ИДЁТ РЕКЛАМА С ЮТУБКАНАЛА А НЕ САМ КОНТЕНТ?».
+     Главный клик карточки даёт КОНТЕНТ ДОМА: флагман — в плеер (мастер из фонда),
+     остальные — честная карточка статуса («контент в доме готовится»).
+     Наружный релиз канала — только вторичная иконка, не главная ссылка. */
+  const ФЛАГМАН_ИД = "rWpYxmFjm9g";
+  function честнаяКарточка(c) {
+    let el = document.getElementById("честнаяКарточка");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "честнаяКарточка";
+      el.setAttribute("role", "dialog");
+      el.style.cssText = "position:fixed;left:50%;bottom:120px;transform:translateX(-50%);max-width:560px;width:calc(100vw - 32px);box-sizing:border-box;z-index:2147483001;background:#0B0A08;border:1px solid rgba(217,164,65,.45);border-radius:14px;padding:18px 20px;color:#E8DFCB;font:15px/1.55 system-ui,-apple-system,sans-serif;box-shadow:0 18px 60px rgba(0,0,0,.6)";
+      document.body.appendChild(el);
+    }
+    const yt = "https://www.youtube.com/watch?v=" + c.id;
+    el.innerHTML =
+      '<div style="font-weight:700;font-size:17px;margin-bottom:6px">♫ ' + c.title + '</div>' +
+      '<div style="opacity:.85">Контент трека в доме готовится: караоке-нить и минус собираются за ним. В доме — только честный статус, никакой чужой рекламы.</div>' +
+      '<div style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">' +
+        '<button id="чКЗакрыть" style="background:#D9A441;border:0;border-radius:8px;padding:7px 14px;font-weight:600;color:#0B0A08;cursor:pointer">хорошо</button>' +
+        '<a href="' + yt + '" target="_blank" rel="noopener" style="color:#E8C89C;font-size:13px;opacity:.85">релиз канала ↗ (вторично)</a>' +
+      '</div>';
+    const btn = document.getElementById("чКЗакрыть");
+    if (btn) btn.addEventListener("click", () => el.remove());
+  }
+  function renderCatalog() {
   const g = $("#catGrid");
   g.innerHTML = "";
   CATALOG.forEach(c => {
@@ -760,8 +785,8 @@ function renderCatalog() {
       <div class="meta"><span>${c.views}</span><span>·</span><span>${c.date}</span></div>
     `;
     card.addEventListener("click", () => {
-      if (c.live) go("player");
-      else window.open("https://www.youtube.com/watch?v=" + c.id, "_blank", "noopener");
+      if (c.live || c.id === ФЛАГМАН_ИД) go("player");
+      else честнаяКарточка(c);
     });
     g.appendChild(card);
   });
@@ -778,7 +803,7 @@ function renderCatalog() {
         <div class="tt">${c.title}</div>
         <div class="meta"><span>${c.views}</span></div>
       `;
-      card.addEventListener("click", () => { if (c.live) go("player"); else window.open("https://www.youtube.com/watch?v=" + c.id, "_blank", "noopener"); });
+      card.addEventListener("click", () => { if (c.live || c.id === ФЛАГМАН_ИД) go("player"); else честнаяКарточка(c); });
       r.appendChild(card);
     });
   });
