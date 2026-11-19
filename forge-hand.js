@@ -76,7 +76,27 @@
       document.body.appendChild(f);
     } catch (e) { /* рука не должна ломать дом */ }
   }
-  function dress() { crown(); stamp(); }
+  /* ЛАТКА-НИЗ v2 (С179): слово владельца «ОДИН БЛОК ПЕРЕКРЫВАЕТ ДРУГОЙ!!!».
+     Нижние латы дома — ПЛОТНЫЕ: контент не просвечивает, полосы не тонут
+     в чужих стековых контекстах, у контента есть запас (padding-bottom).
+     Одна точка правды: forge-hand.js грузится в каждой комнате дома. */
+  function latka() {
+    try {
+      if (!document.head || document.getElementById('forge-latka-niz')) return;
+      var st = document.createElement('style');
+      st.id = 'forge-latka-niz';
+      st.textContent = [
+        'body > footer[data-forge="hand"]{position:fixed !important;left:222px !important;right:auto !important;top:auto !important;bottom:47px !important;margin:0 !important;max-width:min(760px,calc(100vw - 500px)) !important;background:#0B0A08 !important;background-image:linear-gradient(90deg,rgba(11,10,8,1),rgba(18,16,12,1),rgba(11,10,8,1)) !important;border:1px solid rgba(217,164,65,.4) !important;border-radius:10px !important;box-shadow:0 8px 22px rgba(0,0,0,.55) !important;z-index:2147482000 !important;}',
+        'body > nav[aria-label="нить дома"]{position:fixed !important;left:222px !important;right:auto !important;top:auto !important;bottom:8px !important;margin:0 !important;background:#0B0A08 !important;border:1px solid rgba(176,141,87,.28) !important;border-radius:10px !important;z-index:2147482000 !important;}',
+        '#sg65nav{background:rgba(10,10,12,.97) !important;border:1px solid rgba(176,141,87,.28) !important;border-radius:12px !important;padding:4px !important;}',
+        '#main{padding-bottom:150px !important;}',
+        '@media (max-width:1100px){body > footer[data-forge="hand"],body > nav[aria-label="нить дома"]{left:10px !important;max-width:calc(100vw - 210px) !important;}}',
+        '@media (max-width:760px){body > footer[data-forge="hand"],body > nav[aria-label="нить дома"]{max-width:calc(100vw - 24px) !important;}#sg65nav{right:6px !important;bottom:52px !important;}}'
+      ].join('\n');
+      document.head.appendChild(st);
+    } catch (e) { /* латка не должна ломать дом */ }
+  }
+  function dress() { crown(); stamp(); latka(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', dress);
   } else {
