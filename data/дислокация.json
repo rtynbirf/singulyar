@@ -1,47 +1,47 @@
 {
  "схема": 1,
- "генерация": "2026-11-19T13:30:09.769Z",
+ "генерация": "2026-11-19T21:45:28.295Z",
  "источник": "github-actions",
  "релеи": [
   {
    "url": "wss://nostr.oxtr.dev",
-   "жив": true,
-   "мс": 1498
+   "жив": false,
+   "мс": 698
   },
   {
    "url": "wss://nos.lol",
    "жив": true,
-   "мс": 1137
+   "мс": 1244
   },
   {
    "url": "wss://relay.damus.io",
-   "жив": true,
-   "мс": 1125
+   "жив": false,
+   "мс": 115
   },
   {
    "url": "wss://nostr.sathoarder.com",
    "жив": true,
-   "мс": 1124
+   "мс": 1365
   },
   {
    "url": "wss://nostr.islandarea.net",
    "жив": true,
-   "мс": 1130
+   "мс": 1172
   },
   {
    "url": "wss://nostr.wine",
    "жив": true,
-   "мс": 1271
+   "мс": 1611
   },
   {
    "url": "wss://relay.primal.net",
    "жив": true,
-   "мс": 1199
+   "мс": 1393
   },
   {
    "url": "wss://relay.snort.social",
    "жив": true,
-   "мс": 1178
+   "мс": 1225
   }
  ],
  "счётчики": {
