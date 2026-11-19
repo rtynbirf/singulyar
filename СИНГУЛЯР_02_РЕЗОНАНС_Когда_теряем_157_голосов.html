@@ -532,7 +532,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
       <span class="нп-честно" id="нпЧестно"></span>
       <div class="нп-ряд">
         <button class="нп-кн" id="нпФлаг" type="button">играть флагман · Когда теряем</button>
-        <a class="нп-кн" id="нпСвязь" target="_blank" rel="noopener">открыть на канале</a>
+        <a class="нп-кн" id="нпСвязь" rel="noopener">весь контент трека · 157 голосов в доме</a>
       </div>
     </div>
   </div>
@@ -1756,7 +1756,7 @@ function панельРежим(){
   document.getElementById('нпПод').textContent=d.тип==='канал'?'RUVSON · канал'+(d.дата?' · '+датаКрасиво(d.дата):''):'RUVSON · звук фонда';
   document.getElementById('нпЧестно').textContent=d.тип==='канал'?'видео с канала — кадр и звук честные':'текст готовится · нить 157 голосов подождёт флагман';
   var с=document.getElementById('нпСвязь');
-  if(d.тип==='канал'&&d.yt){с.hidden=false;с.href=КАНАЛ_ССЫЛ+d.yt;}
+  if(d.тип==='канал'&&d.yt){с.hidden=false;с.href="./СИНГУЛЯР_01_Когда_теряем_157_голосов.html";}
   else{с.hidden=true;}
   тТитул.textContent=d.t||'Когда теряем';
   тАртист.textContent=d.тип==='канал'?'RUVSON · канал':'RUVSON · звук фонда';
