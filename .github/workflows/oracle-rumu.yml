@@ -1,7 +1,7 @@
 name: Оракулы дома зелёные (sovereign check)
 # Протокол тишины A-HUSH (волна ×1176, 2026-11-18):
 #  Зуб 1 — грейс: дрейф такта (пин догоняет пуш) перепроверяется 3×90 с — транзитная
-#  расходимость НЕ тревога; красный только при надлогом дрейфе.
+#  расходимость НЕ тревога; красный только при надолгом дрейфе.
 #  Зуб 2 — «тревога однажды»: issue с меткой alarm:oracle-pin открывается один раз,
 #  повторные красные молчат; при зелёном такте страж закрывает issue сам.
 on:
@@ -41,7 +41,7 @@ jobs:
         if: always()
         run: |
           STATE="success"; DESC="пин тела rumu сверен"
-          if [ "${{ job.status }}" != "success" ]; then STATE="failure"; DESC="пин тела rumu устарел надлого — make pins --write в cell-swarm"; fi
+          if [ "${{ job.status }}" != "success" ]; then STATE="failure"; DESC="пин тела rumu устарел надолго — make pins --write в cell-swarm"; fi
           curl -s -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
@@ -59,11 +59,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh label create "alarm:oracle-pin" -R "$GITHUB_REPOSITORY" --color b60205 --description "оракул пина: надлогий дрейф такта" --force 2>/dev/null || true
+          gh label create "alarm:oracle-pin" -R "$GITHUB_REPOSITORY" --color b60205 --description "оракул пина: надолгий дрейф такта" --force 2>/dev/null || true
           open=$(gh issue list -R "$GITHUB_REPOSITORY" --state open --label "alarm:oracle-pin" --json number -q 'length')
           if [ "$open" -eq 0 ]; then
             gh issue create -R "$GITHUB_REPOSITORY" \
-              -t "ALARM: пин rumu устарел надлого" \
+              -t "ALARM: пин rumu устарел надолго" \
               -b "run ${{ github.run_id }} — 3 перепроверки через 90 с не сошлись. Лечение: make pins --write в cell-swarm. Пока issue открыта — страж молчит (протокол A-HUSH)." \
               -l "alarm:oracle-pin"
           else
