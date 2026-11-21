@@ -19,8 +19,9 @@
         консоли (pageerror и console.error собираются, падение — провал).
 
    Честные границы (зачеркнутый суд):
-     · живая связь не судится — WebSocket-провалы консоли (/ws — мимо кэша)
-       отфильтрованы, ошибки офлайн-фазы не считаются (там сеть рвём сами);
+     · живая связь не судится — её родные адреса (/ws, /config, /health,
+       /bridge*) мимо кэша и мимо суда: суд по URL ошибки (palata 0.1.1),
+       не только по тексту;
      · WebKit в Playwright не даёт Service Worker API — проверки 3 и 4 там
        ЧЕСТНО пропускаются (skip с причиной), полный суд в Chromium/Firefox;
      · пропущенное — не провал и не победа: не входит ни в N, ни в M пломбы.
@@ -100,11 +101,15 @@ function skip(msg) {
 
     // ── Судья консоли: копим console.error и неперехваченные ошибки JS.
     // Каждую ошибку помечаем фазой (офлайн или нет) — ошибки офлайн-фазы
-    // ожидаемы (сеть рвём сами) и судом не считаются.
+    // ожидаемы (сеть рвём сами) и судом не считаются. У ошибки держим и URL
+    // (msg.location().url) — суд по адресу: живая связь не судится.
     let inOffline = false;
     const consoleErrors = [];
     page.on('console', (msg) => {
-      if (msg.type() === 'error') consoleErrors.push({ text: msg.text(), offline: inOffline });
+      if (msg.type() === 'error') {
+        const loc = msg.location();
+        consoleErrors.push({ text: msg.text(), url: (loc && loc.url) || '', offline: inOffline });
+      }
     });
     page.on('pageerror', (err) => {
       consoleErrors.push({ text: 'неперехваченная ошибка JS: ' + ((err && err.message) || String(err)), offline: inOffline });
@@ -243,9 +248,14 @@ function skip(msg) {
       const need = ['sloi.js', 'app.js'];
       const missing = need.filter((n) => !files.includes(n));
       if (missing.length) throw new Error(`скрипты не загрузились: ${missing.join(', ')}`);
-      // Фильтры честности: WebSocket-провалы — живая связь (палата её не судит),
-      // ошибки офлайн-фазы — ожидаемый сетевой шум (сеть рвали сами).
-      const bad = consoleErrors.filter((e) => !e.offline && !/websocket/i.test(e.text));
+      // Фильтры честности: живая связь не судится (см. шапку файла) — её родные
+      // адреса (/ws, /config, /health, /bridge*) идут мимо кэша и мимо суда;
+      // здесь судим по URL ошибки: не опознанное живым — отвечает оболочка.
+      // Ошибки офлайн-фазы — ожидаемый сетевой шум (сеть рвали сами).
+      const LIVE = /\/(ws|config|health|bridge)/i;
+      const bad = consoleErrors.filter(
+        (e) => !e.offline && !/websocket/i.test(e.text) && !LIVE.test(e.url)
+      );
       if (bad.length) {
         const sample = bad
           .slice(0, 5)
