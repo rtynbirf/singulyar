@@ -75,6 +75,52 @@
       .tutor-dot.is-now{transform:none}
     }
   </style>
+
+  <!-- 0.7.4 ЖИВЫЕ СТАТУСЫ МОСТОВ: стили волны — только новые классы .bridge-*,
+       ни один существующий селектор и переменная ×20 не тронуты. -->
+  <style>
+    /* ============================================================
+       ВОЛНА 0.7.4 «ЖИВЫЕ СТАТУСЫ МОСТОВ» на базе idx_c — ТОЛЬКО ДОБАВЛЕНИЯ.
+       Закон волны 0.8.3 сохранён: зелёный («жив») — ФОН ДОМА, обычное
+       состояние; янтарный («спит») — настроен, но не активен: ожидание,
+       НЕ поломка; красный («рвётся») — ТОЛЬКО явная поломка, которую
+       клиент видел сам (запрос /config упал сетевой ошибкой).
+       Панель не мигает и не пульсирует; при prefers-reduced-motion
+       страховочно отключены и анимации, и переходы.
+       ============================================================ */
+    .bridge-panel{grid-column:1/-1;font-size:.9rem;border:1px solid var(--line);border-radius:var(--rad);background:color-mix(in srgb,var(--acc) 6%,var(--card));color:var(--fg)}
+    .bridge-panel summary{display:flex;align-items:center;gap:10px;min-height:40px;padding:8px 14px;cursor:pointer;list-style:none}
+    .bridge-panel summary::-webkit-details-marker{display:none}
+    .bridge-caret{flex:none;color:var(--mute);transition:transform .15s ease}
+    #bridgePanel[open] .bridge-caret{transform:rotate(90deg)}
+    .bridge-title{font-weight:700}
+    .bridge-brief{margin-left:auto;text-align:right;color:var(--mute)}
+    .bridge-dot{width:9px;height:9px;border-radius:50%;background:var(--mute);flex:none}
+    .bridge-list{list-style:none;margin:0;padding:2px 14px 6px;display:flex;flex-direction:column;gap:6px}
+    .bridge-row{display:flex;align-items:center;gap:10px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+    .bridge-name{flex:1;min-width:0;font-weight:600;overflow-wrap:anywhere}
+    .bridge-extra{flex:1 1 100%;margin:0 0 0 19px;color:var(--mute);font-size:.85em;overflow-wrap:anywhere}
+    .bridge-word{flex:none;font-weight:600;color:var(--mute)}
+    .bridge-note{margin:0;padding:0 14px 12px;color:var(--mute);font-size:.85em}
+    /* состояния: зелёный жив / янтарный спит / красный только поломка */
+    .bridge-panel[data-state="live"]{border-color:color-mix(in srgb,var(--acc) 55%,var(--line))}
+    .bridge-panel[data-state="lost"]{background:color-mix(in srgb,var(--bad) 8%,var(--card));border-color:color-mix(in srgb,var(--bad) 55%,var(--line))}
+    .bridge-dot[data-state="live"]{background:var(--acc)}
+    .bridge-dot[data-state="sleep"]{background:#f59e0b}
+    .bridge-dot[data-state="lost"]{background:var(--bad)}
+    .bridge-word[data-state="live"]{color:var(--acc)}
+    .bridge-word[data-state="sleep"]{color:#f59e0b}
+    .bridge-word[data-state="lost"]{color:var(--bad)}
+    /* дев-кнопки мостов: живут только при ?dev=1 (закон 0.8.3), создаёт их скрипт волны */
+    .bridge-devbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 14px 12px;padding:8px 10px;border:1px dashed #f59e0b;border-radius:10px;font-size:.85rem}
+    .bridge-devbar button{min-height:36px;padding:4px 12px;border-radius:999px;font-size:.85rem}
+    .bridge-devbar button.is-active{background:var(--acc);color:var(--accfg);border-color:transparent}
+    .bridge-devbar .bridge-devtag{color:var(--mute)}
+    /* страховка волны 0.8.3: уважаем prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce){
+      .bridge-panel,.bridge-panel *{transition:none!important;animation:none!important}
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -168,6 +214,34 @@
       <span class="oracle-text" id="oracle-text">Всё в порядке — пишите, дойдёт.</span>
       <button class="oracle-retry hidden" type="button" id="oracle-retry">Проверить связь</button>
     </div>
+
+        <!-- ===== 0.7.4 ЖИВЫЕ СТАТУСЫ МОСТОВ: свёртываемая панель рядом с оракулом =====
+         Позиция: сразу под оракулом (обе строки — на всю ширину комнаты).
+         ПРАВИЛА ПАНЕЛИ (дублируются в JS-блоке «МОСТЫ» и README-0.7.4-мосты.md):
+           1) «жив» (зелёный) — мост сейчас назван в строке #bridgeNote
+              («Мосты: sip-phone, …») — фон дома, обычное состояние.
+           2) «спит» (янтарный) — мост настроен (пришёл из /config), но сейчас
+              не назван активным: ожидание, а НЕ поломка. Красный сюда
+              ЗАПРЕЩЁН — главный закон волны 0.8.3.
+           3) «рвётся» (красный) — ТОЛЬКО явная поломка, которую клиент видел
+              сам: запрос /config упал сетевой ошибкой. Ответ 404, ответ без
+              поля bridges или не-JSON — это «незнание»: честный сон
+              «мостов не настроено», а не красный.
+           4) Внутренности app.js (type="module") снаружи не видны: панель
+              читает только DOM — #bridgeNote через MutationObserver (текст и
+              hidden) — и делает СВОЙ редкий fetch("/config"): один при старте
+              плюс перепросмотр при открытии панели, не чаще раза в 60 секунд.
+         Без ?dev=1 демо-кнопок нет (закон волны 0.8.3); ESC/details — нативные. -->
+    <details id="bridgePanel" class="bridge-panel" data-state="sleep">
+      <summary>
+        <span class="bridge-caret" aria-hidden="true">▸</span>
+        <span class="bridge-dot" data-state="sleep" aria-hidden="true"></span>
+        <span class="bridge-title">Мосты — живые статусы</span>
+        <span class="bridge-brief" id="bridge-brief" aria-live="polite">смотрим…</span>
+      </summary>
+      <ul id="bridge-list" class="bridge-list"></ul>
+      <p class="bridge-note" id="bridge-note">Панель смотрит на дом: кто жив, кто спит…</p>
+    </details>
 
     <section class="card chat">
       <div id="messages" class="messages" aria-live="polite"></div>
@@ -673,6 +747,288 @@
   if (entryAdv) entryAdv.addEventListener("click", function () { tutorOpen(entryAdv); });
   var later = $("tutor-later");
   if (later) later.addEventListener("click", tutorClose);
+})();
+</script>
+
+<script>
+/* =========================================================
+   МОСТЫ (0.7.4) «ЖИВЫЕ СТАТУСЫ МОСТОВ» — волна ТОЛЬКО-ДОБАВЛЕНИЯ на idx_c.
+   Ни один существующий ключ, ID и строка логики не тронуты: app.js /
+   sloi.js / style.css / разметка ×20 не изменены, старые якоря живы
+   (btn-morse-tutor, tutorOpen, tutorListen, oracle, setOracle, btnInstall,
+   installDlg, bridgeNote). Панель #bridgePanel стоит рядом с оракулом.
+
+   ПРАВИЛА ПАНЕЛИ (дублируются в комментарии у разметки и в
+   README-0.7.4-мосты.md):
+   1) «жив» (зелёный) — мост сейчас назван в строке #bridgeNote
+      («Мосты: sip-phone, …»): фон дома, обычное состояние.
+   2) «спит» (янтарный) — мост настроен (пришёл из /config), но сейчас
+      не назван активным: ожидание, а НЕ поломка. Красный сюда
+      ЗАПРЕЩЁН — главный закон волны 0.8.3.
+   3) «рвётся» (красный) — ТОЛЬКО явная поломка, которую клиент видел
+      сам: запрос /config упал сетевой ошибкой (TypeError). Ответ 404,
+      ответ без поля bridges или не-JSON — это «незнание», честный сон
+      «мостов не настроено», а не красный.
+   4) Внутренности app.js (type="module") снаружи не видны: панель
+      читает только DOM — #bridgeNote через MutationObserver (текст и
+      hidden) — и делает СВОЙ редкий fetch("/config"): один при старте
+      плюс перепросмотр при открытии панели, не чаще раза в 60 секунд.
+   Без ?dev=1 демо-кнопок нет (закон волны 0.8.3). Панель не мигает
+   и не пульсирует; prefers-reduced-motion отключает всё страховочно.
+   ========================================================= */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var panel = $("bridgePanel");
+  var list = $("bridge-list");
+  var brief = $("bridge-brief");
+  var panelNote = $("bridge-note");
+  var liveNote = $("bridgeNote"); // живой след мостов app.js — только читаем
+  if (!panel || !list || !brief || !panelNote) return;
+  var summaryDot = panel.querySelector("summary .bridge-dot");
+
+  var REFETCH_MS = 60000; // перепросмотр /config — не чаще раза в минуту
+  var WORDS = { live: "жив", sleep: "спит", lost: "рвётся" };
+  var devButtons = [];    // кнопки демо — существуют ТОЛЬКО при ?dev=1
+  var state = {
+    configured: null,  // null — дом ещё не ответил; [] / [имена] — его список
+    saidNo: null,      // почему списка нет (404, нет поля, не JSON) — честно
+    active: {},        // {имя: true} — мосты из строки #bridgeNote прямо сейчас
+    fetchLost: false,  // true — последняя попытка /config упала СЕТЕВОЙ ошибкой
+    lastOkAt: null,    // когда получен последний список (для честной строки)
+    lastAskAt: 0,      // троттлинт собственных запросов /config
+    devOverride: false,// ?dev=1: демо-кнопка перехватила управление
+    devState: null     // 'live' | 'sleep' | 'lost' — демо-состояние
+  };
+
+  /* --- чтение #bridgeNote: текст + hidden, только DOM --- */
+  function readActive() {
+    var map = {};
+    if (!liveNote || liveNote.classList.contains("hidden")) return map;
+    var t = (liveNote.textContent || "").trim();
+    if (!t) return map;
+    var body = t.replace(/^Мосты:\s*/, "");
+    var parts = body.split(",");
+    for (var i = 0; i < parts.length; i++) {
+      var n = parts[i].trim();
+      if (n) map[n] = true;
+    }
+    return map;
+  }
+
+  /* --- /config: один при старте + при открытии панели, троттлинт 60 с --- */
+  function normalizeBridges(raw) {
+    var out = [], seen = {};
+    for (var i = 0; i < raw.length; i++) {
+      var v = raw[i];
+      var n = (typeof v === "string") ? v.trim()
+            : (v && typeof v.name === "string") ? v.name.trim() : "";
+      if (n && !seen[n]) { seen[n] = true; out.push(n); }
+    }
+    return out;
+  }
+
+  function askConfig() {
+    var now = Date.now();
+    if (state.lastAskAt && now - state.lastAskAt < REFETCH_MS) return;
+    state.lastAskAt = now;
+    fetch("/config").then(function (r) {
+      if (!r.ok) { // 404 и иное «незнание» — НЕ поломка: честный сон
+        state.fetchLost = false;
+        state.configured = [];
+        state.saidNo = "дом не отдал список мостов (HTTP " + r.status + ")";
+        setBridgeStates();
+        return null;
+      }
+      return r.json();
+    }).then(function (c) {
+      if (c === null) return; // случай !r.ok уже разобран выше
+      state.fetchLost = false;
+      state.lastOkAt = now;
+      if (c && Array.isArray(c.bridges)) {
+        state.configured = normalizeBridges(c.bridges);
+        state.saidNo = null;
+      } else {
+        state.configured = [];
+        state.saidNo = (c && c.bridges !== undefined) ? "поле bridges — не массив" : "в ответе нет поля bridges";
+      }
+      setBridgeStates();
+    }).catch(function (e) {
+      if (e && e.name === "TypeError") { // сеть — единственный честный красный
+        state.fetchLost = true;
+      } else { // дом ответил, но не по-мостному — незнание, не поломка
+        state.fetchLost = false;
+        state.configured = [];
+        state.saidNo = "дом ответил, но список мостов разобрать не удалось";
+      }
+      setBridgeStates();
+    });
+  }
+
+  /* --- сборка имён: настроенные + активные (даже если не из списка) --- */
+  function rowNames() {
+    var seen = {}, out = [];
+    var conf = Array.isArray(state.configured) ? state.configured : [];
+    for (var i = 0; i < conf.length; i++) {
+      if (!seen[conf[i]]) { seen[conf[i]] = true; out.push(conf[i]); }
+    }
+    for (var k in state.active) {
+      if (state.active[k] && !seen[k]) { seen[k] = true; out.push(k); }
+    }
+    return out;
+  }
+
+  function isConfigured(name) {
+    return Array.isArray(state.configured) && state.configured.indexOf(name) !== -1;
+  }
+
+  function rowEl(row) {
+    var li = document.createElement("li");
+    li.className = "bridge-row";
+    li.setAttribute("data-state", row.st);
+    var dot = document.createElement("span");
+    dot.className = "bridge-dot";
+    dot.setAttribute("data-state", row.st);
+    dot.setAttribute("aria-hidden", "true");
+    var name = document.createElement("span");
+    name.className = "bridge-name";
+    name.textContent = row.name;
+    var word = document.createElement("span");
+    word.className = "bridge-word";
+    word.setAttribute("data-state", row.st);
+    word.textContent = WORDS[row.st] || "…";
+    li.appendChild(dot);
+    li.appendChild(name);
+    if (row.extra) {
+      var ex = document.createElement("span");
+      ex.className = "bridge-extra";
+      ex.textContent = row.extra;
+      li.appendChild(ex);
+    }
+    li.appendChild(word);
+    return li;
+  }
+
+  function briefText(names) {
+    if (state.devOverride && state.devState) return "демо · " + (WORDS[state.devState] || "…");
+    if (state.fetchLost) return "дом не отвечает";
+    var live = 0;
+    for (var i = 0; i < names.length; i++) if (state.active[names[i]]) live++;
+    if (!names.length) return Array.isArray(state.configured) ? "мостов нет" : "смотрим…";
+    if (live > 0) return Array.isArray(state.configured) ? "жив: " + live + " из " + names.length : "жив: " + live;
+    return "все спят";
+  }
+
+  function noteText() {
+    var t = "Как панель узнаёт: активные мосты — из строки «Мосты: …» (она оживает, когда ты в пространстве), " +
+      "настроенные — редкий запрос /config (при старте и при открытии панели, не чаще раза в минуту).";
+    if (state.fetchLost) {
+      t += " Последний запрос /config упал сетевой ошибкой: клиент не дошёл до дома. Красный здесь — про связь с домом, о самих мостах он не говорит.";
+      if (state.lastOkAt) {
+        var d = new Date(state.lastOkAt);
+        var pad = function (x) { return (x < 10 ? "0" : "") + x; };
+        t += " Последний удачный список: " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) + ".";
+      }
+    } else if (Array.isArray(state.configured) && !state.configured.length) {
+      t += state.saidNo
+        ? " Списка мостов нет (" + state.saidNo + ") — считаем, что мостов не настроено. Это не поломка, просто тихо."
+        : " Дом ответил: настроенных мостов нет — тихо, но это не поломка.";
+    }
+    if (state.devOverride && state.devState) {
+      t += " Демо-режим (?dev=1): показано выдуманное состояние; «следить за живым» вернёт настоящий.";
+    }
+    return t;
+  }
+
+  /* --- ЯКОРЬ ВОЛНЫ: единственная функция, рисующая статусы мостов --- */
+  function setBridgeStates() {
+    var rows = [], overall = "sleep", anyLive = false;
+    if (state.devOverride && state.devState) {
+      // демо ?dev=1: показываем выдуманное состояние на настоящем списке
+      // (если мосты неизвестны — честно создаём один демо-мост)
+      overall = state.devState;
+      var names = rowNames();
+      var added = false;
+      if (!names.length) { names = ["demo-мост"]; added = true; }
+      for (var i = 0; i < names.length; i++) {
+        rows.push({ name: names[i], st: overall, extra: added ? "демо-мост: его нет в доме" : "" });
+      }
+    } else {
+      var names2 = rowNames();
+      for (var j = 0; j < names2.length; j++) {
+        var nm = names2[j];
+        var st = state.active[nm] ? "live" : "sleep";
+        if (st === "live") anyLive = true;
+        var extra = (st === "live" && !isConfigured(nm)) ? "активен, но не в списке дома" : "";
+        rows.push({ name: nm, st: st, extra: extra });
+      }
+      if (state.fetchLost) {
+        // красный только на виденную поломку: связь с домом, не мосты
+        rows.unshift({ name: "связь с домом", st: "lost", extra: "запрос /config упал сетевой ошибкой" });
+        overall = "lost";
+      } else {
+        overall = anyLive ? "live" : "sleep";
+      }
+    }
+    list.textContent = "";
+    for (var r = 0; r < rows.length; r++) list.appendChild(rowEl(rows[r]));
+    panel.setAttribute("data-state", overall);
+    if (summaryDot) summaryDot.setAttribute("data-state", overall);
+    brief.textContent = briefText(rowNames());
+    panelNote.textContent = noteText();
+    for (var b = 0; b < devButtons.length; b++) {
+      devButtons[b].classList.toggle("is-active",
+        state.devOverride && devButtons[b].getAttribute("data-bridge-demo") === state.devState);
+    }
+  }
+
+  /* --- следим за #bridgeNote: текст + hidden (класс) --- */
+  if (window.MutationObserver && liveNote) {
+    new MutationObserver(function () {
+      state.active = readActive();
+      setBridgeStates();
+    }).observe(liveNote, {
+      attributes: true, attributeFilter: ["class"],
+      childList: true, characterData: true, subtree: true
+    });
+  }
+
+  /* --- перепросмотр /config: при открытии панели, троттлинт 60 с --- */
+  panel.addEventListener("toggle", function () {
+    if (panel.open) askConfig();
+  });
+
+  /* --- дев-бар мостов: ТОЛЬКО при ?dev=1 (закон 0.8.3); без него его нет --- */
+  if (new URLSearchParams(location.search).get("dev") === "1") {
+    var bar = document.createElement("div");
+    bar.className = "bridge-devbar";
+    bar.innerHTML = '<span class="bridge-devtag">дев-режим · мосты:</span>' +
+      ["live:мост жив", "sleep:всё спит", "lost:мост рвётся"].map(function (p) {
+        var kv = p.split(":");
+        return '<button type="button" data-bridge-demo="' + kv[0] + '">' + kv[1] + "</button>";
+      }).join("") +
+      '<button type="button" data-bridge-follow="1">следить за живым</button>';
+    panel.appendChild(bar);
+    devButtons = Array.prototype.slice.call(bar.querySelectorAll("[data-bridge-demo]"));
+    for (var d = 0; d < devButtons.length; d++) {
+      (function (btn) {
+        btn.addEventListener("click", function () {
+          state.devOverride = true;
+          state.devState = btn.getAttribute("data-bridge-demo");
+          setBridgeStates();
+        });
+      })(devButtons[d]);
+    }
+    var followBtn = bar.querySelector("[data-bridge-follow]");
+    if (followBtn) followBtn.addEventListener("click", function () {
+      state.devOverride = false;
+      state.devState = null;
+      setBridgeStates();
+    });
+  }
+
+  setBridgeStates(); // первая честная отрисовка: «смотрим…», пока дом не ответил
+  askConfig();       // один fetch при старте; дальше — при открытии панели, не чаще раза в 60 с
 })();
 </script>
 
