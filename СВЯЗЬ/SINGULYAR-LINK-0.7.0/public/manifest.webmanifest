@@ -1,7 +1,7 @@
 {
   "name": "СИНГУЛЯР · Единое окно",
   "short_name": "СИНГУЛЯР",
-  "description": "Один разговор для всех: ссылка открывается сразу, без облака и аккаунтов; установка — по желанию.",
+  "description": "Один разговор для всех: ссылка открывается сразу, без облака и аккаунтов. Живая связь идёт через мосты; без сети окно открывается офлайн и честно просит интернет.",
   "lang": "ru",
   "start_url": "./index.html",
   "scope": "./",
@@ -15,5 +15,25 @@
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "categories": ["communication"],
+  "screenshots": [
+    { "src": "screenshots/link-narrow-414x896.png", "sizes": "414x896", "type": "image/png", "form_factor": "narrow" },
+    { "src": "screenshots/link-wide-1280x800.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide" },
+    { "src": "screenshots/link-install-narrow-414x896.png", "sizes": "414x896", "type": "image/png", "form_factor": "narrow" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Открыть СВЯЗЬ",
+      "short_name": "СВЯЗЬ",
+      "url": "./index.html",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Как установить",
+      "short_name": "Установка",
+      "url": "./install.html",
+      "icons": [{ "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ]
 }

@@ -1,4 +1,4 @@
-const V = "svyaz-x20-0.2.1"; /* INSTALL-0.2.1: гибрид коробки поверх волны ×20. Меняешь состав коробки — подними имя, старые кэши сотрутся сами */
+const V = "svyaz-x20-0.3"; /* STORE-0.1: гибрид коробки поверх волны ×20 + скриншоты сторов в SHELL. Меняешь состав коробки — подними имя, старые кэши сотрутся сами */
 
 /* Обёртка — пути относительные: new URL(p, self.registration.scope) работает и в корне
    домена, и в подкаталоге (Pages-проект). Абсолютные «/» сломали бы скоуп — их тут нет.
@@ -22,7 +22,10 @@ const SHELL = [
   "icons/maskable-192.png",
   "icons/maskable-512.png",
   "icons/apple-touch-icon-180.png",
-  "icons/favicon-64.png"
+  "icons/favicon-64.png",
+  "screenshots/link-narrow-414x896.png",
+  "screenshots/link-wide-1280x800.png",
+  "screenshots/link-install-narrow-414x896.png"
 ];
 const SHELL_URLS = SHELL.map((p) => new URL(p, self.registration.scope).href);
 
