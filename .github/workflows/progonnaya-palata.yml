@@ -1,0 +1,174 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# ПАЛАТА ПРОВЕРОК 0.1 · волна 2026-11-21 · СИНГУЛЯР/СВЯЗЬ
+#
+# Зачем эта волна: у владельца «нет слуха, зрения и рук» — оболочку LINK
+# проверяет машина на каждом пуше, без реальных устройств. GitHub Actions
+# бесплатен на публичных репо — это и есть «онлайн-эмулятор» без чужих
+# сервисов (совет 8 от 2026-11-21).
+#
+# Два прогона:
+#   1) playwright-matrix — 6 честных проверок оболочки в матрице
+#      «браузер × вьюпорт»: Chromium / Firefox / WebKit × desktop / mobile;
+#   2) lighthouse — аудит PWA и производительности через Lighthouse CI
+#      на той же локальной оболочке. Первый прогон КАЛИБРОВОЧНЫЙ: жёстких
+#      порогов нет, только снимаем показания.
+#
+# Честные границы: палата проверяет ОБОЛОЧКУ (страница, кнопка установки,
+# Service Worker, кэш, слои), но НЕ живую связь — /ws, /config, /health,
+# /bridge* идут мимо кэша и мимо суда палаты.
+#
+# Секретов и ключей доступа здесь нет и быть не может: репо публичное,
+# всё проверяется без права записи куда-либо.
+# ═══════════════════════════════════════════════════════════════════════════
+
+name: ПАЛАТА-ПРОВЕРОК-0.1
+
+# Когда гонять: тронута оболочка СВЯЗЬ (именно она ставится как PWA)
+# или ручной запуск с вкладки Actions.
+on:
+  push:
+    paths:
+      - "СВЯЗЬ/**"
+  workflow_dispatch:
+
+# Минимум прав: палата только читает код и выкладывает артефакты прогона.
+permissions:
+  contents: read
+
+# Не копить очередь: новый пуш отменяет ещё не начавшийся предыдущий прогон.
+concurrency:
+  group: palata-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Прогон 1: матрица Playwright — «настоящие» браузеры без устройств ──
+  playwright-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false        # один браузер не топит остальных: сводка честная
+      matrix:
+        browser: [chromium, firefox, webkit]
+        viewport: [desktop, mobile]
+        include:
+          - viewport: desktop   # рабочий стол: широкое окно
+            width: 1280
+            height: 800
+          - viewport: mobile    # телефон: PWA чаще всего ставят отсюда
+            width: 414
+            height: 896
+    name: палата · ${{ matrix.browser }} · ${{ matrix.viewport }}
+    steps:
+      # Ступень 1. Код репо — без него проверять нечего.
+      - uses: actions/checkout@v4
+
+      # Ступень 2. Node 20 — среда для Playwright, http-server и palata.js.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Ступень 3. Драйвер Playwright + статический http-server для оболочки.
+      # Ставим в корень раннера — это одноразовая песочница, в репо ничего
+      # не пишется.
+      - name: поставить playwright + http-server
+        run: |
+          npm init -y
+          npm i playwright http-server
+
+      # Ступень 4. Сами браузеры с системными библиотеками — все три сразу,
+      # чтобы матрица была настоящей (WebKit — судьба Safari).
+      - name: поставить браузеры chromium firefox webkit
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      # Ступень 5. Поднять оболочку LINK локально: http-server отдаёт папку
+      # public/ как корень — абсолютные пути /app.js, /sw.js работают так же,
+      # как при деплое в корень домена. Ждём ответ 30 секунд, иначе падаем
+      # сразу с ясной причиной, а не с загадочным таймаутом проверок.
+      - name: поднять оболочку на 127.0.0.1:8080
+        run: |
+          npx http-server "СВЯЗЬ/SINGULYAR-LINK-0.7.0/public" -p 8080 -a 127.0.0.1 --silent &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/index.html >/dev/null 2>&1; then
+              echo "оболочка отвечает"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "оболочка не поднялась за 30 секунд"
+          exit 1
+
+      # Ступень 6. Сам прогон палаты: palata.js печатает по строке на каждую
+      # проверку и завершает журнал строкой-пломбой
+      # «ПЛОМБА ПАЛАТЫ: N/M проверок пройдено».
+      # Провал хотя бы одной проверки = провал ступени (exit 1).
+      - name: прогнать палату (6 проверок)
+        run: node palata/palata.js --browser ${{ matrix.browser }} --viewport ${{ matrix.viewport }} --width ${{ matrix.width }} --height ${{ matrix.height }}
+
+      # Ступень 7. Артефакты: palata-summary.json + скриншоты всех проверок.
+      # if: always() — артефакт нужен и при провале, чтобы разбирать без перегона.
+      - name: собрать артефакты (отчёт + скриншоты)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: palata-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: playwright-report/
+          if-no-files-found: warn
+
+  # ── Прогон 2: Lighthouse CI — метрики PWA и производительности ────────
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    name: палата · lighthouse (калибровка)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # @lhci/cli пиним на 0.13.0 осознанно: он несёт Lighthouse 11.4.0 —
+      # последнюю линию с категорией pwa (в Lighthouse 12.0.0 категорию
+      # удалили из-за обновлённых критериев установки Chrome, см. changelog
+      # Lighthouse). Без пина аудит установочности/офлайн молча исчез бы.
+      # http-server — тот же сервер, что и в матрице.
+      - name: поставить @lhci/cli (0.13.0 = lighthouse 11.4.0) + http-server
+        run: |
+          npm init -y
+          npm i @lhci/cli@0.13.0 http-server
+
+      # Тот же адрес, что и у матрицы: палата судит одну и ту же оболочку.
+      - name: поднять оболочку на 127.0.0.1:8080
+        run: |
+          npx http-server "СВЯЗЬ/SINGULYAR-LINK-0.7.0/public" -p 8080 -a 127.0.0.1 --silent &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/index.html >/dev/null 2>&1; then
+              echo "оболочка отвечает"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "оболочка не поднялась за 30 секунд"
+          exit 1
+
+      # collect: снять показания. Два прогона — чтобы отсечь шум первого
+      # замера; аудит по категориям performance и pwa (совет 8).
+      - name: lighthouse collect (снять показания)
+        run: npx lhci collect --config-file palata/lhci.config.json
+
+      # assert: первый прогон КАЛИБРОВОЧНЫЙ — жёстких порогов нет.
+      # Пороги категорий minScore: 0 (никогда не роняет), а установочность
+      # (groups:pwa-installable) и офлайн (works-offline) помечены off —
+      # калибровочные, их судьбу решает witness после сбора истории прогонов.
+      # Установочность и офлайн уже жёстко судит матрица (проверки 2–4).
+      - name: lighthouse assert (калибровочный, без жёстких порогов)
+        run: npx lhci assert --config-file palata/lhci.config.json
+
+      # Артефакт lhci/ — сырые JSON-отчёты Lighthouse: база для калибровки
+      # настоящих порогов в следующей волне.
+      - name: собрать артефакт lhci
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci
+          path: lhci/
+          if-no-files-found: warn
