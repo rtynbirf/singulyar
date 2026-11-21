@@ -11,6 +11,32 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
 <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
 <link rel="stylesheet" href="/style.css">
+  <!-- 0.8.2 ТУТОРИАЛ МОРЗЕ: стили волны — только новые классы .tutor-*,
+       ни один существующий селектор и переменная ×20 не тронуты. -->
+  <style>
+    /* вход: тихая кнопка, не конкурирует с клавишами морзе */
+    .tutor-entry{min-height:44px;font-size:.92em}
+    .tutor-dots{display:flex;gap:8px;align-items:center}
+    .tutor-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:transparent;flex:none}
+    .tutor-dot.is-done{background:var(--acc);border-color:var(--acc)}
+    .tutor-dot.is-now{background:var(--acc);border-color:var(--acc);transform:scale(1.2)}
+    .tutor-step{margin:0 0 .75rem}
+    .tutor-title{font-weight:700;font-size:1.15em;margin:.6rem 0 .2rem;color:var(--fg)}
+    .tutor-task{margin:0;font-size:1.1em;font-weight:600;color:var(--fg)}
+    .tutor-step--final .tutor-title{font-size:1.3em}
+    .tutor-big{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:2em;letter-spacing:.12em;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.6rem .5rem;margin:0 0 .75rem}
+    .tutor-buf-line{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:1.3em;letter-spacing:.15em;text-align:center;color:var(--mute);margin:0 0 .75rem}
+    .tutor-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 .75rem}
+    .tutor-actions{display:flex;gap:8px;margin:0 0 .75rem}
+    .tutor-actions button{flex:1}
+    .tutor-cheat{text-align:center;font-size:.95em;color:var(--mute);background:var(--bg);border-radius:8px;padding:.4rem .6rem;margin:0 0 .5rem}
+    .tutor-feedback{min-height:1.6em;text-align:center;font-weight:600;margin:0 0 .25rem;color:var(--fg)}
+    /* уважение prefers-reduced-motion: без анимаций и миганий, только смена состояний */
+    @media (prefers-reduced-motion: reduce){
+      .tutor-dot,.tutor-dots,.tutor-step,#tutor-body,#tutorDlg{transition:none!important;animation:none!important}
+      .tutor-dot.is-now{transform:none}
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -67,6 +93,7 @@
     <details class="adv">
       <summary>Ещё способы: морзе, брайль, перевод</summary>
       <label class="check"><input type="checkbox" id="nMorse"> <span>·− Морзе входящих — вибрацией и строкой</span></label>
+      <button id="btn-morse-tutor-adv" class="ghost tutor-entry" type="button" title="Тот же туториал, что у морзе-клавиатуры">·− можно научиться морзе</button>
       <label class="check"><input type="checkbox" id="nBraille"> <span>⠿ Брайль под сообщениями</span></label>
       <label class="check"><input type="checkbox" id="nTrans"> <span>🌐 Переводить мне — на устройстве, без облака</span></label>
       <label>Мой язык
@@ -96,6 +123,7 @@
           <button id="mLet">Буква</button>
           <button id="mWord">Слово</button>
           <button id="mBack" class="ghost">Стереть</button>
+          <button id="btn-morse-tutor" class="ghost tutor-entry" type="button" title="Учимся морзе: три коротких шага">Научиться</button>
         </div>
       </div>
     </section>
@@ -189,10 +217,280 @@
   </div>
 </div>
 
+<!-- Туториал морзе (0.8.2 → ×20): открывается ТОЛЬКО по кнопке — «Научиться» рядом
+     с морзе-клавиатурой (#morsePad) или тихий вход в «Ещё способы». Никогда сам.
+     Три шага: «А = ·−» (послушать) → «собери М: −−» → «собери МАМА»; финал — «Писать».
+     Закрытие в любой момент: ESC или «Потом». По финалу sg:morseTutor = "done". -->
+<div id="tutorDlg" class="modal hidden" role="dialog" aria-modal="true" aria-label="Учимся морзе" tabindex="-1">
+  <div class="sheet">
+    <div class="row">
+      <div class="tutor-dots" id="tutor-dots" aria-hidden="true"></div>
+      <button id="tutor-later" class="ghost" type="button">Потом</button>
+    </div>
+    <div id="tutor-step" class="tutor-step" aria-live="polite"></div>
+    <div id="tutor-body"></div>
+    <p class="tutor-cheat hidden" id="tutor-cheat">Шпаргалка: ·− это А, −− это М</p>
+    <p class="tutor-feedback" id="tutor-feedback" aria-live="polite" role="status"></p>
+  </div>
+</div>
+
 <div id="toast" class="toast hidden" role="alert"></div>
 <script src="/vendor/qrcode.js"></script>
 <script src="/app.js" type="module"></script>
 <script src="/duet.js" type="module"></script>
 <script src="/sloi.js"></script>
+<script>
+/* СИНГУЛЯР · туториал морзе — волна 0.8.2 поверх ×20 «Единое окно» (LINK-0.7.0).
+   Только добавления: ни один ключ, ID и строка логики ×20 не тронуты
+   (btnInstall, installDlg, data-room от sloi.js работают как работали).
+   Правила волны: туториал никогда не открывается сам; ESC и «Потом» закрывают
+   в любой момент; бипы WebAudio ТОЛЬКО по явному клику «Послушать», гейн 0.15 (≤0.2);
+   по финалу localStorage sg:morseTutor = "done"; кнопки остаются и после done. */
+(function () {
+  "use strict";
+  var TUTOR_KEY = "sg:morseTutor";
+  var TUTOR_STEPS = 4;                            // 3 шага + финал
+  var TUTOR_TARGET_LETTER = "--";                 // М
+  var TUTOR_TARGET_WORD = ["М", "А", "М", "А"];   // МАМА
+  var TUTOR_LETTERS = { ".-": "А", "--": "М" };   // урок знает только свои две буквы; полные таблицы — azbuki.js
+  var tutorStep = 0;   // 1..3 — шаги, 4 — финал, 0 — закрыт
+  var tutorBuf = "";   // текущая буква (символы . -)
+  var tutorWord = "";  // собранное слово
+  var tutorAC = null;  // WebAudio создаётся только по клику «Послушать»
+  var tutorReturnFocus = null;
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function tutorGlyphs(buf) {
+    return buf.split("").map(function (c) { return c === "." ? "·" : "−"; }).join("");
+  }
+
+  function tutorOpen(from) {
+    tutorReturnFocus = from || null;
+    tutorStep = 1;
+    tutorBuf = "";
+    tutorWord = "";
+    $("tutorDlg").classList.remove("hidden");
+    tutorRender();
+    $("tutorDlg").focus();
+    document.addEventListener("keydown", tutorOnKey);
+  }
+
+  function tutorClose() {
+    tutorStep = 0;
+    tutorBuf = "";
+    tutorWord = "";
+    $("tutorDlg").classList.add("hidden");
+    document.removeEventListener("keydown", tutorOnKey);
+    if (tutorReturnFocus && tutorReturnFocus.focus) tutorReturnFocus.focus();
+    tutorReturnFocus = null;
+  }
+
+  function tutorComplete() {
+    try { localStorage.setItem(TUTOR_KEY, "done"); } catch (e) { /* приватный режим: живёт один раз */ }
+  }
+
+  function tutorBeep(dur, when) {
+    var osc = tutorAC.createOscillator();
+    var gain = tutorAC.createGain();
+    osc.type = "sine";
+    osc.frequency.value = 700;
+    gain.gain.value = 0.15; // ≤ 0.2 — тихий учебный сигнал
+    osc.connect(gain);
+    gain.connect(tutorAC.destination);
+    osc.start(when);
+    osc.stop(when + dur);
+  }
+
+  function tutorListen() {
+    // звук ТОЛЬКО по этой кнопке: короткий ~80 мс + пауза + длинный ~240 мс («А = ·−»)
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      if (!tutorAC) tutorAC = new Ctx();
+      if (tutorAC.state === "suspended" && tutorAC.resume) {
+        var p = tutorAC.resume();
+        if (p && p.catch) p.catch(function () {});
+      }
+      var t0 = tutorAC.currentTime + 0.08;
+      tutorBeep(0.08, t0);
+      tutorBeep(0.24, t0 + 0.30);
+    } catch (e) { /* звука нет — урок продолжается глазами */ }
+  }
+
+  function tutorKeyBtn(label, handler) {
+    var b = el("button", "keybtn", label); // тот же класс, что у клавиш морзе ×20 (≥64px)
+    b.type = "button";
+    b.addEventListener("click", handler);
+    return b;
+  }
+
+  function tutorSay(text) { $("tutor-feedback").textContent = text; }
+
+  function tutorUpdateBuf() {
+    var bufEl = $("tutor-buf");
+    if (bufEl) bufEl.textContent = tutorBuf ? tutorGlyphs(tutorBuf) : "—";
+  }
+
+  function tutorUpdateWord() {
+    var wordEl = $("tutor-word");
+    if (!wordEl) return;
+    var parts = tutorWord.split("");
+    while (parts.length < TUTOR_TARGET_WORD.length) parts.push("_");
+    wordEl.textContent = parts.join(" ");
+  }
+
+  function tutorRender() {
+    var dots = $("tutor-dots");
+    dots.textContent = "";
+    for (var i = 1; i <= TUTOR_STEPS; i++) {
+      dots.appendChild(el("span", "tutor-dot" + (i < tutorStep ? " is-done" : (i === tutorStep ? " is-now" : ""))));
+    }
+
+    var step = $("tutor-step");
+    step.textContent = "";
+    step.classList.toggle("tutor-step--final", tutorStep === 4);
+    var body = $("tutor-body");
+    body.textContent = "";
+    tutorSay("");
+    $("tutor-cheat").classList.toggle("hidden", tutorStep < 2 || tutorStep > 3);
+
+    if (tutorStep === 1) {
+      step.appendChild(el("p", "tutor-title", "Посмотри и послушай"));
+      body.appendChild(el("div", "tutor-big", "А = ·−"));
+      var row = el("div", "tutor-actions");
+      var listen = el("button", "", "Послушать");
+      listen.type = "button";
+      listen.id = "tutor-listen";
+      listen.addEventListener("click", tutorListen);
+      var next = el("button", "primary", "Дальше");
+      next.type = "button";
+      next.id = "tutor-next";
+      next.addEventListener("click", function () { tutorStep = 2; tutorBuf = ""; tutorRender(); $("tutorDlg").focus(); });
+      row.appendChild(listen);
+      row.appendChild(next);
+      body.appendChild(row);
+    }
+
+    if (tutorStep === 2) {
+      step.appendChild(el("p", "tutor-title", "Собери букву"));
+      step.appendChild(el("p", "tutor-task", "Собери М: −−"));
+      var buf = el("div", "tutor-big", "—");
+      buf.id = "tutor-buf";
+      body.appendChild(buf);
+      var keys = el("div", "tutor-keys");
+      keys.appendChild(tutorKeyBtn("·", function () { tutorBuf += "."; tutorUpdateBuf(); }));
+      keys.appendChild(tutorKeyBtn("−", function () { tutorBuf += "-"; tutorUpdateBuf(); }));
+      keys.appendChild(tutorKeyBtn("Буква", tutorLetterStep2));
+      keys.appendChild(tutorKeyBtn("Стереть", function () { tutorBuf = tutorBuf.slice(0, -1); tutorUpdateBuf(); }));
+      body.appendChild(keys);
+      var next2 = el("button", "primary hidden", "Дальше");
+      next2.type = "button";
+      next2.id = "tutor-next2";
+      next2.addEventListener("click", function () { tutorStep = 3; tutorBuf = ""; tutorWord = ""; tutorRender(); $("tutorDlg").focus(); });
+      body.appendChild(next2);
+    }
+
+    if (tutorStep === 3) {
+      step.appendChild(el("p", "tutor-title", "Собери слово"));
+      step.appendChild(el("p", "tutor-task", "Собери МАМА"));
+      var word = el("div", "tutor-big", "");
+      word.id = "tutor-word";
+      body.appendChild(word);
+      var line = el("div", "tutor-buf-line", "—");
+      line.id = "tutor-buf";
+      body.appendChild(line);
+      var keys3 = el("div", "tutor-keys");
+      keys3.appendChild(tutorKeyBtn("·", function () { tutorBuf += "."; tutorUpdateBuf(); }));
+      keys3.appendChild(tutorKeyBtn("−", function () { tutorBuf += "-"; tutorUpdateBuf(); }));
+      keys3.appendChild(tutorKeyBtn("Буква", tutorLetterStep3));
+      keys3.appendChild(tutorKeyBtn("Стереть", function () {
+        if (tutorBuf) { tutorBuf = tutorBuf.slice(0, -1); }
+        else if (tutorWord) { tutorWord = tutorWord.slice(0, -1); tutorUpdateWord(); }
+        tutorUpdateBuf();
+      }));
+      body.appendChild(keys3);
+      tutorUpdateWord();
+    }
+
+    if (tutorStep === 4) {
+      step.appendChild(el("p", "tutor-title", "МАМА. Дальше — просто пишите: клавиатура морзе уже здесь."));
+      var write = el("button", "primary", "Писать");
+      write.type = "button";
+      write.id = "tutor-write";
+      write.addEventListener("click", tutorClose);
+      body.appendChild(write);
+    }
+  }
+
+  function tutorLetterStep2() {
+    if (tutorBuf === TUTOR_TARGET_LETTER) {
+      tutorSay("А вот и М — первая твоя буква");
+      tutorBuf = "";
+      tutorUpdateBuf();
+      $("tutor-next2").classList.remove("hidden");
+    } else {
+      tutorSay("Почти. М — это −−. Попробуй ещё раз");
+      tutorBuf = "";
+      tutorUpdateBuf();
+    }
+  }
+
+  function tutorLetterStep3() {
+    var letter = TUTOR_LETTERS[tutorBuf];
+    if (!letter) {
+      tutorSay("Почти. Проверь шпаргалку и попробуй ещё раз");
+      tutorBuf = "";
+      tutorUpdateBuf();
+      return;
+    }
+    var expected = TUTOR_TARGET_WORD[tutorWord.length];
+    if (letter !== expected) {
+      tutorSay("Почти. Дальше идёт " + expected + ". Попробуй ещё раз");
+      tutorBuf = "";
+      tutorUpdateBuf();
+      return;
+    }
+    tutorWord += letter;
+    tutorBuf = "";
+    tutorUpdateWord();
+    tutorUpdateBuf();
+    if (tutorWord.length === TUTOR_TARGET_WORD.length) {
+      tutorStep = 4;
+      tutorComplete();
+      tutorRender();
+      $("tutorDlg").focus();
+    }
+  }
+
+  function tutorOnKey(e) {
+    if (tutorStep === 0) return;
+    if (e.key === "Escape") { e.preventDefault(); tutorClose(); return; }
+    if (e.key === "Tab") {
+      var items = Array.prototype.slice.call($("tutorDlg").querySelectorAll("button:not(.hidden)"));
+      if (!items.length) return;
+      var active = document.activeElement;
+      var inside = active && $("tutorDlg").contains(active);
+      if (e.shiftKey && (active === items[0] || !inside)) { e.preventDefault(); items[items.length - 1].focus(); }
+      else if (!e.shiftKey && (active === items[items.length - 1] || !inside)) { e.preventDefault(); items[0].focus(); }
+    }
+  }
+
+  // входы: только по явному клику, никогда сам
+  var entryPad = $("btn-morse-tutor");
+  if (entryPad) entryPad.addEventListener("click", function () { tutorOpen(entryPad); });
+  var entryAdv = $("btn-morse-tutor-adv");
+  if (entryAdv) entryAdv.addEventListener("click", function () { tutorOpen(entryAdv); });
+  var later = $("tutor-later");
+  if (later) later.addEventListener("click", tutorClose);
+})();
+</script>
+
 </body>
 </html>
