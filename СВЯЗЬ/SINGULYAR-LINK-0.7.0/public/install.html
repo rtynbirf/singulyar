@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0e1116">
+<title>СВЯЗЬ — как поставить на устройство</title>
+<style>
+/* Цвета взяты 1:1 из scripts/data/link07_style.css (:root, тёмная тема по умолчанию) */
+:root{--bg:#0e1116;--card:#171b22;--line:#262c36;--fg:#e8ecf2;--mute:#8c97a8;--acc:#4ade80;--accfg:#06240f;--bad:#f87171;--rad:14px;--warnbg:rgba(250,204,21,.09);--warnline:rgba(250,204,21,.38);--warnfg:#fde68a;font-size:16px}
+@media (prefers-color-scheme:light){:root{--bg:#f4f6f9;--card:#fff;--line:#dde2ea;--fg:#141a22;--mute:#5b6676;--acc:#16a34a;--accfg:#fff;--bad:#dc2626;--warnbg:#fef9c3;--warnline:#fde047;--warnfg:#713f12}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.06em}
+.brand small{font-weight:500;color:var(--mute);letter-spacing:0;margin-left:6px}
+#headNote{color:var(--mute);font-size:.85rem;text-align:right}
+.dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--acc);margin-right:4px}
+#fileNote{margin:0;padding:10px 16px;font-size:.85rem;background:var(--warnbg);border-bottom:1px solid var(--warnline);color:var(--warnfg)}
+main{max-width:640px;margin:0 auto;padding:16px 16px 32px}
+h1{margin:.1em 0 .4em;font-size:1.5rem}
+h2{margin:0 0 6px;font-size:1.15rem}
+p{color:var(--mute);margin:.4em 0}
+.lead{color:var(--fg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:18px;margin-top:14px}
+.note{font-size:.85rem;color:var(--mute)}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:10px 14px;border-radius:10px;min-height:44px}
+button:hover{border-color:var(--mute)}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+button.primary{background:var(--acc);color:var(--accfg);border-color:transparent;font-weight:700}
+button.big{width:100%;padding:14px;font-size:1.05rem}
+button[aria-pressed=true]{background:var(--acc);color:var(--accfg);border-color:transparent}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{min-height:44px;border-radius:99px;padding:8px 16px}
+#guessLine{color:var(--fg);margin:0}
+#guessName{color:var(--acc)}
+#btnInstall{margin-bottom:12px}
+#zoneNote{margin:0 0 12px;color:var(--mute)}
+#zoneNote.ok{color:var(--acc);font-weight:600}
+ol.steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:step}
+ol.steps li{counter-increment:step;display:flex;gap:12px;align-items:flex-start;min-height:44px;padding:8px 0;color:var(--fg);font-size:1.02rem}
+ol.steps li::before{content:counter(step);flex:none;width:32px;height:32px;border-radius:50%;background:var(--acc);color:var(--accfg);font-weight:800;font-size:1rem;display:grid;place-items:center}
+ol.steps li span{padding-top:4px}
+ul.plain{list-style:none;margin:8px 0 0;padding:0}
+ul.plain li{display:flex;gap:10px;align-items:flex-start;min-height:40px;padding:6px 0;color:var(--fg)}
+ul.plain li::before{content:"✓";flex:none;color:var(--acc);font-weight:800}
+#philosophy{color:var(--fg);font-weight:600;margin:14px 0 0}
+@media (prefers-reduced-motion:no-preference){button{transition:border-color .15s,background .15s}}
+</style>
+</head>
+<body>
+
+<div id="fileNote" class="hidden" role="status">Ты открыл файл с диска — установка отсюда не включится. Открой СВЯЗЬ по ссылке http(s) (например, на GitHub Pages) — тогда всё сработает.</div>
+
+<header>
+  <div class="brand"><span class="dot"></span> СВЯЗЬ <small>один разговор для всех</small></div>
+  <div id="headNote">установка — по желанию</div>
+</header>
+
+<main>
+  <h1>СВЯЗЬ — как поставить на устройство</h1>
+  <p class="lead">СВЯЗЬ работает и без установки — ссылку из СМС или WhatsApp можно просто открыть. Установка — по желанию: иконка на экране и отдельное окно.</p>
+
+  <noscript><p class="note">Без JavaScript эта страница не определит платформу и не покажет кнопку — но СВЯЗЬ и так работает по ссылке.</p></noscript>
+
+  <section class="card">
+    <p id="guessLine">Мы думаем, у тебя: <b id="guessName">…</b></p>
+    <p class="note">Не угадали? Выбери вручную:</p>
+    <div class="chips" role="group" aria-label="Платформа — ручной выбор">
+      <button type="button" class="chip" data-p="ios" aria-pressed="false">iOS</button>
+      <button type="button" class="chip" data-p="ipados" aria-pressed="false">iPadOS</button>
+      <button type="button" class="chip" data-p="android" aria-pressed="false">Android</button>
+      <button type="button" class="chip" data-p="windows" aria-pressed="false">Windows</button>
+      <button type="button" class="chip" data-p="macos" aria-pressed="false">macOS</button>
+      <button type="button" class="chip" data-p="harmony" aria-pressed="false">HarmonyOS</button>
+      <button type="button" class="chip" data-p="other" aria-pressed="false">Другое</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div id="actionZone">
+      <button id="btnInstall" class="primary big hidden" type="button">Установить СВЯЗЬ</button>
+      <p id="zoneNote" class="hidden" role="status"></p>
+    </div>
+    <h2 id="cardTitle">…</h2>
+    <div id="stepsBox" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <h2>Что даёт установка</h2>
+    <ul class="plain">
+      <li>Иконка на экране.</li>
+      <li>Открывается отдельным окном, без адресной строки.</li>
+      <li>Откроется без сети (интерфейс — да; живая связь — когда сеть вернётся, скажет сам).</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Честно</h2>
+    <ul class="plain">
+      <li>Установка ничего не добавляет в систему сверх иконки.</li>
+      <li>Удаляется как обычное приложение.</li>
+      <li>Профиль живёт в устройстве (sg:*), облака нет.</li>
+    </ul>
+    <p id="philosophy">Если не хочется ничего ставить — не ставь: ссылка из СМС/WhatsApp уже работает.</p>
+  </section>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+
+/* Детект платформы: userAgent + maxTouchPoints.
+   Чистая функция — вызывается с подставными UA в тестах. */
+function detectPlatform(ua, touchPoints){
+  var u = String(ua || '');
+  var t = (typeof touchPoints === 'number') ? touchPoints : (Number(touchPoints) || 0);
+  if (/HarmonyOS|OpenHarmony/i.test(u)) return 'harmony';
+  if (/iPad/i.test(u)) return 'ipados';
+  if (/iPhone|iPod/i.test(u)) return 'ios';
+  if (/Macintosh/i.test(u) && t > 0) return 'ipados';
+  if (/Android/i.test(u)) return 'android';
+  if (/Windows/i.test(u)) return 'windows';
+  if (/Mac OS X|Macintosh/i.test(u)) return 'macos';
+  return 'other';
+}
+
+var PLAT = {
+  ios: { name:'iOS', title:'Как поставить на iPhone',
+    steps:['Открой ссылку в Safari.','Кнопка „Поделиться“ (квадрат со стрелкой вверх).','„На экран „Домой““.','„Добавить“.'],
+    note:'Chrome на айфоне так не умеет — нужен Safari.' },
+  ipados: { name:'iPadOS', title:'Как поставить на iPad',
+    steps:['Открой ссылку в Safari.','Кнопка „Поделиться“ (квадрат со стрелкой вверх).','„На экран „Домой““.','„Добавить“.'],
+    note:'Chrome на iPad так не умеет — нужен Safari.' },
+  android: { name:'Android', title:'Как поставить на Android',
+    steps:['Открой ссылку в Chrome.','Меню (три точки).','„Установить приложение“.'],
+    note:'Если кнопка „Установить“ выше живая — жми её, это быстрее.' },
+  windows: { name:'Windows', title:'Как поставить на Windows',
+    steps:['Открой ссылку в Edge или Chrome.','Значок установки в правой части адресной строки.','„Установить“.'],
+    note:'' },
+  macos: { name:'macOS', title:'Как поставить на Mac',
+    steps:['Safari 17+: „Файл“ → „Добавить в Dock“.','Chrome или Edge: значок установки в адресной строке.'],
+    note:'' },
+  harmony: { name:'HarmonyOS', title:'Как поставить на HarmonyOS',
+    steps:['Браузер Huawei → меню → „Добавить на главный экран“.'],
+    note:'Если пункта нет — СВЯЗЬ работает и просто по ссылке, установка не обязательна.' },
+  other: { name:'Другое', title:'Общий путь — любой браузер',
+    steps:['Открой ссылку в браузере.','Открой меню браузера.','„Добавить на главный экран“ или „Установить приложение“.'],
+    note:'Если такого пункта нет — СВЯЗЬ работает и просто по ссылке.' }
+};
+
+var current = detectPlatform(navigator.userAgent, navigator.maxTouchPoints);
+var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+
+function syncChips(){
+  chips.forEach(function(c){
+    c.setAttribute('aria-pressed', c.getAttribute('data-p') === current ? 'true' : 'false');
+  });
+}
+function renderCard(){
+  var d = PLAT[current];
+  $('guessName').textContent = d.name;
+  $('cardTitle').textContent = d.title;
+  var box = $('stepsBox');
+  while (box.firstChild) box.removeChild(box.firstChild);
+  var ol = document.createElement('ol');
+  ol.className = 'steps';
+  d.steps.forEach(function(s){
+    var li = document.createElement('li');
+    var span = document.createElement('span');
+    span.textContent = s;
+    li.appendChild(span);
+    ol.appendChild(li);
+  });
+  box.appendChild(ol);
+  if (d.note){
+    var p = document.createElement('p');
+    p.className = 'note';
+    p.textContent = d.note;
+    box.appendChild(p);
+  }
+}
+chips.forEach(function(c){
+  c.addEventListener('click', function(){
+    current = c.getAttribute('data-p');
+    syncChips();
+    renderCard();
+  });
+});
+syncChips();
+renderCard();
+
+/* file:// — честная граница */
+if (location.protocol === 'file:'){ $('fileNote').classList.remove('hidden'); }
+
+/* Кнопка «Установить»: живёт только пока жив beforeinstallprompt */
+var deferredPrompt = null;
+var promptSeen = false;
+var installed = false;
+var btn = $('btnInstall');
+var zoneNote = $('zoneNote');
+
+function showZoneNote(text, ok){
+  zoneNote.textContent = text;
+  zoneNote.className = ok ? 'ok' : '';
+  zoneNote.classList.remove('hidden');
+}
+function hideZoneNote(){ zoneNote.classList.add('hidden'); }
+
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredPrompt = e;
+  promptSeen = true;
+  hideZoneNote();
+  btn.classList.remove('hidden');
+});
+window.addEventListener('appinstalled', function(){
+  installed = true;
+  btn.classList.add('hidden');
+  showZoneNote('Готово — ищи СВЯЗЬ на экране „Домой“/в меню.', true);
+});
+btn.addEventListener('click', function(){
+  if (!deferredPrompt) return;
+  var dp = deferredPrompt;
+  deferredPrompt = null;
+  btn.classList.add('hidden');
+  dp.prompt();
+  if (dp.userChoice && typeof dp.userChoice.then === 'function'){
+    dp.userChoice.then(function(res){
+      if (res && res.outcome === 'accepted'){
+        showZoneNote('Ставлю — иконка появится сама.', true);
+      } else {
+        showZoneNote('Ладно, без установки — ссылка из СМС или WhatsApp и так работает.');
+      }
+    });
+  }
+});
+/* Событие не пришло за 3 с — мёртвой кнопки не будет: честная строка вместо неё */
+setTimeout(function(){
+  if (!promptSeen && !installed){
+    showZoneNote('Кнопка „Установить“ здесь не появится — ставь через меню браузера: точные шаги ниже.');
+  }
+}, 3000);
+})();
+</script>
+</body>
+</html>
