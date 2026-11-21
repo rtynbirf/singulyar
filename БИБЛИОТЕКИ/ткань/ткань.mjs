@@ -28,6 +28,6 @@ export const ТКАНЬ = {
   name: 'singulyar-tkan',
   version: '1.0.0',
   протокол: 'SNG-P2P/1',
-  закон: 'MEANING ≠ TRANSPORT · REPRESENTATION ≠ OBJECT · REPRESENTATION ≠ DIRECT ACCESS · PERSON ≠ DEVICE',
+  закон: 'MEANING ≠ TRANSPORT · REPRESENTATION ≠ OBJECT · ПРЕДСТАВЛЕНИЕ ≠ ПРЯМОЙ ДОСТУП · PERSON ≠ DEVICE',
   словоТакта: 'v1.41.0 «ТКАНЬ» — реализовать ТЗ выбрав свой путь; Атари-пиктограммы выкурены'
 };
