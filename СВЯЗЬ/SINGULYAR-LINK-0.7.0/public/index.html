@@ -9,6 +9,44 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<style>
+/* ============================================================
+   ВОЛНА 0.8.3 «ЗЕЛЁНЫЙ ОРАКУЛ» на базе ×20 — ТОЛЬКО ДОБАВЛЕНИЯ.
+   Главный закон волны: красный перестал быть фоном дома.
+   Зелёный (ok) — ФОН ДОМА, обычное состояние связи.
+   Янтарный (sleep) — «вышел / пусто / спит»: ожидание, НЕ поломка.
+   Красный (lost) — ТОЛЬКО реальная поломка связи, всегда с действием
+   «Проверить связь». Оракул не мигает и не пульсирует: никаких
+   анимаций вовсе, поэтому при prefers-reduced-motion отключать
+   нечего (страховочная проверка ниже всё равно добавлена).
+   ============================================================ */
+.oracle{
+  display:flex;align-items:center;gap:10px;
+  min-height:40px;padding:8px 14px;
+  font-size:.9rem;border:1px solid var(--line);border-radius:var(--rad);
+  background:color-mix(in srgb,var(--acc) 8%,var(--card));
+}
+.oracle-dot{width:9px;height:9px;border-radius:50%;background:var(--acc);flex:none}
+.oracle-text{flex:1;min-width:0;color:var(--fg)}
+.oracle[data-state="sleep"]{background:color-mix(in srgb,#f59e0b 12%,var(--card));border-color:color-mix(in srgb,#f59e0b 55%,var(--line))}
+.oracle[data-state="sleep"] .oracle-dot{background:#f59e0b}
+.oracle[data-state="lost"]{background:color-mix(in srgb,var(--bad) 10%,var(--card));border-color:color-mix(in srgb,var(--bad) 55%,var(--line));color:var(--bad)}
+.oracle[data-state="lost"] .oracle-dot{background:var(--bad)}
+/* тихий ok (правило 4): полоса-фон остаётся, текста-подсказки нет */
+.oracle.is-quiet .oracle-text{display:none}
+.oracle-retry{flex:none;min-height:40px;padding:4px 14px;border-radius:999px;font-weight:600;color:#fff;background:var(--bad);border:none}
+.oracle-retry:disabled{opacity:.7;cursor:default}
+/* в сетке комнаты оракул — своя строка на всю ширину: сразу под шапкой, над лентой сообщений */
+#view-room > .oracle{grid-column:1/-1}
+#view-room > .oracle ~ .chat{height:calc(100dvh - 176px)}
+/* оракул не анимируется вовсе — уважаем prefers-reduced-motion по умолчанию */
+@media (prefers-reduced-motion:reduce){.oracle,.oracle *{animation:none!important;transition:none!important}}
+/* дев-бар оракула: существует ТОЛЬКО при ?dev=1 (добавляет скрипт волны) */
+.oracle-devbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 12px;border:1px dashed #f59e0b;border-radius:var(--rad);background:color-mix(in srgb,#f59e0b 10%,var(--card));font-size:.85rem}
+.oracle-devbar button{min-height:36px;padding:4px 12px;border-radius:999px;font-size:.85rem}
+.oracle-devbar button.is-active{background:var(--acc);color:var(--accfg);border-color:transparent}
+.oracle-devbar .oracle-devtag{color:var(--mute)}
+</style>
 <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
 <link rel="stylesheet" href="/style.css">
   <!-- 0.8.2 ТУТОРИАЛ МОРЗЕ: стили волны — только новые классы .tutor-*,
@@ -105,6 +143,32 @@
 
   <!-- 3. КОМНАТА · разговор в центре, управление по краям; на телефоне чат сверху -->
   <section id="view-room" class="room hidden">
+
+    <!-- ===== 0.8.3 ОРАКУЛ: тихая строка связи (в комнате всегда, зелёный — ФОН ДОМА) =====
+         Позиция: под шапкой комнаты и над лентой сообщений #messages. В ×20 у section#view-room
+         нет собственного хедера — шапкой комнаты служит общий <header> (бренд с лампой #dot
+         и пилюля #status; в комнате она показывает «в пространстве · N чел.»), поэтому оракул
+         поставлен первым элементом внутри section#view-room — сразу под этой шапкой.
+         ПРАВИЛА ОРАКУЛА (продублированы в JS-блоке «ОРАКУЛ» и в README-0.8.3-x20.md):
+           1) Зелёный (ok) — ФОН ДОМА по умолчанию; оракул в комнате всегда.
+           2) Янтарный (sleep) — «вышел», «пусто», «спит» (соединяюсь, не в комнате,
+              мост отдыхает): ожидание, а НЕ поломка. Красный сюда ЗАПРЕЩЁН —
+              это главный закон волны 0.8.3.
+           3) Красный (lost) — ТОЛЬКО реальная поломка связи («связь потеряна,
+              переподключаюсь…») и всегда с действием «Проверить связь» (~1.2 с → зелёный).
+           4) Подсказка следующего шага — максимум одна строка; «Связь вернулась»
+              показывается один раз за сессию, затем — тихий зелёный.
+         Одно состояние за раз: data-state="ok" | "sleep" | "lost" (функция setOracle()).
+         Оракул ЧИТАЕТ лампу #dot и пилюлю #status (их пишет setStatus в app.js) и не
+         конфликтует со sloi.js: тот, как и раньше, вешает data-room=in|out по #dot — не тронут.
+         Не мигает, не пульсирует: никаких анимаций; при prefers-reduced-motion
+         меняются только текст и цвет — как и без него. -->
+    <div class="oracle" id="oracle" data-state="ok" role="status" aria-live="polite">
+      <span class="oracle-dot" aria-hidden="true"></span>
+      <span class="oracle-text" id="oracle-text">Всё в порядке — пишите, дойдёт.</span>
+      <button class="oracle-retry hidden" type="button" id="oracle-retry">Проверить связь</button>
+    </div>
+
     <section class="card chat">
       <div id="messages" class="messages" aria-live="polite"></div>
       <div id="live" class="live" aria-live="polite"></div>
@@ -221,6 +285,126 @@
      с морзе-клавиатурой (#morsePad) или тихий вход в «Ещё способы». Никогда сам.
      Три шага: «А = ·−» (послушать) → «собери М: −−» → «собери МАМА»; финал — «Писать».
      Закрытие в любой момент: ESC или «Потом». По финалу sg:morseTutor = "done". -->
+<script>
+/* =========================================================
+   ОРАКУЛ (0.8.3) на базе ×20 «Единое окно» — волна ТОЛЬКО-ДОБАВЛЕНИЯ.
+   Ни один существующий ключ, ID и строка логики ×20 не тронуты:
+   app.js / sloi.js / style.css / index-разметка не изменены. Оракул
+   только ЧИТАЕТ лампу #dot и пилюлю #status (их пишет setStatus в
+   app.js); sloi.js, как и раньше, вешает data-room=in|out по #dot —
+   наблюдатель оракула тому не мешает.
+   ПРАВИЛА ОРАКУЛА (продублированы комментарием у #oracle в HTML
+   и разделом «Правила оракула» в README-0.8.3-x20.md):
+   1) Зелёный (ok) — ФОН ДОМА: обычное состояние связи; оракул в комнате всегда.
+   2) Янтарный (sleep) — «вышел», «пусто», «спит» («соединяюсь…», «не в комнате»):
+      ожидание, а не поломка. КРАСНЫЙ СЮДА ЗАПРЕЩЁН — главный закон волны.
+   3) Красный (lost) — ТОЛЬКО реальная поломка связи («связь потеряна,
+      переподключаюсь…»), и всегда с действием «Проверить связь» (~1.2 с → ok).
+   4) Подсказка следующего шага — максимум одна строка; «Связь вернулась»
+      показывается один раз за сессию, затем — тихий зелёный.
+   Без ?dev=1 демо-кнопок нет: состояние ведут лампа и статус приложения.
+   Оракул не мигает и не пульсирует: меняются только текст и цвет.
+   ========================================================= */
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var oracle = $("oracle"), oracleText = $("oracle-text"), retry = $("oracle-retry");
+  if (!oracle || !oracleText || !retry) return;
+
+  var ORACLE_TEXTS = {
+    ok:    "Всё в порядке — пишите, дойдёт.",
+    sleep: "Связь спит: соединяемся или вы вышли — сообщение подождёт и уйдёт само, когда связь проснётся.",
+    lost:  "Связи нет. Написанное сохранится — уйдёт, когда связь вернётся."
+  };
+  var ORACLE_BACK_TEXT = "Связь вернулась"; // правило 4: один раз за сессию
+  var ORACLE_CHECK_MS = 1200;               // «Проверить связь»: ~1.2 с ожидания → ok
+
+  var state = { oracle: "ok" }; // текущее состояние оракула: 'ok' | 'sleep' | 'lost'
+  var backTimer = null;         // таймер «Связь вернулась» → снова тихий зелёный
+  var checkTimer = null;        // таймер проверки связи (~1.2 с)
+  var backShown = false;        // правило 4: подсказка уже была в этой сессии
+  var devOverride = false;      // ?dev=1: демо-кнопка перехватила управление
+  var devButtons = [];          // кнопки «оракул: жив / мост спит / связь рвётся»
+
+  /* --- синхронизация с лампой #dot и пилюлей #status (только чтение) ---
+     Красный рождается ОДНОЙ строкой ниже: только на «связь потеряна».
+     Всё остальное («соединяюсь…», «не в комнате» — вышел, пусто) — янтарный sleep. */
+  var dot = $("dot"), statusPill = $("status");
+  function appState() {
+    var t = statusPill ? (statusPill.textContent || "") : "";
+    if (t.indexOf("связь потеряна") !== -1) return "lost"; // реальная поломка — единственный красный
+    if (dot && dot.classList.contains("on") && t.indexOf("в пространстве") !== -1) return "ok"; // связь жива — фон дома
+    return "sleep"; // «соединяюсь…», «не в комнате» (вышел), пусто — янтарный, НЕ красный
+  }
+  function syncWithApp() {
+    if (devOverride) return; // демо-режим держит управление, пока его не отпустят
+    setOracle(appState());
+  }
+
+  function setOracle(next, opts) {
+    opts = opts || {};
+    if (next !== "ok") { clearTimeout(backTimer); backTimer = null; clearTimeout(checkTimer); checkTimer = null; }
+    state.oracle = next;
+    oracle.setAttribute("data-state", next);
+    var quiet = next === "ok" && !!opts.quiet; // тихий зелёный: полоса есть, подсказки нет
+    oracle.classList.toggle("is-quiet", quiet);
+    oracleText.textContent = quiet ? "" : (opts.notice || ORACLE_TEXTS[next]);
+    retry.classList.toggle("hidden", next !== "lost");
+    if (next === "lost") { retry.disabled = false; retry.textContent = "Проверить связь"; }
+    for (var i = 0; i < devButtons.length; i++) {
+      devButtons[i].classList.toggle("is-active", devButtons[i].getAttribute("data-oracle") === state.oracle);
+    }
+  }
+
+  function checkOracleConnection() {
+    // «Проверить связь»: ~1.2 с «Проверяем…» → зелёный «Связь вернулась» → тихий зелёный
+    if (checkTimer || state.oracle !== "lost") return;
+    retry.disabled = true;
+    retry.textContent = "Проверяем…";
+    checkTimer = setTimeout(function () {
+      checkTimer = null;
+      if (state.oracle !== "lost") return; // состояние сменили демо-кнопкой — не мешаем
+      devOverride = false;                 // проверка вернула связь — снова слушаем лампу
+      if (backShown) setOracle("ok");
+      else { backShown = true; setOracle("ok", { notice: ORACLE_BACK_TEXT }); }
+      backTimer = setTimeout(function () { setOracle("ok", { quiet: true }); }, 2200); // правило 4
+    }, ORACLE_CHECK_MS);
+  }
+  retry.addEventListener("click", checkOracleConnection);
+
+  /* --- оракул слушает пилюлю #status и лампу #dot; sloi.js не тронут --- */
+  if (window.MutationObserver && statusPill) {
+    new MutationObserver(syncWithApp).observe(statusPill, { childList: true, characterData: true, subtree: true });
+  }
+  if (window.MutationObserver && dot) {
+    new MutationObserver(syncWithApp).observe(dot, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  /* --- дев-бар оракула: ТОЛЬКО при ?dev=1; в обычной загрузке его нет --- */
+  if (new URLSearchParams(location.search).get("dev") === "1") {
+    var bar = document.createElement("div");
+    bar.className = "oracle-devbar";
+    bar.innerHTML = '<span class="oracle-devtag">дев-режим · оракул:</span>' +
+      ["ok:жив", "sleep:мост спит", "lost:связь рвётся"].map(function (p) {
+        var kv = p.split(":");
+        return '<button type="button" data-oracle="' + kv[0] + '">' + kv[1] + "</button>";
+      }).join("") +
+      '<button type="button" data-follow="1">следить за лампой</button>';
+    document.body.appendChild(bar);
+    devButtons = Array.prototype.slice.call(bar.querySelectorAll("[data-oracle]"));
+    devButtons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        devOverride = true;
+        setOracle(b.getAttribute("data-oracle"));
+      });
+    });
+    var follow = bar.querySelector("[data-follow]");
+    follow.addEventListener("click", function () { devOverride = false; syncWithApp(); });
+  }
+
+  setOracle("ok"); // 0.8.3: оракул стартует зелёным фоном дома
+})();
+</script>
 <div id="tutorDlg" class="modal hidden" role="dialog" aria-modal="true" aria-label="Учимся морзе" tabindex="-1">
   <div class="sheet">
     <div class="row">
