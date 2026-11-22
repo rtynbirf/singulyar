@@ -79,7 +79,7 @@ jobs:
       - name: "Дверь-0 минуса (совет 11, половина дома: релиз MINUS-FOND-V2 издаёт владелец — материалайзер уже проводит; без релиза честный graceful)"
         run: |
           mkdir -p minus/чистый-минус
-          TAGF="MINUS-FOND-V2"
+          TAGF="MINUS-FOND-V2-R2"
           if curl -fsSL -o /tmp/minus-sha.txt "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/__SHA256SUMS" 2>/dev/null; then
             grep -v '__SHA256SUMS' /tmp/minus-sha.txt | while read -r sum name; do
               f=$(basename "$name")
