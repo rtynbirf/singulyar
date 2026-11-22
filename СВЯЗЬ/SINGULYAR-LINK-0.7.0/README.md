@@ -284,3 +284,7 @@ docs/PLATFORMS.md       политика мостов vs invite
 docs/МИРОВЫЕ-ПРАКТИКИ-2026-11-12.md  круги 1–8 ВЭБ-СЕТИ: МИР → ЗАНЕСЕНО → ВПЕРВЫЕ
 tests/                  hub.test.mjs, azbuki.test.mjs, translate.test.mjs, sip-call.test.mjs, e2e.mjs, wa-call.e2e.mjs
 ```
+
+<!--СНГ:ПРЕДСТАВЛЕНИЕ:НАЧАЛО-->
+> **REPRESENTATION ≠ DIRECT ACCESS** — представление не есть прямой доступ: страницы, ссылки и зеркала показывают дом, но дверь открывает только владелец.
+<!--СНГ:ПРЕДСТАВЛЕНИЕ:КОНЕЦ-->
