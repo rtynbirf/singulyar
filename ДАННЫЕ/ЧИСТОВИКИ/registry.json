@@ -2,12 +2,12 @@
   "schema": "lrc-registry/1",
   "artist": "RUVSON",
   "counts": {
-    "tracks": 65,
-    "numbering_max": 65
+    "tracks": 68,
+    "numbering_max": 68
   },
   "gaps": {
     "missing_nums": [],
-    "note": "номера без файла *_ЧИСТОВИК.txt в download/ — в реестре их нет, страницы не строятся (не выдумываем)"
+    "note": "номера без файла *_ЧИСТОВИК.txt в download/ — в реестре их нет, страницы не строятся (не выдумываем); 66–68: youtube нет (id-слаги «файл владельца»), оси-черновики живут в корпусе ·32 (S32_КОРПУС.meta.интеграция_2026_11_22)"
   },
   "sync_policy": "тайминги не выдумываются: sync=unsynced; реальные метки — только prototip/minus/n01..n05 (треки 01–05)",
   "tracks": [
@@ -875,6 +875,39 @@
       "sha256_txt": "6a2dc625bdd94f9fe83e1c1624b71fcaa7ca0d2863e83e90ce584dcbec6fc9b2",
       "sections": 5,
       "karaoke_timed": null
+    },
+    {
+      "num": 66,
+      "title": "Чужие советы",
+      "length": "3:42",
+      "youtube": null,
+      "sync": "unsynced",
+      "lrc": "data/lyrics/66_Чужие_советы.lrc",
+      "sha256_lrc": "fe52053d1676810c9e718df525b12ae57aa1d4d6cb3ee18685461ed252d43958",
+      "source_txt": "upload/RUVSON - Чужие советы.mp3 (текст владельца 2026-11-22)",
+      "sha256_txt": "1b0a71752158fc223d5e45b952b48a96d2b3511ad0e9b119522dfea857ca25c4"
+    },
+    {
+      "num": 67,
+      "title": "Другая жизнь (Remix 2026)",
+      "length": "5:57",
+      "youtube": null,
+      "sync": "unsynced",
+      "lrc": "data/lyrics/67_Другая_жизнь_Remix_2026.lrc",
+      "sha256_lrc": "35ac295654cbd9e49fec362dce2e7ef0a8c7fc237e4cc41bc60ecb059ef842fc",
+      "source_txt": "upload/RUVSON - Другая жизнь (Remix 2026).mp3 (текст владельца 2026-11-22)",
+      "sha256_txt": "c64229aeb972fefaee24afe8177a13cd5ad42e6c5d8c45d73e6acf84a24242f0"
+    },
+    {
+      "num": 68,
+      "title": "Осенний дождь",
+      "length": "4:03",
+      "youtube": null,
+      "sync": "unsynced",
+      "lrc": "data/lyrics/68_Осенний_дождь.lrc",
+      "sha256_lrc": "34ab149170b18fc6af23bba7eb2cadf26bf2aa7bd699f717fea66f4cf6f9c11c",
+      "source_txt": "upload/RUVSON - Осенний дождь.mp3 (текст владельца 2026-11-22)",
+      "sha256_txt": "4fff5e30781de45ade0186ab579b506f219ebfce9f58650120160ab0deb25b20"
     }
   ]
 }

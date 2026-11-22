@@ -3,12 +3,12 @@
  "релиз": "MINUS-FOND-2026-10-30",
  "url_база": "https://github.com/rtynbirf/singulyar/releases/download/MINUS-FOND-2026-10-30/",
  "шим": "js/minus-fond.js (window.minusUrl)",
- "когда": "2026-10-30 TH-AUDIO-44 (AUDIT-2026-1030 P0-4: Pages-артефакт 1,02 ГБ > лимита 1 ГБ)",
+ "когда": "2026-10-30 TH-AUDIO-44 (AUDIT-2026-1030 P0-4: Pages-артефакт 1,02 ГБ > лимита 1 ГБ); 2026-11-22 +4 голоса от владельца (4j1GG_X7zHw + 3 премьеры), двери-0 тем же законом",
  "осталось_в_репо": [
   "minus/prosto-lubi.mp3 (шасси, same-origin TRACK_BUF)",
   "minus/сборник/ПАСПОРТ.md (документ)"
  ],
- "инвариант": "байты не перекодированы; SHA256SUMS.txt в релизе = этому манифесту",
+ "инвариант": "байты не перекодированы; SHA256SUMS.txt в релизе = этому манифесту; 2026-11-22: 4 новых голоса (4j1GG_X7zHw + премьеры chuzhie-sovety, drugaya-zhizn-remix-2026, osenniy-dozhd) живут в ветке minus-fond/minus/голос (5b79f9e): релизы GitHub иммутабельны (422 «Cannot upload assets to an immutable release»); pages.yml материализует их в дверь-0 рядом с 62 из GOLOS-FOND-2026-11-15, raw/jsDelivr-зеркала поют с ветки сразу",
  "файлы": [
   {
    "было": "minus/голос/0er7tqdMrqU.mp3",
@@ -801,6 +801,30 @@
    "ассет": "sbornik__sbornik-07.mp3",
    "байт": 9489618,
    "sha256": "945a8b1aa22cd9921bf7164dae9af3c0a463d07839cb30fd17e50c3abfb337c8"
+  },
+  {
+   "было": "minus/голос/4j1GG_X7zHw.mp3",
+   "ассет": "golos__4j1GG_X7zHw.mp3",
+   "байт": 7425257,
+   "sha256": "de00cbede793eb653dda8282f66b4863d887b59762f39af7db8169e4753fe2ba"
+  },
+  {
+   "было": "minus/голос/chuzhie-sovety.mp3",
+   "ассет": "golos__chuzhie-sovety.mp3",
+   "байт": 8930535,
+   "sha256": "1b0a71752158fc223d5e45b952b48a96d2b3511ad0e9b119522dfea857ca25c4"
+  },
+  {
+   "было": "minus/голос/drugaya-zhizn-remix-2026.mp3",
+   "ассет": "golos__drugaya-zhizn-remix-2026.mp3",
+   "байт": 14344152,
+   "sha256": "c64229aeb972fefaee24afe8177a13cd5ad42e6c5d8c45d73e6acf84a24242f0"
+  },
+  {
+   "было": "minus/голос/osenniy-dozhd.mp3",
+   "ассет": "golos__osenniy-dozhd.mp3",
+   "байт": 9865713,
+   "sha256": "4fff5e30781de45ade0186ab579b506f219ebfce9f58650120160ab0deb25b20"
   }
  ]
 }
