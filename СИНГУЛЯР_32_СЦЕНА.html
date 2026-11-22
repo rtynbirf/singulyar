@@ -135,6 +135,11 @@ details.слой>div{padding:2px 14px 12px}
         padding:0;font-size:clamp(26px,6vw,32px);background:var(--gold);color:#0A0A0C;font-weight:700}
 #панТранспорт .row:first-of-type{justify-content:center}
 #панТранспорт .row:nth-of-type(2){justify-content:center}
+/* ЛИЦО ПУЛЬТА (утверждённый макет 2026-11-22): пять круглых глифов ⇄ ⏮ ▶ ⏭ ↻ */
+.лицо-пульт{gap:clamp(8px,2vw,12px);flex-wrap:wrap}
+.лицо-пульт .кл{width:clamp(48px,11vw,56px);min-width:clamp(48px,11vw,56px);height:clamp(48px,11vw,56px);padding:0;font-size:18px}
+.лицо-пульт .кл-главная{width:clamp(78px,20vw,96px);height:clamp(78px,20vw,96px);font-size:clamp(26px,6vw,32px)}
+.гром-ряд{flex:1;max-width:300px;min-width:120px;height:24px;accent-color:var(--gold);cursor:pointer}
 .кл-тихо{width:44px;height:44px;min-height:44px;padding:0;border-radius:11px;font-size:16px}
 .время{font-family:var(--mono);letter-spacing:.06em}
 #времяСейчас{font-size:clamp(26px,6vw,40px);color:var(--tx)}
@@ -208,24 +213,22 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
   <p class="sr" role="status" id="srСтрока" aria-live="polite"></p>
 
   <section class="panel" id="панТранспорт" role="group" aria-label="Транспорт сцены">
-    <div class="row">
-            <button type="button" class="кл" id="кнПлей" data-справка="ПЛЕЙ: играет выбранную песню. AudioContext стартует только по твоему жесту — дом ничего не включает сам.">ПЛЕЙ</button>
-            <button type="button" class="btn gray" id="кнПауза" style="display:none" data-справка="ПАУЗА: останавливает, помня место. ПЛЕЙ продолжит с него же.">ПАУЗА</button>
-            <button type="button" class="кл" id="кнНазад" aria-label="Назад 10 секунд" data-справка="−10 секунд: отмотать песню. Клавиша ← .">−10с</button>
-            <button type="button" class="кл" id="кнВперёд" aria-label="Вперёд 10 секунд" data-справка="+10 секунд: перемотать песню. Клавиша → .">+10с</button>
-            <span class="sep" aria-hidden="true"></span>
-            <button type="button" class="кл" id="кнРепит" aria-pressed="false" data-справка="РЕПИТ: песня играет по кругу.">РЕПИТ</button>
-            <button type="button" class="кл" id="кнСлучайно" aria-pressed="false" data-справка="СЛУЧАЙНО: после конца — случайная песня фонда, не повторяя текущую. Выкл — по порядку списка.">СЛУЧАЙНО</button>
+    <div class="row лицо-пульт">
+            <button type="button" class="кл" id="кнСлучайно" aria-pressed="false" title="Перемешивание" aria-label="Перемешивание" data-справка="СЛУЧАЙНО: после конца — случайная песня фонда, не повторяя текущую. Выкл — по порядку списка. Влияет и на ⏮/⏭.">&#x21C4;</button>
+            <button type="button" class="кл" id="кнТрекНазад" title="Предыдущий трек" aria-label="Предыдущий трек" data-справка="⏮: предыдущая песня фонда — по кругу списка; при СЛУЧАЙНО — случайная; у Сборника — текущая часть начинается заново.">&#x23EE;</button>
+            <button type="button" class="кл кл-главная" id="кнПлей" aria-pressed="false" title="Играть / пауза (Space)" aria-label="Играть или пауза" data-справка="ПЛЕЙ/ПАУЗА — одна клавиша: играет выбранную песню и останавливает, помня место. AudioContext стартует только по твоему жесту — дом ничего не включает сам.">&#x25B6;</button>
+            <button type="button" class="кл" id="кнТрекВперёд" title="Следующий трек" aria-label="Следующий трек" data-справка="⏭: следующая песня фонда — по кругу списка; при СЛУЧАЙНО — случайная; у Сборника — следующая часть.">&#x23ED;</button>
+            <button type="button" class="кл" id="кнРепит" aria-pressed="false" title="Повтор" aria-label="Повтор трека" data-справка="РЕПИТ: песня играет по кругу.">&#x21BB;</button>
+            <button type="button" class="btn gray" id="кнПауза" style="display:none" aria-hidden="true" tabindex="-1" data-справка="ПАУЗА: останавливает, помня место. ПЛЕЙ продолжит с него же. Живая рука лица — кнПлей.">ПАУЗА</button>
     </div>
         <input type="range" class="прогресс" id="прогресс" min="0" max="1000" value="0" step="1" aria-label="Позиция песни">
     <div class="row">
             <span class="время" id="времяСейчас">0:00</span>
             <span class="время">/ <span id="времяВсего">0:00</span></span>
             <span class="sep" aria-hidden="true"></span>
-            <span class="lbl">ГРОМК</span>
-            <button type="button" class="кл кл-тихо" id="громМинус" aria-label="Тише">−</button>
+            <button type="button" class="кл кл-тихо" id="кнТихо" aria-pressed="false" title="Без звука" aria-label="Без звука" data-справка="ТИХО: мгновенный ноль громкости; повторное нажатие возвращает прежний уровень.">&#x2298;</button>
+            <input type="range" class="гром-ряд" id="громкостьРяд" min="0" max="100" value="100" step="1" aria-label="Громкость выхода">
             <span class="val" id="громВал">100%</span>
-            <button type="button" class="кл кл-тихо" id="громПлюс" aria-label="Громче">+</button>
     </div>
 
     <details class="слой">
@@ -241,6 +244,11 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
 
     <details class="слой">
       <summary>Все настройки — второй слой, собран по смыслу</summary>
+      <div class="row">
+              <span class="lbl">ПОЗИЦИЯ</span>
+              <button type="button" class="mini" id="кнНазад" aria-label="Назад 10 секунд" data-справка="−10 секунд: отмотать песню. Клавиша ← .">−10с</button>
+              <button type="button" class="mini" id="кнВперёд" aria-label="Вперёд 10 секунд" data-справка="+10 секунд: перемотать песню. Клавиша → .">+10с</button>
+      </div>
       <div class="row">
               <span class="lbl">ТЕМП</span>
               <button type="button" class="mini" id="темпМинус" aria-label="Темп медленнее">−</button>
@@ -263,7 +271,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
               <button type="button" class="mini" id="кнСброс" data-справка="СБРОС: вернуть темп 1.00, громкость 100% и сдвиг 0 мс (подгонка пересчитается) — параметры видимы и обратимы (закон I-11).">СБРОС</button>
       </div>
     </details>
-        <p class="hint">Клавиши: <kbd>Space</kbd> плей/пауза и тап ТЭП · <kbd>←</kbd><kbd>→</kbd> ±10 с · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>T</kbd> ТЭП · <kbd>Х</kbd>/<kbd>Ъ</kbd> строка −/+0.5 с (дом запоминает на песню). Ось — ASR-черновик канала: сдвиг ±30 с и построчный тюнинг — честно, без выдумки таймингов.</p>
+        <p class="hint">Лицо пульта: <kbd>⇄</kbd> перемешивание · <kbd>⏮</kbd><kbd>⏭</kbd> треки · <kbd>▶</kbd> плей/пауза · <kbd>↻</kbd> повтор. Клавиши: <kbd>Space</kbd> плей/пауза и тап ТЭП · <kbd>←</kbd><kbd>→</kbd> ±10 с (второй слой, ПОЗИЦИЯ) · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>T</kbd> ТЭП · <kbd>Х</kbd>/<kbd>Ъ</kbd> строка −/+0.5 с (дом запоминает на песню). Ось — ASR-черновик канала: сдвиг ±30 с и построчный тюнинг — честно, без выдумки таймингов.</p>
         <p class="status" id="статус">фонд дома готов — ноль сети</p>
   </section>
 
@@ -431,7 +439,7 @@ window.S32_ЯДРО = (function () {
   var текущаяСтрока = -1, текущееСлово = -1, спетоСлов = 0;
   var сдвигМс = 0, темп = 1.0, громкость = 1.0;
   var поправки = {}, поправкаКлюч = '';   /* v10.91 «УНИСОН»: построчные поправки песни (сек) */
-  var репит = false, случайно = false;
+  var репит = false, случайно = false, громБыла = 1;
   var тэп = false, очки = 0, комбо = 0;
   var последнийМост = 0;
   var тихо = false;
@@ -955,14 +963,29 @@ window.S32_ЯДРО = (function () {
       this.setAttribute('aria-pressed', случайно ? 'true' : 'false');
       статус('СЛУЧАЙНО: ' + (случайно ? 'дом тасует фонд' : 'порядок фонда'), 'ok');
     });
+    $('кнТрекНазад').addEventListener('click', function () {
+      if (сборникАктивен()) { аудио.currentTime = 0; играть(); статус('Сборник: часть начинается заново', 'ok'); return; }
+      if (индекс < 0) { выбрать(случайно ? случайное(ПЕСНИ.length) : ПЕСНИ.length - 1, true); return; }
+      if (случайно) { var слН = случайное(ПЕСНИ.length - 1); if (слН >= индекс) слН++; выбрать(слН, true); return; }
+      выбрать((индекс - 1 + ПЕСНИ.length) % ПЕСНИ.length, true);
+    });
+    $('кнТрекВперёд').addEventListener('click', function () {
+      if (сборникАктивен()) { if (сборникДалее()) return; статус('Сборник: части кончились — дальше тишина мастера', 'warn'); return; }
+      if (индекс < 0) { выбрать(случайно ? случайное(ПЕСНИ.length) : 0, true); return; }
+      if (случайно) { var слВ = случайное(ПЕСНИ.length - 1); if (слВ >= индекс) слВ++; выбрать(слВ, true); return; }
+      выбрать((индекс + 1) % ПЕСНИ.length, true);
+    });
     $('тэпКнопка').addEventListener('click', тэпПереключить);
     $('прогресс').addEventListener('input', function () {
       if (аудио && аудио.duration) { if (сборникАктивен()) сборникКМесту((this.value / 1000) * сборникДлительность()); else аудио.currentTime = (this.value / 1000) * аудио.duration; } /* латка С140 */
     });
     $('темпМинус').addEventListener('click', function () { темпСтавь(темп - 0.05); });
     $('темпПлюс').addEventListener('click', function () { темпСтавь(темп + 0.05); });
-    $('громМинус').addEventListener('click', function () { громСтавь(громкость - 0.1); });
-    $('громПлюс').addEventListener('click', function () { громСтавь(громкость + 0.1); });
+    $('громкостьРяд').addEventListener('input', function () { громСтавь(this.value / 100); });
+    $('кнТихо').addEventListener('click', function () {
+      if (громкость > 0) { громБыла = громкость; громСтавь(0); статус('ТИХО: ноль громкости — повторное нажатие вернёт ' + Math.round(громБыла * 100) + '%', 'ok'); }
+      else { громСтавь(громБыла || 1); статус('ТИХО снят — громкость возвращена', 'ok'); }
+    });
     $('сдвигМинус').addEventListener('click', function () { сдвигСтавь(сдвигМс - 100); });
     $('сдвигПлюс').addEventListener('click', function () { сдвигСтавь(сдвигМс + 100); });
     $('строкаМинус').addEventListener('click', function () { строкаСдвиг(-0.5); });
@@ -983,6 +1006,8 @@ window.S32_ЯДРО = (function () {
     громкость = Math.min(1, Math.max(0, Math.round(г * 100) / 100));
     if (аудио) аудио.volume = громкость;
     $('громВал').textContent = Math.round(громкость * 100) + '%';
+    var рядГром = $('громкостьРяд'); if (рядГром) рядГром.value = Math.round(громкость * 100);
+    var клТихо = $('кнТихо'); if (клТихо) клТихо.setAttribute('aria-pressed', громкость === 0 ? 'true' : 'false');
   }
   function сдвигСтавь(мс) {
     /* v10.91 «УНИСОН»: диапазон ±30 с (оси-черновики убегают сильнее, чем думали в v10.85) +
