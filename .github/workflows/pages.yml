@@ -76,6 +76,21 @@ jobs:
           else
             echo "ветка minus-fond не ответила — Сборник играет с raw/jsDelivr (лестница С186 ловит зеркалом)"
           fi
+      - name: "Дверь-0 минуса (совет 11, половина дома: релиз MINUS-FOND-V2 издаёт владелец — материалайзер уже проводит; без релиза честный graceful)"
+        run: |
+          mkdir -p minus/чистый-минус
+          TAGF="MINUS-FOND-V2"
+          if curl -fsSL -o /tmp/minus-sha.txt "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/__SHA256SUMS" 2>/dev/null; then
+            grep -v '__SHA256SUMS' /tmp/minus-sha.txt | while read -r sum name; do
+              f=$(basename "$name")
+              curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f" \
+                || curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f"
+            done
+            (cd minus/чистый-минус && sha256sum -c /tmp/minus-sha.txt > /tmp/minus-verify.log 2>&1) || { cat /tmp/minus-verify.log; exit 1; }
+            echo "минус-фонд из релиза $TAGF: $(find minus/чистый-минус -name '*.mp3' | wc -l) файлов, sha256 сверены — дверь-0 минуса same-origin"
+          else
+            echo "релиз MINUS-FOND-V2 не издан — минус поёт с raw/зеркала (лестница честная); проводка ждёт релиза владельца (совет 11)"
+          fi
       - name: "Дверь-дислокация (ЛАТКА 2026-11-11): живой замер релеев — материализация ветки данные-дислокация в выкладку"
         run: |
           if git fetch --depth=1 origin данные-дислокация 2>/dev/null; then
