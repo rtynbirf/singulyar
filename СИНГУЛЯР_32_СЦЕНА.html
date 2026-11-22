@@ -189,30 +189,7 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
     <button type="button" class="вкладка" id="вкФонд" aria-selected="false">ФОНД</button>
     <button type="button" class="вкладка" id="вкСлова" aria-selected="false">СЛОВА</button>
   </div>
-  <section class="panel сцена" id="панСцена" aria-label="Сцена: слова песни">
-    <canvas id="холст" aria-hidden="true"></canvas>
-    <div class="сцена-шапка">
-      <span class="титул" id="песняТитул">Дом ждёт твоего голоса</span>
-      <span class="пометка" id="песняПометка" hidden></span>
-      <span class="пометка" id="песняГотовность" hidden aria-live="polite"></span><!-- W2: SONG_READY / не выучена / SONG_UNAVAILABLE — честная метка у титула -->
-    </div>
-    <div id="плашкаРаунда" hidden aria-live="polite"><span id="раундТекст"></span><button type="button" class="с183-мини" id="раундОчистить">снять</button></div><!-- латка С183: очередь зала -->
-    <div id="отсчёт" hidden aria-live="polite"></div><!-- латка С183: честный отсчёт до первой строки -->
-    <div class="слова">
-      <div class="строка прошлая" id="строкаПрошлая" aria-hidden="true"></div>
-      <div class="строка текущая" id="строкаТекущая">Найди песню в фонде и жми ПЛЕЙ</div>
-      <div class="строка следующая" id="строкаСледующая" aria-hidden="true"></div>
-    </div>
-    <div class="тэп-полоса">
-      <span class="тэп-очки" id="тэпОчки">0</span>
-      <span class="тэп-комбо" id="тэпКомбо" hidden></span>
-      <span class="тэп-мелко" id="тэпМелко">ТЭП выключен — очки не считаются</span>
-      <button type="button" class="btn ghost" id="тэпКнопка" aria-pressed="false" data-справка="ТЭП: режим тап-синка. Включи — и тапай (Space или клик по сцене) в такт словам. Тап в окне ИДЕАЛ (±80 мс) даёт тройные очки, окно ТОЧНО (±350 мс) — по реакции, мимо — комбо обнуляется. Рекорд песни хранится на устройстве.">ТЭП: выкл</button>
-    </div>
-  </section>
-  <p class="sr" role="status" id="srСтрока" aria-live="polite"></p>
-
-  <section class="panel" id="панТранспорт" role="group" aria-label="Транспорт сцены">
+  <section class="panel" id="панТранспорт" role="group" aria-label="Пульт дома — сквозной: лицо, прогресс и громкость видны на всех вкладках">
     <div class="row лицо-пульт">
             <button type="button" class="кл" id="кнСлучайно" aria-pressed="false" title="Перемешивание" aria-label="Перемешивание" data-справка="СЛУЧАЙНО: после конца — случайная песня фонда, не повторяя текущую. Выкл — по порядку списка. Влияет и на ⏮/⏭.">&#x21C4;</button>
             <button type="button" class="кл" id="кнТрекНазад" title="Предыдущий трек" aria-label="Предыдущий трек" data-справка="⏮: предыдущая песня фонда — по кругу списка; при СЛУЧАЙНО — случайная; у Сборника — текущая часть начинается заново.">&#x23EE;</button>
@@ -271,9 +248,32 @@ window.SG_ЗВУК_ТВ=function(){return ТВ||!ОПУС;};
               <button type="button" class="mini" id="кнСброс" data-справка="СБРОС: вернуть темп 1.00, громкость 100% и сдвиг 0 мс (подгонка пересчитается) — параметры видимы и обратимы (закон I-11).">СБРОС</button>
       </div>
     </details>
-        <p class="hint">Лицо пульта: <kbd>⇄</kbd> перемешивание · <kbd>⏮</kbd><kbd>⏭</kbd> треки · <kbd>▶</kbd> плей/пауза · <kbd>↻</kbd> повтор. Клавиши: <kbd>Space</kbd> плей/пауза и тап ТЭП · <kbd>←</kbd><kbd>→</kbd> ±10 с (второй слой, ПОЗИЦИЯ) · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>T</kbd> ТЭП · <kbd>Х</kbd>/<kbd>Ъ</kbd> строка −/+0.5 с (дом запоминает на песню). Ось — ASR-черновик канала: сдвиг ±30 с и построчный тюнинг — честно, без выдумки таймингов.</p>
+        <p class="hint">Пульт сквозной — лицо, прогресс и громкость видны на всех вкладках: СЦЕНА, ФОНД, СЛОВА. Лицо пульта: <kbd>⇄</kbd> перемешивание · <kbd>⏮</kbd><kbd>⏭</kbd> треки · <kbd>▶</kbd> плей/пауза · <kbd>↻</kbd> повтор. Клавиши: <kbd>Space</kbd> плей/пауза и тап ТЭП · <kbd>←</kbd><kbd>→</kbd> ±10 с (второй слой, ПОЗИЦИЯ) · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>T</kbd> ТЭП · <kbd>Х</kbd>/<kbd>Ъ</kbd> строка −/+0.5 с (дом запоминает на песню). Ось — ASR-черновик канала: сдвиг ±30 с и построчный тюнинг — честно, без выдумки таймингов.</p>
         <p class="status" id="статус">фонд дома готов — ноль сети</p>
   </section>
+
+  <section class="panel сцена" id="панСцена" aria-label="Сцена: слова песни">
+    <canvas id="холст" aria-hidden="true"></canvas>
+    <div class="сцена-шапка">
+      <span class="титул" id="песняТитул">Дом ждёт твоего голоса</span>
+      <span class="пометка" id="песняПометка" hidden></span>
+      <span class="пометка" id="песняГотовность" hidden aria-live="polite"></span><!-- W2: SONG_READY / не выучена / SONG_UNAVAILABLE — честная метка у титула -->
+    </div>
+    <div id="плашкаРаунда" hidden aria-live="polite"><span id="раундТекст"></span><button type="button" class="с183-мини" id="раундОчистить">снять</button></div><!-- латка С183: очередь зала -->
+    <div id="отсчёт" hidden aria-live="polite"></div><!-- латка С183: честный отсчёт до первой строки -->
+    <div class="слова">
+      <div class="строка прошлая" id="строкаПрошлая" aria-hidden="true"></div>
+      <div class="строка текущая" id="строкаТекущая">Найди песню в фонде и жми ПЛЕЙ</div>
+      <div class="строка следующая" id="строкаСледующая" aria-hidden="true"></div>
+    </div>
+    <div class="тэп-полоса">
+      <span class="тэп-очки" id="тэпОчки">0</span>
+      <span class="тэп-комбо" id="тэпКомбо" hidden></span>
+      <span class="тэп-мелко" id="тэпМелко">ТЭП выключен — очки не считаются</span>
+      <button type="button" class="btn ghost" id="тэпКнопка" aria-pressed="false" data-справка="ТЭП: режим тап-синка. Включи — и тапай (Space или клик по сцене) в такт словам. Тап в окне ИДЕАЛ (±80 мс) даёт тройные очки, окно ТОЧНО (±350 мс) — по реакции, мимо — комбо обнуляется. Рекорд песни хранится на устройстве.">ТЭП: выкл</button>
+    </div>
+  </section>
+  <p class="sr" role="status" id="srСтрока" aria-live="polite"></p>
 
   <section class="panel" id="панФонд" aria-label="Фонд песен дома">
     <label class="lbl" for="поиск" style="display:block;margin-bottom:8px" id="лейблФонда">ФОНД ДОМА · 64 песни · найди свою</label>
@@ -1345,7 +1345,7 @@ try{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw15.js'
 /* ПУЛЬТ-МАКЕТ 2026-11-22 (редизайн ·32 по утверждённому макету, движок цел):
    1) единая клавиша ПЛЕЙ/ПАУЗА — глиф ▶/⏸ и aria зеркалятся от событий аудио;
       клик при играющей делегируется кнПауза (спрятана с лица, жива для движка).
-   2) вкладки СЦЕНА/ФОНД/СЛОВА — просто hidden у секций, aria-selected.
+   2) вкладки СЦЕНА/ФОНД/СЛОВА — hidden у секций контента, aria-selected; пульт (панТранспорт) сквозной — стоит под вкладками и не прячется.
    3) СЛОВА — полный суфлёр: строки из глобального window.S32_КОРПУС, живая
       строка по MutationObserver на #строкаТекущая. Без innerHTML (КОРД). */
 (function(){
@@ -1376,7 +1376,7 @@ if (кл && пз) {
 отразить();
 
 /* вкладки */
-var группы = { сцена: ['панСцена','панТранспорт'], фонд: ['панФонд'], слова: ['пультСлова'] };
+var группы = { сцена: ['панСцена'], фонд: ['панФонд'], слова: ['пультСлова'] } /* пульт сквозной: панТранспорт под вкладками и не прячется */;
 function вид(имя){
   Object.keys(группы).forEach(function(н){
     группы[н].forEach(function(id){ var э = $(id); if (э) э.hidden = (н !== имя); });
