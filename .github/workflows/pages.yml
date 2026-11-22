@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - name: "Дверь-0 (TH-AUDIO-45, усиление Н-4 ×30): голосовой фонд same-origin — материализация из релиза GOLOS-FOND-2026-11-15"
+      - name: "Дверь-0 (TH-AUDIO-45, усиление Н-4 ×30): голосовой фонд same-origin — релиз GOLOS-FOND-2026-11-15 + премьеры RUVSON из ветки minus-fond (релизы GitHub иммутабельны)"
         run: |
           mkdir -p minus/голос
           TAGF="GOLOS-FOND-2026-11-15"
@@ -42,6 +42,12 @@ jobs:
             done
             (cd minus/голос && sha256sum -c /tmp/golos-sha.txt > /tmp/sha-verify.log 2>&1) || { cat /tmp/sha-verify.log; exit 1; }
             echo "голос-фонд из релиза $TAGF: $(find minus/голос -name '*.mp3' | wc -l) файлов, $(du -sh minus/голос | cut -f1), sha256 сверены"
+            # добор премьер RUVSON (2026-11-22): 4 голоса живут в ветке minus-fond/minus/голос
+            # (релизы иммутабельны — 422 «Cannot upload assets to an immutable release»);
+            # checkout добавляет/перезаписывает, старые 62 не трогает; блобы git = content-addressed
+            git fetch --depth=1 origin minus-fond 2>/dev/null && git checkout FETCH_HEAD -- minus/голос 2>/dev/null \
+              && echo "премьеры RUVSON из ветки minus-fond добавлены: итого $(find minus/голос -name '*.mp3' | wc -l) голосов" \
+              || echo "ветка премьер не ответила — старый фонд поёт, премьеры ловят raw/jsDelivr-двери"
           elif git fetch --depth=1 origin minus-fond 2>/dev/null && git checkout FETCH_HEAD -- minus/голос 2>/dev/null; then
             # фолбэк: ветка после Н-4 (голос выпарен) — честный graceful
             echo "голос-фонд из ветки minus-fond (фолбэк): $(find minus/голос -name '*.mp3' | wc -l) файлов"
