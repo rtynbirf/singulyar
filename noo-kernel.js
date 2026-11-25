@@ -256,7 +256,7 @@
     панель.id = 'noo-пульт';
     панель.setAttribute('role', 'complementary');
     панель.setAttribute('aria-label', 'НООСЕТКА · пульт дома');
-    панель.style.cssText = 'position:fixed;z-index:2147480000;display:flex;flex-direction:column;' +
+    панель.style.cssText = 'position:fixed;z-index:2147484000;display:flex;flex-direction:column;' +
       'background:' + ЦВЕТ.фон + ';border:1px solid ' + ЦВЕТ.край + ';border-radius:14px;' +
       'box-shadow:0 12px 40px rgba(0,0,0,.55);color:' + ЦВЕТ.текст + ';' +
       'font:12.5px/1.5 ui-monospace,Consolas,"Courier New",monospace;' +
@@ -322,7 +322,7 @@
     вкладка.textContent = '\u2726';
     вкладка.setAttribute('aria-label', 'НООСЕТКА · открыть пульт дома (двойной щелчок)');
     вкладка.title = 'НООСЕТКА · пульт дома — открыть (двойной щелчок; N — тоже)';
-    вкладка.style.cssText = 'position:fixed;z-index:2147480000;display:none;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;' +
+    вкладка.style.cssText = 'position:fixed;z-index:2147484000;display:none;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;' +
       'background:' + ЦВЕТ.фон + ';border:1px solid ' + ЦВЕТ.край + ';color:' + ЦВЕТ.золото +
       ';font:16px/1 ui-monospace,Consolas,monospace;cursor:grab;box-shadow:0 6px 18px rgba(0,0,0,.5);touch-action:none;user-select:none;-webkit-user-select:none;padding:0';
 
