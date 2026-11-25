@@ -40,6 +40,7 @@ a { color: #F2C464; text-decoration: none; border-bottom: 1px dotted rgba(242,19
 <div class="легенда">
   GHOST — мира нет · WIRE — манифест на связи, ядра нет · LIVE — ядро в репо ·
   READY — стражи 16/16 и канон подтверждён · DEGRADED — отказ с причиной ·
+  SEALED — мир заморожен владельцем (архив GitHub), решение владельца, не отказ ·
   сетка: COHERENT, если ни одного GHOST/DEGRADED, иначе FRACTURED
 </div>
 
@@ -51,16 +52,16 @@ a { color: #F2C464; text-decoration: none; border-bottom: 1px dotted rgba(242,19
 <script>
 (function () {
   'use strict';
-  var счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0 };
+  var счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0, SEALED: 0 };
   function счёт(итог) {
-    счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0 };
+    счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0, SEALED: 0 };
     итог.миры.forEach(function (м) { счётчики[м.состояние] = (счётчики[м.состояние] || 0) + 1; });
     var el = document.getElementById('счёт');
     el.textContent = '';
-    ['READY', 'LIVE', 'WIRE', 'DEGRADED', 'GHOST'].forEach(function (с) {
+    ['READY', 'LIVE', 'WIRE', 'DEGRADED', 'GHOST', 'SEALED'].forEach(function (с) {
       var сп = document.createElement('span');
       сп.textContent = с + ': ' + (счётчики[с] || 0);
-      var цв = { READY: '#3fb950', LIVE: '#58a6ff', WIRE: '#d29922', DEGRADED: '#f85149', GHOST: '#8b949e' }[с];
+      var цв = { READY: '#3fb950', LIVE: '#58a6ff', WIRE: '#d29922', DEGRADED: '#f85149', GHOST: '#8b949e', SEALED: '#6e7681' }[с];
       сп.style.color = цв;
       el.appendChild(сп);
     });

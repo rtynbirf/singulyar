@@ -557,7 +557,8 @@
    "роль": "UniversalAgent (TsUA) - single-brain holistic agent: one LLM core, closed perception-actio",
    "ветка": "main",
    "порядок": 77,
-   "брайль": "⠀"
+   "брайль": "⠀",
+   "архив": true
   },
   {
    "репо": "voice-atlas-llm",
