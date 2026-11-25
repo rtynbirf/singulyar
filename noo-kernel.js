@@ -378,12 +378,14 @@
     тягач(шапка, function (дх, ду) {
       var н = вПределах(панель.offsetLeft + дх, панель.offsetTop + ду, панель.offsetWidth, панель.offsetHeight);
       панель.style.left = н.x + 'px'; панель.style.top = н.y + 'px';
+      панель.style.width = н.w + 'px'; панель.style.height = н.h + 'px'; /* обе пары: пульт не вылезает за край ни одним жестом */
     }, function () {
       от.x = панель.offsetLeft; от.y = панель.offsetTop; складПиши(от);
     });
     тягач(ручка, function (дх, ду) {
       var н = вПределах(панель.offsetLeft, панель.offsetTop, панель.offsetWidth + дх, панель.offsetHeight + ду);
       панель.style.width = н.w + 'px'; панель.style.height = н.h + 'px';
+      панель.style.left = н.x + 'px'; панель.style.top = н.y + 'px'; /* низ пульта и ручка всегда досягаемы */
       тело.style.display = 'none'; тело.style.display = 'block'; /* пересчёт скролла */
     }, function () {
       от.w = панель.offsetWidth; от.h = панель.offsetHeight; складПиши(от);
