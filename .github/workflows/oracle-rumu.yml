@@ -11,7 +11,7 @@ on:
     branches: [rumu]
   workflow_dispatch:
 concurrency:
-  group: oracle-rumu
+  group: oracle-rumu-w2 # С190h «НОВАЯ ОЧЕРЕДЬ»: группа oracle-rumu отравлена призраком 45646737343 (queued, 0 джоб, cancel 500→409) — новые раны в чистой очереди
   cancel-in-progress: true # С190f «ПРИЗРАК В ОЧЕРЕДИ»: диспатч-ран 45646737343 (queued, 0 джоб, cancel 500×3) держал группу 40+ мин и не пускал push-ран 88fb9faf; новейший пуш = актуальная сверка, устаревшие прогоны отменяются
 permissions:
   statuses: write
