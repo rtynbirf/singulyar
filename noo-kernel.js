@@ -242,6 +242,7 @@
     h = Math.min(Math.max(h, 180), Math.max(180, вс - 24));
     x = Math.min(Math.max(x, 8 - w + 48), вш - 48);
     y = Math.min(Math.max(y, 8), вс - 40);
+    if (y + h > вс - 8) y = Math.max(8, вс - 8 - h); /* ручка размера и низ пульта всегда досягаемы */
     return { x: x, y: y, w: w, h: h };
   }
 
