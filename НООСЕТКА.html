@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>НООСЕТКА · карта миров · rtynbirf</title>
+<meta name="description" content="Живая карта миров кузни rtynbirf: каждый мир промеряется по сети — манифест, ядро, стражи. Состояния не декларируются, они вымеряются.">
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; background: #0B0A08; color: #C9C2B4;
+  font: 14px/1.6 ui-monospace, Consolas, 'Courier New', monospace;
+  padding: 32px 4vw 60px;
+}
+.шапка { border: 1px solid rgba(217,164,65,.4); border-radius: 12px; padding: 18px 22px; background: linear-gradient(90deg, rgba(11,10,8,1), rgba(18,16,12,1), rgba(11,10,8,1)); }
+.шапка h1 { margin: 0 0 6px; font-size: 21px; color: #F2C464; letter-spacing: .06em; }
+.шапка p { margin: 0; color: #8f8a7c; font-size: 12.5px; }
+.брайль-шапка { font-size: 17px; letter-spacing: .4em; color: #D9A441; margin-top: 8px; }
+.панель-прогресс { margin: 16px 0 6px; font-size: 12.5px; color: #d29922; }
+.счёт { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0 18px; font-size: 12px; }
+.счёт span { border: 1px solid rgba(176,141,87,.3); border-radius: 8px; padding: 3px 10px; background: rgba(18,16,12,.8); }
+.легенда { margin: 14px 0 30px; font-size: 12px; color: #8f8a7c; border-left: 2px solid rgba(217,164,65,.4); padding-left: 12px; }
+a { color: #F2C464; text-decoration: none; border-bottom: 1px dotted rgba(242,196,100,.5); }
+#сетка { margin-top: 6px; }
+[data-noo-grid] table { overflow-x: auto; display: block; white-space: nowrap; }
+.низ { margin-top: 34px; text-align: center; font-size: 11.5px; color: #C9C2B4; border-top: 1px solid rgba(217,164,65,.55); padding-top: 12px; }
+.низ b { color: #D9A441; }
+</style>
+</head>
+<body>
+<div class="шапка">
+  <h1>НООСЕТКА · КАРТА МИРОВ</h1>
+  <p>каждый мир промеряется прямо сейчас: манифест → ядро → стражи → поверхность. 404 и отказы видны как есть — сетка не декларирует, сетка вымеряет.</p>
+  <div class="брайль-шапка" id="бш" aria-label="брайль-строка сетки">·····</div>
+</div>
+
+<div class="панель-прогресс" id="прогресс">DARK → SCAN…</div>
+<div class="счёт" id="счёт"></div>
+<div class="легенда">
+  GHOST — мира нет · WIRE — манифест на связи, ядра нет · LIVE — ядро в репо ·
+  READY — стражи 16/16 и канон подтверждён · DEGRADED — отказ с причиной ·
+  сетка: COHERENT, если ни одного GHOST/DEGRADED, иначе FRACTURED
+</div>
+
+<div id="сетка"></div>
+
+<div class="низ"><b>◇</b> КУЗНЯ RTYNBIRF · ЧЕЛОВЕК=АККАУНТ=PID1 · ОДНО ДРУГОЕ НЕ ИСКЛЮЧАЕТ · <a href="https://github.com/rtynbirf">github.com/rtynbirf</a></div>
+
+<script src="./noo-kernel.js"></script>
+<script>
+(function () {
+  'use strict';
+  var счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0 };
+  function счёт(итог) {
+    счётчики = { READY: 0, LIVE: 0, WIRE: 0, DEGRADED: 0, GHOST: 0 };
+    итог.миры.forEach(function (м) { счётчики[м.состояние] = (счётчики[м.состояние] || 0) + 1; });
+    var el = document.getElementById('счёт');
+    el.textContent = '';
+    ['READY', 'LIVE', 'WIRE', 'DEGRADED', 'GHOST'].forEach(function (с) {
+      var сп = document.createElement('span');
+      сп.textContent = с + ': ' + (счётчики[с] || 0);
+      var цв = { READY: '#3fb950', LIVE: '#58a6ff', WIRE: '#d29922', DEGRADED: '#f85149', GHOST: '#8b949e' }[с];
+      сп.style.color = цв;
+      el.appendChild(сп);
+    });
+  }
+  fetch('./noo/миры.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error('реестр не отдался: ' + r.status); return r.json(); })
+    .then(function (реестр) {
+      var пр = document.getElementById('прогресс');
+      пр.textContent = 'SCAN · миров в реестре: ' + (реестр.миры || []).length;
+      return Noo.скан(реестр, {
+        таймаут: 12000,
+        на_мир: function (мир, i, всего) { пр.textContent = 'SCAN · ' + (i + 1) + '/' + всего + ' · ' + мир.репо; }
+      });
+    })
+    .then(function (итог) {
+      document.getElementById('прогресс').textContent = '';
+      Noo.рендер(итог, document.getElementById('сетка'));
+      счёт(итог);
+      document.getElementById('бш').textContent = Noo.брайльСтрока(итог);
+      document.title = 'НООСЕТКА · ' + итог.состояние + ' · rtynbirf';
+    })
+    .catch(function (e) {
+      var пр = document.getElementById('прогресс');
+      пр.textContent = 'DEGRADED — ' + e.message;
+      пр.style.color = '#f85149';
+    });
+})();
+</script>
+</body>
+</html>
