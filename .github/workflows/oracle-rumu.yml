@@ -37,7 +37,7 @@ jobs:
           done
           echo "ПИН УСТАРЕЛ НАДЛОГО: make pins --write в cell-swarm"
           exit 2
-      - name: Set status (только failure красит: отменённый гонкой прогон — не «устарел надолго», С190f)
+      - name: "Set status — красит только failure, отменённый гонкой прогон уступил правду (С190f)"
         if: always()
         run: |
           STATE="success"; DESC="пин тела rumu сверен"
