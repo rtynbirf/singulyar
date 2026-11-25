@@ -53,7 +53,10 @@
     }
     if (!мир || !мир.репо) return фин('GHOST', 'мира нет в реестре');
     события.push({ т: 'мир', с: мир.репо });
-    if (!мир.манифест) return фин('GHOST', 'noo-manifest.json не отвечает (404/сеть)');
+    if (!мир.манифест) {
+      if (мир.архив) return фин('SEALED', 'мир заморожен владельцем (архив GitHub) — контракта нет по решению владельца');
+      return фин('GHOST', 'noo-manifest.json не отвечает (404/сеть)');
+    }
     события.push({ т: 'манифест', с: 'есть' });
     /* живой манифест — дальше ядро */
     if (!мир.ядро_живо) return фин('WIRE', 'манифест на связи, ядро в репо не найдено');
@@ -123,7 +126,7 @@
       var итог = await промерить(мир, опции);
       строки.push(Object.assign(мир, итог));
     }
-    var разбитые = строки.filter(function (с) { return с.состояние === 'GHOST' || с.состояние === 'DEGRADED'; });
+    var разбитые = строки.filter(function (с) { return с.состояние === 'GHOST' || с.состояние === 'DEGRADED'; }); /* SEALED не дробит: заморозка — решение владельца, не отказ */
     var ready = строки.filter(function (с) { return с.состояние === 'READY'; }).length;
     return {
       состояние: разбитые.length ? 'FRACTURED' : 'COHERENT',
@@ -165,7 +168,7 @@
     var тело = т.createTBody();
     итог.миры.forEach(function (м) {
       var стр = тело.insertRow();
-      var цветС = { READY: '#3fb950', LIVE: '#58a6ff', WIRE: '#d29922', DEGRADED: '#f85149', GHOST: '#8b949e' }[м.состояние] || '#8b949e';
+      var цветС = { READY: '#3fb950', LIVE: '#58a6ff', WIRE: '#d29922', DEGRADED: '#f85149', GHOST: '#8b949e', SEALED: '#6e7681' }[м.состояние] || '#8b949e';
       function ячейка(текст, цв) {
         var я = стр.insertCell();
         я.textContent = текст == null ? '' : String(текст);
