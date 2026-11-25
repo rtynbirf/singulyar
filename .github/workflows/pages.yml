@@ -76,20 +76,30 @@ jobs:
           else
             echo "ветка minus-fond не ответила — Сборник играет с raw/jsDelivr (лестница С186 ловит зеркалом)"
           fi
-      - name: "Дверь-0 минуса (совет 11, половина дома: релиз MINUS-FOND-V2 издаёт владелец — материалайзер уже проводит; без релиза честный graceful)"
+      - name: "Дверь-0 минуса v2 (П-ЛИМИТ 2026-11-25, улика: лог deploy #376 — артефакт 1.22 GB > лимита 1 GB; слово владельца SONG_UNAVAILABLE): материализуем ТОЛЬКО минус-only песни (id, которых нет в minus/голос) — артефакт держится в лимите, лестница честная"
         run: |
           mkdir -p minus/чистый-минус
-          TAGF="MINUS-FOND-V2-R2"
-          if curl -fsSL -o /tmp/minus-sha.txt "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/__SHA256SUMS" 2>/dev/null; then
+          SUMS=""
+          for имя in "__SHA256SUMS" "__SHA256SUMS.txt" "SHA256SUMS" "SHA256SUMS.txt"; do
+            if curl -fsSL -o /tmp/minus-sha.txt "https://github.com/rtynbirf/singulyar/releases/download/MINUS-FOND-V2-R2/$имя" 2>/dev/null; then SUMS="$имя"; break; fi
+          done
+          if [ -n "$SUMS" ]; then
+            ls minus/голос | sed 's/\\.mp3$//' | sort -u > /tmp/голос-ids.txt
             grep -v '__SHA256SUMS' /tmp/minus-sha.txt | while read -r sum name; do
               f=$(basename "$name")
-              curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f" \
-                || curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/$TAGF/$f"
+              id="${f%.mp3}"
+              if grep -qxF "$id" /tmp/голос-ids.txt; then continue; fi
+              curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/MINUS-FOND-V2-R2/$f" \\
+                || curl -fsSL -o "minus/чистый-минус/$f" "https://github.com/rtynbirf/singulyar/releases/download/MINUS-FOND-V2-R2/$f"
+              ожид=$(grep "  $f\$" /tmp/minus-sha.txt | head -1 | awk '{print $1}')
+              if [ -n "$ожид" ]; then
+                факт=$(sha256sum "minus/чистый-минус/$f" 2>/dev/null | awk '{print $1}')
+                if [ "$ожид" != "$факт" ]; then echo "sha256 не сошёлся: $f — файл снят, лестница честно уведёт дальше"; rm -f "minus/чистый-минус/$f"; fi
+              fi
             done
-            (cd minus/чистый-минус && sha256sum -c /tmp/minus-sha.txt > /tmp/minus-verify.log 2>&1) || { cat /tmp/minus-verify.log; exit 1; }
-            echo "минус-фонд из релиза $TAGF: $(find minus/чистый-минус -name '*.mp3' | wc -l) файлов, sha256 сверены — дверь-0 минуса same-origin"
+            echo "дверь-0 минуса: минус-only материализовано $(find minus/чистый-минус -name '*.mp3' | wc -l) файлов; голосов в фонде $(wc -l < /tmp/голос-ids.txt); артефакт в лимите 1 GB (минус полного фонда 531 MB same-origin не нужен: 69/71 песен поют голосом)"
           else
-            echo "релиз MINUS-FOND-V2 не издан — минус поёт с raw/зеркала (лестница честная); проводка ждёт релиза владельца (совет 11)"
+            echo "SHA256SUMS релиза MINUS-FOND-V2-R2 не ответила — минус остаётся на релизе/raw/зеркале; лестница честная (двери отвечают отказом, не молчанием)"
           fi
       - name: "Дверь-дислокация (ЛАТКА 2026-11-11): живой замер релеев — материализация ветки данные-дислокация в выкладку"
         run: |

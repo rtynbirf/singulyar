@@ -1984,9 +1984,9 @@ function прямойКадр(tr){
     рамка.hidden=false;
     if(ждём)ждём.hidden=true;
     var тит=String(tr.t||'релиз канала').replace(/"/g,'&quot;');
-    рамка.innerHTML='<iframe src="https://www.youtube.com/embed/'+tr.yt+'?playsinline=1&rel=0" style="width:100%;height:100%;border:0;display:block" title="'+тит+' — RUVSON" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    рамка.innerHTML='<img src="https://i.ytimg.com/vi/'+tr.yt+'/hqdefault.jpg" alt="'+тит+' — кадр релиза" style="width:100%;height:100%;object-fit:cover;border:0;display:block" loading="lazy" referrerpolicy="no-referrer"><span style="position:absolute;left:10px;bottom:10px;right:10px;font:600 .72rem/1.35 Manrope,system-ui,sans-serif;color:#E8C89C;background:rgba(0,0,0,.66);border-radius:8px;padding:.3rem .5rem">кадр релиза · плеер канала с рекламой в дом не пускается · смотреть на YouTube — явная ссылка в панели</span>';
     иконкаИгр(true);
-    try{toast('плеер канала не встал · кадр релиза без автоплея — жми ▶ в кадре, если хочешь');}catch(e){}
+    try{toast('плеер канала не встал · показал кадр релиза — рекламу канала в дом не пускаю; смотреть на YouTube — явная ссылка в панели');}catch(e){}
   }catch(e){}
 }
 window.__каналФолбэк=function(tr){
@@ -2319,5 +2319,6 @@ html.уд-тихо .экв i{animation:none;height:55%}
 <script src="./forge-hand.js" defer></script>
 <script src="assets/autoplay-fix.js" defer></script>
 <script src="снг-спутник.js" defer></script><!--СНГ:СПУТНИК: сквозной пульт дома (СЦЕНА живёт отдельно, спутник слышит её)-->
+<script defer src="noo-kernel.js"></script>
 </body>
 </html>
