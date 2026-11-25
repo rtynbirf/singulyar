@@ -1389,7 +1389,7 @@ function wire(){
   function показать(){
     var tr=TR[idx];
     пНазв.textContent=tr.t;
-    пПод.textContent=tr.flag?'флагман · 157/157 голосов':tr.m;
+    пПод.textContent=tr.flag?'флагман · 157/157 голосов':((audio.dataset&&audio.dataset.фонд==='1'&&tr.yt)?'звук фонда дома · из очереди канала':tr.m);
   }
   function подсветить(){
     var live=document.querySelector('#songs .sc.live');
@@ -1424,7 +1424,7 @@ function wire(){
     if(tr.yt){ игратьКанал(tr); return; } /* С171: релизы канала — через YT IFrame */
     try{ ensureCtx(); }catch(e){}
     audio.dataset.cue=tr.flag?'':(tr.id||'');
-    audio.dataset.foreign=tr.flag?'0':'1';
+    audio.dataset.foreign=tr.flag?'0':'1'; audio.dataset.фонд='0';
     audio.src=srcТр(tr);
     ждали=true; ошибок=0;
     audio.play().catch(function(){ if(!(audio.error&&audio.error.code))ждали=false; /* С172: настоящая ошибка файла решается в error-обработчике */ });
@@ -1436,17 +1436,35 @@ function wire(){
       if(т)т.scrollIntoView({block:'nearest'});
     }
   }
-  function игратьКанал(tr){ /* С171: канал — живая рамка, audio честно освобождён */
+  function игратьКанал(tr){
+    /* С187 «КОНТЕНТ НЕ РЕКЛАМА» (правда прежде техники): клик по релизу канала
+       сначала ищет САМ КОНТЕНТ в фонде дома — minus/голос/<yt>.mp3, дверь-0
+       same-origin (материализует pages.yml). Нашёлся — играет НАШ звук, никакой
+       рамки канала. Нет в фонде — честная дверь: релиз не подменяется рекламой
+       канала, смотреть на YouTube человек решает сам, явно. */
     try{ ensureCtx(); }catch(e){}
     try{ audio.pause(); }catch(e){}
     try{ audio.removeAttribute('src'); audio.load(); }catch(e){}
-    audio.dataset.cue=tr.id; audio.dataset.foreign='1';
     ждали=false; ошибок=0;
-    if(window.__каналПлей)window.__каналПлей(tr);
-    if(стражИгр)clearTimeout(стражИгр);
-    стражИгр=setTimeout(function(){ if(window.__каналАктивен&&window.__каналАктивен())каналМолчит(); },14000);
-    меткаТрека(tr); показать(); подсветить(); состояние(); store.set('п-трек',idx);
-    огласить('Играет: '+tr.t);
+    var фондURL=null;
+    try{ if(window.minusUrl)фондURL=window.minusUrl('minus/голос/'+tr.yt+'.mp3'); }catch(e){}
+    if(фондURL){
+      audio.dataset.cue=tr.id; audio.dataset.foreign='1'; audio.dataset.фонд='1';
+      audio.src=фондURL;
+      ждали=true;
+      меткаТрека(tr); показать(); подсветить(); состояние(); store.set('п-трек',idx);
+      audio.play().catch(function(){ if(!(audio.error&&audio.error.code))ждали=false; });
+      огласить('Играет из фонда дома: '+tr.t);
+      return;
+    }
+    /* фонда нет — честно: без авто-кадра, без рекламы вместо контента */
+    try{ if(window.__каналСтоп)window.__каналСтоп(); }catch(e){}
+    audio.dataset.cue=''; audio.dataset.foreign='0'; audio.dataset.фонд='0';
+    текКан=null;
+    меткаТрека(tr); показать(); подсветить(); состояние();
+    огласить('В фонде дома релиза нет — на канале можно посмотреть по желанию');
+    try{ toast('контент дома: «'+(tr.t||tr.yt)+'» ещё не лёг в фонд · смотреть на канале — явно, кнопкой в рамке'); }catch(e){}
+    try{ if(window.__честныйКанал)window.__честныйКанал(tr); }catch(e){}
   }
   function каналМолчит(){ /* С172: YouTube молчит 14 с — честный сброс, нить у флагмана */
     if(!(window.__каналАктивен&&window.__каналАктивен()))return;
@@ -1720,6 +1738,13 @@ function дескрипторАудио(){
   var cue=(audio.dataset&&audio.dataset.cue)||'';
   var чуж=(audio.dataset&&audio.dataset.foreign==='1');
   if(!чуж||!cue)return{тип:'флаг',t:'Когда теряем',артист:'OutShadow feat RUVSON'};
+  /* С187: релиз канала, сыгранный из фонда дома, — это НАШ звук фонда */
+  if(audio.dataset&&audio.dataset.фонд==='1'&&cue){
+    var н2='';
+    try{var кк2=(window.КАНТР||[]);for(var k2=0;k2<кк2.length;k2++){if(кк2[k2].id===cue){н2=кк2[k2].t;break;}}}catch(e){}
+    if(!н2){var сп2=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS);for(var q2=0;q2<сп2.length;q2++){if(сп2[q2].id===cue){н2=сп2[q2].t;break;}}}
+    return{тип:'фонд',id:cue,t:н2||cue,артист:'RUVSON'};
+  }
   if(cue.slice(0,3)==='yt:'){var вып=cue.slice(3),назв='';try{var кк=(window.КАНТР||[]);for(var ki=0;ki<кк.length;ki++){if(кк[ki].yt===вып){назв=кк[ki].t;break;}}}catch(e){}return{тип:'канал',id:cue,yt:вып,t:назв||вып,артист:'RUVSON'};}
   var сп=(window.ОЧЕРЕДЬ_ДАННЫЕ||PLACEHOLDERS);
   for(var i=0;i<сп.length;i++){if(сп[i].id===cue)return{тип:'фонд',id:cue,t:сп[i].t,артист:'RUVSON'};}
@@ -1959,17 +1984,36 @@ function прямойКадр(tr){
     рамка.hidden=false;
     if(ждём)ждём.hidden=true;
     var тит=String(tr.t||'релиз канала').replace(/"/g,'&quot;');
-    рамка.innerHTML='<iframe src="https://www.youtube.com/embed/'+tr.yt+'?autoplay=1&playsinline=1&rel=0" style="width:100%;height:100%;border:0;display:block" title="'+тит+' — RUVSON" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    рамка.innerHTML='<iframe src="https://www.youtube.com/embed/'+tr.yt+'?playsinline=1&rel=0" style="width:100%;height:100%;border:0;display:block" title="'+тит+' — RUVSON" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     иконкаИгр(true);
-    try{toast('плеер канала не встал · включил прямой кадр релиза');}catch(e){}
+    try{toast('плеер канала не встал · кадр релиза без автоплея — жми ▶ в кадре, если хочешь');}catch(e){}
   }catch(e){}
 }
 window.__каналФолбэк=function(tr){
-  if(!готово||!плеер)return false;
-  if(!tr||!tr.id||tr.flag||tr.yt||tr.id===ФЛАГМАН)return false;
-  try{toast('фонд молчит · играю с канала');}catch(e){}
-  window.__каналПлей({id:'yt:'+tr.id,yt:tr.id,t:tr.t||tr.id,m:'с канала · фонд молчит',дата:'',дм:''});
+  /* С187: «фонд молчит · играю с канала» отменяется — реклама не подменяет контент.
+     Фонд мог ожить — вызывающий код проверит снова через игратьКанал; иначе —
+     явная дверь на канал, выбор человека. */
+  if(!tr)return false;
+  try{ toast('фонд молчит честно · смотреть на канале — только по желанию'); }catch(e){}
+  try{ if(window.__честныйКанал)window.__честныйКанал(tr); }catch(e){}
   return true;
+};
+window.__честныйКанал=function(tr){
+  /* С187 «ЧЕСТНАЯ ДВЕРЬ»: явная ссылка на канал — не автоплей, не iframe с рекламой.
+     Человек сам решает, идти ли туда, где реклама. */
+  try{
+    if(!рамка)return;
+    фолбэкКадр=false; готово=true; текКан=null;
+    рамка.hidden=false;
+    if(ждём)ждём.hidden=true;
+    var тит=String(tr.t||tr.yt||'релиз канала').replace(/"/g,'&quot;');
+    рамка.innerHTML='<div style="width:100%;height:100%;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;background:#0B0A08;color:#C9C2B4;font:14px/1.6 ui-monospace,Consolas,monospace;text-align:center;padding:18px">'
+      +'<div>в фонде дома релиза нет · дом не подменяет контент рекламой канала</div>'
+      +'<a href="'+КАНАЛ_ССЫЛ+(tr.yt||'')+'" target="_blank" rel="noopener" style="color:#F2C464;text-decoration:none;border:1px solid rgba(217,164,65,.45);border-radius:8px;padding:9px 16px">смотреть на YouTube по желанию — '+тит+'</a>'
+      +'</div>';
+    иконкаИгр(false);
+    try{toast('дверь канала открыта явной кнопкой — без навязанной рекламы');}catch(e){}
+  }catch(e){}
 };
 window.__каналПлей=function(tr){
   /* правда прежде техники: панель/бар/шкаф узнают трек сразу, даже если API ещё грузится */

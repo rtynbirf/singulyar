@@ -945,6 +945,16 @@ async function initAudio() {
         $("#btnPlay").textContent = "▶";
         $("#btnPlay").setAttribute("aria-pressed", "false");
       });
+      trackEl.addEventListener("error", () => {
+        /* ЛАТКА С187 «ЧЕСТНЫЙ ФОНД»: мастер не отдался — дом не молчит молча.
+           Караоке и ТЭП уходят в тихий демо-режим по внутренним часам (сторож ниже),
+           заявка на карте трека переписывается правдой. */
+        try {
+          const суб = document.querySelector(".info .sub") || document.querySelector("p.sub");
+          if (суб) суб.textContent = "Мастера сейчас нет в фонде дома — караоке и ТЭП идут по внутренним часам (тихий демо-режим). Как только мастер ляжет в фонд, файл подхватится сам.";
+          console.warn("фонда нет: мастер не отдался — честный тихий демо-режим");
+        } catch (e) {}
+      });
       audioReady = true;
       return;
     } catch(e) { console.warn("вшитый трек не декодировался, играет синтез", e); }
@@ -1464,6 +1474,10 @@ function play() {
         clockFallback = true;
         fbPos = pausePos; fbWall = performance.now();
         console.warn("аудио не стартовало → тихий демо-режим (караоке по performance-часам)");
+        try {
+          const суб = document.querySelector(".info .sub") || document.querySelector("p.sub");
+          if (суб && суб.textContent.indexOf("тихий демо-режим") < 0) суб.textContent += " · сейчас: тихий демо-режим по внутренним часам — звук появится, когда браузер даст играть.";
+        } catch (e) {}
       }
     }, 350);
     $("#btnPlay").textContent = "❚❚";
