@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 concurrency:
   group: oracle-rumu
-  cancel-in-progress: false
+  cancel-in-progress: true # С190f «ПРИЗРАК В ОЧЕРЕДИ»: диспатч-ран 45646737343 (queued, 0 джоб, cancel 500×3) держал группу 40+ мин и не пускал push-ран 88fb9faf; новейший пуш = актуальная сверка, устаревшие прогоны отменяются
 permissions:
   statuses: write
   issues: write
@@ -37,11 +37,11 @@ jobs:
           done
           echo "ПИН УСТАРЕЛ НАДЛОГО: make pins --write в cell-swarm"
           exit 2
-      - name: Set status
+      - name: Set status (только failure красит: отменённый гонкой прогон — не «устарел надолго», С190f)
         if: always()
         run: |
           STATE="success"; DESC="пин тела rumu сверен"
-          if [ "${{ job.status }}" != "success" ]; then STATE="failure"; DESC="пин тела rumu устарел надолго — make pins --write в cell-swarm"; fi
+          if [ "${{ job.status }}" = "failure" ]; then STATE="failure"; DESC="пин тела rumu устарел надолго — make pins --write в cell-swarm"; fi
           curl -s -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
