@@ -108,7 +108,7 @@ jobs:
       # if: always() — артефакт нужен и при провале, чтобы разбирать без перегона.
       - name: собрать артефакты (отчёт + скриншоты)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: palata-${{ matrix.browser }}-${{ matrix.viewport }}
           path: playwright-report/
@@ -167,7 +167,7 @@ jobs:
       # настоящих порогов в следующей волне.
       - name: собрать артефакт lhci
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lhci
           path: lhci/
