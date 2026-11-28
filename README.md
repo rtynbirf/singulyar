@@ -1,30 +1,42 @@
 <div align="center">
+
+<a href="https://github.com/rtynbirf/singulyar"><img src="banner.png" width="100%" alt="singulyar — штандарт мастерской в каноне ORNAMENTAL MYTHO-REALISM"></a>
+
+</div>
+
+<!--ФОРЖ:МУЗА:НАЧАЛО-->
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@main/repo-muse.svg" width="100%" alt="Муза singulyar: мастерская КАНДИНСКИЙ · КОМПОЗИЦИЯ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
+  <br/>
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@main/forge-divider.svg" width="62%" alt="делитель мастерской КАНДИНСКИЙ · КОМПОЗИЦИЯ" />
+</div>
+<!--ФОРЖ:МУЗА:КОНЕЦ-->
+
+<!--ФОРЖ:ПАСПОРТ:НАЧАЛО-->
+<div align="center">
+  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы singulyar №2 в каноне ORNAMENTAL MYTHO-REALISM: орнаментальная решётка, медальон-миф, строение файлов, лексикон — по фактическому контенту" />
+</div>
+
+| ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
+|---:|---:|---:|---|---:|
+| 2661 | 287 | 1 | 2026-11-28 | 6 |
+<!--ФОРЖ:ПАСПОРТ:КОНЕЦ-->
+
+# singulyar
+
+<div align="center">
   <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/forge-banner-singulyar.svg" />
   <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/banner.png" alt="singulyar — Офлайн-вселенная караоке RUVSON: 64 песни" width="100%">
 </picture>
 </div>
 
-<!--ФОРЖ:МУЗА:НАЧАЛО-->
-<div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/repo-muse.svg" width="100%" alt="Муза singulyar: мастерская КАНДИНСКИЙ · КОМПОЗИЦИЯ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
-  <br/>
-  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/singulyar@rumu/forge-divider.svg" width="62%" alt="делитель мастерской КАНДИНСКИЙ · КОМПОЗИЦИЯ" />
-</div>
-<!--ФОРЖ:МУЗА:КОНЕЦ-->
+
 
 <!--СНГ:ПРЕДСТАВЛЕНИЕ:НАЧАЛО-->
 > **REPRESENTATION ≠ DIRECT ACCESS** — представление не есть прямой доступ: страницы, ссылки и зеркала показывают дом, но дверь открывает только владелец.
 <!--СНГ:ПРЕДСТАВЛЕНИЕ:КОНЕЦ-->
-<!--ФОРЖ:ПАСПОРТ:НАЧАЛО-->
-<div align="center">
-  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы singulyar в каноне ORNAMENTAL MYTHO-REALISM: орнаментальная решётка, медальон-миф, строение файлов, лексикон — по фактическому контенту" />
-</div>
 
-| ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
-|---:|---:|---:|---|---:|
-| 2652 | 283 | 273 | 2026-11-21 | 15 |
-<!--ФОРЖ:ПАСПОРТ:КОНЕЦ-->
 
 
 
